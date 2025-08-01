@@ -128,7 +128,7 @@ export function IconsPreview() {
             Uncommon Lucide Icons
           </h2>
           <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
-            Less common Lucide icons that are imported specifically for demonstration. These would typically require adding to the optimized import list.
+            Less common Lucide icons that use the dynamic fallback mechanism. These are not in the optimized import list, so they have a small performance cost but work automatically.
           </p>
           <div className="grid grid-cols-6 gap-[var(--space-lg)]">
             {['land-plot', 'radio', 'microscope', 'telescope', 'dna', 'atom'].map((iconName) => (
@@ -144,7 +144,7 @@ export function IconsPreview() {
           </div>
           <div className="mt-[var(--space-md)] rounded-md bg-[var(--color-surface-secondary)] p-[var(--space-md)]">
             <p className="text-caption-sm text-[var(--color-text-secondary)]">
-              <strong>Note:</strong> To use uncommon Lucide icons, they must be added to the import statement and commonLucideIcons map in the Icon component. This maintains bundle optimization while supporting additional icons as needed.
+              <strong>Performance Trade-off:</strong> Uncommon icons use the full Lucide import, increasing bundle size. For frequently used icons, consider adding them to the optimized commonLucideIcons map. If an icon shows a placeholder, it doesn't exist in Lucide React.
             </p>
           </div>
         </div>
