@@ -1,7 +1,7 @@
 import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
-import { Icon, IconType } from "./icon";
+import { Icon, IconType, IconSize } from "./icon";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center relative transition-all duration-150 ease-in-out focus:outline-none cursor-pointer select-none disabled:cursor-not-allowed gap-[var(--space-xsm)]",
@@ -146,7 +146,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
-    const iconSize = size as "sm" | "md" | "lg"; // Direct mapping: sm->sm, md->md, lg->lg
+    const iconSize: IconSize = size || "md"; // Safe mapping with fallback
     
     // Use inverse color for solid background variants, primary color for others
     const iconColor = (variant === 'primary' || variant === 'destructive' || variant === 'success') 

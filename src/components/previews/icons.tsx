@@ -1,7 +1,7 @@
 import { Icon, IconColor, IconSize } from '../ui/icon';
 
 export function IconsSection() {
-  // Sample of popular Lucide icons for demo
+  // Sample of popular Lucide icons for demo - limited for performance
   const sampleLucideIcons = [
     'star', 'heart', 'user', 'settings', 'home', 'search', 'mail', 'phone',
     'calendar', 'clock', 'edit', 'trash-2', 'plus', 'minus', 'check', 'x',
@@ -61,7 +61,7 @@ export function IconsSection() {
             Colors
           </h2>
           <div className="grid grid-cols-7 gap-[var(--space-md)]">
-            {colors.map((color) => (
+            {colors.slice(0, 14).map((color) => (
               <div key={color} className="flex flex-col items-center gap-[var(--space-sm)]">
                 <div className={`flex h-[var(--size-xlg)] w-[var(--size-xlg)] items-center justify-center rounded-sm ${
                   color === 'on-action' || color === 'inverse' ? 'bg-[var(--grey-900)]' : 'bg-[var(--color-surface-secondary)]'
@@ -74,6 +74,11 @@ export function IconsSection() {
               </div>
             ))}
           </div>
+          {colors.length > 14 && (
+            <p className="text-caption-sm text-[var(--color-text-tertiary)] mt-[var(--space-md)]">
+              Showing {Math.min(14, colors.length)} of {colors.length} available colors.
+            </p>
+          )}
         </div>
 
         {/* Custom Icons */}
