@@ -3,8 +3,9 @@ import { TypographyPreview } from "./components/previews/typography-preview";
 import { IconsPreview } from "./components/previews/icons-preview";
 import { ButtonsPreview } from "./components/previews/buttons-preview";
 import { CardPreview } from "./components/previews/card-preview";
+import { SeparatorPreview } from "./components/previews/separator-preview";
 
-type Section = "typography" | "icons" | "buttons" | "cards";
+type Section = "typography" | "icons" | "buttons" | "cards" | "separators";
 
 function App() {
   const [activeSection, setActiveSection] = useState<Section>("buttons");
@@ -14,6 +15,7 @@ function App() {
     { id: "icons" as const, label: "Icons" },
     { id: "buttons" as const, label: "Buttons" },
     { id: "cards" as const, label: "Cards" },
+    { id: "separators" as const, label: "Separators" },
   ];
 
   return (
@@ -62,6 +64,7 @@ function App() {
           {activeSection === "icons" && <IconsPreview />}
           {activeSection === "buttons" && <ButtonsPreview />}
           {activeSection === "cards" && <CardPreview />}
+          {activeSection === "separators" && <SeparatorPreview />}
         </main>
       </div>
     </div>
