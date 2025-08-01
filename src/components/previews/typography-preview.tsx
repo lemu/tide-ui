@@ -1,5 +1,5 @@
 
-export function TypographySection() {
+export function TypographyPreview() {
   return (
     <div className="space-y-[var(--space-2xlg)]">
       <div>

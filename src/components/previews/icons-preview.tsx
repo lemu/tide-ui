@@ -1,6 +1,6 @@
 import { Icon, IconColor, IconSize } from '../ui/icon';
 
-export function IconsSection() {
+export function IconsPreview() {
   // Sample of popular Lucide icons for demo - limited for performance
   const sampleLucideIcons = [
     'star', 'heart', 'user', 'settings', 'home', 'search', 'mail', 'phone',

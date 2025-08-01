@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { TypographySection } from "./components/previews/typography";
-import { IconsSection } from "./components/previews/icons";
-import { ButtonShowcase } from "./components/previews/buttons";
+import { TypographyPreview } from "./components/previews/typography-preview";
+import { IconsPreview } from "./components/previews/icons-preview";
+import { ButtonsPreview } from "./components/previews/buttons-preview";
 
 type Section = "typography" | "icons" | "buttons";
 
@@ -56,9 +56,9 @@ function App() {
 
         {/* Scrollable Content */}
         <main className="flex-1 overflow-y-auto p-[var(--space-2xlg)]">
-          {activeSection === "typography" && <TypographySection />}
-          {activeSection === "icons" && <IconsSection />}
-          {activeSection === "buttons" && <ButtonShowcase />}
+          {activeSection === "typography" && <TypographyPreview />}
+          {activeSection === "icons" && <IconsPreview />}
+          {activeSection === "buttons" && <ButtonsPreview />}
         </main>
       </div>
     </div>

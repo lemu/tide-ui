@@ -1,6 +1,6 @@
-import { Button } from '../ui/button';
+import { Button } from "../ui/button";
 
-export function ButtonShowcase() {
+export function ButtonsPreview() {
   return (
     <div className="space-y-[var(--space-2xlg)]">
       <div>
@@ -46,32 +46,29 @@ export function ButtonShowcase() {
           </h2>
           <div className="space-y-[var(--space-md)]">
             <div className="flex flex-wrap items-center gap-[var(--space-md)]">
-              <Button icon="plus" iconPosition="left">Add Item</Button>
-              <Button icon="download" iconPosition="left" variant="primary">Download</Button>
-              <Button icon="trash-2" iconPosition="left" variant="destructive">Delete</Button>
+              <Button icon="plus" iconPosition="left">
+                Add Item
+              </Button>
+              <Button icon="download" iconPosition="left" variant="primary">
+                Download
+              </Button>
+              <Button icon="trash-2" iconPosition="left" variant="destructive">
+                Delete
+              </Button>
             </div>
             <div className="flex flex-wrap items-center gap-[var(--space-md)]">
-              <Button icon="arrow-right" iconPosition="right">Next</Button>
-              <Button icon="external-link" iconPosition="right" variant="ghost">External</Button>
+              <Button icon="arrow-right" iconPosition="right">
+                Next
+              </Button>
+              <Button icon="external-link" iconPosition="right" variant="ghost">
+                External
+              </Button>
             </div>
             <div className="flex flex-wrap items-center gap-[var(--space-md)]">
               <Button icon="settings" size="sm" />
               <Button icon="edit" size="md" />
               <Button icon="star" size="lg" variant="primary" />
             </div>
-          </div>
-        </div>
-
-        {/* With Custom Icons */}
-        <div>
-          <h2 className="text-heading-lg mb-[var(--space-lg)] text-[var(--color-text-primary)]">
-            With Custom Icons
-          </h2>
-          <div className="flex flex-wrap items-center gap-[var(--space-md)]">
-            <Button icon="chart-bar" iconPosition="left">Charts</Button>
-            <Button icon="dot" iconPosition="left" variant="primary">Data Point</Button>
-            <Button icon="ship-load" iconPosition="left" variant="success">Load Ship</Button>
-            <Button icon="broken-scale" />
           </div>
         </div>
 
@@ -82,8 +79,12 @@ export function ButtonShowcase() {
           </h2>
           <div className="flex flex-wrap items-center gap-[var(--space-md)]">
             <Button dropdown>Actions</Button>
-            <Button dropdown variant="primary">Primary Actions</Button>
-            <Button icon="user" iconPosition="left" dropdown>User Menu</Button>
+            <Button dropdown variant="primary">
+              Primary Actions
+            </Button>
+            <Button icon="user" iconPosition="left" dropdown>
+              User Menu
+            </Button>
           </div>
         </div>
 
@@ -99,11 +100,15 @@ export function ButtonShowcase() {
             </div>
             <div className="flex flex-wrap items-center gap-[var(--space-md)]">
               <Button variant="primary">Primary Normal</Button>
-              <Button variant="primary" disabled>Primary Disabled</Button>
+              <Button variant="primary" disabled>
+                Primary Disabled
+              </Button>
             </div>
             <div className="flex flex-wrap items-center gap-[var(--space-md)]">
               <Button variant="destructive">Destructive Normal</Button>
-              <Button variant="destructive" disabled>Destructive Disabled</Button>
+              <Button variant="destructive" disabled>
+                Destructive Disabled
+              </Button>
             </div>
           </div>
         </div>
@@ -120,7 +125,7 @@ export function ButtonShowcase() {
               </h3>
               <div className="flex items-center gap-[var(--space-md)]">
                 <Button>Click me</Button>
-                <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm text-[var(--color-text-primary)]">
+                <code className="text-body-sm rounded-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] text-[var(--color-text-primary)]">
                   {`<Button>Click me</Button>`}
                 </code>
               </div>
@@ -131,8 +136,10 @@ export function ButtonShowcase() {
                 Primary with Icon
               </h3>
               <div className="flex items-center gap-[var(--space-md)]">
-                <Button variant="primary" icon="plus" iconPosition="left">Add Item</Button>
-                <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm text-[var(--color-text-primary)]">
+                <Button variant="primary" icon="plus" iconPosition="left">
+                  Add Item
+                </Button>
+                <code className="text-body-sm rounded-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] text-[var(--color-text-primary)]">
                   {`<Button variant="primary" icon="plus" iconPosition="left">Add Item</Button>`}
                 </code>
               </div>
@@ -144,7 +151,7 @@ export function ButtonShowcase() {
               </h3>
               <div className="flex items-center gap-[var(--space-md)]">
                 <Button icon="settings" size="md" />
-                <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm text-[var(--color-text-primary)]">
+                <code className="text-body-sm rounded-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] text-[var(--color-text-primary)]">
                   {`<Button icon="settings" size="md" />`}
                 </code>
               </div>
