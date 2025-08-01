@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { Icon, IconType, IconSize } from "./icon";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center relative transition-all duration-150 ease-in-out focus:outline-none cursor-pointer select-none disabled:cursor-not-allowed gap-[var(--space-xsm)]",
+  "inline-flex items-center justify-center relative transition-all duration-150 ease-in-out focus:outline-none cursor-pointer select-none disabled:cursor-not-allowed gap-[var(--space-xsm)] whitespace-nowrap",
   {
     variants: {
       variant: {
