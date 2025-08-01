@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 // Import custom icons from separate file for better maintainability
-import { customIcons } from "./custom-icons";
+import { customIcons, type CustomIconName } from "./custom-icons";
 
 // Color mapping for semantic icon tokens - using Tailwind classes with CSS variables
 const iconColors = {
@@ -42,8 +42,8 @@ const iconSizes = {
 
 export type IconColor = keyof typeof iconColors;
 export type IconSize = keyof typeof iconSizes;
-// Re-export CustomIconName from custom-icons file
-export type { CustomIconName } from "./custom-icons";
+// Re-export CustomIconName type
+export type { CustomIconName };
 
 // Helper function to convert kebab-case to PascalCase for Lucide icons
 function kebabToPascal(str: string): string {
