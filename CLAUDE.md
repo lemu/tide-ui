@@ -154,6 +154,39 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 
 **Shadows:** `shadow-xs`, `shadow-sm`, `shadow-md`, `shadow-lg`, `shadow-xl`
 
+## Development Process
+
+### **CRITICAL: Requirements Gathering for New Components**
+
+**Before implementing any new component or functionality, ALWAYS ask clarifying questions to ensure complete understanding of requirements:**
+
+#### Required Clarification Areas:
+1. **Functional Requirements:**
+   - What is the primary purpose and use case?
+   - What props/API should the component expose?
+   - What are the expected behaviors and interactions?
+   - Are there any specific accessibility requirements?
+
+2. **Design Requirements:**
+   - What variants/sizes should be supported?
+   - What states need to be handled (hover, active, disabled, loading, etc.)?
+   - Should it integrate with existing design tokens?
+   - Any specific styling or layout constraints?
+
+3. **Technical Requirements:**
+   - Should it be a controlled or uncontrolled component?
+   - What TypeScript types are needed?
+   - Any performance considerations?
+   - Integration requirements with other components?
+
+4. **Scope and Examples:**
+   - Can you provide usage examples?
+   - What edge cases should be considered?
+   - Are there existing patterns to follow?
+   - Should preview/showcase be included?
+
+**Never proceed with implementation until you have clarity on these aspects.**
+
 ## Development Notes
 
 The project structure is intentionally minimal. When adding new features:
