@@ -127,6 +127,7 @@
   --color-text-neutral-selected: var(--grey-900);
   --color-text-on-action: #ffffff;
   --color-text-information: var(--cyan-600);
+  --color-text-information-hovered: var(--cyan-600);
   --color-text-success: var(--green-500);
   --color-text-error: var(--red-500);
   --color-text-warning: var(--orange-500);
