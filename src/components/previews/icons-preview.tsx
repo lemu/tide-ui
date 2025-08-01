@@ -122,6 +122,33 @@ export function IconsPreview() {
           </div>
         </div>
 
+        {/* Uncommon Lucide Icons */}
+        <div>
+          <h2 className="text-heading-lg mb-[var(--space-lg)] text-[var(--color-text-primary)]">
+            Uncommon Lucide Icons
+          </h2>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            Less common Lucide icons that use the fallback import mechanism. These icons are dynamically imported when not in the optimized set.
+          </p>
+          <div className="grid grid-cols-6 gap-[var(--space-lg)]">
+            {['land-plot', 'radio', 'microscope', 'telescope', 'dna', 'atom'].map((iconName) => (
+              <div key={iconName} className="flex flex-col items-center gap-[var(--space-sm)]">
+                <div className="flex h-[var(--size-xlg)] w-[var(--size-xlg)] items-center justify-center rounded-sm bg-[var(--color-surface-secondary)]">
+                  <Icon name={iconName} size="lg" />
+                </div>
+                <span className="text-caption-xsm text-center text-[var(--color-text-tertiary)]">
+                  {iconName}
+                </span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-[var(--space-md)] rounded-md bg-[var(--color-surface-secondary)] p-[var(--space-md)]">
+            <p className="text-caption-sm text-[var(--color-text-secondary)]">
+              <strong>Note:</strong> If an icon above shows a placeholder (rectangle with "?"), it means the icon name doesn't exist in Lucide React or there was an import error. The component gracefully handles missing icons with a fallback display.
+            </p>
+          </div>
+        </div>
+
         {/* Usage Examples */}
         <div>
           <h2 className="text-heading-lg mb-[var(--space-lg)] text-[var(--color-text-primary)]">
