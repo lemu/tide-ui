@@ -69,6 +69,12 @@ export function ButtonsPreview() {
               <Button icon="edit" size="md" />
               <Button icon="star" size="lg" variant="primary" />
             </div>
+            <div className="flex flex-wrap items-center gap-[var(--space-md)]">
+              <Button icon="save" iconPosition="left" disabled>
+                Save
+              </Button>
+              <Button icon="lock" size="md" disabled />
+            </div>
           </div>
         </div>
 
