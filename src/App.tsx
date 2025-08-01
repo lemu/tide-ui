@@ -2,8 +2,9 @@ import { useState } from "react";
 import { TypographyPreview } from "./components/previews/typography-preview";
 import { IconsPreview } from "./components/previews/icons-preview";
 import { ButtonsPreview } from "./components/previews/buttons-preview";
+import { CardPreview } from "./components/previews/card-preview";
 
-type Section = "typography" | "icons" | "buttons";
+type Section = "typography" | "icons" | "buttons" | "cards";
 
 function App() {
   const [activeSection, setActiveSection] = useState<Section>("buttons");
@@ -12,6 +13,7 @@ function App() {
     { id: "typography" as const, label: "Typography" },
     { id: "icons" as const, label: "Icons" },
     { id: "buttons" as const, label: "Buttons" },
+    { id: "cards" as const, label: "Cards" },
   ];
 
   return (
@@ -59,6 +61,7 @@ function App() {
           {activeSection === "typography" && <TypographyPreview />}
           {activeSection === "icons" && <IconsPreview />}
           {activeSection === "buttons" && <ButtonsPreview />}
+          {activeSection === "cards" && <CardPreview />}
         </main>
       </div>
     </div>

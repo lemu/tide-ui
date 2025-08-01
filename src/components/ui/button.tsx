@@ -13,7 +13,7 @@ const buttonVariants = cva(
           "border border-[var(--color-border-action-outline)]",
           "enabled:hover:bg-[var(--color-background-neutral-subtle-hovered)] enabled:hover:border-[var(--color-border-action-hovered)] enabled:hover:shadow-sm",
           "focus:outline-2 focus:outline-offset-0 focus:outline-[var(--color-border-focused)]",
-          "enabled:active:bg-[var(--grey-alpha-50)] enabled:active:translate-y-px",
+          "enabled:active:bg-[var(--grey-alpha-50)] enabled:active:translate-y-px enabled:active:shadow-xs",
           "disabled:bg-[var(--color-background-disabled)] disabled:!text-[var(--color-text-disabled)] disabled:border-[var(--color-border-action-outline)]",
         ],
         primary: [
@@ -21,7 +21,7 @@ const buttonVariants = cva(
           "border-none",
           "enabled:hover:bg-[var(--color-background-brand-hovered)] enabled:hover:shadow-sm",
           "focus:outline-2 focus:outline-offset-0 focus:outline-[var(--color-border-focused)]",
-          "enabled:active:bg-[var(--blue-700)] enabled:active:translate-y-px",
+          "enabled:active:bg-[var(--blue-700)] enabled:active:translate-y-px enabled:active:shadow-xs",
           "disabled:bg-[var(--color-background-disabled)] disabled:!text-[var(--color-text-disabled)]",
         ],
         destructive: [
@@ -29,7 +29,7 @@ const buttonVariants = cva(
           "border-none",
           "enabled:hover:bg-[var(--color-background-error-bold-hovered)] enabled:hover:shadow-sm",
           "focus:outline-2 focus:outline-offset-0 focus:outline-[var(--color-border-focused)]",
-          "enabled:active:bg-[var(--red-700)] enabled:active:translate-y-px",
+          "enabled:active:bg-[var(--red-700)] enabled:active:translate-y-px enabled:active:shadow-xs",
           "disabled:bg-[var(--color-background-disabled)] disabled:!text-[var(--color-text-disabled)]",
         ],
         success: [
@@ -37,7 +37,7 @@ const buttonVariants = cva(
           "border-none",
           "enabled:hover:bg-[var(--color-background-success-bold-hovered)] enabled:hover:shadow-sm",
           "focus:outline-2 focus:outline-offset-0 focus:outline-[var(--color-border-focused)]",
-          "enabled:active:bg-[var(--green-700)] enabled:active:translate-y-px",
+          "enabled:active:bg-[var(--green-700)] enabled:active:translate-y-px enabled:active:shadow-xs",
           "disabled:bg-[var(--color-background-disabled)] disabled:!text-[var(--color-text-disabled)]",
         ],
         ghost: [
