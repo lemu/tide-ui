@@ -3,10 +3,10 @@ import { Icon, IconColor, IconSize } from '../ui/icon';
 export function IconsPreview() {
   // Sample of popular Lucide icons for demo - limited for performance
   const sampleLucideIcons = [
-    'star', 'heart', 'user', 'settings', 'home', 'search', 'mail', 'phone',
-    'calendar', 'clock', 'edit', 'trash-2', 'plus', 'minus', 'check', 'x',
-    'arrow-right', 'arrow-left', 'arrow-up', 'arrow-down', 'download', 'upload',
-    'file', 'folder', 'image', 'video'
+    'star', 'user', 'settings', 'search', 'plus', 'check', 'x', 'trash-2',
+    'arrow-right', 'arrow-left', 'arrow-up', 'arrow-down', 'chevron-down', 'chevron-left',
+    'bookmark', 'circle', 'info', 'send', 'share', 'package', 'ship', 'sparkles',
+    'layout-dashboard', 'navigation'
   ] as const;
 
   // All custom icons
