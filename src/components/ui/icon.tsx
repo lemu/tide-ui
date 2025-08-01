@@ -7,7 +7,9 @@ import {
   Star, Heart, User, Settings, Home, Search, Mail, Phone,
   Calendar, Clock, Edit, Trash2, Plus, Minus, Check, X,
   ArrowRight, ArrowLeft, ArrowUp, ArrowDown, Download, Upload,
-  File, Folder, Image, Video, ChevronDown, ExternalLink
+  File, Folder, Image, Video, ChevronDown, ExternalLink,
+  // Uncommon icons for demonstration
+  LandPlot, Radio, Microscope, Telescope, Dna, Atom
 } from "lucide-react";
 
 // Import custom icons from separate file for better maintainability
@@ -83,6 +85,13 @@ const commonLucideIcons = {
   'video': Video,
   'chevron-down': ChevronDown,
   'external-link': ExternalLink,
+  // Uncommon icons for demonstration
+  'land-plot': LandPlot,
+  'radio': Radio,
+  'microscope': Microscope,
+  'telescope': Telescope,
+  'dna': Dna,
+  'atom': Atom,
 } as const;
 
 // Allow any string for Lucide icon names (since we'll convert kebab-case to PascalCase)
@@ -138,27 +147,8 @@ const Icon = React.forwardRef<SVGSVGElement, IconProps>(
       );
     }
 
-    // For less common icons, dynamically import from lucide-react
-    // Note: This requires the full lucide-react import as fallback
-    try {
-      const pascalName = kebabToPascal(name);
-      // This import will only work if the icon exists and will be tree-shaken in production
-      const LucideModule = require('lucide-react');
-      const LucideIcon = LucideModule[pascalName] as React.ComponentType<LucideProps>;
-      
-      if (LucideIcon) {
-        return (
-          <LucideIcon
-            ref={ref}
-            className={cn("shrink-0", iconSizeClass, iconColorClass, className)}
-            {...accessibilityProps}
-            {...props}
-          />
-        );
-      }
-    } catch (error) {
-      // Icon not found in lucide-react, continue to fallback
-    }
+    // For truly uncommon icons not in our optimized set, we would need to add them above
+    // or implement a dynamic import strategy. For now, fall through to the unknown icon fallback.
 
     // Fallback for unknown icons
     console.warn(`Icon "${name}" not found in custom icons or Lucide icons`);
