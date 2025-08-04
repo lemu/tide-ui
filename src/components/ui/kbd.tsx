@@ -15,9 +15,9 @@ const kbdVariants = cva(
         ],
         dark: [
           "bg-grey-800/50",
-          "text-[var(--grey-400)]",
-          "border border-[var(--grey-alpha-200)]",
-          "shadow-[0_1px_0_0_var(--grey-alpha-200)]",
+          "text-[var(--grey-200)]",
+          "border border-[var(--grey-alpha-400)]",
+          "shadow-[0_1px_0_0_var(--grey-alpha-400)]",
         ],
       },
       size: {
