@@ -147,13 +147,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     const iconSize: IconSize = size || "md"; // Safe mapping with fallback
-    
+
     // Icon color logic: disabled buttons use disabled color, otherwise use variant-appropriate color
-    const iconColor = disabled 
-      ? 'disabled' 
-      : (variant === 'primary' || variant === 'destructive' || variant === 'success') 
-        ? 'inverse' 
-        : 'primary';
+    const iconColor = disabled
+      ? "disabled"
+      : variant === "primary" ||
+          variant === "destructive" ||
+          variant === "success"
+        ? "inverse"
+        : "primary";
 
     const renderIcon = () => {
       if (!iconName) return null;

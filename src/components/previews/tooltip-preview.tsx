@@ -14,6 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import { Kbd } from "../ui/kbd";
 
 export function TooltipPreview() {
   return (
@@ -60,9 +61,7 @@ export function TooltipPreview() {
 
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button variant="ghost" size="md">
-                        <Icon name="info" size="sm" />
-                      </Button>
+                      <Button variant="ghost" size="md" icon="info" />
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>Get more information</p>
@@ -84,9 +83,7 @@ export function TooltipPreview() {
                 <div className="flex flex-wrap items-center gap-[var(--space-md)]">
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button variant="ghost" size="sm">
-                        <Icon name="settings" size="sm" />
-                      </Button>
+                      <Button variant="ghost" size="sm" icon="settings" />
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>Settings</p>
@@ -95,9 +92,7 @@ export function TooltipPreview() {
 
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button variant="ghost" size="sm">
-                        <Icon name="share" size="sm" />
-                      </Button>
+                      <Button variant="ghost" size="sm" icon="share" />
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>Share this item</p>
@@ -106,9 +101,7 @@ export function TooltipPreview() {
 
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button variant="ghost" size="sm">
-                        <Icon name="bookmark" size="sm" />
-                      </Button>
+                      <Button variant="ghost" size="sm" icon="bookmark" />
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>Add to bookmarks</p>
@@ -117,9 +110,7 @@ export function TooltipPreview() {
 
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button variant="ghost" size="sm">
-                        <Icon name="trash-2" size="sm" />
-                      </Button>
+                      <Button variant="ghost" size="sm" icon="trash-2" />
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>Move to trash</p>
@@ -209,7 +200,7 @@ export function TooltipPreview() {
                     <TooltipTrigger asChild>
                       <Button variant="default">Feature Info</Button>
                     </TooltipTrigger>
-                    <TooltipContent className="max-w-xs">
+                    <TooltipContent className="max-w-72">
                       <div className="space-y-[var(--space-xsm)]">
                         <p className="text-body-strong-sm">Enhanced Feature</p>
                         <p className="text-body-sm">
@@ -225,11 +216,11 @@ export function TooltipPreview() {
                       <Button variant="default">Keyboard Shortcut</Button>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <div className="flex items-center space-x-[var(--space-xs)]">
-                        <span className="text-body-sm">Save</span>
-                        <kbd className="rounded-xsm text-caption-sm bg-[var(--color-background-secondary)] px-[var(--space-xs)] py-[var(--space-2xsm)]">
+                      <div className="flex items-center gap-[var(--space-sm)]">
+                        <span className="block">Save</span>
+                        <Kbd variant="dark" size="sm">
                           ⌘S
-                        </kbd>
+                        </Kbd>
                       </div>
                     </TooltipContent>
                   </Tooltip>
@@ -356,9 +347,7 @@ export function TooltipPreview() {
                   <div className="flex items-center space-x-[var(--space-sm)] rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-md)]">
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Button variant="ghost" size="sm">
-                          <Icon name="plus" size="sm" />
-                        </Button>
+                        <Button variant="ghost" size="sm" icon="plus" />
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>Create new item</p>
@@ -367,9 +356,7 @@ export function TooltipPreview() {
 
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Button variant="ghost" size="sm">
-                          <Icon name="search" size="sm" />
-                        </Button>
+                        <Button variant="ghost" size="sm" icon="search" />
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>Search items</p>
@@ -378,9 +365,7 @@ export function TooltipPreview() {
 
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Button variant="ghost" size="sm">
-                          <Icon name="list-filter" size="sm" />
-                        </Button>
+                        <Button variant="ghost" size="sm" icon="list-filter" />
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>Filter results</p>
@@ -391,9 +376,11 @@ export function TooltipPreview() {
 
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Button variant="ghost" size="sm">
-                          <Icon name="layout-dashboard" size="sm" />
-                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          icon="layout-dashboard"
+                        />
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>Dashboard view</p>
@@ -402,9 +389,7 @@ export function TooltipPreview() {
 
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Button variant="ghost" size="sm">
-                          <Icon name="table-2" size="sm" />
-                        </Button>
+                        <Button variant="ghost" size="sm" icon="table-2" />
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>Table view</p>
