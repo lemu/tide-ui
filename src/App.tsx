@@ -5,8 +5,9 @@ import { ButtonsPreview } from "./components/previews/buttons-preview";
 import { CardPreview } from "./components/previews/card-preview";
 import { SeparatorPreview } from "./components/previews/separator-preview";
 import { TextLinkPreview } from "./components/previews/text-link-preview";
+import { TooltipPreview } from "./components/previews/tooltip-preview";
 
-type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links";
+type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips";
 
 function App() {
   const [activeSection, setActiveSection] = useState<Section>("buttons");
@@ -18,6 +19,7 @@ function App() {
     { id: "cards" as const, label: "Cards" },
     { id: "separators" as const, label: "Separators" },
     { id: "text-links" as const, label: "Text Links" },
+    { id: "tooltips" as const, label: "Tooltips" },
   ];
 
   return (
@@ -68,6 +70,7 @@ function App() {
           {activeSection === "cards" && <CardPreview />}
           {activeSection === "separators" && <SeparatorPreview />}
           {activeSection === "text-links" && <TextLinkPreview />}
+          {activeSection === "tooltips" && <TooltipPreview />}
         </main>
       </div>
     </div>

@@ -670,6 +670,8 @@
   --text-body-strong-xsm--font-weight: var(--font-weight-semibold);
   --text-body-strong-xsm--letter-spacing: var(--font-letter-spacing-base);
 
+  /* Label */
+
   --text-label-md: var(--font-size-300);
   --text-label-md--line-height: var(--font-line-height-500);
   --text-label-md--font-weight: var(--font-weight-medium);
@@ -679,6 +681,8 @@
   --text-label-sm--line-height: var(--font-line-height-400);
   --text-label-sm--font-weight: var(--font-weight-medium);
   --text-label-sm--letter-spacing: var(--font-letter-spacing-base);
+
+  /* Caption */
 
   --text-caption-sm: var(--font-size-300);
   --text-caption-sm--line-height: var(--font-line-height-400);
