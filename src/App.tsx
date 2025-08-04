@@ -8,8 +8,9 @@ import { TextLinkPreview } from "./components/previews/text-link-preview";
 import { TooltipPreview } from "./components/previews/tooltip-preview";
 import { KbdPreview } from "./components/previews/kbd-preview";
 import { BreadcrumbPreview } from "./components/previews/breadcrumb-preview";
+import { InputPreview } from "./components/previews/input-preview";
 
-type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs";
+type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs" | "inputs";
 
 function App() {
   const [activeSection, setActiveSection] = useState<Section>("buttons");
@@ -24,6 +25,7 @@ function App() {
     { id: "tooltips" as const, label: "Tooltips" },
     { id: "kbd" as const, label: "Kbd" },
     { id: "breadcrumbs" as const, label: "Breadcrumbs" },
+    { id: "inputs" as const, label: "Inputs" },
   ];
 
   return (
@@ -77,6 +79,7 @@ function App() {
           {activeSection === "tooltips" && <TooltipPreview />}
           {activeSection === "kbd" && <KbdPreview />}
           {activeSection === "breadcrumbs" && <BreadcrumbPreview />}
+          {activeSection === "inputs" && <InputPreview />}
         </main>
       </div>
     </div>
