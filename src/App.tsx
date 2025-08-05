@@ -11,8 +11,9 @@ import { BreadcrumbPreview } from "./components/previews/breadcrumb-preview";
 import { InputPreview } from "./components/previews/input-preview";
 import { CheckboxPreview } from "./components/previews/checkbox-preview";
 import { RadioGroupPreview } from "./components/previews/radio-group-preview";
+import { SelectPreview } from "./components/previews/select-preview";
 
-type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs" | "inputs" | "checkboxes" | "radio-groups";
+type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs" | "inputs" | "checkboxes" | "radio-groups" | "selects";
 
 function App() {
   const [activeSection, setActiveSection] = useState<Section>("buttons");
@@ -30,6 +31,7 @@ function App() {
     { id: "inputs" as const, label: "Inputs" },
     { id: "checkboxes" as const, label: "Checkboxes" },
     { id: "radio-groups" as const, label: "Radio Groups" },
+    { id: "selects" as const, label: "Selects" },
   ];
 
   return (
@@ -86,6 +88,7 @@ function App() {
           {activeSection === "inputs" && <InputPreview />}
           {activeSection === "checkboxes" && <CheckboxPreview />}
           {activeSection === "radio-groups" && <RadioGroupPreview />}
+          {activeSection === "selects" && <SelectPreview />}
         </main>
       </div>
     </div>
