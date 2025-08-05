@@ -146,7 +146,7 @@ const FormErrorMessage = React.forwardRef<
       {...props}
     >
       <Icon
-        name="circle-x"
+        name="circle-alert"
         size="sm"
         color="error"
         className="mt-[1px] flex-shrink-0"
