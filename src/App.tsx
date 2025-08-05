@@ -9,8 +9,9 @@ import { TooltipPreview } from "./components/previews/tooltip-preview";
 import { KbdPreview } from "./components/previews/kbd-preview";
 import { BreadcrumbPreview } from "./components/previews/breadcrumb-preview";
 import { InputPreview } from "./components/previews/input-preview";
+import { CheckboxPreview } from "./components/previews/checkbox-preview";
 
-type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs" | "inputs";
+type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs" | "inputs" | "checkboxes";
 
 function App() {
   const [activeSection, setActiveSection] = useState<Section>("buttons");
@@ -26,6 +27,7 @@ function App() {
     { id: "kbd" as const, label: "Kbd" },
     { id: "breadcrumbs" as const, label: "Breadcrumbs" },
     { id: "inputs" as const, label: "Inputs" },
+    { id: "checkboxes" as const, label: "Checkboxes" },
   ];
 
   return (
@@ -80,6 +82,7 @@ function App() {
           {activeSection === "kbd" && <KbdPreview />}
           {activeSection === "breadcrumbs" && <BreadcrumbPreview />}
           {activeSection === "inputs" && <InputPreview />}
+          {activeSection === "checkboxes" && <CheckboxPreview />}
         </main>
       </div>
     </div>

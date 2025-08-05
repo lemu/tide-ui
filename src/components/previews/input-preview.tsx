@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 import { Icon } from "../ui/icon";
 import {
   FormField,
@@ -167,6 +168,15 @@ export function InputPreview() {
                       id="type-number"
                       type="number"
                       placeholder="Enter number"
+                    />
+                  </FormControl>
+                </FormField>
+                <FormField>
+                  <FormLabel htmlFor="type-textarea">Textarea</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      id="type-textarea"
+                      placeholder="Enter multi-line text"
                     />
                   </FormControl>
                 </FormField>
@@ -515,6 +525,152 @@ export function InputPreview() {
             </div>
           </CardContent>
         </Card>
+      </section>
+
+      {/* Textarea Examples */}
+      <section>
+        <h2 className="text-heading-lg mb-[var(--space-lg)]">
+          Textarea Examples
+        </h2>
+
+        <div className="grid grid-cols-1 gap-[var(--space-lg)] md:grid-cols-2">
+          {/* Basic Textarea */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-heading-sm">Basic Textarea</CardTitle>
+              <CardDescription>
+                Standard textarea for multi-line text input.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-[var(--space-lg)]">
+                <FormField>
+                  <FormLabel htmlFor="textarea-basic">Comments</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      id="textarea-basic"
+                      placeholder="Share your thoughts..."
+                    />
+                  </FormControl>
+                  <FormHelperText>Your comments help us improve</FormHelperText>
+                </FormField>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Textarea Sizes */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-heading-sm">Textarea Sizes</CardTitle>
+              <CardDescription>
+                Different textarea sizes for various use cases.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-[var(--space-lg)]">
+                <FormField>
+                  <FormLabel htmlFor="textarea-sm">Small</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      id="textarea-sm"
+                      size="sm"
+                      placeholder="Small textarea"
+                    />
+                  </FormControl>
+                </FormField>
+                <FormField>
+                  <FormLabel htmlFor="textarea-md">Medium (Default)</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      id="textarea-md"
+                      size="md"
+                      placeholder="Medium textarea"
+                    />
+                  </FormControl>
+                </FormField>
+                <FormField>
+                  <FormLabel htmlFor="textarea-lg">Large</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      id="textarea-lg"
+                      size="lg"
+                      placeholder="Large textarea"
+                    />
+                  </FormControl>
+                </FormField>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Textarea States */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-heading-sm">Textarea States</CardTitle>
+              <CardDescription>
+                Different states for textarea components.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-[var(--space-lg)]">
+                <FormField>
+                  <FormLabel htmlFor="textarea-default">Default</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      id="textarea-default"
+                      placeholder="Default textarea"
+                    />
+                  </FormControl>
+                </FormField>
+                <FormField>
+                  <FormLabel htmlFor="textarea-error">Error State</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      id="textarea-error"
+                      variant="error"
+                      placeholder="Textarea with error"
+                    />
+                  </FormControl>
+                  <FormErrorMessage>This field is required</FormErrorMessage>
+                </FormField>
+                <FormField>
+                  <FormLabel htmlFor="textarea-disabled">Disabled</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      id="textarea-disabled"
+                      disabled
+                      placeholder="Disabled textarea"
+                    />
+                  </FormControl>
+                </FormField>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Textarea with Content */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-heading-sm">With Content</CardTitle>
+              <CardDescription>
+                Textarea with default content and custom height.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-[var(--space-lg)]">
+                <FormField>
+                  <FormLabel htmlFor="textarea-content">Description</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      id="textarea-content"
+                      defaultValue="This is a textarea with some default content that demonstrates how the component handles multi-line text input."
+                      className="min-h-[120px]"
+                    />
+                  </FormControl>
+                  <FormHelperText>Provide a detailed description</FormHelperText>
+                </FormField>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </section>
 
       {/* Best Practices */}
