@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
 const checkboxVariants = cva(
-  "peer w-[var(--size-2xsm)] h-[var(--size-2xsm)] shrink-0 rounded-sm border-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 box-border",
+  "peer w-[var(--size-2xsm)] h-[var(--size-2xsm)] shrink-0 rounded-sm border-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-100 box-border",
   {
     variants: {
       variant: {
@@ -14,12 +14,18 @@ const checkboxVariants = cva(
           "hover:border-[var(--color-border-input-hovered)]",
           "data-[state=checked]:border-[var(--color-border-brand)] data-[state=checked]:bg-[var(--color-background-brand)] data-[state=checked]:text-[var(--color-text-on-action)]",
           "data-[state=indeterminate]:border-[var(--color-border-brand)] data-[state=indeterminate]:bg-[var(--color-background-brand)] data-[state=indeterminate]:text-[var(--color-text-on-action)]",
+          "disabled:border-[var(--color-border-disabled)] disabled:bg-[var(--color-background-disabled)]",
+          "disabled:data-[state=checked]:border-[var(--color-border-disabled)] disabled:data-[state=checked]:bg-[var(--color-background-disabled)] disabled:data-[state=checked]:text-[var(--color-icon-disabled)]",
+          "disabled:data-[state=indeterminate]:border-[var(--color-border-disabled)] disabled:data-[state=indeterminate]:bg-[var(--color-background-disabled)] disabled:data-[state=indeterminate]:text-[var(--color-icon-disabled)]"
         ],
         error: [
           "border-[var(--color-border-error)] bg-[var(--color-surface-primary)]",
           "hover:border-[var(--color-border-error)]",
           "data-[state=checked]:border-[var(--color-border-error)] data-[state=checked]:bg-[var(--color-background-error)] data-[state=checked]:text-[var(--color-text-on-error)]",
           "data-[state=indeterminate]:border-[var(--color-border-error)] data-[state=indeterminate]:bg-[var(--color-background-error)] data-[state=indeterminate]:text-[var(--color-text-on-error)]",
+          "disabled:border-[var(--color-border-disabled)] disabled:bg-[var(--color-background-disabled)]",
+          "disabled:data-[state=checked]:border-[var(--color-border-disabled)] disabled:data-[state=checked]:bg-[var(--color-background-disabled)] disabled:data-[state=checked]:text-[var(--color-icon-disabled)]",
+          "disabled:data-[state=indeterminate]:border-[var(--color-border-disabled)] disabled:data-[state=indeterminate]:bg-[var(--color-background-disabled)] disabled:data-[state=indeterminate]:text-[var(--color-icon-disabled)]"
         ],
       },
     },
