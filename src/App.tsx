@@ -12,8 +12,22 @@ import { InputPreview } from "./components/previews/input-preview";
 import { CheckboxPreview } from "./components/previews/checkbox-preview";
 import { RadioGroupPreview } from "./components/previews/radio-group-preview";
 import { SelectPreview } from "./components/previews/select-preview";
+import { AccordionPreview } from "./components/previews/accordion-preview";
+import { AlertPreview } from "./components/previews/alert-preview";
+import { BadgePreview } from "./components/previews/badge-preview";
+import { CalendarPreview } from "./components/previews/calendar-preview";
+import { ComboboxPreview } from "./components/previews/combobox-preview";
+import { HoverCardPreview } from "./components/previews/hover-card-preview";
+import { PaginationPreview } from "./components/previews/pagination-preview";
+import { SheetPreview } from "./components/previews/sheet-preview";
+import { SliderPreview } from "./components/previews/slider-preview";
+import { ToastPreview } from "./components/previews/toast-preview";
+import { SwitchPreview } from "./components/previews/switch-preview";
+import { TogglePreview } from "./components/previews/toggle-preview";
+import { DialogPreview } from "./components/previews/dialog-preview";
+import { Toaster } from "./components/ui/toast";
 
-type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs" | "inputs" | "checkboxes" | "radio-groups" | "selects";
+type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs" | "inputs" | "checkboxes" | "radio-groups" | "selects" | "accordions" | "alerts" | "badges" | "calendars" | "comboboxes" | "hover-cards" | "pagination" | "sheets" | "sliders" | "toasts" | "switches" | "toggles" | "dialogs";
 
 function App() {
   const [activeSection, setActiveSection] = useState<Section>("buttons");
@@ -32,6 +46,19 @@ function App() {
     { id: "checkboxes" as const, label: "Checkboxes" },
     { id: "radio-groups" as const, label: "Radio Groups" },
     { id: "selects" as const, label: "Selects" },
+    { id: "accordions" as const, label: "Accordions" },
+    { id: "alerts" as const, label: "Alerts" },
+    { id: "badges" as const, label: "Badges" },
+    { id: "calendars" as const, label: "Calendars" },
+    { id: "comboboxes" as const, label: "Comboboxes" },
+    { id: "hover-cards" as const, label: "Hover Cards" },
+    { id: "pagination" as const, label: "Pagination" },
+    { id: "sheets" as const, label: "Sheets" },
+    { id: "sliders" as const, label: "Sliders" },
+    { id: "toasts" as const, label: "Toasts" },
+    { id: "switches" as const, label: "Switches" },
+    { id: "toggles" as const, label: "Toggles" },
+    { id: "dialogs" as const, label: "Dialogs" },
   ];
 
   return (
@@ -89,8 +116,22 @@ function App() {
           {activeSection === "checkboxes" && <CheckboxPreview />}
           {activeSection === "radio-groups" && <RadioGroupPreview />}
           {activeSection === "selects" && <SelectPreview />}
+          {activeSection === "accordions" && <AccordionPreview />}
+          {activeSection === "alerts" && <AlertPreview />}
+          {activeSection === "badges" && <BadgePreview />}
+          {activeSection === "calendars" && <CalendarPreview />}
+          {activeSection === "comboboxes" && <ComboboxPreview />}
+          {activeSection === "hover-cards" && <HoverCardPreview />}
+          {activeSection === "pagination" && <PaginationPreview />}
+          {activeSection === "sheets" && <SheetPreview />}
+          {activeSection === "sliders" && <SliderPreview />}
+          {activeSection === "toasts" && <ToastPreview />}
+          {activeSection === "switches" && <SwitchPreview />}
+          {activeSection === "toggles" && <TogglePreview />}
+          {activeSection === "dialogs" && <DialogPreview />}
         </main>
       </div>
+      <Toaster />
     </div>
   );
 }
