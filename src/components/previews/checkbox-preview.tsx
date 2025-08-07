@@ -109,13 +109,13 @@ export function CheckboxPreview() {
               <div className="space-y-[var(--space-lg)]">
                 <div className="flex items-center space-x-[var(--space-sm)]">
                   <Checkbox id="basic-example" />
-                  <label htmlFor="basic-example" className="text-body-md">
+                  <label htmlFor="basic-example" className="text-body-md cursor-pointer">
                     Basic checkbox example
                   </label>
                 </div>
                 <div className="flex items-center space-x-[var(--space-sm)]">
                   <Checkbox id="basic-checked" defaultChecked />
-                  <label htmlFor="basic-checked" className="text-body-md">
+                  <label htmlFor="basic-checked" className="text-body-md cursor-pointer">
                     Pre-checked checkbox
                   </label>
                 </div>
@@ -135,13 +135,13 @@ export function CheckboxPreview() {
               <div className="space-y-[var(--space-lg)]">
                 <div className="flex items-center space-x-[var(--space-sm)]">
                   <Checkbox id="state-unchecked" />
-                  <label htmlFor="state-unchecked" className="text-body-md">
+                  <label htmlFor="state-unchecked" className="text-body-md cursor-pointer">
                     Unchecked
                   </label>
                 </div>
                 <div className="flex items-center space-x-[var(--space-sm)]">
                   <Checkbox id="state-checked" defaultChecked />
-                  <label htmlFor="state-checked" className="text-body-md">
+                  <label htmlFor="state-checked" className="text-body-md cursor-pointer">
                     Checked
                   </label>
                 </div>
@@ -151,7 +151,7 @@ export function CheckboxPreview() {
                     checked={indeterminateChecked}
                     onCheckedChange={setIndeterminateChecked}
                   />
-                  <label htmlFor="state-indeterminate" className="text-body-md">
+                  <label htmlFor="state-indeterminate" className="text-body-md cursor-pointer">
                     Indeterminate
                   </label>
                 </div>
@@ -226,7 +226,7 @@ export function CheckboxPreview() {
                         }))
                       }
                     />
-                    <label htmlFor="multi-option1" className="text-body-md">
+                    <label htmlFor="multi-option1" className="text-body-md cursor-pointer">
                       Email notifications
                     </label>
                   </div>
@@ -241,7 +241,7 @@ export function CheckboxPreview() {
                         }))
                       }
                     />
-                    <label htmlFor="multi-option2" className="text-body-md">
+                    <label htmlFor="multi-option2" className="text-body-md cursor-pointer">
                       SMS notifications
                     </label>
                   </div>
@@ -256,7 +256,7 @@ export function CheckboxPreview() {
                         }))
                       }
                     />
-                    <label htmlFor="multi-option3" className="text-body-md">
+                    <label htmlFor="multi-option3" className="text-body-md cursor-pointer">
                       Push notifications
                     </label>
                   </div>
@@ -290,7 +290,7 @@ export function CheckboxPreview() {
               <div className="space-y-[var(--space-lg)]">
                 <div className="flex items-center space-x-[var(--space-sm)]">
                   <Checkbox id="default-unchecked" variant="default" />
-                  <label htmlFor="default-unchecked" className="text-body-md">
+                  <label htmlFor="default-unchecked" className="text-body-md cursor-pointer">
                     Unchecked default
                   </label>
                 </div>
@@ -300,7 +300,7 @@ export function CheckboxPreview() {
                     variant="default"
                     defaultChecked
                   />
-                  <label htmlFor="default-checked" className="text-body-md">
+                  <label htmlFor="default-checked" className="text-body-md cursor-pointer">
                     Checked default
                   </label>
                 </div>
@@ -312,7 +312,7 @@ export function CheckboxPreview() {
                   />
                   <label
                     htmlFor="default-indeterminate"
-                    className="text-body-md"
+                    className="text-body-md cursor-pointer"
                   >
                     Indeterminate default
                   </label>
@@ -333,13 +333,13 @@ export function CheckboxPreview() {
               <div className="space-y-[var(--space-lg)]">
                 <div className="flex items-center space-x-[var(--space-sm)]">
                   <Checkbox id="error-unchecked" variant="error" />
-                  <label htmlFor="error-unchecked" className="text-body-md">
+                  <label htmlFor="error-unchecked" className="text-body-md cursor-pointer">
                     Unchecked error
                   </label>
                 </div>
                 <div className="flex items-center space-x-[var(--space-sm)]">
                   <Checkbox id="error-checked" variant="error" defaultChecked />
-                  <label htmlFor="error-checked" className="text-body-md">
+                  <label htmlFor="error-checked" className="text-body-md cursor-pointer">
                     Checked error
                   </label>
                 </div>
@@ -349,7 +349,7 @@ export function CheckboxPreview() {
                     variant="error"
                     checked="indeterminate"
                   />
-                  <label htmlFor="error-indeterminate" className="text-body-md">
+                  <label htmlFor="error-indeterminate" className="text-body-md cursor-pointer">
                     Indeterminate error
                   </label>
                 </div>
@@ -382,7 +382,7 @@ export function CheckboxPreview() {
                   <Checkbox id="disabled-unchecked" disabled />
                   <label
                     htmlFor="disabled-unchecked"
-                    className="text-body-md text-[var(--color-text-disabled)]"
+                    className="text-body-md text-[var(--color-text-disabled)] cursor-not-allowed"
                   >
                     Disabled unchecked
                   </label>
@@ -394,7 +394,7 @@ export function CheckboxPreview() {
                   <Checkbox id="disabled-checked" disabled defaultChecked />
                   <label
                     htmlFor="disabled-checked"
-                    className="text-body-md text-[var(--color-text-disabled)]"
+                    className="text-body-md text-[var(--color-text-disabled)] cursor-not-allowed"
                   >
                     Disabled checked
                   </label>
@@ -410,7 +410,7 @@ export function CheckboxPreview() {
                   />
                   <label
                     htmlFor="disabled-indeterminate"
-                    className="text-body-md text-[var(--color-text-disabled)]"
+                    className="text-body-md text-[var(--color-text-disabled)] cursor-not-allowed"
                   >
                     Disabled indeterminate
                   </label>
@@ -471,7 +471,7 @@ export function CheckboxPreview() {
                     
                     <div className="flex items-center space-x-[var(--space-sm)]">
                       <Checkbox id="setting-marketing" />
-                      <label htmlFor="setting-marketing" className="text-body-md">
+                      <label htmlFor="setting-marketing" className="text-body-md cursor-pointer">
                         Receive marketing emails
                       </label>
                     </div>
@@ -500,19 +500,19 @@ export function CheckboxPreview() {
                   <div className="space-y-[var(--space-sm)]">
                     <div className="flex items-center space-x-[var(--space-sm)]">
                       <Checkbox id="pref-email" defaultChecked />
-                      <label htmlFor="pref-email" className="text-body-sm">
+                      <label htmlFor="pref-email" className="text-body-sm cursor-pointer">
                         Email notifications
                       </label>
                     </div>
                     <div className="flex items-center space-x-[var(--space-sm)]">
                       <Checkbox id="pref-browser" defaultChecked />
-                      <label htmlFor="pref-browser" className="text-body-sm">
+                      <label htmlFor="pref-browser" className="text-body-sm cursor-pointer">
                         Browser notifications
                       </label>
                     </div>
                     <div className="flex items-center space-x-[var(--space-sm)]">
                       <Checkbox id="pref-mobile" />
-                      <label htmlFor="pref-mobile" className="text-body-sm">
+                      <label htmlFor="pref-mobile" className="text-body-sm cursor-pointer">
                         Mobile push notifications
                       </label>
                     </div>

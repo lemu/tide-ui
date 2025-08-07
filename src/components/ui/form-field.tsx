@@ -38,7 +38,7 @@ const FormLabel = React.forwardRef<HTMLLabelElement, FormLabelProps>(
     <label
       ref={ref}
       className={cn(
-        "[&]:text-body-md mb-[var(--space-xsm)] block text-[var(--color-text-primary)]",
+        "[&]:text-body-md mb-[var(--space-xsm)] block text-[var(--color-text-primary)] cursor-pointer",
         className,
       )}
       {...props}

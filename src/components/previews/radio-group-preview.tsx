@@ -136,19 +136,19 @@ export function RadioGroupPreview() {
                 <RadioGroup defaultValue="option1">
                   <div className="flex items-center space-x-[var(--space-sm)]">
                     <RadioGroupItem value="option1" id="basic-option1" />
-                    <label htmlFor="basic-option1" className="text-body-md">
+                    <label htmlFor="basic-option1" className="text-body-md cursor-pointer">
                       Option 1
                     </label>
                   </div>
                   <div className="flex items-center space-x-[var(--space-sm)]">
                     <RadioGroupItem value="option2" id="basic-option2" />
-                    <label htmlFor="basic-option2" className="text-body-md">
+                    <label htmlFor="basic-option2" className="text-body-md cursor-pointer">
                       Option 2
                     </label>
                   </div>
                   <div className="flex items-center space-x-[var(--space-sm)]">
                     <RadioGroupItem value="option3" id="basic-option3" />
-                    <label htmlFor="basic-option3" className="text-body-md">
+                    <label htmlFor="basic-option3" className="text-body-md cursor-pointer">
                       Option 3
                     </label>
                   </div>
@@ -170,19 +170,19 @@ export function RadioGroupPreview() {
                 <RadioGroup defaultValue="checked">
                   <div className="flex items-center space-x-[var(--space-sm)]">
                     <RadioGroupItem value="unchecked" id="state-unchecked" />
-                    <label htmlFor="state-unchecked" className="text-body-md">
+                    <label htmlFor="state-unchecked" className="text-body-md cursor-pointer">
                       Unchecked
                     </label>
                   </div>
                   <div className="flex items-center space-x-[var(--space-sm)]">
                     <RadioGroupItem value="checked" id="state-checked" />
-                    <label htmlFor="state-checked" className="text-body-md">
+                    <label htmlFor="state-checked" className="text-body-md cursor-pointer">
                       Checked
                     </label>
                   </div>
                   <div className="flex items-center space-x-[var(--space-sm)]">
                     <RadioGroupItem value="disabled" id="state-disabled" disabled />
-                    <label htmlFor="state-disabled" className="text-body-md text-[var(--color-text-disabled)]">
+                    <label htmlFor="state-disabled" className="text-body-md text-[var(--color-text-disabled)] cursor-not-allowed">
                       Disabled
                     </label>
                   </div>
@@ -308,13 +308,13 @@ export function RadioGroupPreview() {
                 <RadioGroup defaultValue="default-option2">
                   <div className="flex items-center space-x-[var(--space-sm)]">
                     <RadioGroupItem value="default-option1" id="default-option1" variant="default" />
-                    <label htmlFor="default-option1" className="text-body-md">
+                    <label htmlFor="default-option1" className="text-body-md cursor-pointer">
                       Unchecked default
                     </label>
                   </div>
                   <div className="flex items-center space-x-[var(--space-sm)]">
                     <RadioGroupItem value="default-option2" id="default-option2" variant="default" />
-                    <label htmlFor="default-option2" className="text-body-md">
+                    <label htmlFor="default-option2" className="text-body-md cursor-pointer">
                       Checked default
                     </label>
                   </div>
@@ -381,7 +381,7 @@ export function RadioGroupPreview() {
                     <RadioGroupItem value="disabled-unchecked" id="disabled-unchecked" disabled />
                     <label
                       htmlFor="disabled-unchecked"
-                      className="text-body-md text-[var(--color-text-disabled)]"
+                      className="text-body-md text-[var(--color-text-disabled)] cursor-not-allowed"
                     >
                       Disabled option
                     </label>
@@ -395,7 +395,7 @@ export function RadioGroupPreview() {
                     <RadioGroupItem value="disabled-checked" id="disabled-checked" disabled />
                     <label
                       htmlFor="disabled-checked"
-                      className="text-body-md text-[var(--color-text-disabled)]"
+                      className="text-body-md text-[var(--color-text-disabled)] cursor-not-allowed"
                     >
                       Disabled checked
                     </label>
@@ -409,7 +409,7 @@ export function RadioGroupPreview() {
                     <RadioGroupItem value="group-disabled-option1" id="group-disabled-option1" />
                     <label
                       htmlFor="group-disabled-option1"
-                      className="text-body-md text-[var(--color-text-disabled)]"
+                      className="text-body-md text-[var(--color-text-disabled)] cursor-not-allowed"
                     >
                       Group disabled
                     </label>
@@ -418,7 +418,7 @@ export function RadioGroupPreview() {
                     <RadioGroupItem value="group-disabled-option2" id="group-disabled-option2" />
                     <label
                       htmlFor="group-disabled-option2"
-                      className="text-body-md text-[var(--color-text-disabled)]"
+                      className="text-body-md text-[var(--color-text-disabled)] cursor-not-allowed"
                     >
                       Also disabled
                     </label>
