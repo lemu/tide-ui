@@ -7,6 +7,7 @@ import { Icon } from "./icon";
 export interface SeparatorProps
   extends React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root> {
   type?: "line" | "dot";
+  layout?: "horizontal" | "vertical";
 }
 
 const Separator = React.forwardRef<
@@ -16,20 +17,27 @@ const Separator = React.forwardRef<
   (
     {
       className,
-      orientation = "horizontal",
+      orientation,
+      layout = "vertical",
       decorative = true,
       type = "line",
       ...props
     },
     ref,
   ) => {
+    // Use layout prop to determine separator orientation
+    // horizontal layout (side-by-side elements) -> vertical separator
+    // vertical layout (stacked elements) -> horizontal separator
+    const separatorOrientation = layout === "horizontal" ? "vertical" : "horizontal";
+    const finalOrientation = orientation ?? separatorOrientation;
+
     // For dot separators - only for horizontal content layout (side-by-side content)
-    if (type === "dot" && orientation === "horizontal") {
+    if (type === "dot" && layout === "horizontal") {
       return (
         <div
           ref={ref}
           role={decorative ? "presentation" : "separator"}
-          aria-orientation={orientation}
+          aria-orientation={finalOrientation}
           className={cn(
             "flex h-[1em] shrink-0 items-center justify-center",
             className,
@@ -47,10 +55,10 @@ const Separator = React.forwardRef<
       <SeparatorPrimitive.Root
         ref={ref}
         decorative={decorative}
-        orientation={orientation}
+        orientation={finalOrientation}
         className={cn(
           "shrink-0 bg-[var(--grey-alpha-100)]",
-          orientation === "horizontal" ? "h-[1em] w-px" : "h-px w-full",
+          finalOrientation === "horizontal" ? "h-px w-full" : "h-[1em] w-px",
           className,
         )}
         {...props}

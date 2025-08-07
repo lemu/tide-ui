@@ -25,9 +25,14 @@ import { ToastPreview } from "./components/previews/toast-preview";
 import { SwitchPreview } from "./components/previews/switch-preview";
 import { TogglePreview } from "./components/previews/toggle-preview";
 import { DialogPreview } from "./components/previews/dialog-preview";
+import { AvatarPreview } from "./components/previews/avatar-preview";
+import { TabsPreview } from "./components/previews/tabs-preview";
+import { TablePreview } from "./components/previews/table-preview";
+import { AppFramePreview } from "./components/previews/app-frame-preview";
+import { DropdownMenuPreview } from "./components/previews/dropdown-menu-preview";
 import { Toaster } from "./components/ui/toast";
 
-type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs" | "inputs" | "checkboxes" | "radio-groups" | "selects" | "accordions" | "alerts" | "badges" | "calendars" | "comboboxes" | "hover-cards" | "pagination" | "sheets" | "sliders" | "toasts" | "switches" | "toggles" | "dialogs";
+type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs" | "inputs" | "checkboxes" | "radio-groups" | "selects" | "accordions" | "alerts" | "badges" | "calendars" | "comboboxes" | "hover-cards" | "pagination" | "sheets" | "sliders" | "toasts" | "switches" | "toggles" | "dialogs" | "avatars" | "tabs" | "tables" | "dropdown-menus" | "app-frame";
 
 function App() {
   const [activeSection, setActiveSection] = useState<Section>("buttons");
@@ -59,6 +64,11 @@ function App() {
     { id: "switches" as const, label: "Switches" },
     { id: "toggles" as const, label: "Toggles" },
     { id: "dialogs" as const, label: "Dialogs" },
+    { id: "avatars" as const, label: "Avatars" },
+    { id: "tabs" as const, label: "Tabs" },
+    { id: "tables" as const, label: "Tables" },
+    { id: "dropdown-menus" as const, label: "Dropdown Menus" },
+    { id: "app-frame" as const, label: "App Frame" },
   ];
 
   return (
@@ -129,6 +139,11 @@ function App() {
           {activeSection === "switches" && <SwitchPreview />}
           {activeSection === "toggles" && <TogglePreview />}
           {activeSection === "dialogs" && <DialogPreview />}
+          {activeSection === "avatars" && <AvatarPreview />}
+          {activeSection === "tabs" && <TabsPreview />}
+          {activeSection === "tables" && <TablePreview />}
+          {activeSection === "dropdown-menus" && <DropdownMenuPreview />}
+          {activeSection === "app-frame" && <AppFramePreview />}
         </main>
       </div>
       <Toaster />

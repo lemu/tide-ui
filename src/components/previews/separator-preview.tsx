@@ -5,6 +5,35 @@ import { Icon } from "../ui/icon";
 export function SeparatorPreview() {
   return (
     <div className="space-y-[var(--space-xlg)]">
+      {/* Layout-Based Prop Documentation */}
+      <section>
+        <h2 className="text-heading-lg mb-[var(--space-lg)]">Layout-Based Separator API</h2>
+        <div className="bg-[var(--color-background-information)] border border-[var(--color-border-information)] rounded-lg p-[var(--space-lg)] mb-[var(--space-lg)]">
+          <div className="space-y-[var(--space-md)]">
+            <p className="text-body-md text-[var(--color-text-primary)]">
+              <strong>Intuitive Layout Prop:</strong> The <code className="bg-[var(--color-surface-primary)] px-[var(--space-xsm)] rounded-xsm">layout</code> prop describes 
+              the layout context where the separator is used, making it more intuitive than orientation.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-md)]">
+              <div>
+                <h4 className="text-heading-xsm mb-[var(--space-sm)]">Horizontal Layout</h4>
+                <p className="text-body-sm text-[var(--color-text-secondary)]">
+                  <code>layout="horizontal"</code><br/>
+                  For side-by-side elements → creates vertical line
+                </p>
+              </div>
+              <div>
+                <h4 className="text-heading-xsm mb-[var(--space-sm)]">Vertical Layout</h4>
+                <p className="text-body-sm text-[var(--color-text-secondary)]">
+                  <code>layout="vertical"</code><br/>
+                  For stacked elements → creates horizontal line
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Basic Line Separators */}
       <section>
         <h2 className="text-heading-lg mb-[var(--space-lg)]">Line Separators</h2>
@@ -14,14 +43,14 @@ export function SeparatorPreview() {
           <div>
             <h3 className="text-heading-sm mb-[var(--space-md)]">Horizontal Layout (Vertical Lines)</h3>
             <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
-              For side-by-side content, use <code className="text-caption-sm bg-[var(--color-background-secondary)] px-[var(--space-xsm)] rounded-xsm">orientation="horizontal"</code> to create vertical divider lines.
+              For side-by-side content, use <code className="text-caption-sm bg-[var(--color-surface-secondary)] px-[var(--space-xsm)] rounded-xsm">layout="horizontal"</code> to create vertical divider lines.
             </p>
             
             <div className="flex items-center space-x-[var(--space-md)]">
               <span className="text-body-md">Left Content</span>
-              <Separator orientation="horizontal" />
+              <Separator layout="horizontal" />
               <span className="text-body-md">Middle Content</span>
-              <Separator orientation="horizontal" />
+              <Separator layout="horizontal" />
               <span className="text-body-md">Right Content</span>
             </div>
           </div>
@@ -31,9 +60,9 @@ export function SeparatorPreview() {
             <h4 className="text-heading-xsm mb-[var(--space-md)]">Navigation Example</h4>
             <div className="flex items-center space-x-[var(--space-md)]">
               <Button variant="ghost" size="sm">Home</Button>
-              <Separator orientation="horizontal" />
+              <Separator layout="horizontal" />
               <Button variant="ghost" size="sm">About</Button>
-              <Separator orientation="horizontal" />
+              <Separator layout="horizontal" />
               <Button variant="ghost" size="sm">Contact</Button>
             </div>
           </div>
@@ -43,9 +72,9 @@ export function SeparatorPreview() {
             <h4 className="text-heading-xsm mb-[var(--space-md)]">Breadcrumb Example</h4>
             <div className="flex items-center space-x-[var(--space-sm)]">
               <span className="text-body-sm text-[var(--color-text-brand)]">Home</span>
-              <Separator orientation="horizontal" />
+              <Separator layout="horizontal" />
               <span className="text-body-sm text-[var(--color-text-brand)]">Products</span>
-              <Separator orientation="horizontal" />
+              <Separator layout="horizontal" />
               <span className="text-body-sm">Laptops</span>
             </div>
           </div>
@@ -55,15 +84,15 @@ export function SeparatorPreview() {
         <div className="mt-[var(--space-xlg)]">
           <h3 className="text-heading-sm mb-[var(--space-md)]">Vertical Layout (Horizontal Lines)</h3>
           <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
-            For stacked content, use <code className="text-caption-sm bg-[var(--color-background-secondary)] px-[var(--space-xsm)] rounded-xsm">orientation="vertical"</code> to create horizontal divider lines.
+            For stacked content, use <code className="text-caption-sm bg-[var(--color-background-secondary)] px-[var(--space-xsm)] rounded-xsm">layout="vertical"</code> to create horizontal divider lines.
           </p>
           
           <div className="max-w-md bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-lg p-[var(--space-lg)]">
             <div className="space-y-[var(--space-md)]">
               <div className="text-body-md">First Item</div>
-              <Separator orientation="vertical" />
+              <Separator layout="vertical" />
               <div className="text-body-md">Second Item</div>
-              <Separator orientation="vertical" />
+              <Separator layout="vertical" />
               <div className="text-body-md">Third Item</div>
             </div>
           </div>
@@ -83,9 +112,9 @@ export function SeparatorPreview() {
             <h3 className="text-heading-sm mb-[var(--space-md)]">Basic Dot Separators</h3>
             <div className="flex items-center space-x-[var(--space-sm)]">
               <span className="text-body-md">Item One</span>
-              <Separator type="dot" orientation="horizontal" />
+              <Separator type="dot" layout="horizontal" />
               <span className="text-body-md">Item Two</span>
-              <Separator type="dot" orientation="horizontal" />
+              <Separator type="dot" layout="horizontal" />
               <span className="text-body-md">Item Three</span>
             </div>
           </div>
@@ -95,9 +124,9 @@ export function SeparatorPreview() {
             <h4 className="text-heading-xsm mb-[var(--space-md)]">Article Metadata</h4>
             <div className="flex items-center space-x-[var(--space-sm)]">
               <span className="text-body-sm text-[var(--color-text-secondary)]">Aug 1, 2025</span>
-              <Separator type="dot" orientation="horizontal" />
+              <Separator type="dot" layout="horizontal" />
               <span className="text-body-sm text-[var(--color-text-secondary)]">5 min read</span>
-              <Separator type="dot" orientation="horizontal" />
+              <Separator type="dot" layout="horizontal" />
               <span className="text-body-sm text-[var(--color-text-secondary)]">Technology</span>
             </div>
           </div>
@@ -107,9 +136,9 @@ export function SeparatorPreview() {
             <h4 className="text-heading-xsm mb-[var(--space-md)]">Tags</h4>
             <div className="flex items-center space-x-[var(--space-sm)] flex-wrap">
               <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm">React</span>
-              <Separator type="dot" orientation="horizontal" />
+              <Separator type="dot" layout="horizontal" />
               <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm">TypeScript</span>
-              <Separator type="dot" orientation="horizontal" />
+              <Separator type="dot" layout="horizontal" />
               <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm">UI</span>
             </div>
           </div>
@@ -124,9 +153,9 @@ export function SeparatorPreview() {
                 </div>
                 <span className="text-body-medium-md">John Doe</span>
               </div>
-              <Separator type="dot" orientation="horizontal" />
+              <Separator type="dot" layout="horizontal" />
               <span className="text-body-sm text-[var(--color-text-secondary)]">Premium User</span>
-              <Separator type="dot" orientation="horizontal" />
+              <Separator type="dot" layout="horizontal" />
               <span className="text-body-sm text-[var(--color-text-secondary)]">Joined 2023</span>
             </div>
           </div>
