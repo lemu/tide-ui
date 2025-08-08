@@ -164,27 +164,67 @@ function CombinedSwitcher({ user, teams }: CombinedSwitcherProps) {
   const [activeTeam, setActiveTeam] = React.useState(teams[0]);
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          className="h-auto min-h-[48px] w-full justify-start p-2"
-        >
-          <div className="flex w-full items-center gap-3">
-            {/* Team/Company Avatar */}
-            <div className="relative">
-              <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-sm border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)]">
+    <div className="rounded-md border border-[var(--color-border-primary-subtle)] group-data-[collapsible=icon]:border-none group-data-[collapsible=icon]:rounded-none">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            className="h-auto min-h-[48px] w-full justify-start rounded-md p-2 group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:min-h-[32px] group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:h-8"
+          >
+            {/* Expanded state - full layout */}
+            <div className="flex w-full items-center gap-3 group-data-[collapsible=icon]:hidden">
+              {/* Team/Company Avatar */}
+              <div className="relative">
+                <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-sm border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)]">
+                  <img
+                    src={activeTeam.logo}
+                    alt={activeTeam.name}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                {/* User Avatar Overlay */}
+                <div className="absolute -right-1 -bottom-1 h-5 w-5 overflow-hidden rounded-full border-2 border-white">
+                  <Avatar className="h-full w-full">
+                    <AvatarImage src={user.avatar} alt={user.name} />
+                    <AvatarFallback className="bg-[var(--color-background-brand)] text-[8px] text-[var(--color-text-on-action)]">
+                      {user.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        .toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                </div>
+              </div>
+
+              {/* User/Team Info */}
+              <div className="min-w-0 flex-1 text-left">
+                <div className="text-body-medium-sm truncate font-medium text-[var(--color-text-primary)]">
+                  {user.name}
+                </div>
+                <div className="text-body-xsm text-[var(--color-text-secondary)]">
+                  {activeTeam.role} at {activeTeam.name}
+                </div>
+              </div>
+
+              {/* Chevron */}
+              <Icon name="chevron-down" size="md" className="opacity-50" />
+            </div>
+
+            {/* Collapsed state - just avatars */}
+            <div className="relative hidden group-data-[collapsible=icon]:block">
+              <div className="flex h-7 w-7 items-center justify-center overflow-hidden rounded-sm border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)]">
                 <img
                   src={activeTeam.logo}
                   alt={activeTeam.name}
                   className="h-full w-full object-cover"
                 />
               </div>
-              {/* User Avatar Overlay */}
-              <div className="absolute -right-1 -bottom-1 h-5 w-5 overflow-hidden rounded-full border-2 border-white">
+              {/* User Avatar Overlay - bigger */}
+              <div className="absolute -right-0.5 -bottom-0.5 h-4 w-4 overflow-hidden rounded-full border border-white">
                 <Avatar className="h-full w-full">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="bg-[var(--color-background-brand)] text-[8px] text-[var(--color-text-on-action)]">
+                  <AvatarFallback className="bg-[var(--color-background-brand)] text-[7px] text-[var(--color-text-on-action)]">
                     {user.name
                       .split(" ")
                       .map((n) => n[0])
@@ -194,125 +234,112 @@ function CombinedSwitcher({ user, teams }: CombinedSwitcherProps) {
                 </Avatar>
               </div>
             </div>
-
-            {/* User/Team Info */}
-            <div className="min-w-0 flex-1 text-left">
-              <div className="text-body-medium-sm truncate font-medium text-[var(--color-text-primary)]">
-                {user.name}
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          className="w-[--radix-dropdown-menu-trigger-width]"
+          align="start"
+          side="top"
+          sideOffset={4}
+        >
+          {/* User Section */}
+          <DropdownMenuLabel className="p-0 font-normal">
+            <div className="flex items-center gap-3 px-2 py-2">
+              <Avatar className="h-8 w-8">
+                <AvatarImage src={user.avatar} alt={user.name} />
+                <AvatarFallback className="bg-[var(--color-background-brand)] text-[var(--color-text-on-action)]">
+                  {user.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                    .toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+              <div className="grid flex-1 text-left">
+                <span className="text-body-medium-sm truncate font-semibold text-[var(--color-text-primary)]">
+                  {user.name}
+                </span>
+                <span className="text-caption-sm truncate text-[var(--color-text-secondary)]">
+                  {user.email}
+                </span>
               </div>
-              <div className="text-body-xsm text-[var(--color-text-secondary)]">
-                {activeTeam.role} at {activeTeam.name}
+            </div>
+          </DropdownMenuLabel>
+
+          <DropdownMenuSeparator />
+
+          {/* Team Section */}
+          <DropdownMenuLabel className="text-caption-medium-sm px-2 py-1 text-[var(--color-text-secondary)]">
+            Teams
+          </DropdownMenuLabel>
+          {teams.map((team) => (
+            <DropdownMenuItem
+              key={team.name}
+              onClick={() => setActiveTeam(team)}
+              className="mx-1 cursor-pointer gap-2 p-2"
+            >
+              <div className="flex size-6 items-center justify-center overflow-hidden rounded-sm border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)]">
+                <img
+                  src={team.logo}
+                  alt={team.name}
+                  className="h-full w-full object-cover"
+                />
               </div>
-            </div>
+              <div className="flex flex-1 flex-col text-left">
+                <span className="text-body-medium-sm truncate font-semibold text-[var(--color-text-primary)]">
+                  {team.name}
+                </span>
+                <span className="text-caption-sm truncate text-[var(--color-text-secondary)]">
+                  {team.role} at {team.name} • {team.plan}
+                </span>
+              </div>
+              {activeTeam.name === team.name && (
+                <Icon
+                  name="check"
+                  size="sm"
+                  className="text-[var(--color-text-brand)]"
+                />
+              )}
+            </DropdownMenuItem>
+          ))}
 
-            {/* Chevron */}
-            <Icon name="chevron-up" size="md" className="opacity-50" />
-          </div>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        className="w-[--radix-dropdown-menu-trigger-width]"
-        align="start"
-        side="top"
-        sideOffset={4}
-      >
-        {/* User Section */}
-        <DropdownMenuLabel className="p-0 font-normal">
-          <div className="flex items-center gap-3 px-2 py-2">
-            <Avatar className="h-8 w-8">
-              <AvatarImage src={user.avatar} alt={user.name} />
-              <AvatarFallback className="bg-[var(--color-background-brand)] text-[var(--color-text-on-action)]">
-                {user.name
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")
-                  .toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-            <div className="grid flex-1 text-left">
-              <span className="text-body-medium-sm truncate font-semibold text-[var(--color-text-primary)]">
-                {user.name}
-              </span>
-              <span className="text-caption-sm truncate text-[var(--color-text-secondary)]">
-                {user.email}
-              </span>
-            </div>
-          </div>
-        </DropdownMenuLabel>
+          <DropdownMenuSeparator />
 
-        <DropdownMenuSeparator />
+          {/* User Actions */}
+          <DropdownMenuGroup>
+            <DropdownMenuItem className="text-body-sm mx-1 cursor-pointer">
+              <Icon name="user" size="sm" className="mr-2" />
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem className="text-body-sm mx-1 cursor-pointer">
+              <Icon name="settings" size="sm" className="mr-2" />
+              Settings
+            </DropdownMenuItem>
+            <DropdownMenuItem className="text-body-sm mx-1 cursor-pointer">
+              <Icon name="bell" size="sm" className="mr-2" />
+              Notifications
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
 
-        {/* Team Section */}
-        <DropdownMenuLabel className="text-caption-medium-sm px-2 py-1 text-[var(--color-text-secondary)]">
-          Teams
-        </DropdownMenuLabel>
-        {teams.map((team) => (
-          <DropdownMenuItem
-            key={team.name}
-            onClick={() => setActiveTeam(team)}
-            className="mx-1 cursor-pointer gap-2 p-2"
-          >
-            <div className="flex size-6 items-center justify-center overflow-hidden rounded-sm border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)]">
-              <img
-                src={team.logo}
-                alt={team.name}
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="flex flex-1 flex-col text-left">
-              <span className="text-body-medium-sm truncate font-semibold text-[var(--color-text-primary)]">
-                {team.name}
-              </span>
-              <span className="text-caption-sm truncate text-[var(--color-text-secondary)]">
-                {team.role} at {team.name} • {team.plan}
-              </span>
-            </div>
-            {activeTeam.name === team.name && (
-              <Icon
-                name="check"
-                size="sm"
-                className="text-[var(--color-text-brand)]"
-              />
-            )}
-          </DropdownMenuItem>
-        ))}
+          <DropdownMenuSeparator />
 
-        <DropdownMenuSeparator />
+          {/* Team Actions */}
+          <DropdownMenuGroup>
+            <DropdownMenuItem className="text-body-sm mx-1 cursor-pointer">
+              <Icon name="plus" size="sm" className="mr-2" />
+              Add team
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
 
-        {/* User Actions */}
-        <DropdownMenuGroup>
+          <DropdownMenuSeparator />
+
           <DropdownMenuItem className="text-body-sm mx-1 cursor-pointer">
-            <Icon name="user" size="sm" className="mr-2" />
-            Profile
+            <Icon name="log-out" size="sm" className="mr-2" />
+            Sign out
           </DropdownMenuItem>
-          <DropdownMenuItem className="text-body-sm mx-1 cursor-pointer">
-            <Icon name="settings" size="sm" className="mr-2" />
-            Settings
-          </DropdownMenuItem>
-          <DropdownMenuItem className="text-body-sm mx-1 cursor-pointer">
-            <Icon name="bell" size="sm" className="mr-2" />
-            Notifications
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-
-        <DropdownMenuSeparator />
-
-        {/* Team Actions */}
-        <DropdownMenuGroup>
-          <DropdownMenuItem className="text-body-sm mx-1 cursor-pointer">
-            <Icon name="plus" size="sm" className="mr-2" />
-            Add team
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-
-        <DropdownMenuSeparator />
-
-        <DropdownMenuItem className="text-body-sm mx-1 cursor-pointer">
-          <Icon name="log-out" size="sm" className="mr-2" />
-          Sign out
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   );
 }
 
@@ -349,7 +376,7 @@ function AppSidebar(props: AppSidebarProps) {
     <Sidebar
       variant="sidebar"
       collapsible="icon"
-      className="h-full border-r border-[var(--color-border-primary-subtle)]"
+      className="h-full border-r border-[var(--color-border-primary-subtle)] [&>div]:transition-[width] [&>div]:duration-75"
       {...props}
     >
       {/* Header with Company Logo */}
@@ -382,7 +409,7 @@ function AppSidebar(props: AppSidebarProps) {
             <div className="group-data-[collapsible=icon]:hidden">
               <button
                 onClick={() => setCommandOpen(true)}
-                className="text-body-md flex h-8 w-full items-center rounded-md border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-3 py-1 pr-20 pl-8 text-left text-[var(--color-text-tertiary)] transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:border-[var(--color-border-primary-bold)] active:border-[var(--color-border-primary-bold)] focus:ring-1 focus:ring-[var(--color-border-focus)] focus:outline-none cursor-pointer"
+                className="text-body-md flex h-8 w-full cursor-pointer items-center rounded-md border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-3 py-1 pr-20 pl-8 text-left text-[var(--color-text-tertiary)] transition-colors hover:border-[var(--color-border-primary-bold)] hover:bg-[var(--color-background-neutral-subtle-hovered)] focus:ring-1 focus:ring-[var(--color-border-focus)] focus:outline-none active:border-[var(--color-border-primary-bold)]"
               >
                 Search
               </button>
@@ -395,7 +422,7 @@ function AppSidebar(props: AppSidebarProps) {
             {/* Icon-only search button in collapsed state */}
             <button
               onClick={() => setCommandOpen(true)}
-              className="hidden h-8 w-8 items-center justify-center rounded border border-[var(--color-border-primary-subtle)] bg-transparent transition-all duration-200 group-data-[collapsible=icon]:flex hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:border-[var(--color-border-primary-bold)] active:border-[var(--color-border-primary-bold)] cursor-pointer"
+              className="hidden h-8 w-8 cursor-pointer items-center justify-center rounded border border-[var(--color-border-primary-subtle)] bg-transparent transition-all duration-200 group-data-[collapsible=icon]:flex hover:border-[var(--color-border-primary-bold)] hover:bg-[var(--color-background-neutral-subtle-hovered)] active:border-[var(--color-border-primary-bold)]"
               aria-label="Search"
             >
               <Icon name="search" size="md" color="tertiary" />
@@ -411,7 +438,7 @@ function AppSidebar(props: AppSidebarProps) {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     isActive={item.isActive}
-                    className="text-body-medium-md px-2 py-1.5 cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)] transition-colors"
+                    className="text-body-medium-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
                     onClick={() => console.log(`Navigate to ${item.title}`)}
                   >
                     <Icon name={item.icon as any} size="sm" />
@@ -424,7 +451,7 @@ function AppSidebar(props: AppSidebarProps) {
         </SidebarGroup>
 
         {/* Separator between Main and Management in collapsed state */}
-        <div className="group-data-[collapsible=icon]:flex hidden justify-center px-2 my-2">
+        <div className="my-2 hidden justify-center px-2 group-data-[collapsible=icon]:flex">
           <Separator layout="vertical" />
         </div>
 
@@ -443,7 +470,7 @@ function AppSidebar(props: AppSidebarProps) {
                       <div className="group-data-[collapsible=icon]:hidden">
                         <SidebarMenuButton
                           isActive={item.isActive && !item.items?.length}
-                          className="text-body-medium-md px-2 py-1.5 cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)] transition-colors"
+                          className="text-body-medium-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
                           onClick={() => toggleExpanded(item.title)}
                         >
                           <Icon name={item.icon as any} size="sm" />
@@ -457,29 +484,37 @@ function AppSidebar(props: AppSidebarProps) {
                           />
                         </SidebarMenuButton>
                       </div>
-                      
+
                       {/* Collapsed state - dropdown with submenu */}
-                      <div className="group-data-[collapsible=icon]:block hidden">
+                      <div className="hidden group-data-[collapsible=icon]:block">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <SidebarMenuButton
                               isActive={item.isActive}
-                              className="text-body-medium-md px-2 py-1.5 cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)] transition-colors w-full justify-center"
+                              className="text-body-medium-md w-full cursor-pointer justify-center px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
                             >
                               <Icon name={item.icon as any} size="sm" />
                             </SidebarMenuButton>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent side="right" sideOffset={8} align="start">
-                            <DropdownMenuLabel className="font-medium text-body-medium-sm">
+                          <DropdownMenuContent
+                            side="right"
+                            sideOffset={8}
+                            align="start"
+                          >
+                            <DropdownMenuLabel className="text-body-medium-sm font-medium">
                               {item.title}
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             {item.items.map((subItem) => (
                               <DropdownMenuItem
                                 key={subItem.title}
-                                onClick={() => console.log(`Navigate to ${subItem.title}`)}
+                                onClick={() =>
+                                  console.log(`Navigate to ${subItem.title}`)
+                                }
                                 className={`cursor-pointer ${
-                                  subItem.isActive ? "bg-[var(--color-background-brand-selected)] text-[var(--color-text-brand)]" : ""
+                                  subItem.isActive
+                                    ? "bg-[var(--color-background-brand-selected)] text-[var(--color-text-brand)]"
+                                    : ""
                                 }`}
                               >
                                 {subItem.title}
@@ -492,7 +527,7 @@ function AppSidebar(props: AppSidebarProps) {
                   ) : (
                     <SidebarMenuButton
                       isActive={item.isActive}
-                      className="text-body-medium-md px-2 py-1.5 cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)] transition-colors"
+                      className="text-body-medium-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
                       onClick={() => console.log(`Navigate to ${item.title}`)}
                     >
                       <Icon name={item.icon as any} size="sm" />
@@ -536,7 +571,7 @@ function AppSidebar(props: AppSidebarProps) {
         </SidebarGroup>
 
         {/* Separator between Management and Intelligence in collapsed state */}
-        <div className="group-data-[collapsible=icon]:flex hidden justify-center px-2 my-2">
+        <div className="my-2 hidden justify-center px-2 group-data-[collapsible=icon]:flex">
           <Separator layout="vertical" />
         </div>
 
@@ -551,7 +586,7 @@ function AppSidebar(props: AppSidebarProps) {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     isActive={item.isActive}
-                    className="text-body-medium-md px-2 py-1.5 cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)] transition-colors"
+                    className="text-body-medium-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
                     onClick={() => console.log(`Navigate to ${item.title}`)}
                   >
                     <Icon name={item.icon as any} size="sm" />
@@ -564,7 +599,7 @@ function AppSidebar(props: AppSidebarProps) {
         </SidebarGroup>
 
         {/* Spacer to push support section to bottom */}
-        <div className="flex-1" />
+        <div className="min-h-[var(--space-lg)] flex-1" />
 
         {/* Support Section */}
         <SidebarGroup className="px-2 pb-2">
@@ -572,8 +607,8 @@ function AppSidebar(props: AppSidebarProps) {
             <SidebarMenu>
               {sidebarData.navigation.support.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton 
-                    className="text-body-medium-md px-2 py-1.5 cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)] transition-colors"
+                  <SidebarMenuButton
+                    className="text-body-medium-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
                     onClick={() => console.log(`Open ${item.title}`)}
                   >
                     <Icon name={item.icon as any} size="sm" />
@@ -587,7 +622,7 @@ function AppSidebar(props: AppSidebarProps) {
       </SidebarContent>
 
       {/* Footer with Combined User/Team Switcher */}
-      <SidebarFooter className="border-t border-[var(--color-border-primary-subtle)] p-[var(--space-md)]">
+      <SidebarFooter className="p-[var(--space-md)] group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2">
         <CombinedSwitcher user={sidebarData.user} teams={sidebarData.teams} />
       </SidebarFooter>
 
