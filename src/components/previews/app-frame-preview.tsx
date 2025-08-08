@@ -11,8 +11,9 @@ export function AppFramePreview() {
   return (
     <div className="space-y-[var(--space-xlg)]">
       {/* Full Application Layout */}
-      <section className="h-[800px] w-full overflow-hidden rounded-lg border border-[var(--color-border-primary-subtle)]">
-        <AppFrame
+      <section className="h-[900px] w-full rounded-lg border border-[var(--color-border-primary-subtle)]">
+        <div className="h-full">
+          <AppFrame
           breadcrumbs={[
             { label: "Dashboard", href: "#" },
             { label: "Analytics" },
@@ -25,8 +26,8 @@ export function AppFramePreview() {
                   Welcome to Tide DS
                 </CardTitle>
                 <CardDescription>
-                  This is a demonstration of the AppFrame component using
-                  sidebar-07 layout from shadcn/ui blocks.
+                  This is a demonstration of the consolidated AppFrame component 
+                  for Sea platform with integrated sidebar and navigation.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -36,12 +37,12 @@ export function AppFramePreview() {
                     layout with:
                   </p>
                   <ul className="text-body-sm list-inside list-disc space-y-[var(--space-sm)] text-[var(--color-text-secondary)]">
-                    <li>Collapsible sidebar with team switcher</li>
-                    <li>Main navigation with collapsible sections</li>
-                    <li>Project navigation with context menus</li>
-                    <li>User profile dropdown</li>
-                    <li>Breadcrumb navigation</li>
-                    <li>Responsive design (try resizing the window)</li>
+                    <li>Collapsible sidebar with combined user/team switcher</li>
+                    <li>Command palette with keyboard shortcuts (Ctrl+K)</li>
+                    <li>Hierarchical navigation with collapsible sections</li>
+                    <li>Combined user and team management dropdown</li>
+                    <li>Breadcrumb navigation with Sea branding</li>
+                    <li>Responsive design with proper vertical scrolling</li>
                   </ul>
                 </div>
               </CardContent>
@@ -74,6 +75,7 @@ export function AppFramePreview() {
             </Card>
           </div>
         </AppFrame>
+        </div>
       </section>
 
       {/* Usage Examples */}
@@ -128,35 +130,32 @@ export function MyPage() {
               <ul className="text-body-sm space-y-[var(--space-sm)]">
                 <li>
                   <code className="rounded bg-[var(--color-surface-secondary)] px-1 py-0.5">
+                    AppFrame
+                  </code>{" "}
+                  - Main container with sidebar and content area
+                </li>
+                <li>
+                  <code className="rounded bg-[var(--color-surface-secondary)] px-1 py-0.5">
                     AppSidebar
                   </code>{" "}
-                  - Main sidebar container
+                  - Internal sidebar with navigation and search
                 </li>
                 <li>
                   <code className="rounded bg-[var(--color-surface-secondary)] px-1 py-0.5">
-                    TeamSwitcher
+                    CombinedSwitcher
                   </code>{" "}
-                  - Organization/team selector
+                  - Unified user/team selector in footer
                 </li>
                 <li>
                   <code className="rounded bg-[var(--color-surface-secondary)] px-1 py-0.5">
-                    NavMain
+                    sidebarData
                   </code>{" "}
-                  - Primary navigation menu
-                </li>
-                <li>
-                  <code className="rounded bg-[var(--color-surface-secondary)] px-1 py-0.5">
-                    NavProjects
-                  </code>{" "}
-                  - Project-specific navigation
-                </li>
-                <li>
-                  <code className="rounded bg-[var(--color-surface-secondary)] px-1 py-0.5">
-                    NavUser
-                  </code>{" "}
-                  - User profile and settings
+                  - Navigation structure and user/team data
                 </li>
               </ul>
+              <p className="text-body-sm text-[var(--color-text-secondary)] mt-[var(--space-md)]">
+                All components are consolidated into a single file for easier maintenance.
+              </p>
             </CardContent>
           </Card>
 
@@ -166,12 +165,12 @@ export function MyPage() {
             </CardHeader>
             <CardContent>
               <ul className="text-body-sm space-y-[var(--space-sm)]">
-                <li>• Icon-only collapse mode</li>
-                <li>• Tooltips in collapsed state</li>
-                <li>• Collapsible navigation sections</li>
-                <li>• Dropdown menus with actions</li>
-                <li>• Breadcrumb integration</li>
-                <li>• Mobile-optimized overlay</li>
+                <li>• Sea platform branding with SVG logo</li>
+                <li>• Command palette with fuzzy search (Ctrl+K)</li>
+                <li>• Collapsible navigation sections (Management, Intelligence)</li>
+                <li>• Combined user/team switcher with rich dropdown</li>
+                <li>• Proper vertical scrolling and overflow handling</li>
+                <li>• Mobile-responsive sidebar behavior</li>
               </ul>
             </CardContent>
           </Card>

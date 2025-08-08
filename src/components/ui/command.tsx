@@ -3,6 +3,7 @@ import { type DialogProps } from "@radix-ui/react-dialog";
 import { Command as CommandPrimitive } from "cmdk";
 import { Search } from "lucide-react";
 import { cn } from "../../lib/utils";
+import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog";
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
@@ -23,13 +24,14 @@ interface CommandDialogProps extends DialogProps {}
 
 const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
   return (
-    <div className="fixed inset-0 z-50 bg-black/80" {...props}>
-      <div className="fixed left-[50%] top-[50%] max-h-[85%] w-full max-w-[450px] translate-x-[-50%] translate-y-[-50%] overflow-hidden rounded-lg border bg-[var(--color-surface-primary)] shadow-lg">
+    <Dialog {...props}>
+      <DialogOverlay className="bg-black/60 backdrop-blur-sm" />
+      <DialogContent className="overflow-hidden p-0 shadow-lg max-w-[450px]">
         <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-[var(--color-text-tertiary)] [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
           {children}
         </Command>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 
