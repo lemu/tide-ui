@@ -593,18 +593,18 @@ export function SliderPreview() {
             <CardContent className="space-y-[var(--space-lg)]">
               <div className="space-y-[var(--space-md)]">
                 <div className="flex items-center justify-between">
-                  <div className="h-4 bg-[var(--color-background-neutral-subtle)] rounded animate-pulse w-24"></div>
-                  <div className="h-5 bg-[var(--color-background-neutral-subtle)] rounded animate-pulse w-12"></div>
+                  <div className="h-4 bg-[var(--color-background-neutral-subtle)] rounded animate-pulse w-24" aria-hidden="true"></div>
+                  <div className="h-5 bg-[var(--color-background-neutral-subtle)] rounded animate-pulse w-12" aria-hidden="true"></div>
                 </div>
-                <div className="h-5 bg-[var(--color-background-neutral-subtle)] rounded animate-pulse w-full"></div>
+                <div className="h-5 bg-[var(--color-background-neutral-subtle)] rounded animate-pulse w-full" aria-hidden="true"></div>
               </div>
 
               <div className="space-y-[var(--space-md)]">
                 <div className="flex items-center justify-between">
-                  <div className="h-4 bg-[var(--color-background-neutral-subtle)] rounded animate-pulse w-20"></div>
-                  <div className="h-5 bg-[var(--color-background-neutral-subtle)] rounded animate-pulse w-16"></div>
+                  <div className="h-4 bg-[var(--color-background-neutral-subtle)] rounded animate-pulse w-20" aria-hidden="true"></div>
+                  <div className="h-5 bg-[var(--color-background-neutral-subtle)] rounded animate-pulse w-16" aria-hidden="true"></div>
                 </div>
-                <div className="h-5 bg-[var(--color-background-neutral-subtle)] rounded animate-pulse w-full"></div>
+                <div className="h-5 bg-[var(--color-background-neutral-subtle)] rounded animate-pulse w-full" aria-hidden="true"></div>
               </div>
             </CardContent>
           </Card>

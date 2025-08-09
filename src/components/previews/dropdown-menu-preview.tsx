@@ -240,7 +240,7 @@ export function DropdownMenuPreview() {
             <CardContent>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                  <Button variant="ghost" size="sm" className="h-[var(--size-md)] w-[var(--size-md)] p-0">
                     <Icon name="more-horizontal" size="sm" />
                     <span className="sr-only">Open menu</span>
                   </Button>
@@ -307,8 +307,8 @@ export function DropdownMenuPreview() {
             <CardContent>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-8 w-8 rounded-full p-0">
-                    <div className="h-8 w-8 rounded-full bg-[var(--color-background-brand)] flex items-center justify-center">
+                  <Button variant="ghost" className="relative h-[var(--size-md)] w-[var(--size-md)] rounded-full p-0">
+                    <div className="h-[var(--size-md)] w-[var(--size-md)] rounded-full bg-[var(--color-background-brand)] flex items-center justify-center">
                       <span className="text-xs font-medium text-[var(--color-text-on-action)]">
                         JD
                       </span>
@@ -369,7 +369,7 @@ export function DropdownMenuPreview() {
                   </div>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="h-8 w-8 p-0">
+                      <Button variant="ghost" className="h-[var(--size-md)] w-[var(--size-md)] p-0">
                         <Icon name="more-horizontal" size="sm" />
                         <span className="sr-only">Open menu</span>
                       </Button>

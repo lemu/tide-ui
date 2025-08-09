@@ -11,6 +11,7 @@ import { Icon } from "../ui/icon";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { Checkbox } from "../ui/checkbox";
 import { Separator } from "../ui/separator";
 import {
   FormField,
@@ -548,15 +549,15 @@ export function TabsPreview() {
                       <div className="space-y-[var(--space-sm)]">
                         <div className="flex items-center justify-between">
                           <div className="text-body-sm">Email notifications</div>
-                          <input type="checkbox" className="h-4 w-4" defaultChecked />
+                          <Checkbox defaultChecked />
                         </div>
                         <div className="flex items-center justify-between">
                           <div className="text-body-sm">Push notifications</div>
-                          <input type="checkbox" className="h-4 w-4" />
+                          <Checkbox />
                         </div>
                         <div className="flex items-center justify-between">
                           <div className="text-body-sm">SMS notifications</div>
-                          <input type="checkbox" className="h-4 w-4" />
+                          <Checkbox />
                         </div>
                       </div>
                     </div>
@@ -568,11 +569,11 @@ export function TabsPreview() {
                       <div className="space-y-[var(--space-sm)]">
                         <div className="flex items-center justify-between">
                           <div className="text-body-sm">Dark mode</div>
-                          <input type="checkbox" className="h-4 w-4" />
+                          <Checkbox />
                         </div>
                         <div className="flex items-center justify-between">
                           <div className="text-body-sm">Compact view</div>
-                          <input type="checkbox" className="h-4 w-4" defaultChecked />
+                          <Checkbox defaultChecked />
                         </div>
                       </div>
                     </div>

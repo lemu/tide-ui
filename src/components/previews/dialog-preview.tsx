@@ -19,6 +19,7 @@ import { Button } from "../ui/button";
 import { Icon } from "../ui/icon";
 import { Input } from "../ui/input";
 import { Badge } from "../ui/badge";
+import { Checkbox } from "../ui/checkbox";
 import { Separator } from "../ui/separator";
 import {
   FormField,
@@ -396,7 +397,7 @@ export function DialogPreview() {
                               Use dark theme for the interface
                             </div>
                           </div>
-                          <input type="checkbox" className="h-4 w-4" />
+                          <Checkbox />
                         </div>
                         <div className="flex items-center justify-between">
                           <div>
@@ -407,7 +408,7 @@ export function DialogPreview() {
                               Use smaller spacing and elements
                             </div>
                           </div>
-                          <input type="checkbox" className="h-4 w-4" />
+                          <Checkbox />
                         </div>
                       </div>
                     </div>

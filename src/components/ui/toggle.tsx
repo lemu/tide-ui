@@ -13,14 +13,14 @@ const toggleVariants = cva(
           "border border-[var(--color-border-input)] bg-transparent hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]",
       },
       size: {
-        default: "h-[var(--size-lg)] px-[var(--space-md)] min-w-[var(--size-lg)]",
         sm: "h-[var(--size-md)] px-[var(--space-sm)] min-w-[var(--size-md)]",
+        md: "h-[var(--size-lg)] px-[var(--space-md)] min-w-[var(--size-lg)]",
         lg: "h-[var(--size-xlg)] px-[var(--space-lg)] min-w-[var(--size-xlg)]",
       },
     },
     defaultVariants: {
       variant: "default",
-      size: "default",
+      size: "md",
     },
   }
 );

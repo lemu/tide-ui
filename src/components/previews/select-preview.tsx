@@ -48,7 +48,7 @@ export function SelectPreview() {
             <CardContent>
               <div className="space-y-[var(--space-lg)]">
                 <Select>
-                  <SelectTrigger size="medium" className="w-full">
+                  <SelectTrigger size="md" className="w-full">
                     <SelectValue placeholder="Select a fruit" />
                   </SelectTrigger>
                   <SelectContent>

@@ -21,6 +21,9 @@ import { Button } from "../ui/button";
 import { Icon } from "../ui/icon";
 import { Badge } from "../ui/badge";
 import { Separator } from "../ui/separator";
+import { Input } from "../ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Checkbox } from "../ui/checkbox";
 
 // Sample data matching the Figma design
 const laycanData = [
@@ -62,6 +65,10 @@ type SortDirection = 'asc' | 'desc' | false;
 export function TablePreview() {
   const [sortField, setSortField] = useState<SortField | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>(false);
+  const [filterText, setFilterText] = useState('');
+  const [selectedYear, setSelectedYear] = useState('all');
+  const [selectedRows, setSelectedRows] = useState<Set<string>>(new Set());
+  const [minFixtures, setMinFixtures] = useState('');
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -77,7 +84,28 @@ export function TablePreview() {
     }
   };
 
-  const sortedData = [...laycanData].sort((a, b) => {
+  // Filter data based on search and filters
+  const filteredData = laycanData.filter(item => {
+    // Text filter - searches across multiple fields
+    const searchText = filterText.toLowerCase();
+    const textMatch = searchText === '' || 
+      item.month.toLowerCase().includes(searchText) ||
+      item.fixtureCount.toString().includes(searchText) ||
+      item.cargoQuantity.toLowerCase().includes(searchText) ||
+      item.grossFreight.toLowerCase().includes(searchText);
+    
+    // Year filter
+    const yearMatch = selectedYear === 'all' || item.year === selectedYear;
+    
+    // Fixtures filter
+    const fixturesMatch = minFixtures === '' || 
+      parseInt(item.fixtureCount.toString()) >= parseInt(minFixtures);
+    
+    return textMatch && yearMatch && fixturesMatch;
+  });
+
+  // Sort filtered data
+  const sortedData = [...filteredData].sort((a, b) => {
     if (!sortField || !sortDirection) return 0;
     
     let aVal: any = a[sortField];
@@ -106,6 +134,36 @@ export function TablePreview() {
     return acc;
   }, {} as Record<string, typeof laycanData>);
 
+  // Row selection handlers
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      const allIds = sortedData.map((item, index) => `${item.year}-${item.month}-${index}`);
+      setSelectedRows(new Set(allIds));
+    } else {
+      setSelectedRows(new Set());
+    }
+  };
+
+  const handleSelectRow = (id: string, checked: boolean) => {
+    const newSelection = new Set(selectedRows);
+    if (checked) {
+      newSelection.add(id);
+    } else {
+      newSelection.delete(id);
+    }
+    setSelectedRows(newSelection);
+  };
+
+  const clearFilters = () => {
+    setFilterText('');
+    setSelectedYear('all');
+    setMinFixtures('');
+    setSortField(null);
+    setSortDirection(false);
+  };
+
+  const uniqueYears = Array.from(new Set(laycanData.map(item => item.year))).sort().reverse();
+
   return (
     <div className="space-y-[var(--space-xlg)]">
       {/* Figma Design Recreation */}
@@ -116,16 +174,85 @@ export function TablePreview() {
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-heading-md">Summary by laycan date</CardTitle>
-              <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                <Icon name="ellipsis" size="sm" />
-              </Button>
+              <div className="flex items-center gap-[var(--space-sm)]">
+                {selectedRows.size > 0 && (
+                  <Badge variant="secondary" size="small">
+                    {selectedRows.size} selected
+                  </Badge>
+                )}
+                <Button variant="ghost" size="sm" className="h-[var(--size-sm)] w-[var(--size-sm)] p-0">
+                  <Icon name="ellipsis" size="sm" />
+                </Button>
+              </div>
             </div>
           </CardHeader>
+          
+          {/* Filter Controls */}
+          <div className="px-[var(--space-lg)] pb-[var(--space-md)] space-y-[var(--space-md)]">
+            <div className="flex flex-wrap items-center gap-[var(--space-md)]">
+              <div className="flex-1 min-w-[200px]">
+                <Input
+                  placeholder="Search months, fixtures, cargo..."
+                  value={filterText}
+                  onChange={(e) => setFilterText(e.target.value)}
+                  className="w-full"
+                />
+              </div>
+              
+              <Select value={selectedYear} onValueChange={setSelectedYear}>
+                <SelectTrigger className="w-[140px]">
+                  <SelectValue placeholder="Year" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Years</SelectItem>
+                  {uniqueYears.map(year => (
+                    <SelectItem key={year} value={year}>{year}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <span className="text-body-sm text-[var(--color-text-secondary)] whitespace-nowrap">
+                  Min Fixtures:
+                </span>
+                <Input
+                  type="number"
+                  placeholder="0"
+                  value={minFixtures}
+                  onChange={(e) => setMinFixtures(e.target.value)}
+                  className="w-[80px]"
+                />
+              </div>
+              
+              <Button variant="outline" size="sm" onClick={clearFilters}>
+                <Icon name="x" size="sm" className="mr-[var(--space-sm)]" />
+                Clear
+              </Button>
+            </div>
+            
+            <div className="flex items-center justify-between text-body-sm text-[var(--color-text-secondary)]">
+              <span>
+                Showing {sortedData.length} of {laycanData.length} records
+                {selectedRows.size > 0 && ` (${selectedRows.size} selected)`}
+              </span>
+              {(filterText || selectedYear !== 'all' || minFixtures) && (
+                <span>Filters applied</span>
+              )}
+            </div>
+          </div>
+          
           <CardContent>
             <div className="rounded-md border border-[var(--color-border-primary-subtle)]">
               <Table>
                 <TableHeader>
                   <TableRow>
+                    <TableHead className="w-12">
+                      <Checkbox
+                        checked={selectedRows.size > 0 && selectedRows.size === sortedData.length}
+                        onCheckedChange={handleSelectAll}
+                        aria-label="Select all rows"
+                      />
+                    </TableHead>
                     <TableSortHeader 
                       sortable 
                       sorted={sortField === 'month' ? sortDirection : false}
@@ -178,22 +305,38 @@ export function TablePreview() {
                 <TableBody>
                   {Object.entries(groupedData).map(([year, data]) => (
                     <React.Fragment key={year}>
-                      <TableGroupHeader colSpan={6}>
+                      <TableGroupHeader colSpan={7}>
                         <div className="flex items-center gap-[var(--space-sm)]">
                           <span>{year}</span>
                           <Icon name="chevron-down" size="sm" />
                         </div>
                       </TableGroupHeader>
-                      {data.map((row, index) => (
-                        <TableRow key={`${year}-${row.month}`} zebra zebraIndex={index}>
-                          <TableCell className="font-medium">{row.month}</TableCell>
-                          <TableCell align="right">{row.fixtureCount}</TableCell>
-                          <TableCell align="right">{row.cargoQuantity}</TableCell>
-                          <TableCell align="right">{row.grossFreight}</TableCell>
-                          <TableCell align="right">{row.avgFreightRate}</TableCell>
-                          <TableCell align="right">{row.avgDemurrage}</TableCell>
-                        </TableRow>
-                      ))}
+                      {data.map((row, index) => {
+                        const rowId = `${year}-${row.month}-${index}`;
+                        const isSelected = selectedRows.has(rowId);
+                        return (
+                          <TableRow 
+                            key={`${year}-${row.month}`} 
+                            zebra 
+                            zebraIndex={index}
+                            variant={isSelected ? 'selected' : 'default'}
+                          >
+                            <TableCell>
+                              <Checkbox
+                                checked={isSelected}
+                                onCheckedChange={(checked) => handleSelectRow(rowId, checked)}
+                                aria-label={`Select row ${row.month} ${year}`}
+                              />
+                            </TableCell>
+                            <TableCell className="font-medium">{row.month}</TableCell>
+                            <TableCell align="right">{row.fixtureCount}</TableCell>
+                            <TableCell align="right">{row.cargoQuantity}</TableCell>
+                            <TableCell align="right">{row.grossFreight}</TableCell>
+                            <TableCell align="right">{row.avgFreightRate}</TableCell>
+                            <TableCell align="right">{row.avgDemurrage}</TableCell>
+                          </TableRow>
+                        );
+                      })}
                     </React.Fragment>
                   ))}
                 </TableBody>
@@ -508,6 +651,80 @@ export function TablePreview() {
                   </TableRow>
                 </TableBody>
               </Table>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Enhanced Features Demo */}
+      <section>
+        <h2 className="text-heading-lg mb-[var(--space-lg)]">Enhanced Table Features</h2>
+        
+        <div className="grid grid-cols-1 gap-[var(--space-lg)] md:grid-cols-2">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-heading-sm">Filtering & Selection</CardTitle>
+              <CardDescription>
+                The main table above demonstrates comprehensive filtering, sorting, and row selection capabilities.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-[var(--space-md)]">
+              <div>
+                <h4 className="text-body-medium-sm mb-[var(--space-sm)]">Features:</h4>
+                <ul className="space-y-[var(--space-xsm)] text-body-sm text-[var(--color-text-secondary)]">
+                  <li>• Multi-field text search across columns</li>
+                  <li>• Year-based filtering with dropdown</li>
+                  <li>• Minimum fixtures threshold filter</li>
+                  <li>• Column sorting (click headers)</li>
+                  <li>• Row selection with checkboxes</li>
+                  <li>• Clear all filters button</li>
+                  <li>• Real-time result count</li>
+                  <li>• Selected rows counter</li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 className="text-body-medium-sm mb-[var(--space-sm)]">Try it:</h4>
+                <div className="space-y-[var(--space-sm)] text-body-sm">
+                  <p>• Search "jan" to find January records</p>
+                  <p>• Select "2024" year filter</p>
+                  <p>• Set minimum fixtures to 50</p>
+                  <p>• Click column headers to sort</p>
+                  <p>• Use checkboxes to select rows</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-heading-sm">Technical Implementation</CardTitle>
+              <CardDescription>
+                Built with React state management and semantic design tokens.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-[var(--space-md)]">
+              <div>
+                <h4 className="text-body-medium-sm mb-[var(--space-sm)]">Components Used:</h4>
+                <ul className="space-y-[var(--space-xsm)] text-body-sm text-[var(--color-text-secondary)]">
+                  <li>• <code className="text-caption-sm">TableSortHeader</code> - Sortable columns</li>
+                  <li>• <code className="text-caption-sm">TableGroupHeader</code> - Year groups</li>
+                  <li>• <code className="text-caption-sm">Input</code> - Text search</li>
+                  <li>• <code className="text-caption-sm">Select</code> - Year filter</li>
+                  <li>• <code className="text-caption-sm">Checkbox</code> - Row selection</li>
+                  <li>• <code className="text-caption-sm">Badge</code> - Selection counter</li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 className="text-body-medium-sm mb-[var(--space-sm)]">State Management:</h4>
+                <ul className="space-y-[var(--space-xsm)] text-body-sm text-[var(--color-text-secondary)]">
+                  <li>• Sort field and direction tracking</li>
+                  <li>• Multi-field filtering logic</li>
+                  <li>• Row selection with Set data structure</li>
+                  <li>• Real-time data processing</li>
+                </ul>
+              </div>
             </CardContent>
           </Card>
         </div>

@@ -135,10 +135,10 @@ export function BadgePreview() {
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-[var(--space-sm)] items-center">
-                <Badge size="small">Small</Badge>
-                <Badge size="small" variant="secondary">Tag</Badge>
-                <Badge size="small" variant="success">Live</Badge>
-                <Badge size="small" variant="outline">Mini</Badge>
+                <Badge size="sm">Small</Badge>
+                <Badge size="sm" variant="secondary">Tag</Badge>
+                <Badge size="sm" variant="success">Live</Badge>
+                <Badge size="sm" variant="outline">Mini</Badge>
               </div>
             </CardContent>
           </Card>
@@ -153,10 +153,10 @@ export function BadgePreview() {
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-[var(--space-sm)] items-center">
-                <Badge size="default">Default</Badge>
-                <Badge size="default" variant="secondary">Status</Badge>
-                <Badge size="default" variant="warning">Alert</Badge>
-                <Badge size="default" variant="outline">Label</Badge>
+                <Badge size="md">Default</Badge>
+                <Badge size="md" variant="secondary">Status</Badge>
+                <Badge size="md" variant="warning">Alert</Badge>
+                <Badge size="md" variant="outline">Label</Badge>
               </div>
             </CardContent>
           </Card>
@@ -171,10 +171,10 @@ export function BadgePreview() {
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-[var(--space-sm)] items-center">
-                <Badge size="large">Large</Badge>
-                <Badge size="large" variant="secondary">Featured</Badge>
-                <Badge size="large" variant="destructive">Critical</Badge>
-                <Badge size="large" variant="outline">Important</Badge>
+                <Badge size="lg">Large</Badge>
+                <Badge size="lg" variant="secondary">Featured</Badge>
+                <Badge size="lg" variant="destructive">Critical</Badge>
+                <Badge size="lg" variant="outline">Important</Badge>
               </div>
             </CardContent>
           </Card>
@@ -196,20 +196,20 @@ export function BadgePreview() {
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-[var(--space-sm)]">
-                <Badge variant="success">
-                  <Icon name="check-circle" size="xs" className="mr-[var(--space-xsm)]" />
+                <Badge variant="success" className="inline-flex items-center gap-[var(--space-xsm)]">
+                  <Icon name="check-circle" size="sm" />
                   Verified
                 </Badge>
-                <Badge variant="warning">
-                  <Icon name="clock" size="xs" className="mr-[var(--space-xsm)]" />
+                <Badge variant="warning" className="inline-flex items-center gap-[var(--space-xsm)]">
+                  <Icon name="clock" size="sm" />
                   Pending
                 </Badge>
-                <Badge variant="destructive">
-                  <Icon name="x-circle" size="xs" className="mr-[var(--space-xsm)]" />
+                <Badge variant="destructive" className="inline-flex items-center gap-[var(--space-xsm)]">
+                  <Icon name="x-circle" size="sm" />
                   Failed
                 </Badge>
-                <Badge variant="outline">
-                  <Icon name="star" size="xs" className="mr-[var(--space-xsm)]" />
+                <Badge variant="outline" className="inline-flex items-center gap-[var(--space-xsm)]">
+                  <Icon name="star" size="sm" />
                   Featured
                 </Badge>
               </div>
@@ -226,17 +226,17 @@ export function BadgePreview() {
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-[var(--space-sm)]">
-                <Badge variant="success" className="px-[var(--space-xsm)]">
-                  <Icon name="check" size="xs" />
+                <Badge variant="success" className="flex items-center justify-center">
+                  <Icon name="check" size="sm" />
                 </Badge>
-                <Badge variant="warning" className="px-[var(--space-xsm)]">
-                  <Icon name="triangle-alert" size="xs" />
+                <Badge variant="warning" className="flex items-center justify-center">
+                  <Icon name="triangle-alert" size="sm" />
                 </Badge>
-                <Badge variant="destructive" className="px-[var(--space-xsm)]">
-                  <Icon name="x" size="xs" />
+                <Badge variant="destructive" className="flex items-center justify-center">
+                  <Icon name="x" size="sm" />
                 </Badge>
-                <Badge variant="outline" className="px-[var(--space-xsm)]">
-                  <Icon name="info" size="xs" />
+                <Badge variant="outline" className="flex items-center justify-center">
+                  <Icon name="info" size="sm" />
                 </Badge>
               </div>
             </CardContent>
@@ -263,8 +263,8 @@ export function BadgePreview() {
                   <Icon name="bell" size="lg" className="text-[var(--color-text-secondary)]" />
                   <Badge 
                     variant="destructive" 
-                    size="small"
-                    className="absolute -top-2 -right-2 h-5 min-w-5 rounded-full px-1 font-mono tabular-nums"
+                    size="sm"
+                    className="absolute -top-[var(--space-xsm)] -right-[var(--space-xsm)] h-[var(--size-xsm)] min-w-[var(--size-xsm)] rounded-full px-[var(--space-xsm)] text-caption-strong-xsm leading-none flex items-center justify-center"
                   >
                     3
                   </Badge>
@@ -273,8 +273,8 @@ export function BadgePreview() {
                   <Icon name="mail" size="lg" className="text-[var(--color-text-secondary)]" />
                   <Badge 
                     variant="default" 
-                    size="small"
-                    className="absolute -top-2 -right-2 h-5 min-w-5 rounded-full px-1 font-mono tabular-nums"
+                    size="sm"
+                    className="absolute -top-[var(--space-xsm)] -right-[var(--space-xsm)] h-[var(--size-xsm)] min-w-[var(--size-xsm)] rounded-full px-[var(--space-xsm)] text-caption-strong-xsm leading-none flex items-center justify-center"
                   >
                     12
                   </Badge>
@@ -283,8 +283,8 @@ export function BadgePreview() {
                   <Icon name="shopping-cart" size="lg" className="text-[var(--color-text-secondary)]" />
                   <Badge 
                     variant="warning" 
-                    size="small"
-                    className="absolute -top-2 -right-2 h-5 min-w-5 rounded-full px-1 font-mono tabular-nums"
+                    size="sm"
+                    className="absolute -top-[var(--space-xsm)] -right-[var(--space-xsm)] h-[var(--size-xsm)] min-w-[var(--size-xsm)] rounded-full px-[var(--space-xsm)] text-caption-strong-xsm leading-none flex items-center justify-center"
                   >
                     99+
                   </Badge>
@@ -306,7 +306,7 @@ export function BadgePreview() {
                 <div className="flex items-center gap-[var(--space-sm)]">
                   <Badge 
                     variant="success" 
-                    className="h-2 w-2 rounded-full p-0"
+                    className="h-[var(--space-xsm)] w-[var(--space-xsm)] rounded-full p-0 flex items-center justify-center"
                     aria-hidden="true"
                   />
                   <span className="text-body-md">Online</span>
@@ -314,7 +314,7 @@ export function BadgePreview() {
                 <div className="flex items-center gap-[var(--space-sm)]">
                   <Badge 
                     variant="warning" 
-                    className="h-2 w-2 rounded-full p-0"
+                    className="h-[var(--space-xsm)] w-[var(--space-xsm)] rounded-full p-0 flex items-center justify-center"
                     aria-hidden="true"
                   />
                   <span className="text-body-md">Away</span>
@@ -322,7 +322,7 @@ export function BadgePreview() {
                 <div className="flex items-center gap-[var(--space-sm)]">
                   <Badge 
                     variant="destructive" 
-                    className="h-2 w-2 rounded-full p-0"
+                    className="h-[var(--space-xsm)] w-[var(--space-xsm)] rounded-full p-0 flex items-center justify-center"
                     aria-hidden="true"
                   />
                   <span className="text-body-md">Offline</span>
@@ -330,7 +330,7 @@ export function BadgePreview() {
                 <div className="flex items-center gap-[var(--space-sm)]">
                   <Badge 
                     variant="secondary" 
-                    className="h-2 w-2 rounded-full p-0"
+                    className="h-[var(--space-xsm)] w-[var(--space-xsm)] rounded-full p-0 flex items-center justify-center"
                     aria-hidden="true"
                   />
                   <span className="text-body-md">Unknown</span>

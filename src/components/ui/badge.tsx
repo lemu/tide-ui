@@ -33,14 +33,14 @@ const badgeVariants = cva(
         ],
       },
       size: {
-        default: "px-[var(--space-sm)] py-[var(--space-xsm)] text-caption-medium-sm",
-        small: "px-[var(--space-xsm)] py-[1px] text-caption-medium-xsm",
-        large: "px-[var(--space-md)] py-[var(--space-sm)] text-body-medium-sm",
+        sm: "px-[var(--space-xsm)] py-[1px] text-caption-medium-xsm",
+        md: "px-[var(--space-sm)] py-[var(--space-xsm)] text-caption-medium-sm",
+        lg: "px-[var(--space-md)] py-[var(--space-sm)] text-body-medium-sm",
       },
     },
     defaultVariants: {
       variant: "default",
-      size: "default",
+      size: "md",
     },
   }
 );

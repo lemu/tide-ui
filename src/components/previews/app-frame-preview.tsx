@@ -58,19 +58,19 @@ export function AppFramePreview() {
                 <CardContent>
                   <div className="space-y-[var(--space-sm)]">
                     <div className="flex items-center gap-[var(--space-sm)]">
-                      <div className="h-2 w-2 rounded-full bg-[var(--color-background-success)]"></div>
+                      <div className="h-2 w-2 rounded-full bg-[var(--color-background-success)]" aria-hidden="true"></div>
                       <span className="text-body-sm">Keyboard shortcuts</span>
                     </div>
                     <div className="flex items-center gap-[var(--space-sm)]">
-                      <div className="h-2 w-2 rounded-full bg-[var(--color-background-success)]"></div>
+                      <div className="h-2 w-2 rounded-full bg-[var(--color-background-success)]" aria-hidden="true"></div>
                       <span className="text-body-sm">Mobile responsive</span>
                     </div>
                     <div className="flex items-center gap-[var(--space-sm)]">
-                      <div className="h-2 w-2 rounded-full bg-[var(--color-background-success)]"></div>
+                      <div className="h-2 w-2 rounded-full bg-[var(--color-background-success)]" aria-hidden="true"></div>
                       <span className="text-body-sm">State persistence</span>
                     </div>
                     <div className="flex items-center gap-[var(--space-sm)]">
-                      <div className="h-2 w-2 rounded-full bg-[var(--color-background-success)]"></div>
+                      <div className="h-2 w-2 rounded-full bg-[var(--color-background-success)]" aria-hidden="true"></div>
                       <span className="text-body-sm">Theme integration</span>
                     </div>
                   </div>

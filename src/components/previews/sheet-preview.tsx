@@ -20,6 +20,7 @@ import { Button } from "../ui/button";
 import { Icon } from "../ui/icon";
 import { Input } from "../ui/input";
 import { Badge } from "../ui/badge";
+import { Checkbox } from "../ui/checkbox";
 import { Separator } from "../ui/separator";
 import {
   FormField,
@@ -321,14 +322,14 @@ export function SheetPreview() {
                             <div className="text-body-medium-sm">Email notifications</div>
                             <div className="text-caption-sm text-[var(--color-text-secondary)]">Receive updates via email</div>
                           </div>
-                          <input type="checkbox" className="w-4 h-4" defaultChecked />
+                          <Checkbox defaultChecked />
                         </div>
                         <div className="flex items-center justify-between">
                           <div>
                             <div className="text-body-medium-sm">Push notifications</div>
                             <div className="text-caption-sm text-[var(--color-text-secondary)]">Receive push notifications</div>
                           </div>
-                          <input type="checkbox" className="w-4 h-4" />
+                          <Checkbox />
                         </div>
                       </div>
                     </div>
@@ -343,14 +344,14 @@ export function SheetPreview() {
                             <div className="text-body-medium-sm">Profile visibility</div>
                             <div className="text-caption-sm text-[var(--color-text-secondary)]">Make profile public</div>
                           </div>
-                          <input type="checkbox" className="w-4 h-4" defaultChecked />
+                          <Checkbox defaultChecked />
                         </div>
                         <div className="flex items-center justify-between">
                           <div>
                             <div className="text-body-medium-sm">Analytics</div>
                             <div className="text-caption-sm text-[var(--color-text-secondary)]">Help improve our service</div>
                           </div>
-                          <input type="checkbox" className="w-4 h-4" defaultChecked />
+                          <Checkbox defaultChecked />
                         </div>
                       </div>
                     </div>

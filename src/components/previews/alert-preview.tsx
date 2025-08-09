@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { Input } from "../ui/input";
 import { Icon } from "../ui/icon";
 
 export function AlertPreview() {
@@ -318,18 +319,16 @@ export function AlertPreview() {
                 
                 <div className="space-y-[var(--space-sm)]">
                   <label className="text-body-md block">Email Address</label>
-                  <input 
-                    type="email" 
-                    className="w-full px-[var(--space-md)] py-[var(--space-sm)] border border-[var(--color-border-input)] rounded-md bg-[var(--color-surface-primary)]"
+                  <Input
+                    type="email"
                     placeholder="Enter your email"
                   />
                 </div>
                 
                 <div className="space-y-[var(--space-sm)]">
                   <label className="text-body-md block">Password</label>
-                  <input 
-                    type="password" 
-                    className="w-full px-[var(--space-md)] py-[var(--space-sm)] border border-[var(--color-border-input)] rounded-md bg-[var(--color-surface-primary)]"
+                  <Input
+                    type="password"
                     placeholder="Enter your password"
                   />
                 </div>

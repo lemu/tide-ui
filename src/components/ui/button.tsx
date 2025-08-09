@@ -128,6 +128,10 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   icon?: IconType;
   dropdown?: boolean;
+  /** Whether the dropdown is currently open (for accessibility) */
+  dropdownOpen?: boolean;
+  /** Loading state - shows spinner and disables interaction */
+  loading?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -140,7 +144,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       icon: iconName,
       iconPosition,
       dropdown = false,
+      dropdownOpen = false,
       disabled = false,
+      loading = false,
       type = "button",
       ...props
     },
@@ -148,8 +154,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const iconSize: IconSize = size || "md"; // Safe mapping with fallback
 
-    // Icon color logic: disabled buttons use disabled color, otherwise use variant-appropriate color
-    const iconColor = disabled
+    // Determine if button should be disabled (disabled prop or loading state)
+    const isDisabled = disabled || loading;
+
+    // Icon color logic: disabled/loading buttons use disabled color, otherwise use variant-appropriate color
+    const iconColor = isDisabled
       ? "disabled"
       : variant === "primary" ||
           variant === "destructive" ||
@@ -157,7 +166,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ? "inverse"
         : "primary";
 
+    const renderSpinner = () => {
+      if (!loading) return null;
+      return <Icon name="loader-2" size={iconSize} color={iconColor} className="animate-spin" />;
+    };
+
     const renderIcon = () => {
+      if (loading) return renderSpinner();
       if (!iconName) return null;
       return <Icon name={iconName} size={iconSize} color={iconColor} />;
     };
@@ -168,7 +183,29 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     };
 
     const actualIconPosition =
-      iconName && children ? iconPosition : iconName ? "only" : "none";
+      iconName && children 
+        ? iconPosition 
+        : iconName || loading 
+        ? "only" 
+        : loading && children 
+        ? "left" 
+        : "none";
+
+    // Add accessibility attributes for dropdown buttons
+    const dropdownProps = dropdown
+      ? {
+          "aria-haspopup": "menu" as const,
+          "aria-expanded": dropdownOpen,
+        }
+      : {};
+
+    // Add accessibility attributes for loading state
+    const loadingProps = loading
+      ? {
+          "aria-busy": true,
+          "aria-disabled": true,
+        }
+      : {};
 
     return (
       <button
@@ -182,7 +219,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           }),
         )}
         ref={ref}
-        disabled={disabled}
+        disabled={isDisabled}
+        {...dropdownProps}
+        {...loadingProps}
         {...props}
       >
         {actualIconPosition === "left" && renderIcon()}

@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { ChevronDown, ChevronUp } from "lucide-react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 import { Icon } from "./icon";
@@ -22,15 +21,14 @@ const selectTriggerVariants = cva(
         ],
       },
       size: {
-        medium:
-          "h-[32px] px-[var(--space-md)] py-[var(--space-sm)] text-body-md",
-        large:
-          "h-[40px] px-[var(--space-lg)] py-[var(--space-md)] text-body-lg",
+        sm: "h-[var(--size-sm)] px-[var(--space-sm)] py-[var(--space-xsm)] text-body-sm",
+        md: "h-[var(--size-md)] px-[var(--space-md)] py-[var(--space-sm)] text-body-md",
+        lg: "h-[var(--size-lg)] px-[var(--space-lg)] py-[var(--space-md)] text-body-lg",
       },
     },
     defaultVariants: {
       variant: "default",
-      size: "medium",
+      size: "md",
     },
   },
 );
@@ -76,7 +74,7 @@ const SelectTrigger = React.forwardRef<
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 opacity-50" />
+      <Icon name="chevron-down" size="sm" className="opacity-50" />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));
@@ -102,13 +100,13 @@ const SelectContent = React.forwardRef<
       {...props}
     >
       <SelectPrimitive.ScrollUpButton className="flex cursor-default items-center justify-center py-1">
-        <ChevronUp className="h-4 w-4" />
+        <Icon name="chevron-up" size="sm" />
       </SelectPrimitive.ScrollUpButton>
       <SelectPrimitive.Viewport className="p-2">
         <div className="flex flex-col gap-1">{children}</div>
       </SelectPrimitive.Viewport>
       <SelectPrimitive.ScrollDownButton className="flex cursor-default items-center justify-center py-1">
-        <ChevronDown className="h-4 w-4" />
+        <Icon name="chevron-down" size="sm" />
       </SelectPrimitive.ScrollDownButton>
     </SelectPrimitive.Content>
   </SelectPrimitive.Portal>

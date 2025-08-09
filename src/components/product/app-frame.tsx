@@ -339,6 +339,12 @@ function AppSidebar(props: AppSidebarProps) {
         e.preventDefault();
         setCommandOpen((open) => !open);
       }
+      // Additional keyboard shortcuts for enhanced navigation
+      if (e.key === "p" && (e.metaKey || e.ctrlKey) && e.shiftKey) {
+        e.preventDefault();
+        // Open command palette and focus on commands
+        setCommandOpen(true);
+      }
     };
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
@@ -609,25 +615,43 @@ function AppSidebar(props: AppSidebarProps) {
 
       {/* Command Dialog */}
       <CommandDialog open={commandOpen} onOpenChange={setCommandOpen}>
-        <CommandInput placeholder="Search navigation, commands, and more..." />
+        <CommandInput placeholder="Type a command or search..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
 
+          <CommandGroup heading="Quick Actions">
+            <CommandItem onSelect={() => window.location.reload()}>
+              <Icon name="rotate-ccw" size="sm" className="mr-2" />
+              <span>Reload Page</span>
+              <span className="ml-auto text-caption-sm text-[var(--color-text-tertiary)]">⌘R</span>
+            </CommandItem>
+            <CommandItem onSelect={() => setCommandOpen(false)}>
+              <Icon name="search" size="sm" className="mr-2" />
+              <span>Search</span>
+              <span className="ml-auto text-caption-sm text-[var(--color-text-tertiary)]">⌘K</span>
+            </CommandItem>
+            <CommandItem onSelect={() => window.print()}>
+              <Icon name="printer" size="sm" className="mr-2" />
+              <span>Print Page</span>
+              <span className="ml-auto text-caption-sm text-[var(--color-text-tertiary)]">⌘P</span>
+            </CommandItem>
+          </CommandGroup>
+
           <CommandGroup heading="Navigation">
             {sidebarData.navigation.main.map((item) => (
-              <CommandItem key={item.title}>
+              <CommandItem key={item.title} onSelect={() => setCommandOpen(false)}>
                 <Icon name={item.icon as any} size="sm" className="mr-2" />
                 <span>{item.title}</span>
               </CommandItem>
             ))}
             {sidebarData.navigation.management.map((item) => (
-              <CommandItem key={item.title}>
+              <CommandItem key={item.title} onSelect={() => setCommandOpen(false)}>
                 <Icon name={item.icon as any} size="sm" className="mr-2" />
                 <span>{item.title}</span>
               </CommandItem>
             ))}
             {sidebarData.navigation.intelligence.map((item) => (
-              <CommandItem key={item.title}>
+              <CommandItem key={item.title} onSelect={() => setCommandOpen(false)}>
                 <Icon name={item.icon as any} size="sm" className="mr-2" />
                 <span>{item.title}</span>
               </CommandItem>
@@ -636,16 +660,16 @@ function AppSidebar(props: AppSidebarProps) {
 
           <CommandGroup heading="Settings">
             {sidebarData.navigation.support.map((item) => (
-              <CommandItem key={item.title}>
+              <CommandItem key={item.title} onSelect={() => setCommandOpen(false)}>
                 <Icon name={item.icon as any} size="sm" className="mr-2" />
                 <span>{item.title}</span>
               </CommandItem>
             ))}
           </CommandGroup>
 
-          <CommandGroup heading="Teams">
+          <CommandGroup heading="Switch Team">
             {sidebarData.teams.map((team) => (
-              <CommandItem key={team.name}>
+              <CommandItem key={team.name} onSelect={() => setCommandOpen(false)}>
                 <div className="mr-2 h-4 w-4 overflow-hidden rounded-sm">
                   <img
                     src={team.logo}

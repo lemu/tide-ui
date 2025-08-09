@@ -30,9 +30,11 @@ import { TabsPreview } from "./components/previews/tabs-preview";
 import { TablePreview } from "./components/previews/table-preview";
 import { AppFramePreview } from "./components/previews/app-frame-preview";
 import { DropdownMenuShowcase } from "./components/previews/dropdown-menu-showcase";
+import { FormPreview } from "./components/previews/form-preview";
+import { SkeletonPreview } from "./components/previews/skeleton-preview";
 import { Toaster } from "./components/ui/toast";
 
-type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs" | "inputs" | "checkboxes" | "radio-groups" | "selects" | "accordions" | "alerts" | "badges" | "calendars" | "comboboxes" | "hover-cards" | "pagination" | "sheets" | "sliders" | "toasts" | "switches" | "toggles" | "dialogs" | "avatars" | "tabs" | "tables" | "dropdown-menus" | "app-frame";
+type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs" | "inputs" | "forms" | "checkboxes" | "radio-groups" | "selects" | "accordions" | "alerts" | "badges" | "calendars" | "comboboxes" | "hover-cards" | "pagination" | "sheets" | "sliders" | "toasts" | "switches" | "toggles" | "dialogs" | "avatars" | "tabs" | "tables" | "dropdown-menus" | "skeletons" | "app-frame";
 
 function App() {
   const [activeSection, setActiveSection] = useState<Section>("buttons");
@@ -48,6 +50,7 @@ function App() {
     { id: "kbd" as const, label: "Kbd" },
     { id: "breadcrumbs" as const, label: "Breadcrumbs" },
     { id: "inputs" as const, label: "Inputs" },
+    { id: "forms" as const, label: "Forms" },
     { id: "checkboxes" as const, label: "Checkboxes" },
     { id: "radio-groups" as const, label: "Radio Groups" },
     { id: "selects" as const, label: "Selects" },
@@ -68,6 +71,7 @@ function App() {
     { id: "tabs" as const, label: "Tabs" },
     { id: "tables" as const, label: "Tables" },
     { id: "dropdown-menus" as const, label: "Dropdown Menus" },
+    { id: "skeletons" as const, label: "Skeletons" },
     { id: "app-frame" as const, label: "App Frame" },
   ];
 
@@ -123,6 +127,7 @@ function App() {
           {activeSection === "kbd" && <KbdPreview />}
           {activeSection === "breadcrumbs" && <BreadcrumbPreview />}
           {activeSection === "inputs" && <InputPreview />}
+          {activeSection === "forms" && <FormPreview />}
           {activeSection === "checkboxes" && <CheckboxPreview />}
           {activeSection === "radio-groups" && <RadioGroupPreview />}
           {activeSection === "selects" && <SelectPreview />}
@@ -143,6 +148,7 @@ function App() {
           {activeSection === "tabs" && <TabsPreview />}
           {activeSection === "tables" && <TablePreview />}
           {activeSection === "dropdown-menus" && <DropdownMenuShowcase />}
+          {activeSection === "skeletons" && <SkeletonPreview />}
           {activeSection === "app-frame" && <AppFramePreview />}
         </main>
       </div>
