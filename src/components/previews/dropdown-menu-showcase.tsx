@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
+import { Kbd } from "@/components/ui/kbd";
 
 export function DropdownMenuShowcase() {
   const [notifications, setNotifications] = useState(true);
@@ -46,17 +47,27 @@ export function DropdownMenuShowcase() {
                 <DropdownMenuItem>
                   <Icon name="user" size="md" className="mr-2" />
                   Profile
-                  <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                  <DropdownMenuShortcut className="flex gap-1">
+                    <Kbd size="sm">⇧</Kbd>
+                    <Kbd size="sm">⌘</Kbd>
+                    <Kbd size="sm">P</Kbd>
+                  </DropdownMenuShortcut>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Icon name="credit-card" size="md" className="mr-2" />
                   Billing
-                  <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+                  <DropdownMenuShortcut className="flex gap-1">
+                    <Kbd size="sm">⌘</Kbd>
+                    <Kbd size="sm">B</Kbd>
+                  </DropdownMenuShortcut>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Icon name="settings" size="md" className="mr-2" />
                   Settings
-                  <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                  <DropdownMenuShortcut className="flex gap-1">
+                    <Kbd size="sm">⌘</Kbd>
+                    <Kbd size="sm">S</Kbd>
+                  </DropdownMenuShortcut>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem destructive>

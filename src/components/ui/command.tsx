@@ -27,7 +27,7 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
     <Dialog {...props}>
       <DialogOverlay className="bg-black/25" />
       <DialogContent className="overflow-hidden p-0 shadow-lg max-w-[450px]">
-        <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-[var(--color-text-tertiary)] [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
+        <Command className="[&_[cmdk-group-heading]]:px-[var(--space-md)] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-[var(--color-text-tertiary)] [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-4 [&_[cmdk-input-wrapper]_svg]:w-4 [&_[cmdk-input]]:h-14 [&_[cmdk-item]]:px-[var(--space-md)] [&_[cmdk-item]]:h-[var(--size-md)] [&_[cmdk-item]_svg]:h-4 [&_[cmdk-item]_svg]:w-4">
           {children}
         </Command>
       </DialogContent>
@@ -87,7 +87,7 @@ const CommandGroup = React.forwardRef<
   <CommandPrimitive.Group
     ref={ref}
     className={cn(
-      "overflow-hidden p-[var(--space-xsm)] text-[var(--color-text-primary)] [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-[var(--space-sm)] [&_[cmdk-group-heading]]:text-caption-medium-sm [&_[cmdk-group-heading]]:text-[var(--color-text-tertiary)]",
+      "overflow-hidden p-[var(--space-xsm)] text-[var(--color-text-primary)] [&_[cmdk-group-heading]]:px-[var(--space-md)] [&_[cmdk-group-heading]]:py-[var(--space-sm)] [&_[cmdk-group-heading]]:[&]:text-body-medium-sm [&_[cmdk-group-heading]]:text-[var(--color-text-tertiary)]",
       className
     )}
     {...props}
@@ -115,7 +115,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm px-2 py-[var(--space-sm)] text-body-md outline-none aria-selected:bg-[var(--color-background-neutral-subtle-hovered)] aria-selected:text-[var(--color-text-primary)] data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
+      "[&]:text-body-md relative flex cursor-pointer select-none items-center rounded-md px-[var(--space-md)] h-[var(--size-md)] outline-none transition-colors aria-selected:bg-[var(--color-background-neutral-subtle-hovered)] aria-selected:text-[var(--color-text-primary)] data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
       className
     )}
     {...props}

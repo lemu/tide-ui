@@ -2,6 +2,7 @@ import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { cn } from "../../lib/utils";
 import { Icon } from "./icon";
+import { Button } from "./button";
 
 const Dialog = DialogPrimitive.Root;
 
@@ -41,9 +42,15 @@ const DialogContent = React.forwardRef<
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className="absolute right-[var(--space-lg)] top-[var(--space-lg)] rounded-sm opacity-70 ring-offset-[var(--color-surface-primary)] transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-[var(--color-border-focus)] focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-[var(--color-background-secondary)]">
-        <Icon name="x" size="sm" />
-        <span className="sr-only">Close</span>
+      <DialogPrimitive.Close asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="absolute right-3 top-3 h-8 w-8 p-0"
+        >
+          <Icon name="x" size="md" />
+          <span className="sr-only">Close</span>
+        </Button>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
   </DialogPortal>
