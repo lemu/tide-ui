@@ -29,7 +29,7 @@ import { AvatarPreview } from "./components/previews/avatar-preview";
 import { TabsPreview } from "./components/previews/tabs-preview";
 import { TablePreview } from "./components/previews/table-preview";
 import { AppFramePreview } from "./components/previews/app-frame-preview";
-import { DropdownMenuPreview } from "./components/previews/dropdown-menu-preview";
+import { DropdownMenuShowcase } from "./components/previews/dropdown-menu-showcase";
 import { Toaster } from "./components/ui/toast";
 
 type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs" | "inputs" | "checkboxes" | "radio-groups" | "selects" | "accordions" | "alerts" | "badges" | "calendars" | "comboboxes" | "hover-cards" | "pagination" | "sheets" | "sliders" | "toasts" | "switches" | "toggles" | "dialogs" | "avatars" | "tabs" | "tables" | "dropdown-menus" | "app-frame";
@@ -142,7 +142,7 @@ function App() {
           {activeSection === "avatars" && <AvatarPreview />}
           {activeSection === "tabs" && <TabsPreview />}
           {activeSection === "tables" && <TablePreview />}
-          {activeSection === "dropdown-menus" && <DropdownMenuPreview />}
+          {activeSection === "dropdown-menus" && <DropdownMenuShowcase />}
           {activeSection === "app-frame" && <AppFramePreview />}
         </main>
       </div>

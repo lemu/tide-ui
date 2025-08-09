@@ -12,11 +12,6 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
@@ -164,12 +159,12 @@ function CombinedSwitcher({ user, teams }: CombinedSwitcherProps) {
   const [activeTeam, setActiveTeam] = React.useState(teams[0]);
 
   return (
-    <div className="rounded-md border border-[var(--color-border-primary-subtle)] group-data-[collapsible=icon]:border-none group-data-[collapsible=icon]:rounded-none">
+    <div className="rounded-md border border-[var(--color-border-primary-subtle)] group-data-[collapsible=icon]:rounded-none group-data-[collapsible=icon]:border-none">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="h-auto min-h-[48px] w-full justify-start rounded-md p-2 group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:min-h-[32px] group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:h-8"
+            className="h-auto min-h-[48px] w-full justify-start rounded-md p-2 group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:min-h-[32px] group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0"
           >
             {/* Expanded state - full layout */}
             <div className="flex w-full items-center gap-3 group-data-[collapsible=icon]:hidden">
@@ -307,15 +302,15 @@ function CombinedSwitcher({ user, teams }: CombinedSwitcherProps) {
 
           {/* User Actions */}
           <DropdownMenuGroup>
-            <DropdownMenuItem className="text-body-sm mx-1 cursor-pointer">
+            <DropdownMenuItem className="mx-1 cursor-pointer">
               <Icon name="user" size="sm" className="mr-2" />
               Profile
             </DropdownMenuItem>
-            <DropdownMenuItem className="text-body-sm mx-1 cursor-pointer">
+            <DropdownMenuItem className="mx-1 cursor-pointer">
               <Icon name="settings" size="sm" className="mr-2" />
               Settings
             </DropdownMenuItem>
-            <DropdownMenuItem className="text-body-sm mx-1 cursor-pointer">
+            <DropdownMenuItem className="mx-1 cursor-pointer">
               <Icon name="bell" size="sm" className="mr-2" />
               Notifications
             </DropdownMenuItem>
@@ -325,7 +320,7 @@ function CombinedSwitcher({ user, teams }: CombinedSwitcherProps) {
 
           {/* Team Actions */}
           <DropdownMenuGroup>
-            <DropdownMenuItem className="text-body-sm mx-1 cursor-pointer">
+            <DropdownMenuItem className="mx-1 cursor-pointer">
               <Icon name="plus" size="sm" className="mr-2" />
               Add team
             </DropdownMenuItem>
@@ -333,7 +328,7 @@ function CombinedSwitcher({ user, teams }: CombinedSwitcherProps) {
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem className="text-body-sm mx-1 cursor-pointer">
+          <DropdownMenuItem className="mx-1 cursor-pointer" destructive>
             <Icon name="log-out" size="sm" className="mr-2" />
             Sign out
           </DropdownMenuItem>

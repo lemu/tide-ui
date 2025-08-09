@@ -154,6 +154,16 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 
 **Shadows:** `shadow-xs`, `shadow-sm`, `shadow-md`, `shadow-lg`, `shadow-xl`
 
+## Button Variants
+
+**IMPORTANT**: Our design system does NOT include an "outline" button variant. Available button variants are:
+- `default` - Primary button with brand background
+- `secondary` - Secondary button styling  
+- `ghost` - Transparent button with hover effects
+- `link` - Link-styled button
+
+**Always use `ghost` variant instead of non-existent `outline` variant.**
+
 ## Development Process
 
 ### **CRITICAL: Requirements Gathering for New Components**

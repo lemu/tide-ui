@@ -180,6 +180,7 @@
   --color-background-warning-bold: var(--orange-500);
   --color-background-warning-bold-hovered: var(--orange-600);
   --color-background-inverse: var(--grey-900);
+  --color-background-overlay: rgba(0, 0, 0, 0.4);
 
   /* Semantic Color Tokens - Border Colors */
   --color-border-primary-subtle: var(--grey-50);
