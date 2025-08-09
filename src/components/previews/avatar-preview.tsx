@@ -30,6 +30,10 @@ export function AvatarPreview() {
               <div className="space-y-[var(--space-md)]">
                 <div className="text-body-medium-sm">Different Sizes</div>
                 <div className="flex items-center gap-[var(--space-md)]">
+                  <Avatar size="xs">
+                    <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=20&h=20&fit=crop&crop=face" alt="User XS" />
+                    <AvatarFallback size="xs">XS</AvatarFallback>
+                  </Avatar>
                   <Avatar size="sm">
                     <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="User 1" />
                     <AvatarFallback size="sm">JD</AvatarFallback>
@@ -123,6 +127,9 @@ export function AvatarPreview() {
               <div className="space-y-[var(--space-md)]">
                 <div className="text-body-medium-sm">Different Sizes</div>
                 <div className="flex items-center gap-[var(--space-md)]">
+                  <Avatar size="xs">
+                    <AvatarFallback size="xs" variant="secondary">XS</AvatarFallback>
+                  </Avatar>
                   <Avatar size="sm">
                     <AvatarFallback size="sm" variant="primary">S</AvatarFallback>
                   </Avatar>
@@ -283,6 +290,9 @@ export function AvatarPreview() {
               <div className="space-y-[var(--space-md)]">
                 <div className="text-body-medium-sm">Different Sizes</div>
                 <div className="flex items-center gap-[var(--space-md)]">
+                  <Avatar size="xs" shape="rounded">
+                    <AvatarFallback size="xs" shape="rounded" variant="secondary">XS</AvatarFallback>
+                  </Avatar>
                   <Avatar size="sm" shape="rounded">
                     <AvatarFallback size="sm" shape="rounded" variant="primary">AC</AvatarFallback>
                   </Avatar>

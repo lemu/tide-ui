@@ -136,11 +136,6 @@ const sidebarData = {
         url: "#",
       },
       {
-        title: "Settings",
-        icon: "settings-2",
-        url: "#",
-      },
-      {
         title: "Help & Support",
         icon: "circle-help",
         url: "#",
@@ -170,18 +165,21 @@ function CombinedSwitcher({ user, teams }: CombinedSwitcherProps) {
             <div className="flex w-full items-center gap-3 group-data-[collapsible=icon]:hidden">
               {/* Team/Company Avatar */}
               <div className="relative">
-                <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-sm border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)]">
-                  <img
-                    src={activeTeam.logo}
-                    alt={activeTeam.name}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
+                <Avatar size="md" shape="rounded">
+                  <AvatarImage src={activeTeam.logo} alt={activeTeam.name} />
+                  <AvatarFallback variant="primary">
+                    {activeTeam.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
                 {/* User Avatar Overlay */}
-                <div className="absolute -right-1 -bottom-1 h-5 w-5 overflow-hidden rounded-full border-2 border-white">
-                  <Avatar className="h-full w-full">
+                <div className="absolute -right-1 -bottom-1 border-2 border-white rounded-full">
+                  <Avatar size="xs" shape="circle">
                     <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback className="bg-[var(--color-background-brand)] text-[8px] text-[var(--color-text-on-action)]">
+                    <AvatarFallback variant="primary">
                       {user.name
                         .split(" ")
                         .map((n) => n[0])
@@ -208,18 +206,21 @@ function CombinedSwitcher({ user, teams }: CombinedSwitcherProps) {
 
             {/* Collapsed state - just avatars */}
             <div className="relative hidden group-data-[collapsible=icon]:block">
-              <div className="flex h-7 w-7 items-center justify-center overflow-hidden rounded-sm border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)]">
-                <img
-                  src={activeTeam.logo}
-                  alt={activeTeam.name}
-                  className="h-full w-full object-cover"
-                />
-              </div>
+              <Avatar size="sm" shape="rounded">
+                <AvatarImage src={activeTeam.logo} alt={activeTeam.name} />
+                <AvatarFallback variant="primary" className="text-[9px]">
+                  {activeTeam.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                    .toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
               {/* User Avatar Overlay - bigger */}
-              <div className="absolute -right-0.5 -bottom-0.5 h-4 w-4 overflow-hidden rounded-full border border-white">
-                <Avatar className="h-full w-full">
+              <div className="absolute -right-0.5 -bottom-0.5 border border-white rounded-full">
+                <Avatar size="sm" shape="circle" className="h-4 w-4">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="bg-[var(--color-background-brand)] text-[7px] text-[var(--color-text-on-action)]">
+                  <AvatarFallback variant="primary" className="text-[7px]">
                     {user.name
                       .split(" ")
                       .map((n) => n[0])
@@ -240,9 +241,9 @@ function CombinedSwitcher({ user, teams }: CombinedSwitcherProps) {
           {/* User Section */}
           <DropdownMenuLabel className="p-0 font-normal">
             <div className="flex items-center gap-3 px-2 py-2">
-              <Avatar className="h-8 w-8">
+              <Avatar size="sm" shape="circle">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="bg-[var(--color-background-brand)] text-[var(--color-text-on-action)]">
+                <AvatarFallback variant="primary">
                   {user.name
                     .split(" ")
                     .map((n) => n[0])
@@ -254,7 +255,7 @@ function CombinedSwitcher({ user, teams }: CombinedSwitcherProps) {
                 <span className="text-body-medium-sm truncate font-semibold text-[var(--color-text-primary)]">
                   {user.name}
                 </span>
-                <span className="text-caption-sm truncate text-[var(--color-text-secondary)]">
+                <span className="text-caption-xsm truncate text-[var(--color-text-secondary)]">
                   {user.email}
                 </span>
               </div>
@@ -265,36 +266,33 @@ function CombinedSwitcher({ user, teams }: CombinedSwitcherProps) {
 
           {/* Team Section */}
           <DropdownMenuLabel className="text-caption-medium-sm px-2 py-1 text-[var(--color-text-secondary)]">
-            Teams
+            Organizations
           </DropdownMenuLabel>
           {teams.map((team) => (
             <DropdownMenuItem
               key={team.name}
               onClick={() => setActiveTeam(team)}
-              className="mx-1 cursor-pointer gap-2 p-2"
+              className="mx-1 mb-1 h-10 cursor-pointer gap-2 px-1 pr-2 pl-1"
             >
-              <div className="flex size-6 items-center justify-center overflow-hidden rounded-sm border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)]">
-                <img
-                  src={team.logo}
-                  alt={team.name}
-                  className="h-full w-full object-cover"
-                />
-              </div>
+              <Avatar size="sm" shape="rounded">
+                <AvatarImage src={team.logo} alt={team.name} />
+                <AvatarFallback variant="primary" className="text-[8px]">
+                  {team.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                    .toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
               <div className="flex flex-1 flex-col text-left">
                 <span className="text-body-medium-sm truncate font-semibold text-[var(--color-text-primary)]">
                   {team.name}
                 </span>
-                <span className="text-caption-sm truncate text-[var(--color-text-secondary)]">
-                  {team.role} at {team.name} • {team.plan}
+                <span className="text-caption-xsm truncate text-[var(--color-text-secondary)]">
+                  {team.role} at {team.name} • {team.plan} plan
                 </span>
               </div>
-              {activeTeam.name === team.name && (
-                <Icon
-                  name="check"
-                  size="sm"
-                  className="text-[var(--color-text-brand)]"
-                />
-              )}
+              {activeTeam.name === team.name && <Icon name="check" size="md" />}
             </DropdownMenuItem>
           ))}
 
@@ -304,25 +302,11 @@ function CombinedSwitcher({ user, teams }: CombinedSwitcherProps) {
           <DropdownMenuGroup>
             <DropdownMenuItem className="mx-1 cursor-pointer">
               <Icon name="user" size="sm" className="mr-2" />
-              Profile
+              User Profile
             </DropdownMenuItem>
             <DropdownMenuItem className="mx-1 cursor-pointer">
               <Icon name="settings" size="sm" className="mr-2" />
-              Settings
-            </DropdownMenuItem>
-            <DropdownMenuItem className="mx-1 cursor-pointer">
-              <Icon name="bell" size="sm" className="mr-2" />
-              Notifications
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-
-          <DropdownMenuSeparator />
-
-          {/* Team Actions */}
-          <DropdownMenuGroup>
-            <DropdownMenuItem className="mx-1 cursor-pointer">
-              <Icon name="plus" size="sm" className="mr-2" />
-              Add team
+              Organization Settings
             </DropdownMenuItem>
           </DropdownMenuGroup>
 
@@ -693,7 +677,7 @@ export function AppFrame({ children, breadcrumbs = [] }: AppFrameProps) {
     <SidebarProvider className="h-full">
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+        <header className="flex h-12 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-[var(--space-md)]">
             <SidebarTrigger className="-ml-1" />
             <Separator layout="horizontal" className="mr-2 h-4" />
@@ -721,7 +705,7 @@ export function AppFrame({ children, breadcrumbs = [] }: AppFrameProps) {
             </Breadcrumb>
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-[var(--space-md)] p-[var(--space-md)] pt-0">
+        <div className="flex flex-1 flex-col gap-[var(--space-md)]">
           {children}
         </div>
       </SidebarInset>

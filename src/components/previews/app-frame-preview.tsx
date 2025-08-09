@@ -14,67 +14,70 @@ export function AppFramePreview() {
       <section className="h-[900px] w-full rounded-lg border border-[var(--color-border-primary-subtle)]">
         <div className="h-full">
           <AppFrame
-          breadcrumbs={[
-            { label: "Dashboard", href: "#" },
-            { label: "Analytics" },
-          ]}
-        >
-          <div className="grid auto-rows-min gap-[var(--space-md)] md:grid-cols-3">
-            <Card className="md:col-span-2">
-              <CardHeader>
-                <CardTitle className="text-heading-md">
-                  Welcome to Tide DS
-                </CardTitle>
-                <CardDescription>
-                  This is a demonstration of the consolidated AppFrame component 
-                  for Sea platform with integrated sidebar and navigation.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-[var(--space-md)]">
-                  <p className="text-body-md text-[var(--color-text-secondary)]">
-                    The AppFrame component provides a complete application
-                    layout with:
-                  </p>
-                  <ul className="text-body-sm list-inside list-disc space-y-[var(--space-sm)] text-[var(--color-text-secondary)]">
-                    <li>Collapsible sidebar with combined user/team switcher</li>
-                    <li>Command palette with keyboard shortcuts (Ctrl+K)</li>
-                    <li>Hierarchical navigation with collapsible sections</li>
-                    <li>Combined user and team management dropdown</li>
-                    <li>Breadcrumb navigation with Sea branding</li>
-                    <li>Responsive design with proper vertical scrolling</li>
-                  </ul>
-                </div>
-              </CardContent>
-            </Card>
+            breadcrumbs={[
+              { label: "Dashboard", href: "#" },
+              { label: "Analytics" },
+            ]}
+          >
+            <div className="mx-[var(--space-md)] grid auto-rows-min gap-[var(--space-md)]  md:grid-cols-3">
+              <Card className="md:col-span-2">
+                <CardHeader>
+                  <CardTitle className="text-heading-md">
+                    Welcome to Tide DS
+                  </CardTitle>
+                  <CardDescription>
+                    This is a demonstration of the consolidated AppFrame
+                    component for Sea platform with integrated sidebar and
+                    navigation.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-[var(--space-md)]">
+                    <p className="text-body-md text-[var(--color-text-secondary)]">
+                      The AppFrame component provides a complete application
+                      layout with:
+                    </p>
+                    <ul className="text-body-sm list-inside list-disc space-y-[var(--space-sm)] text-[var(--color-text-secondary)]">
+                      <li>
+                        Collapsible sidebar with combined user/team switcher
+                      </li>
+                      <li>Command palette with keyboard shortcuts (Ctrl+K)</li>
+                      <li>Hierarchical navigation with collapsible sections</li>
+                      <li>Combined user and team management dropdown</li>
+                      <li>Breadcrumb navigation with Sea branding</li>
+                      <li>Responsive design with proper vertical scrolling</li>
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-heading-sm">Features</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-[var(--space-sm)]">
-                  <div className="flex items-center gap-[var(--space-sm)]">
-                    <div className="h-2 w-2 rounded-full bg-[var(--color-background-success)]"></div>
-                    <span className="text-body-sm">Keyboard shortcuts</span>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-heading-sm">Features</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-[var(--space-sm)]">
+                    <div className="flex items-center gap-[var(--space-sm)]">
+                      <div className="h-2 w-2 rounded-full bg-[var(--color-background-success)]"></div>
+                      <span className="text-body-sm">Keyboard shortcuts</span>
+                    </div>
+                    <div className="flex items-center gap-[var(--space-sm)]">
+                      <div className="h-2 w-2 rounded-full bg-[var(--color-background-success)]"></div>
+                      <span className="text-body-sm">Mobile responsive</span>
+                    </div>
+                    <div className="flex items-center gap-[var(--space-sm)]">
+                      <div className="h-2 w-2 rounded-full bg-[var(--color-background-success)]"></div>
+                      <span className="text-body-sm">State persistence</span>
+                    </div>
+                    <div className="flex items-center gap-[var(--space-sm)]">
+                      <div className="h-2 w-2 rounded-full bg-[var(--color-background-success)]"></div>
+                      <span className="text-body-sm">Theme integration</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-[var(--space-sm)]">
-                    <div className="h-2 w-2 rounded-full bg-[var(--color-background-success)]"></div>
-                    <span className="text-body-sm">Mobile responsive</span>
-                  </div>
-                  <div className="flex items-center gap-[var(--space-sm)]">
-                    <div className="h-2 w-2 rounded-full bg-[var(--color-background-success)]"></div>
-                    <span className="text-body-sm">State persistence</span>
-                  </div>
-                  <div className="flex items-center gap-[var(--space-sm)]">
-                    <div className="h-2 w-2 rounded-full bg-[var(--color-background-success)]"></div>
-                    <span className="text-body-sm">Theme integration</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </AppFrame>
+                </CardContent>
+              </Card>
+            </div>
+          </AppFrame>
         </div>
       </section>
 
@@ -153,8 +156,9 @@ export function MyPage() {
                   - Navigation structure and user/team data
                 </li>
               </ul>
-              <p className="text-body-sm text-[var(--color-text-secondary)] mt-[var(--space-md)]">
-                All components are consolidated into a single file for easier maintenance.
+              <p className="text-body-sm mt-[var(--space-md)] text-[var(--color-text-secondary)]">
+                All components are consolidated into a single file for easier
+                maintenance.
               </p>
             </CardContent>
           </Card>
@@ -167,7 +171,9 @@ export function MyPage() {
               <ul className="text-body-sm space-y-[var(--space-sm)]">
                 <li>• Sea platform branding with SVG logo</li>
                 <li>• Command palette with fuzzy search (Ctrl+K)</li>
-                <li>• Collapsible navigation sections (Management, Intelligence)</li>
+                <li>
+                  • Collapsible navigation sections (Management, Intelligence)
+                </li>
                 <li>• Combined user/team switcher with rich dropdown</li>
                 <li>• Proper vertical scrolling and overflow handling</li>
                 <li>• Mobile-responsive sidebar behavior</li>

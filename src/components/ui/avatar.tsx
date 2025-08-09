@@ -4,10 +4,11 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const avatarVariants = cva(
-  "relative flex shrink-0 overflow-hidden items-center justify-center",
+  "relative flex shrink-0 overflow-hidden items-center justify-center shadow-[0_0_0_1px_rgba(85,95,109,0.1)]",
   {
     variants: {
       size: {
+        xs: "h-[var(--size-sm)] w-[var(--size-sm)]", // 20px
         sm: "h-[var(--size-md)] w-[var(--size-md)]", // 24px
         md: "h-[var(--size-lg)] w-[var(--size-lg)]", // 32px  
         lg: "h-[var(--size-xlg)] w-[var(--size-xlg)]", // 48px
@@ -31,6 +32,7 @@ const avatarFallbackVariants = cva(
   {
     variants: {
       size: {
+        xs: "text-caption-xsm",
         sm: "text-caption-sm",
         md: "text-label-sm", 
         lg: "text-label-md",
