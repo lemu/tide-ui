@@ -33,9 +33,13 @@ import { DropdownMenuShowcase } from "./components/previews/dropdown-menu-showca
 import { FormPreview } from "./components/previews/form-preview";
 import { SkeletonPreview } from "./components/previews/skeleton-preview";
 import { DropDrawerPreview } from "./components/previews/drop-drawer-preview";
+import { AlertDialogPreview } from "./components/previews/alert-dialog-preview";
+import { AspectRatioPreview } from "./components/previews/aspect-ratio-preview";
+import { DataTablePreview } from "./components/previews/data-table-preview";
+import { CountryDropdownPreview } from "./components/previews/country-dropdown-preview";
 import { Toaster } from "./components/ui/toast";
 
-type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs" | "inputs" | "forms" | "checkboxes" | "radio-groups" | "selects" | "accordions" | "alerts" | "badges" | "calendars" | "comboboxes" | "hover-cards" | "pagination" | "sheets" | "sliders" | "toasts" | "switches" | "toggles" | "dialogs" | "avatars" | "tabs" | "tables" | "dropdown-menus" | "drop-drawer" | "skeletons" | "app-frame";
+type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs" | "inputs" | "forms" | "checkboxes" | "radio-groups" | "selects" | "accordions" | "alerts" | "badges" | "calendars" | "comboboxes" | "hover-cards" | "pagination" | "sheets" | "sliders" | "toasts" | "switches" | "toggles" | "dialogs" | "alert-dialog" | "aspect-ratio" | "avatars" | "tabs" | "tables" | "data-table" | "dropdown-menus" | "drop-drawer" | "country-dropdown" | "skeletons" | "app-frame";
 
 function App() {
   const [activeSection, setActiveSection] = useState<Section>("buttons");
@@ -68,11 +72,15 @@ function App() {
     { id: "switches" as const, label: "Switches" },
     { id: "toggles" as const, label: "Toggles" },
     { id: "dialogs" as const, label: "Dialogs" },
+    { id: "alert-dialog" as const, label: "Alert Dialog" },
+    { id: "aspect-ratio" as const, label: "Aspect Ratio" },
     { id: "avatars" as const, label: "Avatars" },
     { id: "tabs" as const, label: "Tabs" },
     { id: "tables" as const, label: "Tables" },
+    { id: "data-table" as const, label: "Data Table" },
     { id: "dropdown-menus" as const, label: "Dropdown Menus" },
     { id: "drop-drawer" as const, label: "Drop Drawer" },
+    { id: "country-dropdown" as const, label: "Country Dropdown" },
     { id: "skeletons" as const, label: "Skeletons" },
     { id: "app-frame" as const, label: "App Frame" },
   ];
@@ -146,11 +154,15 @@ function App() {
           {activeSection === "switches" && <SwitchPreview />}
           {activeSection === "toggles" && <TogglePreview />}
           {activeSection === "dialogs" && <DialogPreview />}
+          {activeSection === "alert-dialog" && <AlertDialogPreview />}
+          {activeSection === "aspect-ratio" && <AspectRatioPreview />}
           {activeSection === "avatars" && <AvatarPreview />}
           {activeSection === "tabs" && <TabsPreview />}
           {activeSection === "tables" && <TablePreview />}
+          {activeSection === "data-table" && <DataTablePreview />}
           {activeSection === "dropdown-menus" && <DropdownMenuShowcase />}
           {activeSection === "drop-drawer" && <DropDrawerPreview />}
+          {activeSection === "country-dropdown" && <CountryDropdownPreview />}
           {activeSection === "skeletons" && <SkeletonPreview />}
           {activeSection === "app-frame" && <AppFramePreview />}
         </main>
