@@ -32,9 +32,10 @@ import { AppFramePreview } from "./components/previews/app-frame-preview";
 import { DropdownMenuShowcase } from "./components/previews/dropdown-menu-showcase";
 import { FormPreview } from "./components/previews/form-preview";
 import { SkeletonPreview } from "./components/previews/skeleton-preview";
+import { DropDrawerPreview } from "./components/previews/drop-drawer-preview";
 import { Toaster } from "./components/ui/toast";
 
-type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs" | "inputs" | "forms" | "checkboxes" | "radio-groups" | "selects" | "accordions" | "alerts" | "badges" | "calendars" | "comboboxes" | "hover-cards" | "pagination" | "sheets" | "sliders" | "toasts" | "switches" | "toggles" | "dialogs" | "avatars" | "tabs" | "tables" | "dropdown-menus" | "skeletons" | "app-frame";
+type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs" | "inputs" | "forms" | "checkboxes" | "radio-groups" | "selects" | "accordions" | "alerts" | "badges" | "calendars" | "comboboxes" | "hover-cards" | "pagination" | "sheets" | "sliders" | "toasts" | "switches" | "toggles" | "dialogs" | "avatars" | "tabs" | "tables" | "dropdown-menus" | "drop-drawer" | "skeletons" | "app-frame";
 
 function App() {
   const [activeSection, setActiveSection] = useState<Section>("buttons");
@@ -71,6 +72,7 @@ function App() {
     { id: "tabs" as const, label: "Tabs" },
     { id: "tables" as const, label: "Tables" },
     { id: "dropdown-menus" as const, label: "Dropdown Menus" },
+    { id: "drop-drawer" as const, label: "Drop Drawer" },
     { id: "skeletons" as const, label: "Skeletons" },
     { id: "app-frame" as const, label: "App Frame" },
   ];
@@ -78,7 +80,7 @@ function App() {
   return (
     <div className="flex h-screen bg-[var(--color-surface-base)]">
       {/* Left Navigation */}
-      <nav className="fixed top-0 left-0 z-40 h-screen w-32 border-r border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-md)]">
+      <nav className="fixed top-0 left-0 z-40 h-screen w-32 border-r border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-md)] overflow-y-auto">
         <ul className="space-y-[var(--space-xsm)]">
           {sections.map((section) => (
             <li key={section.id}>
@@ -148,6 +150,7 @@ function App() {
           {activeSection === "tabs" && <TabsPreview />}
           {activeSection === "tables" && <TablePreview />}
           {activeSection === "dropdown-menus" && <DropdownMenuShowcase />}
+          {activeSection === "drop-drawer" && <DropDrawerPreview />}
           {activeSection === "skeletons" && <SkeletonPreview />}
           {activeSection === "app-frame" && <AppFramePreview />}
         </main>

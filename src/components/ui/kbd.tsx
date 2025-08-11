@@ -11,13 +11,11 @@ const kbdVariants = cva(
           "bg-grey-25/50",
           "text-[var(--color-text-secondary)]",
           "border border-[var(--color-border-primary-subtle)]",
-          "shadow-[0_1px_0_0_var(--grey-50)]",
         ],
         dark: [
           "bg-grey-800/50",
           "text-[var(--grey-200)]",
           "border border-[var(--grey-alpha-400)]",
-          "shadow-[0_1px_0_0_var(--grey-alpha-400)]",
         ],
       },
       size: {

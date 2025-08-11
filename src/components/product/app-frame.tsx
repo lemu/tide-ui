@@ -129,6 +129,26 @@ const sidebarData = {
         isActive: false,
       },
     ],
+    boards: [
+      {
+        title: "Untitled board 1",
+        icon: "layout-dashboard",
+        url: "#",
+        isActive: false,
+      },
+      {
+        title: "Untitled board 2",
+        icon: "layout-dashboard",
+        url: "#",
+        isActive: false,
+      },
+      {
+        title: "Untitled board 3",
+        icon: "layout-dashboard",
+        url: "#",
+        isActive: false,
+      },
+    ],
     support: [
       {
         title: "Notifications",
@@ -176,7 +196,7 @@ function CombinedSwitcher({ user, teams }: CombinedSwitcherProps) {
                   </AvatarFallback>
                 </Avatar>
                 {/* User Avatar Overlay */}
-                <div className="absolute -right-1 -bottom-1 border-2 border-white rounded-full">
+                <div className="absolute -right-1 -bottom-1 rounded-full border-2 border-white">
                   <Avatar size="xs" shape="circle">
                     <AvatarImage src={user.avatar} alt={user.name} />
                     <AvatarFallback variant="primary">
@@ -217,7 +237,7 @@ function CombinedSwitcher({ user, teams }: CombinedSwitcherProps) {
                 </AvatarFallback>
               </Avatar>
               {/* User Avatar Overlay - bigger */}
-              <div className="absolute -right-0.5 -bottom-0.5 border border-white rounded-full">
+              <div className="absolute -right-0.5 -bottom-0.5 rounded-full border border-white">
                 <Avatar size="sm" shape="circle" className="h-4 w-4">
                   <AvatarImage src={user.avatar} alt={user.name} />
                   <AvatarFallback variant="primary" className="text-[7px]">
@@ -583,6 +603,51 @@ function AppSidebar(props: AppSidebarProps) {
           </SidebarGroupContent>
         </SidebarGroup>
 
+        {/* Separator between Intelligence and Boards in collapsed state */}
+        <div className="my-2 hidden justify-center px-2 group-data-[collapsible=icon]:flex">
+          <Separator layout="vertical" />
+        </div>
+
+        {/* Boards Section */}
+        <SidebarGroup className="-mt-2 px-2">
+          <SidebarGroupLabel className="px-2 py-1 pb-1.5 text-[12px] font-medium text-[var(--color-text-tertiary)] group-data-[collapsible=icon]:hidden">
+            Boards
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {sidebarData.navigation.boards.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton
+                    isActive={item.isActive}
+                    className="text-body-medium-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
+                    onClick={() => console.log(`Navigate to ${item.title}`)}
+                  >
+                    <Icon
+                      name={item.icon as any}
+                      size="sm"
+                      className={
+                        item.isActive ? "text-[var(--color-text-brand)]" : ""
+                      }
+                    />
+                    <span>{item.title}</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+              {/* Show all boards link */}
+
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  className="text-body-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
+                  onClick={() => console.log("Navigate to Show all boards")}
+                >
+                  <Icon name="more-horizontal" size="sm" />
+                  <span>Show all</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
         {/* Spacer to push support section to bottom */}
         <div className="min-h-[var(--space-lg)] flex-1" />
 
@@ -623,35 +688,59 @@ function AppSidebar(props: AppSidebarProps) {
             <CommandItem onSelect={() => window.location.reload()}>
               <Icon name="rotate-ccw" size="sm" className="mr-2" />
               <span>Reload Page</span>
-              <span className="ml-auto text-caption-sm text-[var(--color-text-tertiary)]">⌘R</span>
+              <span className="text-caption-sm ml-auto text-[var(--color-text-tertiary)]">
+                ⌘R
+              </span>
             </CommandItem>
             <CommandItem onSelect={() => setCommandOpen(false)}>
               <Icon name="search" size="sm" className="mr-2" />
               <span>Search</span>
-              <span className="ml-auto text-caption-sm text-[var(--color-text-tertiary)]">⌘K</span>
+              <span className="text-caption-sm ml-auto text-[var(--color-text-tertiary)]">
+                ⌘K
+              </span>
             </CommandItem>
             <CommandItem onSelect={() => window.print()}>
               <Icon name="printer" size="sm" className="mr-2" />
               <span>Print Page</span>
-              <span className="ml-auto text-caption-sm text-[var(--color-text-tertiary)]">⌘P</span>
+              <span className="text-caption-sm ml-auto text-[var(--color-text-tertiary)]">
+                ⌘P
+              </span>
             </CommandItem>
           </CommandGroup>
 
           <CommandGroup heading="Navigation">
             {sidebarData.navigation.main.map((item) => (
-              <CommandItem key={item.title} onSelect={() => setCommandOpen(false)}>
+              <CommandItem
+                key={item.title}
+                onSelect={() => setCommandOpen(false)}
+              >
                 <Icon name={item.icon as any} size="sm" className="mr-2" />
                 <span>{item.title}</span>
               </CommandItem>
             ))}
             {sidebarData.navigation.management.map((item) => (
-              <CommandItem key={item.title} onSelect={() => setCommandOpen(false)}>
+              <CommandItem
+                key={item.title}
+                onSelect={() => setCommandOpen(false)}
+              >
                 <Icon name={item.icon as any} size="sm" className="mr-2" />
                 <span>{item.title}</span>
               </CommandItem>
             ))}
             {sidebarData.navigation.intelligence.map((item) => (
-              <CommandItem key={item.title} onSelect={() => setCommandOpen(false)}>
+              <CommandItem
+                key={item.title}
+                onSelect={() => setCommandOpen(false)}
+              >
+                <Icon name={item.icon as any} size="sm" className="mr-2" />
+                <span>{item.title}</span>
+              </CommandItem>
+            ))}
+            {sidebarData.navigation.boards.map((item) => (
+              <CommandItem
+                key={item.title}
+                onSelect={() => setCommandOpen(false)}
+              >
                 <Icon name={item.icon as any} size="sm" className="mr-2" />
                 <span>{item.title}</span>
               </CommandItem>
@@ -660,7 +749,10 @@ function AppSidebar(props: AppSidebarProps) {
 
           <CommandGroup heading="Settings">
             {sidebarData.navigation.support.map((item) => (
-              <CommandItem key={item.title} onSelect={() => setCommandOpen(false)}>
+              <CommandItem
+                key={item.title}
+                onSelect={() => setCommandOpen(false)}
+              >
                 <Icon name={item.icon as any} size="sm" className="mr-2" />
                 <span>{item.title}</span>
               </CommandItem>
@@ -669,7 +761,10 @@ function AppSidebar(props: AppSidebarProps) {
 
           <CommandGroup heading="Switch Team">
             {sidebarData.teams.map((team) => (
-              <CommandItem key={team.name} onSelect={() => setCommandOpen(false)}>
+              <CommandItem
+                key={team.name}
+                onSelect={() => setCommandOpen(false)}
+              >
                 <div className="mr-2 h-4 w-4 overflow-hidden rounded-sm">
                   <img
                     src={team.logo}
