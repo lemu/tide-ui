@@ -48,6 +48,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 // Data structure for sidebar
 const sidebarData = {
@@ -85,15 +91,15 @@ const sidebarData = {
         title: "Trade desk",
         icon: "trending-up",
         url: "#",
-        isActive: true,
+        isActive: false,
         items: [
           {
-            title: "New Order",
+            title: "New order",
             url: "#",
             isActive: true,
           },
           {
-            title: "Mailing List",
+            title: "Mailing list",
             url: "#",
           },
         ],
@@ -156,12 +162,29 @@ const sidebarData = {
         url: "#",
       },
       {
-        title: "Help & Support",
+        title: "Help & support",
         icon: "circle-help",
         url: "#",
       },
     ],
   },
+};
+
+// Helper function to check if any child item is active
+const hasActiveChild = (item: any) => {
+  return item.items && item.items.some((subItem: any) => subItem.isActive);
+};
+
+// Helper function to get tooltip text for menu items
+const getTooltipText = (item: any) => {
+  // If item has subitems, check if any subitem is active
+  if (item.items && item.items.length > 0) {
+    const activeSubitem = item.items.find((subItem: any) => subItem.isActive);
+    if (activeSubitem) {
+      return `${item.title} → ${activeSubitem.title}`;
+    }
+  }
+  return item.title;
 };
 
 // Combined User/Team Switcher Component
@@ -378,12 +401,13 @@ function AppSidebar(props: AppSidebarProps) {
   };
 
   return (
-    <Sidebar
-      variant="sidebar"
-      collapsible="icon"
-      className="h-full border-r border-[var(--color-border-primary-subtle)] [&>div]:transition-[width] [&>div]:duration-75"
-      {...props}
-    >
+    <TooltipProvider delayDuration={100}>
+      <Sidebar
+        variant="sidebar"
+        collapsible="icon"
+        className="h-full border-r border-[var(--color-border-primary-subtle)] [&>div]:transition-[width] [&>div]:duration-75"
+        {...props}
+      >
       {/* Header with Company Logo */}
       <SidebarHeader className="border-b border-[var(--color-border-primary-subtle)] p-[var(--space-md)] group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2">
         <div className="flex h-[22px] w-7 items-center justify-center">
@@ -441,14 +465,28 @@ function AppSidebar(props: AppSidebarProps) {
             <SidebarMenu>
               {sidebarData.navigation.main.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    isActive={item.isActive}
-                    className="text-body-medium-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
-                    onClick={() => console.log(`Navigate to ${item.title}`)}
-                  >
-                    <Icon name={item.icon as any} size="sm" />
-                    <span>{item.title}</span>
-                  </SidebarMenuButton>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <SidebarMenuButton
+                        isActive={item.isActive}
+                        className="text-body-medium-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
+                        onClick={() => console.log(`Navigate to ${item.title}`)}
+                      >
+                        <Icon 
+                          name={item.icon as any} 
+                          size="sm" 
+                          color={item.isActive ? "brand" : undefined}
+                        />
+                        <span>{item.title}</span>
+                      </SidebarMenuButton>
+                    </TooltipTrigger>
+                    <TooltipContent 
+                      side="right" 
+                      className="group-data-[collapsible=icon]:block group-data-[collapsible=off]:hidden"
+                    >
+                      {getTooltipText(item)}
+                    </TooltipContent>
+                  </Tooltip>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
@@ -478,7 +516,11 @@ function AppSidebar(props: AppSidebarProps) {
                           className="text-body-medium-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
                           onClick={() => toggleExpanded(item.title)}
                         >
-                          <Icon name={item.icon as any} size="sm" />
+                          <Icon 
+                            name={item.icon as any} 
+                            size="sm" 
+                            color={(item.isActive && !item.items?.length) ? "brand" : undefined}
+                          />
                           <span>{item.title}</span>
                           <Icon
                             name="chevron-right"
@@ -493,14 +535,25 @@ function AppSidebar(props: AppSidebarProps) {
                       {/* Collapsed state - dropdown with submenu */}
                       <div className="hidden group-data-[collapsible=icon]:block">
                         <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <SidebarMenuButton
-                              isActive={item.isActive}
-                              className="text-body-medium-md w-full cursor-pointer justify-center px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
-                            >
-                              <Icon name={item.icon as any} size="sm" />
-                            </SidebarMenuButton>
-                          </DropdownMenuTrigger>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <DropdownMenuTrigger asChild>
+                                <SidebarMenuButton
+                                  isActive={hasActiveChild(item)}
+                                  className="text-body-medium-md w-full cursor-pointer justify-center px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
+                                >
+                                  <Icon 
+                                    name={item.icon as any} 
+                                    size="sm" 
+                                    color={hasActiveChild(item) ? "brand" : undefined}
+                                  />
+                                </SidebarMenuButton>
+                              </DropdownMenuTrigger>
+                            </TooltipTrigger>
+                            <TooltipContent side="right">
+                              {getTooltipText(item)}
+                            </TooltipContent>
+                          </Tooltip>
                           <DropdownMenuContent
                             side="right"
                             sideOffset={8}
@@ -530,14 +583,28 @@ function AppSidebar(props: AppSidebarProps) {
                       </div>
                     </>
                   ) : (
-                    <SidebarMenuButton
-                      isActive={item.isActive}
-                      className="text-body-medium-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
-                      onClick={() => console.log(`Navigate to ${item.title}`)}
-                    >
-                      <Icon name={item.icon as any} size="sm" />
-                      <span>{item.title}</span>
-                    </SidebarMenuButton>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <SidebarMenuButton
+                          isActive={item.isActive}
+                          className="text-body-medium-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
+                          onClick={() => console.log(`Navigate to ${item.title}`)}
+                        >
+                          <Icon 
+                            name={item.icon as any} 
+                            size="sm" 
+                            color={item.isActive ? "brand" : undefined}
+                          />
+                          <span>{item.title}</span>
+                        </SidebarMenuButton>
+                      </TooltipTrigger>
+                      <TooltipContent 
+                        side="right" 
+                        className="group-data-[collapsible=icon]:block group-data-[collapsible=off]:hidden"
+                      >
+                        {getTooltipText(item)}
+                      </TooltipContent>
+                    </Tooltip>
                   )}
                   {item.items &&
                     item.items.length > 0 &&
@@ -589,14 +656,28 @@ function AppSidebar(props: AppSidebarProps) {
             <SidebarMenu>
               {sidebarData.navigation.intelligence.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    isActive={item.isActive}
-                    className="text-body-medium-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
-                    onClick={() => console.log(`Navigate to ${item.title}`)}
-                  >
-                    <Icon name={item.icon as any} size="sm" />
-                    <span>{item.title}</span>
-                  </SidebarMenuButton>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <SidebarMenuButton
+                        isActive={item.isActive}
+                        className="text-body-medium-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
+                        onClick={() => console.log(`Navigate to ${item.title}`)}
+                      >
+                        <Icon 
+                          name={item.icon as any} 
+                          size="sm" 
+                          color={item.isActive ? "brand" : undefined}
+                        />
+                        <span>{item.title}</span>
+                      </SidebarMenuButton>
+                    </TooltipTrigger>
+                    <TooltipContent 
+                      side="right" 
+                      className="group-data-[collapsible=icon]:block group-data-[collapsible=off]:hidden"
+                    >
+                      {getTooltipText(item)}
+                    </TooltipContent>
+                  </Tooltip>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
@@ -617,32 +698,50 @@ function AppSidebar(props: AppSidebarProps) {
             <SidebarMenu>
               {sidebarData.navigation.boards.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    isActive={item.isActive}
-                    className="text-body-medium-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
-                    onClick={() => console.log(`Navigate to ${item.title}`)}
-                  >
-                    <Icon
-                      name={item.icon as any}
-                      size="sm"
-                      className={
-                        item.isActive ? "text-[var(--color-text-brand)]" : ""
-                      }
-                    />
-                    <span>{item.title}</span>
-                  </SidebarMenuButton>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <SidebarMenuButton
+                        isActive={item.isActive}
+                        className="text-body-medium-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
+                        onClick={() => console.log(`Navigate to ${item.title}`)}
+                      >
+                        <Icon
+                          name={item.icon as any}
+                          size="sm"
+                          color={item.isActive ? "brand" : undefined}
+                        />
+                        <span>{item.title}</span>
+                      </SidebarMenuButton>
+                    </TooltipTrigger>
+                    <TooltipContent 
+                      side="right" 
+                      className="group-data-[collapsible=icon]:block group-data-[collapsible=off]:hidden"
+                    >
+                      {getTooltipText(item)}
+                    </TooltipContent>
+                  </Tooltip>
                 </SidebarMenuItem>
               ))}
               {/* Show all boards link */}
 
               <SidebarMenuItem>
-                <SidebarMenuButton
-                  className="text-body-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
-                  onClick={() => console.log("Navigate to Show all boards")}
-                >
-                  <Icon name="more-horizontal" size="sm" />
-                  <span>Show all</span>
-                </SidebarMenuButton>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <SidebarMenuButton
+                      className="text-body-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
+                      onClick={() => console.log("Navigate to Show all boards")}
+                    >
+                      <Icon name="more-horizontal" size="sm" />
+                      <span>Show all</span>
+                    </SidebarMenuButton>
+                  </TooltipTrigger>
+                  <TooltipContent 
+                    side="right" 
+                    className="group-data-[collapsible=icon]:block group-data-[collapsible=off]:hidden"
+                  >
+                    Show all
+                  </TooltipContent>
+                </Tooltip>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
@@ -657,13 +756,28 @@ function AppSidebar(props: AppSidebarProps) {
             <SidebarMenu>
               {sidebarData.navigation.support.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    className="text-body-medium-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
-                    onClick={() => console.log(`Open ${item.title}`)}
-                  >
-                    <Icon name={item.icon as any} size="sm" />
-                    <span>{item.title}</span>
-                  </SidebarMenuButton>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <SidebarMenuButton
+                        isActive={item.isActive}
+                        className="text-body-medium-md cursor-pointer px-2 py-1.5 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
+                        onClick={() => console.log(`Open ${item.title}`)}
+                      >
+                        <Icon 
+                          name={item.icon as any} 
+                          size="sm" 
+                          color={item.isActive ? "brand" : undefined}
+                        />
+                        <span>{item.title}</span>
+                      </SidebarMenuButton>
+                    </TooltipTrigger>
+                    <TooltipContent 
+                      side="right" 
+                      className="group-data-[collapsible=icon]:block group-data-[collapsible=off]:hidden"
+                    >
+                      {getTooltipText(item)}
+                    </TooltipContent>
+                  </Tooltip>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
@@ -779,6 +893,7 @@ function AppSidebar(props: AppSidebarProps) {
         </CommandList>
       </CommandDialog>
     </Sidebar>
+    </TooltipProvider>
   );
 }
 

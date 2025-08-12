@@ -37,9 +37,10 @@ import { AlertDialogPreview } from "./components/previews/alert-dialog-preview";
 import { AspectRatioPreview } from "./components/previews/aspect-ratio-preview";
 import { DataTablePreview } from "./components/previews/data-table-preview";
 import { CountryDropdownPreview } from "./components/previews/country-dropdown-preview";
+import { ChartPreview } from "./components/previews/chart-preview";
 import { Toaster } from "./components/ui/toast";
 
-type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs" | "inputs" | "forms" | "checkboxes" | "radio-groups" | "selects" | "accordions" | "alerts" | "badges" | "calendars" | "comboboxes" | "hover-cards" | "pagination" | "sheets" | "sliders" | "toasts" | "switches" | "toggles" | "dialogs" | "alert-dialog" | "aspect-ratio" | "avatars" | "tabs" | "tables" | "data-table" | "dropdown-menus" | "drop-drawer" | "country-dropdown" | "skeletons" | "app-frame";
+type Section = "typography" | "icons" | "buttons" | "cards" | "separators" | "text-links" | "tooltips" | "kbd" | "breadcrumbs" | "inputs" | "forms" | "checkboxes" | "radio-groups" | "selects" | "accordions" | "alerts" | "badges" | "calendars" | "comboboxes" | "hover-cards" | "pagination" | "sheets" | "sliders" | "toasts" | "switches" | "toggles" | "dialogs" | "alert-dialog" | "aspect-ratio" | "avatars" | "tabs" | "tables" | "data-table" | "dropdown-menus" | "drop-drawer" | "country-dropdown" | "charts" | "skeletons" | "app-frame";
 
 function App() {
   const [activeSection, setActiveSection] = useState<Section>("buttons");
@@ -81,6 +82,7 @@ function App() {
     { id: "dropdown-menus" as const, label: "Dropdown Menus" },
     { id: "drop-drawer" as const, label: "Drop Drawer" },
     { id: "country-dropdown" as const, label: "Country Dropdown" },
+    { id: "charts" as const, label: "Charts" },
     { id: "skeletons" as const, label: "Skeletons" },
     { id: "app-frame" as const, label: "App Frame" },
   ];
@@ -163,6 +165,7 @@ function App() {
           {activeSection === "dropdown-menus" && <DropdownMenuShowcase />}
           {activeSection === "drop-drawer" && <DropDrawerPreview />}
           {activeSection === "country-dropdown" && <CountryDropdownPreview />}
+          {activeSection === "charts" && <ChartPreview />}
           {activeSection === "skeletons" && <SkeletonPreview />}
           {activeSection === "app-frame" && <AppFramePreview />}
         </main>
