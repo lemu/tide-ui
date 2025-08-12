@@ -3,46 +3,130 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-sm border px-[var(--space-sm)] py-[var(--space-xsm)] text-caption-medium-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-1",
+  "inline-flex items-center rounded-sm px-[var(--space-sm)] py-[var(--space-xsm)] text-caption-medium-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-1 cursor-default",
   {
     variants: {
-      variant: {
-        default: [
-          "border-transparent bg-[var(--color-background-brand)] text-[var(--color-text-on-action)] shadow-xs",
-          "hover:bg-[var(--color-background-brand-hovered)]"
-        ],
-        secondary: [
-          "border-transparent bg-[var(--color-background-neutral-subtle)] text-[var(--color-text-primary)]",
-          "hover:bg-[var(--color-background-neutral-subtle-hovered)]"
-        ],
-        success: [
-          "border-transparent bg-[var(--color-background-success)] text-[var(--color-text-on-success)] shadow-xs",
-          "hover:bg-[var(--color-background-success-hovered)]"
-        ],
-        warning: [
-          "border-transparent bg-[var(--color-background-warning)] text-[var(--color-text-on-warning)] shadow-xs",
-          "hover:bg-[var(--color-background-warning-hovered)]"
-        ],
-        destructive: [
-          "border-transparent bg-[var(--color-background-error)] text-[var(--color-text-on-error)] shadow-xs",
-          "hover:bg-[var(--color-background-error-hovered)]"
-        ],
-        outline: [
-          "border-[var(--color-border-primary-subtle)] bg-transparent text-[var(--color-text-primary)]",
-          "hover:bg-[var(--color-background-neutral-subtle-hovered)]"
-        ],
+      intent: {
+        neutral: "",
+        brand: "",
+        success: "",
+        warning: "",
+        destructive: "",
+      },
+      appearance: {
+        solid: "border-transparent",
+        subtle: "border-transparent",
+        outline: "bg-transparent",
       },
       size: {
-        sm: "px-[var(--space-xsm)] py-[1px] text-caption-medium-xsm",
-        md: "px-[var(--space-sm)] py-[var(--space-xsm)] text-caption-medium-sm",
-        lg: "px-[var(--space-md)] py-[var(--space-sm)] text-body-medium-sm",
+        sm: "px-[var(--space-xsm)] h-5 [&]:text-body-strong-xsm",
+        md: "px-[var(--space-sm)] h-6 [&]:text-body-strong-sm",
+        lg: "px-[var(--space-md)] h-7 [&]:text-body-strong-md",
       },
     },
+    compoundVariants: [
+      // Neutral intent variants
+      {
+        intent: "neutral",
+        appearance: "solid",
+        class:
+          "border-transparent bg-[var(--grey-600)] text-[var(--color-text-inverse)]",
+      },
+      {
+        intent: "neutral",
+        appearance: "subtle",
+        class:
+          "border-transparent bg-[var(--grey-100)] text-[var(--color-text-primary)]",
+      },
+      {
+        intent: "neutral",
+        appearance: "outline",
+        class:
+          "border border-[var(--color-border-primary-strong)] text-[var(--color-text-primary)]",
+      },
+      // Brand intent variants
+      {
+        intent: "brand",
+        appearance: "solid",
+        class:
+          "border-transparent bg-[var(--color-background-brand)] text-[var(--color-text-inverse)]",
+      },
+      {
+        intent: "brand",
+        appearance: "subtle",
+        class:
+          "border-transparent bg-[var(--blue-50)] text-[var(--color-text-brand)]",
+      },
+      {
+        intent: "brand",
+        appearance: "outline",
+        class:
+          "border border-[var(--color-blue-300)] text-[var(--color-text-brand)]",
+      },
+      // Success intent variants
+      {
+        intent: "success",
+        appearance: "solid",
+        class:
+          "border-transparent bg-[var(--color-background-success-bold)] text-[var(--color-text-inverse)]",
+      },
+      {
+        intent: "success",
+        appearance: "subtle",
+        class:
+          "border-transparent bg-[var(--color-background-success)] text-[var(--color-text-success)]",
+      },
+      {
+        intent: "success",
+        appearance: "outline",
+        class:
+          "border border-[var(--color-border-success)] text-[var(--color-text-success)]",
+      },
+      // Warning intent variants
+      {
+        intent: "warning",
+        appearance: "solid",
+        class:
+          "border-transparent bg-[var(--color-background-warning-bold)] text-[var(--color-text-inverse)]",
+      },
+      {
+        intent: "warning",
+        appearance: "subtle",
+        class:
+          "border-transparent bg-[var(--color-background-warning)] text-[var(--color-text-warning)]",
+      },
+      {
+        intent: "warning",
+        appearance: "outline",
+        class:
+          "border border-[var(--color-border-warning)] text-[var(--color-text-warning)]",
+      },
+      // Destructive intent variants
+      {
+        intent: "destructive",
+        appearance: "solid",
+        class:
+          "border-transparent bg-[var(--color-background-error-bold)] text-[var(--color-text-inverse)]",
+      },
+      {
+        intent: "destructive",
+        appearance: "subtle",
+        class:
+          "border-transparent bg-[var(--color-background-error)] text-[var(--color-text-error)]",
+      },
+      {
+        intent: "destructive",
+        appearance: "outline",
+        class:
+          "border border-[var(--color-border-error)] text-[var(--color-text-error)]",
+      },
+    ],
     defaultVariants: {
-      variant: "default",
+      intent: "neutral",
+      appearance: "subtle",
       size: "md",
     },
-  }
+  },
 );
 
 export interface BadgeProps
@@ -50,15 +134,15 @@ export interface BadgeProps
     VariantProps<typeof badgeVariants> {}
 
 const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
-  ({ className, variant, size, ...props }, ref) => {
+  ({ className, intent, appearance, size, ...props }, ref) => {
     return (
       <div
         ref={ref}
-        className={cn(badgeVariants({ variant, size }), className)}
+        className={cn(badgeVariants({ intent, appearance, size }), className)}
         {...props}
       />
     );
-  }
+  },
 );
 Badge.displayName = "Badge";
 

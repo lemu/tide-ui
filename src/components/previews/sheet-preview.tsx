@@ -75,7 +75,7 @@ export function SheetPreview() {
                   </div>
                   <SheetFooter>
                     <SheetClose asChild>
-                      <Button variant="outline">Close</Button>
+                      <Button variant="ghost">Close</Button>
                     </SheetClose>
                   </SheetFooter>
                 </SheetContent>
@@ -94,7 +94,7 @@ export function SheetPreview() {
             <CardContent>
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="outline">Open Left Sheet</Button>
+                  <Button variant="ghost">Open Left Sheet</Button>
                 </SheetTrigger>
                 <SheetContent side="left">
                   <SheetHeader>
@@ -161,7 +161,7 @@ export function SheetPreview() {
                             Your application has been deployed to production.
                           </div>
                         </div>
-                        <Badge variant="success" size="small">New</Badge>
+                        <Badge variant="success" size="sm">New</Badge>
                       </div>
                       <Separator />
                       <div className="flex items-start gap-[var(--space-md)]">
@@ -202,19 +202,19 @@ export function SheetPreview() {
                   </SheetHeader>
                   <div className="py-[var(--space-lg)]">
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-[var(--space-md)]">
-                      <Button variant="outline" className="flex flex-col gap-[var(--space-sm)] h-auto py-[var(--space-md)]">
+                      <Button variant="ghost" className="flex flex-col gap-[var(--space-sm)] h-auto py-[var(--space-md)]">
                         <Icon name="plus" size="md" />
                         <span className="text-caption-sm">Create</span>
                       </Button>
-                      <Button variant="outline" className="flex flex-col gap-[var(--space-sm)] h-auto py-[var(--space-md)]">
+                      <Button variant="ghost" className="flex flex-col gap-[var(--space-sm)] h-auto py-[var(--space-md)]">
                         <Icon name="share" size="md" />
                         <span className="text-caption-sm">Share</span>
                       </Button>
-                      <Button variant="outline" className="flex flex-col gap-[var(--space-sm)] h-auto py-[var(--space-md)]">
+                      <Button variant="ghost" className="flex flex-col gap-[var(--space-sm)] h-auto py-[var(--space-md)]">
                         <Icon name="bookmark" size="md" />
                         <span className="text-caption-sm">Save</span>
                       </Button>
-                      <Button variant="outline" className="flex flex-col gap-[var(--space-sm)] h-auto py-[var(--space-md)]">
+                      <Button variant="ghost" className="flex flex-col gap-[var(--space-sm)] h-auto py-[var(--space-md)]">
                         <Icon name="send" size="md" />
                         <span className="text-caption-sm">Send</span>
                       </Button>
@@ -281,7 +281,7 @@ export function SheetPreview() {
                   </form>
                   <SheetFooter>
                     <SheetClose asChild>
-                      <Button variant="outline">Cancel</Button>
+                      <Button variant="ghost">Cancel</Button>
                     </SheetClose>
                     <Button onClick={() => setIsProfileOpen(false)}>Save Changes</Button>
                   </SheetFooter>
@@ -301,7 +301,7 @@ export function SheetPreview() {
             <CardContent>
               <Sheet open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="outline" className="flex items-center gap-[var(--space-sm)]">
+                  <Button variant="ghost" className="flex items-center gap-[var(--space-sm)]">
                     <Icon name="settings" size="sm" />
                     Settings
                   </Button>
@@ -358,7 +358,7 @@ export function SheetPreview() {
                   </div>
                   <SheetFooter>
                     <Button 
-                      variant="outline" 
+                      variant="ghost" 
                       onClick={() => setIsSettingsOpen(false)}
                     >
                       Done
@@ -387,7 +387,7 @@ export function SheetPreview() {
             <CardContent>
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="outline" size="sm">Open Narrow</Button>
+                  <Button variant="ghost" size="sm">Open Narrow</Button>
                 </SheetTrigger>
                 <SheetContent className="w-[300px] sm:w-[300px]">
                   <SheetHeader>
@@ -428,7 +428,7 @@ export function SheetPreview() {
             <CardContent>
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="outline" size="sm">Open Medium</Button>
+                  <Button variant="ghost" size="sm">Open Medium</Button>
                 </SheetTrigger>
                 <SheetContent className="w-[400px] sm:w-[400px]">
                   <SheetHeader>
@@ -464,7 +464,7 @@ export function SheetPreview() {
             <CardContent>
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="outline" size="sm">Open Wide</Button>
+                  <Button variant="ghost" size="sm">Open Wide</Button>
                 </SheetTrigger>
                 <SheetContent className="w-[600px] sm:w-[600px]">
                   <SheetHeader>

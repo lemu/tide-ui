@@ -30,9 +30,9 @@ export function AvatarPreview() {
               <div className="space-y-[var(--space-md)]">
                 <div className="text-body-medium-sm">Different Sizes</div>
                 <div className="flex items-center gap-[var(--space-md)]">
-                  <Avatar size="xs">
+                  <Avatar size="sm">
                     <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=20&h=20&fit=crop&crop=face" alt="User XS" />
-                    <AvatarFallback size="xs">XS</AvatarFallback>
+                    <AvatarFallback size="sm">XS</AvatarFallback>
                   </Avatar>
                   <Avatar size="sm">
                     <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="User 1" />
@@ -127,8 +127,8 @@ export function AvatarPreview() {
               <div className="space-y-[var(--space-md)]">
                 <div className="text-body-medium-sm">Different Sizes</div>
                 <div className="flex items-center gap-[var(--space-md)]">
-                  <Avatar size="xs">
-                    <AvatarFallback size="xs" variant="secondary">XS</AvatarFallback>
+                  <Avatar size="sm">
+                    <AvatarFallback size="sm" variant="secondary">XS</AvatarFallback>
                   </Avatar>
                   <Avatar size="sm">
                     <AvatarFallback size="sm" variant="primary">S</AvatarFallback>
@@ -290,8 +290,8 @@ export function AvatarPreview() {
               <div className="space-y-[var(--space-md)]">
                 <div className="text-body-medium-sm">Different Sizes</div>
                 <div className="flex items-center gap-[var(--space-md)]">
-                  <Avatar size="xs" shape="rounded">
-                    <AvatarFallback size="xs" shape="rounded" variant="secondary">XS</AvatarFallback>
+                  <Avatar size="sm" shape="rounded">
+                    <AvatarFallback size="sm" shape="rounded" variant="secondary">XS</AvatarFallback>
                   </Avatar>
                   <Avatar size="sm" shape="rounded">
                     <AvatarFallback size="sm" shape="rounded" variant="primary">AC</AvatarFallback>
@@ -389,7 +389,7 @@ export function AvatarPreview() {
                 <div className="flex-1 space-y-[var(--space-sm)]">
                   <div className="flex items-center gap-[var(--space-sm)]">
                     <h3 className="text-body-medium-md">John Doe</h3>
-                    <Badge variant="success" size="small">Online</Badge>
+                    <Badge variant="success" size="sm">Online</Badge>
                   </div>
                   <p className="text-body-sm text-[var(--color-text-secondary)]">
                     Senior Product Designer at Acme Inc.
@@ -410,7 +410,7 @@ export function AvatarPreview() {
                 <div className="flex-1 space-y-[var(--space-sm)]">
                   <div className="flex items-center gap-[var(--space-sm)]">
                     <h3 className="text-body-medium-md">Sarah Wilson</h3>
-                    <Badge variant="warning" size="small">Away</Badge>
+                    <Badge variant="warning" size="sm">Away</Badge>
                   </div>
                   <p className="text-body-sm text-[var(--color-text-secondary)]">
                     Frontend Engineer at TechCorp
@@ -502,7 +502,7 @@ export function AvatarPreview() {
                       <div className="text-caption-sm text-[var(--color-text-secondary)]">Team Lead</div>
                     </div>
                   </div>
-                  <Badge variant="success" size="small">Admin</Badge>
+                  <Badge variant="success" size="sm">Admin</Badge>
                 </div>
 
                 <div className="flex items-center justify-between">
@@ -516,7 +516,7 @@ export function AvatarPreview() {
                       <div className="text-caption-sm text-[var(--color-text-secondary)]">Developer</div>
                     </div>
                   </div>
-                  <Badge variant="secondary" size="small">Member</Badge>
+                  <Badge variant="secondary" size="sm">Member</Badge>
                 </div>
 
                 <div className="flex items-center justify-between">
@@ -529,7 +529,7 @@ export function AvatarPreview() {
                       <div className="text-caption-sm text-[var(--color-text-secondary)]">Designer</div>
                     </div>
                   </div>
-                  <Badge variant="secondary" size="small">Member</Badge>
+                  <Badge variant="secondary" size="sm">Member</Badge>
                 </div>
 
                 <div className="flex items-center justify-between">
@@ -542,7 +542,7 @@ export function AvatarPreview() {
                       <div className="text-caption-sm text-[var(--color-text-secondary)]">Product Manager</div>
                     </div>
                   </div>
-                  <Badge variant="warning" size="small">Pending</Badge>
+                  <Badge variant="warning" size="sm">Pending</Badge>
                 </div>
               </div>
             </CardContent>

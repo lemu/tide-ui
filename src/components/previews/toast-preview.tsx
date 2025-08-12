@@ -154,7 +154,7 @@ export function ToastPreview() {
               <Button onClick={showBasicToast} className="w-full">
                 Show Basic Toast
               </Button>
-              <Button onClick={showToastWithDescription} variant="outline" className="w-full">
+              <Button onClick={showToastWithDescription} variant="ghost" className="w-full">
                 Toast with Description
               </Button>
               <Button onClick={showToastWithCloseButton} variant="ghost" className="w-full">
@@ -172,19 +172,19 @@ export function ToastPreview() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-[var(--space-md)]">
-              <Button onClick={showSuccessToast} variant="outline" className="w-full flex items-center gap-[var(--space-sm)]">
+              <Button onClick={showSuccessToast} variant="ghost" className="w-full flex items-center gap-[var(--space-sm)]">
                 <Icon name="check-circle" size="sm" color="success" />
                 Success Toast
               </Button>
-              <Button onClick={showErrorToast} variant="outline" className="w-full flex items-center gap-[var(--space-sm)]">
+              <Button onClick={showErrorToast} variant="ghost" className="w-full flex items-center gap-[var(--space-sm)]">
                 <Icon name="x" size="sm" color="error" />
                 Error Toast
               </Button>
-              <Button onClick={showWarningToast} variant="outline" className="w-full flex items-center gap-[var(--space-sm)]">
+              <Button onClick={showWarningToast} variant="ghost" className="w-full flex items-center gap-[var(--space-sm)]">
                 <Icon name="triangle-alert" size="sm" color="warning" />
                 Warning Toast
               </Button>
-              <Button onClick={showInfoToast} variant="outline" className="w-full flex items-center gap-[var(--space-sm)]">
+              <Button onClick={showInfoToast} variant="ghost" className="w-full flex items-center gap-[var(--space-sm)]">
                 <Icon name="info" size="sm" color="information" />
                 Info Toast
               </Button>
@@ -224,7 +224,7 @@ export function ToastPreview() {
                     },
                   });
                 }} 
-                variant="outline" 
+                variant="ghost" 
                 className="w-full"
               >
                 Toast with Action & Cancel
@@ -241,11 +241,11 @@ export function ToastPreview() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-[var(--space-md)]">
-              <Button onClick={showLoadingToast} variant="outline" className="w-full flex items-center gap-[var(--space-sm)]">
+              <Button onClick={showLoadingToast} variant="ghost" className="w-full flex items-center gap-[var(--space-sm)]">
                 <Icon name="rotate-ccw" size="sm" />
                 Loading Toast
               </Button>
-              <Button onClick={showPromiseToast} variant="outline" className="w-full flex items-center gap-[var(--space-sm)]">
+              <Button onClick={showPromiseToast} variant="ghost" className="w-full flex items-center gap-[var(--space-sm)]">
                 <Icon name="send" size="sm" />
                 Promise Toast
               </Button>
@@ -284,7 +284,7 @@ export function ToastPreview() {
                     </div>
                   ));
                 }} 
-                variant="outline" 
+                variant="ghost" 
                 className="w-full flex items-center gap-[var(--space-sm)]"
               >
                 <Icon name="star" size="sm" />
@@ -321,7 +321,7 @@ export function ToastPreview() {
                     id: id,
                   });
                 }} 
-                variant="outline" 
+                variant="ghost" 
                 className="w-full"
               >
                 Show Timestamped Toast
@@ -351,28 +351,28 @@ export function ToastPreview() {
               <div className="grid grid-cols-2 gap-[var(--space-sm)]">
                 <Button 
                   onClick={() => toast("Top Left", { position: "top-left" })} 
-                  variant="outline" 
+                  variant="ghost" 
                   size="sm"
                 >
                   Top Left
                 </Button>
                 <Button 
                   onClick={() => toast("Top Right", { position: "top-right" })} 
-                  variant="outline" 
+                  variant="ghost" 
                   size="sm"
                 >
                   Top Right
                 </Button>
                 <Button 
                   onClick={() => toast("Bottom Left", { position: "bottom-left" })} 
-                  variant="outline" 
+                  variant="ghost" 
                   size="sm"
                 >
                   Bottom Left
                 </Button>
                 <Button 
                   onClick={() => toast("Bottom Right", { position: "bottom-right" })} 
-                  variant="outline" 
+                  variant="ghost" 
                   size="sm"
                 >
                   Bottom Right
@@ -392,19 +392,19 @@ export function ToastPreview() {
             <CardContent className="space-y-[var(--space-md)]">
               <Button 
                 onClick={() => toast("Quick toast (1s)", { duration: 1000 })} 
-                variant="outline" 
+                variant="ghost" 
                 className="w-full"
               >
                 Quick Toast (1s)
               </Button>
               <Button 
                 onClick={() => toast("Long toast (10s)", { duration: 10000, closeButton: true })} 
-                variant="outline" 
+                variant="ghost" 
                 className="w-full"
               >
                 Long Toast (10s)
               </Button>
-              <Button onClick={showPersistentToast} variant="outline" className="w-full">
+              <Button onClick={showPersistentToast} variant="ghost" className="w-full">
                 Persistent Toast
               </Button>
               <Button onClick={dismissAllToasts} variant="destructive" className="w-full">
@@ -452,7 +452,7 @@ export function ToastPreview() {
                     },
                   });
                 }} 
-                variant="outline" 
+                variant="ghost" 
                 className="w-full"
               >
                 <Icon name="triangle-alert" size="sm" className="mr-[var(--space-sm)]" />
@@ -477,7 +477,7 @@ export function ToastPreview() {
                     icon: <Icon name="circle-check-big" size="sm" color="success" />,
                   });
                 }} 
-                variant="outline" 
+                variant="ghost" 
                 className="w-full"
               >
                 <Icon name="circle-check-big" size="sm" className="mr-[var(--space-sm)]" />
@@ -495,7 +495,7 @@ export function ToastPreview() {
                     duration: 8000,
                   });
                 }} 
-                variant="outline" 
+                variant="ghost" 
                 className="w-full"
               >
                 <Icon name="triangle-alert" size="sm" className="mr-[var(--space-sm)]" />

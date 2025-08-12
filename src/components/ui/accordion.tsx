@@ -11,7 +11,10 @@ const AccordionItem = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AccordionPrimitive.Item
     ref={ref}
-    className={cn("border-b border-[var(--color-border-primary-subtle)]", className)}
+    className={cn(
+      "border-b border-[var(--color-border-primary-subtle)]",
+      className,
+    )}
     {...props}
   />
 ));
@@ -25,13 +28,18 @@ const AccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "flex flex-1 items-center justify-between py-[var(--space-lg)] text-body-md font-medium transition-all hover:text-[var(--color-text-brand)] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 text-[var(--color-text-primary)] [&[data-state=open]>svg]:rotate-180",
-        className
+        "[&]:text-body-medium-md flex flex-1 cursor-pointer items-center justify-between py-[var(--space-lg)] text-left text-[var(--color-text-primary)] transition-all focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 focus-visible:outline-none [&[data-state=open]>svg]:rotate-180",
+        className,
       )}
       {...props}
     >
       {children}
-      <Icon name="chevron-down" size="sm" color="tertiary" className="shrink-0 transition-transform duration-200" />
+      <Icon
+        name="chevron-down"
+        size="md"
+        color="tertiary"
+        className="shrink-0 transition-transform duration-200"
+      />
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ));
@@ -44,12 +52,12 @@ const AccordionContent = React.forwardRef<
   <AccordionPrimitive.Content
     ref={ref}
     className={cn(
-      "overflow-hidden text-body-md text-[var(--color-text-secondary)] transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down",
-      className
+      "[&]:text-body-md data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-[var(--color-text-secondary)] transition-all",
+      className,
     )}
     {...props}
   >
-    <div className="pb-[var(--space-lg)] pt-0">{children}</div>
+    <div className="pt-0 pb-[var(--space-lg)]">{children}</div>
   </AccordionPrimitive.Content>
 ));
 AccordionContent.displayName = "AccordionContent";

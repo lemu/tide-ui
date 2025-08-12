@@ -51,7 +51,7 @@ const PaginationLink = React.forwardRef<
     aria-current={isActive ? "page" : undefined}
     className={cn(
       buttonVariants({
-        variant: isActive ? "outline" : "ghost",
+        variant: isActive ? "default" : "ghost",
         size,
       }),
       // Override default button styles with semantic design tokens

@@ -207,21 +207,21 @@ export function CalendarPreview() {
             <CardContent className="space-y-[var(--space-md)]">
               <div className="flex gap-[var(--space-sm)]">
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="sm"
                   onClick={() => setSingleDate(today)}
                 >
                   Today
                 </Button>
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="sm"
                   onClick={() => setSingleDate(tomorrow)}
                 >
                   Tomorrow
                 </Button>
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="sm"
                   onClick={() => setSingleDate(undefined)}
                 >

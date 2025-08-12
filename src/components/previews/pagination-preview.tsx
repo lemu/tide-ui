@@ -225,7 +225,7 @@ export function PaginationPreview() {
                     Showing {((tablePage - 1) * parseInt(pageSize)) + 1}-{Math.min(tablePage * parseInt(pageSize), totalItems)} of {totalItems} items
                   </div>
                 </div>
-                <Badge variant="secondary" size="small">
+                <Badge variant="secondary" size="sm">
                   {Math.ceil(totalItems / parseInt(pageSize))} pages total
                 </Badge>
               </div>
@@ -401,7 +401,7 @@ export function PaginationPreview() {
                   <Icon name="search" size="sm" className="text-[var(--color-text-brand)]" />
                   <span className="text-body-medium-sm">Search Results</span>
                 </div>
-                <Badge variant="secondary" size="small">
+                <Badge variant="secondary" size="sm">
                   1,247 results
                 </Badge>
               </div>

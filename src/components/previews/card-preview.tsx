@@ -106,7 +106,7 @@ export function CardPreview() {
                 <div className="flex items-center justify-between">
                   <span className="text-body-md">Email notifications</span>
                   <div className="flex h-[var(--size-md)] w-[var(--size-md)] items-center justify-center rounded-full bg-[var(--color-background-success)]">
-                    <Icon name="check" size="xsm" color="inverse" />
+                    <Icon name="check" size="sm" color="inverse" />
                   </div>
                 </div>
                 <div className="flex items-center justify-between">

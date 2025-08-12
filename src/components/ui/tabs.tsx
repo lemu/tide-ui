@@ -4,68 +4,44 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const tabsListVariants = cva(
-  "inline-flex items-center gap-[var(--space-sm)] text-[var(--color-text-secondary)]",
+  "inline-flex items-center gap-[var(--space-sm)] text-[var(--color-text-secondary)] bg-[var(--color-surface-secondary)] p-[var(--space-xsm)] rounded-md",
   {
     variants: {
-      variant: {
-        default: "bg-[var(--color-surface-secondary)] p-[var(--space-xsm)] rounded-md",
-        minimal: "bg-transparent p-0",
-        pills: "bg-[var(--color-surface-secondary)] p-[var(--space-xsm)] rounded-full",
-        underline: "bg-transparent p-0 border-b border-[var(--color-border-primary-subtle)]",
-      },
       size: {
-        sm: "h-[var(--size-sm)]",
-        md: "h-[var(--size-md)]",
-        lg: "h-[var(--size-lg)]",
+        sm: "h-[var(--size-xsm)]",
+        md: "h-[var(--size-sm)]",
+        lg: "h-8",
       },
     },
     defaultVariants: {
-      variant: "minimal",
       size: "md",
     },
-  }
+  },
 );
 
 const tabsTriggerVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap transition-all ring-offset-[var(--color-surface-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  [
+    "inline-flex items-center justify-center whitespace-nowrap rounded-sm bg-transparent cursor-pointer",
+    "transition-all ring-offset-[var(--color-surface-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2",
+    "disabled:pointer-events-none disabled:opacity-50",
+    "data-[state=active]:!bg-[var(--color-background-brand-selected)] data-[state=active]:text-[var(--color-text-brand)] data-[state=active]:[&_svg]:text-[var(--color-text-brand)]",
+    "hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]"
+  ],
   {
     variants: {
-      variant: {
-        default: [
-          "text-label-sm rounded-sm px-[var(--space-md)] py-[var(--space-sm)]",
-          "data-[state=active]:bg-[var(--color-surface-primary)] data-[state=active]:text-[var(--color-text-primary)] data-[state=active]:shadow-xs",
-          "hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]",
-        ],
-        minimal: [
-          "text-label-sm rounded-none px-[var(--space-md)] py-[var(--space-sm)]",
-          "data-[state=active]:text-[var(--color-text-primary)]",
-          "hover:text-[var(--color-text-primary)]",
-        ],
-        pills: [
-          "text-label-sm rounded-full px-[var(--space-lg)] py-[var(--space-sm)]",
-          "data-[state=active]:bg-[var(--color-surface-primary)] data-[state=active]:text-[var(--color-text-primary)] data-[state=active]:shadow-xs",
-          "hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]",
-        ],
-        underline: [
-          "text-label-sm rounded-none px-[var(--space-md)] py-[var(--space-sm)] border-b-2 border-transparent",
-          "data-[state=active]:border-[var(--color-border-brand)] data-[state=active]:text-[var(--color-text-brand)] data-[state=active]:bg-transparent",
-          "hover:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)]",
-        ],
-      },
       size: {
-        sm: "text-caption-sm px-[var(--space-sm)] py-[var(--space-xsm)]",
+        sm: "text-label-sm px-[var(--space-sm)] py-[var(--space-xsm)]",
         md: "text-label-sm px-[var(--space-md)] py-[var(--space-sm)]",
         lg: "text-label-md px-[var(--space-lg)] py-[var(--space-md)]",
       },
     },
     defaultVariants: {
-      variant: "minimal",
       size: "md",
     },
-  }
+  },
 );
 
-interface TabsProps 
+interface TabsProps
   extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root> {}
 
 const Tabs = React.forwardRef<
@@ -87,10 +63,10 @@ interface TabsListProps
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
   TabsListProps
->(({ className, variant, size, ...props }, ref) => (
+>(({ className, size, ...props }, ref) => (
   <TabsPrimitive.List
     ref={ref}
-    className={cn(tabsListVariants({ variant, size }), className)}
+    className={cn(tabsListVariants({ size }), className)}
     {...props}
   />
 ));
@@ -103,10 +79,10 @@ interface TabsTriggerProps
 const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
   TabsTriggerProps
->(({ className, variant, size, ...props }, ref) => (
+>(({ className, size, ...props }, ref) => (
   <TabsPrimitive.Trigger
     ref={ref}
-    className={cn(tabsTriggerVariants({ variant, size }), className)}
+    className={cn(tabsTriggerVariants({ size }), className)}
     {...props}
   />
 ));
@@ -119,8 +95,8 @@ const TabsContent = React.forwardRef<
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-      "mt-[var(--space-sm)] ring-offset-[var(--color-surface-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2",
-      className
+      "mt-[var(--space-sm)] ring-offset-[var(--color-surface-primary)] focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 focus-visible:outline-none",
+      className,
     )}
     {...props}
   />
@@ -137,16 +113,24 @@ const TabsGroupLabel = React.forwardRef<HTMLDivElement, TabsGroupLabelProps>(
     <div
       ref={ref}
       className={cn(
-        "text-caption-sm text-[var(--color-text-tertiary)] mb-[var(--space-sm)] font-medium",
-        className
+        "text-caption-sm mb-[var(--space-sm)] font-medium text-[var(--color-text-tertiary)]",
+        className,
       )}
       {...props}
     >
       {children}
     </div>
-  )
+  ),
 );
 TabsGroupLabel.displayName = "TabsGroupLabel";
 
-export { Tabs, TabsList, TabsTrigger, TabsContent, TabsGroupLabel, tabsListVariants, tabsTriggerVariants };
+export {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+  TabsGroupLabel,
+  tabsListVariants,
+  tabsTriggerVariants,
+};
 export type { TabsProps, TabsListProps, TabsTriggerProps, TabsGroupLabelProps };

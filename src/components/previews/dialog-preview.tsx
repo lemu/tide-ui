@@ -544,7 +544,7 @@ export function DialogPreview() {
                         <div className="space-y-[var(--space-sm)]">
                           <div className="flex items-center justify-between text-body-sm">
                             <span className="text-[var(--color-text-secondary)]">Status</span>
-                            <Badge variant="success" size="small">Complete</Badge>
+                            <Badge variant="success" size="sm">Complete</Badge>
                           </div>
                           <div className="flex items-center justify-between text-body-sm">
                             <span className="text-[var(--color-text-secondary)]">Time</span>

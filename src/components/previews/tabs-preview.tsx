@@ -74,64 +74,21 @@ export function TabsPreview() {
             </CardContent>
           </Card>
 
-          {/* Pills Style */}
+          {/* Different Variant Example */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-heading-sm">Pills Style</CardTitle>
+              <CardTitle className="text-heading-sm">Alternative Layout</CardTitle>
               <CardDescription>
-                Rounded pill-style tabs for a softer, modern appearance.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-[var(--space-lg)]">
-              <Tabs defaultValue="general" className="w-full">
-                <TabsList variant="pills" className="grid w-full grid-cols-3">
-                  <TabsTrigger variant="pills" value="general">General</TabsTrigger>
-                  <TabsTrigger variant="pills" value="privacy">Privacy</TabsTrigger>
-                  <TabsTrigger variant="pills" value="billing">Billing</TabsTrigger>
-                </TabsList>
-                <TabsContent value="general" className="space-y-[var(--space-md)]">
-                  <div className="p-[var(--space-lg)] bg-[var(--color-surface-secondary)] rounded-md">
-                    <h3 className="text-body-medium-md mb-[var(--space-sm)]">General Preferences</h3>
-                    <p className="text-body-sm text-[var(--color-text-secondary)]">
-                      Configure general application settings and preferences.
-                    </p>
-                  </div>
-                </TabsContent>
-                <TabsContent value="privacy" className="space-y-[var(--space-md)]">
-                  <div className="p-[var(--space-lg)] bg-[var(--color-surface-secondary)] rounded-md">
-                    <h3 className="text-body-medium-md mb-[var(--space-sm)]">Privacy Settings</h3>
-                    <p className="text-body-sm text-[var(--color-text-secondary)]">
-                      Control your privacy settings and data sharing preferences.
-                    </p>
-                  </div>
-                </TabsContent>
-                <TabsContent value="billing" className="space-y-[var(--space-md)]">
-                  <div className="p-[var(--space-lg)] bg-[var(--color-surface-secondary)] rounded-md">
-                    <h3 className="text-body-medium-md mb-[var(--space-sm)]">Billing Information</h3>
-                    <p className="text-body-sm text-[var(--color-text-secondary)]">
-                      Manage your subscription and billing information.
-                    </p>
-                  </div>
-                </TabsContent>
-              </Tabs>
-            </CardContent>
-          </Card>
-
-          {/* Underline Style */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-heading-sm">Underline Style</CardTitle>
-              <CardDescription>
-                Clean underline style tabs for minimal navigation.
+                Tabs with different content structure and organization.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-[var(--space-lg)]">
               <Tabs defaultValue="dashboard" className="w-full">
-                <TabsList variant="underline" className="grid w-full grid-cols-4">
-                  <TabsTrigger variant="underline" value="dashboard">Dashboard</TabsTrigger>
-                  <TabsTrigger variant="underline" value="analytics">Analytics</TabsTrigger>
-                  <TabsTrigger variant="underline" value="reports">Reports</TabsTrigger>
-                  <TabsTrigger variant="underline" value="team">Team</TabsTrigger>
+                <TabsList className="grid w-full grid-cols-4">
+                  <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+                  <TabsTrigger value="analytics">Analytics</TabsTrigger>
+                  <TabsTrigger value="reports">Reports</TabsTrigger>
+                  <TabsTrigger value="team">Team</TabsTrigger>
                 </TabsList>
                 <TabsContent value="dashboard" className="space-y-[var(--space-md)]">
                   <div className="p-[var(--space-lg)] bg-[var(--color-surface-secondary)] rounded-md">
@@ -362,7 +319,7 @@ export function TabsPreview() {
                   <TabsTrigger value="inbox" className="flex items-center gap-[var(--space-sm)]">
                     <Icon name="package" size="sm" />
                     Inbox
-                    <Badge variant="error" size="small">12</Badge>
+                    <Badge intent="destructive" size="sm">12</Badge>
                   </TabsTrigger>
                   <TabsTrigger value="sent" className="flex items-center gap-[var(--space-sm)]">
                     <Icon name="send" size="sm" />
@@ -371,14 +328,14 @@ export function TabsPreview() {
                   <TabsTrigger value="drafts" className="flex items-center gap-[var(--space-sm)]">
                     <Icon name="circle" size="sm" />
                     Drafts
-                    <Badge variant="warning" size="small">3</Badge>
+                    <Badge intent="warning" size="sm">3</Badge>
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="inbox" className="space-y-[var(--space-md)]">
                   <div className="p-[var(--space-lg)] bg-[var(--color-surface-secondary)] rounded-md">
                     <div className="flex items-center justify-between mb-[var(--space-sm)]">
                       <h3 className="text-body-medium-md">Inbox</h3>
-                      <Badge variant="error" size="small">12 unread</Badge>
+                      <Badge intent="destructive" size="sm">12 unread</Badge>
                     </div>
                     <p className="text-body-sm text-[var(--color-text-secondary)]">
                       You have 12 unread messages in your inbox.
@@ -397,7 +354,7 @@ export function TabsPreview() {
                   <div className="p-[var(--space-lg)] bg-[var(--color-surface-secondary)] rounded-md">
                     <div className="flex items-center justify-between mb-[var(--space-sm)]">
                       <h3 className="text-body-medium-md">Drafts</h3>
-                      <Badge variant="warning" size="small">3 drafts</Badge>
+                      <Badge intent="warning" size="sm">3 drafts</Badge>
                     </div>
                     <p className="text-body-sm text-[var(--color-text-secondary)]">
                       You have 3 unsent draft messages.
@@ -422,8 +379,8 @@ export function TabsPreview() {
                   <TabsTrigger value="available">Available</TabsTrigger>
                   <TabsTrigger value="limited" disabled>Limited</TabsTrigger>
                   <TabsTrigger value="premium" className="flex items-center gap-[var(--space-sm)]">
-                    Premium
-                    <Badge variant="secondary" size="small">Pro</Badge>
+                    <span className="truncate">Premium</span>
+                    <Badge intent="neutral" size="sm">Pro</Badge>
                   </TabsTrigger>
                   <TabsTrigger value="beta" disabled>Beta</TabsTrigger>
                 </TabsList>
@@ -597,16 +554,16 @@ export function TabsPreview() {
             </CardHeader>
             <CardContent>
               <Tabs value={dashboardTab} onValueChange={setDashboardTab} className="w-full">
-                <TabsList variant="underline" className="grid w-full grid-cols-3">
-                  <TabsTrigger variant="underline" value="overview" className="flex items-center gap-[var(--space-sm)]">
+                <TabsList className="grid w-full grid-cols-3">
+                  <TabsTrigger value="overview" className="flex items-center gap-[var(--space-sm)]">
                     <Icon name="layout-dashboard" size="sm" />
                     Overview
                   </TabsTrigger>
-                  <TabsTrigger variant="underline" value="analytics" className="flex items-center gap-[var(--space-sm)]">
+                  <TabsTrigger value="analytics" className="flex items-center gap-[var(--space-sm)]">
                     <Icon name="star" size="sm" />
                     Analytics
                   </TabsTrigger>
-                  <TabsTrigger variant="underline" value="reports" className="flex items-center gap-[var(--space-sm)]">
+                  <TabsTrigger value="reports" className="flex items-center gap-[var(--space-sm)]">
                     <Icon name="package" size="sm" />
                     Reports
                   </TabsTrigger>

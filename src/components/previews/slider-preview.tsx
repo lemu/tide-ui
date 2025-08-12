@@ -46,7 +46,7 @@ export function SliderPreview() {
               <div className="space-y-[var(--space-md)]">
                 <div className="flex items-center justify-between">
                   <label className="text-body-medium-sm">Volume</label>
-                  <Badge variant="secondary" size="small">{volume[0]}%</Badge>
+                  <Badge variant="secondary" size="sm">{volume[0]}%</Badge>
                 </div>
                 <Slider
                   value={volume}
@@ -60,7 +60,7 @@ export function SliderPreview() {
               <div className="space-y-[var(--space-md)]">
                 <div className="flex items-center justify-between">
                   <label className="text-body-medium-sm">Brightness</label>
-                  <Badge variant="secondary" size="small">{brightness[0]}%</Badge>
+                  <Badge variant="secondary" size="sm">{brightness[0]}%</Badge>
                 </div>
                 <Slider
                   value={brightness}
@@ -85,7 +85,7 @@ export function SliderPreview() {
               <div className="space-y-[var(--space-md)]">
                 <div className="flex items-center justify-between">
                   <label className="text-body-medium-sm">Price Range</label>
-                  <Badge variant="secondary" size="small">
+                  <Badge variant="secondary" size="sm">
                     ${priceRange[0]} - ${priceRange[1]}
                   </Badge>
                 </div>
@@ -102,7 +102,7 @@ export function SliderPreview() {
               <div className="space-y-[var(--space-md)]">
                 <div className="flex items-center justify-between">
                   <label className="text-body-medium-sm">Age Range</label>
-                  <Badge variant="secondary" size="small">
+                  <Badge variant="secondary" size="sm">
                     {ageRange[0]} - {ageRange[1]} years
                   </Badge>
                 </div>
@@ -217,7 +217,7 @@ export function SliderPreview() {
               <div className="space-y-[var(--space-sm)]">
                 <div className="flex items-center justify-between">
                   <span className="text-body-medium-sm">Opacity</span>
-                  <Badge variant="outline" size="small">{opacity[0]}%</Badge>
+                  <Badge variant="ghost" size="sm">{opacity[0]}%</Badge>
                 </div>
                 <Slider
                   value={opacity}
@@ -247,7 +247,7 @@ export function SliderPreview() {
               <div className="space-y-[var(--space-sm)]">
                 <div className="flex items-center justify-between">
                   <span className="text-body-medium-sm">Quality</span>
-                  <Badge variant="outline" size="small">{quality[0]}%</Badge>
+                  <Badge variant="ghost" size="sm">{quality[0]}%</Badge>
                 </div>
                 <Slider
                   value={quality}
@@ -279,7 +279,7 @@ export function SliderPreview() {
                   <span className="text-body-medium-sm">Rating</span>
                   <div className="flex items-center gap-[var(--space-xsm)]">
                     <Icon name="star" size="sm" color="warning" />
-                    <Badge variant="outline" size="small">{rating[0]}</Badge>
+                    <Badge variant="ghost" size="sm">{rating[0]}</Badge>
                   </div>
                 </div>
                 <Slider
@@ -385,7 +385,7 @@ export function SliderPreview() {
                       className="w-full"
                     />
                   </div>
-                  <Badge variant="outline" size="small">{brightness[0]}%</Badge>
+                  <Badge variant="ghost" size="sm">{brightness[0]}%</Badge>
                 </div>
 
                 <div className="flex items-center gap-[var(--space-md)]">
@@ -400,7 +400,7 @@ export function SliderPreview() {
                       className="w-full"
                     />
                   </div>
-                  <Badge variant="outline" size="small">{opacity[0]}%</Badge>
+                  <Badge variant="ghost" size="sm">{opacity[0]}%</Badge>
                 </div>
 
                 <div className="flex items-center gap-[var(--space-md)]">
@@ -415,7 +415,7 @@ export function SliderPreview() {
                       className="w-full"
                     />
                   </div>
-                  <Badge variant="outline" size="small">{volume[0]}%</Badge>
+                  <Badge variant="ghost" size="sm">{volume[0]}%</Badge>
                 </div>
               </div>
 
@@ -467,7 +467,7 @@ export function SliderPreview() {
                     step={1}
                     className="flex-1"
                   />
-                  <Badge variant="ghost" size="small">{volume[0]}</Badge>
+                  <Badge variant="ghost" size="sm">{volume[0]}</Badge>
                 </div>
               </div>
             </CardContent>
@@ -485,7 +485,7 @@ export function SliderPreview() {
               <div className="space-y-[var(--space-md)]">
                 <div className="flex items-center justify-between">
                   <span className="text-body-medium-sm">Price Range</span>
-                  <Badge variant="secondary" size="small">
+                  <Badge variant="secondary" size="sm">
                     ${priceRange[0]} - ${priceRange[1]}
                   </Badge>
                 </div>
@@ -504,7 +504,7 @@ export function SliderPreview() {
                   <span className="text-body-medium-sm">Rating</span>
                   <div className="flex items-center gap-[var(--space-xsm)]">
                     <Icon name="star" size="sm" color="warning" />
-                    <Badge variant="secondary" size="small">{rating[0]}+</Badge>
+                    <Badge variant="secondary" size="sm">{rating[0]}+</Badge>
                   </div>
                 </div>
                 <Slider
@@ -520,7 +520,7 @@ export function SliderPreview() {
               <div className="space-y-[var(--space-md)]">
                 <div className="flex items-center justify-between">
                   <span className="text-body-medium-sm">Discount</span>
-                  <Badge variant="secondary" size="small">{opacity[0]}%+</Badge>
+                  <Badge variant="secondary" size="sm">{opacity[0]}%+</Badge>
                 </div>
                 <Slider
                   value={opacity}
@@ -531,7 +531,7 @@ export function SliderPreview() {
                 />
               </div>
 
-              <Button variant="outline" className="w-full">
+              <Button variant="ghost" className="w-full">
                 <Icon name="rotate-ccw" size="sm" className="mr-[var(--space-sm)]" />
                 Reset Filters
               </Button>
@@ -556,7 +556,7 @@ export function SliderPreview() {
               <div className="space-y-[var(--space-md)]">
                 <div className="flex items-center justify-between">
                   <span className="text-body-medium-sm text-[var(--color-text-disabled)]">Volume (Disabled)</span>
-                  <Badge variant="outline" size="small">50%</Badge>
+                  <Badge variant="ghost" size="sm">50%</Badge>
                 </div>
                 <Slider
                   defaultValue={[50]}
@@ -570,7 +570,7 @@ export function SliderPreview() {
               <div className="space-y-[var(--space-md)]">
                 <div className="flex items-center justify-between">
                   <span className="text-body-medium-sm text-[var(--color-text-disabled)]">Range (Disabled)</span>
-                  <Badge variant="outline" size="small">25 - 75</Badge>
+                  <Badge variant="ghost" size="sm">25 - 75</Badge>
                 </div>
                 <Slider
                   defaultValue={[25, 75]}

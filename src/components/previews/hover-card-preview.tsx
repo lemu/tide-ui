@@ -48,7 +48,7 @@ export function HoverCardPreview() {
                       Beautiful UI components built with Radix UI and Tailwind CSS.
                     </p>
                     <div className="flex items-center space-x-[var(--space-sm)] text-caption-sm text-[var(--color-text-tertiary)]">
-                      <Icon name="calendar" size="xs" />
+                      <Icon name="calendar" size="sm" />
                       <span>Joined December 2021</span>
                     </div>
                   </div>
@@ -96,11 +96,11 @@ export function HoverCardPreview() {
                       </p>
                       <div className="flex items-center space-x-[var(--space-lg)] text-caption-sm text-[var(--color-text-tertiary)]">
                         <div className="flex items-center space-x-[var(--space-xsm)]">
-                          <Icon name="users" size="xs" />
+                          <Icon name="users" size="sm" />
                           <span>50k followers</span>
                         </div>
                         <div className="flex items-center space-x-[var(--space-xsm)]">
-                          <Icon name="calendar" size="xs" />
+                          <Icon name="calendar" size="sm" />
                           <span>Joined 2020</span>
                         </div>
                       </div>
@@ -130,7 +130,7 @@ export function HoverCardPreview() {
               <div className="grid grid-cols-2 gap-[var(--space-lg)] p-[var(--space-2xlg)]">
                 <HoverCard>
                   <HoverCardTrigger asChild>
-                    <Button variant="outline" size="sm">Top</Button>
+                    <Button variant="ghost" size="sm">Top</Button>
                   </HoverCardTrigger>
                   <HoverCardContent side="top" className="w-48">
                     <p className="text-body-sm">This hover card appears on top of the trigger.</p>
@@ -139,7 +139,7 @@ export function HoverCardPreview() {
 
                 <HoverCard>
                   <HoverCardTrigger asChild>
-                    <Button variant="outline" size="sm">Right</Button>
+                    <Button variant="ghost" size="sm">Right</Button>
                   </HoverCardTrigger>
                   <HoverCardContent side="right" className="w-48">
                     <p className="text-body-sm">This hover card appears to the right of the trigger.</p>
@@ -148,7 +148,7 @@ export function HoverCardPreview() {
 
                 <HoverCard>
                   <HoverCardTrigger asChild>
-                    <Button variant="outline" size="sm">Left</Button>
+                    <Button variant="ghost" size="sm">Left</Button>
                   </HoverCardTrigger>
                   <HoverCardContent side="left" className="w-48">
                     <p className="text-body-sm">This hover card appears to the left of the trigger.</p>
@@ -157,7 +157,7 @@ export function HoverCardPreview() {
 
                 <HoverCard>
                   <HoverCardTrigger asChild>
-                    <Button variant="outline" size="sm">Bottom</Button>
+                    <Button variant="ghost" size="sm">Bottom</Button>
                   </HoverCardTrigger>
                   <HoverCardContent side="bottom" className="w-48">
                     <p className="text-body-sm">This hover card appears below the trigger.</p>
@@ -179,7 +179,7 @@ export function HoverCardPreview() {
               <div className="space-y-[var(--space-lg)] p-[var(--space-lg)]">
                 <HoverCard>
                   <HoverCardTrigger asChild>
-                    <Button variant="outline" size="sm">Align Start</Button>
+                    <Button variant="ghost" size="sm">Align Start</Button>
                   </HoverCardTrigger>
                   <HoverCardContent align="start" className="w-64">
                     <p className="text-body-sm">This hover card is aligned to the start of the trigger.</p>
@@ -188,7 +188,7 @@ export function HoverCardPreview() {
 
                 <HoverCard>
                   <HoverCardTrigger asChild>
-                    <Button variant="outline" size="sm">Align Center</Button>
+                    <Button variant="ghost" size="sm">Align Center</Button>
                   </HoverCardTrigger>
                   <HoverCardContent align="center" className="w-64">
                     <p className="text-body-sm">This hover card is centered with the trigger.</p>
@@ -197,7 +197,7 @@ export function HoverCardPreview() {
 
                 <HoverCard>
                   <HoverCardTrigger asChild>
-                    <Button variant="outline" size="sm">Align End</Button>
+                    <Button variant="ghost" size="sm">Align End</Button>
                   </HoverCardTrigger>
                   <HoverCardContent align="end" className="w-64">
                     <p className="text-body-sm">This hover card is aligned to the end of the trigger.</p>
@@ -242,10 +242,10 @@ export function HoverCardPreview() {
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-[var(--space-sm)] text-caption-sm text-[var(--color-text-tertiary)]">
-                          <Icon name="globe" size="xs" />
+                          <Icon name="globe" size="sm" />
                           <span>react.dev</span>
                         </div>
-                        <Badge variant="secondary" size="small">Article</Badge>
+                        <Badge variant="secondary" size="sm">Article</Badge>
                       </div>
                     </div>
                   </HoverCardContent>
@@ -277,7 +277,7 @@ export function HoverCardPreview() {
                       <div className="space-y-[var(--space-sm)]">
                         <div className="flex items-center justify-between">
                           <h4 className="text-body-medium-md">Design System Pro</h4>
-                          <Badge variant="success" size="small">New</Badge>
+                          <Badge variant="success" size="sm">New</Badge>
                         </div>
                         <p className="text-body-sm text-[var(--color-text-secondary)]">
                           A comprehensive design system with 50+ components, 
@@ -320,7 +320,7 @@ export function HoverCardPreview() {
                   <HoverCard>
                     <HoverCardTrigger asChild>
                       <Badge variant="success" className="cursor-pointer">
-                        <Icon name="check-circle" size="xs" className="mr-[var(--space-xsm)]" />
+                        <Icon name="check-circle" size="sm" className="mr-[var(--space-xsm)]" />
                         Operational
                       </Badge>
                     </HoverCardTrigger>
@@ -357,7 +357,7 @@ export function HoverCardPreview() {
                   <HoverCard>
                     <HoverCardTrigger asChild>
                       <Badge variant="warning" className="cursor-pointer">
-                        <Icon name="triangle-alert" size="xs" className="mr-[var(--space-xsm)]" />
+                        <Icon name="triangle-alert" size="sm" className="mr-[var(--space-xsm)]" />
                         Degraded
                       </Badge>
                     </HoverCardTrigger>

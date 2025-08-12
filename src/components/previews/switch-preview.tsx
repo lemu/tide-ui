@@ -229,7 +229,7 @@ export function SwitchPreview() {
                 <div className="flex-1">
                   <div className="flex items-center gap-[var(--space-sm)]">
                     <span className="text-body-medium-sm">Two-Factor Authentication</span>
-                    {twoFactorAuth && <Badge variant="success" size="small">Enabled</Badge>}
+                    {twoFactorAuth && <Badge variant="success" size="sm">Enabled</Badge>}
                   </div>
                   <div className="text-body-sm text-[var(--color-text-secondary)]">
                     Add an extra layer of security
@@ -246,7 +246,7 @@ export function SwitchPreview() {
                 <div className="flex-1">
                   <div className="flex items-center gap-[var(--space-sm)]">
                     <span className="text-body-medium-sm">Security Alerts</span>
-                    {securityAlerts && <Badge variant="warning" size="small">Active</Badge>}
+                    {securityAlerts && <Badge variant="warning" size="sm">Active</Badge>}
                   </div>
                   <div className="text-body-sm text-[var(--color-text-secondary)]">
                     Get alerts for suspicious activity
@@ -441,7 +441,7 @@ export function SwitchPreview() {
                   <div>
                     <div className="flex items-center gap-[var(--space-sm)]">
                       <span className="text-body-medium-sm">New Editor</span>
-                      <Badge variant="information" size="small">Beta</Badge>
+                      <Badge variant="information" size="sm">Beta</Badge>
                     </div>
                     <div className="text-body-sm text-[var(--color-text-secondary)]">
                       Try the redesigned code editor
@@ -456,7 +456,7 @@ export function SwitchPreview() {
                   <div>
                     <div className="flex items-center gap-[var(--space-sm)]">
                       <span className="text-body-medium-sm">AI Assistant</span>
-                      <Badge variant="warning" size="small">Experimental</Badge>
+                      <Badge variant="warning" size="sm">Experimental</Badge>
                     </div>
                     <div className="text-body-sm text-[var(--color-text-secondary)]">
                       Get AI-powered coding suggestions
@@ -471,7 +471,7 @@ export function SwitchPreview() {
                   <div>
                     <div className="flex items-center gap-[var(--space-sm)]">
                       <span className="text-body-medium-sm">Performance Mode</span>
-                      <Badge variant="success" size="small">Stable</Badge>
+                      <Badge variant="success" size="sm">Stable</Badge>
                     </div>
                     <div className="text-body-sm text-[var(--color-text-secondary)]">
                       Optimize for better performance
@@ -547,7 +547,7 @@ export function SwitchPreview() {
               <div className="space-y-[var(--space-md)]">
                 <div className="flex items-center justify-between">
                   <Button 
-                    variant="outline" 
+                    variant="ghost" 
                     size="sm"
                     onClick={() => {
                       setNotificationsEnabled(true);
@@ -558,7 +558,7 @@ export function SwitchPreview() {
                     Enable All
                   </Button>
                   <Button 
-                    variant="outline" 
+                    variant="ghost" 
                     size="sm"
                     onClick={() => {
                       setNotificationsEnabled(false);

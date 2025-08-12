@@ -50,7 +50,7 @@ export function DropDrawerPreview() {
           <CardContent>
             <DropDrawer modal={false}>
               <DropDrawerTrigger asChild>
-                <Button variant="outline">Open Menu</Button>
+                <Button variant="ghost">Open Menu</Button>
               </DropDrawerTrigger>
               <DropDrawerContent>
                 <DropDrawerItem>
@@ -99,7 +99,7 @@ export function DropDrawerPreview() {
           <CardContent>
             <DropDrawer modal={false}>
               <DropDrawerTrigger asChild>
-                <Button variant="outline">Categories</Button>
+                <Button variant="ghost">Categories</Button>
               </DropDrawerTrigger>
               <DropDrawerContent>
                 <DropDrawerLabel>Important</DropDrawerLabel>
@@ -147,7 +147,7 @@ export function DropDrawerPreview() {
           <CardContent>
             <DropDrawer modal={false}>
               <DropDrawerTrigger asChild>
-                <Button variant="outline">Preferences</Button>
+                <Button variant="ghost">Preferences</Button>
               </DropDrawerTrigger>
               <DropDrawerContent>
                 <DropDrawerLabel>Email Notifications</DropDrawerLabel>
@@ -185,7 +185,7 @@ export function DropDrawerPreview() {
           <CardContent>
             <DropDrawer modal={false}>
               <DropDrawerTrigger asChild>
-                <Button variant="outline">Position: {position}</Button>
+                <Button variant="ghost">Position: {position}</Button>
               </DropDrawerTrigger>
               <DropDrawerContent>
                 <DropDrawerLabel>Panel Position</DropDrawerLabel>
@@ -210,7 +210,7 @@ export function DropDrawerPreview() {
           <CardContent>
             <DropDrawer modal={false}>
               <DropDrawerTrigger asChild>
-                <Button variant="outline">More Options</Button>
+                <Button variant="ghost">More Options</Button>
               </DropDrawerTrigger>
               <DropDrawerContent>
                 <DropDrawerItem>
@@ -258,7 +258,7 @@ export function DropDrawerPreview() {
           <CardContent>
             <DropDrawer modal={false}>
               <DropDrawerTrigger asChild>
-                <Button variant="outline">
+                <Button variant="ghost">
                   <Icon name="more-horizontal" size="sm" />
                 </Button>
               </DropDrawerTrigger>

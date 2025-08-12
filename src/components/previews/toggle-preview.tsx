@@ -62,13 +62,13 @@ export function TogglePreview() {
               <div className="space-y-[var(--space-md)]">
                 <div className="text-body-medium-sm mb-[var(--space-sm)]">Outline Variant</div>
                 <div className="flex items-center gap-[var(--space-sm)]">
-                  <Toggle variant="outline" aria-label="Toggle bold" size="sm">
+                  <Toggle variant="ghost" aria-label="Toggle bold" size="sm">
                     <Icon name="circle" size="sm" />
                   </Toggle>
-                  <Toggle variant="outline" aria-label="Toggle italic">
+                  <Toggle variant="ghost" aria-label="Toggle italic">
                     <Icon name="circle" size="sm" />
                   </Toggle>
-                  <Toggle variant="outline" aria-label="Toggle underline" size="lg">
+                  <Toggle variant="ghost" aria-label="Toggle underline" size="lg">
                     <Icon name="circle" size="sm" />
                   </Toggle>
                 </div>
@@ -88,28 +88,28 @@ export function TogglePreview() {
               <div className="space-y-[var(--space-md)]">
                 <div className="flex items-center justify-between">
                   <span className="text-body-medium-sm">Not Pressed</span>
-                  <Toggle variant="outline" aria-label="Not pressed">
+                  <Toggle variant="ghost" aria-label="Not pressed">
                     <Icon name="circle" size="sm" />
                   </Toggle>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <span className="text-body-medium-sm">Pressed</span>
-                  <Toggle variant="outline" defaultPressed aria-label="Pressed">
+                  <Toggle variant="ghost" defaultPressed aria-label="Pressed">
                     <Icon name="circle" size="sm" />
                   </Toggle>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <span className="text-body-medium-sm text-[var(--color-text-disabled)]">Disabled</span>
-                  <Toggle variant="outline" disabled aria-label="Disabled">
+                  <Toggle variant="ghost" disabled aria-label="Disabled">
                     <Icon name="circle" size="sm" />
                   </Toggle>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <span className="text-body-medium-sm text-[var(--color-text-disabled)]">Disabled + Pressed</span>
-                  <Toggle variant="outline" disabled defaultPressed aria-label="Disabled pressed">
+                  <Toggle variant="ghost" disabled defaultPressed aria-label="Disabled pressed">
                     <Icon name="circle" size="sm" />
                   </Toggle>
                 </div>
@@ -137,7 +137,7 @@ export function TogglePreview() {
                 <Toggle
                   pressed={boldPressed}
                   onPressedChange={setBoldPressed}
-                  variant="outline"
+                  variant="ghost"
                   aria-label="Toggle bold"
                 >
                   <Icon name="circle" size="sm" />
@@ -146,7 +146,7 @@ export function TogglePreview() {
                 <Toggle
                   pressed={italicPressed}
                   onPressedChange={setItalicPressed}
-                  variant="outline"
+                  variant="ghost"
                   aria-label="Toggle italic"
                 >
                   <Icon name="circle" size="sm" />
@@ -155,7 +155,7 @@ export function TogglePreview() {
                 <Toggle
                   pressed={underlinePressed}
                   onPressedChange={setUnderlinePressed}
-                  variant="outline"
+                  variant="ghost"
                   aria-label="Toggle underline"
                 >
                   <Icon name="circle" size="sm" />
@@ -179,13 +179,13 @@ export function TogglePreview() {
               </div>
 
               <div className="flex items-center gap-[var(--space-sm)] text-caption-sm">
-                <Badge variant={boldPressed ? "success" : "outline"} size="small">
+                <Badge variant={boldPressed ? "success" : "outline"} size="sm">
                   Bold: {boldPressed ? "On" : "Off"}
                 </Badge>
-                <Badge variant={italicPressed ? "success" : "outline"} size="small">
+                <Badge variant={italicPressed ? "success" : "outline"} size="sm">
                   Italic: {italicPressed ? "On" : "Off"}
                 </Badge>
-                <Badge variant={underlinePressed ? "success" : "outline"} size="small">
+                <Badge variant={underlinePressed ? "success" : "outline"} size="sm">
                   Underline: {underlinePressed ? "On" : "Off"}
                 </Badge>
               </div>
@@ -205,7 +205,7 @@ export function TogglePreview() {
                 type="multiple"
                 value={textFormatting}
                 onValueChange={setTextFormatting}
-                variant="outline"
+                variant="ghost"
               >
                 <ToggleGroupItem value="bold" aria-label="Toggle bold">
                   <Icon name="circle" size="sm" />
@@ -228,12 +228,12 @@ export function TogglePreview() {
                 <div className="flex items-center gap-[var(--space-sm)]">
                   {textFormatting.length > 0 ? (
                     textFormatting.map((format) => (
-                      <Badge key={format} variant="success" size="small">
+                      <Badge key={format} variant="success" size="sm">
                         {format}
                       </Badge>
                     ))
                   ) : (
-                    <Badge variant="outline" size="small">
+                    <Badge variant="ghost" size="sm">
                       None
                     </Badge>
                   )}
@@ -264,7 +264,7 @@ export function TogglePreview() {
                   type="single"
                   value={alignment}
                   onValueChange={setAlignment}
-                  variant="outline"
+                  variant="ghost"
                 >
                   <ToggleGroupItem value="left" aria-label="Align left">
                     <Icon name="arrow-left" size="sm" />
@@ -283,7 +283,7 @@ export function TogglePreview() {
 
               <div className="p-[var(--space-md)] bg-[var(--color-background-neutral-subtle)] rounded-md">
                 <div className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-                  Current alignment: <Badge variant="secondary" size="small">{alignment}</Badge>
+                  Current alignment: <Badge variant="secondary" size="sm">{alignment}</Badge>
                 </div>
                 <div
                   className={`text-body-md ${
@@ -332,7 +332,7 @@ export function TogglePreview() {
 
               <div className="p-[var(--space-md)] bg-[var(--color-background-neutral-subtle)] rounded-md">
                 <div className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-                  Current view: <Badge variant="secondary" size="small">{viewMode}</Badge>
+                  Current view: <Badge variant="secondary" size="sm">{viewMode}</Badge>
                 </div>
                 <div className="grid gap-[var(--space-sm)]">
                   {viewMode === "list" && (
@@ -391,7 +391,7 @@ export function TogglePreview() {
                     type="single"
                     value={sidebar}
                     onValueChange={setSidebar}
-                    variant="outline"
+                    variant="ghost"
                   >
                     <ToggleGroupItem value="files" aria-label="Files panel">
                       <Icon name="package" size="sm" />
@@ -418,7 +418,7 @@ export function TogglePreview() {
                   <ToggleGroup
                     type="multiple"
                     defaultValue={["syntax", "minimap"]}
-                    variant="outline"
+                    variant="ghost"
                     size="sm"
                   >
                     <ToggleGroupItem value="syntax" aria-label="Syntax highlighting">
@@ -456,7 +456,7 @@ export function TogglePreview() {
                 <ToggleGroup
                   type="multiple"
                   defaultValue={["save", "undo"]}
-                  variant="outline"
+                  variant="ghost"
                   size="sm"
                 >
                   <ToggleGroupItem value="save" aria-label="Save button">
@@ -479,7 +479,7 @@ export function TogglePreview() {
                 <ToggleGroup
                   type="multiple"
                   defaultValue={["zoom"]}
-                  variant="outline"
+                  variant="ghost"
                   size="sm"
                 >
                   <ToggleGroupItem value="zoom" aria-label="Zoom controls">
@@ -524,7 +524,7 @@ export function TogglePreview() {
               <div className="space-y-[var(--space-md)]">
                 <div className="flex items-center justify-between">
                   <span className="text-body-medium-sm">Show Active Only</span>
-                  <Toggle variant="outline" defaultPressed>
+                  <Toggle variant="ghost" defaultPressed>
                     <Icon name="circle-check-big" size="sm" />
                   </Toggle>
                 </div>
@@ -533,7 +533,7 @@ export function TogglePreview() {
 
                 <div className="flex items-center justify-between">
                   <span className="text-body-medium-sm">Include Archived</span>
-                  <Toggle variant="outline">
+                  <Toggle variant="ghost">
                     <Icon name="package" size="sm" />
                   </Toggle>
                 </div>
@@ -542,7 +542,7 @@ export function TogglePreview() {
 
                 <div>
                   <div className="text-body-medium-sm mb-[var(--space-sm)]">Status Filters</div>
-                  <ToggleGroup type="multiple" variant="outline" size="sm">
+                  <ToggleGroup type="multiple" variant="ghost" size="sm">
                     <ToggleGroupItem value="pending" aria-label="Show pending">
                       <Icon name="circle" size="sm" />
                       <span>Pending</span>
@@ -575,7 +575,7 @@ export function TogglePreview() {
                 <ToggleGroup
                   type="multiple"
                   defaultValue={["analytics", "recent"]}
-                  variant="outline"
+                  variant="ghost"
                   size="sm"
                 >
                   <ToggleGroupItem value="analytics" aria-label="Analytics widget">

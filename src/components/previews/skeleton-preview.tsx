@@ -247,7 +247,7 @@ export function SkeletonPreview() {
             </div>
             <Button
               onClick={() => setShowActual(!showActual)}
-              variant="outline"
+              variant="ghost"
               size="sm"
             >
               <Icon name="rotate-ccw" size="sm" className="mr-[var(--space-sm)]" />
@@ -266,7 +266,7 @@ export function SkeletonPreview() {
                   <div className="flex-1 space-y-[var(--space-sm)]">
                     <div className="flex items-center gap-[var(--space-sm)]">
                       <h3 className="text-heading-sm">John Doe</h3>
-                      <Badge variant="secondary" size="small">Pro</Badge>
+                      <Badge variant="secondary" size="sm">Pro</Badge>
                     </div>
                     <p className="text-body-sm text-[var(--color-text-secondary)]">
                       Senior Frontend Developer

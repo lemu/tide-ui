@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -14,352 +13,16 @@ import {
   TableHeader,
   TableRow,
   TableSortHeader,
-  TableGroupHeader,
   TableCaption,
 } from "../ui/table";
 import { Button } from "../ui/button";
 import { Icon } from "../ui/icon";
 import { Badge } from "../ui/badge";
-import { Separator } from "../ui/separator";
-import { Input } from "../ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { Checkbox } from "../ui/checkbox";
-
-// Sample data matching the Figma design
-const laycanData = [
-  // 2025 Data
-  { year: "2025", month: "Jan", fixtureCount: 45, cargoQuantity: "7,785,000", grossFreight: "$133,340,750", avgFreightRate: "20.35", avgDemurrage: "$22,300" },
-  { year: "2025", month: "Feb", fixtureCount: 127, cargoQuantity: "10,510,000", grossFreight: "$118,074,400", avgFreightRate: "13.29", avgDemurrage: "$21,500" },
-  { year: "2025", month: "Mar", fixtureCount: 118, cargoQuantity: "7,785,900", grossFreight: "$145,230,750", avgFreightRate: "18.45", avgDemurrage: "$26,000" },
-  { year: "2025", month: "Apr", fixtureCount: 102, cargoQuantity: "12,345,678", grossFreight: "$162,890,500", avgFreightRate: "21.67", avgDemurrage: "$23,800" },
-  { year: "2025", month: "May", fixtureCount: 89, cargoQuantity: "15,678,900", grossFreight: "$189,450,300", avgFreightRate: "17.92", avgDemurrage: "$25,600" },
-  { year: "2025", month: "Jun", fixtureCount: 5, cargoQuantity: "20,123,456", grossFreight: "$220,890,500", avgFreightRate: "8.48", avgDemurrage: "$23,800" },
-  
-  // 2024 Data
-  { year: "2024", month: "Jan", fixtureCount: 91, cargoQuantity: "11,234,567", grossFreight: "$320,890,250", avgFreightRate: "13.75", avgDemurrage: "$24,500" },
-  { year: "2024", month: "Feb", fixtureCount: 78, cargoQuantity: "13,456,789", grossFreight: "$335,450,600", avgFreightRate: "26.18", avgDemurrage: "$26,900" },
-  { year: "2024", month: "Mar", fixtureCount: 66, cargoQuantity: "17,890,123", grossFreight: "$350,560,800", avgFreightRate: "12.68", avgDemurrage: "$25,200" },
-  { year: "2024", month: "Apr", fixtureCount: 57, cargoQuantity: "22,000,000", grossFreight: "$353,580,560", avgFreightRate: "27.06", avgDemurrage: "$23,700" },
-  { year: "2024", month: "May", fixtureCount: 49, cargoQuantity: "10,111,111", grossFreight: "$340,230,900", avgFreightRate: "19.40", avgDemurrage: "$24,800" },
-  { year: "2024", month: "Jun", fixtureCount: 42, cargoQuantity: "14,567,890", grossFreight: "$325,890,400", avgFreightRate: "28.32", avgDemurrage: "$25,900" },
-  { year: "2024", month: "Jul", fixtureCount: 36, cargoQuantity: "19,999,999", grossFreight: "$310,450,750", avgFreightRate: "11.62", avgDemurrage: "$26,300" },
-  { year: "2024", month: "Aug", fixtureCount: 30, cargoQuantity: "21,000,000", grossFreight: "$295,670,300", avgFreightRate: "29.42", avgDemurrage: "$24,600" },
-  { year: "2024", month: "Sep", fixtureCount: 25, cargoQuantity: "15,678,123", grossFreight: "$280,890,150", avgFreightRate: "10.58", avgDemurrage: "$23,900" },
-  { year: "2024", month: "Oct", fixtureCount: 20, cargoQuantity: "18,765,432", grossFreight: "$265,320,600", avgFreightRate: "30.37", avgDemurrage: "$26,500" },
-  { year: "2024", month: "Nov", fixtureCount: 15, cargoQuantity: "12,345,000", grossFreight: "$250,450,900", avgFreightRate: "9.67", avgDemurrage: "$24,100" },
-  { year: "2024", month: "Dec", fixtureCount: 10, cargoQuantity: "16,789,123", grossFreight: "$235,670,200", avgFreightRate: "31.52", avgDemurrage: "$25,400" },
-  
-  // 2023 Data  
-  { year: "2023", month: "Jun", fixtureCount: 76, cargoQuantity: "18,234,500", grossFreight: "$205,670,800", avgFreightRate: "22.11", avgDemurrage: "$24,900" },
-  { year: "2023", month: "Feb", fixtureCount: 63, cargoQuantity: "21,903,000", grossFreight: "$223,890,150", avgFreightRate: "15.78", avgDemurrage: "$26,700" },
-  { year: "2023", month: "Mar", fixtureCount: 54, cargoQuantity: "9,876,543", grossFreight: "$240,450,600", avgFreightRate: "23.34", avgDemurrage: "$25,300" },
-  { year: "2023", month: "Apr", fixtureCount: 47, cargoQuantity: "14,321,000", grossFreight: "$256,780,900", avgFreightRate: "16.85", avgDemurrage: "$24,200" },
-  { year: "2023", month: "May", fixtureCount: 128, cargoQuantity: "16,789,000", grossFreight: "$274,150,200", avgFreightRate: "24.29", avgDemurrage: "$27,100" },
-  { year: "2023", month: "Jun", fixtureCount: 115, cargoQuantity: "19,456,789", grossFreight: "$290,320,750", avgFreightRate: "14.90", avgDemurrage: "$26,400" },
-  { year: "2023", month: "Jul", fixtureCount: 103, cargoQuantity: "20,000,000", grossFreight: "$305,670,400", avgFreightRate: "25.03", avgDemurrage: "$25,800" },
-];
-
-type SortField = 'month' | 'fixtureCount' | 'cargoQuantity' | 'grossFreight' | 'avgFreightRate' | 'avgDemurrage';
-type SortDirection = 'asc' | 'desc' | false;
 
 export function TablePreview() {
-  const [sortField, setSortField] = useState<SortField | null>(null);
-  const [sortDirection, setSortDirection] = useState<SortDirection>(false);
-  const [filterText, setFilterText] = useState('');
-  const [selectedYear, setSelectedYear] = useState('all');
-  const [selectedRows, setSelectedRows] = useState<Set<string>>(new Set());
-  const [minFixtures, setMinFixtures] = useState('');
-
-  const handleSort = (field: SortField) => {
-    if (sortField === field) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : sortDirection === 'desc' ? false : 'asc');
-    } else {
-      setSortField(field);
-      setSortDirection('asc');
-    }
-    
-    if (sortDirection === 'desc') {
-      setSortField(null);
-      setSortDirection(false);
-    }
-  };
-
-  // Filter data based on search and filters
-  const filteredData = laycanData.filter(item => {
-    // Text filter - searches across multiple fields
-    const searchText = filterText.toLowerCase();
-    const textMatch = searchText === '' || 
-      item.month.toLowerCase().includes(searchText) ||
-      item.fixtureCount.toString().includes(searchText) ||
-      item.cargoQuantity.toLowerCase().includes(searchText) ||
-      item.grossFreight.toLowerCase().includes(searchText);
-    
-    // Year filter
-    const yearMatch = selectedYear === 'all' || item.year === selectedYear;
-    
-    // Fixtures filter
-    const fixturesMatch = minFixtures === '' || 
-      parseInt(item.fixtureCount.toString()) >= parseInt(minFixtures);
-    
-    return textMatch && yearMatch && fixturesMatch;
-  });
-
-  // Sort filtered data
-  const sortedData = [...filteredData].sort((a, b) => {
-    if (!sortField || !sortDirection) return 0;
-    
-    let aVal: any = a[sortField];
-    let bVal: any = b[sortField];
-    
-    // Handle numeric fields
-    if (sortField === 'fixtureCount') {
-      aVal = parseInt(aVal);
-      bVal = parseInt(bVal);
-    } else if (['cargoQuantity', 'grossFreight', 'avgFreightRate', 'avgDemurrage'].includes(sortField)) {
-      aVal = parseFloat(aVal.toString().replace(/[$,]/g, ''));
-      bVal = parseFloat(bVal.toString().replace(/[$,]/g, ''));
-    }
-    
-    if (sortDirection === 'asc') {
-      return aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
-    } else {
-      return aVal > bVal ? -1 : aVal < bVal ? 1 : 0;
-    }
-  });
-
-  // Group data by year for display
-  const groupedData = sortedData.reduce((acc, item) => {
-    if (!acc[item.year]) acc[item.year] = [];
-    acc[item.year].push(item);
-    return acc;
-  }, {} as Record<string, typeof laycanData>);
-
-  // Row selection handlers
-  const handleSelectAll = (checked: boolean) => {
-    if (checked) {
-      const allIds = sortedData.map((item, index) => `${item.year}-${item.month}-${index}`);
-      setSelectedRows(new Set(allIds));
-    } else {
-      setSelectedRows(new Set());
-    }
-  };
-
-  const handleSelectRow = (id: string, checked: boolean) => {
-    const newSelection = new Set(selectedRows);
-    if (checked) {
-      newSelection.add(id);
-    } else {
-      newSelection.delete(id);
-    }
-    setSelectedRows(newSelection);
-  };
-
-  const clearFilters = () => {
-    setFilterText('');
-    setSelectedYear('all');
-    setMinFixtures('');
-    setSortField(null);
-    setSortDirection(false);
-  };
-
-  const uniqueYears = Array.from(new Set(laycanData.map(item => item.year))).sort().reverse();
 
   return (
     <div className="space-y-[var(--space-xlg)]">
-      {/* Figma Design Recreation */}
-      <section>
-        <h2 className="text-heading-lg mb-[var(--space-lg)]">Figma Design Recreation</h2>
-        
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-heading-md">Summary by laycan date</CardTitle>
-              <div className="flex items-center gap-[var(--space-sm)]">
-                {selectedRows.size > 0 && (
-                  <Badge variant="secondary" size="small">
-                    {selectedRows.size} selected
-                  </Badge>
-                )}
-                <Button variant="ghost" size="sm" className="h-[var(--size-sm)] w-[var(--size-sm)] p-0">
-                  <Icon name="ellipsis" size="sm" />
-                </Button>
-              </div>
-            </div>
-          </CardHeader>
-          
-          {/* Filter Controls */}
-          <div className="px-[var(--space-lg)] pb-[var(--space-md)] space-y-[var(--space-md)]">
-            <div className="flex flex-wrap items-center gap-[var(--space-md)]">
-              <div className="flex-1 min-w-[200px]">
-                <Input
-                  placeholder="Search months, fixtures, cargo..."
-                  value={filterText}
-                  onChange={(e) => setFilterText(e.target.value)}
-                  className="w-full"
-                />
-              </div>
-              
-              <Select value={selectedYear} onValueChange={setSelectedYear}>
-                <SelectTrigger className="w-[140px]">
-                  <SelectValue placeholder="Year" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Years</SelectItem>
-                  {uniqueYears.map(year => (
-                    <SelectItem key={year} value={year}>{year}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              
-              <div className="flex items-center gap-[var(--space-sm)]">
-                <span className="text-body-sm text-[var(--color-text-secondary)] whitespace-nowrap">
-                  Min Fixtures:
-                </span>
-                <Input
-                  type="number"
-                  placeholder="0"
-                  value={minFixtures}
-                  onChange={(e) => setMinFixtures(e.target.value)}
-                  className="w-[80px]"
-                />
-              </div>
-              
-              <Button variant="outline" size="sm" onClick={clearFilters}>
-                <Icon name="x" size="sm" className="mr-[var(--space-sm)]" />
-                Clear
-              </Button>
-            </div>
-            
-            <div className="flex items-center justify-between text-body-sm text-[var(--color-text-secondary)]">
-              <span>
-                Showing {sortedData.length} of {laycanData.length} records
-                {selectedRows.size > 0 && ` (${selectedRows.size} selected)`}
-              </span>
-              {(filterText || selectedYear !== 'all' || minFixtures) && (
-                <span>Filters applied</span>
-              )}
-            </div>
-          </div>
-          
-          <CardContent>
-            <div className="rounded-md border border-[var(--color-border-primary-subtle)]">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-12">
-                      <Checkbox
-                        checked={selectedRows.size > 0 && selectedRows.size === sortedData.length}
-                        onCheckedChange={handleSelectAll}
-                        aria-label="Select all rows"
-                      />
-                    </TableHead>
-                    <TableSortHeader 
-                      sortable 
-                      sorted={sortField === 'month' ? sortDirection : false}
-                      onSort={() => handleSort('month')}
-                    >
-                      Laycan month
-                    </TableSortHeader>
-                    <TableSortHeader 
-                      align="right"
-                      sortable
-                      sorted={sortField === 'fixtureCount' ? sortDirection : false} 
-                      onSort={() => handleSort('fixtureCount')}
-                    >
-                      Fixture count
-                    </TableSortHeader>
-                    <TableSortHeader 
-                      align="right"
-                      sortable
-                      sorted={sortField === 'cargoQuantity' ? sortDirection : false}
-                      onSort={() => handleSort('cargoQuantity')}
-                    >
-                      Cargo quantity
-                    </TableSortHeader>
-                    <TableSortHeader 
-                      align="right"
-                      sortable
-                      sorted={sortField === 'grossFreight' ? sortDirection : false}
-                      onSort={() => handleSort('grossFreight')}
-                    >
-                      Gross freight
-                    </TableSortHeader>
-                    <TableSortHeader 
-                      align="right"
-                      sortable
-                      sorted={sortField === 'avgFreightRate' ? sortDirection : false}
-                      onSort={() => handleSort('avgFreightRate')}
-                    >
-                      Avg. freight rate ($/...)
-                    </TableSortHeader>
-                    <TableSortHeader 
-                      align="right"
-                      sortable
-                      sorted={sortField === 'avgDemurrage' ? sortDirection : false}
-                      onSort={() => handleSort('avgDemurrage')}
-                    >
-                      Avg. demurrage ($/...)
-                    </TableSortHeader>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {Object.entries(groupedData).map(([year, data]) => (
-                    <React.Fragment key={year}>
-                      <TableGroupHeader colSpan={7}>
-                        <div className="flex items-center gap-[var(--space-sm)]">
-                          <span>{year}</span>
-                          <Icon name="chevron-down" size="sm" />
-                        </div>
-                      </TableGroupHeader>
-                      {data.map((row, index) => {
-                        const rowId = `${year}-${row.month}-${index}`;
-                        const isSelected = selectedRows.has(rowId);
-                        return (
-                          <TableRow 
-                            key={`${year}-${row.month}`} 
-                            zebra 
-                            zebraIndex={index}
-                            variant={isSelected ? 'selected' : 'default'}
-                          >
-                            <TableCell>
-                              <Checkbox
-                                checked={isSelected}
-                                onCheckedChange={(checked) => handleSelectRow(rowId, checked)}
-                                aria-label={`Select row ${row.month} ${year}`}
-                              />
-                            </TableCell>
-                            <TableCell className="font-medium">{row.month}</TableCell>
-                            <TableCell align="right">{row.fixtureCount}</TableCell>
-                            <TableCell align="right">{row.cargoQuantity}</TableCell>
-                            <TableCell align="right">{row.grossFreight}</TableCell>
-                            <TableCell align="right">{row.avgFreightRate}</TableCell>
-                            <TableCell align="right">{row.avgDemurrage}</TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    </React.Fragment>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-            
-            {/* Pagination matching Figma */}
-            <div className="flex items-center justify-between mt-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
-                <Button variant="ghost" size="sm">
-                  <Icon name="chevron-left" size="sm" />
-                </Button>
-                <Button variant="ghost" size="sm">
-                  <Icon name="chevron-right" size="sm" />
-                </Button>
-              </div>
-              <div className="text-body-sm text-[var(--color-text-secondary)]">
-                1-25 of 256
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
 
       {/* Basic Table Examples */}
       <section>
@@ -388,28 +51,36 @@ export function TablePreview() {
                   <TableRow>
                     <TableCell className="font-medium">INV001</TableCell>
                     <TableCell>
-                      <Badge variant="success" size="small">Paid</Badge>
+                      <Badge variant="success" size="sm">
+                        Paid
+                      </Badge>
                     </TableCell>
                     <TableCell align="right">$250.00</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell className="font-medium">INV002</TableCell>
                     <TableCell>
-                      <Badge variant="warning" size="small">Pending</Badge>
+                      <Badge variant="warning" size="sm">
+                        Pending
+                      </Badge>
                     </TableCell>
                     <TableCell align="right">$150.00</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell className="font-medium">INV003</TableCell>
                     <TableCell>
-                      <Badge variant="secondary" size="small">Unpaid</Badge>
+                      <Badge variant="secondary" size="sm">
+                        Unpaid
+                      </Badge>
                     </TableCell>
                     <TableCell align="right">$350.00</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell className="font-medium">INV004</TableCell>
                     <TableCell>
-                      <Badge variant="success" size="small">Paid</Badge>
+                      <Badge variant="success" size="sm">
+                        Paid
+                      </Badge>
                     </TableCell>
                     <TableCell align="right">$450.00</TableCell>
                   </TableRow>
@@ -437,14 +108,36 @@ export function TablePreview() {
                 </TableHeader>
                 <TableBody>
                   {[
-                    { name: "John Doe", role: "Software Engineer", salary: "$75,000" },
-                    { name: "Jane Smith", role: "Product Manager", salary: "$85,000" },
-                    { name: "Mike Johnson", role: "Designer", salary: "$65,000" },
-                    { name: "Sarah Wilson", role: "DevOps Engineer", salary: "$80,000" },
-                    { name: "Alex Lee", role: "Data Analyst", salary: "$70,000" },
+                    {
+                      name: "John Doe",
+                      role: "Software Engineer",
+                      salary: "$75,000",
+                    },
+                    {
+                      name: "Jane Smith",
+                      role: "Product Manager",
+                      salary: "$85,000",
+                    },
+                    {
+                      name: "Mike Johnson",
+                      role: "Designer",
+                      salary: "$65,000",
+                    },
+                    {
+                      name: "Sarah Wilson",
+                      role: "DevOps Engineer",
+                      salary: "$80,000",
+                    },
+                    {
+                      name: "Alex Lee",
+                      role: "Data Analyst",
+                      salary: "$70,000",
+                    },
                   ].map((employee, index) => (
                     <TableRow key={employee.name} zebra zebraIndex={index}>
-                      <TableCell className="font-medium">{employee.name}</TableCell>
+                      <TableCell className="font-medium">
+                        {employee.name}
+                      </TableCell>
                       <TableCell>{employee.role}</TableCell>
                       <TableCell align="right">{employee.salary}</TableCell>
                     </TableRow>
@@ -489,7 +182,9 @@ export function TablePreview() {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell className="font-medium">Wireless Mouse</TableCell>
+                    <TableCell className="font-medium">
+                      Wireless Mouse
+                    </TableCell>
                     <TableCell>Accessories</TableCell>
                     <TableCell align="right">$49.99</TableCell>
                     <TableCell align="center">
@@ -526,7 +221,9 @@ export function TablePreview() {
           {/* Sortable Table */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-heading-sm">Sortable Headers</CardTitle>
+              <CardTitle className="text-heading-sm">
+                Sortable Headers
+              </CardTitle>
               <CardDescription>
                 Table with sortable column headers and sort indicators.
               </CardDescription>
@@ -537,8 +234,12 @@ export function TablePreview() {
                   <TableRow>
                     <TableSortHeader sortable>Name</TableSortHeader>
                     <TableSortHeader sortable>Department</TableSortHeader>
-                    <TableSortHeader align="right" sortable>Experience</TableSortHeader>
-                    <TableSortHeader align="right" sortable>Rating</TableSortHeader>
+                    <TableSortHeader align="right" sortable>
+                      Experience
+                    </TableSortHeader>
+                    <TableSortHeader align="right" sortable>
+                      Rating
+                    </TableSortHeader>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -592,22 +293,38 @@ export function TablePreview() {
                   <TableRow>
                     <TableHead size="sm">Item</TableHead>
                     <TableHead size="sm">Code</TableHead>
-                    <TableHead size="sm" align="right">Qty</TableHead>
-                    <TableHead size="sm" align="right">Price</TableHead>
+                    <TableHead size="sm" align="right">
+                      Qty
+                    </TableHead>
+                    <TableHead size="sm" align="right">
+                      Price
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   <TableRow>
-                    <TableCell size="sm" className="font-medium">Widget A</TableCell>
+                    <TableCell size="sm" className="font-medium">
+                      Widget A
+                    </TableCell>
                     <TableCell size="sm">WID001</TableCell>
-                    <TableCell size="sm" align="right">25</TableCell>
-                    <TableCell size="sm" align="right">$12.99</TableCell>
+                    <TableCell size="sm" align="right">
+                      25
+                    </TableCell>
+                    <TableCell size="sm" align="right">
+                      $12.99
+                    </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell size="sm" className="font-medium">Widget B</TableCell>
+                    <TableCell size="sm" className="font-medium">
+                      Widget B
+                    </TableCell>
                     <TableCell size="sm">WID002</TableCell>
-                    <TableCell size="sm" align="right">15</TableCell>
-                    <TableCell size="sm" align="right">$24.99</TableCell>
+                    <TableCell size="sm" align="right">
+                      15
+                    </TableCell>
+                    <TableCell size="sm" align="right">
+                      $24.99
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -629,25 +346,39 @@ export function TablePreview() {
                     <TableHead size="lg">Project</TableHead>
                     <TableHead size="lg">Status</TableHead>
                     <TableHead size="lg">Progress</TableHead>
-                    <TableHead size="lg" align="right">Due Date</TableHead>
+                    <TableHead size="lg" align="right">
+                      Due Date
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   <TableRow>
-                    <TableCell size="lg" className="font-medium">Website Redesign</TableCell>
+                    <TableCell size="lg" className="font-medium">
+                      Website Redesign
+                    </TableCell>
                     <TableCell size="lg">
-                      <Badge variant="success" size="small">Complete</Badge>
+                      <Badge variant="success" size="sm">
+                        Complete
+                      </Badge>
                     </TableCell>
                     <TableCell size="lg">100%</TableCell>
-                    <TableCell size="lg" align="right">Dec 15, 2024</TableCell>
+                    <TableCell size="lg" align="right">
+                      Dec 15, 2024
+                    </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell size="lg" className="font-medium">Mobile App</TableCell>
+                    <TableCell size="lg" className="font-medium">
+                      Mobile App
+                    </TableCell>
                     <TableCell size="lg">
-                      <Badge variant="warning" size="small">In Progress</Badge>
+                      <Badge variant="warning" size="sm">
+                        In Progress
+                      </Badge>
                     </TableCell>
                     <TableCell size="lg">65%</TableCell>
-                    <TableCell size="lg" align="right">Jan 30, 2025</TableCell>
+                    <TableCell size="lg" align="right">
+                      Jan 30, 2025
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -658,20 +389,27 @@ export function TablePreview() {
 
       {/* Enhanced Features Demo */}
       <section>
-        <h2 className="text-heading-lg mb-[var(--space-lg)]">Enhanced Table Features</h2>
-        
+        <h2 className="text-heading-lg mb-[var(--space-lg)]">
+          Enhanced Table Features
+        </h2>
+
         <div className="grid grid-cols-1 gap-[var(--space-lg)] md:grid-cols-2">
           <Card>
             <CardHeader>
-              <CardTitle className="text-heading-sm">Filtering & Selection</CardTitle>
+              <CardTitle className="text-heading-sm">
+                Filtering & Selection
+              </CardTitle>
               <CardDescription>
-                The main table above demonstrates comprehensive filtering, sorting, and row selection capabilities.
+                The main table above demonstrates comprehensive filtering,
+                sorting, and row selection capabilities.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-[var(--space-md)]">
               <div>
-                <h4 className="text-body-medium-sm mb-[var(--space-sm)]">Features:</h4>
-                <ul className="space-y-[var(--space-xsm)] text-body-sm text-[var(--color-text-secondary)]">
+                <h4 className="text-body-medium-sm mb-[var(--space-sm)]">
+                  Features:
+                </h4>
+                <ul className="text-body-sm space-y-[var(--space-xsm)] text-[var(--color-text-secondary)]">
                   <li>• Multi-field text search across columns</li>
                   <li>• Year-based filtering with dropdown</li>
                   <li>• Minimum fixtures threshold filter</li>
@@ -682,10 +420,12 @@ export function TablePreview() {
                   <li>• Selected rows counter</li>
                 </ul>
               </div>
-              
+
               <div>
-                <h4 className="text-body-medium-sm mb-[var(--space-sm)]">Try it:</h4>
-                <div className="space-y-[var(--space-sm)] text-body-sm">
+                <h4 className="text-body-medium-sm mb-[var(--space-sm)]">
+                  Try it:
+                </h4>
+                <div className="text-body-sm space-y-[var(--space-sm)]">
                   <p>• Search "jan" to find January records</p>
                   <p>• Select "2024" year filter</p>
                   <p>• Set minimum fixtures to 50</p>
@@ -698,27 +438,51 @@ export function TablePreview() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-heading-sm">Technical Implementation</CardTitle>
+              <CardTitle className="text-heading-sm">
+                Technical Implementation
+              </CardTitle>
               <CardDescription>
                 Built with React state management and semantic design tokens.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-[var(--space-md)]">
               <div>
-                <h4 className="text-body-medium-sm mb-[var(--space-sm)]">Components Used:</h4>
-                <ul className="space-y-[var(--space-xsm)] text-body-sm text-[var(--color-text-secondary)]">
-                  <li>• <code className="text-caption-sm">TableSortHeader</code> - Sortable columns</li>
-                  <li>• <code className="text-caption-sm">TableGroupHeader</code> - Year groups</li>
-                  <li>• <code className="text-caption-sm">Input</code> - Text search</li>
-                  <li>• <code className="text-caption-sm">Select</code> - Year filter</li>
-                  <li>• <code className="text-caption-sm">Checkbox</code> - Row selection</li>
-                  <li>• <code className="text-caption-sm">Badge</code> - Selection counter</li>
+                <h4 className="text-body-medium-sm mb-[var(--space-sm)]">
+                  Components Used:
+                </h4>
+                <ul className="text-body-sm space-y-[var(--space-xsm)] text-[var(--color-text-secondary)]">
+                  <li>
+                    • <code className="text-caption-sm">TableSortHeader</code> -
+                    Sortable columns
+                  </li>
+                  <li>
+                    • <code className="text-caption-sm">TableGroupHeader</code>{" "}
+                    - Year groups
+                  </li>
+                  <li>
+                    • <code className="text-caption-sm">Input</code> - Text
+                    search
+                  </li>
+                  <li>
+                    • <code className="text-caption-sm">Select</code> - Year
+                    filter
+                  </li>
+                  <li>
+                    • <code className="text-caption-sm">Checkbox</code> - Row
+                    selection
+                  </li>
+                  <li>
+                    • <code className="text-caption-sm">Badge</code> - Selection
+                    counter
+                  </li>
                 </ul>
               </div>
-              
+
               <div>
-                <h4 className="text-body-medium-sm mb-[var(--space-sm)]">State Management:</h4>
-                <ul className="space-y-[var(--space-xsm)] text-body-sm text-[var(--color-text-secondary)]">
+                <h4 className="text-body-medium-sm mb-[var(--space-sm)]">
+                  State Management:
+                </h4>
+                <ul className="text-body-sm space-y-[var(--space-xsm)] text-[var(--color-text-secondary)]">
                   <li>• Sort field and direction tracking</li>
                   <li>• Multi-field filtering logic</li>
                   <li>• Row selection with Set data structure</li>
@@ -743,7 +507,7 @@ export function TablePreview() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ul className="space-y-[var(--space-sm)] text-body-sm text-[var(--color-text-secondary)]">
+              <ul className="text-body-sm space-y-[var(--space-sm)] text-[var(--color-text-secondary)]">
                 <li>• Use clear, descriptive column headers</li>
                 <li>• Align numbers to the right for easy comparison</li>
                 <li>• Use consistent formatting for similar data types</li>
@@ -763,7 +527,7 @@ export function TablePreview() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ul className="space-y-[var(--space-sm)] text-body-sm text-[var(--color-text-secondary)]">
+              <ul className="text-body-sm space-y-[var(--space-sm)] text-[var(--color-text-secondary)]">
                 <li>• Don't make tables too wide for the viewport</li>
                 <li>• Avoid unclear or ambiguous column labels</li>
                 <li>• Don't use excessive colors or styling</li>
@@ -787,18 +551,23 @@ export function TablePreview() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-[var(--space-md)] text-body-sm text-[var(--color-text-secondary)]">
+            <div className="text-body-sm space-y-[var(--space-md)] text-[var(--color-text-secondary)]">
               <p>
-                <strong>Semantic Structure:</strong> Tables use proper HTML elements (table, thead, tbody, th, td) for screen reader compatibility.
+                <strong>Semantic Structure:</strong> Tables use proper HTML
+                elements (table, thead, tbody, th, td) for screen reader
+                compatibility.
               </p>
               <p>
-                <strong>Column Headers:</strong> Use th elements with proper scope attributes to associate data cells with headers.
+                <strong>Column Headers:</strong> Use th elements with proper
+                scope attributes to associate data cells with headers.
               </p>
               <p>
-                <strong>Sort Indicators:</strong> Sortable columns include visual indicators and proper ARIA labels for screen readers.
+                <strong>Sort Indicators:</strong> Sortable columns include
+                visual indicators and proper ARIA labels for screen readers.
               </p>
               <p>
-                <strong>Keyboard Navigation:</strong> Ensure interactive elements within tables are keyboard accessible and focusable.
+                <strong>Keyboard Navigation:</strong> Ensure interactive
+                elements within tables are keyboard accessible and focusable.
               </p>
             </div>
           </CardContent>
