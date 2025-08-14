@@ -3,7 +3,6 @@
   "outputDirectory": "storybook-static",
   "framework": null,
   "installCommand": "npm ci --legacy-peer-deps --force",
-  "functions": {},
   "env": {
     "NODE_OPTIONS": "--max-old-space-size=4096",
     "SKIP_OPTIONAL_DEPS": "true"
