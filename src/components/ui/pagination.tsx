@@ -45,7 +45,7 @@ type PaginationLinkProps = {
 const PaginationLink = React.forwardRef<
   HTMLAnchorElement,
   PaginationLinkProps
->(({ className, isActive, size = "icon", children, ...props }, ref) => (
+>(({ className, isActive, size = "md", children, ...props }, ref) => (
   <a
     ref={ref}
     aria-current={isActive ? "page" : undefined}
@@ -75,7 +75,7 @@ const PaginationPrevious = React.forwardRef<
   <PaginationLink
     ref={ref}
     aria-label="Go to previous page"
-    size="default"
+    size="md"
     className={cn("gap-[var(--space-xsm)] pl-[var(--space-md)]", className)}
     {...props}
   >
@@ -92,7 +92,7 @@ const PaginationNext = React.forwardRef<
   <PaginationLink
     ref={ref}
     aria-label="Go to next page"
-    size="default"
+    size="md"
     className={cn("gap-[var(--space-xsm)] pr-[var(--space-md)]", className)}
     {...props}
   >

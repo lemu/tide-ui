@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { Chart, ChartProps, ChartDataPoint, ChartConfig } from "./chart";
 import { 
   Table, 
@@ -57,12 +57,12 @@ export function LinkedChart({
   const [filteredIndices, setFilteredIndices] = useState<Set<number>>(new Set());
 
   // Handle chart hover
-  const handleChartHover = useCallback((data: ChartDataPoint | null, index?: number) => {
+  const handleChartHover = useCallback((_data: ChartDataPoint | null, index?: number) => {
     setHoveredChartIndex(index ?? null);
   }, []);
 
   // Handle chart click for filtering
-  const handleChartClick = useCallback((clickedData: ChartDataPoint, index: number) => {
+  const handleChartClick = useCallback((_clickedData: ChartDataPoint, index: number) => {
     if (!enableFiltering) return;
 
     const newFilteredIndices = new Set(filteredIndices);
@@ -155,12 +155,12 @@ export function LinkedChart({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-[var(--space-sm)]">
           {selectedRows.size > 0 && (
-            <Badge variant="secondary" size="sm">
+            <Badge intent="neutral" appearance="subtle" size="sm">
               {selectedRows.size} selected
             </Badge>
           )}
           {filteredIndices.size > 0 && (
-            <Badge variant="information" size="sm">
+            <Badge intent="brand" appearance="subtle" size="sm">
               {filteredIndices.size} filtered
             </Badge>
           )}
@@ -184,7 +184,7 @@ export function LinkedChart({
             config={config}
             onDataPointClick={handleChartClick}
             onDataPointHover={handleChartHover}
-            highlightedIndex={chartHighlightIndex}
+            highlightedIndex={chartHighlightIndex ?? undefined}
             className={chartClassName}
           />
         </CardContent>
@@ -196,7 +196,7 @@ export function LinkedChart({
           <CardHeader>
             <CardTitle className="text-heading-sm flex items-center justify-between">
               Data Table
-              <Badge variant="secondary" size="sm">
+              <Badge intent="neutral" appearance="subtle" size="sm">
                 {displayData.length} rows
               </Badge>
             </CardTitle>
@@ -212,7 +212,7 @@ export function LinkedChart({
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {displayData.map((row, index) => {
+                  {displayData.map((row, _index) => {
                     const originalIndex = data.indexOf(row);
                     const isSelected = selectedRows.has(originalIndex);
                     const isHovered = hoveredRowIndex === originalIndex || hoveredChartIndex === originalIndex;

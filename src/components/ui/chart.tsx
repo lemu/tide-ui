@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo } from "react";
 import {
   BarChart,
   Bar,
@@ -12,7 +12,6 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  TooltipProps,
 } from "recharts";
 import { cn } from "@/lib/utils";
 
@@ -74,7 +73,7 @@ export interface ChartProps {
 }
 
 // Custom tooltip component
-const CustomTooltip = ({ active, payload, label, config }: TooltipProps<any, any> & { config: ChartConfig }) => {
+const CustomTooltip = ({ active, payload, label, config }: any & { config: ChartConfig }) => {
   if (!active || !payload || !payload.length) {
     return null;
   }
@@ -82,7 +81,7 @@ const CustomTooltip = ({ active, payload, label, config }: TooltipProps<any, any
   return (
     <div className="rounded-md border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-sm)] shadow-md">
       <p className="text-body-sm font-medium mb-[var(--space-xsm)]">{label}</p>
-      {payload.map((entry, index) => (
+      {payload.map((entry: any, index: number) => (
         <div key={index} className="flex items-center gap-[var(--space-xsm)] text-body-sm">
           <div
             className="w-3 h-3 rounded-full"
@@ -135,9 +134,10 @@ export function Chart({
   // Get data keys from config (exclude 'name' which is the category axis)
   const dataKeys = Object.keys(config).filter(key => key !== 'name');
 
-  const handleMouseEnter = useCallback((data: any, index: number) => {
+  const handleMouseEnter = useCallback((data: any) => {
+    const index = data?.activeTooltipIndex ?? 0;
     setHoveredIndex(index);
-    onDataPointHover?.(data, index);
+    onDataPointHover?.(data?.activePayload?.[0]?.payload, index);
   }, [onDataPointHover]);
 
   const handleMouseLeave = useCallback(() => {
@@ -145,8 +145,9 @@ export function Chart({
     onDataPointHover?.(null);
   }, [onDataPointHover]);
 
-  const handleClick = useCallback((data: any, index: number) => {
-    onDataPointClick?.(data, index);
+  const handleClick = useCallback((data: any) => {
+    const index = data?.activeTooltipIndex ?? 0;
+    onDataPointClick?.(data?.activePayload?.[0]?.payload, index);
   }, [onDataPointClick]);
 
   const commonProps = {
@@ -332,14 +333,14 @@ export function Chart({
         );
 
       default:
-        return null;
+        return <div>Unsupported chart type</div>;
     }
   };
 
   return (
     <div className={cn("w-full", className)} {...props}>
       <ResponsiveContainer width={width || "100%"} height={height}>
-        {renderChart()}
+        {renderChart() || <div>Chart error</div>}
       </ResponsiveContainer>
     </div>
   );

@@ -2,13 +2,8 @@ import * as React from "react";
 import { useForm, UseFormReturn, FieldPath, FieldValues, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { cn } from "../../lib/utils";
 import {
   FormField as BaseFormField,
-  FormLabel,
-  FormControl,
-  FormHelperText,
-  FormErrorMessage,
   FormFieldProps as BaseFormFieldProps,
 } from "./form-field";
 
@@ -58,7 +53,7 @@ Form.displayName = "Form";
 export interface FormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
-> extends BaseFormFieldProps {
+> extends Omit<BaseFormFieldProps, 'children'> {
   name: TName;
   children: (field: {
     value: any;
@@ -110,7 +105,7 @@ export const useFormWithSchema = <T extends z.ZodType<any, any, any>>({
   mode = "onBlur",
 }: UseFormWithSchemaOptions<T>) => {
   return useForm<z.infer<T>>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as any,
     defaultValues,
     mode,
   });

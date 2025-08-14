@@ -160,11 +160,13 @@ const sidebarData = {
         title: "Notifications",
         icon: "bell",
         url: "#",
+        isActive: false,
       },
       {
         title: "Help & support",
         icon: "circle-help",
         url: "#",
+        isActive: false,
       },
     ],
   },
