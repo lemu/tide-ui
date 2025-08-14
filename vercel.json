@@ -1,10 +1,10 @@
 {
-  "buildCommand": "npx storybook build --quiet",
+  "buildCommand": "npm run build-storybook",
   "outputDirectory": "storybook-static",
   "framework": null,
-  "installCommand": "npm ci --legacy-peer-deps --force",
   "env": {
     "NODE_OPTIONS": "--max-old-space-size=4096",
-    "SKIP_OPTIONAL_DEPS": "true"
+    "NPM_CONFIG_LEGACY_PEER_DEPS": "true",
+    "NPM_CONFIG_FORCE": "true"
   }
 }
