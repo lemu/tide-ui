@@ -185,6 +185,93 @@ export const WithDropdown: Story = {
   ),
 }
 
+// Usage Examples with Code
+export const UsageExamples: Story = {
+  render: () => (
+    <div className="space-y-[var(--space-lg)] max-w-4xl">
+      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
+        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+          Basic Button
+        </h3>
+        <div className="flex items-center gap-[var(--space-md)]">
+          <Button>Click me</Button>
+          <code className="text-body-sm rounded-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] text-[var(--color-text-primary)]">
+            {`<Button>Click me</Button>`}
+          </code>
+        </div>
+      </div>
+
+      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
+        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+          Primary with Icon
+        </h3>
+        <div className="flex items-center gap-[var(--space-md)]">
+          <Button variant="primary" icon="plus" iconPosition="left">
+            Add Item
+          </Button>
+          <code className="text-body-sm rounded-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] text-[var(--color-text-primary)]">
+            {`<Button variant="primary" icon="plus" iconPosition="left">Add Item</Button>`}
+          </code>
+        </div>
+      </div>
+
+      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
+        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+          Icon Only Button
+        </h3>
+        <div className="flex items-center gap-[var(--space-md)]">
+          <Button icon="settings" size="md" />
+          <code className="text-body-sm rounded-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] text-[var(--color-text-primary)]">
+            {`<Button icon="settings" size="md" />`}
+          </code>
+        </div>
+      </div>
+
+      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
+        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+          Loading Button
+        </h3>
+        <div className="flex items-center gap-[var(--space-md)]">
+          <Button variant="primary" icon="save" iconPosition="left" loading>
+            Saving...
+          </Button>
+          <code className="text-body-sm rounded-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] text-[var(--color-text-primary)]">
+            {`<Button variant="primary" icon="save" iconPosition="left" loading>Saving...</Button>`}
+          </code>
+        </div>
+      </div>
+
+      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
+        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+          Dropdown Button
+        </h3>
+        <div className="flex flex-col gap-[var(--space-md)]">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button dropdown>More Options</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>Option 1</DropdownMenuItem>
+              <DropdownMenuItem>Option 2</DropdownMenuItem>
+              <DropdownMenuItem>Option 3</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <code className="text-body-sm rounded-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] text-[var(--color-text-primary)]">
+            {`<DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button dropdown>More Options</Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuItem>Option 1</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>`}
+          </code>
+        </div>
+      </div>
+    </div>
+  ),
+}
+
 export const AllVariants: Story = {
   render: () => (
     <div className="space-y-6">
