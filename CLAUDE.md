@@ -208,3 +208,26 @@ The project structure is intentionally minimal. When adding new features:
 - The build outputs to `/dist/` (ignored by ESLint)
 
 No test framework is currently configured in this project.
+
+## NPM Publishing
+
+### **CRITICAL: Version Management for NPM Publishing**
+
+**Whenever the user mentions publishing to NPM, ALWAYS propose the next version number:**
+
+1. **Check Current Version**: Read `package.json` to see the current version
+2. **Propose Version Bump**: Suggest the appropriate semantic version increment:
+   - **Patch** (x.x.X): Bug fixes, small improvements, dependency updates
+   - **Minor** (x.X.x): New features, component additions, non-breaking API changes  
+   - **Major** (X.x.x): Breaking changes, API changes, major refactors
+
+3. **Version Justification**: Explain why the proposed version is appropriate based on recent changes
+
+4. **Publishing Process**:
+   - Use `npm version [patch|minor|major]` to update version and create git tag
+   - Run `npm run build:lib` to build the library 
+   - Use `npm publish` to publish to registry
+   - Verify publication was successful
+
+**Example Response Format:**
+"I recommend bumping to version **X.X.X** (patch/minor/major) because [reason]. This accounts for [list recent changes]. Should I proceed with publishing version X.X.X?"
