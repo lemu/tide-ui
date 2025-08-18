@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/react-vite'
 import '../src/index.css'
+import './storybook.css'
 
 // Import Inter font from Google Fonts
 const link = document.createElement('link')

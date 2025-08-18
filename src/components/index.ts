@@ -32,6 +32,77 @@ export type { TabsProps, TabsListProps, TabsTriggerProps, TabsGroupLabelProps } 
 export { Toggle } from './ui/toggle'
 export type { ToggleProps } from './ui/toggle'
 
+// AppFrame and its dependencies
+export { AppFrame } from './product/app-frame'
+
+// Icon component - core dependency for AppFrame
+export { Icon } from './ui/icon'
+export type { IconColor, IconSize, CustomIconName } from './ui/icon'
+
+// Kbd component - for keyboard shortcuts
+export { Kbd } from './ui/kbd'
+
+// Command components - for search dialog
+export {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from './ui/command'
+
+// Breadcrumb components - for navigation
+export {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from './ui/breadcrumb'
+
+// Sidebar components - main sidebar functionality
+export {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarRail,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarMenuSubButton,
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+  useSidebar,
+} from './ui/sidebar'
+
+// DropdownMenu components - for user/team switcher
+export {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  DropdownMenuLabel,
+  DropdownMenuGroup,
+} from './ui/dropdown-menu'
+
+// Tooltip components - for collapsed sidebar tooltips
+export {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from './ui/tooltip'
+
 // Utility exports
 export { cn } from '../lib/utils'
 

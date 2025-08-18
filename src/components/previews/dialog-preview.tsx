@@ -466,7 +466,9 @@ export function DialogPreview() {
 
       {/* Special Use Cases */}
       <section>
-        <h2 className="text-heading-lg mb-[var(--space-lg)]">Special Use Cases</h2>
+        <h2 className="text-heading-lg mb-[var(--space-lg)]">
+          Special Use Cases
+        </h2>
 
         <div className="grid grid-cols-1 gap-[var(--space-lg)] md:grid-cols-2">
           {/* Alert Dialog */}
@@ -480,7 +482,10 @@ export function DialogPreview() {
             <CardContent>
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="destructive" className="flex items-center gap-[var(--space-sm)]">
+                  <Button
+                    variant="destructive"
+                    className="flex items-center gap-[var(--space-sm)]"
+                  >
                     <Icon name="alert-triangle" size="sm" />
                     Show Alert
                   </Button>
@@ -492,15 +497,18 @@ export function DialogPreview() {
                       System Error
                     </DialogTitle>
                     <DialogDescription>
-                      An unexpected error occurred while processing your request.
-                      Please try again or contact support if the problem persists.
+                      An unexpected error occurred while processing your
+                      request. Please try again or contact support if the
+                      problem persists.
                     </DialogDescription>
                   </DialogHeader>
                   <div className="py-[var(--space-md)]">
-                    <div className="p-[var(--space-md)] bg-[var(--color-background-error)] rounded-md">
+                    <div className="rounded-md bg-[var(--color-background-error)] p-[var(--space-md)]">
                       <div className="text-body-sm text-[var(--color-text-error)]">
-                        <strong>Error Code:</strong> ERR_CONNECTION_FAILED<br/>
-                        <strong>Timestamp:</strong> {new Date().toLocaleString()}
+                        <strong>Error Code:</strong> ERR_CONNECTION_FAILED
+                        <br />
+                        <strong>Timestamp:</strong>{" "}
+                        {new Date().toLocaleString()}
                       </div>
                     </div>
                   </div>
@@ -523,7 +531,10 @@ export function DialogPreview() {
             <CardContent>
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="primary" className="flex items-center gap-[var(--space-sm)]">
+                  <Button
+                    variant="primary"
+                    className="flex items-center gap-[var(--space-sm)]"
+                  >
                     <Icon name="circle-check-big" size="sm" />
                     Complete Action
                   </Button>
@@ -535,27 +546,38 @@ export function DialogPreview() {
                       Success!
                     </DialogTitle>
                     <DialogDescription>
-                      Your action has been completed successfully. All changes have been saved.
+                      Your action has been completed successfully. All changes
+                      have been saved.
                     </DialogDescription>
                   </DialogHeader>
                   <div className="py-[var(--space-md)]">
                     <div className="flex items-center gap-[var(--space-md)]">
                       <div className="flex-1">
                         <div className="space-y-[var(--space-sm)]">
-                          <div className="flex items-center justify-between text-body-sm">
-                            <span className="text-[var(--color-text-secondary)]">Status</span>
-                            <Badge variant="success" size="sm">Complete</Badge>
+                          <div className="text-body-sm flex items-center justify-between">
+                            <span className="text-[var(--color-text-secondary)]">
+                              Status
+                            </span>
+                            <Badge variant="success" size="sm">
+                              Complete
+                            </Badge>
                           </div>
-                          <div className="flex items-center justify-between text-body-sm">
-                            <span className="text-[var(--color-text-secondary)]">Time</span>
-                            <span className="font-medium">{new Date().toLocaleTimeString()}</span>
+                          <div className="text-body-sm flex items-center justify-between">
+                            <span className="text-[var(--color-text-secondary)]">
+                              Time
+                            </span>
+                            <span className="font-medium">
+                              {new Date().toLocaleTimeString()}
+                            </span>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                   <DialogFooter>
-                    <Button variant="primary" className="w-full">Continue</Button>
+                    <Button variant="primary" className="w-full">
+                      Continue
+                    </Button>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
@@ -621,18 +643,24 @@ export function DialogPreview() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-[var(--space-md)] text-body-sm text-[var(--color-text-secondary)]">
+            <div className="text-body-sm space-y-[var(--space-md)] text-[var(--color-text-secondary)]">
               <p>
-                <strong>Focus Management:</strong> Dialogs automatically trap focus within the modal and return focus to the trigger when closed.
+                <strong>Focus Management:</strong> Dialogs automatically trap
+                focus within the modal and return focus to the trigger when
+                closed.
               </p>
               <p>
-                <strong>Keyboard Navigation:</strong> Users can close dialogs with the Escape key and navigate with Tab/Shift+Tab within the dialog.
+                <strong>Keyboard Navigation:</strong> Users can close dialogs
+                with the Escape key and navigate with Tab/Shift+Tab within the
+                dialog.
               </p>
               <p>
-                <strong>Screen Readers:</strong> Dialogs include proper ARIA attributes and roles for screen reader compatibility.
+                <strong>Screen Readers:</strong> Dialogs include proper ARIA
+                attributes and roles for screen reader compatibility.
               </p>
               <p>
-                <strong>Visual Hierarchy:</strong> Use clear headings and descriptions to establish content hierarchy for all users.
+                <strong>Visual Hierarchy:</strong> Use clear headings and
+                descriptions to establish content hierarchy for all users.
               </p>
             </div>
           </CardContent>

@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
 const checkboxVariants = cva(
-  "peer w-[var(--size-2xsm)] h-[var(--size-2xsm)] shrink-0 rounded-sm border-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 cursor-pointer disabled:cursor-not-allowed disabled:opacity-100 box-border",
+  "peer w-[var(--size-2xsm)] h-[var(--size-2xsm)] shrink-0 rounded-sm border-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 cursor-pointer hover:cursor-pointer [&:not(:disabled)]:cursor-pointer disabled:cursor-not-allowed disabled:opacity-100 box-border",
   {
     variants: {
       variant: {

@@ -353,13 +353,20 @@ export const generateChartColors = (count: number, scheme: ChartColorScheme = "b
 };
 
 export const createChartConfig = (
-  keys: string[], 
-  labels: string[], 
+  input: ChartConfig | string[], 
+  labels?: string[], 
   colors?: string[]
 ): ChartConfig => {
+  // If input is already a ChartConfig object, return it
+  if (!Array.isArray(input)) {
+    return input;
+  }
+  
+  // If input is an array of keys, create config from arrays
+  const keys = input;
   return keys.reduce((config, key, index) => {
     config[key] = {
-      label: labels[index] || key,
+      label: labels?.[index] || key,
       color: colors?.[index],
     };
     return config;

@@ -1,0 +1,45 @@
+/* Storybook-specific overrides to ensure proper cursor behavior */
+
+/* Labels should be clickable when associated with form controls */
+label {
+  cursor: pointer !important;
+}
+
+/* Specifically target labels associated with form controls */
+label[for],
+label[htmlFor] {
+  cursor: pointer !important;
+}
+
+/* Ensure interactive elements show pointer cursor */
+[role="radio"],
+[role="checkbox"],
+[role="button"],
+button {
+  cursor: pointer !important;
+}
+
+/* Ensure cursor-pointer class works in Storybook */
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+/* Disabled states should show not-allowed cursor */
+label[aria-disabled="true"],
+label:has([disabled]),
+[disabled],
+[aria-disabled="true"],
+.cursor-not-allowed {
+  cursor: not-allowed !important;
+}
+
+/* Specific fixes for Radix UI components in Storybook */
+[data-radix-collection-item] {
+  cursor: pointer !important;
+}
+
+/* Ensure form control containers are clickable */
+.flex:has([role="radio"]),
+.flex:has([role="checkbox"]) {
+  cursor: pointer !important;
+}

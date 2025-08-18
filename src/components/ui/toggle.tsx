@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
 const toggleVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-body-medium-sm font-medium ring-offset-[var(--color-surface-primary)] transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-[var(--color-background-brand-selected)] data-[state=on]:text-[var(--color-text-selected)] [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:transition-colors data-[state=on]:[&_svg]:text-[var(--color-text-brand)] gap-[var(--space-sm)]",
+  "inline-flex items-center justify-center rounded-md text-body-medium-sm font-medium ring-offset-[var(--color-surface-primary)] transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-[var(--color-background-brand-selected)] data-[state=on]:text-[var(--color-text-selected)] [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:transition-colors data-[state=on]:[&_svg]:text-[var(--color-text-brand)] gap-[var(--space-sm)] cursor-pointer",
   {
     variants: {
       variant: {
