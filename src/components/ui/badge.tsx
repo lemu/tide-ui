@@ -6,6 +6,12 @@ const badgeVariants = cva(
   "inline-flex items-center rounded-sm px-[var(--space-sm)] py-[var(--space-xsm)] text-caption-medium-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-1 cursor-default",
   {
     variants: {
+      variant: {
+        default: "border-transparent bg-[var(--grey-100)] text-[var(--color-text-primary)]",
+        secondary: "border-transparent bg-[var(--grey-100)] text-[var(--color-text-primary)]",
+        destructive: "border-transparent bg-[var(--color-background-error-bold)] text-[var(--color-text-inverse)]",
+        outline: "bg-transparent border border-[var(--color-border-primary-strong)] text-[var(--color-text-primary)]",
+      },
       intent: {
         neutral: "",
         brand: "",
@@ -122,6 +128,7 @@ const badgeVariants = cva(
       },
     ],
     defaultVariants: {
+      variant: "default",
       intent: "neutral",
       appearance: "subtle",
       size: "md",
@@ -134,11 +141,11 @@ export interface BadgeProps
     VariantProps<typeof badgeVariants> {}
 
 const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
-  ({ className, intent, appearance, size, ...props }, ref) => {
+  ({ className, variant, intent, appearance, size, ...props }, ref) => {
     return (
       <div
         ref={ref}
-        className={cn(badgeVariants({ intent, appearance, size }), className)}
+        className={cn(badgeVariants({ variant, intent, appearance, size }), className)}
         {...props}
       />
     );

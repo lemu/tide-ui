@@ -177,7 +177,7 @@ const Tag = React.forwardRef<HTMLDivElement, TagProps>(
       }
     }
 
-    const closeButtonSize = size === "sm" ? "xs" : size === "lg" ? "sm" : "xs"
+    const closeButtonSize = size === "sm" ? "sm" : size === "lg" ? "md" : "sm"
     
     // Determine close button color based on appearance and intent
     const closeButtonColor = appearance === "solid" 
@@ -362,4 +362,3 @@ const TagGroup = React.forwardRef<HTMLDivElement, TagGroupProps>(
 TagGroup.displayName = "TagGroup"
 
 export { Tag, TagGroup, tagVariants }
-export type { TagProps, TagGroupProps }

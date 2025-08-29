@@ -24,7 +24,7 @@ const numberScrubberVariants = cva(
 )
 
 export interface NumberScrubberProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange" | "value" | "type">,
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange" | "value" | "type" | "size">,
     VariantProps<typeof numberScrubberVariants> {
   value?: number
   onChange?: (value: number) => void
@@ -226,4 +226,3 @@ export const NumberScrubber = React.forwardRef<HTMLInputElement, NumberScrubberP
 )
 NumberScrubber.displayName = "NumberScrubber"
 
-export type { NumberScrubberProps }

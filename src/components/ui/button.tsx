@@ -16,6 +16,14 @@ const buttonVariants = cva(
           "enabled:active:bg-[var(--grey-alpha-50)] enabled:active:translate-y-px enabled:active:shadow-xs",
           "disabled:bg-[var(--color-background-disabled)] disabled:[&]:text-[var(--color-text-disabled)] disabled:border-[var(--color-border-action-outline)]",
         ],
+        secondary: [
+          "bg-[var(--color-background-neutral-subtle)] text-[var(--color-text-primary)]",
+          "border border-[var(--color-border-action-outline)]",
+          "enabled:hover:bg-[var(--color-background-neutral-subtle-hovered)] enabled:hover:border-[var(--color-border-action-hovered)] enabled:hover:shadow-sm",
+          "focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
+          "enabled:active:bg-[var(--grey-alpha-50)] enabled:active:translate-y-px enabled:active:shadow-xs",
+          "disabled:bg-[var(--color-background-disabled)] disabled:[&]:text-[var(--color-text-disabled)] disabled:border-[var(--color-border-action-outline)]",
+        ],
         primary: [
           "bg-[var(--color-background-brand)] [&]:text-[var(--color-text-on-action)]",
           "border-none",

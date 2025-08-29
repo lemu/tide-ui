@@ -80,7 +80,7 @@ const useEditable = () => {
 }
 
 export interface EditableProps 
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange">,
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange" | "onSubmit">,
     VariantProps<typeof editableVariants> {
   value?: string
   defaultValue?: string

@@ -6,6 +6,8 @@ import {
   Line,
   ScatterChart,
   Scatter,
+  ComposedChart,
+  Area,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -15,15 +17,17 @@ import {
 } from "recharts";
 import { cn } from "@/lib/utils";
 
-// Color palettes for different chart types
+// Enhanced color palettes for different chart types with accessibility support
 export const chartColorSchemes = {
   bar: [
     "#3B82F6", // blue-500
-    "#1D4ED8", // blue-700
+    "#1D4ED8", // blue-700  
     "#1E40AF", // blue-800
     "#1E3A8A", // blue-900
     "#312E81", // indigo-800
     "#1E1B4B", // indigo-900
+    "#F59E0B", // amber-500 (contrast color)
+    "#DC2626", // red-600 (contrast color)
   ],
   line: [
     "#10B981", // emerald-500
@@ -32,6 +36,8 @@ export const chartColorSchemes = {
     "#065F46", // emerald-800
     "#064E3B", // emerald-900
     "#022C22", // emerald-950
+    "#8B5CF6", // violet-500 (contrast color)
+    "#DC2626", // red-600 (contrast color)
   ],
   scatter: [
     "#8B5CF6", // violet-500
@@ -40,10 +46,23 @@ export const chartColorSchemes = {
     "#5B21B6", // violet-800
     "#4C1D95", // violet-900
     "#312E81", // indigo-800
+    "#10B981", // emerald-500 (contrast color)
+    "#F59E0B", // amber-500 (contrast color)
+  ],
+  // New accessibility-focused scheme
+  accessible: [
+    "#0066CC", // High contrast blue
+    "#CC6600", // High contrast orange
+    "#009966", // High contrast green
+    "#CC0066", // High contrast magenta
+    "#6600CC", // High contrast purple
+    "#CC9900", // High contrast gold
+    "#006666", // High contrast teal
+    "#CC0000", // High contrast red
   ],
 } as const;
 
-export type ChartType = "bar" | "horizontal-bar" | "line" | "scatter";
+export type ChartType = "bar" | "horizontal-bar" | "line" | "scatter" | "composed";
 export type ChartColorScheme = keyof typeof chartColorSchemes;
 
 export interface ChartDataPoint {
@@ -54,6 +73,7 @@ export interface ChartConfig {
   [key: string]: {
     label: string;
     color?: string;
+    type?: "bar" | "line" | "area"; // For composed charts
   };
 }
 
@@ -70,31 +90,47 @@ export interface ChartProps {
   showGrid?: boolean;
   showLegend?: boolean;
   showTooltip?: boolean;
+  colorScheme?: ChartColorScheme; // Allow custom color schemes
+  responsive?: boolean; // Control responsive behavior
+  maintainAspectRatio?: boolean; // Control aspect ratio
 }
 
-// Custom tooltip component
+// Enhanced tooltip component with better accessibility and formatting
 const CustomTooltip = ({ active, payload, label, config }: any & { config: ChartConfig }) => {
   if (!active || !payload || !payload.length) {
     return null;
   }
 
   return (
-    <div className="rounded-md border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-sm)] shadow-md">
-      <p className="text-body-sm font-medium mb-[var(--space-xsm)]">{label}</p>
-      {payload.map((entry: any, index: number) => (
-        <div key={index} className="flex items-center gap-[var(--space-xsm)] text-body-sm">
-          <div
-            className="w-3 h-3 rounded-full"
-            style={{ backgroundColor: entry.color }}
-          />
-          <span className="text-[var(--color-text-secondary)]">
-            {config[entry.dataKey as string]?.label || entry.dataKey}:
-          </span>
-          <span className="font-medium text-[var(--color-text-primary)]">
-            {typeof entry.value === 'number' ? entry.value.toLocaleString() : entry.value}
-          </span>
-        </div>
-      ))}
+    <div 
+      className="rounded-md border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-sm)] shadow-md max-w-xs"
+      role="tooltip"
+      aria-label="Chart data tooltip"
+    >
+      <p className="text-body-sm font-medium mb-[var(--space-xsm)] text-[var(--color-text-primary)]">
+        {label}
+      </p>
+      {payload.map((entry: any, index: number) => {
+        const value = typeof entry.value === 'number' 
+          ? entry.value.toLocaleString() 
+          : entry.value;
+        
+        return (
+          <div key={index} className="flex items-center gap-[var(--space-xsm)] text-body-sm">
+            <div
+              className="w-3 h-3 rounded-full flex-shrink-0"
+              style={{ backgroundColor: entry.color }}
+              aria-hidden="true"
+            />
+            <span className="text-[var(--color-text-secondary)] min-w-0">
+              {config[entry.dataKey as string]?.label || entry.dataKey}:
+            </span>
+            <span className="font-medium text-[var(--color-text-primary)] ml-auto">
+              {value}
+            </span>
+          </div>
+        );
+      })}
     </div>
   );
 };
@@ -112,12 +148,19 @@ export function Chart({
   showGrid = true,
   showLegend = true,
   showTooltip = true,
+  colorScheme,
+  responsive = true,
+  maintainAspectRatio = false,
   ...props
 }: ChartProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  // Get color scheme based on chart type
-  const colorScheme = useMemo(() => {
+  // Get color scheme based on chart type or custom scheme
+  const activeColorScheme = useMemo(() => {
+    if (colorScheme) {
+      return chartColorSchemes[colorScheme];
+    }
+    
     switch (type) {
       case "bar":
       case "horizontal-bar":
@@ -126,10 +169,12 @@ export function Chart({
         return chartColorSchemes.line;
       case "scatter":
         return chartColorSchemes.scatter;
+      case "composed":
+        return chartColorSchemes.bar; // Use bar colors for composed charts
       default:
         return chartColorSchemes.bar;
     }
-  }, [type]);
+  }, [type, colorScheme]);
 
   // Get data keys from config (exclude 'name' which is the category axis)
   const dataKeys = Object.keys(config).filter(key => key !== 'name');
@@ -150,9 +195,21 @@ export function Chart({
     onDataPointClick?.(data?.activePayload?.[0]?.payload, index);
   }, [onDataPointClick]);
 
+  // Dynamic margins based on chart type
+  const getMargins = () => {
+    switch (type) {
+      case "horizontal-bar":
+        return { top: 20, right: 50, left: 60, bottom: 20 }; // More space for Y-axis labels
+      case "scatter":
+        return { top: 20, right: 40, left: 40, bottom: 40 }; // More space for number axes
+      default:
+        return { top: 20, right: 30, left: 20, bottom: 20 };
+    }
+  };
+
   const commonProps = {
     data,
-    margin: { top: 20, right: 30, left: 20, bottom: 20 },
+    margin: getMargins(),
   };
 
   const xAxisProps = {
@@ -206,9 +263,9 @@ export function Chart({
             {showTooltip && <Tooltip content={(props) => <CustomTooltip {...props} config={config} />} />}
             {showLegend && <Legend {...legendProps} />}
             {dataKeys.map((key, index) => {
-              const baseColor = config[key].color || colorScheme[index % colorScheme.length];
-              const isHighlighted = highlightedIndex !== undefined && hoveredIndex !== null;
-              const fillColor = isHighlighted ? `${baseColor}60` : baseColor;
+              const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
+              const shouldDim = highlightedIndex !== undefined && hoveredIndex !== highlightedIndex;
+              const fillColor = shouldDim ? `${baseColor}60` : baseColor;
               
               return (
                 <Bar
@@ -218,6 +275,8 @@ export function Chart({
                   fill={fillColor}
                   radius={[2, 2, 0, 0]}
                   className="cursor-pointer transition-colors"
+                  isAnimationActive={false}
+                  maxBarSize={60}
                 />
               );
             })}
@@ -227,8 +286,8 @@ export function Chart({
       case "horizontal-bar":
         return (
           <BarChart 
-            {...commonProps} 
-            layout="horizontal"
+            {...commonProps}
+            layout="vertical"
             onMouseMove={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onClick={handleClick}
@@ -239,9 +298,9 @@ export function Chart({
             {showTooltip && <Tooltip content={(props) => <CustomTooltip {...props} config={config} />} />}
             {showLegend && <Legend {...legendProps} />}
             {dataKeys.map((key, index) => {
-              const baseColor = config[key].color || colorScheme[index % colorScheme.length];
-              const isHighlighted = highlightedIndex !== undefined && hoveredIndex !== null;
-              const fillColor = isHighlighted ? `${baseColor}60` : baseColor;
+              const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
+              const shouldDim = highlightedIndex !== undefined && hoveredIndex !== highlightedIndex;
+              const fillColor = shouldDim ? `${baseColor}60` : baseColor;
               
               return (
                 <Bar
@@ -249,8 +308,8 @@ export function Chart({
                   dataKey={key}
                   name={config[key].label}
                   fill={fillColor}
-                  radius={[0, 2, 2, 0]}
-                  className="cursor-pointer transition-colors"
+                  isAnimationActive={false}
+                  maxBarSize={40}
                 />
               );
             })}
@@ -271,9 +330,9 @@ export function Chart({
             {showTooltip && <Tooltip content={(props) => <CustomTooltip {...props} config={config} />} />}
             {showLegend && <Legend {...legendProps} />}
             {dataKeys.map((key, index) => {
-              const baseColor = config[key].color || colorScheme[index % colorScheme.length];
-              const isHighlighted = highlightedIndex !== undefined && hoveredIndex !== null;
-              const strokeColor = isHighlighted ? `${baseColor}60` : baseColor;
+              const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
+              const shouldDim = highlightedIndex !== undefined && hoveredIndex !== highlightedIndex;
+              const strokeColor = shouldDim ? `${baseColor}60` : baseColor;
               
               return (
                 <Line
@@ -293,6 +352,7 @@ export function Chart({
                     fill: baseColor
                   }}
                   className="cursor-pointer transition-colors"
+                  isAnimationActive={false}
                 />
               );
             })}
@@ -315,9 +375,9 @@ export function Chart({
             {dataKeys
               .filter(key => key !== 'x' && key !== 'y' && key !== 'name')
               .map((key, index) => {
-                const baseColor = config[key]?.color || colorScheme[index % colorScheme.length];
-                const isHighlighted = highlightedIndex !== undefined && hoveredIndex !== null;
-                const fillColor = isHighlighted ? `${baseColor}60` : baseColor;
+                const baseColor = config[key]?.color || activeColorScheme[index % activeColorScheme.length];
+                const shouldDim = highlightedIndex !== undefined && hoveredIndex !== highlightedIndex;
+                const fillColor = shouldDim ? `${baseColor}60` : baseColor;
                 
                 return (
                   <Scatter
@@ -326,10 +386,85 @@ export function Chart({
                     data={data.map(d => ({ x: d.x, y: d.y, [key]: d[key] }))}
                     fill={fillColor}
                     className="cursor-pointer transition-colors"
+                    isAnimationActive={false}
                   />
                 );
               })}
           </ScatterChart>
+        );
+
+      case "composed":
+        return (
+          <ComposedChart 
+            {...commonProps}
+            onMouseMove={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onClick={handleClick}
+          >
+            {showGrid && <CartesianGrid {...gridProps} />}
+            <XAxis dataKey="name" {...xAxisProps} />
+            <YAxis {...yAxisProps} domain={[0, 'dataMax']} />
+            {showTooltip && <Tooltip content={(props) => <CustomTooltip {...props} config={config} />} />}
+            {showLegend && <Legend {...legendProps} />}
+            {dataKeys.map((key, index) => {
+              const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
+              const shouldDim = highlightedIndex !== undefined && hoveredIndex !== highlightedIndex;
+              const fillColor = shouldDim ? `${baseColor}60` : baseColor;
+              const chartElementType = config[key].type || "bar"; // Default to bar
+              
+              if (chartElementType === "line") {
+                return (
+                  <Line
+                    key={key}
+                    type="linear"
+                    dataKey={key}
+                    name={config[key].label}
+                    stroke={fillColor}
+                    strokeWidth={2}
+                    dot={{ 
+                      fill: fillColor, 
+                      strokeWidth: 0,
+                      r: 3
+                    }}
+                    activeDot={{ 
+                      r: 5,
+                      fill: baseColor
+                    }}
+                    className="cursor-pointer transition-colors"
+                    isAnimationActive={false}
+                  />
+                );
+              } else if (chartElementType === "area") {
+                return (
+                  <Area
+                    key={key}
+                    type="linear"
+                    dataKey={key}
+                    name={config[key].label}
+                    stroke={baseColor}
+                    fill={fillColor}
+                    fillOpacity={0.3}
+                    className="cursor-pointer transition-colors"
+                    isAnimationActive={false}
+                  />
+                );
+              } else {
+                // Default to bar
+                return (
+                  <Bar
+                    key={key}
+                    dataKey={key}
+                    name={config[key].label}
+                    fill={fillColor}
+                    radius={[2, 2, 0, 0]}
+                    className="cursor-pointer transition-colors"
+                    isAnimationActive={false}
+                    maxBarSize={60}
+                  />
+                );
+              }
+            })}
+          </ComposedChart>
         );
 
       default:
@@ -339,9 +474,20 @@ export function Chart({
 
   return (
     <div className={cn("w-full", className)} {...props}>
-      <ResponsiveContainer width={width || "100%"} height={height}>
-        {renderChart() || <div>Chart error</div>}
-      </ResponsiveContainer>
+      {responsive ? (
+        <ResponsiveContainer 
+          width={width || "100%"} 
+          height={height}
+          minHeight={200}
+          debounceMs={50}
+        >
+          {renderChart() || <div>Chart error</div>}
+        </ResponsiveContainer>
+      ) : (
+        <div style={{ width: width || "100%", height }}>
+          {renderChart() || <div>Chart error</div>}
+        </div>
+      )}
     </div>
   );
 }

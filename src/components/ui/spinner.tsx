@@ -327,10 +327,3 @@ export {
   spinnerVariants 
 }
 
-export type { 
-  SpinnerProps, 
-  LoadingOverlayProps, 
-  SkeletonProps, 
-  PulseProps, 
-  ProgressDotsProps 
-}

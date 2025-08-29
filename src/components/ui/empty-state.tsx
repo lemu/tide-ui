@@ -63,13 +63,13 @@ export interface EmptyStateProps
     label: string
     onClick?: () => void
     href?: string
-    variant?: "default" | "secondary" | "ghost" | "link"
+    variant?: "default" | "secondary" | "ghost" | "primary" | "destructive" | "success"
   }
   secondaryAction?: {
     label: string
     onClick?: () => void
     href?: string
-    variant?: "default" | "secondary" | "ghost" | "link"
+    variant?: "default" | "secondary" | "ghost" | "primary" | "destructive" | "success"
   }
 }
 
@@ -309,4 +309,3 @@ export const EmptyStates = {
   ),
 }
 
-export type { EmptyStateProps }

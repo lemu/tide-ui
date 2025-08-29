@@ -68,7 +68,7 @@ const Progress = React.forwardRef<
           style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
         />
       </ProgressPrimitive.Root>
-      {showLabel && value !== undefined && (
+      {showLabel && value !== undefined && value !== null && (
         <div className="mt-1 text-caption-sm text-[var(--color-text-secondary)]">
           {formatLabel ? formatLabel(value) : defaultFormatLabel(value)}
         </div>

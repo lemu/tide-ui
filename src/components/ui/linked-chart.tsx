@@ -18,7 +18,7 @@ export interface LinkedChartColumn {
   key: string;
   label: string;
   type?: "text" | "number" | "currency" | "percentage";
-  format?: (value: any) => string;
+  format?: (value: any, row?: any) => string;
 }
 
 export interface LinkedChartProps extends Omit<ChartProps, "onDataPointClick" | "onDataPointHover" | "highlightedIndex"> {
@@ -56,21 +56,39 @@ export function LinkedChart({
   const [hoveredChartIndex, setHoveredChartIndex] = useState<number | null>(null);
   const [filteredIndices, setFilteredIndices] = useState<Set<number>>(new Set());
 
+  // Filter data based on current filters
+  const displayData = useMemo(() => {
+    if (filteredIndices.size === 0) {
+      return data;
+    }
+    return data.filter((_, index) => filteredIndices.has(index));
+  }, [data, filteredIndices]);
+
   // Handle chart hover
-  const handleChartHover = useCallback((_data: ChartDataPoint | null, index?: number) => {
-    setHoveredChartIndex(index ?? null);
-  }, []);
+  const handleChartHover = useCallback((hoveredData: ChartDataPoint | null, index?: number) => {
+    if (index !== undefined && hoveredData) {
+      // Map the hovered index from displayData back to original data index
+      const originalIndex = data.findIndex(item => item === displayData[index]);
+      setHoveredChartIndex(originalIndex !== -1 ? originalIndex : null);
+    } else {
+      setHoveredChartIndex(null);
+    }
+  }, [data, displayData]);
 
   // Handle chart click for filtering
   const handleChartClick = useCallback((_clickedData: ChartDataPoint, index: number) => {
     if (!enableFiltering) return;
 
+    // Map the clicked index from displayData back to original data index
+    const originalIndex = data.findIndex(item => item === displayData[index]);
+    if (originalIndex === -1) return; // Safety check
+
     const newFilteredIndices = new Set(filteredIndices);
     
-    if (newFilteredIndices.has(index)) {
-      newFilteredIndices.delete(index);
+    if (newFilteredIndices.has(originalIndex)) {
+      newFilteredIndices.delete(originalIndex);
     } else {
-      newFilteredIndices.add(index);
+      newFilteredIndices.add(originalIndex);
     }
     
     setFilteredIndices(newFilteredIndices);
@@ -78,7 +96,7 @@ export function LinkedChart({
     // Notify parent of filtered data
     const filteredData = data.filter((_, i) => newFilteredIndices.has(i));
     onDataFilter?.(filteredData);
-  }, [enableFiltering, filteredIndices, data, onDataFilter]);
+  }, [enableFiltering, filteredIndices, data, onDataFilter, displayData]);
 
   // Handle row selection
   const handleRowClick = useCallback((index: number) => {
@@ -111,9 +129,9 @@ export function LinkedChart({
   }, [onRowSelectionChange, onDataFilter]);
 
   // Format cell value based on column type
-  const formatCellValue = useCallback((value: any, column: LinkedChartColumn) => {
+  const formatCellValue = useCallback((value: any, column: LinkedChartColumn, row?: any) => {
     if (column.format) {
-      return column.format(value);
+      return column.format(value, row);
     }
 
     switch (column.type) {
@@ -127,14 +145,6 @@ export function LinkedChart({
         return value;
     }
   }, []);
-
-  // Filter data based on current filters
-  const displayData = useMemo(() => {
-    if (filteredIndices.size === 0) {
-      return data;
-    }
-    return data.filter((_, index) => filteredIndices.has(index));
-  }, [data, filteredIndices]);
 
   // Determine highlight index for chart
   const chartHighlightIndex = hoveredRowIndex ?? hoveredChartIndex;
@@ -232,7 +242,7 @@ export function LinkedChart({
                       >
                         {columns.map((column) => (
                           <TableCell key={column.key}>
-                            {formatCellValue(row[column.key], column)}
+                            {formatCellValue(row[column.key], column, row)}
                           </TableCell>
                         ))}
                       </TableRow>

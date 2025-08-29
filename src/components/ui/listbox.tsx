@@ -4,48 +4,52 @@ import { Check } from "lucide-react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 const listboxVariants = cva(
-  "w-full rounded-md border border-[var(--color-border-input)] bg-[var(--color-surface-primary)] p-1 shadow-sm focus-within:ring-2 focus-within:ring-[var(--color-border-brand)] focus-within:ring-offset-2",
+  "w-full space-y-2",
   {
     variants: {
-      orientation: {
-        vertical: "flex flex-col",
-        horizontal: "flex flex-row",
-        grid: "grid",
-      },
       size: {
-        sm: "text-caption-sm",
-        md: "text-body-sm",
+        sm: "text-body-sm",
+        md: "text-body-sm", 
         lg: "text-body-md",
       },
     },
     defaultVariants: {
-      orientation: "vertical",
       size: "md",
     },
   }
 )
 
-const listboxItemVariants = cva(
-  "relative flex cursor-pointer select-none items-center rounded-sm px-3 py-2 text-sm outline-none transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] focus:bg-[var(--color-background-neutral-subtle-hovered)] data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+const listboxOptionVariants = cva(
+  "relative flex w-full cursor-pointer select-none items-center rounded-md border bg-[var(--color-surface-primary)] px-4 py-3 text-left outline-none transition-colors focus:ring-2 focus:ring-[var(--color-border-brand)] focus:ring-offset-2",
   {
     variants: {
       selected: {
-        true: "bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand)]",
-        false: "text-[var(--color-text-primary)]",
+        true: "border-[var(--color-border-primary-bold)] bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand)]",
+        false: "border-[var(--color-border-primary-subtle)] text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)]",
+      },
+      disabled: {
+        true: "pointer-events-none opacity-50",
+        false: "",
       },
     },
     defaultVariants: {
       selected: false,
+      disabled: false,
     },
   }
 )
 
 export interface ListboxContextValue {
-  value: string | string[]
-  onValueChange: (value: string | string[]) => void
+  value: string | string[] | undefined
+  onChange: (value: string | string[]) => void
   multiple?: boolean
-  orientation?: "vertical" | "horizontal" | "grid"
   disabled?: boolean
+  size?: "sm" | "md" | "lg"
+  options: { value: string; disabled: boolean; ref: React.RefObject<HTMLDivElement> }[]
+  registerOption: (value: string, disabled: boolean, ref: React.RefObject<HTMLDivElement>) => void
+  unregisterOption: (value: string) => void
+  activeValue: string | null
+  setActiveValue: (value: string | null) => void
 }
 
 const ListboxContext = React.createContext<ListboxContextValue | undefined>(undefined)
@@ -59,40 +63,79 @@ const useListbox = () => {
 }
 
 export interface ListboxProps 
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onSelect">,
+  extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof listboxVariants> {
   value?: string | string[]
-  onValueChange?: (value: string | string[]) => void
+  onChange?: (value: string | string[]) => void
   multiple?: boolean
   disabled?: boolean
-  gridCols?: number
 }
 
 const Listbox = React.forwardRef<HTMLDivElement, ListboxProps>(
   ({ 
     className, 
-    value = multiple ? [] : "", 
-    onValueChange = () => {}, 
-    multiple = false, 
-    orientation,
-    size,
+    value,
+    onChange = () => {},
+    multiple = false,
     disabled = false,
-    gridCols,
+    size = "md",
     children,
     ...props 
   }, ref) => {
-    const gridStyle = orientation === "grid" && gridCols 
-      ? { gridTemplateColumns: `repeat(${gridCols}, 1fr)` }
-      : undefined
+    const [options, setOptions] = React.useState<{ value: string; disabled: boolean; ref: React.RefObject<HTMLDivElement> }[]>([])
+    const [activeValue, setActiveValue] = React.useState<string | null>(null)
+
+    const registerOption = React.useCallback((optionValue: string, optionDisabled: boolean, optionRef: React.RefObject<HTMLDivElement>) => {
+      setOptions(prev => {
+        const existing = prev.find(opt => opt.value === optionValue)
+        if (existing) {
+          return prev.map(opt => 
+            opt.value === optionValue 
+              ? { ...opt, disabled: optionDisabled, ref: optionRef }
+              : opt
+          )
+        }
+        return [...prev, { value: optionValue, disabled: optionDisabled, ref: optionRef }]
+      })
+    }, [])
+
+    const unregisterOption = React.useCallback((optionValue: string) => {
+      setOptions(prev => prev.filter(opt => opt.value !== optionValue))
+    }, [])
+
+    // Container should not handle keyboard events - individual options should be focusable
+
+    // Set first enabled option as active by default
+    React.useEffect(() => {
+      if (activeValue === null && options.length > 0) {
+        const firstEnabledOption = options.find(opt => !opt.disabled)
+        if (firstEnabledOption) {
+          setActiveValue(firstEnabledOption.value)
+        }
+      }
+    }, [options, activeValue])
+
+    const contextValue: ListboxContextValue = {
+      value,
+      onChange,
+      multiple,
+      disabled,
+      size,
+      options,
+      registerOption,
+      unregisterOption,
+      activeValue,
+      setActiveValue,
+    }
 
     return (
-      <ListboxContext.Provider value={{ value, onValueChange, multiple, orientation, disabled }}>
+      <ListboxContext.Provider value={contextValue}>
         <div
           ref={ref}
-          className={cn(listboxVariants({ orientation, size, className }))}
-          style={gridStyle}
+          className={cn(listboxVariants({ size, className }))}
           role="listbox"
           aria-multiselectable={multiple}
+          aria-disabled={disabled}
           {...props}
         >
           {children}
@@ -103,83 +146,114 @@ const Listbox = React.forwardRef<HTMLDivElement, ListboxProps>(
 )
 Listbox.displayName = "Listbox"
 
-export interface ListboxItemProps extends React.HTMLAttributes<HTMLDivElement> {
+
+export interface ListboxOptionProps extends React.HTMLAttributes<HTMLDivElement> {
   value: string
   disabled?: boolean
   children: React.ReactNode
 }
 
-const ListboxItem = React.forwardRef<HTMLDivElement, ListboxItemProps>(
+const ListboxOption = React.forwardRef<HTMLDivElement, ListboxOptionProps>(
   ({ className, value, disabled = false, children, ...props }, ref) => {
-    const { value: selectedValue, onValueChange, multiple, disabled: listboxDisabled } = useListbox()
+    const optionRef = React.useRef<HTMLDivElement>(null)
+    const { 
+      value: selectedValue, 
+      onChange, 
+      multiple,
+      options,
+      registerOption,
+      unregisterOption,
+      disabled: listboxDisabled,
+      activeValue,
+      setActiveValue
+    } = useListbox()
+    
+    // Use the passed ref or our internal ref
+    React.useImperativeHandle(ref, () => optionRef.current!)
+    
+    const optionIndex = React.useMemo(() => {
+      return options.findIndex(opt => opt.value === value)
+    }, [options, value])
+
+    React.useEffect(() => {
+      registerOption(value, disabled, optionRef)
+      return () => unregisterOption(value)
+    }, [value, disabled, registerOption, unregisterOption])
     
     const isSelected = multiple 
       ? Array.isArray(selectedValue) && selectedValue.includes(value)
       : selectedValue === value
-    
     const isDisabled = disabled || listboxDisabled
 
     const handleSelect = () => {
       if (isDisabled) return
-
-      if (multiple && Array.isArray(selectedValue)) {
-        const newValue = isSelected 
-          ? selectedValue.filter(v => v !== value)
-          : [...selectedValue, value]
-        onValueChange(newValue)
+      
+      if (multiple) {
+        const currentValues = Array.isArray(selectedValue) ? selectedValue : []
+        const newValue = currentValues.includes(value)
+          ? currentValues.filter(v => v !== value)
+          : [...currentValues, value]
+        onChange(newValue)
       } else {
-        onValueChange(value)
+        onChange(value)
       }
     }
 
-    const handleKeyDown = (event: React.KeyboardEvent) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault()
-        handleSelect()
-      }
-    }
 
     return (
       <div
-        ref={ref}
-        className={cn(listboxItemVariants({ selected: isSelected, className }))}
+        ref={optionRef}
+        className={cn(listboxOptionVariants({ 
+          selected: isSelected, 
+          disabled: isDisabled,
+          className 
+        }))}
         role="option"
         aria-selected={isSelected}
         aria-disabled={isDisabled}
-        data-disabled={isDisabled}
-        tabIndex={isDisabled ? -1 : 0}
+        tabIndex={isDisabled ? -1 : (activeValue === value || (activeValue === null && options.findIndex(opt => opt.value === value && !opt.isGroupLabel) === 0)) ? 0 : -1}
         onClick={handleSelect}
-        onKeyDown={handleKeyDown}
+        onFocus={() => {
+          if (!isDisabled) {
+            setActiveValue(value)
+          }
+        }}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault()
+            handleSelect()
+          } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+            event.preventDefault()
+            // Filter out disabled options AND group labels
+            const navigableOptions = options.filter(opt => !opt.disabled && !opt.isGroupLabel)
+            const currentIndex = navigableOptions.findIndex(opt => opt.value === value)
+            
+            let nextIndex
+            if (event.key === 'ArrowDown') {
+              nextIndex = currentIndex < navigableOptions.length - 1 ? currentIndex + 1 : 0
+            } else {
+              nextIndex = currentIndex > 0 ? currentIndex - 1 : navigableOptions.length - 1
+            }
+            
+            const nextOption = navigableOptions[nextIndex]
+            if (nextOption?.ref.current) {
+              nextOption.ref.current.focus()
+            }
+          }
+        }}
         {...props}
       >
-        {children}
+        <span className="block truncate">
+          {children}
+        </span>
         {isSelected && (
-          <ListboxItemIndicator>
-            <Check className="h-4 w-4" />
-          </ListboxItemIndicator>
+          <Check className="ml-auto h-4 w-4 text-[var(--color-text-brand)]" aria-hidden="true" />
         )}
       </div>
     )
   }
 )
-ListboxItem.displayName = "ListboxItem"
-
-export interface ListboxItemIndicatorProps extends React.HTMLAttributes<HTMLSpanElement> {
-  children: React.ReactNode
-}
-
-const ListboxItemIndicator = React.forwardRef<HTMLSpanElement, ListboxItemIndicatorProps>(
-  ({ className, children, ...props }, ref) => (
-    <span
-      ref={ref}
-      className={cn("ml-auto flex h-4 w-4 items-center justify-center", className)}
-      {...props}
-    >
-      {children}
-    </span>
-  )
-)
-ListboxItemIndicator.displayName = "ListboxItemIndicator"
+ListboxOption.displayName = "ListboxOption"
 
 export interface ListboxGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
@@ -189,7 +263,7 @@ const ListboxGroup = React.forwardRef<HTMLDivElement, ListboxGroupProps>(
   ({ className, children, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("space-y-1", className)}
+      className={cn("mb-2 last:mb-0", className)}
       role="group"
       {...props}
     >
@@ -207,7 +281,11 @@ const ListboxGroupLabel = React.forwardRef<HTMLDivElement, ListboxGroupLabelProp
   ({ className, children, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("px-3 py-1.5 text-caption-sm font-medium text-[var(--color-text-secondary)]", className)}
+      className={cn(
+        "px-4 py-2 mb-1 text-caption-sm font-medium text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-subtle)]",
+        className
+      )}
+      role="presentation"
       {...props}
     >
       {children}
@@ -218,8 +296,7 @@ ListboxGroupLabel.displayName = "ListboxGroupLabel"
 
 export { 
   Listbox, 
-  ListboxItem, 
-  ListboxItemIndicator, 
-  ListboxGroup, 
-  ListboxGroupLabel 
+  ListboxOption,
+  ListboxGroup,
+  ListboxGroupLabel
 }

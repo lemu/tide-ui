@@ -1,8 +1,7 @@
 import * as React from "react"
 import { cn } from "../../lib/utils"
-import { cva, type VariantProps } from "class-variance-authority"
 import { Popover, PopoverContent, PopoverTrigger } from "./popover"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "./command"
+import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "./command"
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar"
 import { Badge } from "./badge"
 
@@ -23,14 +22,6 @@ interface MentionContextValue {
 }
 
 const MentionContext = React.createContext<MentionContextValue | null>(null)
-
-const useMention = () => {
-  const context = React.useContext(MentionContext)
-  if (!context) {
-    throw new Error("useMention must be used within a Mention component")
-  }
-  return context
-}
 
 // Types
 export interface MentionSuggestion {
@@ -397,4 +388,3 @@ export const MentionText = React.forwardRef<HTMLDivElement, MentionTextProps>(
 )
 MentionText.displayName = "MentionText"
 
-export type { MentionProps, MentionSuggestion, MentionTextProps }

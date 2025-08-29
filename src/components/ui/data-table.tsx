@@ -35,7 +35,7 @@ export interface ColumnMeta {
 }
 
 // Advanced filter functions
-const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+const fuzzyFilter: FilterFn<any> = (row, columnId, value, _addMeta) => {
   const itemValue = row.getValue(columnId) as string
   const searchValue = value.toLowerCase()
   
@@ -56,7 +56,7 @@ const multiSelectFilter: FilterFn<any> = (row, columnId, value) => {
 }
 
 // Table toolbar with advanced filtering
-interface DataTableToolbarProps<TData> {
+interface DataTableToolbarProps<_TData = any> {
   table: any
   searchKey?: string
   searchPlaceholder?: string
@@ -85,8 +85,8 @@ function DataTableToolbar<TData>({
         
         {/* Column filters */}
         {table.getAllColumns()
-          .filter(column => column.getCanFilter() && column.columnDef.meta?.filterVariant)
-          .map(column => (
+          .filter((column: any) => column.getCanFilter() && column.columnDef.meta?.filterVariant)
+          .map((column: any) => (
             <DataTableFilter key={column.id} column={column} />
           ))}
         
@@ -234,7 +234,7 @@ function DataTableFilter({ column }: DataTableFilterProps) {
 }
 
 // Column visibility toggle
-interface DataTableViewOptionsProps<TData> {
+interface DataTableViewOptionsProps<_TData = any> {
   table: any
 }
 
@@ -252,8 +252,8 @@ function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps<TData>
           <p className="text-body-sm font-medium">Toggle columns</p>
           {table
             .getAllColumns()
-            .filter(column => typeof column.accessorFn !== "undefined" && column.getCanHide())
-            .map(column => {
+            .filter((column: any) => typeof column.accessorFn !== "undefined" && column.getCanHide())
+            .map((column: any) => {
               return (
                 <div key={column.id} className="flex items-center space-x-2">
                   <Checkbox
@@ -273,7 +273,7 @@ function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps<TData>
 }
 
 // Column header with sorting
-interface DataTableColumnHeaderProps<TData, TValue> extends React.HTMLAttributes<HTMLDivElement> {
+interface DataTableColumnHeaderProps<_TData = any, _TValue = any> extends React.HTMLAttributes<HTMLDivElement> {
   column: any
   title: string
 }
@@ -309,7 +309,7 @@ function DataTableColumnHeader<TData, TValue>({
 }
 
 // Pagination component
-interface DataTablePaginationProps<TData> {
+interface DataTablePaginationProps<_TData = any> {
   table: any
 }
 

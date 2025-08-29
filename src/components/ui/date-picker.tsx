@@ -134,7 +134,10 @@ const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePickerProps
             defaultMonth={dateRange?.from}
             selected={dateRange}
             onSelect={(range) => {
-              onDateRangeChange?.(range || { from: undefined, to: undefined })
+              onDateRangeChange?.({ 
+                from: range?.from || undefined, 
+                to: range?.to || undefined 
+              })
               if (range?.from && range?.to) {
                 setOpen(false)
               }

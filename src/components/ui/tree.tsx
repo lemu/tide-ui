@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ChevronRightIcon, FileIcon, FolderIcon, FolderOpenIcon } from "lucide-react"
+import { ChevronRightIcon, FileIcon, FolderIcon } from "lucide-react"
 import { cn } from "../../lib/utils"
 import { Button } from "./button"
 
@@ -271,4 +271,3 @@ function getAllItemIds(items: TreeDataItem[]): string[] {
   return ids
 }
 
-export type { TreeDataItem, TreeProps }

@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Listbox, ListboxItem, ListboxGroup, ListboxGroupLabel } from '../components/ui/listbox'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { Button } from '../components/ui/button'
+import { Listbox, ListboxOption, ListboxGroup, ListboxGroupLabel } from '../components/ui/listbox'
 import { Label } from '../components/ui/label'
 import { Badge } from '../components/ui/badge'
 import { Icon } from '../components/ui/icon'
@@ -15,20 +13,12 @@ const meta: Meta<typeof Listbox> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    multiple: {
-      control: 'boolean',
-      description: 'Allow multiple selections',
-    },
-    orientation: {
-      control: { type: 'select' },
-      options: ['vertical', 'horizontal', 'grid'],
-    },
     size: {
       control: { type: 'select' },
       options: ['sm', 'md', 'lg'],
     },
     disabled: {
-      control: 'boolean',
+      control: { type: 'boolean' },
     },
   },
 } satisfies Meta<typeof Listbox>
@@ -36,48 +26,43 @@ const meta: Meta<typeof Listbox> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-// Basic single selection
 export const Default: Story = {
   render: () => {
-    const [selected, setSelected] = useState<string>('')
+    const [selected, setSelected] = useState<string>('react')
     
     return (
-      <div className="w-64 space-y-4">
-        <Label>Choose your favorite fruit</Label>
-        <Listbox value={selected} onValueChange={setSelected}>
-          <ListboxItem value="apple">🍎 Apple</ListboxItem>
-          <ListboxItem value="banana">🍌 Banana</ListboxItem>
-          <ListboxItem value="orange">🍊 Orange</ListboxItem>
-          <ListboxItem value="grape">🍇 Grape</ListboxItem>
-          <ListboxItem value="strawberry">🍓 Strawberry</ListboxItem>
+      <div className="w-80 space-y-4">
+        <Label>Choose your favorite framework</Label>
+        <Listbox value={selected} onChange={setSelected}>
+          <ListboxOption value="react">React</ListboxOption>
+          <ListboxOption value="vue">Vue.js</ListboxOption>
+          <ListboxOption value="angular">Angular</ListboxOption>
+          <ListboxOption value="svelte">Svelte</ListboxOption>
+          <ListboxOption value="solid">SolidJS</ListboxOption>
         </Listbox>
-        {selected && (
-          <p className="text-body-sm text-[var(--color-text-secondary)]">
-            Selected: {selected}
-          </p>
-        )}
+        <p className="text-body-sm text-[var(--color-text-secondary)]">
+          Selected: {selected}
+        </p>
       </div>
     )
   },
 }
 
-// Multiple selection
 export const MultipleSelection: Story = {
   render: () => {
-    const [selected, setSelected] = useState<string[]>(['react', 'typescript'])
+    const [selected, setSelected] = useState<string[]>(['typescript', 'react'])
     
     return (
       <div className="w-80 space-y-4">
         <Label>Choose your tech stack ({selected.length} selected)</Label>
-        <Listbox value={selected} onValueChange={setSelected} multiple>
-          <ListboxItem value="react">React</ListboxItem>
-          <ListboxItem value="vue">Vue.js</ListboxItem>
-          <ListboxItem value="angular">Angular</ListboxItem>
-          <ListboxItem value="svelte">Svelte</ListboxItem>
-          <ListboxItem value="typescript">TypeScript</ListboxItem>
-          <ListboxItem value="javascript">JavaScript</ListboxItem>
-          <ListboxItem value="nodejs">Node.js</ListboxItem>
-          <ListboxItem value="python">Python</ListboxItem>
+        <Listbox value={selected} onChange={setSelected} multiple>
+          <ListboxOption value="javascript">JavaScript</ListboxOption>
+          <ListboxOption value="typescript">TypeScript</ListboxOption>
+          <ListboxOption value="react">React</ListboxOption>
+          <ListboxOption value="vue">Vue.js</ListboxOption>
+          <ListboxOption value="angular">Angular</ListboxOption>
+          <ListboxOption value="nodejs">Node.js</ListboxOption>
+          <ListboxOption value="python">Python</ListboxOption>
         </Listbox>
         {selected.length > 0 && (
           <div className="flex flex-wrap gap-1">
@@ -93,321 +78,76 @@ export const MultipleSelection: Story = {
   },
 }
 
-// Horizontal layout
-export const HorizontalLayout: Story = {
+export const WithIcons: Story = {
   render: () => {
-    const [selected, setSelected] = useState<string>('medium')
-    
-    return (
-      <div className="w-96 space-y-4">
-        <Label>Select size</Label>
-        <Listbox value={selected} onValueChange={setSelected} orientation="horizontal">
-          <ListboxItem value="small">Small</ListboxItem>
-          <ListboxItem value="medium">Medium</ListboxItem>
-          <ListboxItem value="large">Large</ListboxItem>
-          <ListboxItem value="xlarge">Extra Large</ListboxItem>
-        </Listbox>
-        <p className="text-body-sm text-[var(--color-text-secondary)]">
-          Selected: {selected}
-        </p>
-      </div>
-    )
-  },
-}
-
-// Grid layout
-export const GridLayout: Story = {
-  render: () => {
-    const [selected, setSelected] = useState<string[]>([])
-    
-    const colors = [
-      { value: 'red', color: 'bg-red-500', name: 'Red' },
-      { value: 'blue', color: 'bg-blue-500', name: 'Blue' },
-      { value: 'green', color: 'bg-green-500', name: 'Green' },
-      { value: 'yellow', color: 'bg-yellow-500', name: 'Yellow' },
-      { value: 'purple', color: 'bg-purple-500', name: 'Purple' },
-      { value: 'pink', color: 'bg-pink-500', name: 'Pink' },
-      { value: 'indigo', color: 'bg-indigo-500', name: 'Indigo' },
-      { value: 'orange', color: 'bg-orange-500', name: 'Orange' },
-    ]
+    const [selected, setSelected] = useState<string>('home')
     
     return (
       <div className="w-80 space-y-4">
-        <Label>Choose colors ({selected.length} selected)</Label>
-        <Listbox 
-          value={selected} 
-          onValueChange={setSelected} 
-          multiple 
-          orientation="grid" 
-          gridCols={4}
-        >
-          {colors.map((color) => (
-            <ListboxItem key={color.value} value={color.value}>
-              <div className="flex flex-col items-center gap-2">
-                <div className={`w-6 h-6 rounded-full ${color.color}`} />
-                <span className="text-xs">{color.name}</span>
-              </div>
-            </ListboxItem>
-          ))}
+        <Label>Navigation</Label>
+        <Listbox value={selected} onChange={setSelected}>
+          <ListboxOption value="home">
+            <div className="flex items-center gap-3">
+              <Icon name="home" size="sm" />
+              Home
+            </div>
+          </ListboxOption>
+          <ListboxOption value="dashboard">
+            <div className="flex items-center gap-3">
+              <Icon name="layout-dashboard" size="sm" />
+              Dashboard
+            </div>
+          </ListboxOption>
+          <ListboxOption value="settings">
+            <div className="flex items-center gap-3">
+              <Icon name="settings" size="sm" />
+              Settings
+            </div>
+          </ListboxOption>
+          <ListboxOption value="profile">
+            <div className="flex items-center gap-3">
+              <Icon name="user" size="sm" />
+              Profile
+            </div>
+          </ListboxOption>
         </Listbox>
-        {selected.length > 0 && (
-          <div className="flex flex-wrap gap-1">
-            {selected.map((colorValue) => {
-              const color = colors.find(c => c.value === colorValue)
-              return (
-                <Badge key={colorValue} variant="outline" className="text-xs">
-                  {color?.name}
-                </Badge>
-              )
-            })}
-          </div>
-        )}
       </div>
     )
   },
 }
 
-// With groups
-export const WithGroups: Story = {
+export const WithDisabledOptions: Story = {
   render: () => {
-    const [selected, setSelected] = useState<string[]>([])
+    const [selected, setSelected] = useState<string>('free')
     
     return (
       <div className="w-80 space-y-4">
-        <Label>Select team members ({selected.length} selected)</Label>
-        <Listbox value={selected} onValueChange={setSelected} multiple>
-          <ListboxGroup>
-            <ListboxGroupLabel>Developers</ListboxGroupLabel>
-            <ListboxItem value="alice-dev">
-              <div className="flex items-center gap-2">
-                <Icon name="code" size="sm" />
-                Alice Johnson
-              </div>
-            </ListboxItem>
-            <ListboxItem value="bob-dev">
-              <div className="flex items-center gap-2">
-                <Icon name="code" size="sm" />
-                Bob Smith
-              </div>
-            </ListboxItem>
-            <ListboxItem value="charlie-dev">
-              <div className="flex items-center gap-2">
-                <Icon name="code" size="sm" />
-                Charlie Brown
-              </div>
-            </ListboxItem>
-          </ListboxGroup>
-          
-          <ListboxGroup>
-            <ListboxGroupLabel>Designers</ListboxGroupLabel>
-            <ListboxItem value="diana-design">
-              <div className="flex items-center gap-2">
-                <Icon name="palette" size="sm" />
-                Diana Lee
-              </div>
-            </ListboxItem>
-            <ListboxItem value="evan-design">
-              <div className="flex items-center gap-2">
-                <Icon name="palette" size="sm" />
-                Evan Wilson
-              </div>
-            </ListboxItem>
-          </ListboxGroup>
-          
-          <ListboxGroup>
-            <ListboxGroupLabel>Product Managers</ListboxGroupLabel>
-            <ListboxItem value="fiona-pm">
-              <div className="flex items-center gap-2">
-                <Icon name="briefcase" size="sm" />
-                Fiona Davis
-              </div>
-            </ListboxItem>
-            <ListboxItem value="george-pm">
-              <div className="flex items-center gap-2">
-                <Icon name="briefcase" size="sm" />
-                George Miller
-              </div>
-            </ListboxItem>
-          </ListboxGroup>
-        </Listbox>
-        {selected.length > 0 && (
-          <div className="space-y-2">
-            <p className="text-body-sm font-medium">Selected team members:</p>
-            <div className="flex flex-wrap gap-1">
-              {selected.map((member) => (
-                <Badge key={member} variant="secondary" className="text-xs">
-                  {member.split('-')[0]}
-                </Badge>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    )
-  },
-}
-
-// Different sizes
-export const Sizes: Story = {
-  render: () => {
-    const [small, setSmall] = useState<string>('')
-    const [medium, setMedium] = useState<string>('')
-    const [large, setLarge] = useState<string>('')
-    
-    return (
-      <div className="space-y-6">
-        <div className="w-64">
-          <Label className="mb-2 block">Small size</Label>
-          <Listbox value={small} onValueChange={setSmall} size="sm">
-            <ListboxItem value="option1">Small Option 1</ListboxItem>
-            <ListboxItem value="option2">Small Option 2</ListboxItem>
-            <ListboxItem value="option3">Small Option 3</ListboxItem>
-          </Listbox>
-        </div>
-        
-        <div className="w-64">
-          <Label className="mb-2 block">Medium size (default)</Label>
-          <Listbox value={medium} onValueChange={setMedium} size="md">
-            <ListboxItem value="option1">Medium Option 1</ListboxItem>
-            <ListboxItem value="option2">Medium Option 2</ListboxItem>
-            <ListboxItem value="option3">Medium Option 3</ListboxItem>
-          </Listbox>
-        </div>
-        
-        <div className="w-64">
-          <Label className="mb-2 block">Large size</Label>
-          <Listbox value={large} onValueChange={setLarge} size="lg">
-            <ListboxItem value="option1">Large Option 1</ListboxItem>
-            <ListboxItem value="option2">Large Option 2</ListboxItem>
-            <ListboxItem value="option3">Large Option 3</ListboxItem>
-          </Listbox>
-        </div>
-      </div>
-    )
-  },
-}
-
-// Settings panel
-export const SettingsPanel: Story = {
-  render: () => {
-    const [notifications, setNotifications] = useState<string[]>(['email', 'push'])
-    const [theme, setTheme] = useState<string>('auto')
-    const [language, setLanguage] = useState<string>('en')
-    
-    return (
-      <div className="w-96">
-        <Card>
-          <CardHeader>
-            <CardTitle>Application Settings</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div>
-              <Label className="mb-3 block">Notification Preferences</Label>
-              <Listbox value={notifications} onValueChange={setNotifications} multiple>
-                <ListboxItem value="email">
-                  <div className="flex items-center gap-2">
-                    <Icon name="mail" size="sm" />
-                    Email Notifications
-                  </div>
-                </ListboxItem>
-                <ListboxItem value="push">
-                  <div className="flex items-center gap-2">
-                    <Icon name="bell" size="sm" />
-                    Push Notifications
-                  </div>
-                </ListboxItem>
-                <ListboxItem value="sms">
-                  <div className="flex items-center gap-2">
-                    <Icon name="message-circle" size="sm" />
-                    SMS Notifications
-                  </div>
-                </ListboxItem>
-                <ListboxItem value="desktop">
-                  <div className="flex items-center gap-2">
-                    <Icon name="monitor" size="sm" />
-                    Desktop Notifications
-                  </div>
-                </ListboxItem>
-              </Listbox>
-            </div>
-            
-            <div>
-              <Label className="mb-3 block">Theme Preference</Label>
-              <Listbox value={theme} onValueChange={setTheme} orientation="horizontal">
-                <ListboxItem value="light">
-                  <div className="flex flex-col items-center gap-1">
-                    <Icon name="sun" size="sm" />
-                    <span className="text-xs">Light</span>
-                  </div>
-                </ListboxItem>
-                <ListboxItem value="dark">
-                  <div className="flex flex-col items-center gap-1">
-                    <Icon name="moon" size="sm" />
-                    <span className="text-xs">Dark</span>
-                  </div>
-                </ListboxItem>
-                <ListboxItem value="auto">
-                  <div className="flex flex-col items-center gap-1">
-                    <Icon name="laptop" size="sm" />
-                    <span className="text-xs">Auto</span>
-                  </div>
-                </ListboxItem>
-              </Listbox>
-            </div>
-            
-            <div>
-              <Label className="mb-3 block">Language</Label>
-              <Listbox value={language} onValueChange={setLanguage}>
-                <ListboxItem value="en">🇺🇸 English</ListboxItem>
-                <ListboxItem value="es">🇪🇸 Español</ListboxItem>
-                <ListboxItem value="fr">🇫🇷 Français</ListboxItem>
-                <ListboxItem value="de">🇩🇪 Deutsch</ListboxItem>
-                <ListboxItem value="ja">🇯🇵 日本語</ListboxItem>
-                <ListboxItem value="zh">🇨🇳 中文</ListboxItem>
-              </Listbox>
-            </div>
-            
-            <Button className="w-full">Save Settings</Button>
-          </CardContent>
-        </Card>
-      </div>
-    )
-  },
-}
-
-// Disabled items
-export const DisabledItems: Story = {
-  render: () => {
-    const [selected, setSelected] = useState<string>('')
-    
-    return (
-      <div className="w-64 space-y-4">
         <Label>Choose a subscription plan</Label>
-        <Listbox value={selected} onValueChange={setSelected}>
-          <ListboxItem value="free">
+        <Listbox value={selected} onChange={setSelected}>
+          <ListboxOption value="free">
             <div className="flex items-center justify-between w-full">
               <span>Free Plan</span>
-              <Badge variant="outline" className="text-xs">Current</Badge>
+              <Badge variant="secondary" className="text-xs">Current</Badge>
             </div>
-          </ListboxItem>
-          <ListboxItem value="pro">
+          </ListboxOption>
+          <ListboxOption value="pro">
             <div className="flex items-center justify-between w-full">
               <span>Pro Plan</span>
               <Badge variant="default" className="text-xs">$9/mo</Badge>
             </div>
-          </ListboxItem>
-          <ListboxItem value="team" disabled>
+          </ListboxOption>
+          <ListboxOption value="team" disabled>
             <div className="flex items-center justify-between w-full">
               <span>Team Plan</span>
               <Badge variant="secondary" className="text-xs">Coming Soon</Badge>
             </div>
-          </ListboxItem>
-          <ListboxItem value="enterprise" disabled>
+          </ListboxOption>
+          <ListboxOption value="enterprise" disabled>
             <div className="flex items-center justify-between w-full">
               <span>Enterprise</span>
               <Badge variant="secondary" className="text-xs">Contact Sales</Badge>
             </div>
-          </ListboxItem>
+          </ListboxOption>
         </Listbox>
         {selected && (
           <p className="text-body-sm text-[var(--color-text-secondary)]">
@@ -419,108 +159,300 @@ export const DisabledItems: Story = {
   },
 }
 
-// Complex layout with icons and metadata
-export const ComplexLayout: Story = {
+export const DisabledListbox: Story = {
   render: () => {
-    const [selected, setSelected] = useState<string[]>([])
+    const [selected, setSelected] = useState<string>('option1')
     
-    const features = [
-      {
-        id: 'analytics',
-        name: 'Analytics Dashboard',
-        description: 'Advanced analytics and reporting',
-        icon: 'bar-chart',
-        category: 'Analytics',
-        popular: true
-      },
-      {
-        id: 'auth',
-        name: 'Authentication',
-        description: 'User management and security',
-        icon: 'shield',
-        category: 'Security',
-        popular: false
-      },
-      {
-        id: 'payments',
-        name: 'Payment Processing',
-        description: 'Secure payment handling',
-        icon: 'credit-card',
-        category: 'Commerce',
-        popular: true
-      },
-      {
-        id: 'notifications',
-        name: 'Push Notifications',
-        description: 'Real-time user notifications',
-        icon: 'bell',
-        category: 'Communication',
-        popular: false
-      },
-      {
-        id: 'storage',
-        name: 'Cloud Storage',
-        description: 'File storage and management',
-        icon: 'cloud',
-        category: 'Infrastructure',
-        popular: true
-      },
-      {
-        id: 'search',
-        name: 'Full-text Search',
-        description: 'Advanced search capabilities',
-        icon: 'search',
-        category: 'Search',
-        popular: false
-      }
+    return (
+      <div className="w-80 space-y-4">
+        <Label>Disabled listbox</Label>
+        <Listbox value={selected} onChange={setSelected} disabled>
+          <ListboxOption value="option1">Option 1</ListboxOption>
+          <ListboxOption value="option2">Option 2</ListboxOption>
+          <ListboxOption value="option3">Option 3</ListboxOption>
+        </Listbox>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">
+          This entire listbox is disabled
+        </p>
+      </div>
+    )
+  },
+}
+
+export const Sizes: Story = {
+  render: () => {
+    const [small, setSmall] = useState<string>('sm1')
+    const [medium, setMedium] = useState<string>('md1')
+    const [large, setLarge] = useState<string>('lg1')
+    
+    return (
+      <div className="space-y-8">
+        <div className="w-64">
+          <Label className="mb-2 block">Small size</Label>
+          <Listbox value={small} onChange={setSmall} size="sm">
+            <ListboxOption value="sm1">Small Option 1</ListboxOption>
+            <ListboxOption value="sm2">Small Option 2</ListboxOption>
+            <ListboxOption value="sm3">Small Option 3</ListboxOption>
+          </Listbox>
+        </div>
+        
+        <div className="w-64">
+          <Label className="mb-2 block">Medium size (default)</Label>
+          <Listbox value={medium} onChange={setMedium} size="md">
+            <ListboxOption value="md1">Medium Option 1</ListboxOption>
+            <ListboxOption value="md2">Medium Option 2</ListboxOption>
+            <ListboxOption value="md3">Medium Option 3</ListboxOption>
+          </Listbox>
+        </div>
+        
+        <div className="w-64">
+          <Label className="mb-2 block">Large size</Label>
+          <Listbox value={large} onChange={setLarge} size="lg">
+            <ListboxOption value="lg1">Large Option 1</ListboxOption>
+            <ListboxOption value="lg2">Large Option 2</ListboxOption>
+            <ListboxOption value="lg3">Large Option 3</ListboxOption>
+          </Listbox>
+        </div>
+      </div>
+    )
+  },
+}
+
+export const ColorsWithMultipleSelection: Story = {
+  render: () => {
+    const [selected, setSelected] = useState<string[]>(['red', 'blue'])
+    
+    const colors = [
+      { value: 'red', name: 'Red', color: 'bg-red-500' },
+      { value: 'blue', name: 'Blue', color: 'bg-blue-500' },
+      { value: 'green', name: 'Green', color: 'bg-green-500' },
+      { value: 'yellow', name: 'Yellow', color: 'bg-yellow-500' },
+      { value: 'purple', name: 'Purple', color: 'bg-purple-500' },
+      { value: 'pink', name: 'Pink', color: 'bg-pink-500' },
     ]
     
     return (
-      <div className="w-96 space-y-4">
-        <div className="flex items-center justify-between">
-          <Label>Select features ({selected.length} selected)</Label>
-          <Button 
-            variant="ghost" 
-            size="sm"
-            onClick={() => setSelected([])}
-          >
-            Clear All
-          </Button>
-        </div>
-        <Listbox value={selected} onValueChange={setSelected} multiple>
-          {features.map((feature) => (
-            <ListboxItem key={feature.id} value={feature.id}>
-              <div className="flex items-start gap-3 w-full">
-                <div className="mt-1">
-                  <Icon name={feature.icon as any} size="sm" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium">{feature.name}</span>
-                    {feature.popular && (
-                      <Badge variant="default" className="text-xs">Popular</Badge>
-                    )}
-                  </div>
-                  <p className="text-caption-sm text-[var(--color-text-secondary)] mt-1">
-                    {feature.description}
-                  </p>
-                  <Badge variant="outline" className="text-xs mt-2">
-                    {feature.category}
-                  </Badge>
-                </div>
+      <div className="w-80 space-y-4">
+        <Label>Choose colors ({selected.length} selected)</Label>
+        <Listbox value={selected} onChange={setSelected} multiple>
+          {colors.map((color) => (
+            <ListboxOption key={color.value} value={color.value}>
+              <div className="flex items-center gap-3">
+                <div className={`w-4 h-4 rounded-full ${color.color}`} />
+                {color.name}
               </div>
-            </ListboxItem>
+            </ListboxOption>
           ))}
         </Listbox>
         {selected.length > 0 && (
+          <div className="flex flex-wrap gap-1">
+            {selected.map((colorValue) => {
+              const color = colors.find(c => c.value === colorValue)
+              return (
+                <Badge key={colorValue} variant="secondary" className="text-xs">
+                  {color?.name}
+                </Badge>
+              )
+            })}
+          </div>
+        )}
+      </div>
+    )
+  },
+}
+
+export const SettingsPanel: Story = {
+  render: () => {
+    const [theme, setTheme] = useState<string>('system')
+    const [language, setLanguage] = useState<string>('en')
+    const [notifications, setNotifications] = useState<string[]>(['email', 'push'])
+    
+    return (
+      <div className="max-w-md space-y-8">
+        <div>
+          <Label className="mb-3 block">Theme Preference</Label>
+          <Listbox value={theme} onChange={setTheme}>
+            <ListboxOption value="light">
+              <div className="flex items-center gap-3">
+                <Icon name="sun" size="sm" />
+                Light Mode
+              </div>
+            </ListboxOption>
+            <ListboxOption value="dark">
+              <div className="flex items-center gap-3">
+                <Icon name="moon" size="sm" />
+                Dark Mode
+              </div>
+            </ListboxOption>
+            <ListboxOption value="system">
+              <div className="flex items-center gap-3">
+                <Icon name="laptop" size="sm" />
+                System Preference
+              </div>
+            </ListboxOption>
+          </Listbox>
+        </div>
+        
+        <div>
+          <Label className="mb-3 block">Language</Label>
+          <Listbox value={language} onChange={setLanguage}>
+            <ListboxOption value="en">🇺🇸 English</ListboxOption>
+            <ListboxOption value="es">🇪🇸 Español</ListboxOption>
+            <ListboxOption value="fr">🇫🇷 Français</ListboxOption>
+            <ListboxOption value="de">🇩🇪 Deutsch</ListboxOption>
+            <ListboxOption value="ja">🇯🇵 日本語</ListboxOption>
+          </Listbox>
+        </div>
+        
+        <div>
+          <Label className="mb-3 block">Notification Types ({notifications.length} enabled)</Label>
+          <Listbox value={notifications} onChange={setNotifications} multiple>
+            <ListboxOption value="email">
+              <div className="flex items-center gap-3">
+                <Icon name="mail" size="sm" />
+                Email Notifications
+              </div>
+            </ListboxOption>
+            <ListboxOption value="push">
+              <div className="flex items-center gap-3">
+                <Icon name="bell" size="sm" />
+                Push Notifications
+              </div>
+            </ListboxOption>
+            <ListboxOption value="sms">
+              <div className="flex items-center gap-3">
+                <Icon name="message-circle" size="sm" />
+                SMS Notifications
+              </div>
+            </ListboxOption>
+            <ListboxOption value="desktop">
+              <div className="flex items-center gap-3">
+                <Icon name="monitor" size="sm" />
+                Desktop Notifications
+              </div>
+            </ListboxOption>
+          </Listbox>
+        </div>
+      </div>
+    )
+  },
+}
+
+export const WithGroups: Story = {
+  render: () => {
+    const [selected, setSelected] = useState<string[]>(['alice', 'bob', 'diana'])
+    
+    return (
+      <div className="w-96 space-y-4">
+        <Label>Select team members ({selected.length} selected)</Label>
+        <Listbox value={selected} onChange={setSelected} multiple>
+          <ListboxGroup>
+            <ListboxGroupLabel>Developers</ListboxGroupLabel>
+            <ListboxOption value="alice">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[var(--color-background-brand-subtle)] flex items-center justify-center">
+                  <span className="text-caption-sm font-medium text-[var(--color-text-brand)]">AJ</span>
+                </div>
+                <div>
+                  <div className="text-body-sm font-medium">Alice Johnson</div>
+                  <div className="text-caption-sm text-[var(--color-text-secondary)]">Senior Developer</div>
+                </div>
+              </div>
+            </ListboxOption>
+            <ListboxOption value="bob">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[var(--color-background-brand-subtle)] flex items-center justify-center">
+                  <span className="text-caption-sm font-medium text-[var(--color-text-brand)]">BS</span>
+                </div>
+                <div>
+                  <div className="text-body-sm font-medium">Bob Smith</div>
+                  <div className="text-caption-sm text-[var(--color-text-secondary)]">Frontend Developer</div>
+                </div>
+              </div>
+            </ListboxOption>
+            <ListboxOption value="charlie">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[var(--color-background-brand-subtle)] flex items-center justify-center">
+                  <span className="text-caption-sm font-medium text-[var(--color-text-brand)]">CB</span>
+                </div>
+                <div>
+                  <div className="text-body-sm font-medium">Charlie Brown</div>
+                  <div className="text-caption-sm text-[var(--color-text-secondary)]">Backend Developer</div>
+                </div>
+              </div>
+            </ListboxOption>
+          </ListboxGroup>
+          
+          <ListboxGroup>
+            <ListboxGroupLabel>Designers</ListboxGroupLabel>
+            <ListboxOption value="diana">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[var(--color-background-neutral-subtle)] flex items-center justify-center">
+                  <span className="text-caption-sm font-medium text-[var(--color-text-primary)]">DL</span>
+                </div>
+                <div>
+                  <div className="text-body-sm font-medium">Diana Lee</div>
+                  <div className="text-caption-sm text-[var(--color-text-secondary)]">UI/UX Designer</div>
+                </div>
+              </div>
+            </ListboxOption>
+            <ListboxOption value="evan">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[var(--color-background-neutral-subtle)] flex items-center justify-center">
+                  <span className="text-caption-sm font-medium text-[var(--color-text-primary)]">EW</span>
+                </div>
+                <div>
+                  <div className="text-body-sm font-medium">Evan Wilson</div>
+                  <div className="text-caption-sm text-[var(--color-text-secondary)]">Product Designer</div>
+                </div>
+              </div>
+            </ListboxOption>
+          </ListboxGroup>
+          
+          <ListboxGroup>
+            <ListboxGroupLabel>Management</ListboxGroupLabel>
+            <ListboxOption value="fiona">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[var(--color-background-neutral-subtle)] flex items-center justify-center">
+                  <span className="text-caption-sm font-medium text-[var(--color-text-primary)]">FD</span>
+                </div>
+                <div>
+                  <div className="text-body-sm font-medium">Fiona Davis</div>
+                  <div className="text-caption-sm text-[var(--color-text-secondary)]">Product Manager</div>
+                </div>
+              </div>
+            </ListboxOption>
+            <ListboxOption value="george" disabled>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[var(--color-background-neutral-subtle)] flex items-center justify-center">
+                  <span className="text-caption-sm font-medium text-[var(--color-text-primary)]">GM</span>
+                </div>
+                <div>
+                  <div className="text-body-sm font-medium">George Miller</div>
+                  <div className="text-caption-sm text-[var(--color-text-secondary)]">Engineering Manager (On Leave)</div>
+                </div>
+              </div>
+            </ListboxOption>
+          </ListboxGroup>
+        </Listbox>
+        
+        {selected.length > 0 && (
           <div className="space-y-2">
-            <p className="text-body-sm font-medium">Selected features:</p>
+            <p className="text-body-sm font-medium">Selected team members:</p>
             <div className="flex flex-wrap gap-1">
-              {selected.map((featureId) => {
-                const feature = features.find(f => f.id === featureId)
+              {selected.map((memberId) => {
+                const memberNames = {
+                  alice: 'Alice',
+                  bob: 'Bob', 
+                  charlie: 'Charlie',
+                  diana: 'Diana',
+                  evan: 'Evan',
+                  fiona: 'Fiona',
+                  george: 'George'
+                }
                 return (
-                  <Badge key={featureId} variant="secondary" className="text-xs">
-                    {feature?.name}
+                  <Badge key={memberId} variant="secondary" className="text-xs">
+                    {memberNames[memberId as keyof typeof memberNames]}
                   </Badge>
                 )
               })}
@@ -531,3 +463,117 @@ export const ComplexLayout: Story = {
     )
   },
 }
+
+export const DiceUIExample: Story = {
+  render: () => {
+    const [selectedPerson, setSelectedPerson] = useState<string>('wade')
+    
+    const people = [
+      {
+        id: 'wade',
+        name: 'Wade Cooper',
+        title: 'Regional Paradigm Technician',
+        department: 'Optimization',
+        role: 'Admin'
+      },
+      {
+        id: 'arlene',
+        name: 'Arlene Mccoy',
+        title: 'Regional Paradigm Technician',
+        department: 'Optimization', 
+        role: 'Owner'
+      },
+      {
+        id: 'devon',
+        name: 'Devon Webb',
+        title: 'Regional Paradigm Technician',
+        department: 'Optimization',
+        role: 'Member'
+      },
+      {
+        id: 'tom',
+        name: 'Tom Cook',
+        title: 'Regional Paradigm Technician', 
+        department: 'Optimization',
+        role: 'Member'
+      },
+      {
+        id: 'tanya',
+        name: 'Tanya Fox',
+        title: 'Regional Paradigm Technician',
+        department: 'Optimization',
+        role: 'Member'
+      },
+      {
+        id: 'hellen',
+        name: 'Hellen Schmidt',
+        title: 'Regional Paradigm Technician',
+        department: 'Optimization', 
+        role: 'Member'
+      }
+    ]
+    
+    const selectedPersonData = people.find(p => p.id === selectedPerson)
+    
+    return (
+      <div className="max-w-md space-y-6">
+        <div>
+          <Label className="mb-4 block text-body-md font-medium">Assigned to</Label>
+          <Listbox value={selectedPerson} onChange={setSelectedPerson}>
+            {people.map((person) => (
+              <ListboxOption key={person.id} value={person.id}>
+                <div className="flex items-start justify-between w-full">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-[var(--color-background-brand-subtle)] flex items-center justify-center">
+                      <span className="text-body-sm font-medium text-[var(--color-text-brand)]">
+                        {person.name.split(' ').map(n => n[0]).join('')}
+                      </span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-body-sm font-medium text-[var(--color-text-primary)]">
+                        {person.name}
+                      </p>
+                      <p className="text-caption-sm text-[var(--color-text-secondary)] mt-0.5">
+                        {person.title}
+                      </p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-caption-xsm text-[var(--color-text-tertiary)]">
+                          {person.department}
+                        </span>
+                        <span className="text-caption-xsm text-[var(--color-text-tertiary)]">•</span>
+                        <Badge 
+                          variant={person.role === 'Admin' ? 'default' : person.role === 'Owner' ? 'secondary' : 'secondary'} 
+                          className="text-xs px-1.5 py-0.5"
+                        >
+                          {person.role}
+                        </Badge>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ListboxOption>
+            ))}
+          </Listbox>
+        </div>
+        
+        {selectedPersonData && (
+          <div className="mt-4 p-4 rounded-md bg-[var(--color-background-neutral-subtle)]">
+            <p className="text-body-sm font-medium mb-2">Selected:</p>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-[var(--color-background-brand-subtle)] flex items-center justify-center">
+                <span className="text-caption-sm font-medium text-[var(--color-text-brand)]">
+                  {selectedPersonData.name.split(' ').map(n => n[0]).join('')}
+                </span>
+              </div>
+              <div>
+                <p className="text-body-sm font-medium">{selectedPersonData.name}</p>
+                <p className="text-caption-sm text-[var(--color-text-secondary)]">{selectedPersonData.title}</p>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    )
+  },
+}
+
