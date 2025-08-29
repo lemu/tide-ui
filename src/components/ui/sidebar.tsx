@@ -310,7 +310,7 @@ const SidebarInput = React.forwardRef<
       ref={ref}
       data-sidebar="input"
       className={cn(
-        "flex h-8 w-full rounded-md border border-[var(--color-border-input)] bg-[var(--color-surface-primary)] px-3 py-2 text-sm text-[var(--color-text-primary)] ring-offset-[var(--color-surface-primary)] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+        "flex h-8 w-full rounded-lg border border-[var(--color-border-input)] bg-[var(--color-surface-primary)] px-[var(--space-md)] py-[var(--space-sm)] text-sm text-[var(--color-text-primary)] ring-offset-[var(--color-surface-primary)] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
         className
       )}
       {...props}
@@ -327,7 +327,7 @@ const SidebarHeader = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="header"
-      className={cn("flex flex-col gap-2 p-2", className)}
+      className={cn("flex flex-col gap-[var(--space-sm)] p-[var(--space-md)]", className)}
       {...props}
     />
   )
@@ -342,7 +342,7 @@ const SidebarFooter = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="footer"
-      className={cn("flex flex-col gap-2 p-2", className)}
+      className={cn("flex flex-col gap-[var(--space-sm)] p-[var(--space-md)]", className)}
       {...props}
     />
   )
@@ -390,7 +390,7 @@ const SidebarGroup = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="group"
-      className={cn("relative flex w-full min-w-0 flex-col p-2", className)}
+      className={cn("relative flex w-full min-w-0 flex-col p-[var(--space-md)]", className)}
       {...props}
     />
   )
@@ -408,7 +408,7 @@ const SidebarGroupLabel = React.forwardRef<
       ref={ref}
       data-sidebar="group-label"
       className={cn(
-        "duration-200 flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-[margin,opa] ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+        "duration-200 flex h-8 shrink-0 items-center rounded-md px-2 text-caption-medium-sm text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-[margin,opa] ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
         "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0",
         className
       )}
@@ -460,7 +460,7 @@ const SidebarMenu = React.forwardRef<
   <ul
     ref={ref}
     data-sidebar="menu"
-    className={cn("flex w-full min-w-0 flex-col gap-1", className)}
+    className={cn("flex w-full min-w-0 flex-col gap-[var(--space-sm)]", className)}
     {...props}
   />
 ))
@@ -480,13 +480,13 @@ const SidebarMenuItem = React.forwardRef<
 SidebarMenuItem.displayName = "SidebarMenuItem"
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-[var(--color-border-focused)] transition-[width,height,padding] hover:bg-[var(--color-background-neutral-subtle)] focus-visible:ring-2 active:bg-[var(--color-background-neutral-subtle)] disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-[var(--color-background-brand-selected)] data-[active=true]:font-medium data-[active=true]:text-[var(--color-text-selected)] data-[state=open]:hover:bg-[var(--color-background-neutral-subtle)] group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
+  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-[var(--color-border-focused)] transition-[width,height,padding] hover:bg-[var(--color-background-neutral-subtle)] focus-visible:ring-2 active:bg-[var(--color-background-neutral-subtle)] disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-[var(--color-background-brand-selected)] data-[active=true]:font-medium data-[active=true]:text-[var(--color-text-selected)] data-[state=open]:bg-[var(--color-surface-secondary)] data-[state=open]:hover:bg-[var(--color-background-neutral-subtle)] group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "hover:bg-[var(--color-background-neutral-subtle)] hover:text-[var(--color-text-primary)]",
+        default: "hover:bg-[var(--color-background-neutral-subtle)] hover:text-[var(--color-text-primary)] focus-visible:bg-[var(--color-background-neutral-subtle)]",
         outline:
-          "bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] hover:bg-[var(--color-background-neutral-subtle)] hover:text-[var(--color-text-primary)]",
+          "bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] hover:bg-[var(--color-background-neutral-subtle)] hover:text-[var(--color-text-primary)] focus-visible:bg-[var(--color-background-neutral-subtle)]",
       },
       size: {
         default: "h-8 text-sm",
@@ -575,7 +575,7 @@ const SidebarMenuAction = React.forwardRef<
       ref={ref}
       data-sidebar="menu-action"
       className={cn(
-        "absolute right-1 top-1.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-transform hover:bg-[var(--color-background-neutral-subtle)] focus-visible:ring-2 peer-hover/menu-button:text-[var(--color-text-primary)] [&>svg]:size-4 [&>svg]:shrink-0",
+        "absolute right-1 top-1.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-all hover:bg-[var(--color-background-neutral-subtle)] hover:text-[var(--color-text-primary)] focus-visible:ring-2 focus-visible:bg-[var(--color-background-neutral-subtle)] peer-hover/menu-button:text-[var(--color-text-primary)] [&>svg]:size-4 [&>svg]:shrink-0",
         "after:absolute after:-inset-2 after:md:hidden",
         "peer-data-[size=sm]/menu-button:top-1",
         "peer-data-[size=default]/menu-button:top-1.5",
