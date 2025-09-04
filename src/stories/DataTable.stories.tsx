@@ -8,7 +8,7 @@ import { Icon } from '../components/ui/icon'
 import { ColumnDef } from '@tanstack/react-table'
 
 const meta: Meta<typeof DataTable> = {
-  title: 'Components/DataTable',
+  title: 'In Progress/DataTable',
   component: DataTable,
   parameters: {
     layout: 'centered',

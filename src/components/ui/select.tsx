@@ -34,7 +34,7 @@ const selectTriggerVariants = cva(
 );
 
 const selectContentVariants = cva(
-  "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] text-[var(--color-text-primary)] shadow-[0px_0px_12px_-2px_rgba(0,14,20,0.08),0px_16px_24px_-8px_rgba(0,14,20,0.08),0px_4px_8px_-4px_rgba(0,14,20,0.04),0px_1px_1px_0px_rgba(0,14,20,0.02)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+  "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border border-[var(--color-border-primary-bold)] bg-[var(--color-surface-primary)] text-[var(--color-text-primary)] shadow-[0px_0px_12px_-2px_rgba(0,14,20,0.08),0px_16px_24px_-8px_rgba(0,14,20,0.08),0px_4px_8px_-4px_rgba(0,14,20,0.04),0px_1px_1px_0px_rgba(0,14,20,0.02)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
 );
 
 const selectItemVariants = cva(

@@ -3,7 +3,7 @@ import { Toggle } from '../components/ui/toggle'
 import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, Star, Heart, Bookmark } from 'lucide-react'
 
 const meta: Meta<typeof Toggle> = {
-  title: 'Components/Toggle',
+  title: 'NPM/Toggle',
   component: Toggle,
   parameters: {
     layout: 'centered',

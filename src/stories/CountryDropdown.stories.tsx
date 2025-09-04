@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { CountryDropdown } from '../components/ui/country-dropdown'
 
 const meta: Meta<typeof CountryDropdown> = {
-  title: 'Components/CountryDropdown',
+  title: 'In Progress/CountryDropdown',
   component: CountryDropdown,
   parameters: {
     layout: 'centered',

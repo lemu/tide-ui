@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Icon, IconColor, IconSize } from '../components/ui/icon'
 
 const meta: Meta<typeof Icon> = {
-  title: 'Components/Icon',
+  title: 'NPM/Icon',
   component: Icon,
   parameters: {
     layout: 'centered',

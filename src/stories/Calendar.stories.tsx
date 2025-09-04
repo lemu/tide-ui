@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Label } from '../components/ui/label'
 
 const meta: Meta<typeof Calendar> = {
-  title: 'Components/Calendar',
+  title: 'In Progress/Calendar',
   component: Calendar,
   parameters: {
     layout: 'centered',

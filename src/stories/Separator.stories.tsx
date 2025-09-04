@@ -4,7 +4,7 @@ import { Button } from '../components/ui/button'
 import { Icon } from '../components/ui/icon'
 
 const meta: Meta<typeof Separator> = {
-  title: 'Components/Separator',
+  title: 'NPM/Separator',
   component: Separator,
   parameters: {
     layout: 'centered',
@@ -20,11 +20,6 @@ const meta: Meta<typeof Separator> = {
       control: { type: 'select' },
       options: ['line', 'dot'],
       description: 'Visual style of the separator',
-    },
-    orientation: {
-      control: { type: 'select' },
-      options: ['horizontal', 'vertical'],
-      description: 'Physical orientation (deprecated, use layout instead)',
     },
     decorative: {
       control: { type: 'boolean' },
@@ -54,7 +49,7 @@ export const DotSeparator: Story = {
   },
 }
 
-// Legacy examples (kept for compatibility)
+// Legacy examples (updated to use layout prop)
 export const Horizontal: Story = {
   render: () => (
     <div className="w-64">
@@ -64,12 +59,12 @@ export const Horizontal: Story = {
           An open-source UI component library.
         </p>
       </div>
-      <Separator className="my-4" />
+      <Separator layout="vertical" className="my-4" />
       <div className="flex h-5 items-center space-x-4 text-sm">
         <div>Blog</div>
-        <Separator orientation="vertical" />
+        <Separator layout="horizontal" />
         <div>Docs</div>
-        <Separator orientation="vertical" />
+        <Separator layout="horizontal" />
         <div>Source</div>
       </div>
     </div>
@@ -80,9 +75,9 @@ export const Vertical: Story = {
   render: () => (
     <div className="flex h-20 items-center space-x-4 text-sm">
       <div>Blog</div>
-      <Separator orientation="vertical" />
+      <Separator layout="horizontal" />
       <div>Docs</div>
-      <Separator orientation="vertical" />
+      <Separator layout="horizontal" />
       <div>Source</div>
     </div>
   ),

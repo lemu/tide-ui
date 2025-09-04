@@ -6,7 +6,7 @@ import { Badge } from '../components/ui/badge'
 import { Icon } from '../components/ui/icon'
 
 const meta: Meta<typeof Listbox> = {
-  title: 'Components/Listbox',
+  title: 'In Progress/Listbox',
   component: Listbox,
   parameters: {
     layout: 'centered',

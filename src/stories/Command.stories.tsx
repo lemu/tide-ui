@@ -14,9 +14,10 @@ import {
 import { Button } from '../components/ui/button'
 import { Icon } from '../components/ui/icon'
 import { Badge } from '../components/ui/badge'
+import { Avatar, AvatarFallback } from '../components/ui/avatar'
 
 const meta: Meta<typeof Command> = {
-  title: 'Components/Command',
+  title: 'NPM/Command',
   component: Command,
   parameters: {
     layout: 'centered',
@@ -85,7 +86,7 @@ export const DialogExample: Story = {
           <Icon name="search" size="sm" />
           Search...
           <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-[var(--color-surface-secondary)] px-1.5 font-mono text-[10px] font-medium text-[var(--color-text-secondary)] opacity-100">
-            <span className="text-xs">⌘</span>K
+            <span className="text-caption-xsm">⌘</span>K
           </kbd>
         </Button>
         <CommandDialog open={open} onOpenChange={setOpen}>
@@ -150,7 +151,7 @@ export const FileSearch: Story = {
             <Icon name="file-text" className="mr-2 h-4 w-4" />
             <div className="flex flex-col">
               <span>README.md</span>
-              <span className="text-xs text-[var(--color-text-secondary)]">
+              <span className="text-caption-xsm text-[var(--color-text-secondary)]">
                 /project/README.md
               </span>
             </div>
@@ -159,7 +160,7 @@ export const FileSearch: Story = {
             <Icon name="code" className="mr-2 h-4 w-4" />
             <div className="flex flex-col">
               <span>app.tsx</span>
-              <span className="text-xs text-[var(--color-text-secondary)]">
+              <span className="text-caption-xsm text-[var(--color-text-secondary)]">
                 /src/components/app.tsx
               </span>
             </div>
@@ -168,7 +169,7 @@ export const FileSearch: Story = {
             <Icon name="image" className="mr-2 h-4 w-4" />
             <div className="flex flex-col">
               <span>hero-image.png</span>
-              <span className="text-xs text-[var(--color-text-secondary)]">
+              <span className="text-caption-xsm text-[var(--color-text-secondary)]">
                 /public/images/hero-image.png
               </span>
             </div>
@@ -276,12 +277,12 @@ export const TeamSwitcher: Story = {
         <CommandGroup heading="Teams">
           <CommandItem>
             <div className="flex items-center gap-3 w-full">
-              <div className="w-6 h-6 rounded bg-[var(--color-background-brand)] flex items-center justify-center">
-                <span className="text-xs font-medium text-[var(--color-text-on-action)]">A</span>
-              </div>
+              <Avatar size="xs" shape="rounded">
+                <AvatarFallback variant="information" shape="rounded" size="xs">A</AvatarFallback>
+              </Avatar>
               <div className="flex flex-col flex-1">
                 <span className="font-medium">Acme Corp</span>
-                <span className="text-xs text-[var(--color-text-secondary)]">
+                <span className="text-caption-xsm text-[var(--color-text-secondary)]">
                   acme-corp.com
                 </span>
               </div>
@@ -292,12 +293,12 @@ export const TeamSwitcher: Story = {
           </CommandItem>
           <CommandItem>
             <div className="flex items-center gap-3 w-full">
-              <div className="w-6 h-6 rounded bg-[var(--color-background-information)] flex items-center justify-center">
-                <span className="text-xs font-medium text-[var(--color-text-on-action)]">B</span>
-              </div>
+              <Avatar size="xs" shape="rounded">
+                <AvatarFallback variant="violet" shape="rounded" size="xs">B</AvatarFallback>
+              </Avatar>
               <div className="flex flex-col flex-1">
                 <span className="font-medium">Beta Inc</span>
-                <span className="text-xs text-[var(--color-text-secondary)]">
+                <span className="text-caption-xsm text-[var(--color-text-secondary)]">
                   beta-inc.com
                 </span>
               </div>
@@ -308,12 +309,12 @@ export const TeamSwitcher: Story = {
         <CommandGroup heading="Recent Collaborators">
           <CommandItem>
             <div className="flex items-center gap-3 w-full">
-              <div className="w-6 h-6 rounded-full bg-[var(--color-background-success)] flex items-center justify-center">
-                <span className="text-xs font-medium text-[var(--color-text-on-action)]">JD</span>
-              </div>
+              <Avatar size="xs">
+                <AvatarFallback variant="success" size="xs">JD</AvatarFallback>
+              </Avatar>
               <div className="flex flex-col flex-1">
                 <span>John Doe</span>
-                <span className="text-xs text-[var(--color-text-secondary)]">
+                <span className="text-caption-xsm text-[var(--color-text-secondary)]">
                   john@acme.com
                 </span>
               </div>
@@ -322,12 +323,12 @@ export const TeamSwitcher: Story = {
           </CommandItem>
           <CommandItem>
             <div className="flex items-center gap-3 w-full">
-              <div className="w-6 h-6 rounded-full bg-[var(--color-background-warning)] flex items-center justify-center">
-                <span className="text-xs font-medium text-[var(--color-text-on-action)]">AS</span>
-              </div>
+              <Avatar size="xs">
+                <AvatarFallback variant="warning" size="xs">AS</AvatarFallback>
+              </Avatar>
               <div className="flex flex-col flex-1">
                 <span>Alice Smith</span>
-                <span className="text-xs text-[var(--color-text-secondary)]">
+                <span className="text-caption-xsm text-[var(--color-text-secondary)]">
                   alice@acme.com
                 </span>
               </div>
@@ -404,7 +405,7 @@ export const IDECommands: Story = {
             <Icon name="clock" className="mr-2 h-4 w-4 text-[var(--color-text-tertiary)]" />
             <div className="flex flex-col flex-1">
               <span>components/Button.tsx</span>
-              <span className="text-xs text-[var(--color-text-secondary)]">
+              <span className="text-caption-xsm text-[var(--color-text-secondary)]">
                 Modified 2 minutes ago
               </span>
             </div>
@@ -413,7 +414,7 @@ export const IDECommands: Story = {
             <Icon name="clock" className="mr-2 h-4 w-4 text-[var(--color-text-tertiary)]" />
             <div className="flex flex-col flex-1">
               <span>pages/Dashboard.tsx</span>
-              <span className="text-xs text-[var(--color-text-secondary)]">
+              <span className="text-caption-xsm text-[var(--color-text-secondary)]">
                 Modified 10 minutes ago
               </span>
             </div>
@@ -434,7 +435,7 @@ export const HelpSearch: Story = {
           <div className="flex flex-col items-center gap-2 py-6">
             <Icon name="search" className="h-8 w-8 text-[var(--color-text-tertiary)]" />
             <p>No help articles found.</p>
-            <p className="text-xs text-[var(--color-text-secondary)]">
+            <p className="text-caption-xsm text-[var(--color-text-secondary)]">
               Try searching with different terms
             </p>
           </div>
@@ -444,7 +445,7 @@ export const HelpSearch: Story = {
             <Icon name="play-circle" className="mr-2 h-4 w-4" />
             <div className="flex flex-col flex-1">
               <span>Quick Start Guide</span>
-              <span className="text-xs text-[var(--color-text-secondary)]">
+              <span className="text-caption-xsm text-[var(--color-text-secondary)]">
                 Learn the basics in 5 minutes
               </span>
             </div>
@@ -467,7 +468,7 @@ export const HelpSearch: Story = {
             <Icon name="zap" className="mr-2 h-4 w-4" />
             <div className="flex flex-col flex-1">
               <span>Keyboard Shortcuts</span>
-              <span className="text-xs text-[var(--color-text-secondary)]">
+              <span className="text-caption-xsm text-[var(--color-text-secondary)]">
                 Complete list of hotkeys
               </span>
             </div>

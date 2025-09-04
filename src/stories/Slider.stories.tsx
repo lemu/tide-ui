@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Label } from '../components/ui/label'
 
 const meta: Meta<typeof Slider> = {
-  title: 'Components/Slider',
+  title: 'In Progress/Slider',
   component: Slider,
   parameters: {
     layout: 'centered',

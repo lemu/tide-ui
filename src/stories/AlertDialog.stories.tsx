@@ -4,7 +4,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
+  AlertDialogBody,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -13,7 +13,7 @@ import {
 import { Button } from '../components/ui/button'
 
 const meta: Meta<typeof AlertDialog> = {
-  title: 'Components/AlertDialog',
+  title: 'NPM/AlertDialog',
   component: AlertDialog,
   parameters: {
     layout: 'centered',
@@ -33,14 +33,16 @@ export const Default: Story = {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogBody>
+          <p className="text-body-md text-[var(--color-text-secondary)]">
             This action cannot be undone. This will permanently delete your
             account and remove your data from our servers.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
+          </p>
+        </AlertDialogBody>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogAction variant="primary">Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -56,11 +58,13 @@ export const Destructive: Story = {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Delete Account</AlertDialogTitle>
-          <AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogBody>
+          <p className="text-body-md text-[var(--color-text-secondary)]">
             This action cannot be undone. This will permanently delete your
             account and remove your data from our servers.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
+          </p>
+        </AlertDialogBody>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction variant="destructive">Delete Account</AlertDialogAction>
@@ -79,13 +83,15 @@ export const SimpleConfirmation: Story = {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Save Changes?</AlertDialogTitle>
-          <AlertDialogDescription>
-            Do you want to save the changes you made to this document?
-          </AlertDialogDescription>
         </AlertDialogHeader>
+        <AlertDialogBody>
+          <p className="text-body-md text-[var(--color-text-secondary)]">
+            Do you want to save the changes you made to this document?
+          </p>
+        </AlertDialogBody>
         <AlertDialogFooter>
           <AlertDialogCancel>Don't Save</AlertDialogCancel>
-          <AlertDialogAction>Save</AlertDialogAction>
+          <AlertDialogAction variant="primary">Save</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -101,13 +107,15 @@ export const LogoutConfirmation: Story = {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Logout</AlertDialogTitle>
-          <AlertDialogDescription>
-            Are you sure you want to logout? You will need to sign in again to access your account.
-          </AlertDialogDescription>
         </AlertDialogHeader>
+        <AlertDialogBody>
+          <p className="text-body-md text-[var(--color-text-secondary)]">
+            Are you sure you want to logout? You will need to sign in again to access your account.
+          </p>
+        </AlertDialogBody>
         <AlertDialogFooter>
           <AlertDialogCancel>Stay Logged In</AlertDialogCancel>
-          <AlertDialogAction>Logout</AlertDialogAction>
+          <AlertDialogAction variant="primary">Logout</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -124,10 +132,12 @@ export const FileOperations: Story = {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete File</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to delete "document.pdf"? This action cannot be undone.
-            </AlertDialogDescription>
           </AlertDialogHeader>
+          <AlertDialogBody>
+            <p className="text-body-md text-[var(--color-text-secondary)]">
+              Are you sure you want to delete "document.pdf"? This action cannot be undone.
+            </p>
+          </AlertDialogBody>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction variant="destructive">Delete</AlertDialogAction>
@@ -142,13 +152,15 @@ export const FileOperations: Story = {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Replace Existing File</AlertDialogTitle>
-            <AlertDialogDescription>
-              A file with this name already exists. Do you want to replace it?
-            </AlertDialogDescription>
           </AlertDialogHeader>
+          <AlertDialogBody>
+            <p className="text-body-md text-[var(--color-text-secondary)]">
+              A file with this name already exists. Do you want to replace it?
+            </p>
+          </AlertDialogBody>
           <AlertDialogFooter>
             <AlertDialogCancel>Keep Both</AlertDialogCancel>
-            <AlertDialogAction>Replace</AlertDialogAction>
+            <AlertDialogAction variant="primary">Replace</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
@@ -165,7 +177,12 @@ export const LongContent: Story = {
       <AlertDialogContent className="max-w-md">
         <AlertDialogHeader>
           <AlertDialogTitle>Terms and Conditions</AlertDialogTitle>
-          <AlertDialogDescription className="max-h-60 overflow-y-auto">
+        </AlertDialogHeader>
+        <AlertDialogBody>
+          <p className="text-body-md text-[var(--color-text-secondary)] mb-4">
+            Please review the terms and conditions below:
+          </p>
+          <div className="-mx-6 max-h-60 overflow-y-auto px-6 text-body-md text-[var(--color-text-secondary)]">
             By using this application, you agree to the following terms:
             <br /><br />
             1. You must be at least 18 years old to use this service.
@@ -181,11 +198,11 @@ export const LongContent: Story = {
             6. We are not liable for any damages resulting from the use of this service.
             <br /><br />
             These terms are subject to change without notice. Continued use of the service constitutes acceptance of any changes.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
+          </div>
+        </AlertDialogBody>
         <AlertDialogFooter>
           <AlertDialogCancel>Decline</AlertDialogCancel>
-          <AlertDialogAction>Accept Terms</AlertDialogAction>
+          <AlertDialogAction variant="primary">Accept Terms</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

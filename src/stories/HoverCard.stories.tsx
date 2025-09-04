@@ -10,7 +10,7 @@ import { Badge } from '../components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar'
 
 const meta: Meta<typeof HoverCard> = {
-  title: 'Components/HoverCard',
+  title: 'In Progress/HoverCard',
   component: HoverCard,
   parameters: {
     layout: 'centered',

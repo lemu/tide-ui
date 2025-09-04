@@ -7,7 +7,7 @@ import { Badge } from '../components/ui/badge'
 import { Button } from '../components/ui/button'
 
 const meta: Meta<typeof NumberScrubber> = {
-  title: 'Components/NumberScrubber',
+  title: 'In Progress/NumberScrubber',
   component: NumberScrubber,
   parameters: {
     layout: 'centered',

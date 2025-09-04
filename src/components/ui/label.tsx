@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
 const labelVariants = cva(
-  "text-body-medium-md font-medium text-[var(--color-text-primary)] cursor-pointer peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+  "text-body-md text-[var(--color-text-primary)] cursor-pointer peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
 );
 
 export interface LabelProps

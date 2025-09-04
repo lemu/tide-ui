@@ -204,7 +204,7 @@ const Sidebar = React.forwardRef<
       >
         <div
           className={cn(
-            "duration-200 relative h-svh w-[var(--sidebar-width)] bg-[var(--color-surface-primary)] transition-[width] ease-linear",
+            "duration-200 relative h-svh w-[var(--sidebar-width)] bg-[var(--color-surface-primary)] border-r border-[var(--color-border-primary-subtle)] transition-[width] ease-linear",
             "group-data-[collapsible=offcanvas]:w-0",
             "group-data-[collapsible=icon]:w-[var(--sidebar-width-icon)]",
             variant === "floating" &&
@@ -408,7 +408,7 @@ const SidebarGroupLabel = React.forwardRef<
       ref={ref}
       data-sidebar="group-label"
       className={cn(
-        "duration-200 flex h-8 shrink-0 items-center rounded-md px-2 text-caption-medium-sm text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-[margin,opa] ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+        "duration-200 flex h-8 shrink-0 items-center rounded-md px-2 text-caption-medium-sm font-medium text-[var(--color-text-tertiary)] outline-none ring-[var(--color-border-focused)] transition-opacity ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
         "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0",
         className
       )}
@@ -480,7 +480,7 @@ const SidebarMenuItem = React.forwardRef<
 SidebarMenuItem.displayName = "SidebarMenuItem"
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-[var(--color-border-focused)] transition-[width,height,padding] hover:bg-[var(--color-background-neutral-subtle)] focus-visible:ring-2 active:bg-[var(--color-background-neutral-subtle)] disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-[var(--color-background-brand-selected)] data-[active=true]:font-medium data-[active=true]:text-[var(--color-text-selected)] data-[state=open]:bg-[var(--color-surface-secondary)] data-[state=open]:hover:bg-[var(--color-background-neutral-subtle)] group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
+  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-2 py-1.5 text-left text-body-medium-md outline-none ring-[var(--color-border-focused)] transition-colors hover:bg-[var(--color-background-neutral-subtle)] focus-visible:ring-2 active:bg-[var(--color-background-neutral-subtle)] disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-[var(--color-background-brand-selected)] data-[active=true]:font-medium data-[active=true]:text-[var(--color-text-selected)] data-[active=true]:hover:bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:hover:text-[var(--color-text-brand-hovered)] data-[active=true]:active:bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:active:text-[var(--color-text-brand-hovered)] data-[state=open]:bg-[var(--color-surface-secondary)] data-[state=open]:hover:bg-[var(--color-background-neutral-subtle)] group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 data-[active=true]:[&>svg]:text-[var(--color-text-selected)] data-[active=true]:hover:[&>svg]:text-[var(--color-icon-brand-hover)] data-[active=true]:active:[&>svg]:text-[var(--color-icon-brand-hover)]",
   {
     variants: {
       variant: {
@@ -489,9 +489,9 @@ const sidebarMenuButtonVariants = cva(
           "bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] hover:bg-[var(--color-background-neutral-subtle)] hover:text-[var(--color-text-primary)] focus-visible:bg-[var(--color-background-neutral-subtle)]",
       },
       size: {
-        default: "h-8 text-sm",
-        sm: "h-7 text-xs",
-        lg: "h-12 text-sm group-data-[collapsible=icon]:!size-12",
+        default: "h-8",
+        sm: "h-7 text-body-sm py-1",
+        lg: "h-12 py-3 text-body-lg group-data-[collapsible=icon]:!size-12",
       },
     },
     defaultVariants: {

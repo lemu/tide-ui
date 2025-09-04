@@ -12,7 +12,7 @@ const AccordionItem = React.forwardRef<
   <AccordionPrimitive.Item
     ref={ref}
     className={cn(
-      "border-b border-[var(--color-border-primary-subtle)]",
+      "border-b border-[var(--color-border-primary-subtle)] w-full",
       className,
     )}
     {...props}
@@ -28,7 +28,7 @@ const AccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "[&]:text-body-medium-md flex flex-1 cursor-pointer items-center justify-between py-[var(--space-lg)] text-left text-[var(--color-text-primary)] transition-all focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 focus-visible:outline-none [&[data-state=open]>svg]:rotate-180",
+        "[&]:text-body-medium-md flex flex-1 cursor-pointer items-center justify-between gap-[var(--space-sm)] py-[var(--space-lg)] text-left text-[var(--color-text-primary)] transition-all focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 focus-visible:outline-none [&[data-state=open]>svg]:rotate-180",
         className,
       )}
       {...props}
@@ -52,7 +52,7 @@ const AccordionContent = React.forwardRef<
   <AccordionPrimitive.Content
     ref={ref}
     className={cn(
-      "[&]:text-body-md data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-[var(--color-text-secondary)] transition-all",
+      "[&]:text-body-md data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-[var(--color-text-secondary)]",
       className,
     )}
     {...props}

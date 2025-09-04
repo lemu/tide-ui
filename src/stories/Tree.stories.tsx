@@ -7,7 +7,7 @@ import { Icon } from '../components/ui/icon'
 import { Badge } from '../components/ui/badge'
 
 const meta: Meta<typeof Tree> = {
-  title: 'Components/Tree',
+  title: 'In Progress/Tree',
   component: Tree,
   parameters: {
     layout: 'centered',

@@ -21,7 +21,7 @@ import { Badge } from '../components/ui/badge'
 import { Label } from '../components/ui/label'
 
 const meta: Meta<typeof FormField> = {
-  title: 'Components/FormField',
+  title: 'In Progress/FormField',
   component: FormField,
   parameters: {
     layout: 'centered',

@@ -10,7 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar'
 import { Icon } from '../components/ui/icon'
 
 const meta: Meta<typeof Spinner> = {
-  title: 'Components/Spinner',
+  title: 'In Progress/Spinner',
   component: Spinner,
   parameters: {
     layout: 'centered',

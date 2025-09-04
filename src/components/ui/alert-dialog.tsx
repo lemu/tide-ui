@@ -33,9 +33,10 @@ const AlertDialogContent = React.forwardRef<
     <AlertDialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-[var(--space-lg)] border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-2xlg)] shadow-xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] rounded-lg sm:max-w-[425px]",
+        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed top-[50%] left-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] shadow-xl duration-200 sm:max-w-[425px]",
         className
       )}
+      aria-describedby={undefined}
       {...props}
     />
   </AlertDialogPortal>
@@ -48,7 +49,7 @@ const AlertDialogHeader = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col space-y-[var(--space-sm)] text-center sm:text-left",
+      "flex flex-col space-y-[var(--space-sm)] border-b border-[var(--color-border-primary-subtle)] px-6 py-4 text-center sm:text-left",
       className
     )}
     {...props}
@@ -62,13 +63,21 @@ const AlertDialogFooter = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-[var(--space-sm)]",
+      "flex flex-col-reverse rounded-br-lg rounded-bl-lg border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-base)] p-[var(--space-xlg)] py-[var(--space-lg)] sm:flex-row sm:justify-end sm:space-x-[var(--space-sm)]",
       className
     )}
     {...props}
   />
 );
 AlertDialogFooter.displayName = "AlertDialogFooter";
+
+const AlertDialogBody = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn("px-6 py-4", className)} {...props} />
+);
+AlertDialogBody.displayName = "AlertDialogBody";
 
 const AlertDialogTitle = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Title>,
@@ -77,7 +86,7 @@ const AlertDialogTitle = React.forwardRef<
   <AlertDialogPrimitive.Title
     ref={ref}
     className={cn(
-      "text-heading-lg text-[var(--color-text-primary)]",
+      "[&]:text-heading-md text-[var(--color-text-primary)]",
       className
     )}
     {...props}
@@ -85,32 +94,17 @@ const AlertDialogTitle = React.forwardRef<
 ));
 AlertDialogTitle.displayName = AlertDialogPrimitive.Title.displayName;
 
-const AlertDialogDescription = React.forwardRef<
-  React.ElementRef<typeof AlertDialogPrimitive.Description>,
-  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description>
->(({ className, ...props }, ref) => (
-  <AlertDialogPrimitive.Description
-    ref={ref}
-    className={cn("text-body-md text-[var(--color-text-secondary)]", className)}
-    {...props}
-  />
-));
-AlertDialogDescription.displayName = AlertDialogPrimitive.Description.displayName;
 
 const AlertDialogAction = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Action>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action> & {
-    variant?: "default" | "destructive";
+    variant?: "default" | "primary" | "destructive";
   }
->(({ className, variant = "default", ...props }, ref) => (
+>(({ className, variant = "primary", ...props }, ref) => (
   <AlertDialogPrimitive.Action
     ref={ref}
     className={cn(
-      buttonVariants({ 
-        variant: variant === "destructive" ? "default" : variant 
-      }),
-      variant === "destructive" && 
-        "bg-[var(--color-background-error)] text-[var(--color-text-on-error)] hover:bg-[var(--color-background-error-hovered)] focus-visible:ring-[var(--color-border-error)]",
+      buttonVariants({ variant }),
       className
     )}
     {...props}
@@ -125,7 +119,7 @@ const AlertDialogCancel = React.forwardRef<
   <AlertDialogPrimitive.Cancel
     ref={ref}
     className={cn(
-      buttonVariants({ variant: "ghost" }),
+      buttonVariants({ variant: "default" }),
       "mt-[var(--space-sm)] sm:mt-0",
       className
     )}
@@ -141,9 +135,9 @@ export {
   AlertDialogTrigger,
   AlertDialogContent,
   AlertDialogHeader,
+  AlertDialogBody,
   AlertDialogFooter,
   AlertDialogTitle,
-  AlertDialogDescription,
   AlertDialogAction,
   AlertDialogCancel,
 };

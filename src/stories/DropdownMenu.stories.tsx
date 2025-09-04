@@ -20,7 +20,7 @@ import { Button } from '../components/ui/button'
 import { Icon } from '../components/ui/icon'
 
 const meta: Meta<typeof DropdownMenu> = {
-  title: 'Components/DropdownMenu',
+  title: 'NPM/DropdownMenu',
   component: DropdownMenu,
   parameters: {
     layout: 'centered',

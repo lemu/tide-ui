@@ -115,6 +115,43 @@
   --orange-800: #5c330a;
   --orange-900: #2e1905;
 
+  /* Additional Colors */
+  --violet-25: #f7f6fc;
+  --violet-50: #efedfa;
+  --violet-100: #e0dcf4;
+  --violet-200: #c1b8ea;
+  --violet-300: #a195df;
+  --violet-400: #8271d5;
+  --violet-500: #634eca;
+  --violet-600: #4f3ea2;
+  --violet-700: #3b2f79;
+  --violet-800: #281f51;
+  --violet-900: #141028;
+
+  --magenta-25: #fbf5f9;
+  --magenta-50: #f7eaf3;
+  --magenta-100: #efd5e7;
+  --magenta-200: #e0accf;
+  --magenta-300: #d082b6;
+  --magenta-400: #c1599e;
+  --magenta-500: #b12f86;
+  --magenta-600: #8e266b;
+  --magenta-700: #6a1c50;
+  --magenta-800: #471336;
+  --magenta-900: #23091b;
+
+  --olive-25: #f9fbf6;
+  --olive-50: #f4f7eb;
+  --olive-100: #e8efd7;
+  --olive-200: #d2dfb1;
+  --olive-300: #bbcf8b;
+  --olive-400: #a5c067;
+  --olive-500: #8fb046;
+  --olive-600: #728d38;
+  --olive-700: #556929;
+  --olive-800: #39461b;
+  --olive-900: #1d230d;
+
   /* Semantic Color Tokens - Text Colors */
   --color-text-primary: var(--grey-900);
   --color-text-secondary: var(--grey-700);

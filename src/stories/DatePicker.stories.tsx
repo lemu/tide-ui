@@ -7,7 +7,7 @@ import { Label } from '../components/ui/label'
 import { Badge } from '../components/ui/badge'
 
 const meta: Meta<typeof DatePicker> = {
-  title: 'Components/DatePicker',
+  title: 'In Progress/DatePicker',
   component: DatePicker,
   parameters: {
     layout: 'centered',

@@ -8,7 +8,7 @@ import { Badge } from '../components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 
 const meta: Meta<typeof LinkedChart> = {
-  title: 'Components/LinkedChart',
+  title: 'In Progress/LinkedChart',
   component: LinkedChart,
   parameters: {
     layout: 'fullscreen',

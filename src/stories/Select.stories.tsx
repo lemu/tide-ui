@@ -16,7 +16,7 @@ import { Icon } from '../components/ui/icon'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 
 const meta: Meta<typeof Select> = {
-  title: 'Components/Select',
+  title: 'NPM/Select',
   component: Select,
   parameters: {
     layout: 'centered',

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Chart, generateChartColors, createChartConfig } from '../components/ui/chart'
 
 const meta: Meta<typeof Chart> = {
-  title: 'Components/Chart',
+  title: 'In Progress/Chart',
   component: Chart,
   parameters: {
     layout: 'centered',

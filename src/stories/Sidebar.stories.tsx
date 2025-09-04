@@ -38,7 +38,7 @@ import {
 } from '../components/ui/dropdown-menu'
 
 const meta: Meta<typeof Sidebar> = {
-  title: 'Components/Sidebar',
+  title: 'NPM/Sidebar',
   component: Sidebar,
   parameters: {
     layout: 'fullscreen',

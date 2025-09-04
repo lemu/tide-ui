@@ -19,7 +19,7 @@ import {
 import { Icon } from '../components/ui/icon'
 
 const meta: Meta<typeof DropDrawer> = {
-  title: 'Components/DropDrawer',
+  title: 'In Progress/DropDrawer',
   component: DropDrawer,
   parameters: {
     layout: 'centered',

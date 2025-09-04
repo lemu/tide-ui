@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Label } from '../components/ui/label'
 
 const meta: Meta<typeof Combobox> = {
-  title: 'Components/Combobox',
+  title: 'In Progress/Combobox',
   component: Combobox,
   parameters: {
     layout: 'centered',

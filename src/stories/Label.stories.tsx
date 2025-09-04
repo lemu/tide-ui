@@ -7,7 +7,7 @@ import { Switch } from '../components/ui/switch'
 import { Textarea } from '../components/ui/textarea'
 
 const meta: Meta<typeof Label> = {
-  title: 'Components/Label',
+  title: 'NPM/Label',
   component: Label,
   parameters: {
     layout: 'centered',
@@ -71,7 +71,7 @@ export const WithCheckbox: Story = {
       <Checkbox id="terms" />
       <Label
         htmlFor="terms"
-        className="text-body-md font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        className="font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
       >
         Accept terms and conditions
       </Label>
@@ -93,7 +93,7 @@ export const WithSwitch: Story = {
 export const WithRadioGroup: Story = {
   render: () => (
     <div className="space-y-3">
-      <Label className="text-body-md font-medium">Notification preferences</Label>
+      <Label className="font-medium">Notification preferences</Label>
       <RadioGroup defaultValue="email" className="space-y-2">
         <div className="flex items-center space-x-2">
           <RadioGroupItem value="email" id="email-notifications" />

@@ -4,49 +4,50 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a React + TypeScript application built with Vite, featuring client-side routing with React Router. The project follows a minimal setup with modern tooling for fast development and hot module replacement.
+**Tide UI** is a React + TypeScript component library built with Vite and published to NPM. It provides a comprehensive set of UI components with semantic design tokens, built on top of Radix UI primitives and styled with Tailwind CSS.
 
 ## Key Commands
 
-### Development
+### Library Development
 
-- `npm run dev` - Start development server with hot reload
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build locally
-- `npm run lint` - Run ESLint on all files
+- `npm run dev` - Start Storybook development server for component development
+- `npm run build:lib` - Build the library for production (generates `/dist/`)
+- `npm run storybook` - Start Storybook server for component documentation
+- `npm run lint` - Run ESLint on all library files
 
-### File Structure
+### Library Structure
 
-The project uses a route-based architecture:
+The library follows a clean component architecture:
 
-- `/src/App.tsx` - Main app component with BrowserRouter and navigation
-- `/src/routes/` - Route components (Home, About, Contact)
-- `/src/main.tsx` - Application entry point with React StrictMode
+- `/src/components/ui/` - Core UI component implementations
+- `/src/components/index.ts` - Main library export file
+- `/src/lib/` - Utility functions and shared logic
+- `/src/stories/` - Storybook documentation for components
+- `/dist/` - Built library output (npm package contents)
 
 ## Architecture
 
-### Routing
+### Component Library Structure
 
-Uses React Router v7 with `BrowserRouter` for client-side routing. Routes are defined in `App.tsx` with a simple navigation structure. New routes should be added as components in `/src/routes/` and registered in the Routes configuration.
+- **Component Exports**: All components are exported from `/src/components/index.ts`
+- **Design Tokens**: Comprehensive semantic token system via CSS variables
+- **Storybook Documentation**: All components have corresponding `.stories.tsx` files
+- **TypeScript**: Full type safety with exported type definitions
 
 ### Build System
 
-- **Vite** for build tooling and development server
-- **TypeScript** with strict mode enabled
-- **ESLint** with React Hooks and React Refresh plugins
-- Modern ES2020 target with ESNext modules
+- **Vite** for library bundling with dual format output (ESM + CJS)
+- **TypeScript** with strict mode and declaration file generation
+- **Storybook** for component development and documentation
+- **ESLint** with React component library best practices
+- **Dual output**: ESM (`index.es.js`) and CommonJS (`index.cjs.js`) builds
 
 ### TypeScript Configuration
 
-- Strict TypeScript settings with `noUnusedLocals` and `noUnusedParameters`
-- JSX set to `react-jsx` (new JSX transform)
+- Strict TypeScript settings optimized for library development
+- Declaration file generation for npm package consumers
+- Path mapping for clean imports during development
 - Module resolution set to "bundler" for Vite compatibility
-
-### ESLint Rules
-
-- Custom rule: unused variables starting with capital letters or underscores are ignored
-- React Hooks rules enforced
-- React Refresh rules for HMR compatibility
 
 ## Theme System
 
@@ -164,7 +165,7 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 
 **Always use `ghost` variant instead of non-existent `outline` variant.**
 
-## Development Process
+## Component Development Process
 
 ### **CRITICAL: Requirements Gathering for New Components**
 
@@ -189,23 +190,34 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
    - Any performance considerations?
    - Integration requirements with other components?
 
-4. **Scope and Examples:**
-   - Can you provide usage examples?
-   - What edge cases should be considered?
-   - Are there existing patterns to follow?
-   - Should preview/showcase be included?
+4. **Library Integration:**
+   - Should it be exported from the main library index?
+   - What TypeScript types need to be exported?
+   - Should it have a corresponding Storybook story?
+   - How does it fit with existing component patterns?
 
 **Never proceed with implementation until you have clarity on these aspects.**
 
-## Development Notes
+## Library Development Guidelines
 
-The project structure is intentionally minimal. When adding new features:
+### Adding New Components
 
-- Place route components in `/src/routes/`
-- Update navigation in `App.tsx`
-- Follow the existing TypeScript and ESLint configurations
-- **Always use semantic design tokens for styling**
-- The build outputs to `/dist/` (ignored by ESLint)
+When adding new components to the library:
+
+1. **Create component file** in `/src/components/ui/[component-name].tsx`
+2. **Export from main index** in `/src/components/index.ts`
+3. **Create Storybook story** in `/src/stories/[ComponentName].stories.tsx`
+4. **Follow existing patterns** for styling, TypeScript, and component structure
+5. **Use semantic design tokens** consistently throughout
+6. **Build and test** with `npm run build:lib` before committing
+
+### Component Best Practices
+
+- **Minimal overrides needed**: Base components should work well without extensive className overrides
+- **Semantic defaults**: Use design tokens and semantic typography as defaults
+- **Accessibility first**: Follow ARIA guidelines and keyboard navigation standards  
+- **TypeScript safety**: Export all component props and variants as types
+- **Storybook coverage**: Document all variants, states, and usage examples
 
 No test framework is currently configured in this project.
 

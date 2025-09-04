@@ -3,7 +3,7 @@ import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 
 const meta: Meta<typeof Input> = {
-  title: 'Components/Input',
+  title: 'NPM/Input',
   component: Input,
   parameters: {
     layout: 'centered',
@@ -62,6 +62,7 @@ export const Disabled: Story = {
     placeholder: 'Disabled input',
     disabled: true,
     value: 'Cannot edit this',
+    readOnly: true,
   },
 }
 
@@ -69,6 +70,7 @@ export const WithValue: Story = {
   args: {
     value: 'Pre-filled value',
     placeholder: 'This won\'t show',
+    readOnly: true,
   },
 }
 

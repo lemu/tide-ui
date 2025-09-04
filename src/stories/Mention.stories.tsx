@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Mention, MentionText, type MentionSuggestion } from '../components/ui/mention'
 
 const meta: Meta<typeof Mention> = {
-  title: 'Components/Mention',
+  title: 'In Progress/Mention',
   component: Mention,
   parameters: {
     layout: 'centered',

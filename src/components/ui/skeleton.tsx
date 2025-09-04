@@ -3,7 +3,7 @@ import { cn } from "../../lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const skeletonVariants = cva(
-  "animate-pulse bg-[var(--color-background-neutral)] rounded",
+  "animate-pulse bg-[var(--grey-alpha-50)] rounded",
   {
     variants: {
       variant: {

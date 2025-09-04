@@ -8,7 +8,7 @@ import { Badge } from '../components/ui/badge'
 import { Icon } from '../components/ui/icon'
 
 const meta: Meta<typeof Tag> = {
-  title: 'Components/Tag',
+  title: 'In Progress/Tag',
   component: Tag,
   parameters: {
     layout: 'centered',

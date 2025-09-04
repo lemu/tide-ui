@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Label } from '../components/ui/label'
 
 const meta: Meta<typeof ToggleGroup> = {
-  title: 'Components/ToggleGroup',
+  title: 'In Progress/ToggleGroup',
   component: ToggleGroup,
   parameters: {
     layout: 'centered',

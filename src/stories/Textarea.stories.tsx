@@ -6,7 +6,7 @@ import { Button } from '../components/ui/button'
 import { Icon } from '../components/ui/icon'
 
 const meta: Meta<typeof Textarea> = {
-  title: 'Components/Textarea',
+  title: 'NPM/Textarea',
   component: Textarea,
   parameters: {
     layout: 'centered',
@@ -62,7 +62,7 @@ export const Sizes: Story = {
   render: () => (
     <div className="w-80 space-y-4">
       <div>
-        <Label className="text-body-sm font-medium mb-2 block">Small</Label>
+        <Label className="font-medium mb-2 block">Small</Label>
         <Textarea
           size="sm"
           placeholder="Small textarea"
@@ -70,7 +70,7 @@ export const Sizes: Story = {
         />
       </div>
       <div>
-        <Label className="text-body-sm font-medium mb-2 block">Medium (Default)</Label>
+        <Label className="font-medium mb-2 block">Medium (Default)</Label>
         <Textarea
           size="md"
           placeholder="Medium textarea"
@@ -78,7 +78,7 @@ export const Sizes: Story = {
         />
       </div>
       <div>
-        <Label className="text-body-sm font-medium mb-2 block">Large</Label>
+        <Label className="font-medium mb-2 block">Large</Label>
         <Textarea
           size="lg"
           placeholder="Large textarea"

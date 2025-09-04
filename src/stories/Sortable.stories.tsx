@@ -8,7 +8,7 @@ import { Badge } from '../components/ui/badge'
 import { Icon } from '../components/ui/icon'
 
 const meta: Meta<typeof Sortable.Root> = {
-  title: 'Components/Sortable',
+  title: 'In Progress/Sortable',
   component: Sortable.Root,
   parameters: {
     layout: 'centered',

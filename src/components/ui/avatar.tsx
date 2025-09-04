@@ -4,10 +4,11 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const avatarVariants = cva(
-  "relative flex shrink-0 overflow-hidden items-center justify-center shadow-[0_0_0_1px_rgba(85,95,109,0.1)]",
+  "relative flex shrink-0 overflow-hidden items-center justify-center",
   {
     variants: {
       size: {
+        xxs: "h-4 w-4", // 16px
         xs: "h-[var(--size-sm)] w-[var(--size-sm)]", // 20px
         sm: "h-[var(--size-md)] w-[var(--size-md)]", // 24px
         md: "h-[var(--size-lg)] w-[var(--size-lg)]", // 32px  
@@ -28,10 +29,11 @@ const avatarVariants = cva(
 );
 
 const avatarFallbackVariants = cva(
-  "flex h-full w-full items-center justify-center font-medium text-[var(--color-text-on-action)]",
+  "flex h-full w-full items-center justify-center font-medium [&]:text-[var(--color-text-inverse)]",
   {
     variants: {
       size: {
+        xxs: "text-caption-xsm",
         xs: "text-caption-xsm",
         sm: "text-caption-sm",
         md: "text-label-sm", 
@@ -44,18 +46,18 @@ const avatarFallbackVariants = cva(
         square: "rounded-none",
       },
       variant: {
-        primary: "bg-[var(--color-background-brand)]",
-        secondary: "bg-[var(--color-background-neutral)]",
-        accent: "bg-[var(--color-background-information)]",
+        information: "bg-[var(--color-background-information-bold)]",
         success: "bg-[var(--color-background-success-bold)]",
-        warning: "bg-[var(--color-background-warning-bold)]",
         error: "bg-[var(--color-background-error-bold)]",
+        warning: "bg-[var(--color-background-warning-bold)]",
+        violet: "bg-[var(--violet-500)]",
+        magenta: "bg-[var(--magenta-500)]",
       },
     },
     defaultVariants: {
       size: "md",
       shape: "circle",
-      variant: "secondary",
+      variant: "information",
     },
   }
 );
@@ -82,7 +84,7 @@ const AvatarImage = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AvatarPrimitive.Image
     ref={ref}
-    className={cn("aspect-square h-full w-full object-cover", className)}
+    className={cn("aspect-square h-full w-full object-cover shadow-[0_0_0_1px_rgba(85,95,109,0.1)]", className)}
     {...props}
   />
 ));

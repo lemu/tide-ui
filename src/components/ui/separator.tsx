@@ -17,7 +17,6 @@ const Separator = React.forwardRef<
   (
     {
       className,
-      orientation,
       layout = "vertical",
       decorative = true,
       type = "line",
@@ -28,8 +27,7 @@ const Separator = React.forwardRef<
     // Use layout prop to determine separator orientation
     // horizontal layout (side-by-side elements) -> vertical separator
     // vertical layout (stacked elements) -> horizontal separator
-    const separatorOrientation = layout === "horizontal" ? "vertical" : "horizontal";
-    const finalOrientation = orientation ?? separatorOrientation;
+    const finalOrientation = layout === "horizontal" ? "vertical" : "horizontal";
 
     // For dot separators - only for horizontal content layout (side-by-side content)
     if (type === "dot" && layout === "horizontal") {

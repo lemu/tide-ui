@@ -8,7 +8,7 @@ import { Badge } from '../components/ui/badge'
 import { Icon } from '../components/ui/icon'
 
 const meta: Meta<typeof EmptyStates.NoData> = {
-  title: 'Components/EmptyState',
+  title: 'In Progress/EmptyState',
   component: EmptyStates.NoData,
   parameters: {
     layout: 'centered',

@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
 const inputVariants = cva(
-  "flex w-full rounded-md border transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+  "flex w-full rounded-md border transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:shadow-[0px_0px_0px_2px_rgba(0,95,133,0.2),0px_3px_4px_0px_rgba(0,14,20,0.03)] disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -11,7 +11,7 @@ const inputVariants = cva(
           "bg-[var(--color-background-input)] text-[var(--color-text-primary)]",
           "border-[var(--color-border-input)]",
           "hover:border-[var(--color-border-input-hovered)]",
-          "focus-visible:border-[var(--color-border-focused)]",
+          "focus-visible:border-[#005f85]",
         ],
         error: [
           "bg-[var(--color-background-input)] text-[var(--color-text-primary)]",

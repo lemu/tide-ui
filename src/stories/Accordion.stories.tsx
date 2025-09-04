@@ -10,7 +10,7 @@ import { Icon } from '../components/ui/icon'
 import { Badge } from '../components/ui/badge'
 
 const meta: Meta<typeof Accordion> = {
-  title: 'Components/Accordion',
+  title: 'NPM/Accordion',
   component: Accordion,
   parameters: {
     layout: 'centered',
@@ -458,6 +458,55 @@ export const SettingsAccordion: Story = {
                 <Button size="sm" variant="ghost">Change Plan</Button>
                 <Button size="sm" variant="ghost">Update Payment</Button>
               </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </div>
+  ),
+}
+
+// Width consistency demonstration
+export const WidthConsistency: Story = {
+  render: () => (
+    <div className="p-8">
+      <div className="mb-6">
+        <h2 className="text-heading-md font-semibold mb-2">Width Consistency Test</h2>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">
+          This example shows how accordion width behaves with different content lengths.
+          The accordion should maintain consistent width in collapsed and expanded states.
+        </p>
+      </div>
+      
+      <Accordion type="single" collapsible className="border border-[var(--color-border-primary-subtle)] rounded-md">
+        <AccordionItem value="short">
+          <AccordionTrigger>Short</AccordionTrigger>
+          <AccordionContent>
+            Brief content.
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="medium">
+          <AccordionTrigger>Medium length title</AccordionTrigger>
+          <AccordionContent>
+            This is medium length content that should not affect the overall accordion width when expanded or collapsed.
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="long">
+          <AccordionTrigger>This is a very long accordion trigger title that demonstrates width behavior</AccordionTrigger>
+          <AccordionContent>
+            <div className="space-y-3">
+              <p>This is very long content that includes multiple paragraphs and complex layout elements to test how the accordion handles width consistency when there's a significant difference between trigger and content widths.</p>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-3 border border-[var(--color-border-primary-subtle)] rounded">
+                  <h4 className="font-medium mb-1">Column 1</h4>
+                  <p className="text-body-sm">Some content here that extends the width</p>
+                </div>
+                <div className="p-3 border border-[var(--color-border-primary-subtle)] rounded">
+                  <h4 className="font-medium mb-1">Column 2</h4>
+                  <p className="text-body-sm">More content that could affect width</p>
+                </div>
+              </div>
+              <Button size="sm">Action Button</Button>
             </div>
           </AccordionContent>
         </AccordionItem>

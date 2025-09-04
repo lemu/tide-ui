@@ -26,11 +26,55 @@ export { Skeleton, SkeletonAvatar, SkeletonButton, SkeletonCard, SkeletonTable, 
 
 export { Switch } from './ui/switch'
 
+export { Textarea } from './ui/textarea'
+export type { TextareaProps } from './ui/textarea'
+
 export { Tabs, TabsList, TabsTrigger, TabsContent, TabsGroupLabel } from './ui/tabs'
 export type { TabsProps, TabsListProps, TabsTriggerProps, TabsGroupLabelProps } from './ui/tabs'
 
 export { Toggle } from './ui/toggle'
 export type { ToggleProps } from './ui/toggle'
+
+// Select components
+export {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+  selectTriggerVariants,
+  selectContentVariants,
+  selectItemVariants,
+} from './ui/select'
+export type { SelectTriggerProps, SelectContentProps, SelectItemProps } from './ui/select'
+
+// TextLink component
+export { TextLink } from './ui/text-link'
+export type { TextLinkProps } from './ui/text-link'
+
+// Accordion components
+export {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from './ui/accordion'
+
+// AlertDialog components
+export {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from './ui/alert-dialog'
 
 // Icon component
 export { Icon } from './ui/icon'
