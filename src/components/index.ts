@@ -63,6 +63,20 @@ export {
   AccordionTrigger,
 } from './ui/accordion'
 
+// Dialog components
+export {
+  Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogClose,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+  DialogTitle,
+} from './ui/dialog'
+
 // AlertDialog components
 export {
   AlertDialog,

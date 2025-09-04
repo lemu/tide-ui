@@ -27,7 +27,7 @@ import { Checkbox } from "../components/ui/checkbox";
 import { Alert, AlertDescription } from "../components/ui/alert";
 
 const meta: Meta<typeof Dialog> = {
-  title: "Done/Dialog",
+  title: "NPM/Dialog",
   component: Dialog,
   parameters: {
     layout: "centered",
