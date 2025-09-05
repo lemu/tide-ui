@@ -56,27 +56,28 @@ export const Default: Story = {
 
 // With descriptions
 export const WithDescriptions: Story = {
+  args: {},
   render: () => (
     <div className="w-96">
       <div className="space-y-3">
         <Label className="text-body-md font-medium">Choose your plan</Label>
         <RadioGroup defaultValue="pro" className="space-y-4">
-          <div className="flex items-start space-x-3 p-4 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-bold)] transition-colors">
+          <label htmlFor="free" className="flex items-start space-x-3 p-4 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-bold)] transition-colors cursor-pointer">
             <RadioGroupItem value="free" id="free" className="mt-1" />
             <div className="flex-1 space-y-1">
-              <Label htmlFor="free" className="text-body-md font-medium">Free</Label>
+              <span className="text-body-md font-medium block">Free</span>
               <p className="text-body-sm text-[var(--color-text-secondary)]">
                 Perfect for getting started with basic features and limited usage.
               </p>
               <p className="text-body-sm font-medium">$0/month</p>
             </div>
-          </div>
+          </label>
           
-          <div className="flex items-start space-x-3 p-4 border-2 border-[var(--color-border-brand)] bg-[var(--color-background-brand-subtle)] rounded-lg">
+          <label htmlFor="pro" className="flex items-start space-x-3 p-4 border-2 border-[var(--color-border-brand)] bg-[var(--color-background-brand-subtle)] rounded-lg cursor-pointer">
             <RadioGroupItem value="pro" id="pro" className="mt-1" />
             <div className="flex-1 space-y-1">
               <div className="flex items-center gap-2">
-                <Label htmlFor="pro" className="text-body-md font-medium">Pro</Label>
+                <span className="text-body-md font-medium">Pro</span>
                 <span className="px-2 py-1 bg-[var(--color-background-brand)] text-[var(--color-text-on-action)] text-caption-sm font-medium rounded">
                   Popular
                 </span>
@@ -86,18 +87,18 @@ export const WithDescriptions: Story = {
               </p>
               <p className="text-body-sm font-medium">$29/month</p>
             </div>
-          </div>
+          </label>
           
-          <div className="flex items-start space-x-3 p-4 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-bold)] transition-colors">
+          <label htmlFor="enterprise" className="flex items-start space-x-3 p-4 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-bold)] transition-colors cursor-pointer">
             <RadioGroupItem value="enterprise" id="enterprise" className="mt-1" />
             <div className="flex-1 space-y-1">
-              <Label htmlFor="enterprise" className="text-body-md font-medium">Enterprise</Label>
+              <span className="text-body-md font-medium block">Enterprise</span>
               <p className="text-body-sm text-[var(--color-text-secondary)]">
                 For large organizations with custom requirements and dedicated support.
               </p>
               <p className="text-body-sm font-medium">Custom pricing</p>
             </div>
-          </div>
+          </label>
         </RadioGroup>
       </div>
     </div>
@@ -194,42 +195,43 @@ export const DisabledState: Story = {
 
 // With icons
 export const WithIcons: Story = {
+  args: {},
   render: () => (
     <div className="w-80 space-y-3">
       <Label className="text-body-md font-medium">Theme preference</Label>
       <RadioGroup defaultValue="light" className="space-y-3">
-        <div className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-bold)] transition-colors">
+        <label htmlFor="theme-light" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-bold)] transition-colors cursor-pointer">
           <RadioGroupItem value="light" id="theme-light" />
           <Icon name="sun" size="sm" />
           <div>
-            <Label htmlFor="theme-light" className="font-medium">Light</Label>
+            <span className="font-medium block">Light</span>
             <p className="text-body-sm text-[var(--color-text-secondary)]">
               Classic light theme
             </p>
           </div>
-        </div>
+        </label>
         
-        <div className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-bold)] transition-colors">
+        <label htmlFor="theme-dark" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-bold)] transition-colors cursor-pointer">
           <RadioGroupItem value="dark" id="theme-dark" />
           <Icon name="moon" size="sm" />
           <div>
-            <Label htmlFor="theme-dark" className="font-medium">Dark</Label>
+            <span className="font-medium block">Dark</span>
             <p className="text-body-sm text-[var(--color-text-secondary)]">
               Dark theme for better focus
             </p>
           </div>
-        </div>
+        </label>
         
-        <div className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-bold)] transition-colors">
+        <label htmlFor="theme-system" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-bold)] transition-colors cursor-pointer">
           <RadioGroupItem value="system" id="theme-system" />
           <Icon name="monitor" size="sm" />
           <div>
-            <Label htmlFor="theme-system" className="font-medium">System</Label>
+            <span className="font-medium block">System</span>
             <p className="text-body-sm text-[var(--color-text-secondary)]">
               Follow system preference
             </p>
           </div>
-        </div>
+        </label>
       </RadioGroup>
     </div>
   ),
