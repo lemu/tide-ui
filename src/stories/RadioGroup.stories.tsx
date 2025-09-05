@@ -57,52 +57,68 @@ export const Default: Story = {
 // With descriptions
 export const WithDescriptions: Story = {
   args: {},
-  render: () => (
-    <div className="w-96">
-      <div className="space-y-3">
-        <Label className="text-body-md font-medium">Choose your plan</Label>
-        <RadioGroup defaultValue="pro" className="space-y-4">
-          <label htmlFor="free" className="flex items-start space-x-3 p-4 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-bold)] transition-colors cursor-pointer">
-            <RadioGroupItem value="free" id="free" className="mt-1" />
-            <div className="flex-1 space-y-1">
-              <span className="text-body-md font-medium block">Free</span>
-              <p className="text-body-sm text-[var(--color-text-secondary)]">
-                Perfect for getting started with basic features and limited usage.
-              </p>
-              <p className="text-body-sm font-medium">$0/month</p>
-            </div>
-          </label>
-          
-          <label htmlFor="pro" className="flex items-start space-x-3 p-4 border-2 border-[var(--color-border-brand)] bg-[var(--color-background-brand-subtle)] rounded-lg cursor-pointer">
-            <RadioGroupItem value="pro" id="pro" className="mt-1" />
-            <div className="flex-1 space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="text-body-md font-medium">Pro</span>
-                <span className="px-2 py-1 bg-[var(--color-background-brand)] text-[var(--color-text-on-action)] text-caption-sm font-medium rounded">
-                  Popular
-                </span>
+  render: () => {
+    const [selectedPlan, setSelectedPlan] = useState("pro")
+    
+    return (
+      <div className="w-96">
+        <div className="space-y-3">
+          <Label className="text-body-md font-medium">Choose your plan</Label>
+          <RadioGroup value={selectedPlan} onValueChange={setSelectedPlan} className="space-y-4">
+            <label htmlFor="free" className={`flex items-start space-x-3 p-4 rounded-lg transition-colors cursor-pointer ${
+              selectedPlan === "free" 
+                ? "border-2 border-[var(--color-border-brand)] bg-[var(--color-background-brand-subtle)]"
+                : "border border-[var(--color-border-primary-subtle)] hover:border-[var(--color-border-primary-bold)]"
+            }`}>
+              <RadioGroupItem value="free" id="free" className="mt-1" />
+              <div className="flex-1 space-y-1">
+                <span className="text-body-md font-medium block">Free</span>
+                <p className="text-body-sm text-[var(--color-text-secondary)]">
+                  Perfect for getting started with basic features and limited usage.
+                </p>
+                <p className="text-body-sm font-medium">$0/month</p>
               </div>
-              <p className="text-body-sm text-[var(--color-text-secondary)]">
-                Great for growing teams with advanced features and increased limits.
-              </p>
-              <p className="text-body-sm font-medium">$29/month</p>
-            </div>
-          </label>
-          
-          <label htmlFor="enterprise" className="flex items-start space-x-3 p-4 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-bold)] transition-colors cursor-pointer">
-            <RadioGroupItem value="enterprise" id="enterprise" className="mt-1" />
-            <div className="flex-1 space-y-1">
-              <span className="text-body-md font-medium block">Enterprise</span>
-              <p className="text-body-sm text-[var(--color-text-secondary)]">
-                For large organizations with custom requirements and dedicated support.
-              </p>
-              <p className="text-body-sm font-medium">Custom pricing</p>
-            </div>
-          </label>
-        </RadioGroup>
+            </label>
+            
+            <label htmlFor="pro" className={`flex items-start space-x-3 p-4 rounded-lg cursor-pointer ${
+              selectedPlan === "pro"
+                ? "border-2 border-[var(--color-border-brand)] bg-[var(--color-background-brand-subtle)]"
+                : "border border-[var(--color-border-primary-subtle)] hover:border-[var(--color-border-primary-bold)] transition-colors"
+            }`}>
+              <RadioGroupItem value="pro" id="pro" className="mt-1" />
+              <div className="flex-1 space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-body-md font-medium">Pro</span>
+                  <span className="px-2 py-1 bg-[var(--color-background-brand)] text-[var(--color-text-on-action)] text-caption-sm font-medium rounded">
+                    Popular
+                  </span>
+                </div>
+                <p className="text-body-sm text-[var(--color-text-secondary)]">
+                  Great for growing teams with advanced features and increased limits.
+                </p>
+                <p className="text-body-sm font-medium">$29/month</p>
+              </div>
+            </label>
+            
+            <label htmlFor="enterprise" className={`flex items-start space-x-3 p-4 rounded-lg transition-colors cursor-pointer ${
+              selectedPlan === "enterprise"
+                ? "border-2 border-[var(--color-border-brand)] bg-[var(--color-background-brand-subtle)]"
+                : "border border-[var(--color-border-primary-subtle)] hover:border-[var(--color-border-primary-bold)]"
+            }`}>
+              <RadioGroupItem value="enterprise" id="enterprise" className="mt-1" />
+              <div className="flex-1 space-y-1">
+                <span className="text-body-md font-medium block">Enterprise</span>
+                <p className="text-body-sm text-[var(--color-text-secondary)]">
+                  For large organizations with custom requirements and dedicated support.
+                </p>
+                <p className="text-body-sm font-medium">Custom pricing</p>
+              </div>
+            </label>
+          </RadioGroup>
+        </div>
       </div>
-    </div>
-  ),
+    )
+  },
 }
 
 // Horizontal orientation
