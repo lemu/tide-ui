@@ -7,7 +7,7 @@ import { Icon } from '../components/ui/icon'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
 
 const meta: Meta<typeof RadioGroup> = {
-  title: 'In Progress/RadioGroup',
+  title: 'Done/RadioGroup',
   component: RadioGroup,
   parameters: {
     layout: 'centered',
@@ -31,8 +31,12 @@ type Story = StoryObj<typeof meta>
 
 // Basic radio group
 export const Default: Story = {
-  render: () => (
-    <RadioGroup defaultValue="option-1" className="w-80">
+  args: {
+    defaultValue: "option-1",
+    className: "w-80",
+  },
+  render: (args) => (
+    <RadioGroup {...args}>
       <div className="flex items-center space-x-2">
         <RadioGroupItem value="option-1" id="option-1" />
         <Label htmlFor="option-1">Option 1</Label>
