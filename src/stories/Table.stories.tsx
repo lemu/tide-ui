@@ -19,7 +19,7 @@ import { Checkbox } from '../components/ui/checkbox'
 import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar'
 
 const meta: Meta<typeof Table> = {
-  title: 'In Progress/Table',
+  title: 'Done/Table',
   component: Table,
   parameters: {
     layout: 'centered',

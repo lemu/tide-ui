@@ -7,7 +7,7 @@ import { Icon } from '../components/ui/icon'
 import { Badge } from '../components/ui/badge'
 
 const meta: Meta<typeof FileUpload.Root> = {
-  title: 'In Progress/FileUpload',
+  title: 'Done/FileUpload',
   component: FileUpload.Root,
   parameters: {
     layout: 'centered',
