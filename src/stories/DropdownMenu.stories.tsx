@@ -568,3 +568,138 @@ export const ContextualActionsMenu: Story = {
     </div>
   ),
 }
+
+// Mobile Responsive Preview Story
+export const ResponsivePreview: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    viewport: {
+      viewports: {
+        mobile: {
+          name: 'Mobile',
+          styles: {
+            width: '375px',
+            height: '667px',
+          },
+        },
+        desktop: {
+          name: 'Desktop',
+          styles: {
+            width: '1200px',
+            height: '800px',
+          },
+        },
+      },
+      defaultViewport: 'desktop',
+    },
+  },
+  render: () => (
+    <div className="p-[var(--space-lg)]">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-[var(--space-lg)]">
+          <h2 className="text-heading-lg mb-[var(--space-md)]">Responsive DropdownMenu</h2>
+          <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-lg)]">
+            This dropdown menu automatically switches between a desktop dropdown (≥768px) and a mobile bottom sheet (&lt;768px). 
+            Use the viewport controls in Storybook to switch between mobile and desktop views.
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[var(--space-lg)]">
+          {/* Basic Menu */}
+          <div className="space-y-[var(--space-md)]">
+            <h3 className="text-heading-sm">Basic Menu</h3>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="default">
+                  Open Menu
+                  <Icon name="chevron-down" size="sm" className="ml-2" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuItem>
+                  <Icon name="user" size="sm" className="mr-2" />
+                  Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Icon name="settings" size="sm" className="mr-2" />
+                  Settings
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem destructive>
+                  <Icon name="log-out" size="sm" className="mr-2" />
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          {/* Checkbox Menu */}
+          <div className="space-y-[var(--space-md)]">
+            <h3 className="text-heading-sm">Checkbox Menu</h3>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost">
+                  View Options
+                  <Icon name="chevron-down" size="sm" className="ml-2" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
+                <DropdownMenuLabel>Appearance</DropdownMenuLabel>
+                <DropdownMenuCheckboxItem checked={true}>
+                  Show Sidebar
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem checked={false}>
+                  Show Toolbar
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem checked={true}>
+                  Show Status Bar
+                </DropdownMenuCheckboxItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          {/* Radio Menu */}
+          <div className="space-y-[var(--space-md)]">
+            <h3 className="text-heading-sm">Radio Menu</h3>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost">
+                  Theme
+                  <Icon name="chevron-down" size="sm" className="ml-2" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
+                <DropdownMenuLabel>Theme</DropdownMenuLabel>
+                <DropdownMenuRadioGroup value="light">
+                  <DropdownMenuRadioItem value="light">
+                    <Icon name="sun" size="sm" className="mr-2" />
+                    Light
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="dark">
+                    <Icon name="moon" size="sm" className="mr-2" />
+                    Dark
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="system">
+                    <Icon name="monitor" size="sm" className="mr-2" />
+                    System
+                  </DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+
+        <div className="mt-[var(--space-2xlg)] p-[var(--space-lg)] bg-[var(--color-surface-secondary)] rounded-lg">
+          <h3 className="text-heading-sm mb-[var(--space-md)]">Testing Instructions</h3>
+          <div className="space-y-[var(--space-sm)] text-body-sm">
+            <p><strong>Desktop (≥768px):</strong> Shows traditional dropdown with positioning</p>
+            <p><strong>Mobile (&lt;768px):</strong> Shows bottom sheet with slide-up animation</p>
+            <p><strong>Styling:</strong> Both versions use identical design tokens and spacing</p>
+            <p><strong>Interaction:</strong> Touch-friendly mobile targets, mouse-friendly desktop targets</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+}
