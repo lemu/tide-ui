@@ -7,7 +7,7 @@ import { Badge } from '../components/ui/badge'
 import { Card, CardContent } from '../components/ui/card'
 
 const meta: Meta<typeof Alert> = {
-  title: 'In Progress/Alert',
+  title: 'Done/Alert',
   component: Alert,
   parameters: {
     layout: 'centered',
@@ -30,7 +30,7 @@ export const Default: Story = {
   render: () => (
     <div className="w-full max-w-lg space-y-4">
       <Alert>
-        <Icon name="info" size="sm" />
+        <Icon name="info" size="md" />
         <AlertTitle>Default Alert</AlertTitle>
         <AlertDescription>
           This is a default alert with some information for the user.
@@ -38,7 +38,7 @@ export const Default: Story = {
       </Alert>
 
       <Alert variant="info">
-        <Icon name="info" size="sm" />
+        <Icon name="info" size="md" />
         <AlertTitle>Information</AlertTitle>
         <AlertDescription>
           This is an informational alert with helpful details.
@@ -46,7 +46,7 @@ export const Default: Story = {
       </Alert>
 
       <Alert variant="success">
-        <Icon name="check-circle" size="sm" />
+        <Icon name="check-circle" size="md" />
         <AlertTitle>Success</AlertTitle>
         <AlertDescription>
           Your action was completed successfully!
@@ -54,7 +54,7 @@ export const Default: Story = {
       </Alert>
 
       <Alert variant="warning">
-        <Icon name="alert-triangle" size="sm" />
+        <Icon name="alert-triangle" size="md" />
         <AlertTitle>Warning</AlertTitle>
         <AlertDescription>
           Please review your settings before continuing.
@@ -62,7 +62,7 @@ export const Default: Story = {
       </Alert>
 
       <Alert variant="destructive">
-        <Icon name="alert-circle" size="sm" />
+        <Icon name="alert-circle" size="md" />
         <AlertTitle>Error</AlertTitle>
         <AlertDescription>
           Something went wrong. Please try again or contact support.
@@ -77,28 +77,28 @@ export const WithoutTitles: Story = {
   render: () => (
     <div className="w-full max-w-lg space-y-4">
       <Alert variant="info">
-        <Icon name="info" size="sm" />
+        <Icon name="info" size="md" />
         <AlertDescription>
           Your session will expire in 5 minutes. Please save your work.
         </AlertDescription>
       </Alert>
 
       <Alert variant="success">
-        <Icon name="check" size="sm" />
+        <Icon name="check" size="md" />
         <AlertDescription>
           Settings have been saved successfully.
         </AlertDescription>
       </Alert>
 
       <Alert variant="warning">
-        <Icon name="alert-triangle" size="sm" />
+        <Icon name="alert-triangle" size="md" />
         <AlertDescription>
           Storage is almost full. Consider upgrading your plan.
         </AlertDescription>
       </Alert>
 
       <Alert variant="destructive">
-        <Icon name="x-circle" size="sm" />
+        <Icon name="x-circle" size="md" />
         <AlertDescription>
           Failed to connect to the server. Check your internet connection.
         </AlertDescription>
@@ -112,7 +112,7 @@ export const SystemStatus: Story = {
   render: () => (
     <div className="w-full max-w-2xl space-y-4">
       <Alert variant="info">
-        <Icon name="clock" size="sm" />
+        <Icon name="clock" size="md" />
         <AlertTitle>Scheduled Maintenance</AlertTitle>
         <AlertDescription>
           <p className="mb-2">
@@ -126,7 +126,7 @@ export const SystemStatus: Story = {
       </Alert>
 
       <Alert variant="warning">
-        <Icon name="wifi-off" size="sm" />
+        <Icon name="wifi-off" size="md" />
         <AlertTitle>Connectivity Issues</AlertTitle>
         <AlertDescription>
           <p className="mb-2">
@@ -142,7 +142,7 @@ export const SystemStatus: Story = {
       </Alert>
 
       <Alert variant="success">
-        <Icon name="check-circle" size="sm" />
+        <Icon name="check-circle" size="md" />
         <AlertTitle>All Systems Operational</AlertTitle>
         <AlertDescription>
           <p className="mb-2">All systems are running normally.</p>
@@ -190,7 +190,7 @@ export const WithActions: Story = {
             <Icon name={
               alert.type === 'update' ? 'download' :
               alert.type === 'storage' ? 'hard-drive' : 'shield'
-            } size="sm" />
+            } size="md" />
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <AlertTitle>
@@ -205,28 +205,28 @@ export const WithActions: Story = {
                 <div className="flex gap-2 mt-3">
                   {alert.type === 'update' && (
                     <>
-                      <Button size="sm">Update Now</Button>
-                      <Button size="sm" variant="ghost">View Details</Button>
+                      <Button size="md">Update Now</Button>
+                      <Button size="md" variant="ghost">View Details</Button>
                     </>
                   )}
                   {alert.type === 'storage' && (
                     <>
-                      <Button size="sm">Upgrade Plan</Button>
-                      <Button size="sm" variant="ghost">Manage Storage</Button>
+                      <Button size="md">Upgrade Plan</Button>
+                      <Button size="md" variant="ghost">Manage Storage</Button>
                     </>
                   )}
                   {alert.type === 'backup' && (
-                    <Button size="sm" variant="ghost">View Backup</Button>
+                    <Button size="md" variant="ghost">View Backup</Button>
                   )}
                 </div>
               </div>
               <Button 
                 variant="ghost" 
-                size="sm" 
+                size="md" 
                 className="h-6 w-6 p-0 ml-4"
                 onClick={() => dismissAlert(alert.id)}
               >
-                <Icon name="x" size="sm" />
+                <Icon name="x" size="md" />
               </Button>
             </div>
           </Alert>
@@ -237,7 +237,7 @@ export const WithActions: Story = {
             <Icon name="check-circle" size="lg" className="mx-auto mb-2" />
             <p>All alerts have been dismissed</p>
             <Button 
-              size="sm" 
+              size="md" 
               variant="ghost" 
               className="mt-2"
               onClick={() => setAlerts(prev => prev.map(alert => ({ ...alert, dismissed: false })))}
@@ -293,11 +293,11 @@ export const FormValidation: Story = {
       <div className="w-full max-w-md space-y-4">
         <Card>
           <CardContent className="p-6">
-            <h3 className="text-heading-md font-semibold mb-4">Create Account</h3>
+            <h3 className="text-heading-md mb-4">Create Account</h3>
             
             <div className="space-y-4">
               <div>
-                <label className="text-body-sm font-medium mb-2 block">Email</label>
+                <label className="text-label-sm mb-2 block">Email</label>
                 <input
                   type="email"
                   value={formData.email}
@@ -308,7 +308,7 @@ export const FormValidation: Story = {
               </div>
               
               <div>
-                <label className="text-body-sm font-medium mb-2 block">Password</label>
+                <label className="text-label-sm mb-2 block">Password</label>
                 <input
                   type="password"
                   value={formData.password}
@@ -319,7 +319,7 @@ export const FormValidation: Story = {
               </div>
               
               <div>
-                <label className="text-body-sm font-medium mb-2 block">Confirm Password</label>
+                <label className="text-label-sm mb-2 block">Confirm Password</label>
                 <input
                   type="password"
                   value={formData.confirmPassword}
@@ -338,7 +338,7 @@ export const FormValidation: Story = {
 
         {errors.length > 0 && (
           <Alert variant="destructive">
-            <Icon name="alert-circle" size="sm" />
+            <Icon name="alert-circle" size="md" />
             <AlertTitle>Please fix the following errors:</AlertTitle>
             <AlertDescription>
               <ul className="list-disc list-inside space-y-1 mt-2">
@@ -352,7 +352,7 @@ export const FormValidation: Story = {
 
         {success && (
           <Alert variant="success">
-            <Icon name="check-circle" size="sm" />
+            <Icon name="check-circle" size="md" />
             <AlertTitle>Account Created Successfully!</AlertTitle>
             <AlertDescription>
               Welcome! Your account has been created and you're now logged in.
@@ -369,21 +369,21 @@ export const FeatureAnnouncements: Story = {
   render: () => (
     <div className="w-full max-w-2xl space-y-4">
       <Alert variant="info">
-        <Icon name="sparkles" size="sm" />
+        <Icon name="sparkles" size="md" />
         <AlertTitle>New Feature: Dark Mode</AlertTitle>
         <AlertDescription>
           <p className="mb-3">
             We've added dark mode support! Switch between light and dark themes in your settings.
           </p>
           <div className="flex items-center gap-2">
-            <Button size="sm">Try Dark Mode</Button>
-            <Button size="sm" variant="ghost">Learn More</Button>
+            <Button size="md">Try Dark Mode</Button>
+            <Button size="md" variant="ghost">Learn More</Button>
           </div>
         </AlertDescription>
       </Alert>
 
       <Alert variant="success">
-        <Icon name="zap" size="sm" />
+        <Icon name="zap" size="md" />
         <AlertTitle>Performance Improvements</AlertTitle>
         <AlertDescription>
           <p className="mb-3">
@@ -407,7 +407,7 @@ export const FeatureAnnouncements: Story = {
       </Alert>
 
       <Alert>
-        <Icon name="calendar" size="sm" />
+        <Icon name="calendar" size="md" />
         <AlertTitle>Upcoming Webinar</AlertTitle>
         <AlertDescription>
           <p className="mb-3">
@@ -419,8 +419,8 @@ export const FeatureAnnouncements: Story = {
             <div><strong>What you'll learn:</strong> Real-time collaboration, advanced sharing, team workflows</div>
           </div>
           <div className="flex items-center gap-2 mt-3">
-            <Button size="sm">Register Now</Button>
-            <Button size="sm" variant="ghost">Add to Calendar</Button>
+            <Button size="md">Register Now</Button>
+            <Button size="md" variant="ghost">Add to Calendar</Button>
           </div>
         </AlertDescription>
       </Alert>
@@ -437,7 +437,7 @@ export const ProgressAlerts: Story = {
     return (
       <div className="w-full max-w-lg space-y-4">
         <Alert variant="info">
-          <Icon name="upload" size="sm" />
+          <Icon name="upload" size="md" />
           <AlertTitle>Uploading Files...</AlertTitle>
           <AlertDescription>
             <p className="mb-3">Uploading 5 files to your project folder.</p>
@@ -457,7 +457,7 @@ export const ProgressAlerts: Story = {
               </div>
             </div>
             <Button 
-              size="sm" 
+              size="md" 
               variant="ghost" 
               className="mt-3"
               onClick={() => setUploadProgress(prev => Math.min(100, prev + 10))}
@@ -471,7 +471,7 @@ export const ProgressAlerts: Story = {
           <Icon name={
             syncStatus === 'complete' ? 'check-circle' :
             syncStatus === 'error' ? 'alert-circle' : 'refresh-cw'
-          } size="sm" className={syncStatus === 'syncing' ? 'animate-spin' : ''} />
+          } size="md" className={syncStatus === 'syncing' ? 'animate-spin' : ''} />
           <AlertTitle>
             {syncStatus === 'complete' ? 'Sync Complete' :
              syncStatus === 'error' ? 'Sync Failed' : 'Syncing Data...'}
@@ -486,21 +486,21 @@ export const ProgressAlerts: Story = {
             <div className="flex gap-2 mt-3">
               {syncStatus === 'syncing' && (
                 <>
-                  <Button size="sm" variant="ghost" onClick={() => setSyncStatus('complete')}>
+                  <Button size="md" variant="ghost" onClick={() => setSyncStatus('complete')}>
                     Simulate Success
                   </Button>
-                  <Button size="sm" variant="ghost" onClick={() => setSyncStatus('error')}>
+                  <Button size="md" variant="ghost" onClick={() => setSyncStatus('error')}>
                     Simulate Error
                   </Button>
                 </>
               )}
               {syncStatus === 'error' && (
-                <Button size="sm" onClick={() => setSyncStatus('syncing')}>
+                <Button size="md" onClick={() => setSyncStatus('syncing')}>
                   Retry Sync
                 </Button>
               )}
               {syncStatus === 'complete' && (
-                <Button size="sm" variant="ghost" onClick={() => setSyncStatus('syncing')}>
+                <Button size="md" variant="ghost" onClick={() => setSyncStatus('syncing')}>
                   Sync Again
                 </Button>
               )}
@@ -517,7 +517,7 @@ export const ContextualAlerts: Story = {
   render: () => (
     <div className="w-full max-w-2xl space-y-4">
       <Alert variant="warning">
-        <Icon name="shield-alert" size="sm" />
+        <Icon name="shield-alert" size="md" />
         <AlertTitle>Security Recommendation</AlertTitle>
         <AlertDescription>
           <p className="mb-2">
@@ -527,29 +527,29 @@ export const ContextualAlerts: Story = {
             Secure your account with an additional layer of protection to prevent unauthorized access.
           </p>
           <div className="flex items-center gap-2">
-            <Button size="sm">Enable 2FA</Button>
-            <Button size="sm" variant="ghost">Learn More</Button>
-            <Button size="sm" variant="ghost">Remind Me Later</Button>
+            <Button size="md">Enable 2FA</Button>
+            <Button size="md" variant="ghost">Learn More</Button>
+            <Button size="md" variant="ghost">Remind Me Later</Button>
           </div>
         </AlertDescription>
       </Alert>
 
       <Alert variant="info">
-        <Icon name="users" size="sm" />
+        <Icon name="users" size="md" />
         <AlertTitle>Team Collaboration Tip</AlertTitle>
         <AlertDescription>
           <p className="mb-3">
             Did you know you can @mention team members in comments to notify them instantly?
           </p>
           <div className="flex items-center gap-2">
-            <Button size="sm" variant="ghost">Try it Now</Button>
-            <Button size="sm" variant="ghost">More Tips</Button>
+            <Button size="md" variant="ghost">Try it Now</Button>
+            <Button size="md" variant="ghost">More Tips</Button>
           </div>
         </AlertDescription>
       </Alert>
 
       <Alert>
-        <Icon name="gift" size="sm" />
+        <Icon name="gift" size="md" />
         <AlertTitle>Free Trial Ending Soon</AlertTitle>
         <AlertDescription>
           <p className="mb-2">
@@ -565,8 +565,8 @@ export const ContextualAlerts: Story = {
               </ul>
             </div>
             <div className="flex flex-col gap-2">
-              <Button size="sm">Upgrade Now</Button>
-              <Button size="sm" variant="ghost">Compare Plans</Button>
+              <Button size="md">Upgrade Now</Button>
+              <Button size="md" variant="ghost">Compare Plans</Button>
             </div>
           </div>
         </AlertDescription>

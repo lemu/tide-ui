@@ -18,7 +18,6 @@ const avatarVariants = cva(
       shape: {
         circle: "rounded-full",
         rounded: "rounded-md",
-        square: "rounded-none",
       },
     },
     defaultVariants: {
@@ -42,8 +41,7 @@ const avatarFallbackVariants = cva(
       },
       shape: {
         circle: "rounded-full",
-        rounded: "rounded-md", 
-        square: "rounded-none",
+        rounded: "rounded-md",
       },
       variant: {
         information: "bg-[var(--color-background-information-bold)]",
@@ -82,11 +80,14 @@ const AvatarImage = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Image>,
   React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
 >(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Image
-    ref={ref}
-    className={cn("aspect-square h-full w-full object-cover shadow-[0_0_0_1px_rgba(85,95,109,0.1)]", className)}
-    {...props}
-  />
+  <div className="relative h-full w-full rounded-[inherit]">
+    <AvatarPrimitive.Image
+      ref={ref}
+      className={cn("aspect-square h-full w-full object-cover rounded-[inherit]", className)}
+      {...props}
+    />
+    <div className="absolute inset-0 rounded-[inherit] shadow-[inset_0_0_0_1px_rgba(85,95,109,0.1)] pointer-events-none" />
+  </div>
 ));
 AvatarImage.displayName = AvatarPrimitive.Image.displayName;
 

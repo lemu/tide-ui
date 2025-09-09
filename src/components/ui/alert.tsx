@@ -31,11 +31,11 @@ const alertVariants = cva(
 );
 
 const alertTitleVariants = cva(
-  "mb-[var(--space-xsm)] text-body-medium-md text-[var(--color-text-primary)] leading-none tracking-tight",
+  "mb-[var(--space-xsm)] [&]:text-body-strong-md text-[var(--color-text-primary)] leading-none tracking-tight",
 );
 
 const alertDescriptionVariants = cva(
-  "text-body-sm text-[var(--color-text-secondary)] [&_p]:leading-relaxed",
+  "[&]:text-body-md text-[var(--color-text-secondary)] [&_p]:leading-relaxed",
 );
 
 export interface AlertProps

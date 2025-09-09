@@ -362,6 +362,16 @@ export const CompanyAvatars: Story = {
   render: () => (
     <div className="space-y-[var(--space-lg)]">
       <div>
+        <h3 className="text-heading-sm mb-[var(--space-sm)]">Company Logo</h3>
+        <div className="flex items-center gap-[var(--space-md)]">
+          <Avatar shape="rounded">
+            <AvatarImage src="https://useful-toucan-91.convex.cloud/api/storage/5e36a31d-3f0a-4bb0-95db-f5b1c8e8af93" alt="Company Logo" />
+            <AvatarFallback shape="rounded" variant="information">CO</AvatarFallback>
+          </Avatar>
+        </div>
+      </div>
+      
+      <div>
         <h3 className="text-heading-sm mb-[var(--space-sm)]">Company Initials</h3>
         <div className="flex items-center gap-[var(--space-md)]">
           <Avatar shape="rounded">
