@@ -46,7 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Navigation**: Breadcrumb, Pagination, Tabs
 - **Form Controls**: Button, Input, Textarea, Select, Checkbox, Radio Group, Switch
 - **Data Display**: Badge, Avatar, Table, Skeleton, CountryDropdown
-- **Feedback**: Alert, Toast, Dialog, Hover Card, DropDrawer
+- **Feedback**: Alert, Toast, Dialog, Hover Card
 - **Overlays**: Dropdown Menu, Popover, Tooltip, Command
 - **Charts**: Chart, LinkedChart with Recharts integration
 - **Form Management**: Form components with react-hook-form integration

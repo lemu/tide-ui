@@ -62,7 +62,6 @@ export const SimpleMenu: Story = {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
         <DropdownMenuItem>
           <Icon name="user" size="sm" className="mr-2" />
           <span>Profile</span>
@@ -106,7 +105,6 @@ export const CheckboxMenu: Story = {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>Appearance</DropdownMenuLabel>
-          <DropdownMenuSeparator />
           <DropdownMenuCheckboxItem
             checked={showStatusBar}
             onCheckedChange={setShowStatusBar}
@@ -147,7 +145,6 @@ export const RadioGroupMenu: Story = {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>Position</DropdownMenuLabel>
-          <DropdownMenuSeparator />
           <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
             <DropdownMenuRadioItem value="top">Top</DropdownMenuRadioItem>
             <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
@@ -228,7 +225,7 @@ export const IconButtonTrigger: Story = {
         <DropdownMenuItem>Duplicate</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Archive</DropdownMenuItem>
-        <DropdownMenuItem className="text-[var(--color-text-error)]">
+        <DropdownMenuItem destructive>
           Delete
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -249,7 +246,6 @@ export const TextLinkTrigger: Story = {
       <DropdownMenuContent align="start" className="w-56">
         <DropdownMenuLabel>Signed in as</DropdownMenuLabel>
         <DropdownMenuItem disabled>john.doe@example.com</DropdownMenuItem>
-        <DropdownMenuSeparator />
         <DropdownMenuItem>
           <Icon name="user" size="sm" className="mr-2" />
           Your Profile
@@ -290,7 +286,6 @@ export const AvatarTrigger: Story = {
             </p>
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
             <Icon name="user" size="sm" className="mr-2" />
@@ -345,7 +340,7 @@ export const TableRowActions: Story = {
               <Icon name="archive" size="sm" className="mr-2" />
               Archive
             </DropdownMenuItem>
-            <DropdownMenuItem className="text-[var(--color-text-error)]">
+            <DropdownMenuItem destructive>
               <Icon name="trash-2" size="sm" className="mr-2" />
               Delete
             </DropdownMenuItem>
@@ -377,7 +372,6 @@ export const NavigationUserMenu: Story = {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end">
           <DropdownMenuLabel>Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
           <DropdownMenuItem>
             <Icon name="user" size="sm" className="mr-2" />
             Profile
@@ -418,7 +412,6 @@ export const ComplexMenuWithGroups: Story = {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-64">
         <DropdownMenuLabel>File Operations</DropdownMenuLabel>
-        <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
             <Icon name="file-plus" size="sm" className="mr-2" />
@@ -520,7 +513,7 @@ export const ContextualActionsMenu: Story = {
                 Crop
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-[var(--color-text-error)]">
+              <DropdownMenuItem destructive>
                 <Icon name="trash-2" size="sm" className="mr-2" />
                 Delete
               </DropdownMenuItem>
@@ -564,7 +557,7 @@ export const ContextualActionsMenu: Story = {
                 Add to Favorites
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-[var(--color-text-error)]">
+              <DropdownMenuItem destructive>
                 <Icon name="trash-2" size="sm" className="mr-2" />
                 Delete
               </DropdownMenuItem>
