@@ -11,7 +11,7 @@ import { Badge } from '../components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 
 const meta: Meta<typeof Collapsible> = {
-  title: 'In Progress/Collapsible',
+  title: 'Done/Collapsible',
   component: Collapsible,
   parameters: {
     layout: 'centered',

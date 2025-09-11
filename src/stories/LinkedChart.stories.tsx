@@ -574,6 +574,232 @@ export const TrafficAnalytics: Story = {
   },
 }
 
+// Multiple charts linked to single data table
+export const MultiChartDashboard: Story = {
+  render: () => {
+    const [selectedRows, setSelectedRows] = useState<number[]>([])
+    const [filteredData, setFilteredData] = useState<ChartDataPoint[]>([])
+    const [activeChart, setActiveChart] = useState<'sales' | 'performance' | 'activity'>('sales')
+
+    const teamData: ChartDataPoint[] = [
+      { name: 'Alice Johnson', sales: 145000, calls: 420, meetings: 52, performance: 128, region: 'North', satisfaction: 4.8 },
+      { name: 'Bob Smith', sales: 98000, calls: 280, meetings: 38, performance: 87, region: 'South', satisfaction: 4.2 },
+      { name: 'Carol Davis', sales: 167000, calls: 380, meetings: 58, performance: 145, region: 'East', satisfaction: 4.9 },
+      { name: 'David Wilson', sales: 134000, calls: 360, meetings: 49, performance: 118, region: 'West', satisfaction: 4.5 },
+      { name: 'Emma Brown', sales: 156000, calls: 400, meetings: 55, performance: 138, region: 'North', satisfaction: 4.7 },
+      { name: 'Frank Miller', sales: 112000, calls: 320, meetings: 42, performance: 98, region: 'South', satisfaction: 4.3 },
+      { name: 'Grace Lee', sales: 189000, calls: 450, meetings: 65, performance: 165, region: 'East', satisfaction: 4.8 },
+      { name: 'Henry Garcia', sales: 123000, calls: 340, meetings: 46, performance: 108, region: 'West', satisfaction: 4.4 },
+    ]
+
+    // Chart configurations for different views
+    const salesConfig: ChartConfig = {
+      sales: { label: 'Sales Revenue ($)', color: 'var(--color-chart-1)' },
+    }
+
+    const performanceConfig: ChartConfig = {
+      performance: { label: 'Performance Score', color: 'var(--color-chart-2)' },
+      satisfaction: { label: 'Customer Satisfaction', color: 'var(--color-chart-3)' },
+    }
+
+    const activityConfig: ChartConfig = {
+      calls: { label: 'Calls Made', color: 'var(--color-chart-4)' },
+      meetings: { label: 'Meetings Held', color: 'var(--color-chart-5)' },
+    }
+
+    // Unified table columns showing all metrics
+    const allColumns: LinkedChartColumn[] = [
+      { key: 'name', label: 'Team Member', type: 'text' },
+      { key: 'sales', label: 'Sales Revenue', type: 'currency' },
+      { key: 'calls', label: 'Calls Made', type: 'number' },
+      { key: 'meetings', label: 'Meetings', type: 'number' },
+      { key: 'performance', label: 'Performance', type: 'number' },
+      { key: 'region', label: 'Region', type: 'text' },
+      { key: 'satisfaction', label: 'Satisfaction', format: (value: number) => `${value}/5.0 ⭐` },
+      { 
+        key: 'efficiency', 
+        label: 'Sales/Call Ratio', 
+        type: 'currency',
+        format: (value: any, row: any) => `$${Math.round(row.sales / row.calls)}`
+      },
+    ]
+
+    const getCurrentConfig = () => {
+      switch (activeChart) {
+        case 'sales': return salesConfig
+        case 'performance': return performanceConfig
+        case 'activity': return activityConfig
+        default: return salesConfig
+      }
+    }
+
+    const getChartTitle = () => {
+      switch (activeChart) {
+        case 'sales': return 'Sales Revenue by Team Member'
+        case 'performance': return 'Performance & Satisfaction Scores'
+        case 'activity': return 'Activity Metrics (Calls & Meetings)'
+        default: return 'Team Performance'
+      }
+    }
+
+    return (
+      <div className="p-6 space-y-6">
+        {/* Header */}
+        <div className="text-center">
+          <h2 className="text-heading-lg font-semibold mb-2">Multi-Chart Team Dashboard</h2>
+          <p className="text-body-md text-[var(--color-text-secondary)]">
+            Switch between different chart views while maintaining unified data table interactions
+          </p>
+        </div>
+
+        {/* Chart Selector */}
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center justify-center gap-2">
+              <Button
+                size="sm"
+                variant={activeChart === 'sales' ? 'default' : 'ghost'}
+                onClick={() => setActiveChart('sales')}
+              >
+                <Icon name="dollar-sign" size="sm" className="mr-1" />
+                Sales Revenue
+              </Button>
+              <Button
+                size="sm"
+                variant={activeChart === 'performance' ? 'default' : 'ghost'}
+                onClick={() => setActiveChart('performance')}
+              >
+                <Icon name="trending-up" size="sm" className="mr-1" />
+                Performance
+              </Button>
+              <Button
+                size="sm"
+                variant={activeChart === 'activity' ? 'default' : 'ghost'}
+                onClick={() => setActiveChart('activity')}
+              >
+                <Icon name="phone" size="sm" className="mr-1" />
+                Activity
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Interactive Chart with Unified Data Table */}
+        <LinkedChart
+          title={getChartTitle()}
+          description="All charts are linked to the same comprehensive data table below. Selections and filters persist across chart views. Select rows to see them highlighted or filtered in the chart above."
+          data={teamData}
+          config={getCurrentConfig()}
+          columns={allColumns}
+          type="bar"
+          enableFiltering={true}
+          enableRowSelection={true}
+          chartFilterMode="highlight" // Start with highlight mode
+          onDataFilter={setFilteredData}
+          onRowSelectionChange={setSelectedRows}
+          showTable={true}
+        />
+
+        {/* Summary Cards showing selected data insights */}
+        {selectedRows.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Card>
+              <CardContent className="p-4 text-center">
+                <div className="text-heading-md font-semibold text-[var(--color-text-primary)]">
+                  {selectedRows.length}
+                </div>
+                <div className="text-caption-sm text-[var(--color-text-secondary)]">
+                  Team Members Selected
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardContent className="p-4 text-center">
+                <div className="text-heading-md font-semibold text-[var(--color-text-primary)]">
+                  ${Math.round(teamData
+                    .filter((_, i) => selectedRows.includes(i))
+                    .reduce((sum, member) => sum + member.sales, 0) / 1000)}k
+                </div>
+                <div className="text-caption-sm text-[var(--color-text-secondary)]">
+                  Combined Sales (Selected)
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardContent className="p-4 text-center">
+                <div className="text-heading-md font-semibold text-[var(--color-text-primary)]">
+                  {Math.round(teamData
+                    .filter((_, i) => selectedRows.includes(i))
+                    .reduce((sum, member) => sum + member.performance, 0) / selectedRows.length)}
+                </div>
+                <div className="text-caption-sm text-[var(--color-text-secondary)]">
+                  Avg Performance (Selected)
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {/* Action Panel */}
+        {(filteredData.length > 0 || selectedRows.length > 0) && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Data Actions</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap gap-2">
+                {selectedRows.length > 0 && (
+                  <>
+                    <Button size="sm">
+                      <Icon name="mail" size="sm" className="mr-1" />
+                      Message Selected ({selectedRows.length})
+                    </Button>
+                    <Button size="sm" variant="ghost">
+                      <Icon name="calendar" size="sm" className="mr-1" />
+                      Schedule Team Meeting
+                    </Button>
+                    <Button size="sm" variant="ghost">
+                      <Icon name="award" size="sm" className="mr-1" />
+                      Performance Review
+                    </Button>
+                  </>
+                )}
+                {filteredData.length > 0 && (
+                  <Button size="sm" variant="ghost">
+                    <Icon name="download" size="sm" className="mr-1" />
+                    Export Filtered Data
+                  </Button>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Features Info */}
+        <Card className="border-[var(--color-border-success)]">
+          <CardContent className="p-4">
+            <div className="flex items-start gap-3">
+              <Icon name="lightbulb" size="sm" color="success" className="mt-1" />
+              <div className="space-y-2 text-body-sm">
+                <p className="font-medium text-[var(--color-text-primary)]">Multi-Chart Features:</p>
+                <ul className="list-disc list-inside space-y-1 text-[var(--color-text-secondary)]">
+                  <li>Switch between Sales, Performance, and Activity views</li>
+                  <li>All charts share the same unified data table with full metrics</li>
+                  <li>Row selections and filters persist across chart changes</li>
+                  <li>Real-time summary calculations for selected team members</li>
+                  <li>Comprehensive data export and team management actions</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  },
+}
+
 // Financial dashboard with expense tracking
 export const ExpenseTracking: Story = {
   render: () => {

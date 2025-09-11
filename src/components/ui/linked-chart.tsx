@@ -32,6 +32,7 @@ export interface LinkedChartProps extends Omit<ChartProps, "onDataPointClick" | 
   showTable?: boolean;
   tableClassName?: string;
   chartClassName?: string;
+  chartFilterMode?: "highlight" | "filter"; // New prop to control chart behavior
 }
 
 export function LinkedChart({
@@ -48,6 +49,7 @@ export function LinkedChart({
   showTable = true,
   tableClassName,
   chartClassName,
+  chartFilterMode = "highlight",
   className,
   ...chartProps
 }: LinkedChartProps) {
@@ -55,14 +57,23 @@ export function LinkedChart({
   const [hoveredRowIndex, setHoveredRowIndex] = useState<number | null>(null);
   const [hoveredChartIndex, setHoveredChartIndex] = useState<number | null>(null);
   const [filteredIndices, setFilteredIndices] = useState<Set<number>>(new Set());
+  const [internalChartFilterMode, setInternalChartFilterMode] = useState<"highlight" | "filter">(chartFilterMode);
 
-  // Filter data based on current filters
+  // Filter data based on current filters or row selections
   const displayData = useMemo(() => {
-    if (filteredIndices.size === 0) {
-      return data;
+    // If we have filtered indices from chart clicks, use those
+    if (filteredIndices.size > 0) {
+      return data.filter((_, index) => filteredIndices.has(index));
     }
-    return data.filter((_, index) => filteredIndices.has(index));
-  }, [data, filteredIndices]);
+    
+    // If internal chartFilterMode is "filter" and we have selected rows, show only selected
+    if (internalChartFilterMode === "filter" && selectedRows.size > 0) {
+      return data.filter((_, index) => selectedRows.has(index));
+    }
+    
+    // Otherwise show all data
+    return data;
+  }, [data, filteredIndices, selectedRows, internalChartFilterMode]);
 
   // Handle chart hover
   const handleChartHover = useCallback((hoveredData: ChartDataPoint | null, index?: number) => {
@@ -124,9 +135,10 @@ export function LinkedChart({
     setFilteredIndices(new Set());
     setHoveredRowIndex(null);
     setHoveredChartIndex(null);
+    setInternalChartFilterMode(chartFilterMode); // Reset to initial mode
     onRowSelectionChange?.([]);
     onDataFilter?.([]);
-  }, [onRowSelectionChange, onDataFilter]);
+  }, [onRowSelectionChange, onDataFilter, chartFilterMode]);
 
   // Format cell value based on column type
   const formatCellValue = useCallback((value: any, column: LinkedChartColumn, row?: any) => {
@@ -149,6 +161,27 @@ export function LinkedChart({
   // Determine highlight index for chart
   const chartHighlightIndex = hoveredRowIndex ?? hoveredChartIndex;
 
+  // Calculate which data point should be highlighted (for single hover highlight)
+  const getChartHighlightIndex = useMemo(() => {
+    if (chartHighlightIndex !== null) {
+      // Map original data index to display data index
+      const displayIndex = displayData.findIndex(item => data[chartHighlightIndex] === item);
+      return displayIndex !== -1 ? displayIndex : undefined;
+    }
+    return undefined;
+  }, [chartHighlightIndex, displayData, data]);
+  
+  // Get highlighted indices for multi-selection visual feedback
+  const getHighlightedIndices = useMemo(() => {
+    if (internalChartFilterMode === "highlight" && selectedRows.size > 0) {
+      // Map original data indices to display data indices when showing selected rows
+      return Array.from(selectedRows).map(originalIndex => {
+        return displayData.findIndex(item => data[originalIndex] === item);
+      }).filter(index => index !== -1);
+    }
+    return [];
+  }, [selectedRows, displayData, data, internalChartFilterMode]);
+
   return (
     <div className={cn("space-y-[var(--space-lg)]", className)}>
       {/* Header */}
@@ -167,21 +200,46 @@ export function LinkedChart({
           {selectedRows.size > 0 && (
             <Badge intent="neutral" appearance="subtle" size="sm">
               {selectedRows.size} selected
+              {internalChartFilterMode === "filter" ? " (filtered)" : " (highlighted)"}
             </Badge>
           )}
           {filteredIndices.size > 0 && (
             <Badge intent="brand" appearance="subtle" size="sm">
-              {filteredIndices.size} filtered
+              {filteredIndices.size} chart filtered
             </Badge>
           )}
         </div>
         
-        {(selectedRows.size > 0 || filteredIndices.size > 0) && (
-          <Button variant="ghost" size="sm" onClick={clearAll}>
-            <Icon name="x" size="sm" className="mr-[var(--space-sm)]" />
-            Clear All
-          </Button>
-        )}
+        <div className="flex items-center gap-[var(--space-sm)]">
+          {/* Chart filter mode toggle */}
+          {enableRowSelection && selectedRows.size > 0 && (
+            <div className="flex items-center gap-1 text-body-sm text-[var(--color-text-secondary)]">
+              <Button 
+                size="sm" 
+                variant={internalChartFilterMode === "highlight" ? "default" : "ghost"}
+                onClick={() => setInternalChartFilterMode("highlight")}
+                className="h-6 px-2 text-xs"
+              >
+                Highlight
+              </Button>
+              <Button 
+                size="sm" 
+                variant={internalChartFilterMode === "filter" ? "default" : "ghost"}
+                onClick={() => setInternalChartFilterMode("filter")}
+                className="h-6 px-2 text-xs"
+              >
+                Filter
+              </Button>
+            </div>
+          )}
+          
+          {(selectedRows.size > 0 || filteredIndices.size > 0) && (
+            <Button variant="ghost" size="sm" onClick={clearAll}>
+              <Icon name="x" size="sm" className="mr-[var(--space-sm)]" />
+              Clear All
+            </Button>
+          )}
+        </div>
       </div>
 
       {/* Chart */}
@@ -194,7 +252,7 @@ export function LinkedChart({
             config={config}
             onDataPointClick={handleChartClick}
             onDataPointHover={handleChartHover}
-            highlightedIndex={chartHighlightIndex ?? undefined}
+            highlightedIndex={getChartHighlightIndex}
             className={chartClassName}
           />
         </CardContent>
@@ -267,7 +325,12 @@ export function LinkedChart({
                 </p>
                 <ul className="list-disc list-inside space-y-[var(--space-xsm)]">
                   <li>Click chart data points to filter the table</li>
-                  {enableRowSelection && <li>Click table rows to select/deselect them</li>}
+                  {enableRowSelection && (
+                    <>
+                      <li>Click table rows to select/deselect them</li>
+                      <li>Toggle between "Highlight" (dim unselected bars) and "Filter" (show only selected bars) modes</li>
+                    </>
+                  )}
                   <li>Hover over chart or table to highlight corresponding data</li>
                   <li>Use "Clear All" to reset filters and selections</li>
                 </ul>
