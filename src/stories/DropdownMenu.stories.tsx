@@ -569,7 +569,7 @@ export const ContextualActionsMenu: Story = {
   ),
 }
 
-// Mobile Responsive Preview Story
+
 export const ResponsivePreview: Story = {
   parameters: {
     layout: 'fullscreen',
@@ -698,6 +698,125 @@ export const ResponsivePreview: Story = {
             <p><strong>Styling:</strong> Both versions use identical design tokens and spacing</p>
             <p><strong>Interaction:</strong> Touch-friendly mobile targets, mouse-friendly desktop targets</p>
           </div>
+        </div>
+      </div>
+    </div>
+  ),
+}
+
+// Multi-level navigation test
+export const MultiLevelNavigation: Story = {
+  render: () => (
+    <div className="flex flex-col space-y-[var(--space-lg)]">
+      <div>
+        <h3 className="text-heading-md mb-[var(--space-md)]">Multi-Level Navigation Test</h3>
+        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-lg)]">
+          Test multiple levels of navigation with separate bottom sheets on mobile
+        </p>
+      </div>
+      
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="default">
+            Navigation Menu
+            <Icon name="chevron-down" size="sm" className="ml-2" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-64">
+          <DropdownMenuLabel>Main Menu</DropdownMenuLabel>
+          
+          <DropdownMenuItem>
+            <Icon name="home" size="sm" className="mr-2" />
+            <span>Dashboard</span>
+          </DropdownMenuItem>
+          
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <Icon name="folder" size="sm" className="mr-2" />
+              <span>Projects</span>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuLabel>Project Actions</DropdownMenuLabel>
+              <DropdownMenuItem>
+                <Icon name="plus" size="sm" className="mr-2" />
+                <span>New Project</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Icon name="folder-open" size="sm" className="mr-2" />
+                <span>Open Recent</span>
+              </DropdownMenuItem>
+              
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <Icon name="settings" size="sm" className="mr-2" />
+                  <span>Project Settings</span>
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuLabel>Settings</DropdownMenuLabel>
+                  <DropdownMenuItem>
+                    <Icon name="users" size="sm" className="mr-2" />
+                    <span>Team Members</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Icon name="shield" size="sm" className="mr-2" />
+                    <span>Permissions</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Icon name="bell" size="sm" className="mr-2" />
+                    <span>Notifications</span>
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+              
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <Icon name="archive" size="sm" className="mr-2" />
+                <span>Archive</span>
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+          
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <Icon name="user" size="sm" className="mr-2" />
+              <span>Account</span>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuLabel>Account Settings</DropdownMenuLabel>
+              <DropdownMenuItem>
+                <Icon name="user-circle" size="sm" className="mr-2" />
+                <span>Profile</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Icon name="credit-card" size="sm" className="mr-2" />
+                <span>Billing</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Icon name="key" size="sm" className="mr-2" />
+                <span>Security</span>
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+          
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <Icon name="help-circle" size="sm" className="mr-2" />
+            <span>Help & Support</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Icon name="log-out" size="sm" className="mr-2" />
+            <span>Sign Out</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      
+      <div className="mt-[var(--space-2xlg)] p-[var(--space-lg)] bg-[var(--color-surface-secondary)] rounded-lg">
+        <h3 className="text-heading-sm mb-[var(--space-md)]">Multi-Level Testing Instructions</h3>
+        <div className="space-y-[var(--space-sm)] text-body-sm">
+          <p><strong>Desktop (≥768px):</strong> Traditional floating submenus with hover/click interactions</p>
+          <p><strong>Mobile (&lt;768px):</strong> Each submenu opens as a separate bottom sheet with slide animations</p>
+          <p><strong>Navigation:</strong> Use back button or swipe to return to parent level</p>
+          <p><strong>Test Flow:</strong> Main Menu → Projects → Project Settings → Navigate back through levels</p>
         </div>
       </div>
     </div>

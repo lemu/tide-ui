@@ -1,15 +1,13 @@
 import * as React from "react"
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
-import { Check, ChevronRight, Circle } from "lucide-react"
+import { Check, ChevronLeft, ChevronRight, Circle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useIsDesktop } from "@/lib/hooks"
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "./sheet"
+import { 
+  Drawer, 
+  DrawerContent, 
+  DrawerTrigger 
+} from "./drawer"
 
 const DropdownMenuDesktop = DropdownMenuPrimitive.Root
 
@@ -19,7 +17,6 @@ const DropdownMenuGroup = DropdownMenuPrimitive.Group
 
 const DropdownMenuPortal = DropdownMenuPrimitive.Portal
 
-const DropdownMenuSub = DropdownMenuPrimitive.Sub
 
 const DropdownMenuDesktopRadioGroup = DropdownMenuPrimitive.RadioGroup
 
@@ -195,10 +192,10 @@ DropdownMenuShortcut.displayName = "DropdownMenuShortcut"
 // Mobile Sheet Components (styled to match dropdown menu)
 const MobileDropdownItem = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & {
+  Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
     inset?: boolean
     destructive?: boolean
-    onSelect?: (e: React.MouseEvent) => void
+    onSelect?: (e: Event) => void
   }
 >(({ className, inset, destructive, onSelect, ...props }, ref) => (
   <div
@@ -209,7 +206,7 @@ const MobileDropdownItem = React.forwardRef<
       inset && "pl-8",
       className
     )}
-    onClick={onSelect}
+    onClick={(e) => onSelect?.(e.nativeEvent)}
     role="menuitem"
     tabIndex={0}
     {...props}
@@ -219,7 +216,7 @@ MobileDropdownItem.displayName = "MobileDropdownItem"
 
 const MobileDropdownCheckboxItem = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & {
+  Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
     checked?: boolean
     onCheckedChange?: (checked: boolean) => void
   }
@@ -250,19 +247,19 @@ MobileDropdownCheckboxItem.displayName = "MobileDropdownCheckboxItem"
 
 const MobileDropdownRadioItem = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & {
+  Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
     value: string
     checked?: boolean
-    onSelect?: (value: string) => void
+    onRadioSelect?: (value: string) => void
   }
->(({ className, children, value, checked, onSelect, ...props }, ref) => (
+>(({ className, children, value, checked, onRadioSelect, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
       "text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md h-[var(--size-lg)] pl-10 pr-[var(--space-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtle-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] active:bg-[var(--color-background-neutral-subtle-hovered)]",
       className
     )}
-    onClick={() => onSelect?.(value)}
+    onClick={() => onRadioSelect?.(value)}
     role="menuitemradio"
     aria-checked={checked}
     tabIndex={0}
@@ -288,7 +285,7 @@ const MobileDropdownLabel = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "[&]:text-body-medium-sm px-[var(--space-md)] py-[var(--space-sm)] text-[var(--color-text-tertiary)]",
+      "[&]:text-body-medium-sm px-[var(--space-md)] pt-[var(--space-md)] pb-[var(--space-sm)] text-[var(--color-text-tertiary)]",
       inset && "pl-8",
       className
     )}
@@ -310,6 +307,11 @@ const MobileDropdownSeparator = React.forwardRef<
 ))
 MobileDropdownSeparator.displayName = "MobileDropdownSeparator"
 
+// Context for managing responsive mode consistency
+const ResponsiveDropdownContext = React.createContext<{
+  isDesktop: boolean
+}>({ isDesktop: true })
+
 // Responsive Dropdown Components
 interface ResponsiveDropdownMenuProps {
   children: React.ReactNode
@@ -318,11 +320,25 @@ interface ResponsiveDropdownMenuProps {
 const ResponsiveDropdownMenu = ({ children }: ResponsiveDropdownMenuProps) => {
   const isDesktop = useIsDesktop()
   
+  // Provide the responsive mode to all child components
+  const contextValue = React.useMemo(() => ({ isDesktop }), [isDesktop])
+  
   if (isDesktop) {
-    return <DropdownMenuDesktop>{children}</DropdownMenuDesktop>
+    return (
+      <ResponsiveDropdownContext.Provider value={contextValue}>
+        <DropdownMenuDesktop>{children}</DropdownMenuDesktop>
+      </ResponsiveDropdownContext.Provider>
+    )
   }
   
-  return <Sheet>{children}</Sheet>
+  // For mobile, use Drawer primitive with navigation provider
+  return (
+    <ResponsiveDropdownContext.Provider value={contextValue}>
+      <MenuNavigationProvider>
+        <Drawer>{children}</Drawer>
+      </MenuNavigationProvider>
+    </ResponsiveDropdownContext.Provider>
+  )
 }
 
 interface ResponsiveDropdownMenuContentProps extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content> {
@@ -333,7 +349,7 @@ const ResponsiveDropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   ResponsiveDropdownMenuContentProps
 >(({ className, sideOffset = 4, children, ...props }, ref) => {
-  const isDesktop = useIsDesktop()
+  const { isDesktop } = React.useContext(ResponsiveDropdownContext)
   
   if (isDesktop) {
     return (
@@ -348,12 +364,25 @@ const ResponsiveDropdownMenuContent = React.forwardRef<
     )
   }
   
+  // Mobile: Use Vaul Drawer with native drag-to-dismiss
   return (
-    <SheetContent side="bottom" className={cn("p-[var(--space-lg)]", className)}>
-      <div className="space-y-[var(--space-xsm)]">
-        {children}
-      </div>
-    </SheetContent>
+    <DrawerContent 
+      ref={ref}
+      className={cn(
+        "p-0", // Remove default padding since we handle spacing in MenuLevelContainer
+        className
+      )}
+      {...props}
+    >
+      <MenuLevelContainer>
+        <div className="space-y-[var(--space-xsm)] px-[var(--space-md)] pb-[var(--space-md)]">
+          {children}
+        </div>
+      </MenuLevelContainer>
+      
+      {/* Safe area padding for devices with bottom home indicator */}
+      <div className="h-[env(safe-area-inset-bottom)]" />
+    </DrawerContent>
   )
 })
 ResponsiveDropdownMenuContent.displayName = "ResponsiveDropdownMenuContent"
@@ -367,7 +396,7 @@ const ResponsiveDropdownMenuTrigger = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Trigger>,
   ResponsiveDropdownMenuTriggerProps
 >(({ asChild, children, ...props }, ref) => {
-  const isDesktop = useIsDesktop()
+  const { isDesktop } = React.useContext(ResponsiveDropdownContext)
   
   if (isDesktop) {
     return (
@@ -377,10 +406,24 @@ const ResponsiveDropdownMenuTrigger = React.forwardRef<
     )
   }
   
+  // For mobile, render Drawer trigger with proper touch handling
+  const mobileProps = asChild ? {} : { 
+    style: { 
+      touchAction: 'manipulation',
+      WebkitTapHighlightColor: 'transparent',
+      ...props.style 
+    } 
+  }
+  
   return (
-    <SheetTrigger asChild={asChild} {...props}>
+    <DrawerTrigger 
+      ref={ref} 
+      asChild={asChild} 
+      {...props}
+      {...mobileProps}
+    >
       {children}
-    </SheetTrigger>
+    </DrawerTrigger>
   )
 })
 ResponsiveDropdownMenuTrigger.displayName = "ResponsiveDropdownMenuTrigger"
@@ -391,6 +434,201 @@ const MobileDropdownContext = React.createContext<{
   onRadioChange?: (value: string) => void
 }>({})
 
+// Interface for menu navigation levels
+interface MenuLevel {
+  id: string
+  title: string
+  content: React.ReactNode
+  parentId?: string
+}
+
+// Interface for navigation state
+interface NavigationState {
+  levels: MenuLevel[]
+  currentLevelIndex: number
+  isTransitioning: boolean
+}
+
+// Context for managing menu navigation stack in mobile mode
+const MenuNavigationContext = React.createContext<{
+  navigationState: NavigationState
+  navigateToSubmenu: (submenu: Omit<MenuLevel, 'id'>, triggerId: string) => void
+  navigateBack: () => void
+  registerMenuLevel: (level: MenuLevel) => void
+  isCurrentLevel: (levelId: string) => boolean
+}>({
+  navigationState: { levels: [], currentLevelIndex: 0, isTransitioning: false },
+  navigateToSubmenu: () => {},
+  navigateBack: () => {},
+  registerMenuLevel: () => {},
+  isCurrentLevel: () => false,
+})
+
+// Context for linking submenu trigger with its content
+const SubmenuLevelContext = React.createContext<{
+  submenuContent: React.ReactNode | null
+  submenuTitle: string
+  setSubmenuContent: (content: React.ReactNode) => void
+  setSubmenuTitle: (title: string) => void
+  triggerNavigation: () => void
+}>({
+  submenuContent: null,
+  submenuTitle: '',
+  setSubmenuContent: () => {},
+  setSubmenuTitle: () => {},
+  triggerNavigation: () => {},
+})
+
+// Navigation provider component for mobile menu navigation
+interface MenuNavigationProviderProps {
+  children: React.ReactNode
+}
+
+const MenuNavigationProvider = ({ children }: MenuNavigationProviderProps) => {
+  const [navigationState, setNavigationState] = React.useState<NavigationState>({
+    levels: [],
+    currentLevelIndex: 0,
+    isTransitioning: false,
+  })
+
+  const navigateToSubmenu = React.useCallback((
+    submenu: Omit<MenuLevel, 'id'>, 
+    triggerId: string
+  ) => {
+    setNavigationState(prev => {
+      const newLevel: MenuLevel = {
+        id: `${triggerId}-${Date.now()}`,
+        ...submenu,
+      }
+      
+      return {
+        levels: [...prev.levels, newLevel],
+        currentLevelIndex: prev.levels.length,
+        isTransitioning: true,
+      }
+    })
+    
+    // Clear transitioning state after animation
+    setTimeout(() => {
+      setNavigationState(prev => ({ ...prev, isTransitioning: false }))
+    }, 300)
+  }, [])
+
+  const navigateBack = React.useCallback(() => {
+    setNavigationState(prev => {
+      if (prev.currentLevelIndex === 0) return prev
+      
+      return {
+        levels: prev.levels.slice(0, -1),
+        currentLevelIndex: prev.currentLevelIndex - 1,
+        isTransitioning: true,
+      }
+    })
+    
+    // Clear transitioning state after animation
+    setTimeout(() => {
+      setNavigationState(prev => ({ ...prev, isTransitioning: false }))
+    }, 300)
+  }, [])
+
+  const registerMenuLevel = React.useCallback((level: MenuLevel) => {
+    setNavigationState(prev => ({
+      ...prev,
+      levels: prev.levels.some(l => l.id === level.id) 
+        ? prev.levels 
+        : [...prev.levels, level]
+    }))
+  }, [])
+
+  const isCurrentLevel = React.useCallback((levelId: string) => {
+    const currentLevel = navigationState.levels[navigationState.currentLevelIndex]
+    return currentLevel?.id === levelId
+  }, [navigationState])
+
+  const contextValue = React.useMemo(() => ({
+    navigationState,
+    navigateToSubmenu,
+    navigateBack,
+    registerMenuLevel,
+    isCurrentLevel,
+  }), [navigationState, navigateToSubmenu, navigateBack, registerMenuLevel, isCurrentLevel])
+
+  return (
+    <MenuNavigationContext.Provider value={contextValue}>
+      {children}
+    </MenuNavigationContext.Provider>
+  )
+}
+
+// Component for handling animated transitions between menu levels
+interface MenuLevelContainerProps {
+  children: React.ReactNode
+}
+
+const MenuLevelContainer = ({ children }: MenuLevelContainerProps) => {
+  const { navigationState, navigateBack } = React.useContext(MenuNavigationContext)
+  const { levels, currentLevelIndex, isTransitioning } = navigationState
+
+  const currentLevel = levels[currentLevelIndex]
+  const isRootLevel = currentLevelIndex === 0
+
+  return (
+    <div className="relative overflow-hidden h-full">
+      {/* Back button header for non-root levels */}
+      {!isRootLevel && currentLevel && (
+        <div className="flex items-center px-[var(--space-md)] pt-[var(--space-sm)] pb-[var(--space-md)] border-b border-[var(--color-border-primary-subtle)]">
+          <button
+            onClick={navigateBack}
+            className="flex items-center text-body-md text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+          >
+            <ChevronLeft className="h-4 w-4 mr-[var(--space-sm)]" />
+            Back
+          </button>
+          {currentLevel.title && (
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] ml-[var(--space-md)]">
+              {currentLevel.title}
+            </h3>
+          )}
+        </div>
+      )}
+      
+      {/* Menu content container with slide animations */}
+      <div 
+        className={cn(
+          "transition-transform duration-300 ease-in-out",
+          isTransitioning && "transform",
+        )}
+        style={{
+          transform: `translateX(-${currentLevelIndex * 100}%)`,
+        }}
+      >
+        <div className="flex">
+          {/* Root level */}
+          <div 
+            className="w-full flex-shrink-0" 
+            style={{ minWidth: '100%' }}
+          >
+            {children}
+          </div>
+          
+          {/* Additional levels */}
+          {levels.map((level, index) => (
+            index > 0 && (
+              <div 
+                key={level.id}
+                className="w-full flex-shrink-0" 
+                style={{ minWidth: '100%' }}
+              >
+                {level.content}
+              </div>
+            )
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 interface ResponsiveDropdownMenuItemProps extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> {
   inset?: boolean
   destructive?: boolean
@@ -400,7 +638,7 @@ const ResponsiveDropdownMenuItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Item>,
   ResponsiveDropdownMenuItemProps
 >(({ className, inset, destructive, onSelect, ...props }, ref) => {
-  const isDesktop = useIsDesktop()
+  const { isDesktop } = React.useContext(ResponsiveDropdownContext)
   
   if (isDesktop) {
     return (
@@ -436,7 +674,7 @@ const ResponsiveDropdownMenuCheckboxItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
   ResponsiveDropdownMenuCheckboxItemProps
 >(({ className, children, checked, onCheckedChange, ...props }, ref) => {
-  const isDesktop = useIsDesktop()
+  const { isDesktop } = React.useContext(ResponsiveDropdownContext)
   
   if (isDesktop) {
     return (
@@ -484,7 +722,7 @@ const ResponsiveDropdownMenuRadioItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
   ResponsiveDropdownMenuRadioItemProps
 >(({ className, children, value, ...props }, ref) => {
-  const isDesktop = useIsDesktop()
+  const { isDesktop } = React.useContext(ResponsiveDropdownContext)
   
   if (isDesktop) {
     return (
@@ -516,7 +754,7 @@ const ResponsiveDropdownMenuRadioItem = React.forwardRef<
           className={className}
           value={value}
           checked={radioValue === value}
-          onSelect={onRadioChange}
+          onRadioSelect={onRadioChange}
           {...props}
         >
           {children}
@@ -535,7 +773,7 @@ const ResponsiveDropdownMenuLabel = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Label>,
   ResponsiveDropdownMenuLabelProps
 >(({ className, inset, ...props }, ref) => {
-  const isDesktop = useIsDesktop()
+  const { isDesktop } = React.useContext(ResponsiveDropdownContext)
   
   if (isDesktop) {
     return (
@@ -565,7 +803,7 @@ const ResponsiveDropdownMenuSeparator = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>
 >(({ className, ...props }, ref) => {
-  const isDesktop = useIsDesktop()
+  const { isDesktop } = React.useContext(ResponsiveDropdownContext)
   
   if (isDesktop) {
     return (
@@ -593,7 +831,7 @@ interface ResponsiveDropdownMenuRadioGroupProps {
 }
 
 const ResponsiveDropdownMenuRadioGroup = ({ value, onValueChange, children }: ResponsiveDropdownMenuRadioGroupProps) => {
-  const isDesktop = useIsDesktop()
+  const { isDesktop } = React.useContext(ResponsiveDropdownContext)
   
   if (isDesktop) {
     return (
@@ -612,6 +850,147 @@ const ResponsiveDropdownMenuRadioGroup = ({ value, onValueChange, children }: Re
   )
 }
 
+// Responsive Submenu Components
+interface ResponsiveDropdownMenuSubProps {
+  children: React.ReactNode
+}
+
+const ResponsiveDropdownMenuSub = ({ children }: ResponsiveDropdownMenuSubProps) => {
+  const { isDesktop } = React.useContext(ResponsiveDropdownContext)
+  const { navigateToSubmenu } = React.useContext(MenuNavigationContext)
+  
+  if (isDesktop) {
+    return <DropdownMenuPrimitive.Sub>{children}</DropdownMenuPrimitive.Sub>
+  }
+  
+  // For mobile, manage submenu level registration and navigation
+  const [submenuContent, setSubmenuContent] = React.useState<React.ReactNode | null>(null)
+  const [submenuTitle, setSubmenuTitle] = React.useState('')
+  const submenuId = React.useId()
+  
+  const triggerNavigation = React.useCallback(() => {
+    if (submenuContent) {
+      navigateToSubmenu({
+        title: submenuTitle,
+        content: submenuContent,
+      }, submenuId)
+    }
+  }, [submenuContent, submenuTitle, submenuId, navigateToSubmenu])
+  
+  const contextValue = React.useMemo(() => ({
+    submenuContent,
+    submenuTitle,
+    setSubmenuContent,
+    setSubmenuTitle,
+    triggerNavigation,
+  }), [submenuContent, submenuTitle, triggerNavigation])
+  
+  return (
+    <SubmenuLevelContext.Provider value={contextValue}>
+      <div className="mobile-submenu">{children}</div>
+    </SubmenuLevelContext.Provider>
+  )
+}
+
+interface ResponsiveDropdownMenuSubTriggerProps extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> {
+  inset?: boolean
+}
+
+const ResponsiveDropdownMenuSubTrigger = React.forwardRef<
+  HTMLButtonElement,
+  ResponsiveDropdownMenuSubTriggerProps
+>(({ className, inset, children, ...props }, ref) => {
+  const { isDesktop } = React.useContext(ResponsiveDropdownContext)
+  const { triggerNavigation } = React.useContext(SubmenuLevelContext)
+  
+  if (isDesktop) {
+    return (
+      <DropdownMenuPrimitive.SubTrigger
+        ref={ref as any}
+        className={cn(
+          "text-body-md flex [&]:cursor-pointer select-none items-center rounded-md px-[var(--space-md)] h-[var(--size-md)] outline-none focus:bg-[var(--color-background-neutral-subtle-hovered)] hover:bg-[var(--color-background-neutral-subtle-hovered)] data-[state=open]:bg-[var(--color-background-neutral-subtle-hovered)]",
+          inset && "pl-8",
+          className
+        )}
+        {...props}
+      >
+        {children}
+        <ChevronRight className="ml-auto h-4 w-4" />
+      </DropdownMenuPrimitive.SubTrigger>
+    )
+  }
+  
+  // For mobile, trigger navigation to submenu level
+  const { onClick, ...buttonProps } = props as any
+  
+  return (
+    <button
+      ref={ref}
+      className={cn(
+        "text-body-md relative flex w-full cursor-pointer select-none items-center rounded-md px-[var(--space-md)] h-[var(--size-lg)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtle-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] active:bg-[var(--color-background-neutral-subtle-hovered)]",
+        inset && "pl-8",
+        className
+      )}
+      onClick={(e) => {
+        triggerNavigation()
+        if (onClick) onClick(e as any)
+      }}
+      role="button"
+      type="button"
+      {...buttonProps}
+    >
+      {children}
+      <ChevronRight className="ml-auto h-4 w-4" />
+    </button>
+  )
+})
+ResponsiveDropdownMenuSubTrigger.displayName = "ResponsiveDropdownMenuSubTrigger"
+
+interface ResponsiveDropdownMenuSubContentProps extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent> {
+  children: React.ReactNode
+}
+
+const ResponsiveDropdownMenuSubContent = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
+  ResponsiveDropdownMenuSubContentProps
+>(({ className, children, ...props }, ref) => {
+  const { isDesktop } = React.useContext(ResponsiveDropdownContext)
+  const { setSubmenuContent } = React.useContext(SubmenuLevelContext)
+  
+  if (isDesktop) {
+    return (
+      <DropdownMenuPrimitive.SubContent
+        ref={ref}
+        className={cn(
+          "z-50 min-w-[12rem] overflow-hidden rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-xsm)] text-[var(--color-text-primary)] shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </DropdownMenuPrimitive.SubContent>
+    )
+  }
+  
+  // For mobile, register content with submenu context for navigation
+  React.useEffect(() => {
+    const content = (
+      <div className="space-y-[var(--space-xsm)] px-[var(--space-md)] pb-[var(--space-md)]">
+        {children}
+      </div>
+    )
+    setSubmenuContent(content)
+    
+    // Cleanup on unmount
+    return () => setSubmenuContent(null)
+  }, [children, setSubmenuContent])
+  
+  // For mobile, this component doesn't render anything directly
+  // The content is rendered as part of the navigation levels
+  return null
+})
+ResponsiveDropdownMenuSubContent.displayName = "ResponsiveDropdownMenuSubContent"
+
 // Export responsive components as the main API
 export {
   // Main responsive components (new default API)
@@ -624,14 +1003,14 @@ export {
   ResponsiveDropdownMenuLabel as DropdownMenuLabel,
   ResponsiveDropdownMenuSeparator as DropdownMenuSeparator,
   ResponsiveDropdownMenuRadioGroup as DropdownMenuRadioGroup,
+  ResponsiveDropdownMenuSub as DropdownMenuSub,
+  ResponsiveDropdownMenuSubContent as DropdownMenuSubContent,
+  ResponsiveDropdownMenuSubTrigger as DropdownMenuSubTrigger,
   
   // Original non-responsive components (for backwards compatibility)
   DropdownMenuShortcut,
   DropdownMenuGroup,
   DropdownMenuPortal,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   
   // Original primitives (kept for advanced use cases)
   DropdownMenuDesktop,

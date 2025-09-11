@@ -145,6 +145,20 @@ export {
   useSidebar,
 } from './ui/sidebar'
 
+// Drawer components  
+export {
+  Drawer,
+  DrawerPortal,
+  DrawerOverlay,
+  DrawerTrigger,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerFooter,
+  DrawerTitle,
+  DrawerDescription,
+} from './ui/drawer'
+
 // DropdownMenu components
 export {
   DropdownMenu,
