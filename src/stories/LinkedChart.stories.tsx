@@ -39,15 +39,15 @@ export const SalesPerformance: Story = {
     const chartConfig: ChartConfig = {
       sales: {
         label: 'Sales ($)',
-        color: 'var(--color-chart-1)',
+        color: 'var(--color-chart-bar-1)',
       },
       calls: {
         label: 'Calls Made',
-        color: 'var(--color-chart-2)',
+        color: 'var(--color-chart-bar-2)',
       },
       meetings: {
         label: 'Meetings',
-        color: 'var(--color-chart-3)',
+        color: 'var(--color-chart-bar-3)',
       },
     }
 
@@ -189,15 +189,15 @@ export const RevenueAnalytics: Story = {
     const chartConfig: ChartConfig = {
       revenue: {
         label: 'Revenue',
-        color: 'var(--color-chart-1)',
+        color: 'var(--color-chart-bar-1)',
       },
       expenses: {
         label: 'Expenses',
-        color: 'var(--color-chart-2)',
+        color: 'var(--color-chart-bar-2)',
       },
       profit: {
         label: 'Profit',
-        color: 'var(--color-chart-3)',
+        color: 'var(--color-chart-bar-3)',
       },
     }
 
@@ -322,11 +322,11 @@ export const ProductComparison: Story = {
     const chartConfig: ChartConfig = {
       sales: {
         label: 'Sales Revenue',
-        color: 'var(--color-chart-1)',
+        color: 'var(--color-chart-bar-1)',
       },
       units: {
         label: 'Units Sold',
-        color: 'var(--color-chart-2)',
+        color: 'var(--color-chart-bar-2)',
       },
     }
 
@@ -441,11 +441,11 @@ export const TrafficAnalytics: Story = {
     const chartConfig: ChartConfig = {
       pageviews: {
         label: 'Page Views',
-        color: 'var(--color-chart-1)',
+        color: 'var(--color-chart-line-1)',
       },
       sessions: {
         label: 'Sessions',
-        color: 'var(--color-chart-2)',
+        color: 'var(--color-chart-line-2)',
       },
     }
 
@@ -522,7 +522,7 @@ export const TrafficAnalytics: Story = {
                 ].map((source, index) => (
                   <div key={index} className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-[var(--color-chart-1)]"></div>
+                      <div className="w-3 h-3 rounded-full bg-[var(--color-chart-line-1)]"></div>
                       <span className="text-body-sm">{source.source}</span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -594,17 +594,17 @@ export const MultiChartDashboard: Story = {
 
     // Chart configurations for different views
     const salesConfig: ChartConfig = {
-      sales: { label: 'Sales Revenue ($)', color: 'var(--color-chart-1)' },
+      sales: { label: 'Sales Revenue ($)', color: 'var(--color-chart-bar-1)' },
     }
 
     const performanceConfig: ChartConfig = {
-      performance: { label: 'Performance Score', color: 'var(--color-chart-2)' },
-      satisfaction: { label: 'Customer Satisfaction', color: 'var(--color-chart-3)' },
+      performance: { label: 'Performance Score', color: 'var(--color-chart-bar-2)' },
+      satisfaction: { label: 'Customer Satisfaction', color: 'var(--color-chart-bar-3)' },
     }
 
     const activityConfig: ChartConfig = {
-      calls: { label: 'Calls Made', color: 'var(--color-chart-4)' },
-      meetings: { label: 'Meetings Held', color: 'var(--color-chart-5)' },
+      calls: { label: 'Calls Made', color: 'var(--color-chart-bar-4)' },
+      meetings: { label: 'Meetings Held', color: 'var(--color-chart-bar-5)' },
     }
 
     // Unified table columns showing all metrics
@@ -816,15 +816,15 @@ export const ExpenseTracking: Story = {
     const chartConfig: ChartConfig = {
       budget: {
         label: 'Budget',
-        color: 'var(--color-chart-1)',
+        color: 'var(--color-chart-bar-1)',
       },
       spent: {
         label: 'Spent',
-        color: 'var(--color-chart-2)',
+        color: 'var(--color-chart-bar-2)',
       },
       remaining: {
         label: 'Remaining',
-        color: 'var(--color-chart-3)',
+        color: 'var(--color-chart-bar-3)',
       },
     }
 

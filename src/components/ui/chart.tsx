@@ -14,7 +14,6 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  ReferenceLine,
 } from "recharts";
 import { cn } from "@/lib/utils";
 
@@ -245,17 +244,6 @@ export function Chart({
     vertical: false,
   };
 
-  const legendProps = {
-    verticalAlign: "bottom" as const,
-    align: "right" as const,
-    wrapperStyle: {
-      fontSize: "10px",
-      fontFamily: "Inter, sans-serif",
-      color: "var(--color-text-secondary)",
-      fontWeight: 500,
-      paddingTop: "12px",
-    },
-  };
 
   // Custom legend content for consistent styling
   const CustomLegend = ({ payload }: any) => {
@@ -589,7 +577,6 @@ export function Chart({
           width={width || "100%"} 
           height={height}
           minHeight={200}
-          debounceMs={50}
         >
           {renderChart() || <div>Chart error</div>}
         </ResponsiveContainer>
