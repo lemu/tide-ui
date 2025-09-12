@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Combobox, MultiCombobox } from '../components/ui/combobox'
 import { Button } from '../components/ui/button'
 import { Icon } from '../components/ui/icon'
@@ -18,6 +18,42 @@ const meta: Meta<typeof Combobox> = {
 
 export default meta
 type Story = StoryObj<typeof meta>
+
+// Helper function for standard Button trigger
+const createButtonTrigger = () => ({ selectedOption, placeholder, disabled }: any) => (
+  <Button
+    variant="ghost"
+    role="combobox"
+    disabled={disabled}
+    className="w-full justify-between"
+  >
+    {selectedOption ? selectedOption.label : placeholder}
+    <Icon name="chevrons-up-down" className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+  </Button>
+)
+
+// Helper function for MultiCombobox Button trigger
+const createMultiButtonTrigger = () => ({ selectedOptions, placeholder, disabled, maxDisplayedItems }: any) => {
+  const getDisplayText = () => {
+    if (selectedOptions.length === 0) return placeholder;
+    if (selectedOptions.length <= maxDisplayedItems) {
+      return selectedOptions.map((option: any) => option.label).join(", ");
+    }
+    return `${selectedOptions.slice(0, maxDisplayedItems).map((option: any) => option.label).join(", ")} +${selectedOptions.length - maxDisplayedItems} more`;
+  };
+
+  return (
+    <Button
+      variant="ghost"
+      role="combobox"
+      disabled={disabled}
+      className="w-full justify-between"
+    >
+      <span className="truncate">{getDisplayText()}</span>
+      <Icon name="chevrons-up-down" className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+    </Button>
+  );
+}
 
 // Basic single select combobox
 export const Default: Story = {
@@ -43,6 +79,7 @@ export const Default: Story = {
           onValueChange={setValue}
           placeholder="Select a fruit..."
           searchPlaceholder="Search fruits..."
+          trigger={createButtonTrigger()}
         />
       </div>
     )
@@ -98,6 +135,7 @@ export const TeamMemberSelection: Story = {
                 searchPlaceholder="Search team members..."
                 emptyMessage="No team members found"
                 className="w-full"
+                trigger={createButtonTrigger()}
               />
               {teamMembers.some(m => m.disabled) && (
                 <p className="text-caption-sm text-[var(--color-text-secondary)] mt-2">
@@ -243,6 +281,7 @@ export const TagManagement: Story = {
                 emptyMessage="No tags found"
                 maxDisplayedItems={3}
                 className="w-full"
+                trigger={createMultiButtonTrigger()}
               />
               <p className="text-caption-sm text-[var(--color-text-secondary)] mt-2">
                 Tags help categorize and improve discoverability of your content
@@ -389,6 +428,7 @@ export const LocationSelection: Story = {
                 placeholder="Select country..."
                 searchPlaceholder="Search countries..."
                 className="w-full"
+                trigger={createButtonTrigger()}
               />
             </div>
 
@@ -404,6 +444,7 @@ export const LocationSelection: Story = {
                 searchPlaceholder="Search cities..."
                 disabled={!selectedCountry}
                 className="w-full"
+                trigger={createButtonTrigger()}
               />
               {!selectedCountry && (
                 <p className="text-caption-sm text-[var(--color-text-secondary)] mt-2">
@@ -557,6 +598,7 @@ export const SkillFiltering: Story = {
                 emptyMessage="No skills found"
                 maxDisplayedItems={4}
                 className="w-full"
+                trigger={createMultiButtonTrigger()}
               />
             </div>
 
@@ -570,6 +612,7 @@ export const SkillFiltering: Story = {
                 onValueChange={setExperienceLevel}
                 placeholder="Select experience level..."
                 className="w-full"
+                trigger={createButtonTrigger()}
               />
             </div>
 
@@ -747,6 +790,7 @@ export const FormIntegration: Story = {
                 placeholder="Select ticket category..."
                 searchPlaceholder="Search categories..."
                 className="w-full"
+                trigger={createButtonTrigger()}
               />
               {errors.category && (
                 <p className="text-caption-sm text-[var(--color-text-error)] mt-1">
@@ -766,6 +810,7 @@ export const FormIntegration: Story = {
                 placeholder="Add relevant tags..."
                 searchPlaceholder="Search tags..."
                 className="w-full"
+                trigger={createMultiButtonTrigger()}
               />
               {errors.tags && (
                 <p className="text-caption-sm text-[var(--color-text-error)] mt-1">
@@ -784,6 +829,7 @@ export const FormIntegration: Story = {
                 onValueChange={(value) => updateFormData('priority', value)}
                 placeholder="Select priority level..."
                 className="w-full"
+                trigger={createButtonTrigger()}
               />
             </div>
 
@@ -798,6 +844,7 @@ export const FormIntegration: Story = {
                 placeholder="Assign to team member..."
                 searchPlaceholder="Search team members..."
                 className="w-full"
+                trigger={createButtonTrigger()}
               />
               {errors.assignee && (
                 <p className="text-caption-sm text-[var(--color-text-error)] mt-1">

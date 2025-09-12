@@ -114,6 +114,16 @@ export {
   CommandList,
 } from './ui/command'
 
+// Combobox components
+export { Combobox, MultiCombobox } from './ui/combobox'
+export type {
+  ComboboxProps,
+  ComboboxOption,
+  ComboboxTriggerProps,
+  MultiComboboxProps,
+  MultiComboboxTriggerProps,
+} from './ui/combobox'
+
 // Breadcrumb components
 export {
   Breadcrumb,

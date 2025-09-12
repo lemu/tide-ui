@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check } from "lucide-react";
 import { cn } from "../../lib/utils";
-import { Button } from "./button";
+import { useIsDesktop } from "@/lib/hooks";
 import {
   Command,
   CommandEmpty,
@@ -15,11 +15,23 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "./popover";
+import { 
+  Drawer, 
+  DrawerContent, 
+  DrawerTrigger 
+} from "./drawer";
 
 export interface ComboboxOption {
   value: string;
   label: string;
   disabled?: boolean;
+}
+
+export interface ComboboxTriggerProps {
+  open: boolean;
+  selectedOption: ComboboxOption | undefined;
+  placeholder: string;
+  disabled: boolean;
 }
 
 export interface ComboboxProps {
@@ -32,7 +44,7 @@ export interface ComboboxProps {
   disabled?: boolean;
   className?: string;
   popoverClassName?: string;
-  triggerClassName?: string;
+  trigger: (props: ComboboxTriggerProps) => React.ReactNode;
 }
 
 export function Combobox({
@@ -45,70 +57,119 @@ export function Combobox({
   disabled = false,
   className,
   popoverClassName,
-  triggerClassName,
+  trigger,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
+  const isDesktop = useIsDesktop();
 
   const selectedOption = options.find((option) => option.value === value);
 
-  return (
-    <div className={cn("w-full", className)}>
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <Button
-            variant="ghost"
-            role="combobox"
-            aria-expanded={open}
-            disabled={disabled}
+  const handleSelect = React.useCallback((currentValue: string) => {
+    if (currentValue === value) {
+      onValueChange?.("");
+    } else {
+      onValueChange?.(currentValue);
+    }
+    setOpen(false);
+  }, [value, onValueChange]);
+
+  if (isDesktop) {
+    return (
+      <div className={cn("w-full", className)}>
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            {trigger({ open, selectedOption, placeholder, disabled })}
+          </PopoverTrigger>
+          <PopoverContent 
             className={cn(
-              "w-full justify-between",
-              !selectedOption && "text-[var(--color-text-tertiary)]",
-              triggerClassName
+              "w-[--radix-popover-trigger-width] min-w-[16rem] p-[var(--space-sm)]", 
+              popoverClassName
             )}
           >
-            {selectedOption ? selectedOption.label : placeholder}
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className={cn("w-[--radix-popover-trigger-width] p-0", popoverClassName)}>
-          <Command>
-            <CommandInput placeholder={searchPlaceholder} />
-            <CommandList>
-              <CommandEmpty>{emptyMessage}</CommandEmpty>
-              <CommandGroup>
-                {options.map((option) => (
-                  <CommandItem
-                    key={option.value}
-                    value={option.value}
-                    disabled={option.disabled}
-                    onSelect={(currentValue) => {
-                      if (currentValue === value) {
-                        onValueChange?.("");
-                      } else {
-                        onValueChange?.(currentValue);
-                      }
-                      setOpen(false);
-                    }}
-                  >
-                    <Check
-                      className={cn(
-                        "mr-2 h-4 w-4",
-                        value === option.value ? "opacity-100" : "opacity-0"
-                      )}
-                    />
-                    {option.label}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </CommandList>
-          </Command>
-        </PopoverContent>
-      </Popover>
+            <Command>
+              <CommandInput placeholder={searchPlaceholder} />
+              <CommandList>
+                <CommandEmpty>{emptyMessage}</CommandEmpty>
+                <CommandGroup>
+                  {options.map((option) => (
+                    <CommandItem
+                      key={option.value}
+                      value={option.value}
+                      disabled={option.disabled}
+                      onSelect={handleSelect}
+                      className="h-[var(--size-md)] px-[var(--space-md)] transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] aria-selected:bg-[var(--color-background-neutral-subtle-hovered)]"
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          value === option.value ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                      {option.label}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+      </div>
+    );
+  }
+
+  // Mobile implementation using drawer
+  return (
+    <div className={cn("w-full", className)}>
+      <Drawer open={open} onOpenChange={setOpen}>
+        <DrawerTrigger asChild>
+          {trigger({ open, selectedOption, placeholder, disabled })}
+        </DrawerTrigger>
+        <DrawerContent className={cn("p-0", popoverClassName)}>
+          <div className="space-y-[var(--space-xsm)] px-[var(--space-md)] pb-[var(--space-md)]">
+            <Command>
+              <CommandInput placeholder={searchPlaceholder} />
+              <CommandList>
+                <CommandEmpty>{emptyMessage}</CommandEmpty>
+                <CommandGroup>
+                  {options.map((option) => (
+                    <CommandItem
+                      key={option.value}
+                      value={option.value}
+                      disabled={option.disabled}
+                      onSelect={handleSelect}
+                      className="h-[var(--size-lg)] px-[var(--space-md)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          value === option.value ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                      {option.label}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </div>
+          
+          {/* Safe area padding for devices with bottom home indicator */}
+          <div className="h-[env(safe-area-inset-bottom)]" />
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 }
 
 // Multi-select Combobox variant
+export interface MultiComboboxTriggerProps {
+  open: boolean;
+  selectedOptions: ComboboxOption[];
+  placeholder: string;
+  disabled: boolean;
+  maxDisplayedItems: number;
+}
+
 export interface MultiComboboxProps {
   options: ComboboxOption[];
   values?: string[];
@@ -119,7 +180,7 @@ export interface MultiComboboxProps {
   disabled?: boolean;
   className?: string;
   popoverClassName?: string;
-  triggerClassName?: string;
+  trigger: (props: MultiComboboxTriggerProps) => React.ReactNode;
   maxDisplayedItems?: number;
 }
 
@@ -133,73 +194,106 @@ export function MultiCombobox({
   disabled = false,
   className,
   popoverClassName,
-  triggerClassName,
+  trigger,
   maxDisplayedItems = 3,
 }: MultiComboboxProps) {
   const [open, setOpen] = React.useState(false);
+  const isDesktop = useIsDesktop();
 
   const selectedOptions = options.filter((option) => values.includes(option.value));
 
-  const getDisplayText = () => {
-    if (selectedOptions.length === 0) return placeholder;
-    if (selectedOptions.length <= maxDisplayedItems) {
-      return selectedOptions.map((option) => option.label).join(", ");
+  const handleSelect = React.useCallback((currentValue: string) => {
+    if (values.includes(currentValue)) {
+      onValuesChange?.(values.filter((value) => value !== currentValue));
+    } else {
+      onValuesChange?.([...values, currentValue]);
     }
-    return `${selectedOptions.slice(0, maxDisplayedItems).map((option) => option.label).join(", ")} +${selectedOptions.length - maxDisplayedItems} more`;
-  };
+  }, [values, onValuesChange]);
 
-  return (
-    <div className={cn("w-full", className)}>
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <Button
-            variant="ghost"
-            role="combobox"
-            aria-expanded={open}
-            disabled={disabled}
+  if (isDesktop) {
+    return (
+      <div className={cn("w-full", className)}>
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            {trigger({ open, selectedOptions, placeholder, disabled, maxDisplayedItems })}
+          </PopoverTrigger>
+          <PopoverContent 
             className={cn(
-              "w-full justify-between",
-              selectedOptions.length === 0 && "text-[var(--color-text-tertiary)]",
-              triggerClassName
+              "w-[--radix-popover-trigger-width] min-w-[16rem] p-[var(--space-sm)]", 
+              popoverClassName
             )}
           >
-            <span className="truncate">{getDisplayText()}</span>
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className={cn("w-[--radix-popover-trigger-width] p-0", popoverClassName)}>
-          <Command>
-            <CommandInput placeholder={searchPlaceholder} />
-            <CommandList>
-              <CommandEmpty>{emptyMessage}</CommandEmpty>
-              <CommandGroup>
-                {options.map((option) => (
-                  <CommandItem
-                    key={option.value}
-                    value={option.value}
-                    disabled={option.disabled}
-                    onSelect={(currentValue) => {
-                      if (values.includes(currentValue)) {
-                        onValuesChange?.(values.filter((value) => value !== currentValue));
-                      } else {
-                        onValuesChange?.([...values, currentValue]);
-                      }
-                    }}
-                  >
-                    <Check
-                      className={cn(
-                        "mr-2 h-4 w-4",
-                        values.includes(option.value) ? "opacity-100" : "opacity-0"
-                      )}
-                    />
-                    {option.label}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </CommandList>
-          </Command>
-        </PopoverContent>
-      </Popover>
+            <Command>
+              <CommandInput placeholder={searchPlaceholder} />
+              <CommandList>
+                <CommandEmpty>{emptyMessage}</CommandEmpty>
+                <CommandGroup>
+                  {options.map((option) => (
+                    <CommandItem
+                      key={option.value}
+                      value={option.value}
+                      disabled={option.disabled}
+                      onSelect={handleSelect}
+                      className="h-[var(--size-md)] px-[var(--space-md)] transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] aria-selected:bg-[var(--color-background-neutral-subtle-hovered)]"
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          values.includes(option.value) ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                      {option.label}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+      </div>
+    );
+  }
+
+  // Mobile implementation using drawer
+  return (
+    <div className={cn("w-full", className)}>
+      <Drawer open={open} onOpenChange={setOpen}>
+        <DrawerTrigger asChild>
+          {trigger({ open, selectedOptions, placeholder, disabled, maxDisplayedItems })}
+        </DrawerTrigger>
+        <DrawerContent className={cn("p-0", popoverClassName)}>
+          <div className="space-y-[var(--space-xsm)] px-[var(--space-md)] pb-[var(--space-md)]">
+            <Command>
+              <CommandInput placeholder={searchPlaceholder} />
+              <CommandList>
+                <CommandEmpty>{emptyMessage}</CommandEmpty>
+                <CommandGroup>
+                  {options.map((option) => (
+                    <CommandItem
+                      key={option.value}
+                      value={option.value}
+                      disabled={option.disabled}
+                      onSelect={handleSelect}
+                      className="h-[var(--size-lg)] px-[var(--space-md)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          values.includes(option.value) ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                      {option.label}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </div>
+          
+          {/* Safe area padding for devices with bottom home indicator */}
+          <div className="h-[env(safe-area-inset-bottom)]" />
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 }
