@@ -23,7 +23,6 @@ import {
   SidebarRail,
   SidebarSeparator,
   SidebarTrigger,
-  useSidebar,
 } from '../components/ui/sidebar'
 import { Button } from '../components/ui/button'
 import { Icon } from '../components/ui/icon'
@@ -63,9 +62,11 @@ export const Default: Story = {
       <Sidebar>
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
-            <div className="h-8 w-8 rounded bg-[var(--color-background-brand)] flex items-center justify-center">
-              <Icon name="sparkles" size="sm" color="inverse" />
-            </div>
+            <Avatar className="h-8 w-8 rounded-md">
+              <AvatarFallback className="bg-[var(--color-background-brand)] rounded-md">
+                <Icon name="sparkles" size="sm" color="inverse" />
+              </AvatarFallback>
+            </Avatar>
             <span className="font-semibold">Acme Corp</span>
           </div>
         </SidebarHeader>
@@ -134,9 +135,11 @@ export const WithSubmenus: Story = {
       <Sidebar>
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
-            <div className="h-8 w-8 rounded bg-[var(--color-background-brand)] flex items-center justify-center">
-              <Icon name="package" size="sm" color="inverse" />
-            </div>
+            <Avatar className="h-8 w-8 rounded-md">
+              <AvatarFallback className="bg-[var(--color-background-brand)] rounded-md">
+                <Icon name="package" size="sm" color="inverse" />
+              </AvatarFallback>
+            </Avatar>
             <span className="font-semibold">Project Hub</span>
           </div>
         </SidebarHeader>
@@ -277,9 +280,11 @@ export const WithBadgesAndActions: Story = {
       <Sidebar>
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
-            <div className="h-8 w-8 rounded bg-[var(--color-background-brand)] flex items-center justify-center">
-              <Icon name="mail" size="sm" color="inverse" />
-            </div>
+            <Avatar className="h-8 w-8 rounded-md">
+              <AvatarFallback className="bg-[var(--color-background-brand)] rounded-md">
+                <Icon name="mail" size="sm" color="inverse" />
+              </AvatarFallback>
+            </Avatar>
             <span className="font-semibold">Mail App</span>
           </div>
         </SidebarHeader>
@@ -397,9 +402,11 @@ export const WithSearch: Story = {
       <Sidebar>
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
-            <div className="h-8 w-8 rounded bg-[var(--color-background-brand)] flex items-center justify-center">
-              <Icon name="file-text" size="sm" color="inverse" />
-            </div>
+            <Avatar className="h-8 w-8 rounded-md">
+              <AvatarFallback className="bg-[var(--color-background-brand)] rounded-md">
+                <Icon name="file-text" size="sm" color="inverse" />
+              </AvatarFallback>
+            </Avatar>
             <span className="font-semibold">Docs</span>
           </div>
           <SidebarInput placeholder="Search documents..." />
@@ -509,9 +516,11 @@ export const FloatingVariant: Story = {
       <Sidebar variant="floating">
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
-            <div className="h-8 w-8 rounded bg-[var(--color-background-brand)] flex items-center justify-center">
-              <Icon name="zap" size="sm" color="inverse" />
-            </div>
+            <Avatar className="h-8 w-8 rounded-md">
+              <AvatarFallback className="bg-[var(--color-background-brand)] rounded-md">
+                <Icon name="zap" size="sm" color="inverse" />
+              </AvatarFallback>
+            </Avatar>
             <span className="font-semibold">Quick Actions</span>
           </div>
         </SidebarHeader>
@@ -618,9 +627,11 @@ export const ComplexSidebar: Story = {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <SidebarMenuButton size="lg">
-                    <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-[var(--color-background-brand)] text-[var(--color-text-on-action)]">
-                      <Icon name="sparkles" size="sm" />
-                    </div>
+                    <Avatar className="size-8 rounded-md">
+                      <AvatarFallback className="bg-[var(--color-background-brand)] rounded-md">
+                        <Icon name="sparkles" size="sm" color="inverse" />
+                      </AvatarFallback>
+                    </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
                       <span className="truncate font-semibold">Acme Inc</span>
                       <span className="truncate text-xs">Enterprise</span>
@@ -732,7 +743,7 @@ export const ComplexSidebar: Story = {
                     size="lg"
                     className="data-[state=open]:bg-[var(--color-background-neutral-subtle)] data-[state=open]:text-[var(--color-text-primary)]"
                   >
-                    <Avatar className="h-8 w-8 rounded-lg">
+                    <Avatar className="size-8 rounded-lg">
                       <AvatarImage
                         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face"
                         alt="User"
