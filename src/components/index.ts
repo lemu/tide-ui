@@ -1,6 +1,13 @@
 // Main export file for @rafal.lemieszewski/tide-ui
 
 // Core UI Components
+// Alert components
+export { Alert, AlertDescription, AlertTitle } from './ui/alert'
+export type { AlertProps } from './ui/alert'
+
+// Chart components
+export { Chart, generateChartColors, createChartConfig, chartColorSchemes } from './ui/chart'
+export type { ChartProps, ChartConfig, ChartDataPoint, ChartType, ChartColorScheme } from './ui/chart'
 export { Avatar, AvatarImage, AvatarFallback, avatarVariants, avatarFallbackVariants } from './ui/avatar'
 export type { AvatarProps, AvatarFallbackProps } from './ui/avatar'
 

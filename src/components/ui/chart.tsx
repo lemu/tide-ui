@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import {
   BarChart,
   Bar,
@@ -14,40 +14,43 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  ReferenceLine,
 } from "recharts";
 import { cn } from "@/lib/utils";
 
 // Enhanced color palettes for different chart types with accessibility support
 export const chartColorSchemes = {
   bar: [
-    "#3B82F6", // blue-500
-    "#1D4ED8", // blue-700  
-    "#1E40AF", // blue-800
-    "#1E3A8A", // blue-900
-    "#312E81", // indigo-800
-    "#1E1B4B", // indigo-900
-    "#F59E0B", // amber-500 (contrast color)
-    "#DC2626", // red-600 (contrast color)
+    "var(--color-chart-bar-1)", // #487D9A - Deep blue-teal
+    "var(--color-chart-bar-2)", // #86C8CF - Light teal
+    "var(--color-chart-bar-3)", // #D27369 - Coral red
+    "var(--color-chart-bar-4)", // #CFDEE6 - Light blue-gray
+    "var(--color-chart-bar-5)", // #DCB891 - Warm beige
+    "var(--color-chart-bar-6)", // #56959D - Medium teal
   ],
   line: [
-    "#10B981", // emerald-500
-    "#059669", // emerald-600
-    "#047857", // emerald-700
-    "#065F46", // emerald-800
-    "#064E3B", // emerald-900
-    "#022C22", // emerald-950
-    "#8B5CF6", // violet-500 (contrast color)
-    "#DC2626", // red-600 (contrast color)
+    "var(--color-chart-line-1)", // #487D9A - Deep blue-teal
+    "var(--color-chart-line-2)", // #86C8CF - Light teal
+    "var(--color-chart-line-3)", // #DCB891 - Warm beige
+    "var(--color-chart-line-4)", // #D27369 - Coral red
+    "var(--color-chart-line-5)", // #6B9691 - Sage green-teal
   ],
   scatter: [
-    "#8B5CF6", // violet-500
-    "#7C3AED", // violet-600
-    "#6D28D9", // violet-700
-    "#5B21B6", // violet-800
-    "#4C1D95", // violet-900
-    "#312E81", // indigo-800
-    "#10B981", // emerald-500 (contrast color)
-    "#F59E0B", // amber-500 (contrast color)
+    "var(--color-chart-scatter-1)", // #66B1BA - Bright teal
+    "var(--color-chart-scatter-2)", // #A14238 - Deep red-brown
+    "var(--color-chart-scatter-3)", // #DCB891 - Warm beige
+    "var(--color-chart-scatter-4)", // #3B5D73 - Dark blue-gray
+    "var(--color-chart-scatter-5)", // #56959D - Medium teal
+    "var(--color-chart-scatter-6)", // #D27369 - Coral red
+  ],
+  // Area chart colors optimized for filled regions with transparency
+  area: [
+    "var(--color-chart-area-1)", // #487D9A - Deep blue-teal
+    "var(--color-chart-area-2)", // #86C8CF - Light teal
+    "var(--color-chart-area-3)", // #DCB891 - Warm beige
+    "var(--color-chart-area-4)", // #699792 - Medium sage
+    "var(--color-chart-area-5)", // #A1C8C4 - Soft teal
+    "var(--color-chart-area-6)", // #3B5D73 - Dark blue-gray
   ],
   // New accessibility-focused scheme
   accessible: [
@@ -84,6 +87,7 @@ export interface ChartProps {
   className?: string;
   height?: number;
   width?: number;
+  minWidth?: number;
   onDataPointClick?: (data: ChartDataPoint, index: number) => void;
   onDataPointHover?: (data: ChartDataPoint | null, index?: number) => void;
   highlightedIndex?: number;
@@ -142,6 +146,7 @@ export function Chart({
   className,
   height = 300,
   width,
+  minWidth = 300,
   onDataPointClick,
   onDataPointHover,
   highlightedIndex,
@@ -199,11 +204,11 @@ export function Chart({
   const getMargins = () => {
     switch (type) {
       case "horizontal-bar":
-        return { top: 20, right: 50, left: 60, bottom: 20 }; // More space for Y-axis labels
+        return { top: 24, right: 50, left: 60, bottom: 24 }; // More space for Y-axis labels
       case "scatter":
-        return { top: 20, right: 40, left: 40, bottom: 40 }; // More space for number axes
+        return { top: 24, right: 40, left: 40, bottom: 40 }; // More space for number axes
       default:
-        return { top: 20, right: 30, left: 20, bottom: 20 };
+        return { top: 24, right: 24, left: 24, bottom: 24 };
     }
   };
 
@@ -213,38 +218,80 @@ export function Chart({
   };
 
   const xAxisProps = {
-    axisLine: false,
+    axisLine: { stroke: "var(--color-border-primary-subtle)", strokeWidth: 2 },
     tickLine: false,
     tick: { 
-      fontSize: 12, 
-      fill: "var(--color-text-secondary)",
+      fontSize: 10, 
+      fill: "var(--color-text-tertiary)",
       fontFamily: "Inter, sans-serif"
     },
   };
 
+
+
   const yAxisProps = {
-    axisLine: false,
-    tickLine: false,
+    axisLine: { stroke: "var(--color-border-primary-subtle)", strokeWidth: 2 },
+    tickLine: { stroke: "var(--color-border-primary-subtle)", strokeWidth: 1 },
     tick: { 
-      fontSize: 12, 
-      fill: "var(--color-text-secondary)",
+      fontSize: 10, 
+      fill: "var(--color-text-tertiary)",
       fontFamily: "Inter, sans-serif"
     },
   };
 
   const gridProps = {
-    strokeDasharray: "2 2",
     stroke: "var(--color-border-primary-subtle)",
     horizontal: true,
     vertical: false,
   };
 
   const legendProps = {
+    verticalAlign: "bottom" as const,
+    align: "right" as const,
     wrapperStyle: {
-      fontSize: "12px",
+      fontSize: "10px",
       fontFamily: "Inter, sans-serif",
       color: "var(--color-text-secondary)",
+      fontWeight: 500,
+      paddingTop: "12px",
     },
+  };
+
+  // Custom legend content for consistent styling
+  const CustomLegend = ({ payload }: any) => {
+    if (!payload || !payload.length) return null;
+    
+    // Get left margin to align with Y-axis start (accounting for Y-axis label width + tick marks)
+    const getLeftMargin = () => {
+      switch (type) {
+        case "horizontal-bar":
+          return "ml-[65px]"; // 60px + 5px adjustment
+        case "scatter":
+          return "ml-[69px]"; // 64px + 5px adjustment
+        default:
+          return "ml-[59px]"; // 54px + 5px adjustment
+      }
+    };
+    
+    return (
+      <div className={`flex justify-start items-center gap-[var(--space-md)] ${getLeftMargin()}`}>
+        {payload.map((entry: any, index: number) => {
+          const isBarChart = type === "bar" || type === "horizontal-bar";
+          return (
+            <div key={index} className="flex items-center justify-center gap-[var(--space-xsm)]">
+              <div
+                className={isBarChart ? "w-[6px] h-[6px] flex-shrink-0" : "w-[6px] h-[6px] rounded-full flex-shrink-0"}
+                style={{ backgroundColor: entry.color }}
+                aria-hidden="true"
+              />
+              <span className="[&]:text-body-medium-xsm [&]:text-[var(--color-text-secondary)] leading-none">
+                {entry.value}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    );
   };
 
   const renderChart = () => {
@@ -260,8 +307,19 @@ export function Chart({
             {showGrid && <CartesianGrid {...gridProps} />}
             <XAxis dataKey="name" {...xAxisProps} />
             <YAxis {...yAxisProps} />
-            {showTooltip && <Tooltip content={(props) => <CustomTooltip {...props} config={config} />} />}
-            {showLegend && <Legend {...legendProps} />}
+            {showTooltip && <Tooltip 
+              content={(props) => <CustomTooltip {...props} config={config} />}
+              cursor={{ 
+                stroke: "var(--color-border-primary)", 
+                strokeWidth: 1,
+                fill: "var(--color-background-neutral)",
+                fillOpacity: 1.0
+              }}
+              position={{ x: undefined, y: undefined }}
+              offset={10}
+              animationDuration={0}
+            />}
+            {showLegend && <Legend content={<CustomLegend />} />}
             {dataKeys.map((key, index) => {
               const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
               const shouldDim = highlightedIndex !== undefined && hoveredIndex !== highlightedIndex;
@@ -273,7 +331,7 @@ export function Chart({
                   dataKey={key}
                   name={config[key].label}
                   fill={fillColor}
-                  radius={[2, 2, 0, 0]}
+                  radius={[0, 0, 0, 0]}
                   className="cursor-pointer transition-colors"
                   isAnimationActive={false}
                   maxBarSize={60}
@@ -295,8 +353,19 @@ export function Chart({
             {showGrid && <CartesianGrid {...gridProps} horizontal={false} vertical={true} />}
             <XAxis type="number" {...xAxisProps} />
             <YAxis type="category" dataKey="name" {...yAxisProps} />
-            {showTooltip && <Tooltip content={(props) => <CustomTooltip {...props} config={config} />} />}
-            {showLegend && <Legend {...legendProps} />}
+            {showTooltip && <Tooltip 
+              content={(props) => <CustomTooltip {...props} config={config} />}
+              cursor={{ 
+                stroke: "var(--color-border-primary)", 
+                strokeWidth: 1,
+                fill: "var(--color-background-neutral)",
+                fillOpacity: 1.0
+              }}
+              position={{ x: undefined, y: undefined }}
+              offset={10}
+              animationDuration={0}
+            />}
+            {showLegend && <Legend content={<CustomLegend />} />}
             {dataKeys.map((key, index) => {
               const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
               const shouldDim = highlightedIndex !== undefined && hoveredIndex !== highlightedIndex;
@@ -327,8 +396,13 @@ export function Chart({
             {showGrid && <CartesianGrid {...gridProps} />}
             <XAxis dataKey="name" {...xAxisProps} />
             <YAxis {...yAxisProps} />
-            {showTooltip && <Tooltip content={(props) => <CustomTooltip {...props} config={config} />} />}
-            {showLegend && <Legend {...legendProps} />}
+            {showTooltip && <Tooltip 
+              content={(props) => <CustomTooltip {...props} config={config} />} 
+              position={{ x: undefined, y: undefined }}
+              offset={10}
+              animationDuration={0}
+            />}
+            {showLegend && <Legend content={<CustomLegend />} />}
             {dataKeys.map((key, index) => {
               const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
               const shouldDim = highlightedIndex !== undefined && hoveredIndex !== highlightedIndex;
@@ -370,8 +444,13 @@ export function Chart({
             {showGrid && <CartesianGrid {...gridProps} />}
             <XAxis dataKey="x" type="number" {...xAxisProps} />
             <YAxis dataKey="y" type="number" {...yAxisProps} />
-            {showTooltip && <Tooltip content={(props) => <CustomTooltip {...props} config={config} />} />}
-            {showLegend && <Legend {...legendProps} />}
+            {showTooltip && <Tooltip 
+              content={(props) => <CustomTooltip {...props} config={config} />} 
+              position={{ x: undefined, y: undefined }}
+              offset={10}
+              animationDuration={0}
+            />}
+            {showLegend && <Legend content={<CustomLegend />} />}
             {dataKeys
               .filter(key => key !== 'x' && key !== 'y' && key !== 'name')
               .map((key, index) => {
@@ -404,8 +483,13 @@ export function Chart({
             {showGrid && <CartesianGrid {...gridProps} />}
             <XAxis dataKey="name" {...xAxisProps} />
             <YAxis {...yAxisProps} domain={[0, 'dataMax']} />
-            {showTooltip && <Tooltip content={(props) => <CustomTooltip {...props} config={config} />} />}
-            {showLegend && <Legend {...legendProps} />}
+            {showTooltip && <Tooltip 
+              content={(props) => <CustomTooltip {...props} config={config} />} 
+              position={{ x: undefined, y: undefined }}
+              offset={10}
+              animationDuration={0}
+            />}
+            {showLegend && <Legend content={<CustomLegend />} />}
             {dataKeys.map((key, index) => {
               const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
               const shouldDim = highlightedIndex !== undefined && hoveredIndex !== highlightedIndex;
@@ -456,7 +540,7 @@ export function Chart({
                     dataKey={key}
                     name={config[key].label}
                     fill={fillColor}
-                    radius={[2, 2, 0, 0]}
+                    radius={[0, 0, 0, 0]}
                     className="cursor-pointer transition-colors"
                     isAnimationActive={false}
                     maxBarSize={60}
@@ -472,8 +556,34 @@ export function Chart({
     }
   };
 
+  const chartRef = React.useRef<HTMLDivElement>(null);
+  
+  React.useEffect(() => {
+    const chartContainer = chartRef.current;
+    if (!chartContainer) return;
+    
+    const timeoutId = setTimeout(() => {
+      // Find all Y-axis ticks and make the zero tick thicker
+      const ticks = chartContainer.querySelectorAll('.recharts-cartesian-axis-tick');
+      ticks.forEach(tick => {
+        const text = tick.querySelector('text');
+        const tickLine = tick.querySelector('.recharts-cartesian-axis-tick-line');
+        if (text?.textContent?.trim() === '0' && tickLine) {
+          (tickLine as SVGElement).setAttribute('stroke-width', '2');
+        }
+      });
+    }, 100); // Small delay to ensure chart is rendered
+    
+    return () => clearTimeout(timeoutId);
+  }, [data, type]);
+
   return (
-    <div className={cn("w-full", className)} {...props}>
+    <div 
+      ref={chartRef}
+      className={cn("w-full", className)} 
+      style={{ minWidth }}
+      {...props}
+    >
       {responsive ? (
         <ResponsiveContainer 
           width={width || "100%"} 
@@ -484,7 +594,7 @@ export function Chart({
           {renderChart() || <div>Chart error</div>}
         </ResponsiveContainer>
       ) : (
-        <div style={{ width: width || "100%", height }}>
+        <div style={{ width: width || "100%", height, minWidth }}>
           {renderChart() || <div>Chart error</div>}
         </div>
       )}

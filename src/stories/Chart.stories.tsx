@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Chart, generateChartColors, createChartConfig } from '../components/ui/chart'
 
 const meta: Meta<typeof Chart> = {
-  title: 'Done/Chart',
+  title: 'npm/Chart',
   component: Chart,
   parameters: {
     layout: 'centered',
@@ -49,8 +49,8 @@ export const BarChart: Story = {
         type="bar"
         data={monthlyData}
         config={createChartConfig({
-          value: { label: 'Value', color: 'hsl(var(--chart-1))' },
-          sales: { label: 'Sales', color: 'hsl(var(--chart-2))' },
+          value: { label: 'Value', color: 'var(--color-chart-bar-1)' },
+          sales: { label: 'Sales', color: 'var(--color-chart-bar-2)' },
         })}
         className="h-full"
       />
@@ -65,8 +65,8 @@ export const HorizontalBarChart: Story = {
         type="horizontal-bar"
         data={monthlyData}
         config={createChartConfig({
-          value: { label: 'Revenue', color: 'hsl(var(--chart-1))' },
-          sales: { label: 'Sales', color: 'hsl(var(--chart-2))' },
+          value: { label: 'Revenue', color: 'var(--color-chart-line-1)' },
+          sales: { label: 'Sales', color: 'var(--color-chart-line-2)' },
         })}
         className="h-full"
       />
@@ -81,9 +81,9 @@ export const LineChart: Story = {
         type="line"
         data={monthlyData}
         config={createChartConfig({
-          value: { label: 'Revenue', color: 'hsl(var(--chart-3))' },
-          sales: { label: 'Sales', color: 'hsl(var(--chart-4))' },
-          profit: { label: 'Profit', color: 'hsl(var(--chart-5))' },
+          value: { label: 'Revenue', color: 'var(--color-chart-area-1)' },
+          sales: { label: 'Sales', color: 'var(--color-chart-area-2)' },
+          profit: { label: 'Profit', color: 'var(--color-chart-area-3)' },
         })}
         className="h-full"
       />
@@ -98,7 +98,7 @@ export const ScatterChart: Story = {
         type="scatter"
         data={scatterData}
         config={createChartConfig({
-          value: { label: 'Performance', color: 'hsl(var(--chart-6))' },
+          value: { label: 'Performance', color: 'var(--color-chart-scatter-1)' },
         })}
         className="h-full"
       />
@@ -178,28 +178,28 @@ export const ColorSchemesShowcase: Story = {
 
 export const ResponsiveChart: Story = {
   render: () => (
-    <div className="w-full max-w-4xl">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="h-64">
+    <div className="w-full max-w-5xl">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+        <div className="h-64 min-w-0">
           <h4 className="text-sm font-medium mb-2">Revenue Trend</h4>
           <Chart
             type="line"
             data={monthlyData}
             config={createChartConfig({
-              value: { label: 'Revenue', color: 'hsl(var(--chart-1))' },
+              value: { label: 'Revenue', color: 'var(--color-chart-line-1)' },
             })}
             className="h-full"
           />
         </div>
         
-        <div className="h-64">
+        <div className="h-64 min-w-0">
           <h4 className="text-sm font-medium mb-2">Sales vs Profit</h4>
           <Chart
             type="bar"
             data={monthlyData}
             config={createChartConfig({
-              sales: { label: 'Sales', color: 'hsl(var(--chart-2))' },
-              profit: { label: 'Profit', color: 'hsl(var(--chart-3))' },
+              sales: { label: 'Sales', color: 'var(--color-chart-bar-1)' },
+              profit: { label: 'Profit', color: 'var(--color-chart-bar-2)' },
             })}
             className="h-full"
           />
@@ -212,8 +212,8 @@ export const ResponsiveChart: Story = {
 export const DashboardCharts: Story = {
   render: () => (
     <div className="w-full max-w-6xl space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="col-span-2 h-80">
+      <div className="grid grid-cols-1 xl:grid-cols-5 gap-6">
+        <div className="xl:col-span-3 h-80">
           <h3 className="text-lg font-semibold mb-4">Monthly Performance</h3>
           <Chart
             type="line"
@@ -227,7 +227,7 @@ export const DashboardCharts: Story = {
           />
         </div>
         
-        <div className="h-80">
+        <div className="xl:col-span-2 h-80">
           <h3 className="text-lg font-semibold mb-4">Distribution</h3>
           <Chart
             type="scatter"
@@ -257,79 +257,3 @@ export const DashboardCharts: Story = {
   ),
 }
 
-// Sample data for composed chart
-const salesMetricsData = [
-  { name: 'Jan', revenue: 8400, visitors: 2400, conversionRate: 24, profit: 2400 },
-  { name: 'Feb', revenue: 7300, visitors: 1398, conversionRate: 22, profit: 2210 },
-  { name: 'Mar', revenue: 9800, visitors: 3800, conversionRate: 29, profit: 2900 },
-  { name: 'Apr', revenue: 3908, visitors: 4800, conversionRate: 21, profit: 2000 },
-  { name: 'May', revenue: 4800, visitors: 3800, conversionRate: 28, profit: 2781 },
-  { name: 'Jun', revenue: 3800, visitors: 4300, conversionRate: 26, profit: 2500 },
-  { name: 'Jul', revenue: 4300, visitors: 2400, conversionRate: 31, profit: 2100 },
-  { name: 'Aug', revenue: 5600, visitors: 2900, conversionRate: 27, profit: 2300 },
-]
-
-export const ComposedChart: Story = {
-  render: () => (
-    <div className="w-[800px] h-[500px] space-y-4">
-      <div className="text-center">
-        <h3 className="text-heading-md font-semibold">Sales Analytics Dashboard</h3>
-        <p className="text-body-sm text-[var(--color-text-secondary)]">
-          Combined visualization showing revenue bars and visitor trends as lines
-        </p>
-      </div>
-      <Chart
-        type="composed"
-        data={salesMetricsData}
-        config={createChartConfig({
-          revenue: { 
-            label: 'Revenue ($)', 
-            color: 'hsl(var(--chart-1))',
-            type: 'bar'
-          },
-          visitors: { 
-            label: 'Visitors', 
-            color: 'hsl(var(--chart-2))',
-            type: 'line'
-          },
-        })}
-        className="h-full"
-      />
-    </div>
-  ),
-}
-
-export const MultiDataComposedChart: Story = {
-  render: () => (
-    <div className="w-[900px] h-[600px] space-y-4">
-      <div className="text-center">
-        <h3 className="text-heading-md font-semibold">Complete Business Metrics</h3>
-        <p className="text-body-sm text-[var(--color-text-secondary)]">
-          Bar charts for revenue and profit, line chart for visitor trends
-        </p>
-      </div>
-      <Chart
-        type="composed"
-        data={salesMetricsData}
-        config={createChartConfig({
-          revenue: { 
-            label: 'Revenue ($)', 
-            color: generateChartColors('bar')[0],
-            type: 'bar'
-          },
-          profit: { 
-            label: 'Profit ($)', 
-            color: generateChartColors('bar')[1],
-            type: 'bar'
-          },
-          visitors: { 
-            label: 'Site Visitors', 
-            color: generateChartColors('line')[0],
-            type: 'line'
-          },
-        })}
-        className="h-full"
-      />
-    </div>
-  ),
-}
