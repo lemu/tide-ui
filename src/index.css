@@ -502,14 +502,41 @@
   /* Ring Colors for Focus States */
   --ring-color: var(--color-border-focused);
   --ring-offset-background: var(--color-surface-primary);
-  --sidebar: hsl(0 0% 98%);
-  --sidebar-foreground: hsl(240 5.3% 26.1%);
-  --sidebar-primary: hsl(240 5.9% 10%);
-  --sidebar-primary-foreground: hsl(0 0% 98%);
-  --sidebar-accent: hsl(240 4.8% 95.9%);
-  --sidebar-accent-foreground: hsl(240 5.9% 10%);
-  --sidebar-border: hsl(220 13% 91%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+
+  /* ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+  /* Chart Color Variables - Bar Charts */
+  --color-chart-bar-1: #487d9a;
+  --color-chart-bar-2: #86c8cf;
+  --color-chart-bar-3: #d27369;
+  --color-chart-bar-4: #cfdee6;
+  --color-chart-bar-5: #dcb891;
+  --color-chart-bar-6: #56959d;
+
+  /* Chart Color Variables - Line Charts */
+  --color-chart-line-1: #487d9a;
+  --color-chart-line-2: #86c8cf;
+  --color-chart-line-3: #dcb891;
+  --color-chart-line-4: #d27369;
+  --color-chart-line-5: #6b9691;
+
+  /* Chart Color Variables - Area Charts */
+  --color-chart-area-1: #487d9a;
+  --color-chart-area-2: #86c8cf;
+  --color-chart-area-3: #dcb891;
+  --color-chart-area-4: #699792;
+  --color-chart-area-5: #a1c8c4;
+  --color-chart-area-6: #3b5d73;
+
+  /* Chart Color Variables - Scatter Charts */
+  --color-chart-scatter-1: #66b1ba;
+  --color-chart-scatter-2: #a14238;
+  --color-chart-scatter-3: #dcb891;
+  --color-chart-scatter-4: #3b5d73;
+  --color-chart-scatter-5: #56959d;
+  --color-chart-scatter-6: #d27369;
+
+  /* ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
 }
 
 @theme {
@@ -615,6 +642,37 @@
 
   --color-black: #000;
   --color-white: #fff;
+
+  /* Chart Colors - Bar Charts */
+  --color-chart-bar-1: var(--color-chart-bar-1);
+  --color-chart-bar-2: var(--color-chart-bar-2);
+  --color-chart-bar-3: var(--color-chart-bar-3);
+  --color-chart-bar-4: var(--color-chart-bar-4);
+  --color-chart-bar-5: var(--color-chart-bar-5);
+  --color-chart-bar-6: var(--color-chart-bar-6);
+
+  /* Chart Colors - Line Charts */
+  --color-chart-line-1: var(--color-chart-line-1);
+  --color-chart-line-2: var(--color-chart-line-2);
+  --color-chart-line-3: var(--color-chart-line-3);
+  --color-chart-line-4: var(--color-chart-line-4);
+  --color-chart-line-5: var(--color-chart-line-5);
+
+  /* Chart Colors - Area Charts */
+  --color-chart-area-1: var(--color-chart-area-1);
+  --color-chart-area-2: var(--color-chart-area-2);
+  --color-chart-area-3: var(--color-chart-area-3);
+  --color-chart-area-4: var(--color-chart-area-4);
+  --color-chart-area-5: var(--color-chart-area-5);
+  --color-chart-area-6: var(--color-chart-area-6);
+
+  /* Chart Colors - Scatter Charts */
+  --color-chart-scatter-1: var(--color-chart-scatter-1);
+  --color-chart-scatter-2: var(--color-chart-scatter-2);
+  --color-chart-scatter-3: var(--color-chart-scatter-3);
+  --color-chart-scatter-4: var(--color-chart-scatter-4);
+  --color-chart-scatter-5: var(--color-chart-scatter-5);
+  --color-chart-scatter-6: var(--color-chart-scatter-6);
 
   /* Tailwind Theme - Typography Setup  */
   /* Example: text-heading-2xlg */
@@ -785,28 +843,6 @@
   /* Ring Colors for Focus States */
   --ring-color: var(--color-border-focused);
   --ring-offset-background: var(--color-surface-primary);
-}
-
-.dark {
-  --sidebar: hsl(240 5.9% 10%);
-  --sidebar-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-primary: hsl(224.3 76.3% 48%);
-  --sidebar-primary-foreground: hsl(0 0% 100%);
-  --sidebar-accent: hsl(240 3.7% 15.9%);
-  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-border: hsl(240 3.7% 15.9%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
-}
-
-@theme inline {
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
 }
 
 @layer base {
