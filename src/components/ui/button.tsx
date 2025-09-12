@@ -90,7 +90,7 @@ const buttonVariants = cva(
       {
         size: "sm",
         iconPosition: "only",
-        className: "px-[var(--space-sm)]",
+        className: "px-[var(--space-sm)] min-w-[var(--size-sm)]",
       },
       {
         size: "md",
@@ -105,7 +105,7 @@ const buttonVariants = cva(
       {
         size: "md",
         iconPosition: "only",
-        className: "px-[var(--space-sm)]",
+        className: "px-[var(--space-sm)] min-w-[var(--size-md)]",
       },
       {
         size: "lg",
@@ -120,7 +120,7 @@ const buttonVariants = cva(
       {
         size: "lg",
         iconPosition: "only",
-        className: "px-[var(--space-md)]",
+        className: "px-[var(--space-md)] min-w-[var(--size-lg)]",
       },
     ],
     defaultVariants: {
