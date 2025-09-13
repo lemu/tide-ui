@@ -2,7 +2,7 @@ import * as React from "react";
 import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
-import { Icon } from "./icon";
+import { Button } from "./button";
 
 const Sheet = SheetPrimitive.Root;
 
@@ -65,9 +65,16 @@ const SheetContent = React.forwardRef<
     >
       {children}
       {showClose && (
-        <SheetPrimitive.Close className="absolute right-[var(--space-lg)] top-[var(--space-lg)] rounded-sm opacity-70 ring-offset-[var(--color-surface-primary)] transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-[var(--color-border-focus)] focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-[var(--color-background-secondary)]">
-          <Icon name="x" size="sm" />
-          <span className="sr-only">Close</span>
+        <SheetPrimitive.Close asChild>
+          <Button
+            variant="ghost"
+            size="md"
+            icon="x"
+            iconPosition="only"
+            className="absolute right-[var(--space-lg)] top-[var(--space-lg)]"
+          >
+            <span className="sr-only">Close</span>
+          </Button>
         </SheetPrimitive.Close>
       )}
     </SheetPrimitive.Content>

@@ -339,9 +339,9 @@ const EditableInput = React.forwardRef<HTMLDivElement, EditableInputProps>(
     // Apply typography class directly to contenteditable div
     const appliedClassName = cn(
       // Base styles for contenteditable
-      "w-full rounded border bg-[var(--color-surface-primary)] px-2 py-1 focus:outline-none focus:ring-2 focus:ring-[var(--color-border-brand)] focus:ring-offset-1 break-words",
+      "w-full rounded border bg-[var(--color-surface-primary)] px-2 py-1 transition-colors focus-visible:outline-none focus-visible:shadow-[0px_0px_0px_2px_rgba(0,95,133,0.2),0px_3px_4px_0px_rgba(0,14,20,0.03)] break-words",
       // Invalid state
-      invalid ? "border-[var(--color-border-error)]" : "border-[var(--color-border-input)]",
+      invalid ? "border-[var(--color-border-error)] focus-visible:border-[var(--color-border-error)]" : "border-[var(--color-border-input)] focus-visible:border-[#005f85]",
       // Typography class from preview (this is the key!)
       previewFontSize || "",
       // Additional classes
@@ -446,9 +446,9 @@ const EditableTextarea = React.forwardRef<HTMLDivElement, EditableTextareaProps>
     // Apply typography class directly to contenteditable div 
     const appliedClassName = cn(
       // Base styles for contenteditable textarea
-      "w-full rounded border bg-[var(--color-surface-primary)] px-2 py-1 focus:outline-none focus:ring-2 focus:ring-[var(--color-border-brand)] focus:ring-offset-1 min-h-[3lh] break-words whitespace-pre-wrap",
+      "w-full rounded border bg-[var(--color-surface-primary)] px-2 py-1 transition-colors focus-visible:outline-none focus-visible:shadow-[0px_0px_0px_2px_rgba(0,95,133,0.2),0px_3px_4px_0px_rgba(0,14,20,0.03)] min-h-[3lh] break-words whitespace-pre-wrap",
       // Invalid state
-      invalid ? "border-[var(--color-border-error)]" : "border-[var(--color-border-input)]",
+      invalid ? "border-[var(--color-border-error)] focus-visible:border-[var(--color-border-error)]" : "border-[var(--color-border-input)] focus-visible:border-[#005f85]",
       // Typography class from preview (this is the key!)
       previewFontSize || "",
       // Additional classes

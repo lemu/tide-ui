@@ -20,7 +20,7 @@ import { Textarea } from '../components/ui/textarea'
 import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar'
 
 const meta: Meta<typeof Sheet> = {
-  title: 'Done/Sheet',
+  title: 'NPM/Sheet',
   component: Sheet,
   parameters: {
     layout: 'centered',

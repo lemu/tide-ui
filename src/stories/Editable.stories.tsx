@@ -8,7 +8,7 @@ import { Badge } from '../components/ui/badge'
 import { Icon } from '../components/ui/icon'
 
 const meta: Meta<typeof Editable> = {
-  title: 'Done/Editable',
+  title: 'NPM/Editable',
   component: Editable,
   parameters: {
     layout: 'centered',

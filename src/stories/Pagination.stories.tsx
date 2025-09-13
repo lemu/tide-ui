@@ -15,7 +15,7 @@ import { Badge } from '../components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 
 const meta: Meta<typeof Pagination> = {
-  title: 'In Progress/Pagination',
+  title: 'Done/Pagination',
   component: Pagination,
   parameters: {
     layout: 'centered',

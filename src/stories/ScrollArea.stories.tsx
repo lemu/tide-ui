@@ -6,7 +6,7 @@ import { Button } from '../components/ui/button'
 import { Icon } from '../components/ui/icon'
 
 const meta: Meta<typeof ScrollArea> = {
-  title: 'Done/ScrollArea',
+  title: 'NPM/ScrollArea',
   component: ScrollArea,
   parameters: {
     layout: 'centered',

@@ -21,11 +21,16 @@ export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 
 export { Checkbox, checkboxVariants } from './ui/checkbox'
 
+export { RadioGroup, RadioGroupItem, radioGroupVariants, radioGroupItemVariants } from './ui/radio-group'
+export type { RadioGroupProps, RadioGroupItemProps } from './ui/radio-group'
+
 export { Input } from './ui/input'
 export type { InputProps } from './ui/input'
 
 export { Label } from './ui/label'
 export type { LabelProps } from './ui/label'
+
+export { ScrollArea, ScrollBar } from './ui/scroll-area'
 
 export { Separator } from './ui/separator'
 
@@ -36,11 +41,21 @@ export { Switch } from './ui/switch'
 export { Textarea } from './ui/textarea'
 export type { TextareaProps } from './ui/textarea'
 
+// Editable components
+export { Editable, EditablePreview, EditableInput, EditableTextarea, useEditable } from './ui/editable'
+export type { EditableProps, EditableContextValue, EditablePreviewProps, EditableInputProps, EditableTextareaProps } from './ui/editable'
+
+// Form Field components
+export { FormField, FormLabel, FormControl, FormHelperText, FormErrorMessage } from './ui/form-field'
+export type { FormFieldProps, FormLabelProps, FormControlProps, FormHelperTextProps, FormErrorMessageProps } from './ui/form-field'
+
 export { Tabs, TabsList, TabsTrigger, TabsContent, TabsGroupLabel } from './ui/tabs'
 export type { TabsProps, TabsListProps, TabsTriggerProps, TabsGroupLabelProps } from './ui/tabs'
 
 export { Toggle } from './ui/toggle'
 export type { ToggleProps } from './ui/toggle'
+
+export { ToggleGroup, ToggleGroupItem } from './ui/toggle-group'
 
 // Select components
 export {
@@ -175,6 +190,21 @@ export {
   DrawerTitle,
   DrawerDescription,
 } from './ui/drawer'
+
+// Sheet components
+export {
+  Sheet,
+  SheetPortal,
+  SheetOverlay,
+  SheetTrigger,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetFooter,
+  SheetTitle,
+  SheetDescription,
+} from './ui/sheet'
+export type { SheetContentProps } from './ui/sheet'
 
 // DropdownMenu components
 export {

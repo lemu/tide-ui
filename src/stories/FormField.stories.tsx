@@ -21,7 +21,7 @@ import { Badge } from '../components/ui/badge'
 import { Label } from '../components/ui/label'
 
 const meta: Meta<typeof FormField> = {
-  title: 'Done/FormField',
+  title: 'NPM/FormField',
   component: FormField,
   parameters: {
     layout: 'centered',
@@ -94,8 +94,8 @@ export const WithError: Story = {
 export const CheckboxField: Story = {
   render: () => (
     <FormField isCheckboxField>
-      <div className="flex items-center space-x-2">
-        <Checkbox id="terms" />
+      <div className="flex items-start space-x-2">
+        <Checkbox id="terms" className="mt-0.5" />
         <FormLabel htmlFor="terms">
           I agree to the terms and conditions
         </FormLabel>
@@ -111,8 +111,8 @@ export const CheckboxField: Story = {
 export const CheckboxFieldWithError: Story = {
   render: () => (
     <FormField isCheckboxField>
-      <div className="flex items-center space-x-2">
-        <Checkbox id="required-terms" />
+      <div className="flex items-start space-x-2">
+        <Checkbox id="required-terms" className="mt-0.5" />
         <FormLabel htmlFor="required-terms">
           I agree to the terms and conditions
           <span className="text-[var(--color-text-error)] ml-1">*</span>
@@ -194,14 +194,14 @@ export const DisabledField: Story = {
 // Switch field
 export const SwitchField: Story = {
   render: () => (
-    <FormField isCheckboxField>
-      <div className="flex items-center space-x-2">
+    <FormField>
+      <div className="flex items-start space-x-2">
         <Switch id="notifications" />
         <FormLabel htmlFor="notifications">
           Enable email notifications
         </FormLabel>
       </div>
-      <FormHelperText>
+      <FormHelperText className="!ml-11 [&>div]:!flex-none [&>svg]:!hidden [&>span]:!ml-0">
         Receive updates about your account and new features.
       </FormHelperText>
     </FormField>
@@ -324,11 +324,12 @@ export const InteractiveForm: Story = {
         </FormField>
 
         <FormField isCheckboxField>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-start space-x-2">
             <Checkbox
               id="signup-terms"
               checked={terms}
               onCheckedChange={(checked) => setTerms(checked as boolean)}
+              className="mt-0.5"
             />
             <FormLabel htmlFor="signup-terms">
               I agree to the terms and conditions
@@ -390,8 +391,8 @@ export const MultipleSections: Story = {
         <h3 className="text-heading-md font-semibold mb-4">Preferences</h3>
         <div className="space-y-4">
           <FormField isCheckboxField>
-            <div className="flex items-center space-x-2">
-              <Checkbox id="marketing-emails" />
+            <div className="flex items-start space-x-2">
+              <Checkbox id="marketing-emails" className="mt-0.5" />
               <FormLabel htmlFor="marketing-emails">
                 Receive marketing emails
               </FormLabel>
@@ -401,14 +402,14 @@ export const MultipleSections: Story = {
             </FormHelperText>
           </FormField>
 
-          <FormField isCheckboxField>
-            <div className="flex items-center space-x-2">
+          <FormField>
+            <div className="flex items-start space-x-2">
               <Switch id="push-notifications" />
               <FormLabel htmlFor="push-notifications">
                 Enable push notifications
               </FormLabel>
             </div>
-            <FormHelperText>
+            <FormHelperText className="!ml-11 [&>div]:!flex-none [&>svg]:!hidden [&>span]:!ml-0">
               Receive real-time updates on your device.
             </FormHelperText>
           </FormField>
@@ -437,6 +438,39 @@ export const MultipleSections: Story = {
           </FormField>
         </div>
       </div>
+    </div>
+  ),
+}
+
+// Multi-line label alignment test
+export const MultiLineLabels: Story = {
+  render: () => (
+    <div className="w-96 space-y-6">
+      <FormField isCheckboxField>
+        <div className="flex items-start space-x-2">
+          <Checkbox id="long-terms" className="mt-0.5" />
+          <FormLabel htmlFor="long-terms">
+            I have read and agree to the comprehensive terms and conditions, 
+            privacy policy, and user agreement that governs the use of this platform
+          </FormLabel>
+        </div>
+        <FormHelperText>
+          This is a longer label that spans multiple lines to test vertical alignment.
+        </FormHelperText>
+      </FormField>
+
+      <FormField>
+        <div className="flex items-start space-x-2">
+          <Switch id="detailed-notifications" />
+          <FormLabel htmlFor="detailed-notifications">
+            Enable comprehensive email notifications including account updates, 
+            security alerts, feature announcements, and promotional content
+          </FormLabel>
+        </div>
+        <FormHelperText className="!ml-11 [&>div]:!flex-none [&>svg]:!hidden [&>span]:!ml-0">
+          Switch alignment with multi-line labels should maintain proper positioning.
+        </FormHelperText>
+      </FormField>
     </div>
   ),
 }
@@ -593,12 +627,13 @@ export const ContactForm: Story = {
             </FormField>
 
             <FormField isCheckboxField>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-start space-x-2">
                 <Checkbox
                   id="contact-newsletter"
                   checked={formData.newsletter}
                   onCheckedChange={(checked) => handleInputChange('newsletter', checked)}
                   disabled={isSubmitting}
+                  className="mt-0.5"
                 />
                 <FormLabel htmlFor="contact-newsletter">
                   Subscribe to our newsletter for updates
