@@ -275,7 +275,7 @@
   --font-line-height-400: 16px;
   --font-line-height-500: 20px;
   --font-line-height-600: 24px;
-  --font-line-height-700: 28px;
+  --font-line-height-700: 32px;
   --font-line-height-800: 40px;
   --font-line-height-900: 48px;
   --font-line-height-1000: 56px;
@@ -690,7 +690,7 @@
   --text-heading-2xlg--letter-spacing: var(--font-letter-spacing-dense);
 
   --text-heading-xlg: var(--font-size-700);
-  --text-heading-xlg--line-height: var(--font--line-height-800);
+  --text-heading-xlg--line-height: var(--font-line-height-800);
   --text-heading-xlg--font-weight: var(--font-weight-semibold);
   --text-heading-xlg--letter-spacing: var(--font-letter-spacing-dense);
 

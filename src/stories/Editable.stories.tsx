@@ -519,3 +519,82 @@ export const CustomPreview: Story = {
     )
   },
 }
+
+// Font size testing showcase
+export const FontSizeShowcase: Story = {
+  render: () => {
+    const [values, setValues] = useState({
+      heading2xlg: 'Extra Large Heading',
+      headingXlg: 'Large Heading', 
+      headingLg: 'Medium Large Heading',
+      headingMd: 'Medium Heading',
+      headingSm: 'Small Heading',
+      bodyLg: 'Large body text',
+      bodyMd: 'Medium body text', 
+      bodySm: 'Small body text',
+      captionSm: 'Caption text',
+      captionXsm: 'Extra small caption'
+    })
+    
+    const updateValue = (key: string, value: string) => {
+      setValues(prev => ({ ...prev, [key]: value }))
+    }
+    
+    const fontSizeExamples = [
+      { key: 'heading2xlg', label: 'text-heading-2xlg', className: 'text-heading-2xlg', value: values.heading2xlg },
+      { key: 'headingXlg', label: 'text-heading-xlg', className: 'text-heading-xlg', value: values.headingXlg },
+      { key: 'headingLg', label: 'text-heading-lg', className: 'text-heading-lg', value: values.headingLg },
+      { key: 'headingMd', label: 'text-heading-md', className: 'text-heading-md', value: values.headingMd },
+      { key: 'headingSm', label: 'text-heading-sm', className: 'text-heading-sm', value: values.headingSm },
+      { key: 'bodyLg', label: 'text-body-lg', className: 'text-body-lg', value: values.bodyLg },
+      { key: 'bodyMd', label: 'text-body-md', className: 'text-body-md', value: values.bodyMd },
+      { key: 'bodySm', label: 'text-body-sm', className: 'text-body-sm', value: values.bodySm },
+      { key: 'captionSm', label: 'text-caption-sm', className: 'text-caption-sm', value: values.captionSm },
+      { key: 'captionXsm', label: 'text-caption-xsm', className: 'text-caption-xsm', value: values.captionXsm }
+    ]
+    
+    return (
+      <div className="w-full max-w-4xl">
+        <Card>
+          <CardHeader>
+            <CardTitle>Font Size Matching Test</CardTitle>
+            <p className="text-body-sm text-[var(--color-text-secondary)]">
+              Click each text below to edit it. The input should maintain the same font size as the preview.
+            </p>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {fontSizeExamples.map((example) => (
+              <div key={example.key} className="space-y-2">
+                <Label className="text-body-sm font-medium text-[var(--color-text-tertiary)]">
+                  {example.label}
+                </Label>
+                <Editable 
+                  value={example.value} 
+                  onValueChange={(value) => updateValue(example.key, value)}
+                  placeholder={`Enter ${example.label} text...`}
+                >
+                  <EditablePreview className={example.className} />
+                  <EditableInput />
+                </Editable>
+              </div>
+            ))}
+            
+            <div className="pt-4 border-t border-[var(--color-border-primary-subtle)]">
+              <Label className="text-body-sm font-medium mb-2 block text-[var(--color-text-tertiary)]">
+                text-body-md with textarea
+              </Label>
+              <Editable 
+                value="This is a longer text that demonstrates font size matching with textarea editing. Click to edit and see how the font size remains consistent."
+                onValueChange={() => {}}
+                placeholder="Enter longer text..."
+              >
+                <EditablePreview className="text-body-md" />
+                <EditableTextarea rows={3} />
+              </Editable>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  },
+}

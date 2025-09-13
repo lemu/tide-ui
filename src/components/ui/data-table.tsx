@@ -315,7 +315,7 @@ interface DataTablePaginationProps<_TData = any> {
 
 function DataTablePagination<TData>({ table }: DataTablePaginationProps<TData>) {
   return (
-    <div className="flex items-center justify-between px-2">
+    <div className="flex items-center justify-between">
       <div className="flex-1 text-body-sm text-[var(--color-text-secondary)]">
         {table.getFilteredSelectedRowModel().rows.length} of{" "}
         {table.getFilteredRowModel().rows.length} row(s) selected.
@@ -434,13 +434,18 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div className={cn("space-y-4", className)}>
-      <DataTableToolbar 
-        table={table} 
-        searchKey={searchKey}
-        searchPlaceholder={searchPlaceholder}
-      />
-      <div className="rounded-md border">
+    <div className={cn("border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden", className)}>
+      {/* Header section with toolbar */}
+      <div className="border-b border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-secondary)] px-[var(--space-md)] py-[var(--space-sm)]">
+        <DataTableToolbar 
+          table={table} 
+          searchKey={searchKey}
+          searchPlaceholder={searchPlaceholder}
+        />
+      </div>
+      
+      {/* Table section - no additional borders */}
+      <div>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -490,7 +495,11 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+      
+      {/* Footer section with pagination */}
+      <div className="border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-secondary)] px-[var(--space-md)] py-[var(--space-sm)]">
+        <DataTablePagination table={table} />
+      </div>
     </div>
   )
 }
