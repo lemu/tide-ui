@@ -14,8 +14,13 @@ export type { AvatarProps, AvatarFallbackProps } from './ui/avatar'
 export { Badge } from './ui/badge'
 export type { BadgeProps } from './ui/badge'
 
+export { Collapsible, CollapsibleTrigger, CollapsibleContent } from './ui/collapsible'
+
 export { Button } from './ui/button'
 export type { ButtonProps } from './ui/button'
+
+export { ButtonGroup } from './ui/button-group'
+export type { ButtonGroupProps } from './ui/button-group'
 
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'
 
@@ -224,6 +229,52 @@ export {
   TooltipProvider,
   TooltipTrigger,
 } from './ui/tooltip'
+
+// Toast components
+export { Toaster, toast } from './ui/toast'
+
+// Pagination component
+export { Pagination } from './ui/pagination'
+export type { PaginationProps } from './ui/pagination'
+
+// Progress component
+export { Progress } from './ui/progress'
+export type { ProgressProps } from './ui/progress'
+
+// Popover components
+export { Popover, PopoverTrigger, PopoverContent } from './ui/popover'
+
+// Table components
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption,
+  TableSortHeader,
+  TableGroupHeader,
+  tableVariants,
+  tableRowVariants,
+  tableCellVariants,
+  tableHeaderVariants,
+} from './ui/table'
+export type {
+  TableProps,
+  TableRowProps,
+  TableHeadProps,
+  TableCellProps,
+  TableSortHeaderProps,
+} from './ui/table'
+
+// DataTable component
+export { DataTable } from './ui/data-table'
+
+// LinkedChart component
+export { LinkedChart, createLinkedChartColumns } from './ui/linked-chart'
+export type { LinkedChartProps, LinkedChartColumn } from './ui/linked-chart'
 
 // Utility exports
 export { cn } from '../lib/utils'

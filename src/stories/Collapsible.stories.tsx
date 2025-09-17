@@ -11,7 +11,7 @@ import { Badge } from '../components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 
 const meta: Meta<typeof Collapsible> = {
-  title: 'Done/Collapsible',
+  title: 'NPM/Collapsible',
   component: Collapsible,
   parameters: {
     layout: 'centered',
@@ -30,15 +30,8 @@ export const Default: Story = {
     return (
       <div className="w-full max-w-md">
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-          <CollapsibleTrigger asChild>
-            <Button variant="ghost" className="flex w-full items-center justify-between p-4">
-              <span className="text-body-md font-medium">Can I use this in my project?</span>
-              <Icon 
-                name="chevron-down" 
-                size="sm" 
-                className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-              />
-            </Button>
+          <CollapsibleTrigger>
+            Can I use this in my project?
           </CollapsibleTrigger>
           <CollapsibleContent className="px-4 pb-4">
             <div className="text-body-md text-[var(--color-text-secondary)]">
@@ -67,14 +60,8 @@ export const CodeSnippet: Story = {
           </CardHeader>
           <CardContent>
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-              <CollapsibleTrigger asChild>
-                <Button variant="ghost" className="flex w-full items-center justify-between">
-                  <span>View source code</span>
-                  <Icon 
-                    name={isOpen ? 'chevron-up' : 'chevron-down'} 
-                    size="sm"
-                  />
-                </Button>
+              <CollapsibleTrigger>
+                View source code
               </CollapsibleTrigger>
               <CollapsibleContent className="mt-4">
                 <div className="rounded-md bg-[var(--color-surface-secondary)] p-4 font-mono text-sm">
@@ -143,15 +130,8 @@ export const SettingsSection: Story = {
 
             <div className="border-t border-[var(--color-border-primary-subtle)] pt-4">
               <Collapsible open={advancedOpen} onOpenChange={setAdvancedOpen}>
-                <CollapsibleTrigger asChild>
-                  <Button variant="ghost" className="flex w-full items-center justify-between p-0">
-                    <span className="text-body-md font-medium">Advanced Settings</span>
-                    <Icon 
-                      name="chevron-down" 
-                      size="sm" 
-                      className={`transition-transform duration-200 ${advancedOpen ? 'rotate-180' : ''}`}
-                    />
-                  </Button>
+                <CollapsibleTrigger>
+                  Advanced Settings
                 </CollapsibleTrigger>
                 <CollapsibleContent className="mt-4 space-y-4">
                   <div className="space-y-2">
@@ -183,18 +163,11 @@ export const SettingsSection: Story = {
 
             <div className="border-t border-[var(--color-border-primary-subtle)] pt-4">
               <Collapsible open={debugOpen} onOpenChange={setDebugOpen}>
-                <CollapsibleTrigger asChild>
-                  <Button variant="ghost" className="flex w-full items-center justify-between p-0">
-                    <div className="flex items-center gap-2">
-                      <span className="text-body-md font-medium">Debug Options</span>
-                      <Badge variant="outline" className="text-xs">Developer</Badge>
-                    </div>
-                    <Icon 
-                      name="chevron-down" 
-                      size="sm" 
-                      className={`transition-transform duration-200 ${debugOpen ? 'rotate-180' : ''}`}
-                    />
-                  </Button>
+                <CollapsibleTrigger>
+                  <div className="flex items-center gap-2">
+                    <span>Debug Options</span>
+                    <Badge variant="outline" className="text-xs">Developer</Badge>
+                  </div>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="mt-4 space-y-3">
                   <div className="flex items-center justify-between">
@@ -254,9 +227,10 @@ export const NavigationSidebar: Story = {
                       <Icon name="layout-dashboard" size="sm" />
                       <span className="text-body-sm">Dashboard</span>
                     </div>
-                    <Icon 
-                      name="chevron-down" 
-                      size="sm" 
+                    <Icon
+                      name="chevron-down"
+                      size="md"
+                      color="tertiary"
                       className={`transition-transform duration-200 ${openSections.dashboard ? 'rotate-180' : ''}`}
                     />
                   </Button>
@@ -287,9 +261,10 @@ export const NavigationSidebar: Story = {
                       <span className="text-body-sm">Projects</span>
                       <Badge variant="secondary" className="text-xs">3</Badge>
                     </div>
-                    <Icon 
-                      name="chevron-down" 
-                      size="sm" 
+                    <Icon
+                      name="chevron-down"
+                      size="md"
+                      color="tertiary"
                       className={`transition-transform duration-200 ${openSections.projects ? 'rotate-180' : ''}`}
                     />
                   </Button>
@@ -325,9 +300,10 @@ export const NavigationSidebar: Story = {
                       <Icon name="settings" size="sm" />
                       <span className="text-body-sm">Settings</span>
                     </div>
-                    <Icon 
-                      name="chevron-down" 
-                      size="sm" 
+                    <Icon
+                      name="chevron-down"
+                      size="md"
+                      color="tertiary"
                       className={`transition-transform duration-200 ${openSections.settings ? 'rotate-180' : ''}`}
                     />
                   </Button>
@@ -461,9 +437,10 @@ export const FeatureList: Story = {
                           </p>
                         </div>
                       </div>
-                      <Icon 
-                        name="chevron-down" 
-                        size="sm" 
+                      <Icon
+                        name="chevron-down"
+                        size="md"
+                        color="tertiary"
                         className={`transition-transform duration-200 ${openFeatures[feature.id] ? 'rotate-180' : ''}`}
                       />
                     </div>
@@ -540,9 +517,10 @@ export const MultipleControlled: Story = {
                     <Icon name="user" size="sm" />
                     <span className="text-body-md font-medium">Personal Information</span>
                   </div>
-                  <Icon 
-                    name="chevron-down" 
-                    size="sm" 
+                  <Icon
+                    name="chevron-down"
+                    size="md"
+                    color="tertiary"
                     className={`transition-transform duration-200 ${states.personal ? 'rotate-180' : ''}`}
                   />
                 </div>
@@ -570,9 +548,10 @@ export const MultipleControlled: Story = {
                     <Icon name="briefcase" size="sm" />
                     <span className="text-body-md font-medium">Work Information</span>
                   </div>
-                  <Icon 
-                    name="chevron-down" 
-                    size="sm" 
+                  <Icon
+                    name="chevron-down"
+                    size="md"
+                    color="tertiary"
                     className={`transition-transform duration-200 ${states.work ? 'rotate-180' : ''}`}
                   />
                 </div>
@@ -598,9 +577,10 @@ export const MultipleControlled: Story = {
                     <Icon name="share-2" size="sm" />
                     <span className="text-body-md font-medium">Social Links</span>
                   </div>
-                  <Icon 
-                    name="chevron-down" 
-                    size="sm" 
+                  <Icon
+                    name="chevron-down"
+                    size="md"
+                    color="tertiary"
                     className={`transition-transform duration-200 ${states.social ? 'rotate-180' : ''}`}
                   />
                 </div>
