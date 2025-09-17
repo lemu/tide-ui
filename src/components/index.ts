@@ -276,6 +276,9 @@ export { DataTable } from './ui/data-table'
 export { LinkedChart, createLinkedChartColumns } from './ui/linked-chart'
 export type { LinkedChartProps, LinkedChartColumn } from './ui/linked-chart'
 
+// Resizable components
+export { ResizablePanelGroup, ResizablePanel, ResizableHandle } from './ui/resizable'
+
 // Utility exports
 export { cn } from '../lib/utils'
 

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { cn } from "../../lib/utils";
-import { Button } from "./button";
 import type { ButtonProps } from "./button";
 
 export interface ButtonGroupProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -28,13 +27,18 @@ const ButtonGroup = React.forwardRef<HTMLDivElement, ButtonGroupProps>(
           const isLast = index === totalValidChildren - 1;
           const isOnly = totalValidChildren === 1;
 
+          // Cast child to proper type for TypeScript
+          const buttonChild = child as React.ReactElement<ButtonProps>;
+          const childProps = buttonChild.props;
+
           // Clone the child with modified props for grouping
-          return React.cloneElement(child as React.ReactElement<ButtonProps>, {
-            size: child.props.size || size,
-            variant: child.props.variant || variant,
+          return React.cloneElement(buttonChild, {
+            key: index,
+            size: childProps.size || size,
+            variant: childProps.variant || variant,
             className: cn(
               // Base button styles are preserved from the Button component
-              child.props.className,
+              childProps.className,
               // Border radius modifications with higher specificity
               {
                 // Single button (no grouping needed)
