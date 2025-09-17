@@ -8,6 +8,10 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      id-token: write
     
     steps:
       - name: Checkout
@@ -46,24 +50,20 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create GitHub Release
-        uses: actions/create-release@v1
+        run: |
+          gh release create ${{ steps.version.outputs.tag }} \
+            --title "Release ${{ steps.version.outputs.tag }}" \
+            --notes "## Changes in ${{ steps.version.outputs.tag }}
+
+          - Published from commit: ${{ github.sha }}
+          - Version: ${{ steps.version.outputs.version }}
+
+          ### Installation
+          \`\`\`bash
+          npm install @rafal.lemieszewski/tide-ui@${{ steps.version.outputs.version }}
+          \`\`\`
+
+          ### Documentation
+          View the component library at: https://tide-ui-storybook.vercel.app"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.version.outputs.tag }}
-          release_name: Release ${{ steps.version.outputs.tag }}
-          body: |
-            ## Changes in ${{ steps.version.outputs.tag }}
-
-            - Published from commit: ${{ github.sha }}
-            - Version: ${{ steps.version.outputs.version }}
-
-            ### Installation
-            ```bash
-            npm install @rafal.lemieszewski/tide-ui@${{ steps.version.outputs.version }}
-            ```
-
-            ### Documentation
-            View the component library at: https://tide-ui-storybook.vercel.app
-          draft: false
-          prerelease: false
