@@ -3,13 +3,13 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const tableVariants = cva(
-  "w-full caption-bottom",
+  "w-full caption-bottom text-body-sm",
   {
     variants: {
       size: {
-        sm: "text-caption-sm",
-        md: "text-body-sm",
-        lg: "text-body-md",
+        sm: "[&_td]:!text-body-xsm [&_th]:!text-body-strong-xsm [&_td]:!px-3 [&_td]:!py-1 [&_td]:!h-7 [&_th]:!px-3 [&_th]:!py-1",
+        md: "[&_td]:!text-body-sm [&_th]:!text-body-strong-sm [&_td]:!px-4 [&_td]:!py-2 [&_td]:!h-9 [&_th]:!px-4 [&_th]:!py-2",
+        lg: "[&_td]:!text-body-md [&_th]:!text-body-strong-md [&_td]:!px-6 [&_td]:!py-3 [&_td]:!h-11 [&_th]:!px-6 [&_th]:!py-3",
       },
     },
     defaultVariants: {
@@ -35,45 +35,55 @@ const tableRowVariants = cva(
 );
 
 const tableCellVariants = cva(
-  "align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+  "align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] border-r border-[var(--color-border-primary-subtle)] last:border-r-0",
   {
     variants: {
       size: {
-        sm: "p-[var(--space-sm)]",
-        md: "p-[var(--space-md)]",
-        lg: "p-[var(--space-lg)]",
-      },
-      align: {
-        left: "text-left",
-        center: "text-center", 
-        right: "text-right",
-      },
-    },
-    defaultVariants: {
-      size: "md",
-      align: "left",
-    },
-  }
-);
-
-const tableHeaderVariants = cva(
-  "align-middle font-medium text-[var(--color-text-secondary)] [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
-  {
-    variants: {
-      size: {
-        sm: "h-[var(--size-md)] px-[var(--space-sm)] text-caption-medium-sm",
-        md: "h-[var(--size-lg)] px-[var(--space-md)] text-label-sm",
-        lg: "h-[var(--size-xlg)] px-[var(--space-lg)] text-label-md",
+        sm: "px-3 py-1 h-7 text-body-xsm",
+        md: "px-4 py-2 h-9 text-body-sm",
+        lg: "px-6 py-3 h-11 text-body-md",
       },
       align: {
         left: "text-left",
         center: "text-center",
         right: "text-right",
       },
+      numeric: {
+        true: "text-right tabular-nums",
+        false: "",
+      },
     },
     defaultVariants: {
       size: "md",
       align: "left",
+      numeric: false,
+    },
+  }
+);
+
+const tableHeaderVariants = cva(
+  "align-middle font-semibold text-[var(--color-text-primary)] [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] border-r border-[var(--color-border-primary-subtle)] last:border-r-0",
+  {
+    variants: {
+      size: {
+        sm: "px-3 py-1 text-body-strong-xsm",
+        md: "px-4 py-2 text-body-strong-sm",
+        lg: "px-6 py-3 text-body-strong-md",
+      },
+      align: {
+        left: "text-left",
+        center: "text-center",
+        right: "text-right",
+      },
+      numeric: {
+        true: "text-right tabular-nums",
+        false: "",
+      },
+    },
+    defaultVariants: {
+      size: "md",
+      align: "left",
+      numeric: false,
     },
   }
 );
@@ -99,10 +109,13 @@ const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
-  <thead 
-    ref={ref} 
-    className={cn("[&_tr]:border-b [&_tr]:border-[var(--color-border-primary-subtle)]", className)} 
-    {...props} 
+  <thead
+    ref={ref}
+    className={cn(
+      "[&_tr]:border-b [&_tr]:border-[var(--color-border-primary-subtle)] [&_tr]:bg-[#f6f7f8]",
+      className
+    )}
+    {...props}
   />
 ));
 TableHeader.displayName = "TableHeader";
@@ -167,10 +180,10 @@ interface TableHeadProps
     VariantProps<typeof tableHeaderVariants> {}
 
 const TableHead = React.forwardRef<HTMLTableCellElement, TableHeadProps>(
-  ({ className, size, align, ...props }, ref) => (
+  ({ className, size, align, numeric, ...props }, ref) => (
     <th
       ref={ref}
-      className={cn(tableHeaderVariants({ size, align }), className)}
+      className={cn(tableHeaderVariants({ size, align, numeric }), className)}
       {...props}
     />
   )
@@ -182,10 +195,10 @@ interface TableCellProps
     VariantProps<typeof tableCellVariants> {}
 
 const TableCell = React.forwardRef<HTMLTableCellElement, TableCellProps>(
-  ({ className, size, align, ...props }, ref) => (
+  ({ className, size, align, numeric, ...props }, ref) => (
     <td
       ref={ref}
-      className={cn(tableCellVariants({ size, align }), className)}
+      className={cn(tableCellVariants({ size, align, numeric }), className)}
       {...props}
     />
   )

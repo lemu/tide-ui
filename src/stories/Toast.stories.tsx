@@ -6,7 +6,7 @@ import { Input } from '../components/ui/input'
 import { useState } from 'react'
 
 const meta: Meta<typeof Toaster> = {
-  title: 'Done/Toast',
+  title: 'NPM/Toast',
   component: Toaster,
   parameters: {
     layout: 'centered',

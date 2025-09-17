@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import {
   BarChart,
   Bar,
@@ -157,7 +157,7 @@ export function Chart({
   maintainAspectRatio = false,
   ...props
 }: ChartProps) {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
 
   // Get color scheme based on chart type or custom scheme
   const activeColorScheme = useMemo(() => {
@@ -185,12 +185,10 @@ export function Chart({
 
   const handleMouseEnter = useCallback((data: any) => {
     const index = data?.activeTooltipIndex ?? 0;
-    setHoveredIndex(index);
     onDataPointHover?.(data?.activePayload?.[0]?.payload, index);
   }, [onDataPointHover]);
 
   const handleMouseLeave = useCallback(() => {
-    setHoveredIndex(null);
     onDataPointHover?.(null);
   }, [onDataPointHover]);
 
@@ -310,15 +308,13 @@ export function Chart({
             {showLegend && <Legend content={<CustomLegend />} />}
             {dataKeys.map((key, index) => {
               const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
-              const shouldDim = highlightedIndex !== undefined && hoveredIndex !== highlightedIndex;
-              const fillColor = shouldDim ? `${baseColor}60` : baseColor;
-              
+
               return (
                 <Bar
                   key={key}
                   dataKey={key}
                   name={config[key].label}
-                  fill={fillColor}
+                  fill={baseColor}
                   radius={[0, 0, 0, 0]}
                   className="cursor-pointer transition-colors"
                   isAnimationActive={false}
@@ -356,15 +352,13 @@ export function Chart({
             {showLegend && <Legend content={<CustomLegend />} />}
             {dataKeys.map((key, index) => {
               const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
-              const shouldDim = highlightedIndex !== undefined && hoveredIndex !== highlightedIndex;
-              const fillColor = shouldDim ? `${baseColor}60` : baseColor;
-              
+
               return (
                 <Bar
                   key={key}
                   dataKey={key}
                   name={config[key].label}
-                  fill={fillColor}
+                  fill={baseColor}
                   isAnimationActive={false}
                   maxBarSize={40}
                 />
@@ -393,23 +387,21 @@ export function Chart({
             {showLegend && <Legend content={<CustomLegend />} />}
             {dataKeys.map((key, index) => {
               const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
-              const shouldDim = highlightedIndex !== undefined && hoveredIndex !== highlightedIndex;
-              const strokeColor = shouldDim ? `${baseColor}60` : baseColor;
-              
+
               return (
                 <Line
                   key={key}
                   type="linear"
                   dataKey={key}
                   name={config[key].label}
-                  stroke={strokeColor}
+                  stroke={baseColor}
                   strokeWidth={2}
-                  dot={{ 
-                    fill: strokeColor, 
+                  dot={{
+                    fill: baseColor,
                     strokeWidth: 0,
                     r: 3
                   }}
-                  activeDot={{ 
+                  activeDot={{
                     r: 5,
                     fill: baseColor
                   }}
@@ -443,15 +435,13 @@ export function Chart({
               .filter(key => key !== 'x' && key !== 'y' && key !== 'name')
               .map((key, index) => {
                 const baseColor = config[key]?.color || activeColorScheme[index % activeColorScheme.length];
-                const shouldDim = highlightedIndex !== undefined && hoveredIndex !== highlightedIndex;
-                const fillColor = shouldDim ? `${baseColor}60` : baseColor;
-                
+
                 return (
                   <Scatter
                     key={key}
                     name={config[key]?.label || key}
                     data={data.map(d => ({ x: d.x, y: d.y, [key]: d[key] }))}
-                    fill={fillColor}
+                    fill={baseColor}
                     className="cursor-pointer transition-colors"
                     isAnimationActive={false}
                   />
@@ -480,10 +470,8 @@ export function Chart({
             {showLegend && <Legend content={<CustomLegend />} />}
             {dataKeys.map((key, index) => {
               const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
-              const shouldDim = highlightedIndex !== undefined && hoveredIndex !== highlightedIndex;
-              const fillColor = shouldDim ? `${baseColor}60` : baseColor;
               const chartElementType = config[key].type || "bar"; // Default to bar
-              
+
               if (chartElementType === "line") {
                 return (
                   <Line
@@ -491,14 +479,14 @@ export function Chart({
                     type="linear"
                     dataKey={key}
                     name={config[key].label}
-                    stroke={fillColor}
+                    stroke={baseColor}
                     strokeWidth={2}
-                    dot={{ 
-                      fill: fillColor, 
+                    dot={{
+                      fill: baseColor,
                       strokeWidth: 0,
                       r: 3
                     }}
-                    activeDot={{ 
+                    activeDot={{
                       r: 5,
                       fill: baseColor
                     }}
@@ -514,7 +502,7 @@ export function Chart({
                     dataKey={key}
                     name={config[key].label}
                     stroke={baseColor}
-                    fill={fillColor}
+                    fill={baseColor}
                     fillOpacity={0.3}
                     className="cursor-pointer transition-colors"
                     isAnimationActive={false}
@@ -527,7 +515,7 @@ export function Chart({
                     key={key}
                     dataKey={key}
                     name={config[key].label}
-                    fill={fillColor}
+                    fill={baseColor}
                     radius={[0, 0, 0, 0]}
                     className="cursor-pointer transition-colors"
                     isAnimationActive={false}

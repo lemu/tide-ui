@@ -159,6 +159,23 @@ export const IconOnly: Story = {
   },
 }
 
+// Disabled icon button
+export const DisabledIconOnly: Story = {
+  args: {
+    icon: 'settings',
+    size: 'md',
+    disabled: true,
+  },
+}
+
+// Small icon button (like in Pagination)
+export const IconOnlySmall: Story = {
+  args: {
+    icon: 'arrow-left',
+    size: 'sm',
+  },
+}
+
 // Dropdown button
 export const WithDropdown: Story = {
   render: () => (

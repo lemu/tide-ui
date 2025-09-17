@@ -16,7 +16,7 @@ const meta: Meta<typeof Toggle> = {
     },
     size: {
       control: { type: 'select' },
-      options: ['default', 'sm', 'lg'],
+      options: ['sm', 'md', 'lg'],
     },
     disabled: {
       control: { type: 'boolean' },
@@ -165,6 +165,43 @@ export const ToolbarExample: Story = {
   ),
 }
 
+// New story matching Figma design - column display toggles
+export const ColumnDisplayToggles: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <h4 className="text-label-sm text-[var(--color-text-tertiary)]">Display columns</h4>
+        <div className="flex flex-wrap gap-1 items-start justify-start">
+          <Toggle variant="outline" size="sm" pressed aria-label="Toggle Laycan year">
+            Laycan year
+          </Toggle>
+          <Toggle variant="outline" size="sm" pressed aria-label="Toggle Laycan month">
+            Laycan month
+          </Toggle>
+          <Toggle variant="outline" size="sm" pressed aria-label="Toggle Fixture count">
+            Fixture count
+          </Toggle>
+          <Toggle variant="outline" size="sm" pressed aria-label="Toggle Cargo count">
+            Cargo count
+          </Toggle>
+          <Toggle variant="outline" size="sm" pressed aria-label="Toggle Gross freight">
+            Gross freight
+          </Toggle>
+          <Toggle variant="outline" size="sm" pressed aria-label="Toggle Avg. freight rate">
+            Avg. freight rate
+          </Toggle>
+          <Toggle variant="outline" size="sm" pressed aria-label="Toggle Avg. demurrage">
+            Avg. demurrage
+          </Toggle>
+          <Toggle variant="outline" size="sm" aria-label="Toggle Hidden property">
+            Hidden property
+          </Toggle>
+        </div>
+      </div>
+    </div>
+  ),
+}
+
 export const AllVariants: Story = {
   render: () => (
     <div className="space-y-4">
@@ -174,7 +211,7 @@ export const AllVariants: Story = {
           <Toggle size="sm" aria-label="Small default">
             <Bold className="h-4 w-4" />
           </Toggle>
-          <Toggle aria-label="Default">
+          <Toggle size="md" aria-label="Medium default">
             <Bold className="h-4 w-4" />
           </Toggle>
           <Toggle size="lg" aria-label="Large default">
@@ -188,11 +225,25 @@ export const AllVariants: Story = {
           <Toggle variant="outline" size="sm" aria-label="Small outline">
             <Italic className="h-4 w-4" />
           </Toggle>
-          <Toggle variant="outline" aria-label="Default outline">
+          <Toggle variant="outline" size="md" aria-label="Medium outline">
             <Italic className="h-4 w-4" />
           </Toggle>
           <Toggle variant="outline" size="lg" aria-label="Large outline">
             <Italic className="h-4 w-4" />
+          </Toggle>
+        </div>
+      </div>
+      <div className="space-y-2">
+        <h4 className="text-sm font-medium">Text Toggles - All Sizes</h4>
+        <div className="flex space-x-2 items-center">
+          <Toggle variant="outline" size="sm" aria-label="Small text">
+            Small
+          </Toggle>
+          <Toggle variant="outline" size="md" aria-label="Medium text">
+            Medium
+          </Toggle>
+          <Toggle variant="outline" size="lg" aria-label="Large text">
+            Large
           </Toggle>
         </div>
       </div>

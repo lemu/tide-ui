@@ -1,802 +1,421 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { useState } from 'react'
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from '../components/ui/pagination'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
-import { Badge } from '../components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
+import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
+import { Pagination } from "../components/ui/pagination";
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
+import { Badge } from "../components/ui/badge";
 
 const meta: Meta<typeof Pagination> = {
-  title: 'Done/Pagination',
+  title: "NPM/Pagination",
   component: Pagination,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
-} satisfies Meta<typeof Pagination>
+  tags: ["autodocs"],
+  argTypes: {
+    variant: {
+      control: "select",
+      options: ["default", "full"],
+      description: "Pagination variant - default has prev/next, full adds first/last buttons",
+    },
+    currentPage: {
+      control: "number",
+      description: "Current active page number",
+    },
+    totalItems: {
+      control: "number",
+      description: "Total number of items to paginate",
+    },
+    pageSize: {
+      control: "number",
+      description: "Number of items per page",
+    },
+  },
+} satisfies Meta<typeof Pagination>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-// Basic pagination
+// Default variant
 export const Default: Story = {
-  render: () => (
-    <Pagination>
-      <PaginationContent>
-        <PaginationItem>
-          <PaginationPrevious href="#" />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">1</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#" isActive>2</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">3</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">10</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationNext href="#" />
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
-  ),
-}
+  render: () => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(25);
+    const totalItems = 256;
 
-// Interactive pagination
+    return (
+      <div className="space-y-4">
+        <div className="text-center">
+          <p className="text-body-sm font-medium mb-2">Default Variant</p>
+          <p className="text-body-sm text-[var(--color-text-secondary)]">
+            Previous/Next navigation with range dropdown
+          </p>
+        </div>
+        <Pagination
+          variant="default"
+          currentPage={currentPage}
+          totalItems={totalItems}
+          pageSize={pageSize}
+          onPageChange={setCurrentPage}
+          onPageSizeChange={setPageSize}
+        />
+      </div>
+    );
+  },
+};
+
+// Full variant
+export const Full: Story = {
+  render: () => {
+    const [currentPage, setCurrentPage] = useState(3);
+    const [pageSize, setPageSize] = useState(25);
+    const totalItems = 256;
+
+    return (
+      <div className="space-y-4">
+        <div className="text-center">
+          <p className="text-body-sm font-medium mb-2">Full Variant</p>
+          <p className="text-body-sm text-[var(--color-text-secondary)]">
+            First/Previous/Next/Last navigation with range dropdown
+          </p>
+        </div>
+        <Pagination
+          variant="full"
+          currentPage={currentPage}
+          totalItems={totalItems}
+          pageSize={pageSize}
+          onPageChange={setCurrentPage}
+          onPageSizeChange={setPageSize}
+        />
+      </div>
+    );
+  },
+};
+
+// Interactive example
 export const Interactive: Story = {
   render: () => {
-    const [currentPage, setCurrentPage] = useState(5)
-    const totalPages = 20
+    const [currentPage, setCurrentPage] = useState(5);
+    const [pageSize, setPageSize] = useState(10);
+    const [variant, setVariant] = useState<"default" | "full">("default");
+    const totalItems = 247;
 
-    const generatePageNumbers = () => {
-      const pages = []
-      const maxVisible = 7
-
-      if (totalPages <= maxVisible) {
-        for (let i = 1; i <= totalPages; i++) {
-          pages.push(i)
-        }
-      } else {
-        if (currentPage <= 4) {
-          for (let i = 1; i <= 5; i++) {
-            pages.push(i)
-          }
-          pages.push('ellipsis')
-          pages.push(totalPages)
-        } else if (currentPage >= totalPages - 3) {
-          pages.push(1)
-          pages.push('ellipsis')
-          for (let i = totalPages - 4; i <= totalPages; i++) {
-            pages.push(i)
-          }
-        } else {
-          pages.push(1)
-          pages.push('ellipsis')
-          for (let i = currentPage - 1; i <= currentPage + 1; i++) {
-            pages.push(i)
-          }
-          pages.push('ellipsis')
-          pages.push(totalPages)
-        }
-      }
-
-      return pages
-    }
-
-    const pages = generatePageNumbers()
+    const startItem = (currentPage - 1) * pageSize + 1;
+    const endItem = Math.min(currentPage * pageSize, totalItems);
+    const totalPages = Math.ceil(totalItems / pageSize);
 
     return (
-      <div className="space-y-4">
-        <div className="text-center">
-          <p className="text-body-sm text-[var(--color-text-secondary)]">
-            Page {currentPage} of {totalPages} (400 total items)
-          </p>
-        </div>
-        
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious 
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault()
-                  if (currentPage > 1) setCurrentPage(currentPage - 1)
-                }}
-                style={{ 
-                  opacity: currentPage === 1 ? 0.5 : 1,
-                  pointerEvents: currentPage === 1 ? 'none' : 'auto'
-                }}
-              />
-            </PaginationItem>
-            
-            {pages.map((page, index) => (
-              <PaginationItem key={index}>
-                {page === 'ellipsis' ? (
-                  <PaginationEllipsis />
-                ) : (
-                  <PaginationLink 
-                    href="#"
-                    isActive={page === currentPage}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      setCurrentPage(page as number)
-                    }}
-                  >
-                    {page}
-                  </PaginationLink>
-                )}
-              </PaginationItem>
-            ))}
-            
-            <PaginationItem>
-              <PaginationNext 
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault()
-                  if (currentPage < totalPages) setCurrentPage(currentPage + 1)
-                }}
-                style={{ 
-                  opacity: currentPage === totalPages ? 0.5 : 1,
-                  pointerEvents: currentPage === totalPages ? 'none' : 'auto'
-                }}
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-        
-        <div className="text-center">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={() => setCurrentPage(Math.floor(Math.random() * totalPages) + 1)}
-          >
-            Random Page
-          </Button>
-        </div>
-      </div>
-    )
-  },
-}
-
-// Simple pagination (few pages)
-export const SimplePagination: Story = {
-  render: () => {
-    const [currentPage, setCurrentPage] = useState(2)
-    const totalPages = 5
-
-    return (
-      <div className="space-y-4">
-        <div className="text-center">
-          <p className="text-body-sm text-[var(--color-text-secondary)]">
-            Showing page {currentPage} of {totalPages}
-          </p>
-        </div>
-        
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious 
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault()
-                  if (currentPage > 1) setCurrentPage(currentPage - 1)
-                }}
-                style={{ 
-                  opacity: currentPage === 1 ? 0.5 : 1,
-                  pointerEvents: currentPage === 1 ? 'none' : 'auto'
-                }}
-              />
-            </PaginationItem>
-            
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <PaginationItem key={page}>
-                <PaginationLink 
-                  href="#"
-                  isActive={page === currentPage}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    setCurrentPage(page)
-                  }}
+      <div className="w-full max-w-2xl space-y-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between">
+              Pagination Demo
+              <div className="flex gap-2">
+                <Badge
+                  variant={variant === "default" ? "default" : "secondary"}
+                  className="cursor-pointer"
+                  onClick={() => setVariant("default")}
                 >
-                  {page}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
-            
-            <PaginationItem>
-              <PaginationNext 
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault()
-                  if (currentPage < totalPages) setCurrentPage(currentPage + 1)
-                }}
-                style={{ 
-                  opacity: currentPage === totalPages ? 0.5 : 1,
-                  pointerEvents: currentPage === totalPages ? 'none' : 'auto'
-                }}
+                  Default
+                </Badge>
+                <Badge
+                  variant={variant === "full" ? "default" : "secondary"}
+                  className="cursor-pointer"
+                  onClick={() => setVariant("full")}
+                >
+                  Full
+                </Badge>
+              </div>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="text-center space-y-2">
+              <p className="text-body-md">
+                <strong>Showing items {startItem}-{endItem}</strong> of {totalItems} total
+              </p>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                Page {currentPage} of {totalPages} • {pageSize} items per page
+              </p>
+            </div>
+
+            {/* Simulated content */}
+            <div className="border rounded-lg p-4 space-y-2">
+              {Array.from({ length: Math.min(pageSize, totalItems - startItem + 1) }, (_, i) => {
+                const itemNumber = startItem + i;
+                return (
+                  <div
+                    key={itemNumber}
+                    className="flex items-center justify-between p-2 bg-[var(--color-background-neutral-subtle)] rounded"
+                  >
+                    <span className="font-medium">Item #{itemNumber}</span>
+                    <Badge variant="outline">Type {((itemNumber - 1) % 4) + 1}</Badge>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="flex justify-center">
+              <Pagination
+                variant={variant}
+                currentPage={currentPage}
+                totalItems={totalItems}
+                pageSize={pageSize}
+                onPageChange={setCurrentPage}
+                onPageSizeChange={setPageSize}
               />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+            </div>
+          </CardContent>
+        </Card>
       </div>
-    )
+    );
   },
-}
+};
 
-// Data table with pagination
-export const DataTablePagination: Story = {
+// Different page sizes
+export const PageSizes: Story = {
   render: () => {
-    const [currentPage, setCurrentPage] = useState(1)
-    const [itemsPerPage, setItemsPerPage] = useState(10)
-    
-    const totalItems = 247
-    const totalPages = Math.ceil(totalItems / itemsPerPage)
-    const startItem = (currentPage - 1) * itemsPerPage + 1
-    const endItem = Math.min(currentPage * itemsPerPage, totalItems)
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(50);
+    const totalItems = 1000;
 
-    const generateTableRows = () => {
-      const rows = []
-      for (let i = startItem; i <= endItem; i++) {
-        rows.push({
-          id: i,
-          name: `User ${i}`,
-          email: `user${i}@example.com`,
-          role: ['Admin', 'Editor', 'Viewer'][i % 3],
-          status: Math.random() > 0.3 ? 'Active' : 'Inactive'
-        })
-      }
-      return rows
-    }
+    return (
+      <div className="space-y-4">
+        <div className="text-center">
+          <p className="text-body-sm font-medium mb-2">Large Dataset</p>
+          <p className="text-body-sm text-[var(--color-text-secondary)]">
+            {totalItems} items with customizable page sizes
+          </p>
+        </div>
+        <Pagination
+          variant="full"
+          currentPage={currentPage}
+          totalItems={totalItems}
+          pageSize={pageSize}
+          onPageChange={setCurrentPage}
+          onPageSizeChange={setPageSize}
+          pageSizeOptions={[25, 50, 100, 200]}
+        />
+      </div>
+    );
+  },
+};
 
-    const tableData = generateTableRows()
+// Edge cases
+export const EdgeCases: Story = {
+  render: () => {
+    const [scenario, setScenario] = useState<"empty" | "single" | "few">("empty");
 
-    const generatePageNumbers = () => {
-      const pages = []
-      const maxVisible = 5
+    const scenarios = {
+      empty: { items: 0, page: 1, size: 10 },
+      single: { items: 5, page: 1, size: 10 },
+      few: { items: 8, page: 1, size: 25 },
+    };
 
-      if (totalPages <= maxVisible) {
-        for (let i = 1; i <= totalPages; i++) {
-          pages.push(i)
-        }
-      } else {
-        if (currentPage <= 3) {
-          for (let i = 1; i <= 4; i++) {
-            pages.push(i)
-          }
-          pages.push('ellipsis')
-          pages.push(totalPages)
-        } else if (currentPage >= totalPages - 2) {
-          pages.push(1)
-          pages.push('ellipsis')
-          for (let i = totalPages - 3; i <= totalPages; i++) {
-            pages.push(i)
-          }
-        } else {
-          pages.push(1)
-          pages.push('ellipsis')
-          for (let i = currentPage - 1; i <= currentPage + 1; i++) {
-            pages.push(i)
-          }
-          pages.push('ellipsis')
-          pages.push(totalPages)
-        }
-      }
+    const [currentPage, setCurrentPage] = useState(scenarios[scenario].page);
+    const [pageSize, setPageSize] = useState(scenarios[scenario].size);
+    const totalItems = scenarios[scenario].items;
 
-      return pages
-    }
+    return (
+      <div className="space-y-6">
+        <div className="text-center space-y-2">
+          <p className="text-body-sm font-medium">Edge Cases</p>
+          <div className="flex justify-center gap-2">
+            <Badge
+              variant={scenario === "empty" ? "default" : "secondary"}
+              className="cursor-pointer"
+              onClick={() => setScenario("empty")}
+            >
+              No Items
+            </Badge>
+            <Badge
+              variant={scenario === "single" ? "default" : "secondary"}
+              className="cursor-pointer"
+              onClick={() => setScenario("single")}
+            >
+              Single Page
+            </Badge>
+            <Badge
+              variant={scenario === "few" ? "default" : "secondary"}
+              className="cursor-pointer"
+              onClick={() => setScenario("few")}
+            >
+              Few Items
+            </Badge>
+          </div>
+        </div>
 
-    const pages = generatePageNumbers()
+        <div className="flex justify-center">
+          <Pagination
+            variant="full"
+            currentPage={currentPage}
+            totalItems={totalItems}
+            pageSize={pageSize}
+            onPageChange={setCurrentPage}
+            onPageSizeChange={setPageSize}
+          />
+        </div>
+
+        <div className="text-center text-body-sm text-[var(--color-text-secondary)]">
+          {scenario === "empty" && "No items to display"}
+          {scenario === "single" && `${totalItems} items (all fit on one page)`}
+          {scenario === "few" && `${totalItems} items (less than page size)`}
+        </div>
+      </div>
+    );
+  },
+};
+
+// Data table integration example
+export const DataTableExample: Story = {
+  render: () => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+
+    const allUsers = Array.from({ length: 127 }, (_, i) => ({
+      id: i + 1,
+      name: `User ${i + 1}`,
+      email: `user${i + 1}@example.com`,
+      role: ["Admin", "Editor", "Viewer"][i % 3],
+      status: Math.random() > 0.3 ? "Active" : "Inactive",
+    }));
+
+    const totalItems = allUsers.length;
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const currentUsers = allUsers.slice(startIndex, endIndex);
+
+    const getStatusBadge = (status: string) => (
+      <Badge variant={status === "Active" ? "default" : "secondary"}>
+        {status}
+      </Badge>
+    );
 
     return (
       <div className="w-full max-w-4xl space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center justify-between">
-              Users
-              <Badge variant="outline">{totalItems} total</Badge>
-            </CardTitle>
+            <CardTitle>User Management</CardTitle>
           </CardHeader>
           <CardContent>
             {/* Table */}
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto mb-4">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-[var(--color-border-primary-subtle)]">
-                    <th className="text-left p-3 text-body-sm font-medium">Name</th>
-                    <th className="text-left p-3 text-body-sm font-medium">Email</th>
-                    <th className="text-left p-3 text-body-sm font-medium">Role</th>
-                    <th className="text-left p-3 text-body-sm font-medium">Status</th>
+                  <tr className="border-b border-[var(--color-border-primary-subtle)] bg-[#f6f7f8]">
+                    <th className="text-left px-4 py-2 text-body-strong-sm font-semibold">Name</th>
+                    <th className="text-left px-4 py-2 text-body-strong-sm font-semibold">Email</th>
+                    <th className="text-left px-4 py-2 text-body-strong-sm font-semibold">Role</th>
+                    <th className="text-left px-4 py-2 text-body-strong-sm font-semibold">Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {tableData.map((user) => (
-                    <tr key={user.id} className="border-b border-[var(--color-border-primary-subtle)] hover:bg-[var(--color-background-neutral-subtle-hovered)]">
-                      <td className="p-3 text-body-sm font-medium">{user.name}</td>
-                      <td className="p-3 text-body-sm text-[var(--color-text-secondary)]">{user.email}</td>
-                      <td className="p-3">
-                        <Badge variant="outline" className="text-xs">{user.role}</Badge>
+                  {currentUsers.map((user) => (
+                    <tr
+                      key={user.id}
+                      className="border-b border-[var(--color-border-primary-subtle)] hover:bg-[var(--color-background-neutral-subtle-hovered)]"
+                    >
+                      <td className="px-4 py-2 text-body-sm font-medium">{user.name}</td>
+                      <td className="px-4 py-2 text-body-sm text-[var(--color-text-secondary)]">
+                        {user.email}
                       </td>
-                      <td className="p-3">
-                        <Badge variant={user.status === 'Active' ? 'default' : 'secondary'} className="text-xs">
-                          {user.status}
-                        </Badge>
+                      <td className="px-4 py-2">
+                        <Badge variant="outline">{user.role}</Badge>
                       </td>
+                      <td className="px-4 py-2">{getStatusBadge(user.status)}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
 
-            {/* Pagination Controls */}
-            <div className="flex items-center justify-between mt-6">
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <span className="text-body-sm">Rows per page:</span>
-                  <select
-                    value={itemsPerPage}
-                    onChange={(e) => {
-                      const newItemsPerPage = Number(e.target.value)
-                      setItemsPerPage(newItemsPerPage)
-                      setCurrentPage(1)
-                    }}
-                    className="border border-[var(--color-border-input)] rounded px-2 py-1 text-body-sm"
-                  >
-                    <option value={5}>5</option>
-                    <option value={10}>10</option>
-                    <option value={20}>20</option>
-                    <option value={50}>50</option>
-                  </select>
-                </div>
-                <div className="text-body-sm text-[var(--color-text-secondary)]">
-                  Showing {startItem}-{endItem} of {totalItems}
-                </div>
+            {/* Pagination */}
+            <div className="flex justify-between items-center">
+              <div className="text-body-sm text-[var(--color-text-secondary)]">
+                Total: {totalItems} users
               </div>
-
-              <Pagination>
-                <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious 
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        if (currentPage > 1) setCurrentPage(currentPage - 1)
-                      }}
-                      style={{ 
-                        opacity: currentPage === 1 ? 0.5 : 1,
-                        pointerEvents: currentPage === 1 ? 'none' : 'auto'
-                      }}
-                    />
-                  </PaginationItem>
-                  
-                  {pages.map((page, index) => (
-                    <PaginationItem key={index}>
-                      {page === 'ellipsis' ? (
-                        <PaginationEllipsis />
-                      ) : (
-                        <PaginationLink 
-                          href="#"
-                          isActive={page === currentPage}
-                          onClick={(e) => {
-                            e.preventDefault()
-                            setCurrentPage(page as number)
-                          }}
-                        >
-                          {page}
-                        </PaginationLink>
-                      )}
-                    </PaginationItem>
-                  ))}
-                  
-                  <PaginationItem>
-                    <PaginationNext 
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        if (currentPage < totalPages) setCurrentPage(currentPage + 1)
-                      }}
-                      style={{ 
-                        opacity: currentPage === totalPages ? 0.5 : 1,
-                        pointerEvents: currentPage === totalPages ? 'none' : 'auto'
-                      }}
-                    />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
+              <Pagination
+                variant="default"
+                currentPage={currentPage}
+                totalItems={totalItems}
+                pageSize={pageSize}
+                onPageChange={setCurrentPage}
+                onPageSizeChange={setPageSize}
+              />
             </div>
           </CardContent>
         </Card>
       </div>
-    )
+    );
   },
-}
+};
 
-// Search results pagination
-export const SearchResultsPagination: Story = {
+// Comparison of variants
+export const VariantComparison: Story = {
   render: () => {
-    const [currentPage, setCurrentPage] = useState(1)
-    const [searchQuery] = useState('design system')
-    
-    const resultsPerPage = 5
-    const totalResults = 127
-    const totalPages = Math.ceil(totalResults / resultsPerPage)
-    const startResult = (currentPage - 1) * resultsPerPage + 1
-    const endResult = Math.min(currentPage * resultsPerPage, totalResults)
-
-    const generateResults = () => {
-      const results = []
-      for (let i = startResult; i <= endResult; i++) {
-        results.push({
-          id: i,
-          title: `Design System Component #${i}`,
-          description: `A comprehensive guide to building scalable design systems with reusable components and patterns. Result ${i} of ${totalResults}.`,
-          url: `https://example.com/component-${i}`,
-          type: ['Component', 'Pattern', 'Guide', 'Example'][i % 4]
-        })
-      }
-      return results
-    }
-
-    const searchResults = generateResults()
-
-    const generatePageNumbers = () => {
-      const pages = []
-      if (totalPages <= 7) {
-        for (let i = 1; i <= totalPages; i++) {
-          pages.push(i)
-        }
-      } else {
-        if (currentPage <= 4) {
-          for (let i = 1; i <= 5; i++) {
-            pages.push(i)
-          }
-          pages.push('ellipsis')
-          pages.push(totalPages)
-        } else if (currentPage >= totalPages - 3) {
-          pages.push(1)
-          pages.push('ellipsis')
-          for (let i = totalPages - 4; i <= totalPages; i++) {
-            pages.push(i)
-          }
-        } else {
-          pages.push(1)
-          pages.push('ellipsis')
-          for (let i = currentPage - 1; i <= currentPage + 1; i++) {
-            pages.push(i)
-          }
-          pages.push('ellipsis')
-          pages.push(totalPages)
-        }
-      }
-      return pages
-    }
-
-    const pages = generatePageNumbers()
+    const [currentPage1, setCurrentPage1] = useState(1);
+    const [pageSize1, setPageSize1] = useState(25);
+    const [currentPage2, setCurrentPage2] = useState(1);
+    const [pageSize2, setPageSize2] = useState(25);
+    const totalItems = 256;
 
     return (
-      <div className="w-full max-w-3xl space-y-6">
-        <div className="border-b border-[var(--color-border-primary-subtle)] pb-4">
-          <h2 className="text-heading-lg font-semibold mb-2">Search Results</h2>
-          <p className="text-body-md text-[var(--color-text-secondary)]">
-            {totalResults.toLocaleString()} results for "{searchQuery}" ({(Math.random() * 0.5 + 0.2).toFixed(2)} seconds)
-          </p>
-        </div>
-
-        <div className="space-y-6">
-          {searchResults.map((result) => (
-            <div key={result.id} className="space-y-2">
-              <div className="flex items-start gap-3">
-                <div className="flex-1">
-                  <h3 className="text-body-lg font-medium text-[var(--color-text-action)] hover:underline cursor-pointer">
-                    {result.title}
-                  </h3>
-                  <p className="text-body-sm text-[var(--color-text-secondary)] mt-1">
-                    {result.url}
-                  </p>
-                  <p className="text-body-md mt-2">
-                    {result.description}
-                  </p>
-                </div>
-                <Badge variant="outline" className="text-xs">
-                  {result.type}
-                </Badge>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex items-center justify-between pt-6 border-t border-[var(--color-border-primary-subtle)]">
-          <div className="text-body-sm text-[var(--color-text-secondary)]">
-            Showing {startResult}-{endResult} of {totalResults.toLocaleString()} results
-          </div>
-
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious 
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    if (currentPage > 1) setCurrentPage(currentPage - 1)
-                  }}
-                  style={{ 
-                    opacity: currentPage === 1 ? 0.5 : 1,
-                    pointerEvents: currentPage === 1 ? 'none' : 'auto'
-                  }}
-                />
-              </PaginationItem>
-              
-              {pages.map((page, index) => (
-                <PaginationItem key={index}>
-                  {page === 'ellipsis' ? (
-                    <PaginationEllipsis />
-                  ) : (
-                    <PaginationLink 
-                      href="#"
-                      isActive={page === currentPage}
-                      onClick={(e) => {
-                        e.preventDefault()
-                        setCurrentPage(page as number)
-                      }}
-                    >
-                      {page}
-                    </PaginationLink>
-                  )}
-                </PaginationItem>
-              ))}
-              
-              <PaginationItem>
-                <PaginationNext 
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    if (currentPage < totalPages) setCurrentPage(currentPage + 1)
-                  }}
-                  style={{ 
-                    opacity: currentPage === totalPages ? 0.5 : 1,
-                    pointerEvents: currentPage === totalPages ? 'none' : 'auto'
-                  }}
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </div>
-      </div>
-    )
-  },
-}
-
-// Compact pagination for mobile
-export const CompactPagination: Story = {
-  render: () => {
-    const [currentPage, setCurrentPage] = useState(3)
-    const totalPages = 15
-
-    return (
-      <div className="w-full max-w-sm space-y-4">
+      <div className="w-full max-w-3xl space-y-8">
         <div className="text-center">
-          <h3 className="text-heading-sm font-semibold mb-2">Mobile Gallery</h3>
-          <p className="text-body-sm text-[var(--color-text-secondary)]">
-            Photo {currentPage} of {totalPages}
+          <h3 className="text-heading-md font-semibold mb-2">Variant Comparison</h3>
+          <p className="text-body-md text-[var(--color-text-secondary)]">
+            Compare default and full pagination variants side by side
           </p>
         </div>
 
-        {/* Simulated image */}
-        <div className="aspect-square bg-[var(--color-background-neutral-subtle)] rounded-lg flex items-center justify-center">
-          <div className="text-center">
-            <Icon name="image" size="lg" className="mx-auto mb-2 text-[var(--color-text-secondary)]" />
-            <p className="text-body-sm text-[var(--color-text-secondary)]">Image {currentPage}</p>
-          </div>
-        </div>
-
-        {/* Compact pagination */}
-        <div className="flex items-center justify-between">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            <Icon name="chevron-left" size="sm" className="mr-1" />
-            Previous
-          </Button>
-          
-          <div className="flex items-center gap-1">
-            {currentPage > 2 && (
-              <>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="w-8 h-8 p-0"
-                  onClick={() => setCurrentPage(1)}
-                >
-                  1
-                </Button>
-                {currentPage > 3 && <span className="text-[var(--color-text-secondary)]">...</span>}
-              </>
-            )}
-            
-            {currentPage > 1 && (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="w-8 h-8 p-0"
-                onClick={() => setCurrentPage(currentPage - 1)}
-              >
-                {currentPage - 1}
-              </Button>
-            )}
-            
-            <Button
-              size="sm"
-              className="w-8 h-8 p-0"
-            >
-              {currentPage}
-            </Button>
-            
-            {currentPage < totalPages && (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="w-8 h-8 p-0"
-                onClick={() => setCurrentPage(currentPage + 1)}
-              >
-                {currentPage + 1}
-              </Button>
-            )}
-            
-            {currentPage < totalPages - 1 && (
-              <>
-                {currentPage < totalPages - 2 && <span className="text-[var(--color-text-secondary)]">...</span>}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="w-8 h-8 p-0"
-                  onClick={() => setCurrentPage(totalPages)}
-                >
-                  {totalPages}
-                </Button>
-              </>
-            )}
-          </div>
-          
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => currentPage < totalPages && setCurrentPage(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            Next
-            <Icon name="chevron-right" size="sm" className="ml-1" />
-          </Button>
-        </div>
-      </div>
-    )
-  },
-}
-
-// Edge cases
-export const EdgeCases: Story = {
-  render: () => {
-    const [scenario, setScenario] = useState<'single' | 'empty' | 'many'>('single')
-    
-    const scenarios = {
-      single: { current: 1, total: 1, items: 5 },
-      empty: { current: 1, total: 0, items: 0 },
-      many: { current: 500, total: 1000, items: 25000 }
-    }
-    
-    const { current, total, items } = scenarios[scenario]
-
-    return (
-      <div className="w-full max-w-lg space-y-6">
-        <div className="space-y-2">
-          <h3 className="text-heading-sm font-semibold">Edge Case Scenarios</h3>
-          <div className="flex gap-2">
-            <Button
-              size="sm"
-              variant={scenario === 'single' ? 'default' : 'ghost'}
-              onClick={() => setScenario('single')}
-            >
-              Single Page
-            </Button>
-            <Button
-              size="sm"
-              variant={scenario === 'empty' ? 'default' : 'ghost'}
-              onClick={() => setScenario('empty')}
-            >
-              No Results
-            </Button>
-            <Button
-              size="sm"
-              variant={scenario === 'many' ? 'default' : 'ghost'}
-              onClick={() => setScenario('many')}
-            >
-              Many Pages
-            </Button>
-          </div>
-        </div>
-
-        <Card>
-          <CardContent className="p-6">
-            {scenario === 'empty' ? (
-              <div className="text-center py-8">
-                <Icon name="search" size="lg" className="mx-auto mb-4 text-[var(--color-text-tertiary)]" />
-                <h4 className="text-body-md font-medium mb-2">No results found</h4>
-                <p className="text-body-sm text-[var(--color-text-secondary)] mb-4">
-                  Try adjusting your search criteria or filters.
-                </p>
-                <Button size="sm">Clear Filters</Button>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-center">Default Variant</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="text-center text-body-sm text-[var(--color-text-secondary)]">
+                Previous/Next navigation only
               </div>
-            ) : (
-              <>
-                <div className="text-center mb-4">
-                  <p className="text-body-sm text-[var(--color-text-secondary)]">
-                    {scenario === 'single' 
-                      ? `Showing all ${items} items` 
-                      : `Page ${current.toLocaleString()} of ${total.toLocaleString()} (${items.toLocaleString()} total items)`
-                    }
-                  </p>
-                </div>
+              <div className="flex justify-center">
+                <Pagination
+                  variant="default"
+                  currentPage={currentPage1}
+                  totalItems={totalItems}
+                  pageSize={pageSize1}
+                  onPageChange={setCurrentPage1}
+                  onPageSizeChange={setPageSize1}
+                />
+              </div>
+              <div className="text-center text-body-sm">
+                Page {currentPage1} of {Math.ceil(totalItems / pageSize1)}
+              </div>
+            </CardContent>
+          </Card>
 
-                {scenario === 'single' ? (
-                  <div className="text-center py-4">
-                    <p className="text-body-sm text-[var(--color-text-secondary)]">
-                      All items are displayed on this page.
-                    </p>
-                  </div>
-                ) : (
-                  <Pagination>
-                    <PaginationContent>
-                      <PaginationItem>
-                        <PaginationPrevious href="#" />
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink href="#">1</PaginationLink>
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationEllipsis />
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink href="#">499</PaginationLink>
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink href="#" isActive>500</PaginationLink>
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink href="#">501</PaginationLink>
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationEllipsis />
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink href="#">1000</PaginationLink>
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationNext href="#" />
-                      </PaginationItem>
-                    </PaginationContent>
-                  </Pagination>
-                )}
-              </>
-            )}
-          </CardContent>
-        </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-center">Full Variant</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="text-center text-body-sm text-[var(--color-text-secondary)]">
+                First/Previous/Next/Last navigation
+              </div>
+              <div className="flex justify-center">
+                <Pagination
+                  variant="full"
+                  currentPage={currentPage2}
+                  totalItems={totalItems}
+                  pageSize={pageSize2}
+                  onPageChange={setCurrentPage2}
+                  onPageSizeChange={setPageSize2}
+                />
+              </div>
+              <div className="text-center text-body-sm">
+                Page {currentPage2} of {Math.ceil(totalItems / pageSize2)}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
-    )
+    );
   },
-}
+};

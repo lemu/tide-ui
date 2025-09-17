@@ -8,7 +8,7 @@ import { Badge } from '../components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 
 const meta: Meta<typeof LinkedChart> = {
-  title: 'Done/LinkedChart',
+  title: 'NPM/LinkedChart',
   component: LinkedChart,
   parameters: {
     layout: 'fullscreen',
@@ -119,13 +119,14 @@ export const SalesPerformance: Story = {
         {/* Interactive Chart and Table */}
         <LinkedChart
           title="Sales Team Performance Analysis"
-          description="Click chart data points to filter the table, select table rows to highlight team members"
+          description="Click chart data points to filter the table, select table rows and use 'Filter Selected' to focus on specific team members"
           data={salesData}
           config={chartConfig}
           columns={columns}
           type="bar"
           enableFiltering={true}
           enableRowSelection={true}
+          enableRowFiltering={true}
           onDataFilter={setFilteredData}
           onRowSelectionChange={setSelectedRows}
           showTable={true}
@@ -372,7 +373,7 @@ export const ProductComparison: Story = {
 
         <LinkedChart
           title={`${selectedQuarter} Product Performance`}
-          description="Interactive product comparison - click data points to filter, select rows to compare products"
+          description="Interactive product comparison - click data points to filter table, select rows for detailed comparison"
           data={productData}
           config={chartConfig}
           columns={columns}
@@ -687,14 +688,14 @@ export const MultiChartDashboard: Story = {
         {/* Interactive Chart with Unified Data Table */}
         <LinkedChart
           title={getChartTitle()}
-          description="All charts are linked to the same comprehensive data table below. Selections and filters persist across chart views. Select rows to see them highlighted or filtered in the chart above."
+          description="All charts are linked to the same comprehensive data table below. Select team members and use 'Filter Selected' to compare them directly."
           data={teamData}
           config={getCurrentConfig()}
           columns={allColumns}
           type="bar"
           enableFiltering={true}
           enableRowSelection={true}
-          chartFilterMode="highlight" // Start with highlight mode
+          enableRowFiltering={true}
           onDataFilter={setFilteredData}
           onRowSelectionChange={setSelectedRows}
           showTable={true}

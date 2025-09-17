@@ -22,6 +22,8 @@ import { Icon } from "./icon"
 import { Badge } from "./badge"
 import { Popover, PopoverContent, PopoverTrigger } from "./popover"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "./command"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from "./dropdown-menu"
+import { Pagination } from "./pagination"
 
 // Filter variants and types
 export type FilterVariant = "text" | "select" | "multiselect" | "number" | "date" | "boolean"
@@ -60,12 +62,14 @@ interface DataTableToolbarProps<_TData = any> {
   table: any
   searchKey?: string
   searchPlaceholder?: string
+  showViewOptions?: boolean
 }
 
-function DataTableToolbar<TData>({ 
-  table, 
+function DataTableToolbar<TData>({
+  table,
   searchKey,
-  searchPlaceholder = "Search..." 
+  searchPlaceholder = "Search...",
+  showViewOptions = true
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
 
@@ -102,9 +106,11 @@ function DataTableToolbar<TData>({
         )}
       </div>
       
-      <div className="flex items-center space-x-2">
-        <DataTableViewOptions table={table} />
-      </div>
+      {showViewOptions && (
+        <div className="flex items-center space-x-2">
+          <DataTableViewOptions table={table} />
+        </div>
+      )}
     </div>
   )
 }
@@ -240,35 +246,34 @@ interface DataTableViewOptionsProps<_TData = any> {
 
 function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps<TData>) {
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="ghost" size="sm" className="ml-auto h-8">
-          <Icon name="settings-2" className="mr-2 h-4 w-4" />
-          View
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <Icon name="more-horizontal" className="h-4 w-4" />
         </Button>
-      </PopoverTrigger>
-      <PopoverContent align="end" className="w-[150px]">
-        <div className="space-y-2">
-          <p className="text-body-sm font-medium">Toggle columns</p>
-          {table
-            .getAllColumns()
-            .filter((column: any) => typeof column.accessorFn !== "undefined" && column.getCanHide())
-            .map((column: any) => {
-              return (
-                <div key={column.id} className="flex items-center space-x-2">
-                  <Checkbox
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(checked) => column.toggleVisibility(checked)}
-                  />
-                  <label className="text-body-sm font-normal">
-                    {column.columnDef.meta?.label || column.id}
-                  </label>
-                </div>
-              )
-            })}
-        </div>
-      </PopoverContent>
-    </Popover>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-[200px]">
+        <DropdownMenuLabel>View settings</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuLabel className="text-label-sm">Display columns</DropdownMenuLabel>
+        {table
+          .getAllColumns()
+          .filter((column: any) => typeof column.accessorFn !== "undefined" && column.getCanHide())
+          .map((column: any) => {
+            return (
+              <DropdownMenuCheckboxItem
+                key={column.id}
+                className="capitalize"
+                checked={column.getIsVisible()}
+                onCheckedChange={(checked) => column.toggleVisibility(checked)}
+              >
+                {column.columnDef.meta?.label || column.id}
+              </DropdownMenuCheckboxItem>
+            )
+          })}
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }
 
@@ -314,76 +319,37 @@ interface DataTablePaginationProps<_TData = any> {
 }
 
 function DataTablePagination<TData>({ table }: DataTablePaginationProps<TData>) {
+  const currentPage = table.getState().pagination.pageIndex + 1
+  const pageSize = table.getState().pagination.pageSize
+  const totalItems = table.getFilteredRowModel().rows.length
+  const selectedCount = table.getFilteredSelectedRowModel().rows.length
+
+  const handlePageChange = (page: number) => {
+    table.setPageIndex(page - 1) // TanStack uses 0-based indexing
+  }
+
+  const handlePageSizeChange = (newPageSize: number) => {
+    table.setPageSize(newPageSize)
+  }
+
   return (
     <div className="flex items-center justify-between">
       <div className="flex-1 text-body-sm text-[var(--color-text-secondary)]">
-        {table.getFilteredSelectedRowModel().rows.length} of{" "}
-        {table.getFilteredRowModel().rows.length} row(s) selected.
+        {selectedCount > 0 && (
+          <span>
+            {selectedCount} of {totalItems} row(s) selected.
+          </span>
+        )}
       </div>
-      <div className="flex items-center space-x-6 lg:space-x-8">
-        <div className="flex items-center space-x-2">
-          <p className="text-body-sm font-medium">Rows per page</p>
-          <Select
-            value={`${table.getState().pagination.pageSize}`}
-            onValueChange={(value) => {
-              table.setPageSize(Number(value))
-            }}
-          >
-            <SelectTrigger className="h-8 w-[70px]">
-              <SelectValue placeholder={table.getState().pagination.pageSize} />
-            </SelectTrigger>
-            <SelectContent side="top">
-              {[10, 20, 30, 40, 50].map((pageSize) => (
-                <SelectItem key={pageSize} value={`${pageSize}`}>
-                  {pageSize}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="flex w-[100px] items-center justify-center text-body-sm font-medium">
-          Page {table.getState().pagination.pageIndex + 1} of{" "}
-          {table.getPageCount()}
-        </div>
-        <div className="flex items-center space-x-2">
-          <Button
-            variant="ghost"
-            className="hidden h-8 w-8 p-0 lg:flex"
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <span className="sr-only">Go to first page</span>
-            <Icon name="chevrons-left" className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="ghost"
-            className="h-8 w-8 p-0"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <span className="sr-only">Go to previous page</span>
-            <Icon name="chevron-left" className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="ghost"
-            className="h-8 w-8 p-0"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Go to next page</span>
-            <Icon name="chevron-right" className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="ghost"
-            className="hidden h-8 w-8 p-0 lg:flex"
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Go to last page</span>
-            <Icon name="chevrons-right" className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
+      <Pagination
+        variant="full"
+        currentPage={currentPage}
+        totalItems={totalItems}
+        pageSize={pageSize}
+        onPageChange={handlePageChange}
+        onPageSizeChange={handlePageSizeChange}
+        pageSizeOptions={[10, 25, 50, 100]}
+      />
     </div>
   )
 }
@@ -394,6 +360,7 @@ export interface DataTableProps<TData, TValue> {
   data: TData[]
   searchKey?: string
   searchPlaceholder?: string
+  title?: string
   className?: string
 }
 
@@ -402,6 +369,7 @@ export function DataTable<TData, TValue>({
   data,
   searchKey,
   searchPlaceholder,
+  title,
   className,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -434,13 +402,20 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div className={cn("border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden", className)}>
-      {/* Header section with toolbar */}
-      <div className="border-b border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-secondary)] px-[var(--space-md)] py-[var(--space-sm)]">
-        <DataTableToolbar 
-          table={table} 
+    <div className={cn("border border-[var(--color-border-primary-subtle)] rounded-lg overflow-hidden bg-[var(--color-surface-primary)]", className)}>
+      {/* Header section with title and toolbar */}
+      <div className="border-b border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-[var(--space-lg)] py-[var(--space-md)]">
+        {title && (
+          <div className="flex justify-between items-center">
+            <h3 className="text-heading-sm font-semibold text-[var(--color-text-primary)]">{title}</h3>
+            <DataTableViewOptions table={table} />
+          </div>
+        )}
+        <DataTableToolbar
+          table={table}
           searchKey={searchKey}
           searchPlaceholder={searchPlaceholder}
+          showViewOptions={!title}
         />
       </div>
       
@@ -497,7 +472,7 @@ export function DataTable<TData, TValue>({
       </div>
       
       {/* Footer section with pagination */}
-      <div className="border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-secondary)] px-[var(--space-md)] py-[var(--space-sm)]">
+      <div className="border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-[var(--space-lg)] py-[var(--space-md)]">
         <DataTablePagination table={table} />
       </div>
     </div>

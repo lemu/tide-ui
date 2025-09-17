@@ -225,14 +225,16 @@ const Icon = React.forwardRef<SVGSVGElement, IconProps>(
     {
       name,
       size = "md",
-      color = "primary",
+      color,
       className,
       "aria-label": ariaLabel,
       ...props
     },
     ref,
   ) => {
-    const iconColorClass = iconColors[color];
+    // If no color is specified, use currentColor to inherit parent text color
+    // If color is specified, use the semantic color from our system
+    const iconColorClass = color ? iconColors[color] : "text-current";
     const iconSizeClass = iconSizes[size];
 
     // If no aria-label is provided, mark as decorative

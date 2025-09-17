@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import {
   Table,
   TableBody,
@@ -17,9 +17,10 @@ import { Icon } from '../components/ui/icon'
 import { Badge } from '../components/ui/badge'
 import { Checkbox } from '../components/ui/checkbox'
 import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar'
+import { formatNumber, formatCurrency, formatDecimal } from '../lib/utils'
 
 const meta: Meta<typeof Table> = {
-  title: 'Done/Table',
+  title: 'NPM/Table',
   component: Table,
   parameters: {
     layout: 'centered',
@@ -37,46 +38,109 @@ const meta: Meta<typeof Table> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+// New story showcasing numeric columns and formatting utilities - inspired by Figma design
+export const NumericColumnsWithFormatting: Story = {
+  render: () => {
+    const laycanData = [
+      { month: 'Jan', fixtureCount: 45, cargoQuantity: 7785000, grossFreight: 133340750, avgFreightRate: 20.35, avgDemurrage: 22300 },
+      { month: 'Feb', fixtureCount: 127, cargoQuantity: 10510000, grossFreight: 118074400, avgFreightRate: 13.29, avgDemurrage: 21500 },
+      { month: 'Mar', fixtureCount: 118, cargoQuantity: 7785900, grossFreight: 145230750, avgFreightRate: 18.45, avgDemurrage: 26000 },
+      { month: 'Apr', fixtureCount: 102, cargoQuantity: 12345678, grossFreight: 162890500, avgFreightRate: 21.67, avgDemurrage: 23800 },
+      { month: 'May', fixtureCount: 89, cargoQuantity: 15678900, grossFreight: 189450300, avgFreightRate: 17.92, avgDemurrage: 25600 },
+      { month: 'Jun', fixtureCount: 5, cargoQuantity: 20123456, grossFreight: 220890500, avgFreightRate: 8.48, avgDemurrage: 23800 },
+    ]
+
+    return (
+      <div className="w-full">
+        <div className="mb-6">
+          <h3 className="text-heading-sm font-medium mb-2">Summary by laycan date</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)]">
+            Demonstrating the new <code>numeric</code> prop and formatting utilities
+          </p>
+        </div>
+
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Laycan month</TableHead>
+              <TableHead numeric>Fixture count</TableHead>
+              <TableHead numeric>Cargo quantity</TableHead>
+              <TableHead numeric>Gross freight</TableHead>
+              <TableHead numeric>Avg. freight rate ($...)</TableHead>
+              <TableHead numeric>Avg. demurrage ($...)</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {laycanData.map((row) => (
+              <TableRow key={row.month}>
+                <TableCell className="font-medium">{row.month}</TableCell>
+                <TableCell numeric>{formatNumber(row.fixtureCount)}</TableCell>
+                <TableCell numeric>{formatNumber(row.cargoQuantity)}</TableCell>
+                <TableCell numeric>{formatCurrency(row.grossFreight)}</TableCell>
+                <TableCell numeric>{formatDecimal(row.avgFreightRate)}</TableCell>
+                <TableCell numeric>{formatCurrency(row.avgDemurrage)}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+
+        <div className="mt-4 p-4 bg-[var(--color-background-neutral-subtle)] rounded-md">
+          <h4 className="text-body-md font-medium mb-2">Features Demonstrated:</h4>
+          <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-1">
+            <li>• <strong>numeric prop</strong>: Right-aligns content and uses tabular numerals</li>
+            <li>• <strong>formatNumber()</strong>: Adds commas to large numbers (7,785,000)</li>
+            <li>• <strong>formatCurrency()</strong>: Formats as currency ($133,340,750)</li>
+            <li>• <strong>formatDecimal()</strong>: Fixed decimal places (20.35)</li>
+          </ul>
+        </div>
+      </div>
+    )
+  },
+}
+
 // Basic table
 export const Default: Story = {
   render: () => (
-    <Table>
-      <TableCaption>A list of your recent invoices.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">Invoice</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        <TableRow>
-          <TableCell className="font-medium">INV001</TableCell>
-          <TableCell>Paid</TableCell>
-          <TableCell>Credit Card</TableCell>
-          <TableCell className="text-right">$250.00</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell className="font-medium">INV002</TableCell>
-          <TableCell>Pending</TableCell>
-          <TableCell>PayPal</TableCell>
-          <TableCell className="text-right">$150.00</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell className="font-medium">INV003</TableCell>
-          <TableCell>Unpaid</TableCell>
-          <TableCell>Bank Transfer</TableCell>
-          <TableCell className="text-right">$350.00</TableCell>
-        </TableRow>
-      </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">$750.00</TableCell>
-        </TableRow>
-      </TableFooter>
-    </Table>
+    <div className="w-full max-w-2xl space-y-4">
+      <h2 className="text-heading-lg font-semibold">Simple Table</h2>
+      <Table>
+        <TableCaption>A list of your recent invoices.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">Invoice</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Method</TableHead>
+            <TableHead numeric>Amount</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell className="font-medium">INV001</TableCell>
+            <TableCell>Paid</TableCell>
+            <TableCell>Credit Card</TableCell>
+            <TableCell numeric>$250.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className="font-medium">INV002</TableCell>
+            <TableCell>Pending</TableCell>
+            <TableCell>PayPal</TableCell>
+            <TableCell numeric>$150.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className="font-medium">INV003</TableCell>
+            <TableCell>Unpaid</TableCell>
+            <TableCell>Bank Transfer</TableCell>
+            <TableCell numeric>$350.00</TableCell>
+          </TableRow>
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={3}>Total</TableCell>
+            <TableCell numeric>$750.00</TableCell>
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </div>
   ),
 }
 
@@ -275,17 +339,17 @@ export const WithSorting: Story = {
     }
 
     const sortedData = [...data].sort((a, b) => {
-      let aVal: any = a[field as keyof typeof a]
-      let bVal: any = b[field as keyof typeof b]
-      
-      if (field === 'salary') {
+      let aVal: any = a[sortField as keyof typeof a]
+      let bVal: any = b[sortField as keyof typeof b]
+
+      if (sortField === 'salary') {
         aVal = Number(aVal)
         bVal = Number(bVal)
-      } else if (field === 'startDate') {
+      } else if (sortField === 'startDate') {
         aVal = new Date(aVal)
         bVal = new Date(bVal)
       }
-      
+
       if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1
       if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1
       return 0

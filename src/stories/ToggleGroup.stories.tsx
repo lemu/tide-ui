@@ -540,6 +540,60 @@ export const ChartTypeSelector: Story = {
   },
 }
 
+// Column display toggles - matching Figma design
+export const ColumnDisplayToggles: Story = {
+  render: () => {
+    const [selectedColumns, setSelectedColumns] = useState<string[]>([
+      'laycan-year', 'laycan-month', 'fixture-count', 'cargo-count',
+      'gross-freight', 'avg-freight-rate', 'avg-demurrage'
+    ])
+
+    return (
+      <div className="w-full max-w-lg">
+        <Card>
+          <CardHeader>
+            <CardTitle>Table View Settings</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label className="text-label-sm text-[var(--color-text-tertiary)]">Display columns</Label>
+              <ToggleGroup
+                type="multiple"
+                variant="outline"
+                size="sm"
+                value={selectedColumns}
+                onValueChange={setSelectedColumns}
+                className="flex-wrap justify-start"
+              >
+                <ToggleGroupItem value="laycan-year">Laycan year</ToggleGroupItem>
+                <ToggleGroupItem value="laycan-month">Laycan month</ToggleGroupItem>
+                <ToggleGroupItem value="fixture-count">Fixture count</ToggleGroupItem>
+                <ToggleGroupItem value="cargo-count">Cargo count</ToggleGroupItem>
+                <ToggleGroupItem value="gross-freight">Gross freight</ToggleGroupItem>
+                <ToggleGroupItem value="avg-freight-rate">Avg. freight rate</ToggleGroupItem>
+                <ToggleGroupItem value="avg-demurrage">Avg. demurrage</ToggleGroupItem>
+                <ToggleGroupItem value="hidden-property">Hidden property</ToggleGroupItem>
+              </ToggleGroup>
+            </div>
+
+            <div className="border-t border-[var(--color-border-primary-subtle)] pt-4">
+              <div className="text-body-sm space-y-1">
+                <div><strong>Visible columns:</strong> {selectedColumns.length}</div>
+                <div className="text-[var(--color-text-secondary)]">
+                  {selectedColumns.length > 0
+                    ? selectedColumns.map(col => col.replace('-', ' ')).join(', ')
+                    : 'No columns selected'
+                  }
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  },
+}
+
 // Disabled state
 export const DisabledState: Story = {
   render: () => {

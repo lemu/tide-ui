@@ -4,23 +4,17 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
 const toggleVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-body-medium-sm font-medium ring-offset-[var(--color-surface-primary)] transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-[var(--color-background-brand-selected)] data-[state=on]:text-[var(--color-text-selected)] [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:transition-colors data-[state=on]:[&_svg]:text-[var(--color-text-brand)] gap-[var(--space-sm)] cursor-pointer",
+  "inline-flex items-center justify-center font-medium ring-offset-[var(--color-surface-primary)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:transition-colors gap-[var(--space-sm)] cursor-pointer border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] data-[state=on]:bg-[var(--color-background-brand-selected)] data-[state=on]:text-[var(--color-text-brand)] data-[state=on]:border-transparent data-[state=on]:[&_svg]:text-[var(--color-text-brand)] aria-checked:bg-[var(--color-background-brand-selected)] aria-checked:text-[var(--color-text-brand)] aria-checked:border-transparent aria-checked:[&_svg]:text-[var(--color-text-brand)]",
   {
     variants: {
-      variant: {
-        default: "bg-transparent",
-        outline:
-          "border border-[var(--color-border-input)] bg-transparent hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]",
-      },
       size: {
-        sm: "h-[var(--size-md)] px-[var(--space-sm)] min-w-[var(--size-md)]",
-        md: "h-[var(--size-lg)] px-[var(--space-md)] min-w-[var(--size-lg)]",
-        lg: "h-[var(--size-xlg)] px-[var(--space-lg)] min-w-[var(--size-xlg)]",
+        sm: "text-label-sm rounded-sm px-[var(--space-sm)] py-[var(--space-xsm)]",
+        md: "text-label-sm rounded-md px-[var(--space-md)] py-[var(--space-sm)]",
+        lg: "text-label-md rounded-md px-[var(--space-lg)] py-[var(--space-md)]",
       },
     },
     defaultVariants: {
-      variant: "default",
-      size: "md",
+      size: "sm",
     },
   }
 );
@@ -32,10 +26,10 @@ export interface ToggleProps
 const Toggle = React.forwardRef<
   React.ElementRef<typeof TogglePrimitive.Root>,
   ToggleProps
->(({ className, variant, size, ...props }, ref) => (
+>(({ className, size, ...props }, ref) => (
   <TogglePrimitive.Root
     ref={ref}
-    className={cn(toggleVariants({ variant, size, className }))}
+    className={cn(toggleVariants({ size, className }))}
     {...props}
   />
 ));

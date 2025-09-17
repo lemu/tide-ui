@@ -1,132 +1,142 @@
 import * as React from "react";
 import { cn } from "../../lib/utils";
-import { ButtonProps, buttonVariants } from "./button";
+import { Button } from "./button";
+import { ButtonGroup } from "./button-group";
 import { Icon } from "./icon";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./dropdown-menu";
 
-const Pagination = React.forwardRef<
-  HTMLElement,
-  React.ComponentProps<"nav">
->(({ className, ...props }, ref) => (
-  <nav
-    ref={ref}
-    role="navigation"
-    aria-label="pagination"
-    className={cn("mx-auto flex w-full justify-center", className)}
-    {...props}
-  />
-));
+export interface PaginationProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: "default" | "full";
+  currentPage: number;
+  totalItems: number;
+  pageSize: number;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (pageSize: number) => void;
+  pageSizeOptions?: number[];
+}
+
+const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
+  ({
+    className,
+    variant = "default",
+    currentPage,
+    totalItems,
+    pageSize,
+    onPageChange,
+    onPageSizeChange,
+    pageSizeOptions = [10, 25, 50, 100],
+    ...props
+  }, ref) => {
+    // Calculate pagination values
+    const totalPages = Math.ceil(totalItems / pageSize);
+    const startItem = (currentPage - 1) * pageSize + 1;
+    const endItem = Math.min(currentPage * pageSize, totalItems);
+
+    // Navigation handlers
+    const goToFirstPage = () => onPageChange(1);
+    const goToPreviousPage = () => onPageChange(Math.max(1, currentPage - 1));
+    const goToNextPage = () => onPageChange(Math.min(totalPages, currentPage + 1));
+    const goToLastPage = () => onPageChange(totalPages);
+
+    // Disabled states
+    const isFirstPage = currentPage === 1;
+    const isLastPage = currentPage === totalPages || totalItems === 0;
+
+    // Handle page size change - try to maintain current starting item
+    const handlePageSizeChange = (newPageSize: number) => {
+      const currentStartItem = (currentPage - 1) * pageSize + 1;
+      const newPage = Math.ceil(currentStartItem / newPageSize);
+      onPageSizeChange(newPageSize);
+      onPageChange(Math.max(1, newPage));
+    };
+
+    return (
+      <div
+        ref={ref}
+        className={cn("flex items-center gap-[var(--space-sm)]", className)}
+        {...props}
+      >
+        {/* Navigation ButtonGroup */}
+        <ButtonGroup variant="default" size="sm">
+          {variant === "full" && (
+            <Button
+              onClick={goToFirstPage}
+              disabled={isFirstPage}
+              aria-label="Go to first page"
+              className="px-[var(--space-sm)] aspect-square"
+            >
+              <Icon name="arrow-left-to-line" className="w-4 h-4" />
+            </Button>
+          )}
+          <Button
+            onClick={goToPreviousPage}
+            disabled={isFirstPage}
+            aria-label="Go to previous page"
+            className="px-[var(--space-sm)] aspect-square"
+          >
+            <Icon name="arrow-left" className="w-4 h-4" />
+          </Button>
+          <Button
+            onClick={goToNextPage}
+            disabled={isLastPage}
+            aria-label="Go to next page"
+            className="px-[var(--space-sm)] aspect-square"
+          >
+            <Icon name="arrow-right" className="w-4 h-4" />
+          </Button>
+          {variant === "full" && (
+            <Button
+              onClick={goToLastPage}
+              disabled={isLastPage}
+              aria-label="Go to last page"
+              className="px-[var(--space-sm)] aspect-square"
+            >
+              <Icon name="arrow-right-to-line" className="w-4 h-4" />
+            </Button>
+          )}
+        </ButtonGroup>
+
+        {/* Range Dropdown */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm" className="gap-1 min-w-0">
+              <span className="whitespace-nowrap">
+                {totalItems === 0
+                  ? "0 of 0"
+                  : `${startItem}-${endItem} of ${totalItems}`
+                }
+              </span>
+              <Icon name="chevron-down" className="w-4 h-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="min-w-[80px]">
+            {pageSizeOptions.map((option) => (
+              <DropdownMenuItem
+                key={option}
+                onClick={() => handlePageSizeChange(option)}
+                className={cn(
+                  "cursor-pointer",
+                  option === pageSize && "font-medium"
+                )}
+              >
+                {option}
+                {option === pageSize && (
+                  <Icon name="check" className="w-4 h-4 ml-auto" />
+                )}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    );
+  }
+);
+
 Pagination.displayName = "Pagination";
 
-const PaginationContent = React.forwardRef<
-  HTMLUListElement,
-  React.ComponentProps<"ul">
->(({ className, ...props }, ref) => (
-  <ul
-    ref={ref}
-    className={cn("flex flex-row items-center gap-[var(--space-xsm)]", className)}
-    {...props}
-  />
-));
-PaginationContent.displayName = "PaginationContent";
-
-const PaginationItem = React.forwardRef<
-  HTMLLIElement,
-  React.ComponentProps<"li">
->(({ className, ...props }, ref) => (
-  <li ref={ref} className={cn("", className)} {...props} />
-));
-PaginationItem.displayName = "PaginationItem";
-
-type PaginationLinkProps = {
-  isActive?: boolean;
-} & Pick<ButtonProps, "size"> &
-  React.ComponentProps<"a">;
-
-const PaginationLink = React.forwardRef<
-  HTMLAnchorElement,
-  PaginationLinkProps
->(({ className, isActive, size = "md", children, ...props }, ref) => (
-  <a
-    ref={ref}
-    aria-current={isActive ? "page" : undefined}
-    className={cn(
-      buttonVariants({
-        variant: isActive ? "default" : "ghost",
-        size,
-      }),
-      // Override default button styles with semantic design tokens
-      isActive
-        ? "bg-[var(--color-background-brand-selected)] border-[var(--color-border-brand)] text-[var(--color-text-selected)] hover:bg-[var(--color-background-brand-selected-hovered)]"
-        : "text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]",
-      "transition-colors",
-      className
-    )}
-    {...props}
-  >
-    {children}
-  </a>
-));
-PaginationLink.displayName = "PaginationLink";
-
-const PaginationPrevious = React.forwardRef<
-  HTMLAnchorElement,
-  React.ComponentProps<typeof PaginationLink>
->(({ className, ...props }, ref) => (
-  <PaginationLink
-    ref={ref}
-    aria-label="Go to previous page"
-    size="md"
-    className={cn("gap-[var(--space-xsm)] pl-[var(--space-md)]", className)}
-    {...props}
-  >
-    <Icon name="chevron-left" size="sm" />
-    <span>Previous</span>
-  </PaginationLink>
-));
-PaginationPrevious.displayName = "PaginationPrevious";
-
-const PaginationNext = React.forwardRef<
-  HTMLAnchorElement,
-  React.ComponentProps<typeof PaginationLink>
->(({ className, ...props }, ref) => (
-  <PaginationLink
-    ref={ref}
-    aria-label="Go to next page"
-    size="md"
-    className={cn("gap-[var(--space-xsm)] pr-[var(--space-md)]", className)}
-    {...props}
-  >
-    <span>Next</span>
-    <Icon name="chevron-right" size="sm" />
-  </PaginationLink>
-));
-PaginationNext.displayName = "PaginationNext";
-
-const PaginationEllipsis = React.forwardRef<
-  HTMLSpanElement,
-  React.ComponentProps<"span">
->(({ className, ...props }, ref) => (
-  <span
-    ref={ref}
-    aria-hidden
-    className={cn(
-      "flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center text-[var(--color-text-tertiary)]",
-      className
-    )}
-    {...props}
-  >
-    <Icon name="ellipsis" size="sm" />
-    <span className="sr-only">More pages</span>
-  </span>
-));
-PaginationEllipsis.displayName = "PaginationEllipsis";
-
-export {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-};
+export { Pagination };

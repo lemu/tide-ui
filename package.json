@@ -46,7 +46,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rafal-lemieszewski/tide-ui"
+    "url": "https://github.com/lemu/tide-ui"
   },
   "homepage": "https://tide-ui-storybook.vercel.app",
   "peerDependencies": {
