@@ -223,23 +223,40 @@ No test framework is currently configured in this project.
 
 ## NPM Publishing
 
-### **CRITICAL: Version Management for NPM Publishing**
+### **CRITICAL: Automated Tag-Based Publishing Process**
 
-**Whenever the user mentions publishing to NPM, ALWAYS propose the next version number:**
+**Whenever the user mentions publishing to NPM, ALWAYS follow this exact process:**
 
 1. **Check Current Version**: Read `package.json` to see the current version
 2. **Propose Version Bump**: Suggest the appropriate semantic version increment:
    - **Patch** (x.x.X): Bug fixes, small improvements, dependency updates
-   - **Minor** (x.X.x): New features, component additions, non-breaking API changes  
+   - **Minor** (x.X.x): New features, component additions, non-breaking API changes
    - **Major** (X.x.x): Breaking changes, API changes, major refactors
 
 3. **Version Justification**: Explain why the proposed version is appropriate based on recent changes
 
-4. **Publishing Process**:
-   - Use `npm version [patch|minor|major]` to update version and create git tag
-   - Run `npm run build:lib` to build the library 
-   - Use `npm publish` to publish to registry
-   - Verify publication was successful
+4. **Automated Publishing Process**:
+   ```bash
+   # 1. User controls versioning (creates commit + tag)
+   npm version [patch|minor|major]
+
+   # 2. Push commits (triggers CI workflow - lint + build only)
+   git push
+
+   # 3. Push tags (triggers Release workflow - build + publish to NPM + GitHub release)
+   git push --tags
+   ```
+
+5. **What the GitHub Workflows Do**:
+   - **CI Workflow** (on push to main): Runs linting and library build for quality assurance
+   - **Release Workflow** (on tag push): Automatically builds library, publishes to NPM, and creates GitHub release
+   - **Storybook**: Automatically deployed to Vercel on every push (no GitHub Actions needed)
+
+6. **Verification**: After tag push, monitor:
+   - GitHub Actions: https://github.com/lemu/tide-ui/actions
+   - NPM Package: https://www.npmjs.com/package/@rafal.lemieszewski/tide-ui
 
 **Example Response Format:**
-"I recommend bumping to version **X.X.X** (patch/minor/major) because [reason]. This accounts for [list recent changes]. Should I proceed with publishing version X.X.X?"
+"I recommend bumping to version **X.X.X** (patch/minor/major) because [reason]. This accounts for [list recent changes]. Should I proceed with version X.X.X and trigger the automated publishing workflow?"
+
+**IMPORTANT**: Never manually run `npm publish` - the GitHub workflow handles all publishing automatically using the NPM automation token.
