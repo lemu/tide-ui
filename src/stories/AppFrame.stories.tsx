@@ -674,7 +674,7 @@ export const AppFrameExample: Story = {
           <header className="flex h-12 shrink-0 items-center gap-2 border-b border-[var(--color-border-primary-subtle)] transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 box-border">
             <div className="flex items-center gap-2 px-[var(--space-md)]">
               <SidebarToggleWithTooltip />
-              <Separator orientation="vertical" className="mr-2 h-4" />
+              <Separator layout="horizontal" className="mr-2 h-4" />
               <Breadcrumb className="min-w-0 flex-1">
                 <BreadcrumbList className="flex-nowrap">
                   <BreadcrumbItem>
@@ -749,7 +749,7 @@ export const CollapsedState: Story = {
           <header className="flex h-12 shrink-0 items-center gap-2 border-b border-[var(--color-border-primary-subtle)] transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 box-border">
             <div className="flex items-center gap-2 px-[var(--space-md)]">
               <SidebarToggleWithTooltip />
-              <Separator orientation="vertical" className="mr-2 h-4" />
+              <Separator layout="horizontal" className="mr-2 h-4" />
               <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem>

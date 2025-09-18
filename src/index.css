@@ -190,7 +190,7 @@
   --color-background-brand: var(--blue-500);
   --color-background-brand-hovered: var(--blue-600);
   --color-background-neutral-subtle: #ffffff;
-  --color-background-neutral-subtle-hovered: var(--grey-alpha-25);
+  --color-background-neutral-subtle-hovered: var(--grey-alpha-50);
   --color-background-neutral: var(--grey-alpha-25);
   --color-background-neutral-hovered: var(--grey-alpha-50);
   --color-background-disabled: var(--grey-50);
