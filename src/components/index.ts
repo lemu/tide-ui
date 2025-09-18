@@ -161,6 +161,8 @@ export {
   SidebarFooter,
   SidebarHeader,
   SidebarInput,
+  SidebarSearchButton,
+  SidebarSearchTrigger,
   SidebarRail,
   SidebarSeparator,
   SidebarGroup,

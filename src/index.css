@@ -170,6 +170,7 @@
   --color-text-success: var(--green-500);
   --color-text-error: var(--red-500);
   --color-text-warning: var(--orange-500);
+  --color-text-destructive: var(--red-500);
   --color-text-inverse: #ffffff;
   --color-text-on-disabled: var(--grey-300);
   --color-text-accent-violet: var(--violet-500);
@@ -216,6 +217,7 @@
   --color-background-warning-hovered: var(--orange-100);
   --color-background-warning-bold: var(--orange-500);
   --color-background-warning-bold-hovered: var(--orange-600);
+  --color-background-destructive-subtle: var(--red-50);
   --color-background-inverse: var(--grey-900);
   --color-background-overlay: rgba(0, 0, 0, 0.4);
 

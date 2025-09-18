@@ -319,6 +319,64 @@ const SidebarInput = React.forwardRef<
 })
 SidebarInput.displayName = "SidebarInput"
 
+const SidebarSearchButton = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<"button"> & {
+    onOpenChange?: (open: boolean) => void
+    shortcuts?: string[]
+  }
+>(({ className, children, onOpenChange, shortcuts = ["⌘", "K"], ...props }, ref) => {
+  const isMacOS = () => {
+    return typeof navigator !== 'undefined' && /Mac|iPod|iPhone|iPad/.test(navigator.userAgent)
+  }
+
+  return (
+    <button
+      ref={ref}
+      data-sidebar="search-button"
+      className={cn(
+        "text-body-md flex h-8 w-full cursor-pointer items-center rounded-md border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-3 py-1 pr-20 pl-8 text-left text-[var(--color-text-tertiary)] transition-colors hover:border-[var(--color-border-primary-bold)] hover:bg-[var(--color-background-neutral-subtle-hovered)] focus:border-[var(--color-border-brand)] focus:ring-2 focus:ring-[var(--color-border-brand)] focus:ring-offset-2 focus:outline-none active:border-[var(--color-border-primary-bold)] group-data-[collapsible=icon]:hidden",
+        className
+      )}
+      onClick={() => onOpenChange?.(true)}
+      {...props}
+    >
+      {children || "Search"}
+      <div className="absolute top-1/2 right-2 flex -translate-y-1/2 gap-1">
+        {shortcuts.map((key, index) => (
+          <kbd key={index} className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-secondary)] px-1.5 font-mono text-[10px] font-medium text-[var(--color-text-tertiary)] opacity-100">
+            {key}
+          </kbd>
+        ))}
+      </div>
+    </button>
+  )
+})
+SidebarSearchButton.displayName = "SidebarSearchButton"
+
+const SidebarSearchTrigger = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<"button"> & {
+    onOpenChange?: (open: boolean) => void
+    shortcuts?: string[]
+  }
+>(({ className, onOpenChange, shortcuts = ["⌘", "K"], ...props }, ref) => {
+  return (
+    <button
+      ref={ref}
+      data-sidebar="search-trigger"
+      className={cn(
+        "hidden h-8 w-8 cursor-pointer items-center justify-center rounded border border-[var(--color-border-primary-subtle)] bg-transparent transition-all duration-200 group-data-[collapsible=icon]:flex hover:border-[var(--color-border-primary-bold)] hover:bg-[var(--color-background-neutral-subtle-hovered)] focus:border-[var(--color-border-brand)] focus:ring-2 focus:ring-[var(--color-border-brand)] focus:ring-offset-2 focus:outline-none active:border-[var(--color-border-primary-bold)]",
+        className
+      )}
+      onClick={() => onOpenChange?.(true)}
+      aria-label="Search"
+      {...props}
+    />
+  )
+})
+SidebarSearchTrigger.displayName = "SidebarSearchTrigger"
+
 const SidebarHeader = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div">
@@ -480,13 +538,13 @@ const SidebarMenuItem = React.forwardRef<
 SidebarMenuItem.displayName = "SidebarMenuItem"
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-2 py-1.5 text-left text-body-medium-md outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out hover:bg-[var(--color-background-neutral-subtle)] hover:transition-all hover:duration-150 hover:ease-in-out focus-visible:ring-2 active:bg-[var(--color-background-neutral-subtle)] disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-[var(--color-background-brand-selected)] data-[active=true]:font-medium data-[active=true]:text-[var(--color-text-selected)] data-[active=true]:hover:bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:hover:text-[var(--color-text-brand-hovered)] data-[active=true]:active:bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:active:text-[var(--color-text-brand-hovered)] data-[state=open]:bg-[var(--color-surface-secondary)] data-[state=open]:hover:bg-[var(--color-background-neutral-subtle)] group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 data-[active=true]:[&>svg]:text-[var(--color-text-selected)] data-[active=true]:hover:[&>svg]:text-[var(--color-icon-brand-hover)] data-[active=true]:active:[&>svg]:text-[var(--color-icon-brand-hover)] [&.peer\\/menu-button:hover]:bg-[var(--color-background-neutral-subtle)] [&.peer\\/menu-button:not([disabled]):not([aria-disabled]):hover]:bg-[var(--color-background-neutral-subtle)]",
+  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-2 py-1.5 text-left text-body-medium-md outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-[var(--color-background-brand-selected)] data-[active=true]:font-medium data-[active=true]:text-[var(--color-text-selected)] data-[state=open]:bg-[var(--color-surface-secondary)] group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 data-[active=true]:[&>svg]:text-[var(--color-text-selected)]",
   {
     variants: {
       variant: {
-        default: "hover:bg-[var(--color-background-neutral-subtle)] hover:text-[var(--color-text-primary)] focus-visible:bg-[var(--color-background-neutral-subtle)] [&:not([disabled]):not([aria-disabled]):hover]:bg-[var(--color-background-neutral-subtle)] [&:hover:not([data-active='true'])]:bg-[var(--color-background-neutral-subtle)] [&:hover:not([disabled]):not([aria-disabled])]:text-[var(--color-text-primary)] [&[data-active='true']:hover]:bg-[var(--color-background-brand-selected-hovered)] [&[data-active='true']:hover]:text-[var(--color-text-brand-hovered)] [&[data-state='active']:hover]:bg-[var(--color-background-brand-selected-hovered)] [&[data-state='active']:hover]:text-[var(--color-text-brand-hovered)] [&[aria-current='page']:hover]:bg-[var(--color-background-brand-selected-hovered)] [&[aria-current='page']:hover]:text-[var(--color-text-brand-hovered)]",
+        default: "hover:bg-[var(--color-background-neutral-subtle)] hover:text-[var(--color-text-primary)] focus-visible:bg-[var(--color-background-neutral-subtle)] active:bg-[var(--color-background-neutral-subtle)] data-[active=true]:hover:!bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:hover:!text-[var(--color-text-brand-hovered)] data-[active=true]:active:!bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:active:!text-[var(--color-text-brand-hovered)] data-[active=true]:hover:[&>svg]:!text-[var(--color-icon-brand-hover)] data-[active=true]:active:[&>svg]:!text-[var(--color-icon-brand-hover)] data-[state=open]:hover:bg-[var(--color-background-neutral-subtle)]",
         outline:
-          "bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] hover:bg-[var(--color-background-neutral-subtle)] hover:text-[var(--color-text-primary)] focus-visible:bg-[var(--color-background-neutral-subtle)] [&:not([disabled]):not([aria-disabled]):hover]:bg-[var(--color-background-neutral-subtle)] [&:hover:not([data-active='true'])]:bg-[var(--color-background-neutral-subtle)] [&:hover:not([disabled]):not([aria-disabled])]:text-[var(--color-text-primary)] [&[data-active='true']:hover]:bg-[var(--color-background-brand-selected-hovered)] [&[data-active='true']:hover]:text-[var(--color-text-brand-hovered)] [&[data-state='active']:hover]:bg-[var(--color-background-brand-selected-hovered)] [&[data-state='active']:hover]:text-[var(--color-text-brand-hovered)] [&[aria-current='page']:hover]:bg-[var(--color-background-brand-selected-hovered)] [&[aria-current='page']:hover]:text-[var(--color-text-brand-hovered)]",
+          "bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] hover:bg-[var(--color-background-neutral-subtle)] hover:text-[var(--color-text-primary)] focus-visible:bg-[var(--color-background-neutral-subtle)] active:bg-[var(--color-background-neutral-subtle)] data-[active=true]:hover:!bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:hover:!text-[var(--color-text-brand-hovered)] data-[active=true]:active:!bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:active:!text-[var(--color-text-brand-hovered)] data-[active=true]:hover:[&>svg]:!text-[var(--color-icon-brand-hover)] data-[active=true]:active:[&>svg]:!text-[var(--color-icon-brand-hover)]",
       },
       size: {
         default: "h-8",
@@ -574,7 +632,7 @@ const SidebarMenuAction = React.forwardRef<
       variant="ghost"
       size="sm"
       className={cn(
-        "absolute right-1 top-1.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-transform hover:bg-[var(--color-background-neutral-subtle)] hover:text-[var(--color-text-primary)] focus-visible:ring-2 peer-hover/menu-button:text-[var(--color-text-primary)] [&>svg]:size-4 [&>svg]:shrink-0",
+        "absolute right-1 top-1 flex aspect-square w-6 items-center justify-center rounded-md p-0 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out hover:bg-[var(--color-background-neutral-subtle)] hover:text-[var(--color-text-primary)] focus-visible:ring-2 focus:bg-[var(--color-background-neutral-subtle)] peer-hover/menu-button:text-[var(--color-text-primary)] enabled:active:bg-[var(--grey-alpha-100)] enabled:active:translate-y-px [&>svg]:size-4 [&>svg]:shrink-0",
         // Peer is SidebarMenuButton
         "peer-data-[size=sm]/menu-button:top-1",
         "peer-data-[size=md]/menu-button:top-1.5",
@@ -685,8 +743,8 @@ const SidebarMenuSubButton = React.forwardRef<
       data-size={size}
       data-active={isActive}
       className={cn(
-        "flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] hover:bg-[var(--color-background-neutral-subtle)] hover:text-[var(--color-text-primary)] focus-visible:ring-2 active:bg-[var(--color-background-neutral-subtle)] active:text-[var(--color-text-primary)] disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--color-text-secondary)]",
-        "data-[active=true]:bg-[var(--color-background-brand-selected)] data-[active=true]:text-[var(--color-text-selected)]",
+        "flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out hover:bg-[var(--color-background-neutral-subtle)] hover:text-[var(--color-text-primary)] focus-visible:ring-2 active:bg-[var(--color-background-neutral-subtle)] active:text-[var(--color-text-primary)] disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--color-text-secondary)]",
+        "data-[active=true]:bg-[var(--color-background-brand-selected)] data-[active=true]:text-[var(--color-text-selected)] data-[active=true]:hover:!bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:hover:!text-[var(--color-text-brand-hovered)] data-[active=true]:active:!bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:active:!text-[var(--color-text-brand-hovered)]",
         size === "sm" && "text-xs",
         size === "md" && "text-sm",
         className
@@ -707,6 +765,8 @@ export {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarInput,
+  SidebarSearchButton,
+  SidebarSearchTrigger,
   SidebarInset,
   SidebarMenu,
   SidebarMenuAction,
