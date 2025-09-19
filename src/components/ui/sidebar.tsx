@@ -647,8 +647,13 @@ const SidebarMenuButton = React.forwardRef<
         size === "default" && "h-8",
         size === "lg" && "h-12 py-3 text-body-lg group-data-[collapsible=icon]:!size-8",
 
-        // Enhanced hover behavior - only when hovered and not focused
-        isHovered && !isFocused && "bg-[var(--color-background-neutral-subtle-hovered)]",
+        // Enhanced hover behavior - only show background on active items when hovered
+        // Non-active items remain transparent on hover
+        isHovered && !isFocused && isActive && [
+          "bg-[var(--color-background-brand-selected-hovered)]",
+          "text-[var(--color-text-brand-hovered)]",
+          "[&>svg]:text-[var(--color-icon-brand-hover)]"
+        ],
 
         // Focus styles - clean focus for non-active items
         isFocused && !isActive && "bg-transparent ring-2 ring-[var(--color-border-brand)] ring-offset-1",
@@ -669,12 +674,6 @@ const SidebarMenuButton = React.forwardRef<
           "[&>svg]:text-[var(--color-text-brand)]"
         ],
 
-        // Active item hover (when active but not focused)
-        isActive && isHovered && !isFocused && [
-          "bg-[var(--color-background-brand-selected-hovered)]",
-          "text-[var(--color-text-brand-hovered)]",
-          "[&>svg]:text-[var(--color-icon-brand-hover)]"
-        ],
 
         // Open state (for collapsible items)
         "data-[state=open]:bg-[var(--color-surface-secondary)]",
@@ -937,10 +936,11 @@ const SidebarMenuSubButton = React.forwardRef<
       size === "sm" && "text-body-sm px-1.5 py-0.5",
       size === "md" && "text-body-md",
 
-      // Enhanced hover behavior - only when hovered and not focused
-      enhancedHover && isHovered && !isFocused && [
-        "bg-[var(--color-background-neutral-subtle-hovered)]",
-        "text-[var(--color-text-primary)]"
+      // Enhanced hover behavior - only show background on active items when hovered
+      // Non-active items remain transparent on hover
+      enhancedHover && isHovered && !isFocused && isActive && [
+        "bg-[var(--color-background-brand-selected-hovered)]",
+        "text-[var(--color-text-brand-hovered)]"
       ],
 
       // Focus styles - clean focus for non-active items
@@ -960,11 +960,6 @@ const SidebarMenuSubButton = React.forwardRef<
         "font-medium"
       ],
 
-      // Active item hover (when active but not focused)
-      isActive && isHovered && !isFocused && [
-        "bg-[var(--color-background-brand-selected-hovered)]",
-        "text-[var(--color-text-brand-hovered)]"
-      ],
 
       // Fallback for non-enhanced behavior
       !enhancedHover && [
