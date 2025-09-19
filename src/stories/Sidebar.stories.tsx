@@ -637,6 +637,126 @@ export const WithSkeleton: Story = {
   ),
 }
 
+// Enhanced hover/focus behavior demonstration
+export const EnhancedHoverFocus: Story = {
+  render: () => (
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarHeader>
+          <div className="flex items-center gap-2 px-2">
+            <Avatar className="h-8 w-8 rounded-md">
+              <AvatarFallback className="bg-[var(--color-background-brand)] rounded-md">
+                <Icon name="zap" size="sm" color="inverse" />
+              </AvatarFallback>
+            </Avatar>
+            <span className="font-semibold">Enhanced UI</span>
+          </div>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel>Enhanced Behavior Demo</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <Icon name="home" />
+                    <span>Hover me (enhanced)</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton isActive>
+                    <Icon name="star" />
+                    <span>Active item (focus preserved)</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <Icon name="settings" />
+                    <span>Try keyboard navigation</span>
+                  </SidebarMenuButton>
+                  <SidebarMenuAction showOnHover>
+                    <Icon name="more-horizontal" size="sm" />
+                  </SidebarMenuAction>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton enhancedHover={false}>
+                    <Icon name="archive" />
+                    <span>Legacy behavior (enhancedHover=false)</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <Icon name="folder" />
+                    <span>Submenu with enhanced behavior</span>
+                  </SidebarMenuButton>
+                  <SidebarMenuSub>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton>
+                        <span>Enhanced submenu item</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton isActive>
+                        <span>Active submenu (focus preserved)</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton enhancedHover={false}>
+                        <span>Legacy submenu behavior</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  </SidebarMenuSub>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+          <SidebarSeparator />
+          <SidebarGroup>
+            <SidebarGroupLabel>Interaction Guide</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <div className="px-2 py-1 text-xs text-[var(--color-text-secondary)] space-y-1">
+                <p>• <strong>Mouse hover:</strong> Subtle background appears only when not focused</p>
+                <p>• <strong>Keyboard focus:</strong> Clean focus rings, active items keep brand background</p>
+                <p>• <strong>Actions:</strong> Show on hover with improved positioning</p>
+                <p>• <strong>Legacy mode:</strong> Use enhancedHover=false for old behavior</p>
+              </div>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+        <SidebarFooter>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton>
+                <Icon name="help-circle" />
+                <span>Help & Support</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarFooter>
+      </Sidebar>
+      <SidebarInset>
+        <div className="flex items-center gap-2 border-b border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-4 py-2">
+          <SidebarTrigger />
+          <span className="text-lg font-semibold">Enhanced Hover/Focus Demo</span>
+        </div>
+        <div className="flex flex-1 flex-col gap-4 p-4">
+          <div className="rounded-lg bg-[var(--color-surface-secondary)] p-4">
+            <h3 className="text-heading-sm mb-2">Enhanced Behavior Features</h3>
+            <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-1">
+              <li>✅ Hover effects only appear when not keyboard-focused</li>
+              <li>✅ Clean focus rings for accessibility</li>
+              <li>✅ Active menu items preserve brand background when focused</li>
+              <li>✅ Improved menu action positioning and visibility</li>
+              <li>✅ No external CSS overrides needed</li>
+              <li>✅ Backwards compatible with legacy behavior option</li>
+            </ul>
+          </div>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
+  ),
+}
+
 // Complex sidebar with all features
 export const ComplexSidebar: Story = {
   render: () => (

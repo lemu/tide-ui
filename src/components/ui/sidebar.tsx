@@ -326,10 +326,6 @@ const SidebarSearchButton = React.forwardRef<
     shortcuts?: string[]
   }
 >(({ className, children, onOpenChange, shortcuts = ["⌘", "K"], ...props }, ref) => {
-  const isMacOS = () => {
-    return typeof navigator !== 'undefined' && /Mac|iPod|iPhone|iPad/.test(navigator.userAgent)
-  }
-
   return (
     <button
       ref={ref}
@@ -565,16 +561,25 @@ const SidebarMenuButton = React.forwardRef<
     asChild?: boolean
     isActive?: boolean
     tooltip?: string | React.ComponentProps<typeof TooltipPrimitive.Content>
+    enhancedHover?: boolean
+    preserveActiveOnFocus?: boolean
+    variant?: 'default' | 'enhanced'
   } & VariantProps<typeof sidebarMenuButtonVariants>
 >(
   (
     {
       asChild = false,
       isActive = false,
-      variant = "default",
+      variant = "enhanced",
       size = "default",
       tooltip,
+      enhancedHover = true,
+      preserveActiveOnFocus = true,
       className,
+      onMouseEnter,
+      onMouseLeave,
+      onFocus,
+      onBlur,
       ...props
     },
     ref
@@ -582,13 +587,114 @@ const SidebarMenuButton = React.forwardRef<
     const Comp = asChild ? "span" : "button"
     const { isMobile, state } = useSidebar()
 
+    // Enhanced hover/focus state management
+    const [isHovered, setIsHovered] = React.useState(false)
+    const [isFocused, setIsFocused] = React.useState(false)
+
+    // Event handlers for enhanced behavior
+    const handleMouseEnter = React.useCallback(
+      (e: React.MouseEvent<HTMLButtonElement>) => {
+        if (enhancedHover) {
+          setIsHovered(true)
+        }
+        onMouseEnter?.(e)
+      },
+      [enhancedHover, onMouseEnter]
+    )
+
+    const handleMouseLeave = React.useCallback(
+      (e: React.MouseEvent<HTMLButtonElement>) => {
+        if (enhancedHover) {
+          setIsHovered(false)
+        }
+        onMouseLeave?.(e)
+      },
+      [enhancedHover, onMouseLeave]
+    )
+
+    const handleFocus = React.useCallback(
+      (e: React.FocusEvent<HTMLButtonElement>) => {
+        if (enhancedHover) {
+          setIsFocused(true)
+        }
+        onFocus?.(e)
+      },
+      [enhancedHover, onFocus]
+    )
+
+    const handleBlur = React.useCallback(
+      (e: React.FocusEvent<HTMLButtonElement>) => {
+        if (enhancedHover) {
+          setIsFocused(false)
+        }
+        onBlur?.(e)
+      },
+      [enhancedHover, onBlur]
+    )
+
+    // Enhanced styling logic
+    const enhancedClasses = React.useMemo(() => {
+      if (variant !== 'enhanced') {
+        return sidebarMenuButtonVariants({ variant: "default", size })
+      }
+
+      return cn(
+        // Base button styles
+        "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-2 py-1.5 text-left text-body-medium-md outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
+
+        // Size variants
+        size === "sm" && "h-7 text-body-sm py-1",
+        size === "default" && "h-8",
+        size === "lg" && "h-12 py-3 text-body-lg group-data-[collapsible=icon]:!size-8",
+
+        // Enhanced hover behavior - only when hovered and not focused
+        isHovered && !isFocused && "bg-[var(--color-background-neutral-subtle-hovered)]",
+
+        // Focus styles - clean focus for non-active items
+        isFocused && !isActive && "bg-transparent ring-2 ring-[var(--color-border-brand)] ring-offset-1",
+
+        // Active item focus - preserve brand background when focused
+        isFocused && isActive && preserveActiveOnFocus && [
+          "bg-[var(--color-background-brand-selected)]",
+          "text-[var(--color-text-brand)]",
+          "ring-2 ring-[var(--color-border-brand)] ring-offset-1",
+          "[&>svg]:text-[var(--color-text-brand)]"
+        ],
+
+        // Active item styles (non-focus state)
+        isActive && !isFocused && [
+          "bg-[var(--color-background-brand-selected)]",
+          "text-[var(--color-text-brand)]",
+          "font-medium",
+          "[&>svg]:text-[var(--color-text-brand)]"
+        ],
+
+        // Active item hover (when active but not focused)
+        isActive && isHovered && !isFocused && [
+          "bg-[var(--color-background-brand-selected-hovered)]",
+          "text-[var(--color-text-brand-hovered)]",
+          "[&>svg]:text-[var(--color-icon-brand-hover)]"
+        ],
+
+        // Open state (for collapsible items)
+        "data-[state=open]:bg-[var(--color-surface-secondary)]",
+
+        // Collapsed sidebar styles
+        "group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 group-data-[collapsible=icon]:justify-center"
+      )
+    }, [variant, size, isHovered, isFocused, isActive, preserveActiveOnFocus])
+
     const button = (
       <Comp
         ref={ref}
         data-sidebar="menu-button"
         data-size={size}
         data-active={isActive}
-        className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+        className={cn(enhancedClasses, className)}
+        onMouseEnter={enhancedHover ? handleMouseEnter : onMouseEnter}
+        onMouseLeave={enhancedHover ? handleMouseLeave : onMouseLeave}
+        onFocus={enhancedHover ? handleFocus : onFocus}
+        onBlur={enhancedHover ? handleBlur : onBlur}
         {...props}
       />
     )
@@ -623,8 +729,9 @@ const SidebarMenuAction = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Button> & {
     showOnHover?: boolean
+    size?: 'sm' | 'md' | 'lg'
   }
->(({ className, showOnHover = false, ...props }, ref) => {
+>(({ className, showOnHover = false, size = 'md', ...props }, ref) => {
   return (
     <Button
       ref={ref}
@@ -632,14 +739,39 @@ const SidebarMenuAction = React.forwardRef<
       variant="ghost"
       size="sm"
       className={cn(
-        "absolute right-1 top-1 flex aspect-square w-6 items-center justify-center rounded-md p-0 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] focus-visible:ring-2 focus:bg-[var(--color-background-neutral-subtle-hovered)] peer-hover/menu-button:text-[var(--color-text-primary)] enabled:active:bg-[var(--grey-alpha-100)] enabled:active:translate-y-px [&>svg]:size-4 [&>svg]:shrink-0",
-        // Peer is SidebarMenuButton
+        // Base positioning and styling - Fixed inconsistencies
+        "absolute right-1 flex aspect-square items-center justify-center rounded-md p-0",
+        "text-[var(--color-text-secondary)] outline-none transition-all duration-150 ease-in-out",
+        "hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]",
+        "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)]",
+        "peer-hover/menu-button:text-[var(--color-text-primary)]",
+        "enabled:active:bg-[var(--grey-alpha-100)] enabled:active:translate-y-px",
+        "[&>svg]:size-4 [&>svg]:shrink-0",
+
+        // Consistent sizing - Fixed w-5 -> w-6 issue
+        "w-6 h-6",
+
+        // Improved positioning - Fixed top-1.5 -> top-1 issue
+        "top-1",
+
+        // Size-responsive positioning for different menu button sizes
         "peer-data-[size=sm]/menu-button:top-1",
-        "peer-data-[size=md]/menu-button:top-1.5",
+        "peer-data-[size=default]/menu-button:top-1",
         "peer-data-[size=lg]/menu-button:top-2.5",
+
+        // Enhanced showOnHover behavior with improved transitions
+        showOnHover && [
+          "opacity-0 transition-opacity duration-150",
+          "group-hover/menu-item:opacity-100",
+          "group-focus-within/menu-item:opacity-100",
+          "data-[state=open]:opacity-100",
+          "peer-data-[active=true]/menu-button:opacity-100",
+          "peer-data-[active=true]/menu-button:text-[var(--color-text-primary)]"
+        ],
+
+        // Hide in collapsed sidebar
         "group-data-[collapsible=icon]:hidden",
-        showOnHover &&
-          "group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 peer-data-[active=true]/menu-button:text-[var(--color-text-primary)] md:opacity-0",
+
         className
       )}
       {...props}
@@ -732,9 +864,115 @@ const SidebarMenuSubButton = React.forwardRef<
     asChild?: boolean
     size?: "sm" | "md"
     isActive?: boolean
+    enhancedHover?: boolean
+    preserveActiveOnFocus?: boolean
   }
->(({ asChild = false, size = "md", isActive, className, ...props }, ref) => {
+>(({
+  asChild = false,
+  size = "md",
+  isActive = false,
+  enhancedHover = true,
+  preserveActiveOnFocus = true,
+  className,
+  onMouseEnter,
+  onMouseLeave,
+  onFocus,
+  onBlur,
+  ...props
+}, ref) => {
   const Comp = asChild ? "span" : "a"
+
+  // Enhanced hover/focus state management
+  const [isHovered, setIsHovered] = React.useState(false)
+  const [isFocused, setIsFocused] = React.useState(false)
+
+  // Event handlers for enhanced behavior
+  const handleMouseEnter = React.useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      if (enhancedHover) {
+        setIsHovered(true)
+      }
+      onMouseEnter?.(e)
+    },
+    [enhancedHover, onMouseEnter]
+  )
+
+  const handleMouseLeave = React.useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      if (enhancedHover) {
+        setIsHovered(false)
+      }
+      onMouseLeave?.(e)
+    },
+    [enhancedHover, onMouseLeave]
+  )
+
+  const handleFocus = React.useCallback(
+    (e: React.FocusEvent<HTMLAnchorElement>) => {
+      if (enhancedHover) {
+        setIsFocused(true)
+      }
+      onFocus?.(e)
+    },
+    [enhancedHover, onFocus]
+  )
+
+  const handleBlur = React.useCallback(
+    (e: React.FocusEvent<HTMLAnchorElement>) => {
+      if (enhancedHover) {
+        setIsFocused(false)
+      }
+      onBlur?.(e)
+    },
+    [enhancedHover, onBlur]
+  )
+
+  // Enhanced styling logic
+  const enhancedClasses = React.useMemo(() => {
+    return cn(
+      // Base submenu button styles
+      "flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 cursor-pointer [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--color-text-secondary)]",
+
+      // Size variants
+      size === "sm" && "text-body-sm px-1.5 py-0.5",
+      size === "md" && "text-body-md",
+
+      // Enhanced hover behavior - only when hovered and not focused
+      enhancedHover && isHovered && !isFocused && [
+        "bg-[var(--color-background-neutral-subtle-hovered)]",
+        "text-[var(--color-text-primary)]"
+      ],
+
+      // Focus styles - clean focus for non-active items
+      enhancedHover && isFocused && !isActive && "bg-transparent ring-2 ring-[var(--color-border-brand)] ring-offset-1",
+
+      // Active item focus - preserve brand background when focused
+      enhancedHover && isFocused && isActive && preserveActiveOnFocus && [
+        "bg-[var(--color-background-brand-selected)]",
+        "text-[var(--color-text-brand)]",
+        "ring-2 ring-[var(--color-border-brand)] ring-offset-1"
+      ],
+
+      // Active item styles (non-focus state)
+      isActive && !isFocused && [
+        "bg-[var(--color-background-brand-selected)]",
+        "text-[var(--color-text-brand)]",
+        "font-medium"
+      ],
+
+      // Active item hover (when active but not focused)
+      isActive && isHovered && !isFocused && [
+        "bg-[var(--color-background-brand-selected-hovered)]",
+        "text-[var(--color-text-brand-hovered)]"
+      ],
+
+      // Fallback for non-enhanced behavior
+      !enhancedHover && [
+        "hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] focus-visible:ring-2 active:bg-[var(--color-background-neutral-subtle-hovered)] active:text-[var(--color-text-primary)]",
+        "data-[active=true]:bg-[var(--color-background-brand-selected)] data-[active=true]:text-[var(--color-text-selected)] data-[active=true]:hover:!bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:hover:!text-[var(--color-text-brand-hovered)] data-[active=true]:active:!bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:active:!text-[var(--color-text-brand-hovered)]"
+      ]
+    )
+  }, [size, enhancedHover, isHovered, isFocused, isActive, preserveActiveOnFocus])
 
   return (
     <Comp
@@ -742,13 +980,11 @@ const SidebarMenuSubButton = React.forwardRef<
       data-sidebar="menu-sub-button"
       data-size={size}
       data-active={isActive}
-      className={cn(
-        "flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] focus-visible:ring-2 active:bg-[var(--color-background-neutral-subtle-hovered)] active:text-[var(--color-text-primary)] disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 cursor-pointer [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--color-text-secondary)]",
-        "data-[active=true]:bg-[var(--color-background-brand-selected)] data-[active=true]:text-[var(--color-text-selected)] data-[active=true]:hover:!bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:hover:!text-[var(--color-text-brand-hovered)] data-[active=true]:active:!bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:active:!text-[var(--color-text-brand-hovered)]",
-        size === "sm" && "text-body-sm",
-        size === "md" && "text-body-md",
-        className
-      )}
+      className={cn(enhancedClasses, className)}
+      onMouseEnter={enhancedHover ? handleMouseEnter : onMouseEnter}
+      onMouseLeave={enhancedHover ? handleMouseLeave : onMouseLeave}
+      onFocus={enhancedHover ? handleFocus : onFocus}
+      onBlur={enhancedHover ? handleBlur : onBlur}
       {...props}
     />
   )
