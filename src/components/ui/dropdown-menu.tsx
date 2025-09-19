@@ -3,11 +3,12 @@ import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
 import { Check, ChevronLeft, ChevronRight, Circle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useIsDesktop } from "@/lib/hooks"
-import { 
-  Drawer, 
-  DrawerContent, 
-  DrawerTrigger 
+import {
+  Drawer,
+  DrawerContent,
+  DrawerTrigger
 } from "./drawer"
+import { Icon } from "./icon"
 
 const DropdownMenuDesktop = DropdownMenuPrimitive.Root
 
@@ -81,8 +82,9 @@ const DropdownMenuDesktopItem = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
     inset?: boolean
     destructive?: boolean
+    icon?: string
   }
->(({ className, inset, destructive, ...props }, ref) => (
+>(({ className, inset, destructive, icon, children, ...props }, ref) => (
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={cn(
@@ -92,7 +94,10 @@ const DropdownMenuDesktopItem = React.forwardRef<
       className
     )}
     {...props}
-  />
+  >
+    {icon && <Icon name={icon} size="md" className="mr-2" />}
+    {children}
+  </DropdownMenuPrimitive.Item>
 ))
 DropdownMenuDesktopItem.displayName = DropdownMenuPrimitive.Item.displayName
 
@@ -195,9 +200,10 @@ const MobileDropdownItem = React.forwardRef<
   Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
     inset?: boolean
     destructive?: boolean
+    icon?: string
     onSelect?: (e: Event) => void
   }
->(({ className, inset, destructive, onSelect, ...props }, ref) => (
+>(({ className, inset, destructive, icon, onSelect, children, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
@@ -210,7 +216,10 @@ const MobileDropdownItem = React.forwardRef<
     role="menuitem"
     tabIndex={0}
     {...props}
-  />
+  >
+    {icon && <Icon name={icon} size="md" className="mr-2" />}
+    {children}
+  </div>
 ))
 MobileDropdownItem.displayName = "MobileDropdownItem"
 
@@ -250,9 +259,10 @@ const MobileDropdownRadioItem = React.forwardRef<
   Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
     value: string
     checked?: boolean
+    icon?: string
     onRadioSelect?: (value: string) => void
   }
->(({ className, children, value, checked, onRadioSelect, ...props }, ref) => (
+>(({ className, children, value, checked, icon, onRadioSelect, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
@@ -271,6 +281,7 @@ const MobileDropdownRadioItem = React.forwardRef<
     )}>
       {checked && <Circle className="h-[6px] w-[6px] fill-current" />}
     </span>
+    {icon && <Icon name={icon} size="md" className="mr-2 ml-6" />}
     {children}
   </div>
 ))
@@ -632,12 +643,13 @@ const MenuLevelContainer = ({ children }: MenuLevelContainerProps) => {
 interface ResponsiveDropdownMenuItemProps extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> {
   inset?: boolean
   destructive?: boolean
+  icon?: string
 }
 
 const ResponsiveDropdownMenuItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Item>,
   ResponsiveDropdownMenuItemProps
->(({ className, inset, destructive, onSelect, ...props }, ref) => {
+>(({ className, inset, destructive, icon, onSelect, ...props }, ref) => {
   const { isDesktop } = React.useContext(ResponsiveDropdownContext)
   
   if (isDesktop) {
@@ -647,6 +659,7 @@ const ResponsiveDropdownMenuItem = React.forwardRef<
         className={className}
         inset={inset}
         destructive={destructive}
+        icon={icon}
         onSelect={onSelect}
         {...props}
       />
@@ -658,6 +671,7 @@ const ResponsiveDropdownMenuItem = React.forwardRef<
       className={className}
       inset={inset}
       destructive={destructive}
+      icon={icon}
       onSelect={onSelect}
       {...props}
     />
@@ -716,12 +730,13 @@ ResponsiveDropdownMenuCheckboxItem.displayName = "ResponsiveDropdownMenuCheckbox
 
 interface ResponsiveDropdownMenuRadioItemProps extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem> {
   value: string
+  icon?: string
 }
 
 const ResponsiveDropdownMenuRadioItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
   ResponsiveDropdownMenuRadioItemProps
->(({ className, children, value, ...props }, ref) => {
+>(({ className, children, value, icon, ...props }, ref) => {
   const { isDesktop } = React.useContext(ResponsiveDropdownContext)
   
   if (isDesktop) {
@@ -741,6 +756,7 @@ const ResponsiveDropdownMenuRadioItem = React.forwardRef<
             <Circle className="h-[6px] w-[6px] fill-current" />
           </DropdownMenuPrimitive.ItemIndicator>
         </span>
+        {icon && <Icon name={icon} size="md" className="mr-2 ml-6" />}
         {children}
       </DropdownMenuPrimitive.RadioItem>
     )
@@ -754,6 +770,7 @@ const ResponsiveDropdownMenuRadioItem = React.forwardRef<
           className={className}
           value={value}
           checked={radioValue === value}
+          icon={icon}
           onRadioSelect={onRadioChange}
           {...props}
         >
@@ -894,12 +911,13 @@ const ResponsiveDropdownMenuSub = ({ children }: ResponsiveDropdownMenuSubProps)
 
 interface ResponsiveDropdownMenuSubTriggerProps extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> {
   inset?: boolean
+  icon?: string
 }
 
 const ResponsiveDropdownMenuSubTrigger = React.forwardRef<
   HTMLButtonElement,
   ResponsiveDropdownMenuSubTriggerProps
->(({ className, inset, children, ...props }, ref) => {
+>(({ className, inset, icon, children, ...props }, ref) => {
   const { isDesktop } = React.useContext(ResponsiveDropdownContext)
   const { triggerNavigation } = React.useContext(SubmenuLevelContext)
   
@@ -914,6 +932,7 @@ const ResponsiveDropdownMenuSubTrigger = React.forwardRef<
         )}
         {...props}
       >
+        {icon && <Icon name={icon} size="md" className="mr-2" />}
         {children}
         <ChevronRight className="ml-auto h-4 w-4" />
       </DropdownMenuPrimitive.SubTrigger>
@@ -939,6 +958,7 @@ const ResponsiveDropdownMenuSubTrigger = React.forwardRef<
       type="button"
       {...buttonProps}
     >
+      {icon && <Icon name={icon} size="md" className="mr-2" />}
       {children}
       <ChevronRight className="ml-auto h-4 w-4" />
     </button>

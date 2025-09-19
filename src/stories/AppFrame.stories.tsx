@@ -255,7 +255,7 @@ function AppSidebar() {
         </SidebarHeader>
 
         {/* Content */}
-        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto group-data-[collapsible=icon]:overflow-hidden" data-sidebar="content">
+        <SidebarContent>
           {/* Search Section */}
           <div className="p-[var(--space-md)] pt-[var(--space-sm)] group-data-[collapsible=icon]:px-2">
             <div className="relative">
@@ -492,20 +492,20 @@ function AppSidebar() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-48">
                         <DropdownMenuItem className="cursor-pointer">
-                          <Icon name="eye" size="sm" />
+                          <Icon name="eye" size="sm" className="mr-2" />
                           <span>View</span>
                         </DropdownMenuItem>
                         <DropdownMenuItem className="cursor-pointer">
-                          <Icon name="pin-off" size="sm" />
+                          <Icon name="pin-off" size="sm" className="mr-2" />
                           <span>Unpin</span>
                         </DropdownMenuItem>
                         <DropdownMenuItem className="cursor-pointer">
-                          <Icon name="edit" size="sm" />
+                          <Icon name="edit" size="sm" className="mr-2" />
                           <span>Rename</span>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem className="cursor-pointer text-[var(--color-text-destructive)] hover:bg-[var(--color-background-destructive-subtle)] hover:text-[var(--color-text-destructive)]">
-                          <Icon name="trash" size="sm" />
+                          <Icon name="trash" size="sm" className="mr-2" />
                           <span>Delete</span>
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -551,7 +551,7 @@ function AppSidebar() {
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
-        </div>
+        </SidebarContent>
 
         {/* Footer */}
         <SidebarFooter className="border-t border-[var(--color-border-primary-subtle)] group-data-[collapsible=icon]:px-2">
@@ -739,36 +739,3 @@ export const AppFrameExample: Story = {
   ),
 }
 
-// Collapsed State Story
-export const CollapsedState: Story = {
-  render: () => (
-    <div className="h-screen">
-      <SidebarProvider defaultOpen={false}>
-        <AppSidebar />
-        <SidebarInset>
-          <header className="flex h-12 shrink-0 items-center gap-2 border-b border-[var(--color-border-primary-subtle)] transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 box-border">
-            <div className="flex items-center gap-2 px-[var(--space-md)]">
-              <SidebarToggleWithTooltip />
-              <Separator layout="horizontal" className="mr-2 h-4" />
-              <Breadcrumb>
-                <BreadcrumbList>
-                  <BreadcrumbItem>
-                    <BreadcrumbPage>Collapsed Sidebar Demo</BreadcrumbPage>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
-            </div>
-          </header>
-          <div className="flex flex-1 flex-col overflow-auto min-h-0 p-6">
-            <h1 className="text-heading-lg text-[var(--color-text-primary)]">
-              Collapsed Sidebar State
-            </h1>
-            <p className="text-body-md text-[var(--color-text-secondary)] mt-2">
-              Test hover effects and tooltips in the collapsed sidebar state.
-            </p>
-          </div>
-        </SidebarInset>
-      </SidebarProvider>
-    </div>
-  ),
-}

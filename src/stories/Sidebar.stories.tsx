@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import * as React from 'react'
 import {
   Sidebar,
   SidebarContent,
@@ -22,11 +23,16 @@ import {
   SidebarProvider,
   SidebarRail,
   SidebarSeparator,
+  SidebarSearchButton,
+  SidebarSearchTrigger,
   SidebarTrigger,
+  useSidebar,
 } from '../components/ui/sidebar'
 import { Button } from '../components/ui/button'
 import { Icon } from '../components/ui/icon'
 import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar'
+import { Separator } from '../components/ui/separator'
+import { Kbd } from '../components/ui/kbd'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -35,6 +41,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../components/ui/dropdown-menu'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '../components/ui/tooltip'
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '../components/ui/breadcrumb'
 
 const meta: Meta<typeof Sidebar> = {
   title: 'NPM/Sidebar',
@@ -54,6 +74,7 @@ const meta: Meta<typeof Sidebar> = {
 
 export default meta
 type Story = StoryObj<typeof meta>
+
 
 // Basic sidebar
 export const Default: Story = {

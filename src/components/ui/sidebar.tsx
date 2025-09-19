@@ -385,7 +385,7 @@ const SidebarHeader = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="header"
-      className={cn("flex flex-col gap-[var(--space-sm)] p-[var(--space-md)]", className)}
+      className={cn("flex flex-col gap-[var(--space-sm)] p-[var(--space-md)] group-data-[collapsible=icon]:p-[var(--space-sm)]", className)}
       {...props}
     />
   )
@@ -400,7 +400,7 @@ const SidebarFooter = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="footer"
-      className={cn("flex flex-col gap-[var(--space-sm)] p-[var(--space-md)]", className)}
+      className={cn("flex flex-col gap-[var(--space-sm)] p-[var(--space-md)] group-data-[collapsible=icon]:p-[var(--space-sm)]", className)}
       {...props}
     />
   )
@@ -431,7 +431,7 @@ const SidebarContent = React.forwardRef<
       ref={ref}
       data-sidebar="content"
       className={cn(
-        "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
+        "flex min-h-0 flex-1 flex-col overflow-y-auto group-data-[collapsible=icon]:overflow-hidden",
         className
       )}
       {...props}
@@ -448,7 +448,7 @@ const SidebarGroup = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="group"
-      className={cn("relative flex w-full min-w-0 flex-col p-[var(--space-md)]", className)}
+      className={cn("relative flex w-full min-w-0 flex-col p-[var(--space-md)] group-data-[collapsible=icon]:p-[var(--space-sm)]", className)}
       {...props}
     />
   )
@@ -538,7 +538,7 @@ const SidebarMenuItem = React.forwardRef<
 SidebarMenuItem.displayName = "SidebarMenuItem"
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-2 py-1.5 text-left text-body-medium-md outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-[var(--color-background-brand-selected)] data-[active=true]:font-medium data-[active=true]:text-[var(--color-text-selected)] data-[state=open]:bg-[var(--color-surface-secondary)] group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 data-[active=true]:[&>svg]:text-[var(--color-text-selected)]",
+  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-2 py-1.5 text-left text-body-medium-md outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-[var(--color-background-brand-selected)] data-[active=true]:font-medium data-[active=true]:text-[var(--color-text-selected)] data-[state=open]:bg-[var(--color-surface-secondary)] group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 group-data-[collapsible=icon]:justify-center [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 data-[active=true]:[&>svg]:text-[var(--color-text-selected)]",
   {
     variants: {
       variant: {
@@ -549,7 +549,7 @@ const sidebarMenuButtonVariants = cva(
       size: {
         default: "h-8",
         sm: "h-7 text-body-sm py-1",
-        lg: "h-12 py-3 text-body-lg group-data-[collapsible=icon]:!size-10",
+        lg: "h-12 py-3 text-body-lg group-data-[collapsible=icon]:!size-8",
       },
     },
     defaultVariants: {
@@ -743,10 +743,10 @@ const SidebarMenuSubButton = React.forwardRef<
       data-size={size}
       data-active={isActive}
       className={cn(
-        "flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] focus-visible:ring-2 active:bg-[var(--color-background-neutral-subtle-hovered)] active:text-[var(--color-text-primary)] disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--color-text-secondary)]",
+        "flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] focus-visible:ring-2 active:bg-[var(--color-background-neutral-subtle-hovered)] active:text-[var(--color-text-primary)] disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 cursor-pointer [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--color-text-secondary)]",
         "data-[active=true]:bg-[var(--color-background-brand-selected)] data-[active=true]:text-[var(--color-text-selected)] data-[active=true]:hover:!bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:hover:!text-[var(--color-text-brand-hovered)] data-[active=true]:active:!bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:active:!text-[var(--color-text-brand-hovered)]",
-        size === "sm" && "text-xs",
-        size === "md" && "text-sm",
+        size === "sm" && "text-body-sm",
+        size === "md" && "text-body-md",
         className
       )}
       {...props}

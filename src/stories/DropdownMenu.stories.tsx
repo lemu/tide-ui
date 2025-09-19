@@ -62,24 +62,20 @@ export const SimpleMenu: Story = {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuItem>
-          <Icon name="user" size="sm" className="mr-2" />
+        <DropdownMenuItem icon="user">
           <span>Profile</span>
           <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Icon name="credit-card" size="sm" className="mr-2" />
+        <DropdownMenuItem icon="credit-card">
           <span>Billing</span>
           <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Icon name="settings" size="sm" className="mr-2" />
+        <DropdownMenuItem icon="settings">
           <span>Settings</span>
           <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Icon name="log-out" size="sm" className="mr-2" />
+        <DropdownMenuItem icon="log-out">
           <span>Log out</span>
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
@@ -167,41 +163,34 @@ export const WithSubmenu: Story = {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuItem>
-          <Icon name="plus" size="sm" className="mr-2" />
+        <DropdownMenuItem icon="plus">
           <span>New Tab</span>
           <DropdownMenuShortcut>⌘T</DropdownMenuShortcut>
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Icon name="download" size="sm" className="mr-2" />
+        <DropdownMenuItem icon="download">
           <span>Download</span>
           <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
-            <Icon name="share-2" size="sm" className="mr-2" />
+          <DropdownMenuSubTrigger icon="share-2">
             <span>Share</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
-            <DropdownMenuItem>
-              <Icon name="mail" size="sm" className="mr-2" />
+            <DropdownMenuItem icon="mail">
               <span>Email</span>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Icon name="message-square" size="sm" className="mr-2" />
+            <DropdownMenuItem icon="message-square">
               <span>Message</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Icon name="plus-circle" size="sm" className="mr-2" />
+            <DropdownMenuItem icon="plus-circle">
               <span>More...</span>
             </DropdownMenuItem>
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Icon name="trash-2" size="sm" className="mr-2" />
+        <DropdownMenuItem icon="trash-2">
           <span>Delete</span>
           <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
         </DropdownMenuItem>
@@ -246,17 +235,14 @@ export const TextLinkTrigger: Story = {
       <DropdownMenuContent align="start" className="w-56">
         <DropdownMenuLabel>Signed in as</DropdownMenuLabel>
         <DropdownMenuItem disabled>john.doe@example.com</DropdownMenuItem>
-        <DropdownMenuItem>
-          <Icon name="user" size="sm" className="mr-2" />
+        <DropdownMenuItem icon="user">
           Your Profile
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Icon name="settings" size="sm" className="mr-2" />
+        <DropdownMenuItem icon="settings">
           Settings
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Icon name="log-out" size="sm" className="mr-2" />
+        <DropdownMenuItem icon="log-out">
           Sign out
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -287,18 +273,15 @@ export const AvatarTrigger: Story = {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Icon name="user" size="sm" className="mr-2" />
+          <DropdownMenuItem icon="user">
             Profile
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Icon name="settings" size="sm" className="mr-2" />
+          <DropdownMenuItem icon="settings">
             Settings
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Icon name="log-out" size="sm" className="mr-2" />
+        <DropdownMenuItem icon="log-out">
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -323,25 +306,20 @@ export const TableRowActions: Story = {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem>
-              <Icon name="eye" size="sm" className="mr-2" />
+            <DropdownMenuItem icon="eye">
               View
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Icon name="edit" size="sm" className="mr-2" />
+            <DropdownMenuItem icon="edit">
               Edit
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Icon name="copy" size="sm" className="mr-2" />
+            <DropdownMenuItem icon="copy">
               Duplicate
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Icon name="archive" size="sm" className="mr-2" />
+            <DropdownMenuItem icon="archive">
               Archive
             </DropdownMenuItem>
-            <DropdownMenuItem destructive>
-              <Icon name="trash-2" size="sm" className="mr-2" />
+            <DropdownMenuItem icon="trash-2" destructive>
               Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -372,26 +350,21 @@ export const NavigationUserMenu: Story = {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end">
           <DropdownMenuLabel>Account</DropdownMenuLabel>
-          <DropdownMenuItem>
-            <Icon name="user" size="sm" className="mr-2" />
+          <DropdownMenuItem icon="user">
             Profile
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Icon name="credit-card" size="sm" className="mr-2" />
+          <DropdownMenuItem icon="credit-card">
             Billing
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Icon name="settings" size="sm" className="mr-2" />
+          <DropdownMenuItem icon="settings">
             Settings
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <Icon name="life-buoy" size="sm" className="mr-2" />
+          <DropdownMenuItem icon="life-buoy">
             Support
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <Icon name="log-out" size="sm" className="mr-2" />
+          <DropdownMenuItem icon="log-out">
             Log out
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -413,59 +386,49 @@ export const ComplexMenuWithGroups: Story = {
       <DropdownMenuContent className="w-64">
         <DropdownMenuLabel>File Operations</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Icon name="file-plus" size="sm" className="mr-2" />
+          <DropdownMenuItem icon="file-plus">
             <span>New File</span>
             <DropdownMenuShortcut>⌘N</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Icon name="folder-plus" size="sm" className="mr-2" />
+          <DropdownMenuItem icon="folder-plus">
             <span>New Folder</span>
             <DropdownMenuShortcut>⇧⌘N</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Icon name="file-text" size="sm" className="mr-2" />
+          <DropdownMenuItem icon="file-text">
             <span>Open File</span>
             <DropdownMenuShortcut>⌘O</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Icon name="save" size="sm" className="mr-2" />
+          <DropdownMenuItem icon="save">
             <span>Save</span>
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Icon name="save-all" size="sm" className="mr-2" />
+          <DropdownMenuItem icon="save-all">
             <span>Save As...</span>
             <DropdownMenuShortcut>⇧⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
-            <Icon name="upload" size="sm" className="mr-2" />
+          <DropdownMenuSubTrigger icon="upload">
             <span>Import</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
-            <DropdownMenuItem>
-              <Icon name="image" size="sm" className="mr-2" />
+            <DropdownMenuItem icon="image">
               <span>Import Images</span>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Icon name="file-spreadsheet" size="sm" className="mr-2" />
+            <DropdownMenuItem icon="file-spreadsheet">
               <span>Import CSV</span>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Icon name="database" size="sm" className="mr-2" />
+            <DropdownMenuItem icon="database">
               <span>Import Database</span>
             </DropdownMenuItem>
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Icon name="printer" size="sm" className="mr-2" />
+        <DropdownMenuItem icon="printer">
           <span>Print</span>
           <DropdownMenuShortcut>⌘P</DropdownMenuShortcut>
         </DropdownMenuItem>
@@ -495,26 +458,21 @@ export const ContextualActionsMenu: Story = {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>
-                <Icon name="eye" size="sm" className="mr-2" />
+              <DropdownMenuItem icon="eye">
                 Preview
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Icon name="download" size="sm" className="mr-2" />
+              <DropdownMenuItem icon="download">
                 Download
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Icon name="edit" size="sm" className="mr-2" />
+              <DropdownMenuItem icon="edit">
                 Edit
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Icon name="crop" size="sm" className="mr-2" />
+              <DropdownMenuItem icon="crop">
                 Crop
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem destructive>
-                <Icon name="trash-2" size="sm" className="mr-2" />
+              <DropdownMenuItem icon="trash-2" destructive>
                 Delete
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -534,31 +492,25 @@ export const ContextualActionsMenu: Story = {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>
-                <Icon name="eye" size="sm" className="mr-2" />
+              <DropdownMenuItem icon="eye">
                 View
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Icon name="download" size="sm" className="mr-2" />
+              <DropdownMenuItem icon="download">
                 Download
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Icon name="share" size="sm" className="mr-2" />
+              <DropdownMenuItem icon="share">
                 Share
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Icon name="copy" size="sm" className="mr-2" />
+              <DropdownMenuItem icon="copy">
                 Copy Link
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Icon name="star" size="sm" className="mr-2" />
+              <DropdownMenuItem icon="star">
                 Add to Favorites
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem destructive>
-                <Icon name="trash-2" size="sm" className="mr-2" />
+              <DropdownMenuItem icon="trash-2" destructive>
                 Delete
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -617,17 +569,14 @@ export const ResponsivePreview: Story = {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuItem>
-                  <Icon name="user" size="sm" className="mr-2" />
+                <DropdownMenuItem icon="user">
                   Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Icon name="settings" size="sm" className="mr-2" />
+                <DropdownMenuItem icon="settings">
                   Settings
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem destructive>
-                  <Icon name="log-out" size="sm" className="mr-2" />
+                <DropdownMenuItem icon="log-out" destructive>
                   Logout
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -672,16 +621,13 @@ export const ResponsivePreview: Story = {
               <DropdownMenuContent className="w-56">
                 <DropdownMenuLabel>Theme</DropdownMenuLabel>
                 <DropdownMenuRadioGroup value="light">
-                  <DropdownMenuRadioItem value="light">
-                    <Icon name="sun" size="sm" className="mr-2" />
+                  <DropdownMenuRadioItem value="light" icon="sun">
                     Light
                   </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="dark">
-                    <Icon name="moon" size="sm" className="mr-2" />
+                  <DropdownMenuRadioItem value="dark" icon="moon">
                     Dark
                   </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="system">
-                    <Icon name="monitor" size="sm" className="mr-2" />
+                  <DropdownMenuRadioItem value="system" icon="monitor">
                     System
                   </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
@@ -705,6 +651,164 @@ export const ResponsivePreview: Story = {
 }
 
 // Multi-level navigation test
+// Automatic icon integration example
+export const AutomaticIconIntegration: Story = {
+  render: () => (
+    <div className="space-y-[var(--space-lg)]">
+      <div>
+        <h3 className="text-heading-md mb-[var(--space-md)]">Automatic Icon Integration</h3>
+        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-lg)]">
+          Compare the new automatic icon integration with the traditional manual approach.
+          Icons are automatically sized to `md` (16px) with proper `mr-2` spacing.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-lg)]">
+        {/* New Automatic Approach */}
+        <div className="space-y-[var(--space-md)]">
+          <h4 className="text-heading-sm">✨ New: Automatic Icons</h4>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="default">
+                User Menu (Auto)
+                <Icon name="chevron-down" size="sm" className="ml-2" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>Account</DropdownMenuLabel>
+              <DropdownMenuItem icon="user">Profile</DropdownMenuItem>
+              <DropdownMenuItem icon="settings">Settings</DropdownMenuItem>
+              <DropdownMenuItem icon="credit-card">Billing</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger icon="share-2">
+                  Share
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem icon="mail">Email</DropdownMenuItem>
+                  <DropdownMenuItem icon="message-square">Message</DropdownMenuItem>
+                  <DropdownMenuItem icon="copy">Copy Link</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem icon="help-circle">Help</DropdownMenuItem>
+              <DropdownMenuItem icon="log-out" destructive>Logout</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <div className="bg-[var(--color-surface-secondary)] p-[var(--space-md)] rounded-md">
+            <h5 className="text-heading-sm mb-[var(--space-sm)]">Code Example:</h5>
+            <pre className="text-caption-sm text-[var(--color-text-secondary)] overflow-x-auto">
+{`<DropdownMenuItem icon="user">
+  Profile
+</DropdownMenuItem>
+<DropdownMenuItem icon="settings">
+  Settings
+</DropdownMenuItem>`}
+            </pre>
+          </div>
+        </div>
+
+        {/* Traditional Manual Approach */}
+        <div className="space-y-[var(--space-md)]">
+          <h4 className="text-heading-sm">🔧 Traditional: Manual Icons</h4>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost">
+                User Menu (Manual)
+                <Icon name="chevron-down" size="sm" className="ml-2" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>Account</DropdownMenuLabel>
+              <DropdownMenuItem>
+                <Icon name="user" size="md" className="mr-2" />
+                Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Icon name="settings" size="md" className="mr-2" />
+                Settings
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Icon name="credit-card" size="md" className="mr-2" />
+                Billing
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <Icon name="share-2" size="md" className="mr-2" />
+                  Share
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>
+                    <Icon name="mail" size="md" className="mr-2" />
+                    Email
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Icon name="message-square" size="md" className="mr-2" />
+                    Message
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Icon name="copy" size="md" className="mr-2" />
+                    Copy Link
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <Icon name="help-circle" size="md" className="mr-2" />
+                Help
+              </DropdownMenuItem>
+              <DropdownMenuItem destructive>
+                <Icon name="log-out" size="md" className="mr-2" />
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <div className="bg-[var(--color-surface-secondary)] p-[var(--space-md)] rounded-md">
+            <h5 className="text-heading-sm mb-[var(--space-sm)]">Code Example:</h5>
+            <pre className="text-caption-sm text-[var(--color-text-secondary)] overflow-x-auto">
+{`<DropdownMenuItem>
+  <Icon name="user" size="md" className="mr-2" />
+  Profile
+</DropdownMenuItem>
+<DropdownMenuItem>
+  <Icon name="settings" size="md" className="mr-2" />
+  Settings
+</DropdownMenuItem>`}
+            </pre>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-[var(--space-2xlg)] p-[var(--space-lg)] bg-[var(--color-background-brand)] bg-opacity-5 rounded-lg border border-[var(--color-border-brand)]">
+        <h3 className="text-heading-sm mb-[var(--space-md)] text-[var(--color-text-brand)]">Benefits of Automatic Icon Integration</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-md)] text-body-sm">
+          <div>
+            <h4 className="font-medium mb-[var(--space-sm)]">Developer Experience</h4>
+            <ul className="space-y-[var(--space-xsm)] text-[var(--color-text-secondary)]">
+              <li>✅ Cleaner, more readable code</li>
+              <li>✅ Consistent icon sizing (md/16px)</li>
+              <li>✅ Automatic spacing (mr-2)</li>
+              <li>✅ Reduced code duplication</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium mb-[var(--space-sm)]">Compatibility</h4>
+            <ul className="space-y-[var(--space-xsm)] text-[var(--color-text-secondary)]">
+              <li>✅ Works with all menu item types</li>
+              <li>✅ Supports submenus and triggers</li>
+              <li>✅ Backward compatible with manual icons</li>
+              <li>✅ Responsive (desktop + mobile)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+}
+
 export const MultiLevelNavigation: Story = {
   render: () => (
     <div className="flex flex-col space-y-[var(--space-lg)]">
@@ -725,86 +829,71 @@ export const MultiLevelNavigation: Story = {
         <DropdownMenuContent className="w-64">
           <DropdownMenuLabel>Main Menu</DropdownMenuLabel>
           
-          <DropdownMenuItem>
-            <Icon name="home" size="sm" className="mr-2" />
+          <DropdownMenuItem icon="home">
             <span>Dashboard</span>
           </DropdownMenuItem>
           
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger>
-              <Icon name="folder" size="sm" className="mr-2" />
+            <DropdownMenuSubTrigger icon="folder">
               <span>Projects</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
               <DropdownMenuLabel>Project Actions</DropdownMenuLabel>
-              <DropdownMenuItem>
-                <Icon name="plus" size="sm" className="mr-2" />
+              <DropdownMenuItem icon="plus">
                 <span>New Project</span>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Icon name="folder-open" size="sm" className="mr-2" />
+              <DropdownMenuItem icon="folder-open">
                 <span>Open Recent</span>
               </DropdownMenuItem>
               
               <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
-                  <Icon name="settings" size="sm" className="mr-2" />
+                <DropdownMenuSubTrigger icon="settings">
                   <span>Project Settings</span>
                 </DropdownMenuSubTrigger>
                 <DropdownMenuSubContent>
                   <DropdownMenuLabel>Settings</DropdownMenuLabel>
-                  <DropdownMenuItem>
-                    <Icon name="users" size="sm" className="mr-2" />
+                  <DropdownMenuItem icon="users">
                     <span>Team Members</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Icon name="shield" size="sm" className="mr-2" />
+                  <DropdownMenuItem icon="shield">
                     <span>Permissions</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Icon name="bell" size="sm" className="mr-2" />
+                  <DropdownMenuItem icon="bell">
                     <span>Notifications</span>
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuSub>
               
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Icon name="archive" size="sm" className="mr-2" />
+              <DropdownMenuItem icon="archive">
                 <span>Archive</span>
               </DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuSub>
           
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger>
-              <Icon name="user" size="sm" className="mr-2" />
+            <DropdownMenuSubTrigger icon="user">
               <span>Account</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
               <DropdownMenuLabel>Account Settings</DropdownMenuLabel>
-              <DropdownMenuItem>
-                <Icon name="user-circle" size="sm" className="mr-2" />
+              <DropdownMenuItem icon="user-circle">
                 <span>Profile</span>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Icon name="credit-card" size="sm" className="mr-2" />
+              <DropdownMenuItem icon="credit-card">
                 <span>Billing</span>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Icon name="key" size="sm" className="mr-2" />
+              <DropdownMenuItem icon="key">
                 <span>Security</span>
               </DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuSub>
           
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <Icon name="help-circle" size="sm" className="mr-2" />
+          <DropdownMenuItem icon="help-circle">
             <span>Help & Support</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Icon name="log-out" size="sm" className="mr-2" />
+          <DropdownMenuItem icon="log-out">
             <span>Sign Out</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
