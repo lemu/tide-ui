@@ -809,6 +809,182 @@ export const AutomaticIconIntegration: Story = {
   ),
 }
 
+// Mobile auto-dismiss behavior test
+export const MobileAutoDismissTest: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    viewport: {
+      viewports: {
+        mobile: {
+          name: 'Mobile',
+          styles: {
+            width: '375px',
+            height: '667px',
+          },
+        },
+      },
+      defaultViewport: 'mobile',
+    },
+  },
+  render: () => (
+    <div className="p-[var(--space-lg)] space-y-[var(--space-lg)]">
+      <div>
+        <h2 className="text-heading-lg mb-[var(--space-md)]">Mobile Auto-Dismiss Behavior</h2>
+        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-lg)]">
+          Test the mobile dropdown auto-dismiss functionality. Switch to mobile view (≤768px) to see bottom sheet behavior.
+        </p>
+      </div>
+
+      <div className="space-y-[var(--space-lg)]">
+        {/* Regular menu items - should auto-close */}
+        <div>
+          <h3 className="text-heading-sm mb-[var(--space-md)]">Regular Menu Items (Auto-Close)</h3>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="default">
+                Actions Menu
+                <Icon name="chevron-down" size="sm" className="ml-2" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>User Actions</DropdownMenuLabel>
+              <DropdownMenuItem icon="user">
+                View Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem icon="edit">
+                Edit Account
+              </DropdownMenuItem>
+              <DropdownMenuItem icon="settings">
+                Settings
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem icon="log-out" destructive>
+                Sign Out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <p className="text-body-sm text-[var(--color-text-tertiary)] mt-[var(--space-sm)]">
+            ✅ These items should auto-close the mobile sheet after selection
+          </p>
+        </div>
+
+        {/* Checkbox menu - should stay open */}
+        <div>
+          <h3 className="text-heading-sm mb-[var(--space-md)]">Checkbox Menu (Stay Open)</h3>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost">
+                View Options
+                <Icon name="chevron-down" size="sm" className="ml-2" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>Display Settings</DropdownMenuLabel>
+              <DropdownMenuCheckboxItem checked={true}>
+                Show Notifications
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem checked={false}>
+                Show Sidebar
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem checked={true}>
+                Show Toolbar
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem checked={false}>
+                Show Footer
+              </DropdownMenuCheckboxItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <p className="text-body-sm text-[var(--color-text-tertiary)] mt-[var(--space-sm)]">
+            🔄 Checkbox items should keep the mobile sheet open for multi-selection
+          </p>
+        </div>
+
+        {/* Radio menu - should auto-close */}
+        <div>
+          <h3 className="text-heading-sm mb-[var(--space-md)]">Radio Menu (Auto-Close)</h3>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost">
+                Theme Selection
+                <Icon name="chevron-down" size="sm" className="ml-2" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>Choose Theme</DropdownMenuLabel>
+              <DropdownMenuRadioGroup value="light">
+                <DropdownMenuRadioItem value="light" icon="sun">
+                  Light Theme
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="dark" icon="moon">
+                  Dark Theme
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="system" icon="monitor">
+                  System Theme
+                </DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <p className="text-body-sm text-[var(--color-text-tertiary)] mt-[var(--space-sm)]">
+            ✅ Radio items should auto-close after theme selection
+          </p>
+        </div>
+
+        {/* Custom autoClose control */}
+        <div>
+          <h3 className="text-heading-sm mb-[var(--space-md)]">Custom Auto-Close Control</h3>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost">
+                Mixed Behavior
+                <Icon name="chevron-down" size="sm" className="ml-2" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>Mixed Menu</DropdownMenuLabel>
+              <DropdownMenuItem icon="download">
+                Download (Auto-Close)
+              </DropdownMenuItem>
+              <DropdownMenuItem icon="bookmark" autoClose={false}>
+                Bookmark (Stay Open)
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuCheckboxItem autoClose={true} checked={false}>
+                Force Close Checkbox
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuRadioGroup value="option1">
+                <DropdownMenuRadioItem value="option1" autoClose={false}>
+                  Stay Open Radio
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="option2">
+                  Auto-Close Radio
+                </DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <p className="text-body-sm text-[var(--color-text-tertiary)] mt-[var(--space-sm)]">
+            🎛️ Custom autoClose prop overrides default behavior
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-[var(--space-2xlg)] p-[var(--space-lg)] bg-[var(--color-surface-secondary)] rounded-lg">
+        <h3 className="text-heading-sm mb-[var(--space-md)]">Testing Instructions</h3>
+        <div className="space-y-[var(--space-sm)] text-body-sm">
+          <p><strong>Mobile (≤768px):</strong> Uses bottom sheet with auto-dismiss behavior</p>
+          <p><strong>Desktop (≥768px):</strong> Regular dropdown behavior unchanged</p>
+          <p><strong>Auto-Close Defaults:</strong></p>
+          <ul className="ml-[var(--space-lg)] space-y-[var(--space-xsm)]">
+            <li>• Regular items: <code>autoClose=true</code></li>
+            <li>• Checkbox items: <code>autoClose=false</code></li>
+            <li>• Radio items: <code>autoClose=true</code></li>
+            <li>• Custom control: Use <code>autoClose</code> prop</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  ),
+}
+
 export const MultiLevelNavigation: Story = {
   render: () => (
     <div className="flex flex-col space-y-[var(--space-lg)]">

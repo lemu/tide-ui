@@ -6,7 +6,8 @@ import { useIsDesktop } from "@/lib/hooks"
 import {
   Drawer,
   DrawerContent,
-  DrawerTrigger
+  DrawerTrigger,
+  DrawerClose
 } from "./drawer"
 import { Icon } from "./icon"
 
@@ -201,57 +202,83 @@ const MobileDropdownItem = React.forwardRef<
     inset?: boolean
     destructive?: boolean
     icon?: string
+    autoClose?: boolean
     onSelect?: (e: Event) => void
   }
->(({ className, inset, destructive, icon, onSelect, children, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "[&]:text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md px-[var(--space-md)] h-[var(--size-lg)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtle-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] active:bg-[var(--color-background-neutral-subtle-hovered)]",
-      destructive && "text-[var(--color-text-error)] hover:text-[var(--color-text-error)] focus:text-[var(--color-text-error)] hover:bg-[var(--color-background-error)] focus:bg-[var(--color-background-error)] [&>svg]:text-[var(--color-icon-error)]",
-      inset && "pl-8",
-      className
-    )}
-    onClick={(e) => onSelect?.(e.nativeEvent)}
-    role="menuitem"
-    tabIndex={0}
-    {...props}
-  >
-    {icon && <Icon name={icon} size="md" className="mr-2" />}
-    {children}
-  </div>
-))
+>(({ className, inset, destructive, icon, autoClose = true, onSelect, children, ...props }, ref) => {
+  const itemContent = (
+    <div
+      ref={ref}
+      className={cn(
+        "[&]:text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md px-[var(--space-md)] h-[var(--size-lg)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtle-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] active:bg-[var(--color-background-neutral-subtle-hovered)]",
+        destructive && "text-[var(--color-text-error)] hover:text-[var(--color-text-error)] focus:text-[var(--color-text-error)] hover:bg-[var(--color-background-error)] focus:bg-[var(--color-background-error)] [&>svg]:text-[var(--color-icon-error)]",
+        inset && "pl-8",
+        className
+      )}
+      onClick={(e) => onSelect?.(e.nativeEvent)}
+      role="menuitem"
+      tabIndex={0}
+      {...props}
+    >
+      {icon && <Icon name={icon} size="md" className="mr-2" />}
+      {children}
+    </div>
+  )
+
+  if (autoClose) {
+    return (
+      <DrawerClose asChild>
+        {itemContent}
+      </DrawerClose>
+    )
+  }
+
+  return itemContent
+})
 MobileDropdownItem.displayName = "MobileDropdownItem"
 
 const MobileDropdownCheckboxItem = React.forwardRef<
   HTMLDivElement,
   Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
     checked?: boolean
+    autoClose?: boolean
     onCheckedChange?: (checked: boolean) => void
   }
->(({ className, children, checked, onCheckedChange, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md h-[var(--size-lg)] pl-10 pr-[var(--space-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtle-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] active:bg-[var(--color-background-neutral-subtle-hovered)]",
-      className
-    )}
-    onClick={() => onCheckedChange?.(!checked)}
-    role="menuitemcheckbox"
-    aria-checked={checked}
-    tabIndex={0}
-    {...props}
-  >
-    <span className="absolute left-[var(--space-md)] flex h-4 w-4 items-center justify-center rounded-sm border border-[var(--color-border-input)] bg-[var(--color-surface-primary)]">
-      {checked && (
-        <div className="h-4 w-4 rounded-sm border border-[var(--color-background-brand)] bg-[var(--color-background-brand)] flex items-center justify-center">
-          <Check className="h-3 w-3 text-[var(--color-text-on-action)]" />
-        </div>
+>(({ className, children, checked, autoClose = false, onCheckedChange, ...props }, ref) => {
+  const itemContent = (
+    <div
+      ref={ref}
+      className={cn(
+        "text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md h-[var(--size-lg)] pl-10 pr-[var(--space-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtle-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] active:bg-[var(--color-background-neutral-subtle-hovered)]",
+        className
       )}
-    </span>
-    {children}
-  </div>
-))
+      onClick={() => onCheckedChange?.(!checked)}
+      role="menuitemcheckbox"
+      aria-checked={checked}
+      tabIndex={0}
+      {...props}
+    >
+      <span className="absolute left-[var(--space-md)] flex h-4 w-4 items-center justify-center rounded-sm border border-[var(--color-border-input)] bg-[var(--color-surface-primary)]">
+        {checked && (
+          <div className="h-4 w-4 rounded-sm border border-[var(--color-background-brand)] bg-[var(--color-background-brand)] flex items-center justify-center">
+            <Check className="h-3 w-3 text-[var(--color-text-on-action)]" />
+          </div>
+        )}
+      </span>
+      {children}
+    </div>
+  )
+
+  if (autoClose) {
+    return (
+      <DrawerClose asChild>
+        {itemContent}
+      </DrawerClose>
+    )
+  }
+
+  return itemContent
+})
 MobileDropdownCheckboxItem.displayName = "MobileDropdownCheckboxItem"
 
 const MobileDropdownRadioItem = React.forwardRef<
@@ -260,31 +287,44 @@ const MobileDropdownRadioItem = React.forwardRef<
     value: string
     checked?: boolean
     icon?: string
+    autoClose?: boolean
     onRadioSelect?: (value: string) => void
   }
->(({ className, children, value, checked, icon, onRadioSelect, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md h-[var(--size-lg)] pl-10 pr-[var(--space-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtle-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] active:bg-[var(--color-background-neutral-subtle-hovered)]",
-      className
-    )}
-    onClick={() => onRadioSelect?.(value)}
-    role="menuitemradio"
-    aria-checked={checked}
-    tabIndex={0}
-    {...props}
-  >
-    <span className={cn(
-      "absolute left-[var(--space-md)] flex h-4 w-4 items-center justify-center rounded-full border-2 border-[var(--color-border-input)] bg-[var(--color-surface-primary)]",
-      checked && "border-[var(--color-border-brand)] bg-[var(--color-background-brand)] text-[var(--color-text-on-action)]"
-    )}>
-      {checked && <Circle className="h-[6px] w-[6px] fill-current" />}
-    </span>
-    {icon && <Icon name={icon} size="md" className="mr-2 ml-6" />}
-    {children}
-  </div>
-))
+>(({ className, children, value, checked, icon, autoClose = true, onRadioSelect, ...props }, ref) => {
+  const itemContent = (
+    <div
+      ref={ref}
+      className={cn(
+        "text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md h-[var(--size-lg)] pl-10 pr-[var(--space-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtle-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] active:bg-[var(--color-background-neutral-subtle-hovered)]",
+        className
+      )}
+      onClick={() => onRadioSelect?.(value)}
+      role="menuitemradio"
+      aria-checked={checked}
+      tabIndex={0}
+      {...props}
+    >
+      <span className={cn(
+        "absolute left-[var(--space-md)] flex h-4 w-4 items-center justify-center rounded-full border-2 border-[var(--color-border-input)] bg-[var(--color-surface-primary)]",
+        checked && "border-[var(--color-border-brand)] bg-[var(--color-background-brand)] text-[var(--color-text-on-action)]"
+      )}>
+        {checked && <Circle className="h-[6px] w-[6px] fill-current" />}
+      </span>
+      {icon && <Icon name={icon} size="md" className="mr-2 ml-6" />}
+      {children}
+    </div>
+  )
+
+  if (autoClose) {
+    return (
+      <DrawerClose asChild>
+        {itemContent}
+      </DrawerClose>
+    )
+  }
+
+  return itemContent
+})
 MobileDropdownRadioItem.displayName = "MobileDropdownRadioItem"
 
 const MobileDropdownLabel = React.forwardRef<
@@ -377,7 +417,7 @@ const ResponsiveDropdownMenuContent = React.forwardRef<
   
   // Mobile: Use Vaul Drawer with native drag-to-dismiss
   return (
-    <DrawerContent 
+    <DrawerContent
       ref={ref}
       className={cn(
         "p-0", // Remove default padding since we handle spacing in MenuLevelContainer
@@ -386,13 +426,13 @@ const ResponsiveDropdownMenuContent = React.forwardRef<
       {...props}
     >
       <MenuLevelContainer>
-        <div className="space-y-[var(--space-xsm)] px-[var(--space-md)] pb-[var(--space-md)]">
+        <div className="space-y-[var(--space-xsm)] px-[var(--space-md)] pt-[var(--space-sm)] pb-[var(--space-md)]">
           {children}
         </div>
       </MenuLevelContainer>
-      
+
       {/* Safe area padding for devices with bottom home indicator */}
-      <div className="h-[env(safe-area-inset-bottom)]" />
+      <div className="h-[env(safe-area-inset-bottom)] pb-1" />
     </DrawerContent>
   )
 })
@@ -644,12 +684,13 @@ interface ResponsiveDropdownMenuItemProps extends React.ComponentPropsWithoutRef
   inset?: boolean
   destructive?: boolean
   icon?: string
+  autoClose?: boolean
 }
 
 const ResponsiveDropdownMenuItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Item>,
   ResponsiveDropdownMenuItemProps
->(({ className, inset, destructive, icon, onSelect, ...props }, ref) => {
+>(({ className, inset, destructive, icon, autoClose, onSelect, ...props }, ref) => {
   const { isDesktop } = React.useContext(ResponsiveDropdownContext)
   
   if (isDesktop) {
@@ -672,6 +713,7 @@ const ResponsiveDropdownMenuItem = React.forwardRef<
       inset={inset}
       destructive={destructive}
       icon={icon}
+      autoClose={autoClose}
       onSelect={onSelect}
       {...props}
     />
@@ -682,12 +724,13 @@ ResponsiveDropdownMenuItem.displayName = "ResponsiveDropdownMenuItem"
 // Add remaining responsive components
 interface ResponsiveDropdownMenuCheckboxItemProps extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem> {
   checked?: boolean
+  autoClose?: boolean
 }
 
 const ResponsiveDropdownMenuCheckboxItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
   ResponsiveDropdownMenuCheckboxItemProps
->(({ className, children, checked, onCheckedChange, ...props }, ref) => {
+>(({ className, children, checked, autoClose, onCheckedChange, ...props }, ref) => {
   const { isDesktop } = React.useContext(ResponsiveDropdownContext)
   
   if (isDesktop) {
@@ -719,6 +762,7 @@ const ResponsiveDropdownMenuCheckboxItem = React.forwardRef<
     <MobileDropdownCheckboxItem
       className={className}
       checked={checked}
+      autoClose={autoClose}
       onCheckedChange={onCheckedChange}
       {...props}
     >
@@ -731,12 +775,13 @@ ResponsiveDropdownMenuCheckboxItem.displayName = "ResponsiveDropdownMenuCheckbox
 interface ResponsiveDropdownMenuRadioItemProps extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem> {
   value: string
   icon?: string
+  autoClose?: boolean
 }
 
 const ResponsiveDropdownMenuRadioItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
   ResponsiveDropdownMenuRadioItemProps
->(({ className, children, value, icon, ...props }, ref) => {
+>(({ className, children, value, icon, autoClose, ...props }, ref) => {
   const { isDesktop } = React.useContext(ResponsiveDropdownContext)
   
   if (isDesktop) {
@@ -771,6 +816,7 @@ const ResponsiveDropdownMenuRadioItem = React.forwardRef<
           value={value}
           checked={radioValue === value}
           icon={icon}
+          autoClose={autoClose}
           onRadioSelect={onRadioChange}
           {...props}
         >
