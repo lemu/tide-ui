@@ -647,8 +647,13 @@ const SidebarMenuButton = React.forwardRef<
         size === "default" && "h-8",
         size === "lg" && "h-12 py-3 text-body-lg group-data-[collapsible=icon]:!size-8",
 
-        // Enhanced hover behavior - only show background on active items when hovered
-        // Non-active items remain transparent on hover
+        // Enhanced hover behavior for non-active items
+        isHovered && !isFocused && !isActive && [
+          "bg-[var(--color-background-neutral-subtle-hovered)]",
+          "text-[var(--color-text-primary)]"
+        ],
+
+        // Enhanced hover behavior for active items
         isHovered && !isFocused && isActive && [
           "bg-[var(--color-background-brand-selected-hovered)]",
           "text-[var(--color-text-brand-hovered)]",
@@ -936,8 +941,13 @@ const SidebarMenuSubButton = React.forwardRef<
       size === "sm" && "text-body-sm px-1.5 py-0.5",
       size === "md" && "text-body-md",
 
-      // Enhanced hover behavior - only show background on active items when hovered
-      // Non-active items remain transparent on hover
+      // Enhanced hover behavior for non-active items
+      enhancedHover && isHovered && !isFocused && !isActive && [
+        "bg-[var(--color-background-neutral-subtle-hovered)]",
+        "text-[var(--color-text-primary)]"
+      ],
+
+      // Enhanced hover behavior for active items
       enhancedHover && isHovered && !isFocused && isActive && [
         "bg-[var(--color-background-brand-selected-hovered)]",
         "text-[var(--color-text-brand-hovered)]"
