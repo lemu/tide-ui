@@ -534,7 +534,7 @@ const SidebarMenuItem = React.forwardRef<
 SidebarMenuItem.displayName = "SidebarMenuItem"
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-2 py-1.5 text-left text-body-medium-md outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-[var(--color-background-brand-selected)] data-[active=true]:font-medium data-[active=true]:text-[var(--color-text-selected)] data-[state=open]:bg-[var(--color-surface-secondary)] group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 group-data-[collapsible=icon]:justify-center [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 data-[active=true]:[&>svg]:text-[var(--color-text-selected)]",
+  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-2 py-1.5 text-left text-body-medium-md outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-[var(--color-background-brand-selected)] data-[active=true]:text-[var(--color-text-selected)] data-[state=open]:bg-[var(--color-surface-secondary)] group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 group-data-[collapsible=icon]:justify-center [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 data-[active=true]:[&>svg]:text-[var(--color-text-selected)]",
   {
     variants: {
       variant: {
@@ -648,15 +648,11 @@ const SidebarMenuButton = React.forwardRef<
         size === "lg" && "h-12 py-3 text-body-lg group-data-[collapsible=icon]:!size-8",
 
         // Enhanced hover behavior for non-active items
-        isHovered && !isFocused && !isActive && [
-          "bg-[var(--color-background-neutral-subtle-hovered)]",
-          "text-[var(--color-text-primary)]"
-        ],
+        isHovered && !isFocused && !isActive && "bg-[var(--color-background-neutral-subtle-hovered)]",
 
         // Enhanced hover behavior for active items
         isHovered && !isFocused && isActive && [
           "bg-[var(--color-background-brand-selected-hovered)]",
-          "text-[var(--color-text-brand-hovered)]",
           "[&>svg]:text-[var(--color-icon-brand-hover)]"
         ],
 
@@ -667,6 +663,7 @@ const SidebarMenuButton = React.forwardRef<
         isFocused && isActive && preserveActiveOnFocus && [
           "bg-[var(--color-background-brand-selected)]",
           "text-[var(--color-text-brand)]",
+          "[&]:text-body-medium-md [&]:font-normal",
           "ring-2 ring-[var(--color-border-brand)] ring-offset-1",
           "[&>svg]:text-[var(--color-text-brand)]"
         ],
@@ -675,7 +672,7 @@ const SidebarMenuButton = React.forwardRef<
         isActive && !isFocused && [
           "bg-[var(--color-background-brand-selected)]",
           "text-[var(--color-text-brand)]",
-          "font-medium",
+          "[&]:text-body-medium-md [&]:font-normal",
           "[&>svg]:text-[var(--color-text-brand)]"
         ],
 
@@ -942,16 +939,10 @@ const SidebarMenuSubButton = React.forwardRef<
       size === "md" && "text-body-md",
 
       // Enhanced hover behavior for non-active items
-      enhancedHover && isHovered && !isFocused && !isActive && [
-        "bg-[var(--color-background-neutral-subtle-hovered)]",
-        "text-[var(--color-text-primary)]"
-      ],
+      enhancedHover && isHovered && !isFocused && !isActive && "bg-[var(--color-background-neutral-subtle-hovered)]",
 
       // Enhanced hover behavior for active items
-      enhancedHover && isHovered && !isFocused && isActive && [
-        "bg-[var(--color-background-brand-selected-hovered)]",
-        "text-[var(--color-text-brand-hovered)]"
-      ],
+      enhancedHover && isHovered && !isFocused && isActive && "bg-[var(--color-background-brand-selected-hovered)]",
 
       // Focus styles - clean focus for non-active items
       enhancedHover && isFocused && !isActive && "bg-transparent ring-2 ring-[var(--color-border-brand)] ring-offset-1",
@@ -960,6 +951,7 @@ const SidebarMenuSubButton = React.forwardRef<
       enhancedHover && isFocused && isActive && preserveActiveOnFocus && [
         "bg-[var(--color-background-brand-selected)]",
         "text-[var(--color-text-brand)]",
+        "[&]:text-body-md [&]:font-normal",
         "ring-2 ring-[var(--color-border-brand)] ring-offset-1"
       ],
 
@@ -967,7 +959,7 @@ const SidebarMenuSubButton = React.forwardRef<
       isActive && !isFocused && [
         "bg-[var(--color-background-brand-selected)]",
         "text-[var(--color-text-brand)]",
-        "font-medium"
+        "[&]:text-body-md [&]:font-normal"
       ],
 
 
