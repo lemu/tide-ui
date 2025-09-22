@@ -306,7 +306,7 @@ function AppSidebar() {
                   <SidebarMenuItem key={item.title}>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <SidebarMenuButton isActive={item.isActive} className="cursor-pointer">
+                        <SidebarMenuButton isActive={item.isActive}>
                           <Icon name={item.icon} size="sm" />
                           <span>{item.title}</span>
                         </SidebarMenuButton>
@@ -341,7 +341,6 @@ function AppSidebar() {
                         <div className="group-data-[collapsible=icon]:hidden">
                           <SidebarMenuButton
                             isActive={item.isActive && !item.items?.length}
-                            className="cursor-pointer"
                             onClick={() => toggleExpanded(item.title)}
                           >
                             <Icon name={item.icon} size="sm" />
@@ -379,7 +378,7 @@ function AppSidebar() {
                                 <DropdownMenuTrigger asChild>
                                   <SidebarMenuButton
                                     isActive={hasActiveChild(item)}
-                                    className="cursor-pointer w-full justify-center"
+                                    className="w-full justify-center"
                                   >
                                     <Icon name={item.icon} size="sm" />
                                   </SidebarMenuButton>
@@ -397,11 +396,11 @@ function AppSidebar() {
                               {item.items.map((subItem: any) => (
                                 <DropdownMenuItem
                                   key={subItem.title}
-                                  className={`cursor-pointer ${
+                                  className={
                                     subItem.isActive
                                       ? 'bg-[var(--color-background-brand-selected)] text-[var(--color-text-brand)]'
                                       : ''
-                                  }`}
+                                  }
                                 >
                                   {subItem.title}
                                 </DropdownMenuItem>
@@ -413,7 +412,7 @@ function AppSidebar() {
                     ) : (
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <SidebarMenuButton isActive={item.isActive} className="cursor-pointer">
+                          <SidebarMenuButton isActive={item.isActive}>
                             <Icon name={item.icon} size="sm" />
                             <span>{item.title}</span>
                           </SidebarMenuButton>
@@ -440,7 +439,7 @@ function AppSidebar() {
                   <SidebarMenuItem key={item.title}>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <SidebarMenuButton isActive={item.isActive} className="cursor-pointer">
+                        <SidebarMenuButton isActive={item.isActive}>
                           <Icon name={item.icon} size="sm" />
                           <span>{item.title}</span>
                         </SidebarMenuButton>
@@ -473,7 +472,7 @@ function AppSidebar() {
                   <SidebarMenuItem key={item.title}>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <SidebarMenuButton isActive={item.isActive} className="cursor-pointer">
+                        <SidebarMenuButton isActive={item.isActive}>
                           <Icon name="layout-dashboard" size="sm" />
                           <span>{item.title}</span>
                         </SidebarMenuButton>
@@ -511,7 +510,7 @@ function AppSidebar() {
                 <SidebarMenuItem>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <SidebarMenuButton className="cursor-pointer">
+                      <SidebarMenuButton>
                         <Icon name="more-horizontal" size="sm" />
                         <span>Show all</span>
                       </SidebarMenuButton>
@@ -533,7 +532,7 @@ function AppSidebar() {
                   <SidebarMenuItem key={item.title}>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <SidebarMenuButton isActive={item.isActive} className="cursor-pointer">
+                        <SidebarMenuButton isActive={item.isActive}>
                           <Icon name={item.icon} size="sm" />
                           <span>{item.title}</span>
                         </SidebarMenuButton>
