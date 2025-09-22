@@ -47,8 +47,8 @@ export { Textarea } from './ui/textarea'
 export type { TextareaProps } from './ui/textarea'
 
 // Editable components
-export { Editable, EditablePreview, EditableInput, EditableTextarea, useEditable } from './ui/editable'
-export type { EditableProps, EditableContextValue, EditablePreviewProps, EditableInputProps, EditableTextareaProps } from './ui/editable'
+export { Editable, EditablePreview, EditableInput, EditableDisplay, EditableField } from './ui/editable'
+export type { EditableProps, EditablePreviewProps, EditableInputProps } from './ui/editable'
 
 // Form Field components
 export { FormField, FormLabel, FormControl, FormHelperText, FormErrorMessage } from './ui/form-field'

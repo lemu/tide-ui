@@ -1,11 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { useState } from 'react'
-import { Editable, EditablePreview, EditableInput, EditableTextarea } from '../components/ui/editable'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { Button } from '../components/ui/button'
-import { Label } from '../components/ui/label'
-import { Badge } from '../components/ui/badge'
-import { Icon } from '../components/ui/icon'
+import * as React from 'react'
+import { Editable, EditablePreview, EditableInput } from '../components/ui/editable'
 
 const meta: Meta<typeof Editable> = {
   title: 'NPM/Editable',
@@ -15,26 +10,29 @@ const meta: Meta<typeof Editable> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    triggerMode: {
-      control: { type: 'select' },
-      options: ['click', 'dblclick', 'focus'],
-      description: 'How to trigger edit mode',
+    value: {
+      control: 'text',
+      description: 'Controlled value',
+    },
+    defaultValue: {
+      control: 'text',
+      description: 'Default value for uncontrolled usage',
     },
     placeholder: {
       control: 'text',
-      description: 'Placeholder text when value is empty',
+      description: 'Placeholder text when empty',
     },
     disabled: {
       control: 'boolean',
+      description: 'Whether editing is disabled',
     },
-    invalid: {
+    autoFocus: {
       control: 'boolean',
+      description: 'Auto-focus when editing starts',
     },
-    required: {
+    selectAllOnFocus: {
       control: 'boolean',
-    },
-    maxLength: {
-      control: 'number',
+      description: 'Select all text when focused',
     },
   },
 } satisfies Meta<typeof Editable>
@@ -45,555 +43,359 @@ type Story = StoryObj<typeof meta>
 // Basic editable text
 export const Default: Story = {
   render: () => {
-    const [value, setValue] = useState('Click to edit this text')
-    
+    const [value, setValue] = React.useState('Click to edit this text')
+
     return (
-      <div className="w-80 space-y-4">
-        <Label>Basic editable text</Label>
-        <Editable 
-          value={value} 
-          onValueChange={setValue}
-          placeholder="Enter some text..."
+      <div className="w-96 p-4">
+        <Editable
+          value={value}
+          onSubmit={setValue}
+          placeholder="Enter text..."
         >
-          <EditablePreview />
-          <EditableInput />
+          <EditablePreview className="cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] p-2 rounded-md transition-colors" />
+          <EditableInput className="border-2 border-[var(--color-border-brand)] p-2 rounded-md outline-none" />
         </Editable>
-        <p className="text-caption-sm text-[var(--color-text-secondary)]">
-          Click the text above to edit it
-        </p>
       </div>
     )
   },
 }
 
-// Different trigger modes
-export const TriggerModes: Story = {
+// Heading with text-heading-lg
+export const HeadingLarge: Story = {
   render: () => {
-    const [clickValue, setClickValue] = useState('Click to edit')
-    const [dblClickValue, setDblClickValue] = useState('Double-click to edit')
-    const [focusValue, setFocusValue] = useState('Focus to edit')
-    
-    return (
-      <div className="w-80 space-y-6">
-        <div>
-          <Label>Click trigger (default)</Label>
-          <Editable 
-            value={clickValue} 
-            onValueChange={setClickValue}
-            triggerMode="click"
-          >
-            <EditablePreview />
-            <EditableInput />
-          </Editable>
-        </div>
-        
-        <div>
-          <Label>Double-click trigger</Label>
-          <Editable 
-            value={dblClickValue} 
-            onValueChange={setDblClickValue}
-            triggerMode="dblclick"
-          >
-            <EditablePreview />
-            <EditableInput />
-          </Editable>
-        </div>
-        
-        <div>
-          <Label>Focus trigger</Label>
-          <Editable 
-            value={focusValue} 
-            onValueChange={setFocusValue}
-            triggerMode="focus"
-          >
-            <EditablePreview />
-            <EditableInput />
-          </Editable>
-        </div>
-      </div>
-    )
-  },
-}
+    const [title, setTitle] = React.useState('Large Heading Title')
 
-// With textarea
-export const WithTextarea: Story = {
-  render: () => {
-    const [value, setValue] = useState('This is a longer piece of text that can be edited in a textarea. Click to edit and see how it expands automatically.')
-    
+    const sharedStyles = {
+      fontFamily: 'var(--font-family-primary)',
+      padding: 'var(--space-sm)',
+    }
+
     return (
-      <div className="w-96 space-y-4">
-        <Label>Editable textarea</Label>
-        <Editable 
-          value={value} 
-          onValueChange={setValue}
-          placeholder="Enter a longer description..."
+      <div className="w-full p-4">
+        <Editable
+          value={title}
+          onSubmit={setTitle}
+          placeholder="Enter heading..."
         >
-          <EditablePreview />
-          <EditableTextarea />
+          <EditablePreview
+            className="text-heading-lg cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] rounded-md transition-colors"
+            style={{
+              ...sharedStyles,
+              minHeight: '3rem',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          />
+          <EditableInput
+            className="text-heading-lg bg-transparent border-none outline-none focus:ring-2 focus:ring-[var(--color-border-brand)] rounded-md"
+            style={sharedStyles}
+            autoResize
+            minWidth={200}
+            charWidth={20}
+          />
         </Editable>
-        <p className="text-caption-sm text-[var(--color-text-secondary)]">
-          Press Cmd+Enter to save, Escape to cancel
-        </p>
       </div>
     )
   },
 }
 
-// Validation states
-export const ValidationStates: Story = {
+// Auto-resizing input
+export const AutoResizing: Story = {
   render: () => {
-    const [validValue, setValidValue] = useState('Valid input')
-    const [invalidValue, setInvalidValue] = useState('This text is too long and exceeds the limit')
-    const [requiredValue, setRequiredValue] = useState('')
-    
+    const [text, setText] = React.useState('This text will auto-resize as you type more content')
+
+    const sharedStyles = {
+      fontSize: '1rem',
+      lineHeight: '1.5rem',
+      fontWeight: '400',
+      color: 'var(--color-text-primary)',
+      fontFamily: 'var(--font-family-primary)',
+      padding: 'var(--space-sm)',
+    }
+
     return (
-      <div className="w-80 space-y-6">
-        <div>
-          <Label>Valid state</Label>
-          <Editable 
-            value={validValue} 
-            onValueChange={setValidValue}
-            maxLength={50}
-          >
-            <EditablePreview />
-            <EditableInput />
-          </Editable>
-        </div>
-        
-        <div>
-          <Label>Invalid state (too long)</Label>
-          <Editable 
-            value={invalidValue} 
-            onValueChange={setInvalidValue}
-            invalid={invalidValue.length > 20}
-            maxLength={20}
-          >
-            <EditablePreview />
-            <EditableInput />
-          </Editable>
-          <p className="text-caption-sm text-[var(--color-text-error)]">
-            Text must be 20 characters or less
+      <div className="w-full max-w-2xl p-4">
+        <div className="mb-4">
+          <h3 className="text-heading-sm mb-2">Auto-resizing Editable</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)]">
+            The input field grows and shrinks based on content length
           </p>
         </div>
-        
+        <Editable
+          value={text}
+          onSubmit={setText}
+          placeholder="Start typing to see auto-resize..."
+        >
+          <EditablePreview
+            className="cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] rounded-md transition-colors"
+            style={{
+              ...sharedStyles,
+              minHeight: '2rem',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          />
+          <EditableInput
+            className="bg-transparent border-none outline-none focus:ring-2 focus:ring-[var(--color-border-brand)] rounded-md"
+            style={sharedStyles}
+            autoResize
+            minWidth={150}
+            charWidth={12}
+          />
+        </Editable>
+      </div>
+    )
+  },
+}
+
+// Controlled vs Uncontrolled
+export const ControlledVsUncontrolled: Story = {
+  render: () => {
+    const [controlledValue, setControlledValue] = React.useState('Controlled component')
+
+    return (
+      <div className="w-full max-w-2xl p-4 space-y-6">
         <div>
-          <Label>Required field</Label>
-          <Editable 
-            value={requiredValue} 
-            onValueChange={setRequiredValue}
-            placeholder="This field is required"
-            required
-            invalid={!requiredValue}
-          >
-            <EditablePreview />
-            <EditableInput />
-          </Editable>
-          {!requiredValue && (
-            <p className="text-caption-sm text-[var(--color-text-error)]">
-              This field is required
+          <h3 className="text-heading-sm mb-2">Controlled Component</h3>
+          <div className="border border-[var(--color-border-primary-subtle)] rounded-lg p-4">
+            <Editable
+              value={controlledValue}
+              onSubmit={setControlledValue}
+              onChange={(value) => console.log('Typing:', value)}
+              placeholder="Type something..."
+            >
+              <EditablePreview className="text-body-md cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] p-2 rounded-md transition-colors" />
+              <EditableInput className="text-body-md border-2 border-[var(--color-border-brand)] p-2 rounded-md outline-none" />
+            </Editable>
+            <p className="text-caption-sm text-[var(--color-text-secondary)] mt-2">
+              Current value: "{controlledValue}"
             </p>
-          )}
+          </div>
         </div>
-      </div>
-    )
-  },
-}
 
-// Profile editing
-export const ProfileEditing: Story = {
-  render: () => {
-    const [profile, setProfile] = useState({
-      name: 'John Doe',
-      title: 'Senior Frontend Developer',
-      bio: 'Passionate about creating beautiful and functional user interfaces. 5+ years of experience with React, TypeScript, and modern web technologies.',
-      email: 'john.doe@example.com',
-      location: 'San Francisco, CA'
-    })
-    
-    const updateProfile = (field: string, value: string) => {
-      setProfile(prev => ({ ...prev, [field]: value }))
-    }
-    
-    return (
-      <div className="w-96">
-        <Card>
-          <CardHeader>
-            <CardTitle>Profile Settings</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-[var(--color-background-brand)] rounded-full flex items-center justify-center">
-                <Icon name="user" size="lg" className="text-[var(--color-text-on-action)]" />
-              </div>
-              <div className="flex-1 space-y-2">
-                <Editable 
-                  value={profile.name} 
-                  onValueChange={(value) => updateProfile('name', value)}
-                  placeholder="Enter your name"
-                >
-                  <EditablePreview className="text-heading-md font-semibold" />
-                  <EditableInput />
-                </Editable>
-                <Editable 
-                  value={profile.title} 
-                  onValueChange={(value) => updateProfile('title', value)}
-                  placeholder="Enter your job title"
-                >
-                  <EditablePreview className="text-body-md text-[var(--color-text-secondary)]" />
-                  <EditableInput />
-                </Editable>
-              </div>
-            </div>
-            
-            <div>
-              <Label className="text-body-sm font-medium mb-2 block">About</Label>
-              <Editable 
-                value={profile.bio} 
-                onValueChange={(value) => updateProfile('bio', value)}
-                placeholder="Tell us about yourself..."
-              >
-                <EditablePreview />
-                <EditableTextarea rows={4} />
-              </Editable>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label className="text-body-sm font-medium mb-2 block">Email</Label>
-                <Editable 
-                  value={profile.email} 
-                  onValueChange={(value) => updateProfile('email', value)}
-                  placeholder="Enter your email"
-                >
-                  <EditablePreview />
-                  <EditableInput type="email" />
-                </Editable>
-              </div>
-              
-              <div>
-                <Label className="text-body-sm font-medium mb-2 block">Location</Label>
-                <Editable 
-                  value={profile.location} 
-                  onValueChange={(value) => updateProfile('location', value)}
-                  placeholder="Enter your location"
-                >
-                  <EditablePreview />
-                  <EditableInput />
-                </Editable>
-              </div>
-            </div>
-            
-            <Button className="w-full">Save Profile</Button>
-          </CardContent>
-        </Card>
-      </div>
-    )
-  },
-}
-
-// Task list
-export const TaskList: Story = {
-  render: () => {
-    const [tasks, setTasks] = useState([
-      { id: 1, title: 'Design new homepage', completed: false },
-      { id: 2, title: 'Implement user authentication', completed: true },
-      { id: 3, title: 'Write API documentation', completed: false },
-      { id: 4, title: 'Set up CI/CD pipeline', completed: false },
-      { id: 5, title: 'Create mobile app designs', completed: true },
-    ])
-    
-    const updateTask = (id: number, title: string) => {
-      setTasks(prev => prev.map(task => 
-        task.id === id ? { ...task, title } : task
-      ))
-    }
-    
-    const toggleTask = (id: number) => {
-      setTasks(prev => prev.map(task => 
-        task.id === id ? { ...task, completed: !task.completed } : task
-      ))
-    }
-    
-    return (
-      <div className="w-96">
-        <Card>
-          <CardHeader>
-            <CardTitle>Project Tasks</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              {tasks.map((task) => (
-                <div key={task.id} className="flex items-center gap-3 p-2 hover:bg-[var(--color-background-neutral-subtle-hovered)] rounded">
-                  <input
-                    type="checkbox"
-                    checked={task.completed}
-                    onChange={() => toggleTask(task.id)}
-                    className="rounded"
-                  />
-                  <div className="flex-1">
-                    <Editable 
-                      value={task.title} 
-                      onValueChange={(value) => updateTask(task.id, value)}
-                      placeholder="Enter task title"
-                    >
-                      <EditablePreview 
-                        className={task.completed ? 'line-through text-[var(--color-text-secondary)]' : ''} 
-                      />
-                      <EditableInput />
-                    </Editable>
-                  </div>
-                  <Badge variant={task.completed ? 'default' : 'secondary'} className="text-xs">
-                    {task.completed ? 'Done' : 'Todo'}
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    )
-  },
-}
-
-// Settings configuration
-export const SettingsConfiguration: Story = {
-  render: () => {
-    const [settings, setSettings] = useState({
-      siteName: 'My Awesome Website',
-      tagline: 'Building the future, one line of code at a time',
-      description: 'A comprehensive platform for modern web development with cutting-edge tools and technologies.',
-      maxUsers: '100',
-      apiKey: 'sk-1234567890abcdef',
-      webhookUrl: 'https://api.example.com/webhook'
-    })
-    
-    const updateSetting = (key: string, value: string) => {
-      setSettings(prev => ({ ...prev, [key]: value }))
-    }
-    
-    return (
-      <div className="w-full max-w-2xl">
-        <Card>
-          <CardHeader>
-            <CardTitle>Site Configuration</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <Label className="text-body-sm font-medium mb-2 block">Site Name</Label>
-                <Editable 
-                  value={settings.siteName} 
-                  onValueChange={(value) => updateSetting('siteName', value)}
-                  placeholder="Enter site name"
-                >
-                  <EditablePreview />
-                  <EditableInput />
-                </Editable>
-              </div>
-              
-              <div>
-                <Label className="text-body-sm font-medium mb-2 block">Tagline</Label>
-                <Editable 
-                  value={settings.tagline} 
-                  onValueChange={(value) => updateSetting('tagline', value)}
-                  placeholder="Enter tagline"
-                >
-                  <EditablePreview />
-                  <EditableInput />
-                </Editable>
-              </div>
-            </div>
-            
-            <div>
-              <Label className="text-body-sm font-medium mb-2 block">Description</Label>
-              <Editable 
-                value={settings.description} 
-                onValueChange={(value) => updateSetting('description', value)}
-                placeholder="Enter site description"
-              >
-                <EditablePreview />
-                <EditableTextarea rows={3} />
-              </Editable>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <Label className="text-body-sm font-medium mb-2 block">Max Users</Label>
-                <Editable 
-                  value={settings.maxUsers} 
-                  onValueChange={(value) => updateSetting('maxUsers', value)}
-                  placeholder="Enter max users"
-                >
-                  <EditablePreview />
-                  <EditableInput type="number" />
-                </Editable>
-              </div>
-              
-              <div>
-                <Label className="text-body-sm font-medium mb-2 block">API Key</Label>
-                <Editable 
-                  value={settings.apiKey} 
-                  onValueChange={(value) => updateSetting('apiKey', value)}
-                  placeholder="Enter API key"
-                >
-                  <EditablePreview className="font-mono text-caption-sm" />
-                  <EditableInput className="font-mono" />
-                </Editable>
-              </div>
-            </div>
-            
-            <div>
-              <Label className="text-body-sm font-medium mb-2 block">Webhook URL</Label>
-              <Editable 
-                value={settings.webhookUrl} 
-                onValueChange={(value) => updateSetting('webhookUrl', value)}
-                placeholder="Enter webhook URL"
-              >
-                <EditablePreview className="text-caption-sm text-[var(--color-text-action)]" />
-                <EditableInput type="url" />
-              </Editable>
-            </div>
-            
-            <div className="flex gap-2">
-              <Button>Save Configuration</Button>
-              <Button variant="ghost">Reset to Defaults</Button>
-            </div>
-          </CardContent>
-        </Card>
+        <div>
+          <h3 className="text-heading-sm mb-2">Uncontrolled Component</h3>
+          <div className="border border-[var(--color-border-primary-subtle)] rounded-lg p-4">
+            <Editable
+              defaultValue="Uncontrolled component"
+              onSubmit={(value) => console.log('Submitted:', value)}
+              placeholder="Enter text..."
+            >
+              <EditablePreview className="text-body-md cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] p-2 rounded-md transition-colors" />
+              <EditableInput className="text-body-md border-2 border-[var(--color-border-brand)] p-2 rounded-md outline-none" />
+            </Editable>
+            <p className="text-caption-sm text-[var(--color-text-secondary)] mt-2">
+              Check console for submitted values
+            </p>
+          </div>
+        </div>
       </div>
     )
   },
 }
 
 // Disabled state
-export const DisabledState: Story = {
+export const Disabled: Story = {
   render: () => {
-    const [value, setValue] = useState('This text cannot be edited')
-    
     return (
-      <div className="w-80 space-y-4">
-        <Label>Disabled editable text</Label>
-        <Editable 
-          value={value} 
-          onValueChange={setValue}
-          disabled={true}
-        >
-          <EditablePreview />
-          <EditableInput />
-        </Editable>
-        <p className="text-caption-sm text-[var(--color-text-secondary)]">
-          This editable component is disabled and cannot be interacted with.
-        </p>
+      <div className="w-96 p-4">
+        <div className="mb-4">
+          <h3 className="text-heading-sm mb-2">Disabled Editable</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)]">
+            This field cannot be edited
+          </p>
+        </div>
+        <div className="border border-[var(--color-border-primary-subtle)] rounded-lg p-4 bg-[var(--color-surface-secondary)]">
+          <Editable
+            defaultValue="This field is disabled"
+            disabled={true}
+            placeholder="Cannot edit..."
+          >
+            <EditablePreview
+              className="text-body-md rounded-md p-2"
+              style={{
+                color: 'var(--color-text-disabled)',
+                cursor: 'not-allowed',
+              }}
+            />
+            <EditableInput
+              className="text-body-md p-2 rounded-md"
+              style={{
+                color: 'var(--color-text-disabled)',
+                border: '2px solid var(--color-border-input-disabled)',
+                backgroundColor: 'var(--color-background-input-disabled)',
+              }}
+            />
+          </Editable>
+        </div>
       </div>
     )
   },
 }
 
-// Custom preview content
-export const CustomPreview: Story = {
+// Custom styling with Tide UI tokens
+export const CustomStyling: Story = {
   render: () => {
-    const [value, setValue] = useState('Custom formatted content')
-    
+    const [value, setValue] = React.useState('Custom styled editable')
+
     return (
-      <div className="w-80 space-y-4">
-        <Label>Custom preview formatting</Label>
-        <Editable 
-          value={value} 
-          onValueChange={setValue}
+      <div className="w-full max-w-xl p-4">
+        <div className="mb-4">
+          <h3 className="text-heading-sm mb-2">Custom Styled with Tide UI Tokens</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)]">
+            Using semantic design tokens for consistent theming
+          </p>
+        </div>
+        <Editable
+          value={value}
+          onSubmit={setValue}
           placeholder="Enter text..."
         >
-          <EditablePreview>
-            <div className="flex items-center gap-2">
-              <Icon name="edit" size="sm" />
-              <span className="font-semibold text-[var(--color-text-brand)]">
-                {value || 'Click to add content'}
-              </span>
-            </div>
-          </EditablePreview>
-          <EditableInput />
+          <EditablePreview
+            className="cursor-pointer rounded-lg transition-all duration-200 hover:shadow-sm"
+            style={{
+              color: 'var(--color-text-brand)',
+              fontSize: 'var(--font-size-500)',
+              lineHeight: 'var(--font-line-height-600)',
+              fontWeight: 'var(--font-weight-semibold)',
+              padding: 'var(--space-lg)',
+              backgroundColor: 'var(--color-background-brand-selected)',
+              border: `1px solid var(--color-border-brand)`,
+            }}
+          />
+          <EditableInput
+            className="rounded-lg outline-none transition-all duration-200"
+            style={{
+              color: 'var(--color-text-brand)',
+              fontSize: 'var(--font-size-500)',
+              lineHeight: 'var(--font-line-height-600)',
+              fontWeight: 'var(--font-weight-semibold)',
+              padding: 'var(--space-lg)',
+              backgroundColor: 'var(--color-surface-primary)',
+              border: `2px solid var(--color-border-brand)`,
+              boxShadow: 'var(--shadow-md)',
+            }}
+            autoResize
+            charWidth={14}
+          />
         </Editable>
-        <p className="text-caption-sm text-[var(--color-text-secondary)]">
-          The preview can contain custom JSX content
-        </p>
       </div>
     )
   },
 }
 
-// Font size testing showcase
-export const FontSizeShowcase: Story = {
+// Demonstration of all fixes
+export const EnhancedFeatures: Story = {
   render: () => {
-    const [values, setValues] = useState({
-      heading2xlg: 'Extra Large Heading',
-      headingXlg: 'Large Heading', 
-      headingLg: 'Medium Large Heading',
-      headingMd: 'Medium Heading',
-      headingSm: 'Small Heading',
-      bodyLg: 'Large body text',
-      bodyMd: 'Medium body text', 
-      bodySm: 'Small body text',
-      captionSm: 'Caption text',
-      captionXsm: 'Extra small caption'
-    })
-    
-    const updateValue = (key: string, value: string) => {
-      setValues(prev => ({ ...prev, [key]: value }))
+    const [title, setTitle] = React.useState('Enhanced Editable Component')
+    const [description, setDescription] = React.useState('This component fixes all the issues: no cursor jumping, consistent fonts, auto-resizing')
+
+    const titleStyles = {
+      fontFamily: 'var(--font-family-primary)',
+      padding: 'var(--space-sm)',
     }
-    
-    const fontSizeExamples = [
-      { key: 'heading2xlg', label: 'text-heading-2xlg', className: 'text-heading-2xlg', value: values.heading2xlg },
-      { key: 'headingXlg', label: 'text-heading-xlg', className: 'text-heading-xlg', value: values.headingXlg },
-      { key: 'headingLg', label: 'text-heading-lg', className: 'text-heading-lg', value: values.headingLg },
-      { key: 'headingMd', label: 'text-heading-md', className: 'text-heading-md', value: values.headingMd },
-      { key: 'headingSm', label: 'text-heading-sm', className: 'text-heading-sm', value: values.headingSm },
-      { key: 'bodyLg', label: 'text-body-lg', className: 'text-body-lg', value: values.bodyLg },
-      { key: 'bodyMd', label: 'text-body-md', className: 'text-body-md', value: values.bodyMd },
-      { key: 'bodySm', label: 'text-body-sm', className: 'text-body-sm', value: values.bodySm },
-      { key: 'captionSm', label: 'text-caption-sm', className: 'text-caption-sm', value: values.captionSm },
-      { key: 'captionXsm', label: 'text-caption-xsm', className: 'text-caption-xsm', value: values.captionXsm }
-    ]
-    
+
+    const descStyles = {
+      fontSize: '1rem',
+      lineHeight: '1.5rem',
+      fontWeight: '400',
+      color: 'var(--color-text-secondary)',
+      fontFamily: 'var(--font-family-primary)',
+      padding: 'var(--space-sm)',
+    }
+
     return (
-      <div className="w-full max-w-4xl">
-        <Card>
-          <CardHeader>
-            <CardTitle>Font Size Matching Test</CardTitle>
-            <p className="text-body-sm text-[var(--color-text-secondary)]">
-              Click each text below to edit it. The input should maintain the same font size as the preview.
-            </p>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {fontSizeExamples.map((example) => (
-              <div key={example.key} className="space-y-2">
-                <Label className="text-body-sm font-medium text-[var(--color-text-tertiary)]">
-                  {example.label}
-                </Label>
-                <Editable 
-                  value={example.value} 
-                  onValueChange={(value) => updateValue(example.key, value)}
-                  placeholder={`Enter ${example.label} text...`}
-                >
-                  <EditablePreview className={example.className} />
-                  <EditableInput />
-                </Editable>
+      <div className="w-full max-w-3xl p-6 space-y-6">
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-heading-sm mb-2">✅ All Issues Fixed</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="border border-[var(--color-border-success)] rounded-lg p-4 bg-[var(--color-background-success)]">
+                <h4 className="text-body-strong-sm text-[var(--color-text-success)] mb-1">No Cursor Jumping</h4>
+                <p className="text-caption-sm text-[var(--color-text-success)]">
+                  Cursor stays in correct position while typing
+                </p>
               </div>
-            ))}
-            
-            <div className="pt-4 border-t border-[var(--color-border-primary-subtle)]">
-              <Label className="text-body-sm font-medium mb-2 block text-[var(--color-text-tertiary)]">
-                text-body-md with textarea
-              </Label>
-              <Editable 
-                value="This is a longer text that demonstrates font size matching with textarea editing. Click to edit and see how the font size remains consistent."
-                onValueChange={() => {}}
-                placeholder="Enter longer text..."
+              <div className="border border-[var(--color-border-information)] rounded-lg p-4 bg-[var(--color-background-information)]">
+                <h4 className="text-body-strong-sm text-[var(--color-text-information)] mb-1">Font Consistency</h4>
+                <p className="text-caption-sm text-[var(--color-text-information)]">
+                  Preview and input have identical styling
+                </p>
+              </div>
+              <div className="border border-[var(--color-border-brand)] rounded-lg p-4 bg-[var(--color-background-brand-selected)]">
+                <h4 className="text-body-strong-sm text-[var(--color-text-brand)] mb-1">Auto-resizing</h4>
+                <p className="text-caption-sm text-[var(--color-text-brand)]">
+                  Input grows and shrinks with content
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div>
+              <h4 className="text-body-strong-md mb-2">Title Editor (text-heading-lg)</h4>
+              <Editable
+                value={title}
+                onSubmit={setTitle}
+                placeholder="Enter title..."
               >
-                <EditablePreview className="text-body-md" />
-                <EditableTextarea rows={3} />
+                <EditablePreview
+                  className="text-heading-lg cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] rounded-md transition-colors"
+                  style={{
+                    ...titleStyles,
+                    minHeight: '3rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                />
+                <EditableInput
+                  className="text-heading-lg bg-transparent border-none outline-none focus:ring-2 focus:ring-[var(--color-border-brand)] rounded-md"
+                  style={titleStyles}
+                  autoResize
+                  minWidth={200}
+                  charWidth={18}
+                />
               </Editable>
             </div>
-          </CardContent>
-        </Card>
+
+            <div>
+              <h4 className="text-body-strong-md mb-2">Description Editor (Auto-resizing)</h4>
+              <Editable
+                value={description}
+                onSubmit={setDescription}
+                placeholder="Enter description..."
+              >
+                <EditablePreview
+                  className="cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] rounded-md transition-colors"
+                  style={{
+                    ...descStyles,
+                    minHeight: '2rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                />
+                <EditableInput
+                  className="bg-transparent border-none outline-none focus:ring-2 focus:ring-[var(--color-border-brand)] rounded-md"
+                  style={descStyles}
+                  autoResize
+                  minWidth={250}
+                  charWidth={12}
+                />
+              </Editable>
+            </div>
+          </div>
+
+          <div className="bg-[var(--color-surface-secondary)] rounded-lg p-4">
+            <h4 className="text-body-strong-md mb-2">How to Use</h4>
+            <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-1">
+              <li>• <strong>Click</strong> on any editable text to start editing</li>
+              <li>• <strong>Enter</strong> to save changes</li>
+              <li>• <strong>Escape</strong> to cancel changes</li>
+              <li>• <strong>Click outside</strong> to save changes</li>
+              <li>• Watch the input field auto-resize as you type</li>
+            </ul>
+          </div>
+        </div>
       </div>
     )
   },

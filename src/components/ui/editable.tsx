@@ -1,486 +1,299 @@
-import * as React from "react"
-import { cn } from "../../lib/utils"
-import { cva, type VariantProps } from "class-variance-authority"
+import React, { useState, useRef, useEffect, createContext, useContext } from 'react';
 
-const editableVariants = cva(
-  "relative w-full",
-  {
-    variants: {
-      size: {
-        sm: "text-caption-sm",
-        md: "text-body-sm",
-        lg: "text-body-md",
-      },
-    },
-    defaultVariants: {
-      size: "md",
-    },
-  }
-)
-
-const editablePreviewVariants = cva(
-  "w-full cursor-pointer rounded border border-transparent px-2 py-1 transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] focus:outline-none focus:ring-2 focus:ring-[var(--color-border-brand)] focus:ring-offset-1",
-  {
-    variants: {
-      placeholder: {
-        true: "text-[var(--color-text-tertiary)] italic",
-        false: "text-[var(--color-text-primary)]",
-      },
-      invalid: {
-        true: "border-[var(--color-border-error)] text-[var(--color-text-error)]",
-        false: "",
-      },
-    },
-    defaultVariants: {
-      placeholder: false,
-      invalid: false,
-    },
-  }
-)
-
-// Removed editableInputVariants - now using direct styling on contenteditable divs
-
-export interface EditableContextValue {
-  isEditing: boolean
-  value: string
-  originalValue: string
-  onEdit: () => void
-  onCancel: () => void
-  onSubmit: () => void
-  onChange: (value: string) => void
-  placeholder?: string
-  invalid?: boolean
-  required?: boolean
-  maxLength?: number
-  disabled?: boolean
-  triggerMode: "click" | "dblclick" | "focus"
-  previewFontSize?: string
-  setPreviewFontSize: (fontSize: string | undefined) => void
+// Context for sharing state between compound components
+interface EditableContextType {
+  isEditing: boolean;
+  value: string;
+  originalValue: string;
+  disabled: boolean;
+  placeholder?: string;
+  onStartEdit: () => void;
+  onSave: () => void;
+  onCancel: () => void;
+  onChange: (value: string) => void;
+  inputRef: React.RefObject<HTMLInputElement | null>;
 }
 
-const EditableContext = React.createContext<EditableContextValue | undefined>(undefined)
+const EditableContext = createContext<EditableContextType | null>(null);
 
-const useEditable = () => {
-  const context = React.useContext(EditableContext)
+const useEditableContext = () => {
+  const context = useContext(EditableContext);
   if (!context) {
-    throw new Error("useEditable must be used within an Editable component")
+    throw new Error('Editable compound components must be used within Editable');
   }
-  return context
+  return context;
+};
+
+// Main Editable component props
+export interface EditableProps {
+  /** The current value of the editable field */
+  value?: string;
+  /** Default value for uncontrolled usage */
+  defaultValue?: string;
+  /** Called when the value is submitted (Enter key or blur) */
+  onSubmit?: (value: string) => void;
+  /** Called when the value changes during editing */
+  onChange?: (value: string) => void;
+  /** Whether the field is disabled from editing */
+  disabled?: boolean;
+  /** Placeholder text when empty */
+  placeholder?: string;
+  /** Whether to auto-focus when editing starts */
+  autoFocus?: boolean;
+  /** Whether to select all text when editing starts */
+  selectAllOnFocus?: boolean;
+  /** Children components (EditablePreview, EditableInput) */
+  children: React.ReactNode;
+  /** CSS class name */
+  className?: string;
+  /** Inline styles */
+  style?: React.CSSProperties;
 }
 
-export interface EditableProps 
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange" | "onSubmit">,
-    VariantProps<typeof editableVariants> {
-  value?: string
-  defaultValue?: string
-  onValueChange?: (value: string) => void
-  onEdit?: () => void
-  onCancel?: () => void
-  onSubmit?: (value: string) => void
-  placeholder?: string
-  invalid?: boolean
-  required?: boolean
-  maxLength?: number
-  disabled?: boolean
-  triggerMode?: "click" | "dblclick" | "focus"
-  controlled?: boolean
+// Preview component props
+export interface EditablePreviewProps {
+  /** CSS class name */
+  className?: string;
+  /** Inline styles */
+  style?: React.CSSProperties;
+  /** Custom render function */
+  children?: React.ReactNode;
 }
 
-const Editable = React.forwardRef<HTMLDivElement, EditableProps>(
-  ({ 
-    className,
-    size,
-    value: controlledValue,
-    defaultValue = "",
-    onValueChange,
-    onEdit,
-    onCancel,
-    onSubmit,
-    placeholder = "Enter text...",
-    invalid = false,
-    required = false,
-    maxLength,
-    disabled = false,
-    triggerMode = "click",
-    controlled = false,
-    children,
-    ...props 
-  }, ref) => {
-    const [isEditing, setIsEditing] = React.useState(false)
-    const [internalValue, setInternalValue] = React.useState(controlledValue || defaultValue)
-    const [originalValue, setOriginalValue] = React.useState(controlledValue || defaultValue)
-    const [previewFontSize, setPreviewFontSize] = React.useState<string | undefined>(undefined)
-
-    const value = controlled ? controlledValue || "" : internalValue
-
-    React.useEffect(() => {
-      if (controlled && controlledValue !== undefined) {
-        setInternalValue(controlledValue)
-        setOriginalValue(controlledValue)
-      }
-    }, [controlled, controlledValue])
-
-    const handleEdit = () => {
-      if (disabled) return
-      setOriginalValue(value)
-      setIsEditing(true)
-      onEdit?.()
-    }
-
-    const handleCancel = () => {
-      const resetValue = originalValue
-      if (!controlled) {
-        setInternalValue(resetValue)
-      }
-      setIsEditing(false)
-      onCancel?.()
-      onValueChange?.(resetValue)
-    }
-
-    const handleSubmit = () => {
-      setIsEditing(false)
-      onSubmit?.(value)
-    }
-
-    const handleChange = (newValue: string) => {
-      if (!controlled) {
-        setInternalValue(newValue)
-      }
-      onValueChange?.(newValue)
-    }
-
-    const contextValue: EditableContextValue = {
-      isEditing,
-      value,
-      originalValue,
-      onEdit: handleEdit,
-      onCancel: handleCancel,
-      onSubmit: handleSubmit,
-      onChange: handleChange,
-      placeholder,
-      invalid,
-      required,
-      maxLength,
-      disabled,
-      triggerMode,
-      previewFontSize,
-      setPreviewFontSize,
-    }
-
-    return (
-      <EditableContext.Provider value={contextValue}>
-        <div
-          ref={ref}
-          className={cn(editableVariants({ size, className }))}
-          {...props}
-        >
-          {children}
-        </div>
-      </EditableContext.Provider>
-    )
-  }
-)
-Editable.displayName = "Editable"
-
-export interface EditablePreviewProps extends React.HTMLAttributes<HTMLDivElement> {
-  children?: React.ReactNode
+// Input component props
+export interface EditableInputProps {
+  /** CSS class name */
+  className?: string;
+  /** Inline styles */
+  style?: React.CSSProperties;
+  /** Input type */
+  type?: string;
+  /** Auto-sizing behavior */
+  autoResize?: boolean;
+  /** Minimum width for auto-resize */
+  minWidth?: number;
+  /** Character width multiplier for auto-resize */
+  charWidth?: number;
 }
 
-const EditablePreview = React.forwardRef<HTMLDivElement, EditablePreviewProps>(
-  ({ className, children, ...props }, ref) => {
-    const { 
-      isEditing, 
-      value, 
-      onEdit, 
-      placeholder, 
-      invalid, 
-      disabled, 
-      triggerMode,
-      setPreviewFontSize
-    } = useEditable()
+/**
+ * Editable - A compound component for inline editing
+ *
+ * @example
+ * ```tsx
+ * <Editable defaultValue="Click to edit" onSubmit={handleSubmit}>
+ *   <EditablePreview className="cursor-pointer hover:bg-gray-100 p-2" />
+ *   <EditableInput className="border-2 border-blue-500 p-2" autoResize />
+ * </Editable>
+ * ```
+ */
+export const Editable: React.FC<EditableProps> = ({
+  value: controlledValue,
+  defaultValue = '',
+  onSubmit,
+  onChange: onChangeProp,
+  disabled = false,
+  placeholder,
+  autoFocus = true,
+  selectAllOnFocus = true,
+  children,
+  className,
+  style,
+}) => {
+  // Determine if component is controlled or uncontrolled
+  const isControlled = controlledValue !== undefined;
+  const [internalValue, setInternalValue] = useState(controlledValue ?? defaultValue);
+  const [isEditing, setIsEditing] = useState(false);
+  const [originalValue, setOriginalValue] = useState(controlledValue ?? defaultValue);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-    // Extract font size class from className when component mounts or className changes
-    React.useEffect(() => {
-      if (className) {
-        // Look for text-* classes that define font sizes - matches all typography utilities
-        const fontSizeMatch = className.match(/text-(?:heading|body|label|caption)-[\w-]+/g)
-        if (fontSizeMatch && fontSizeMatch.length > 0) {
-          setPreviewFontSize(fontSizeMatch[0])
-        } else {
-          setPreviewFontSize(undefined)
+  // Current value is either controlled value or internal state
+  const currentValue = isControlled ? controlledValue : internalValue;
+
+  // Update internal state when controlled value changes
+  useEffect(() => {
+    if (isControlled) {
+      setInternalValue(controlledValue);
+      if (!isEditing) {
+        setOriginalValue(controlledValue);
+      }
+    }
+  }, [controlledValue, isControlled, isEditing]);
+
+  const onStartEdit = () => {
+    if (disabled) return;
+
+    setIsEditing(true);
+    setOriginalValue(currentValue);
+
+    // Auto-focus and select text
+    if (autoFocus) {
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+          if (selectAllOnFocus) {
+            inputRef.current.select();
+          }
         }
-      } else {
-        setPreviewFontSize(undefined)
+      }, 0);
+    }
+  };
+
+  const onSave = () => {
+    const trimmedValue = currentValue.trim();
+
+    // If empty, reset to original value
+    if (!trimmedValue) {
+      const resetValue = originalValue;
+      if (!isControlled) {
+        setInternalValue(resetValue);
       }
-    }, [className, setPreviewFontSize])
-
-    if (isEditing) return null
-
-    const hasValue = value && value.length > 0
-    const displayValue = hasValue ? value : placeholder
-
-    const handleClick = () => {
-      if (triggerMode === "click") onEdit()
+      setIsEditing(false);
+      return;
     }
 
-    const handleDoubleClick = () => {
-      if (triggerMode === "dblclick") onEdit()
+    // Call callbacks
+    onSubmit?.(trimmedValue);
+    if (!isControlled) {
+      setInternalValue(trimmedValue);
     }
 
-    const handleFocus = () => {
-      if (triggerMode === "focus") onEdit()
-    }
+    setIsEditing(false);
+  };
 
-    const handleKeyDown = (event: React.KeyboardEvent) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault()
-        onEdit()
-      }
+  const onCancel = () => {
+    // Reset to original value
+    if (!isControlled) {
+      setInternalValue(originalValue);
     }
+    setIsEditing(false);
+  };
 
-    return (
-      <div
-        ref={ref}
-        className={cn(
-          editablePreviewVariants({ 
-            placeholder: !hasValue, 
-            invalid,
-            className 
-          }),
-          disabled && "cursor-not-allowed opacity-50"
-        )}
-        onClick={handleClick}
-        onDoubleClick={handleDoubleClick}
-        onFocus={handleFocus}
-        onKeyDown={handleKeyDown}
-        tabIndex={disabled ? -1 : 0}
-        role="button"
-        aria-label="Click to edit"
-        {...props}
-      >
-        {children || displayValue}
+  const onChange = (newValue: string) => {
+    onChangeProp?.(newValue);
+    if (!isControlled) {
+      setInternalValue(newValue);
+    }
+  };
+
+  const contextValue: EditableContextType = {
+    isEditing,
+    value: currentValue,
+    originalValue,
+    disabled,
+    placeholder,
+    onStartEdit,
+    onSave,
+    onCancel,
+    onChange,
+    inputRef,
+  };
+
+  return (
+    <EditableContext.Provider value={contextValue}>
+      <div className={className} style={style}>
+        {children}
       </div>
-    )
-  }
-)
-EditablePreview.displayName = "EditablePreview"
+    </EditableContext.Provider>
+  );
+};
 
-export interface EditableInputProps 
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
-  autoFocus?: boolean
-}
+/**
+ * EditablePreview - Shows the value when not editing
+ */
+export const EditablePreview: React.FC<EditablePreviewProps> = ({
+  className,
+  style,
+  children,
+}) => {
+  const { isEditing, value, disabled, onStartEdit } = useEditableContext();
 
-const EditableInput = React.forwardRef<HTMLDivElement, EditableInputProps>(
-  ({ className, autoFocus = true, ...props }, ref) => {
-    const { 
-      isEditing, 
-      value, 
-      onChange, 
-      onCancel, 
-      onSubmit, 
-      invalid, 
-      required, 
-      maxLength, 
-      disabled,
-      previewFontSize
-    } = useEditable()
+  if (isEditing) return null;
 
-    const inputRef = React.useRef<HTMLDivElement>(null)
+  const handleClick = () => {
+    onStartEdit();
+  };
 
-    React.useImperativeHandle(ref, () => inputRef.current!, [])
+  return (
+    <div
+      onClick={handleClick}
+      className={className}
+      style={{
+        cursor: disabled ? 'default' : 'pointer',
+        ...style,
+      }}
+    >
+      {children || value || 'Click to edit'}
+    </div>
+  );
+};
 
-    React.useEffect(() => {
-      if (isEditing && autoFocus && inputRef.current) {
-        inputRef.current.focus()
-        // Select all text in contenteditable
-        const range = document.createRange()
-        range.selectNodeContents(inputRef.current)
-        const selection = window.getSelection()
-        selection?.removeAllRanges()
-        selection?.addRange(range)
-      }
-    }, [isEditing, autoFocus])
+/**
+ * EditableInput - Shows the input field when editing
+ */
+export const EditableInput: React.FC<EditableInputProps> = ({
+  className,
+  style,
+  type = 'text',
+  autoResize = false,
+  minWidth = 120,
+  charWidth = 16,
+}) => {
+  const {
+    isEditing,
+    value,
+    placeholder,
+    onChange,
+    onSave,
+    onCancel,
+    inputRef
+  } = useEditableContext();
 
-    if (!isEditing) return null
+  if (!isEditing) return null;
 
-    const handleInput = (event: React.FormEvent<HTMLDivElement>) => {
-      const newValue = event.currentTarget.textContent || ''
-      
-      // Handle maxLength constraint
-      if (maxLength && newValue.length > maxLength) {
-        event.currentTarget.textContent = newValue.slice(0, maxLength)
-        // Move cursor to end
-        const range = document.createRange()
-        const selection = window.getSelection()
-        range.selectNodeContents(event.currentTarget)
-        range.collapse(false)
-        selection?.removeAllRanges()
-        selection?.addRange(range)
-        return
-      }
-      
-      onChange(newValue)
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(e.target.value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      onSave();
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      onCancel();
     }
+  };
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-      if (event.key === "Enter") {
-        event.preventDefault()
-        onSubmit()
-      } else if (event.key === "Escape") {
-        event.preventDefault()
-        onCancel()
-      }
-    }
+  const handleBlur = () => {
+    onSave();
+  };
 
-    const handleBlur = () => {
-      onSubmit()
-    }
+  // Calculate auto-resize width
+  const autoWidth = autoResize
+    ? Math.max(minWidth, value.length * charWidth)
+    : undefined;
 
-    // Apply typography class directly to contenteditable div
-    const appliedClassName = cn(
-      // Base styles for contenteditable
-      "w-full rounded border bg-[var(--color-surface-primary)] px-2 py-1 transition-colors focus-visible:outline-none focus-visible:shadow-[0px_0px_0px_2px_rgba(0,95,133,0.2),0px_3px_4px_0px_rgba(0,14,20,0.03)] break-words",
-      // Invalid state
-      invalid ? "border-[var(--color-border-error)] focus-visible:border-[var(--color-border-error)]" : "border-[var(--color-border-input)] focus-visible:border-[#005f85]",
-      // Typography class from preview (this is the key!)
-      previewFontSize || "",
-      // Additional classes
-      className
-    )
+  return (
+    <input
+      ref={inputRef}
+      type={type}
+      value={value}
+      onChange={handleChange}
+      onKeyDown={handleKeyDown}
+      onBlur={handleBlur}
+      placeholder={placeholder}
+      className={className}
+      style={{
+        ...style,
+        ...(autoResize && { width: `${autoWidth}px` }),
+      }}
+    />
+  );
+};
 
-    return (
-      <div
-        ref={inputRef}
-        className={appliedClassName}
-        contentEditable={!disabled}
-        suppressContentEditableWarning={true}
-        onInput={handleInput}
-        onKeyDown={handleKeyDown}
-        onBlur={handleBlur}
-        role="textbox"
-        aria-required={required}
-        aria-invalid={invalid}
-        {...(props as React.HTMLAttributes<HTMLDivElement>)}
-      >
-        {value}
-      </div>
-    )
-  }
-)
-EditableInput.displayName = "EditableInput"
+// Re-export for convenient importing
+export { EditablePreview as EditableDisplay };
+export { EditableInput as EditableField };
 
-export interface EditableTextareaProps 
-  extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "onChange"> {
-  autoFocus?: boolean
-  autoResize?: boolean
-}
-
-const EditableTextarea = React.forwardRef<HTMLDivElement, EditableTextareaProps>(
-  ({ className, autoFocus = true, autoResize = true, ...props }, ref) => {
-    const { 
-      isEditing, 
-      value, 
-      onChange, 
-      onCancel, 
-      onSubmit, 
-      invalid, 
-      required, 
-      maxLength, 
-      disabled,
-      previewFontSize
-    } = useEditable()
-
-    const textareaRef = React.useRef<HTMLDivElement>(null)
-
-    React.useImperativeHandle(ref, () => textareaRef.current!, [])
-
-    React.useEffect(() => {
-      if (isEditing && autoFocus && textareaRef.current) {
-        textareaRef.current.focus()
-        // Select all text in contenteditable
-        const range = document.createRange()
-        range.selectNodeContents(textareaRef.current)
-        const selection = window.getSelection()
-        selection?.removeAllRanges()
-        selection?.addRange(range)
-      }
-    }, [isEditing, autoFocus])
-
-    if (!isEditing) return null
-
-    const handleInput = (event: React.FormEvent<HTMLDivElement>) => {
-      const newValue = event.currentTarget.textContent || ''
-      
-      // Handle maxLength constraint
-      if (maxLength && newValue.length > maxLength) {
-        event.currentTarget.textContent = newValue.slice(0, maxLength)
-        // Move cursor to end
-        const range = document.createRange()
-        const selection = window.getSelection()
-        range.selectNodeContents(event.currentTarget)
-        range.collapse(false)
-        selection?.removeAllRanges()
-        selection?.addRange(range)
-        return
-      }
-      
-      onChange(newValue)
-    }
-
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-      if (event.key === "Enter" && event.metaKey) {
-        // Cmd+Enter submits (like original textarea behavior)
-        event.preventDefault()
-        onSubmit()
-      } else if (event.key === "Escape") {
-        event.preventDefault()
-        onCancel()
-      }
-      // Allow regular Enter for new lines in textarea mode
-    }
-
-    const handleBlur = () => {
-      onSubmit()
-    }
-
-    // Apply typography class directly to contenteditable div 
-    const appliedClassName = cn(
-      // Base styles for contenteditable textarea
-      "w-full rounded border bg-[var(--color-surface-primary)] px-2 py-1 transition-colors focus-visible:outline-none focus-visible:shadow-[0px_0px_0px_2px_rgba(0,95,133,0.2),0px_3px_4px_0px_rgba(0,14,20,0.03)] min-h-[3lh] break-words whitespace-pre-wrap",
-      // Invalid state
-      invalid ? "border-[var(--color-border-error)] focus-visible:border-[var(--color-border-error)]" : "border-[var(--color-border-input)] focus-visible:border-[#005f85]",
-      // Typography class from preview (this is the key!)
-      previewFontSize || "",
-      // Additional classes
-      className
-    )
-
-    return (
-      <div
-        ref={textareaRef}
-        className={appliedClassName}
-        contentEditable={!disabled}
-        suppressContentEditableWarning={true}
-        onInput={handleInput}
-        onKeyDown={handleKeyDown}
-        onBlur={handleBlur}
-        role="textbox"
-        aria-multiline="true"
-        aria-required={required}
-        aria-invalid={invalid}
-        {...(props as React.HTMLAttributes<HTMLDivElement>)}
-      >
-        {value}
-      </div>
-    )
-  }
-)
-EditableTextarea.displayName = "EditableTextarea"
-
-export { 
-  Editable, 
-  EditablePreview, 
-  EditableInput, 
-  EditableTextarea,
-  useEditable 
-}
+export default Editable;
