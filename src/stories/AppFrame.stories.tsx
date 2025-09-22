@@ -490,23 +490,19 @@ function AppSidebar() {
                           <Icon name="more-horizontal" size="sm" />
                         </SidebarMenuAction>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-48">
-                        <DropdownMenuItem className="cursor-pointer">
-                          <Icon name="eye" size="sm" className="mr-2" />
-                          <span>View</span>
+                      <DropdownMenuContent side="right" align="start" className="w-48">
+                        <DropdownMenuItem icon="eye" className="cursor-pointer">
+                          View
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer">
-                          <Icon name="pin-off" size="sm" className="mr-2" />
-                          <span>Unpin</span>
+                        <DropdownMenuItem icon="pin-off" className="cursor-pointer">
+                          Unpin
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer">
-                          <Icon name="edit" size="sm" className="mr-2" />
-                          <span>Rename</span>
+                        <DropdownMenuItem icon="edit" className="cursor-pointer">
+                          Rename
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="cursor-pointer text-[var(--color-text-destructive)] hover:bg-[var(--color-background-destructive-subtle)] hover:text-[var(--color-text-destructive)]">
-                          <Icon name="trash" size="sm" className="mr-2" />
-                          <span>Delete</span>
+                        <DropdownMenuItem icon="trash" className="cursor-pointer text-[var(--color-text-destructive)] hover:bg-[var(--color-background-destructive-subtle)] hover:text-[var(--color-text-destructive)]">
+                          Delete
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -618,18 +614,15 @@ function AppSidebar() {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="cursor-pointer flex items-center gap-2">
-                  <Icon name="user" size="sm" />
-                  <span>User profile</span>
+                <DropdownMenuItem icon="user" className="cursor-pointer">
+                  User profile
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer flex items-center gap-2">
-                  <Icon name="settings" size="sm" />
-                  <span>Organization settings</span>
+                <DropdownMenuItem icon="settings" className="cursor-pointer">
+                  Organization settings
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="cursor-pointer flex items-center gap-2 text-[var(--color-text-destructive)]">
-                  <Icon name="log-out" size="sm" />
-                  <span>Sign out</span>
+                <DropdownMenuItem icon="log-out" className="cursor-pointer text-[var(--color-text-destructive)]">
+                  Sign out
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
