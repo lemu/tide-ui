@@ -679,7 +679,7 @@ const SidebarMenuButton = React.forwardRef<
         "data-[state=open]:bg-[var(--color-surface-secondary)]",
 
         // Collapsed sidebar styles
-        "group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 group-data-[collapsible=icon]:justify-center"
+        "group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2"
       )
     }, [variant, size, isHovered, isFocused, isActive, preserveActiveOnFocus])
 
