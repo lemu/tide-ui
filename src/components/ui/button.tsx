@@ -52,7 +52,7 @@ const buttonVariants = cva(
           "bg-transparent text-[var(--color-text-primary)]",
           "border-none",
           "enabled:hover:bg-[var(--color-background-neutral-hovered)]",
-          "focus:bg-[var(--color-background-neutral-subtle)] focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
+          "focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
           "enabled:active:bg-[var(--grey-alpha-100)] enabled:active:translate-y-px",
           "disabled:bg-[var(--color-background-neutral-subtle)] disabled:[&]:text-[var(--color-text-disabled)]",
         ],
