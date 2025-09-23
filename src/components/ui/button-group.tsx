@@ -50,7 +50,7 @@ const ButtonGroup = React.forwardRef<HTMLDivElement, ButtonGroupProps>(
                 // Last button: keep right rounded, remove left rounded
                 "!rounded-l-none !rounded-r-md": isLast && !isOnly,
                 // Remove right border for all except last to avoid double borders
-                "border-r-0": !isLast,
+                "!border-r-0": !isLast,
               }
             ),
           });
