@@ -23,7 +23,7 @@ const tableRowVariants = cva(
   {
     variants: {
       variant: {
-        default: "hover:bg-[var(--color-background-neutral-subtle-hovered)]",
+        default: "hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:bg-opacity-50",
         zebra: "",
         selected: "bg-[var(--color-background-brand-selected)]",
       },
@@ -112,7 +112,7 @@ const TableHeader = React.forwardRef<
   <thead
     ref={ref}
     className={cn(
-      "[&_tr]:border-b [&_tr]:border-[var(--color-border-primary-subtle)] [&_tr]:bg-[#f6f7f8]",
+      "[&_tr]:border-b [&_tr]:border-[var(--color-border-primary-subtle)] [&_tr]:bg-[#f6f7f8] [&_tr]:hover:bg-[#f6f7f8]",
       className
     )}
     {...props}
@@ -126,7 +126,7 @@ const TableBody = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tbody
     ref={ref}
-    className={cn("[&_tr:last-child]:border-0", className)}
+    className={cn("[&_tr:last-child]:border-0 [&_tr:last-child:hover_td:first-child]:rounded-bl-lg [&_tr:last-child:hover_td:last-child]:rounded-br-lg", className)}
     {...props}
   />
 ));
