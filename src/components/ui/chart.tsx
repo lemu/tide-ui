@@ -68,14 +68,16 @@ export type ChartType = "bar" | "horizontal-bar" | "line" | "scatter" | "compose
 export type ChartColorScheme = keyof typeof chartColorSchemes;
 
 export interface ChartDataPoint {
-  [key: string]: string | number;
+  [key: string]: string | number | number[]; // Allow arrays for range data
 }
 
 export interface ChartConfig {
   [key: string]: {
     label: string;
     color?: string;
-    type?: "bar" | "line" | "area"; // For composed charts
+    type?: "bar" | "line" | "area" | "range-area"; // For composed charts
+    stroke?: string; // Custom stroke color or "none"
+    fill?: string; // Custom fill color
   };
 }
 
@@ -209,6 +211,28 @@ export function Chart({
   // Get data keys from config (exclude 'name' which is the category axis)
   const dataKeys = Object.keys(config).filter(key => key !== 'name');
 
+  // Transform data for range-area types
+  const processedData = useMemo(() => {
+    return data.map(point => {
+      const transformedPoint = { ...point };
+
+      // Process range-area data
+      dataKeys.forEach(key => {
+        if (config[key].type === 'range-area') {
+          const value = point[key];
+          if (Array.isArray(value) && value.length === 2) {
+            // Transform [min, max] to separate min/max fields and range
+            transformedPoint[`${key}_min`] = value[0];
+            transformedPoint[`${key}_max`] = value[1];
+            transformedPoint[`${key}_range`] = value[1] - value[0]; // Calculate range
+          }
+        }
+      });
+
+      return transformedPoint;
+    });
+  }, [data, config, dataKeys]);
+
   const handleMouseEnter = useCallback((data: any) => {
     const index = data?.activeTooltipIndex ?? 0;
     onDataPointHover?.(data?.activePayload?.[0]?.payload, index);
@@ -279,7 +303,7 @@ export function Chart({
   };
 
   const commonProps = {
-    data,
+    data: processedData,
     margin: getMargins(),
   };
 
@@ -565,13 +589,41 @@ export function Chart({
                     type="linear"
                     dataKey={key}
                     name={config[key].label}
-                    stroke="none"
-                    fill={baseColor}
+                    stroke={config[key].stroke ?? baseColor}
+                    fill={config[key].fill ?? baseColor}
                     fillOpacity={0.3}
                     className="cursor-pointer transition-colors"
                     isAnimationActive={false}
                   />
                 );
+              } else if (chartElementType === "range-area") {
+                // For range areas, use stacked areas to show the proper range
+                return [
+                  // Base invisible area to position the range at the correct height
+                  <Area
+                    key={`${key}_min`}
+                    type="linear"
+                    dataKey={`${key}_min`}
+                    stackId={key}
+                    stroke="none"
+                    fill="transparent"
+                    isAnimationActive={false}
+                    legendType="none"
+                  />,
+                  // Visible range area stacked on top
+                  <Area
+                    key={`${key}_range`}
+                    type="linear"
+                    dataKey={`${key}_range`}
+                    stackId={key}
+                    name={config[key].label}
+                    stroke={config[key].stroke ?? "none"}
+                    fill={config[key].fill ?? baseColor}
+                    fillOpacity={0.3}
+                    className="cursor-pointer transition-colors"
+                    isAnimationActive={false}
+                  />
+                ];
               } else {
                 // Default to bar
                 return (

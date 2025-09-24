@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Chart, generateChartColors, createChartConfig } from '../components/ui/chart'
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 
 const meta: Meta<typeof Chart> = {
   title: 'npm/Chart',
@@ -102,6 +103,211 @@ export const ScatterChart: Story = {
         })}
         className="h-full"
       />
+    </div>
+  ),
+}
+
+export const AreaCharts: Story = {
+  render: () => (
+    <div className="w-full max-w-5xl space-y-8">
+      <div className="prose max-w-none">
+        <h1 className="text-heading-lg text-[var(--color-text-primary)] mb-[var(--space-lg)]">Area Charts - Stroke Removed</h1>
+        <p className="text-body-md text-[var(--color-text-secondary)]">
+          Area charts now render without stroke borders for cleaner, more modern appearance.
+          Perfect for showing filled regions and trend areas.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Single Area Chart */}
+        <div>
+          <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Single Area Series</h2>
+          <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+            <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`<Chart
+  type="composed"
+  data={data}
+  config={{
+    revenue: {
+      label: 'Revenue',
+      type: 'area'
+    }
+  }}
+/>`}
+            </pre>
+          </div>
+          <div className="h-80 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+            <Chart
+              type="composed"
+              data={[
+                { name: 'Jan', revenue: 4000 },
+                { name: 'Feb', revenue: 3200 },
+                { name: 'Mar', revenue: 5800 },
+                { name: 'Apr', revenue: 4100 },
+                { name: 'May', revenue: 6200 },
+                { name: 'Jun', revenue: 5500 },
+              ]}
+              config={createChartConfig({
+                revenue: { label: 'Revenue ($)', type: 'area', color: 'var(--color-chart-area-1)' },
+              })}
+              yAxisTickFormatter={(value) => `$${(value / 1000).toFixed(0)}K`}
+              className="h-full"
+            />
+          </div>
+          <p className="text-body-xsm text-[var(--color-text-success)] mt-2">✅ Clean filled area without border stroke</p>
+        </div>
+
+        {/* Multiple Area Charts */}
+        <div>
+          <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Multiple Overlapping Areas</h2>
+          <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+            <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`config={{
+  mobile: { label: 'Mobile', type: 'area' },
+  desktop: { label: 'Desktop', type: 'area' },
+  tablet: { label: 'Tablet', type: 'area' }
+}}`}
+            </pre>
+          </div>
+          <div className="h-80 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+            <Chart
+              type="composed"
+              data={[
+                { name: 'Jan', mobile: 2000, desktop: 1500, tablet: 500 },
+                { name: 'Feb', mobile: 2200, desktop: 1300, tablet: 700 },
+                { name: 'Mar', mobile: 2800, desktop: 1800, tablet: 600 },
+                { name: 'Apr', mobile: 2100, desktop: 1600, tablet: 800 },
+                { name: 'May', mobile: 3200, desktop: 2000, tablet: 900 },
+                { name: 'Jun', mobile: 2900, desktop: 1900, tablet: 650 },
+              ]}
+              config={createChartConfig({
+                mobile: { label: 'Mobile Users', type: 'area', color: 'var(--color-chart-area-1)' },
+                desktop: { label: 'Desktop Users', type: 'area', color: 'var(--color-chart-area-2)' },
+                tablet: { label: 'Tablet Users', type: 'area', color: 'var(--color-chart-area-3)' },
+              })}
+              className="h-full"
+            />
+          </div>
+          <p className="text-body-xsm text-[var(--color-text-success)] mt-2">✅ Smooth overlapping areas with transparency</p>
+        </div>
+      </div>
+
+      {/* Mixed Chart Type */}
+      <div>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Mixed Chart: Area + Line + Bar</h2>
+        <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+          <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`config={{
+  background: { label: 'Market Size', type: 'area' },
+  target: { label: 'Target', type: 'line' },
+  actual: { label: 'Actual Sales', type: 'bar' }
+}}`}
+          </pre>
+        </div>
+        <div className="h-96 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+          <Chart
+            type="composed"
+            data={[
+              { name: 'Q1', background: 8000, target: 3500, actual: 4000 },
+              { name: 'Q2', background: 8500, target: 4000, actual: 5000 },
+              { name: 'Q3', background: 9000, target: 4500, actual: 4500 },
+              { name: 'Q4', background: 9500, target: 5000, actual: 6000 },
+            ]}
+            config={createChartConfig({
+              background: { label: 'Market Size', type: 'area', color: 'var(--color-chart-area-4)' },
+              target: { label: 'Target', type: 'line', color: 'var(--color-chart-line-2)' },
+              actual: { label: 'Actual Sales', type: 'bar', color: 'var(--color-chart-bar-1)' },
+            })}
+            yAxisTickFormatter={(value) => `$${(value / 1000).toFixed(0)}K`}
+            className="h-full"
+          />
+        </div>
+        <p className="text-body-xsm text-[var(--color-text-info)] mt-2">💡 Area provides context background, line shows targets, bars show actuals</p>
+      </div>
+
+      {/* Native AreaChart Example */}
+      <div>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Temperature Range Area Chart</h2>
+        <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+          <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`// Temperature range area chart with array data
+const rangeData = [
+  { "name": "05-01", "temperature": [-1, 10] },
+  { "name": "05-02", "temperature": [2, 15] },
+  { "name": "05-03", "temperature": [3, 12] },
+  // ... more data
+];
+
+<Chart
+  type="composed"
+  data={rangeData}
+  config={{
+    temperature: {
+      label: 'Temperature Range (°C)',
+      type: 'range-area',  // New range-area type
+      stroke: 'none',      // Remove stroke
+      fill: '#8884d8'      // Custom fill color
+    }
+  }}
+  className="h-full"
+/>`}
+          </pre>
+        </div>
+        <div className="h-80 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden p-4 bg-white">
+          <Chart
+            type="composed"
+            data={[
+              { "name": "05-01", "temperature": [-1, 10] },
+              { "name": "05-02", "temperature": [2, 15] },
+              { "name": "05-03", "temperature": [3, 12] },
+              { "name": "05-04", "temperature": [4, 12] },
+              { "name": "05-05", "temperature": [12, 16] },
+              { "name": "05-06", "temperature": [5, 16] },
+              { "name": "05-07", "temperature": [3, 12] },
+              { "name": "05-08", "temperature": [0, 8] },
+              { "name": "05-09", "temperature": [-3, 5] }
+            ]}
+            config={createChartConfig({
+              temperature: {
+                label: 'Temperature Range (°C)',
+                type: 'range-area',
+                stroke: 'none',
+                fill: '#8884d8'
+              },
+            })}
+            className="h-full"
+          />
+        </div>
+        <p className="text-body-xsm text-[var(--color-text-success)] mt-2">✅ Chart component with custom stroke and fill - temperature range data with clean filled area</p>
+      </div>
+
+
+      {/* Benefits Info */}
+      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-lg)] rounded-lg">
+        <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">🎨 Area Chart Benefits</h3>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Visual Improvements</h4>
+            <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
+              <li><strong>No border lines</strong> - Cleaner, modern appearance</li>
+              <li><strong>Smooth filled regions</strong> - Better for trend visualization</li>
+              <li><strong>Translucent overlays</strong> - Perfect for layered data</li>
+              <li><strong>Focus on data</strong> - Less visual noise</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Best Use Cases</h4>
+            <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
+              <li><strong>Time series data</strong> - Revenue, users, metrics over time</li>
+              <li><strong>Cumulative values</strong> - Total sales, growth areas</li>
+              <li><strong>Background context</strong> - Market size, capacity, ranges</li>
+              <li><strong>Multi-layer analysis</strong> - Different user segments</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   ),
 }
