@@ -636,7 +636,7 @@ marginSize="auto" → 'sm' margins
       </div>
 
       {/* Margin Size Presets */}
-      <div>
+      <div className="mt-[var(--space-xlg)]">
         <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Margin Size Presets</h2>
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-[var(--space-lg)]">
@@ -715,10 +715,10 @@ marginSize="auto" → 'sm' margins
       </div>
 
       {/* Usage Examples */}
-      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-lg)] rounded-lg">
+      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-lg)] rounded-lg mt-[var(--space-xlg)]">
         <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">💡 Usage Examples</h3>
 
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Dashboard Cards</h4>
             <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md">
@@ -732,7 +732,7 @@ marginSize="auto" → 'sm' margins
             <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Responsive Charts</h4>
             <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
-{`<Chart marginSize="auto" /> // Auto-scales with chart size`}
+{`<Chart marginSize="auto" />`}
               </pre>
             </div>
           </div>
@@ -741,7 +741,7 @@ marginSize="auto" → 'sm' margins
             <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Custom Spacing</h4>
             <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
-{`<Chart margin={{ left: 80, bottom: 50 }} /> // Override specific margins`}
+{`<Chart margin={{ left: 80 }} />`}
               </pre>
             </div>
           </div>
