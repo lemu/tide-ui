@@ -302,21 +302,13 @@ export function Chart({
   // Custom legend content for consistent styling
   const CustomLegend = ({ payload }: any) => {
     if (!payload || !payload.length) return null;
-    
-    // Get left margin to align with Y-axis start (accounting for Y-axis label width + tick marks)
-    const getLeftMargin = () => {
-      switch (type) {
-        case "horizontal-bar":
-          return "ml-[65px]"; // 60px + 5px adjustment
-        case "scatter":
-          return "ml-[69px]"; // 64px + 5px adjustment
-        default:
-          return "ml-[59px]"; // 54px + 5px adjustment
-      }
-    };
-    
+
+    // Get dynamic left margin based on actual chart margins (not hardcoded)
+    const actualMargins = getMargins();
+    const legendLeftOffset = actualMargins.left + 5; // 5px visual alignment adjustment
+
     return (
-      <div className={`flex justify-start items-center gap-[var(--space-md)] ${getLeftMargin()}`}>
+      <div className="flex justify-start items-center gap-[var(--space-md)]" style={{ marginLeft: `${legendLeftOffset}px` }}>
         {payload.map((entry: any, index: number) => {
           const isBarChart = type === "bar" || type === "horizontal-bar";
           return (
