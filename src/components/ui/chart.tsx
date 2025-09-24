@@ -107,6 +107,13 @@ export interface ChartProps {
   maintainAspectRatio?: boolean; // Control aspect ratio
   margin?: Partial<ChartMargin>; // Custom margin override
   marginSize?: ChartMarginSize; // Preset margin sizes
+  yAxisWidth?: number; // Override Y-axis space when more room needed
+  xAxisTickFormatter?: (value: any, index: number) => string; // Custom X-axis tick formatting
+  yAxisTickFormatter?: (value: any, index: number) => string; // Custom Y-axis tick formatting
+  // Accessibility
+  title?: string; // Chart title for screen readers
+  description?: string; // Chart description for screen readers
+  showDataTable?: boolean; // Show accessible data table fallback
 }
 
 // Enhanced tooltip component with better accessibility and formatting
@@ -168,6 +175,12 @@ export function Chart({
   maintainAspectRatio = false,
   margin,
   marginSize = 'auto',
+  yAxisWidth,
+  xAxisTickFormatter,
+  yAxisTickFormatter,
+  title,
+  description,
+  showDataTable = false,
   ...props
 }: ChartProps) {
 
@@ -212,11 +225,11 @@ export function Chart({
 
   // Smart margin calculation based on chart size and type
   const calculateMargins = (size: ChartMarginSize, chartType: ChartType, chartHeight: number): ChartMargin => {
-    // Base margins for different sizes - optimized for maximum chart space (multiples of 4px)
+    // Comfortable margins with 4px grid system - Y-axis width is the real space controller
     const marginPresets = {
-      sm: { top: 4, right: 8, left: 8, bottom: 16 },
-      md: { top: 8, right: 12, left: 16, bottom: 20 },
-      lg: { top: 16, right: 20, left: 24, bottom: 28 },
+      sm: { top: 4, right: 8, left: 8, bottom: 8 },   // Compact for small charts
+      md: { top: 8, right: 12, left: 12, bottom: 12 },  // Balanced for medium charts
+      lg: { top: 12, right: 16, left: 16, bottom: 16 }, // Spacious for large charts
     };
 
     // Auto-calculate size based on height
@@ -229,19 +242,19 @@ export function Chart({
     const effectiveSize = size === 'auto' ? getAutoSize(chartHeight) : size;
     const baseMargins = marginPresets[effectiveSize];
 
-    // Type-specific adjustments - reduced for tighter spacing (multiples of 4px)
+    // Type-specific adjustments - 4px grid system maintained
     const typeAdjustments = {
       'horizontal-bar': {
-        left: baseMargins.left + 12, // Extra space for Y-axis labels
-        right: baseMargins.right + 4, // Extra space for value labels
+        left: baseMargins.left + 8, // Extra space for Y-axis category labels
+        right: baseMargins.right + 4, // Space for value labels
       },
       'scatter': {
-        left: baseMargins.left + 4, // Minimal extra space for number axes (4px multiple)
+        left: baseMargins.left + 4, // Slight extra for numeric Y-axis
         right: baseMargins.right + 4,
         bottom: baseMargins.bottom + 4,
       },
       'bar': baseMargins,
-      'line': baseMargins,
+      'line': baseMargins, // Clean margins - Y-axis width controls space
       'composed': baseMargins,
     };
 
@@ -273,11 +286,12 @@ export function Chart({
   const xAxisProps = {
     axisLine: { stroke: "var(--color-border-primary-subtle)", strokeWidth: 2 },
     tickLine: false,
-    tick: { 
-      fontSize: 10, 
+    tick: {
+      fontSize: 10,
       fill: "var(--color-text-tertiary)",
       fontFamily: "Inter, sans-serif"
     },
+    tickFormatter: xAxisTickFormatter,
   };
 
 
@@ -285,11 +299,13 @@ export function Chart({
   const yAxisProps = {
     axisLine: { stroke: "var(--color-border-primary-subtle)", strokeWidth: 2 },
     tickLine: { stroke: "var(--color-border-primary-subtle)", strokeWidth: 1 },
-    tick: { 
-      fontSize: 10, 
+    tick: {
+      fontSize: 10,
       fill: "var(--color-text-tertiary)",
       fontFamily: "Inter, sans-serif"
     },
+    width: yAxisWidth || 15, // Ultra-minimal default width (15px) vs Recharts default (~60px)
+    tickFormatter: yAxisTickFormatter,
   };
 
   const gridProps = {
@@ -580,6 +596,45 @@ export function Chart({
     }
   };
 
+  // Accessible data table for screen readers
+  const DataTable = () => {
+    if (!showDataTable) return null;
+
+    return (
+      <div className="sr-only">
+        <table role="table" aria-label={title ? `Data for ${title}` : "Chart data"}>
+          <caption className="sr-only">
+            {title && `${title}. `}
+            {description || `${type} chart showing ${dataKeys.length} data series across ${data.length} categories.`}
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Category</th>
+              {dataKeys.map(key => (
+                <th key={key} scope="col">{config[key]?.label || key}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((item, index) => (
+              <tr key={index}>
+                <th scope="row">{item.name || `Item ${index + 1}`}</th>
+                {dataKeys.map(key => (
+                  <td key={key}>
+                    {yAxisTickFormatter
+                      ? yAxisTickFormatter(item[key], index)
+                      : item[key]
+                    }
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  };
+
   const chartRef = React.useRef<HTMLDivElement>(null);
   
   React.useEffect(() => {
@@ -602,15 +657,29 @@ export function Chart({
   }, [data, type]);
 
   return (
-    <div 
+    <div
       ref={chartRef}
-      className={cn("w-full", className)} 
+      className={cn("w-full", className)}
       style={{ minWidth }}
+      role="img"
+      aria-label={title || `${type} chart`}
+      aria-describedby={description ? `${chartRef.current?.id || 'chart'}-desc` : undefined}
       {...props}
     >
+      {title && (
+        <h3 className="sr-only" id={`${chartRef.current?.id || 'chart'}-title`}>
+          {title}
+        </h3>
+      )}
+      {description && (
+        <p className="sr-only" id={`${chartRef.current?.id || 'chart'}-desc`}>
+          {description}
+        </p>
+      )}
+
       {responsive ? (
-        <ResponsiveContainer 
-          width={width || "100%"} 
+        <ResponsiveContainer
+          width={width || "100%"}
           height={height}
           minHeight={200}
         >
@@ -621,6 +690,8 @@ export function Chart({
           {renderChart() || <div>Chart error</div>}
         </div>
       )}
+
+      <DataTable />
     </div>
   );
 }

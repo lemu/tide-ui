@@ -556,6 +556,359 @@ const MyChart = () => {
   ),
 }
 
+export const TickFormatting: Story = {
+  render: () => (
+    <div className="w-full max-w-7xl space-y-8">
+      <div className="prose max-w-none">
+        <h1 className="text-heading-lg text-[var(--color-text-primary)] mb-[var(--space-lg)]">Tick Formatting Examples</h1>
+
+        <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-lg)] rounded-lg mb-[var(--space-lg)]">
+          <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Custom Formatters</h2>
+          <div className="text-body-sm text-[var(--color-text-secondary)] space-y-2">
+            <p><strong>xAxisTickFormatter:</strong> Format X-axis labels (dates, categories, etc.)</p>
+            <p><strong>yAxisTickFormatter:</strong> Format Y-axis labels (currency, percentages, units)</p>
+            <p><strong>Common patterns:</strong> Currency, percentages, dates, abbreviated numbers</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Currency Formatting */}
+      <div>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Currency Formatting</h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-[var(--space-lg)]">
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Without Formatting</h3>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`// Raw numbers display as is
+data: [{ name: 'Q1', revenue: 45000 }]`}
+              </pre>
+            </div>
+            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+              <Chart
+                type="bar"
+                data={[
+                  { name: 'Q1', revenue: 45000 },
+                  { name: 'Q2', revenue: 52000 },
+                  { name: 'Q3', revenue: 38000 },
+                  { name: 'Q4', revenue: 61000 },
+                ]}
+                config={createChartConfig({
+                  revenue: { label: 'Revenue' },
+                })}
+                height={256}
+                showLegend={false}
+                className="w-full"
+              />
+            </div>
+            <p className="text-body-xsm text-[var(--color-text-secondary)] mt-2">❌ Hard to read: 45000, 52000</p>
+          </div>
+
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">With Currency Formatting</h3>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`// Format as currency
+yAxisTickFormatter={(value) =>
+  \`$\${(value / 1000).toFixed(0)}K\`
+}`}
+              </pre>
+            </div>
+            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+              <Chart
+                type="bar"
+                data={[
+                  { name: 'Q1', revenue: 45000 },
+                  { name: 'Q2', revenue: 52000 },
+                  { name: 'Q3', revenue: 38000 },
+                  { name: 'Q4', revenue: 61000 },
+                ]}
+                config={createChartConfig({
+                  revenue: { label: 'Revenue' },
+                })}
+                yAxisTickFormatter={(value) => `$${(value / 1000).toFixed(0)}K`}
+                height={256}
+                showLegend={false}
+                className="w-full"
+              />
+            </div>
+            <p className="text-body-xsm text-[var(--color-text-success)] mt-2">✅ Easy to read: $45K, $52K</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Percentage Formatting */}
+      <div>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Percentage & Date Formatting</h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-[var(--space-lg)]">
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Percentage Values</h3>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`yAxisTickFormatter={(value) => \`\${value}%\`}`}
+              </pre>
+            </div>
+            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+              <Chart
+                type="line"
+                data={[
+                  { name: 'Jan', conversion: 12.5 },
+                  { name: 'Feb', conversion: 15.2 },
+                  { name: 'Mar', conversion: 18.7 },
+                  { name: 'Apr', conversion: 16.3 },
+                ]}
+                config={createChartConfig({
+                  conversion: { label: 'Conversion Rate' },
+                })}
+                yAxisTickFormatter={(value) => `${value}%`}
+                height={256}
+                showLegend={false}
+                className="w-full"
+              />
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Abbreviated Numbers</h3>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`yAxisTickFormatter={(value) =>
+  value >= 1000000 ? \`\${(value/1000000).toFixed(1)}M\` :
+  value >= 1000 ? \`\${(value/1000).toFixed(0)}K\` : value
+}`}
+              </pre>
+            </div>
+            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+              <Chart
+                type="bar"
+                data={[
+                  { name: 'Small', users: 1200 },
+                  { name: 'Medium', users: 15000 },
+                  { name: 'Large', users: 230000 },
+                  { name: 'Enterprise', users: 1200000 },
+                ]}
+                config={createChartConfig({
+                  users: { label: 'Users' },
+                })}
+                yAxisTickFormatter={(value) =>
+                  value >= 1000000 ? `${(value/1000000).toFixed(1)}M` :
+                  value >= 1000 ? `${(value/1000).toFixed(0)}K` : value
+                }
+                height={256}
+                showLegend={false}
+                className="w-full"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Usage Examples */}
+      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-lg)] rounded-lg mt-[var(--space-xlg)]">
+        <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">💡 Common Formatters</h3>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Currency</h4>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`// Short format
+(value) => \`$\${(value/1000).toFixed(0)}K\`
+
+// Full format
+(value) => new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD'
+}).format(value)`}
+              </pre>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Dates</h4>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`// Month abbreviation
+(value) => new Date(value).toLocaleDateString(
+  'en-US', { month: 'short' }
+)
+
+// Custom format
+(value) => format(new Date(value), 'MMM yy')`}
+              </pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+}
+
+export const AccessibilityFeatures: Story = {
+  render: () => (
+    <div className="w-full max-w-7xl space-y-8">
+      <div className="prose max-w-none">
+        <h1 className="text-heading-lg text-[var(--color-text-primary)] mb-[var(--space-lg)]">Chart Accessibility Features</h1>
+
+        <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-lg)] rounded-lg mb-[var(--space-lg)]">
+          <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Accessibility Props</h2>
+          <div className="text-body-sm text-[var(--color-text-secondary)] space-y-2">
+            <p><strong>title:</strong> Chart title for screen readers</p>
+            <p><strong>description:</strong> Chart description for screen readers</p>
+            <p><strong>showDataTable:</strong> Provides accessible data table fallback</p>
+            <p><strong>ARIA support:</strong> Automatic role="img" and aria-labels</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Enhanced ARIA Labels */}
+      <div>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Enhanced ARIA Labels</h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-[var(--space-lg)]">
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Basic Chart</h3>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`// Basic accessibility
+<Chart type="bar" data={data} config={config} />`}
+              </pre>
+            </div>
+            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+              <Chart
+                type="bar"
+                data={[
+                  { name: 'Q1', revenue: 45000 },
+                  { name: 'Q2', revenue: 52000 },
+                  { name: 'Q3', revenue: 38000 },
+                  { name: 'Q4', revenue: 61000 },
+                ]}
+                config={createChartConfig({
+                  revenue: { label: 'Revenue' },
+                })}
+                height={256}
+                showLegend={false}
+                className="w-full"
+              />
+            </div>
+            <p className="text-body-xsm text-[var(--color-text-secondary)] mt-2">🔍 Inspect: role="img", aria-label="bar chart"</p>
+          </div>
+
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Enhanced Accessibility</h3>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`// Full accessibility features
+<Chart
+  title="Quarterly Revenue 2024"
+  description="Revenue increased 35% from Q1 to Q4"
+  showDataTable={true}
+/>`}
+              </pre>
+            </div>
+            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+              <Chart
+                type="bar"
+                data={[
+                  { name: 'Q1', revenue: 45000 },
+                  { name: 'Q2', revenue: 52000 },
+                  { name: 'Q3', revenue: 38000 },
+                  { name: 'Q4', revenue: 61000 },
+                ]}
+                config={createChartConfig({
+                  revenue: { label: 'Revenue' },
+                })}
+                title="Quarterly Revenue 2024"
+                description="Revenue increased 35% from Q1 to Q4, with strongest performance in Q2"
+                showDataTable={true}
+                yAxisTickFormatter={(value) => `$${(value / 1000).toFixed(0)}K`}
+                height={256}
+                showLegend={false}
+                className="w-full"
+              />
+            </div>
+            <p className="text-body-xsm text-[var(--color-text-success)] mt-2">✅ Full ARIA labels + hidden data table</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Data Table Fallback */}
+      <div>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Screen Reader Support</h2>
+
+        <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-lg)] rounded-lg mb-[var(--space-lg)]">
+          <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">What Screen Readers Get:</h3>
+          <div className="space-y-4">
+            <div>
+              <h4 className="text-body-md font-medium text-[var(--color-text-primary)]">1. Chart Title & Description</h4>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">Hidden headings provide context and summary</p>
+            </div>
+            <div>
+              <h4 className="text-body-md font-medium text-[var(--color-text-primary)]">2. Data Table (when showDataTable=true)</h4>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">Complete data in accessible table format with proper headers</p>
+            </div>
+            <div>
+              <h4 className="text-body-md font-medium text-[var(--color-text-primary)]">3. ARIA Labels</h4>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">Chart type, data series count, and category information</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+          <Chart
+            type="line"
+            data={[
+              { name: 'Jan', sales: 120, leads: 85 },
+              { name: 'Feb', sales: 145, leads: 92 },
+              { name: 'Mar', sales: 165, leads: 108 },
+              { name: 'Apr', sales: 140, leads: 95 },
+            ]}
+            config={createChartConfig({
+              sales: { label: 'Sales' },
+              leads: { label: 'Leads' },
+            })}
+            title="Monthly Sales & Leads Performance"
+            description="Sales trend showing steady growth with leads correlation. Sales peaked in March at 165 units."
+            showDataTable={true}
+            height={256}
+            className="w-full"
+          />
+        </div>
+        <p className="text-body-xsm text-[var(--color-text-info)] mt-2">💡 Use browser developer tools to inspect the hidden data table</p>
+      </div>
+
+      {/* Best Practices */}
+      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-lg)] rounded-lg mt-[var(--space-xlg)]">
+        <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">♿ Accessibility Best Practices</h3>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Always Include</h4>
+            <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
+              <li><strong>title</strong> - Clear, descriptive chart title</li>
+              <li><strong>description</strong> - Key insights and trends</li>
+              <li><strong>showDataTable</strong> - For complex data</li>
+              <li><strong>Color contrast</strong> - Use 'accessible' color scheme</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Consider Adding</h4>
+            <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
+              <li><strong>Tick formatters</strong> - Improve readability</li>
+              <li><strong>Legend</strong> - For multi-series charts</li>
+              <li><strong>Tooltips</strong> - Additional context on hover</li>
+              <li><strong>Summary stats</strong> - In description text</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+}
+
 export const MarginCustomization: Story = {
   render: () => (
     <div className="w-full max-w-7xl space-y-8">
@@ -567,8 +920,8 @@ export const MarginCustomization: Story = {
           <div className="text-body-sm text-[var(--color-text-secondary)] space-y-2">
             <p><strong>marginSize:</strong> 'sm', 'md', 'lg', 'auto' (auto scales based on chart height)</p>
             <p><strong>margin:</strong> Custom margin object override</p>
-            <p><strong>Auto scaling:</strong> height &lt; 300px = 'sm', 300-500px = 'md', &gt; 500px = 'lg'</p>
-            <p><strong>New margins:</strong> sm: 4-16px, md: 8-20px, lg: 16-28px (all multiples of 4px)</p>
+            <p><strong>yAxisWidth:</strong> Override Y-axis space when more room needed</p>
+            <p><strong>Optimized spacing:</strong> ~27px total left space (12px margin + 15px Y-axis) with 4px grid system</p>
           </div>
         </div>
       </div>
@@ -582,8 +935,8 @@ export const MarginCustomization: Story = {
             <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Old Fixed Margins</h3>
             <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
-{`// Old: Fixed 40px margins for scatter
-scatter: { top: 24, right: 40, left: 40, bottom: 40 }`}
+{`// Old: Large fixed margins (16px left)
+md: { top: 8, right: 12, left: 16, bottom: 20 }`}
               </pre>
             </div>
             <div className="h-64 border-2 border-red-200">
@@ -598,20 +951,20 @@ scatter: { top: 24, right: 40, left: 40, bottom: 40 }`}
                 config={createChartConfig({
                   performance: { label: 'Performance Score' },
                 })}
-                margin={{ top: 24, right: 40, left: 40, bottom: 40 }}
+                margin={{ top: 8, right: 12, left: 16, bottom: 20 }}
                 className="h-full"
               />
             </div>
-            <p className="text-body-xsm text-[var(--color-text-secondary)] mt-2">❌ Wastes significant space with large margins</p>
+            <p className="text-body-xsm text-[var(--color-text-secondary)] mt-2">❌ Old margins: 16px left = more waste</p>
           </div>
 
           <div>
             <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">New Auto Margins</h3>
             <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
-{`// New: Auto-calculated for height < 300px
-marginSize="auto" → 'sm' margins
-{ top: 4, right: 8, left: 8, bottom: 16 }`}
+{`// New: Optimized margins (12px left) + Y-axis fix
+md: { top: 8, right: 12, left: 12, bottom: 16 }
+Y-axis: 15px (vs old 60px default)`}
               </pre>
             </div>
             <div className="h-64 border-2 border-green-200">
@@ -630,7 +983,7 @@ marginSize="auto" → 'sm' margins
                 className="h-full"
               />
             </div>
-            <p className="text-body-xsm text-[var(--color-text-success)] mt-2">✅ Much more space-efficient for small charts</p>
+            <p className="text-body-xsm text-[var(--color-text-success)] mt-2">✅ New margins: 4px left = minimal waste</p>
           </div>
         </div>
       </div>
@@ -720,11 +1073,77 @@ marginSize="auto" → 'sm' margins
         </div>
       </div>
 
+      {/* Y-Axis Width Configuration */}
+      <div className="mt-[var(--space-xlg)]">
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Y-Axis Width Configuration</h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-[var(--space-lg)]">
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Default (Auto Width)</h3>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`// Ultra-minimal margins + auto Y-axis
+<Chart type="line" marginSize="auto" />`}
+              </pre>
+            </div>
+            <div className="h-64 w-[452px] border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden mx-auto">
+              <Chart
+                type="line"
+                data={[
+                  { name: 'Jan', value: 4000 },
+                  { name: 'Feb', value: 3200 },
+                  { name: 'Mar', value: 5800 },
+                  { name: 'Apr', value: 2100 },
+                ]}
+                config={createChartConfig({
+                  value: { label: 'Revenue' },
+                })}
+                marginSize="auto"
+                height={256}
+                showLegend={false}
+                className="w-full"
+              />
+            </div>
+            <p className="text-body-xsm text-[var(--color-text-success)] mt-2">✅ ~27px total left space (452px → ~425px usable)</p>
+          </div>
+
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Custom Y-Axis Width</h3>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`// When you need more Y-axis space
+<Chart yAxisWidth={60} marginSize="auto" />`}
+              </pre>
+            </div>
+            <div className="h-64 w-[452px] border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden mx-auto">
+              <Chart
+                type="line"
+                data={[
+                  { name: 'January', value: 40000 },
+                  { name: 'February', value: 32000 },
+                  { name: 'March', value: 58000 },
+                  { name: 'April', value: 21000 },
+                ]}
+                config={createChartConfig({
+                  value: { label: 'Revenue ($)' },
+                })}
+                marginSize="auto"
+                yAxisWidth={60}
+                height={256}
+                showLegend={false}
+                className="w-full"
+              />
+            </div>
+            <p className="text-body-xsm text-[var(--color-text-secondary)] mt-2">🔧 Custom width for longer labels/values</p>
+          </div>
+        </div>
+      </div>
+
       {/* Usage Examples */}
       <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-lg)] rounded-lg mt-[var(--space-xlg)]">
         <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">💡 Usage Examples</h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div>
             <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Dashboard Cards</h4>
             <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md">
@@ -739,6 +1158,15 @@ marginSize="auto" → 'sm' margins
             <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`<Chart marginSize="auto" />`}
+              </pre>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Long Y-Labels</h4>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`<Chart yAxisWidth={80} />`}
               </pre>
             </div>
           </div>
