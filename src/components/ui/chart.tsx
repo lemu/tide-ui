@@ -221,10 +221,11 @@ export function Chart({
         if (config[key].type === 'range-area') {
           const value = point[key];
           if (Array.isArray(value) && value.length === 2) {
-            // Transform [min, max] to separate min/max fields and range
+            // For range areas, we need both the original array and separate min/max
+            // Keep the original array for potential other uses
+            transformedPoint[key] = value;
             transformedPoint[`${key}_min`] = value[0];
             transformedPoint[`${key}_max`] = value[1];
-            transformedPoint[`${key}_range`] = value[1] - value[0]; // Calculate range
           }
         }
       });
@@ -597,33 +598,31 @@ export function Chart({
                   />
                 );
               } else if (chartElementType === "range-area") {
-                // For range areas, use stacked areas to show the proper range
-                return [
-                  // Base invisible area to position the range at the correct height
+                // For range areas, use Area with proper baseLine data transformation
+                const customData = processedData.map(point => ({
+                  ...point,
+                  [key]: point[`${key}_max`] // Use max value as the area height
+                }));
+
+                return (
                   <Area
-                    key={`${key}_min`}
+                    key={key}
                     type="linear"
-                    dataKey={`${key}_min`}
-                    stackId={key}
-                    stroke="none"
-                    fill="transparent"
-                    isAnimationActive={false}
-                    legendType="none"
-                  />,
-                  // Visible range area stacked on top
-                  <Area
-                    key={`${key}_range`}
-                    type="linear"
-                    dataKey={`${key}_range`}
-                    stackId={key}
+                    dataKey={key}
                     name={config[key].label}
                     stroke={config[key].stroke ?? "none"}
                     fill={config[key].fill ?? baseColor}
                     fillOpacity={0.3}
                     className="cursor-pointer transition-colors"
                     isAnimationActive={false}
+                    // Use a custom shape to render the range properly
+                    baseLine={(props: any) => {
+                      // Return the min value for each data point
+                      const dataPoint = processedData[props.index];
+                      return dataPoint ? dataPoint[`${key}_min`] : 0;
+                    }}
                   />
-                ];
+                );
               } else {
                 // Default to bar
                 return (
