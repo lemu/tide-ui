@@ -568,6 +568,7 @@ export const MarginCustomization: Story = {
             <p><strong>marginSize:</strong> 'sm', 'md', 'lg', 'auto' (auto scales based on chart height)</p>
             <p><strong>margin:</strong> Custom margin object override</p>
             <p><strong>Auto scaling:</strong> height &lt; 300px = 'sm', 300-500px = 'md', &gt; 500px = 'lg'</p>
+            <p><strong>New margins:</strong> sm: 4-12px, md: 8-16px, lg: 16-24px</p>
           </div>
         </div>
       </div>
@@ -610,7 +611,7 @@ scatter: { top: 24, right: 40, left: 40, bottom: 40 }`}
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`// New: Auto-calculated for height < 300px
 marginSize="auto" → 'sm' margins
-{ top: 8, right: 16, left: 20, bottom: 20 }`}
+{ top: 4, right: 10, left: 14, bottom: 14 }`}
               </pre>
             </div>
             <div className="h-64 border-2 border-green-200">

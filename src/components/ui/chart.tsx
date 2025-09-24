@@ -212,11 +212,11 @@ export function Chart({
 
   // Smart margin calculation based on chart size and type
   const calculateMargins = (size: ChartMarginSize, chartType: ChartType, chartHeight: number): ChartMargin => {
-    // Base margins for different sizes
+    // Base margins for different sizes - optimized for maximum chart space
     const marginPresets = {
-      sm: { top: 8, right: 12, left: 16, bottom: 16 },
-      md: { top: 16, right: 20, left: 24, bottom: 24 },
-      lg: { top: 24, right: 32, left: 32, bottom: 32 },
+      sm: { top: 4, right: 8, left: 12, bottom: 12 },
+      md: { top: 8, right: 12, left: 16, bottom: 16 },
+      lg: { top: 16, right: 20, left: 24, bottom: 24 },
     };
 
     // Auto-calculate size based on height
@@ -229,16 +229,16 @@ export function Chart({
     const effectiveSize = size === 'auto' ? getAutoSize(chartHeight) : size;
     const baseMargins = marginPresets[effectiveSize];
 
-    // Type-specific adjustments
+    // Type-specific adjustments - reduced for tighter spacing
     const typeAdjustments = {
       'horizontal-bar': {
-        left: baseMargins.left + 20, // Extra space for Y-axis labels
-        right: baseMargins.right + 8, // Extra space for value labels
+        left: baseMargins.left + 12, // Reduced extra space for Y-axis labels
+        right: baseMargins.right + 4, // Reduced extra space for value labels
       },
       'scatter': {
-        left: baseMargins.left + 4, // Slightly more space for number axes
-        right: baseMargins.right + 4,
-        bottom: baseMargins.bottom + 4,
+        left: baseMargins.left + 2, // Minimal extra space for number axes
+        right: baseMargins.right + 2,
+        bottom: baseMargins.bottom + 2,
       },
       'bar': baseMargins,
       'line': baseMargins,
