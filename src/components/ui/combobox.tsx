@@ -80,9 +80,9 @@ export function Combobox({
           <PopoverTrigger asChild>
             {trigger({ open, selectedOption, placeholder, disabled })}
           </PopoverTrigger>
-          <PopoverContent 
+          <PopoverContent
             className={cn(
-              "w-[--radix-popover-trigger-width] min-w-[16rem] p-[var(--space-sm)]", 
+              "w-[--radix-popover-trigger-width] min-w-[16rem] p-0",
               popoverClassName
             )}
           >
@@ -217,9 +217,9 @@ export function MultiCombobox({
           <PopoverTrigger asChild>
             {trigger({ open, selectedOptions, placeholder, disabled, maxDisplayedItems })}
           </PopoverTrigger>
-          <PopoverContent 
+          <PopoverContent
             className={cn(
-              "w-[--radix-popover-trigger-width] min-w-[16rem] p-[var(--space-sm)]", 
+              "w-[--radix-popover-trigger-width] min-w-[16rem] p-0",
               popoverClassName
             )}
           >

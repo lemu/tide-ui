@@ -565,7 +565,7 @@ export function Chart({
                     type="linear"
                     dataKey={key}
                     name={config[key].label}
-                    stroke={baseColor}
+                    stroke="none"
                     fill={baseColor}
                     fillOpacity={0.3}
                     className="cursor-pointer transition-colors"
