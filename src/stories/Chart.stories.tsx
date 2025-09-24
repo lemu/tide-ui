@@ -568,7 +568,7 @@ export const MarginCustomization: Story = {
             <p><strong>marginSize:</strong> 'sm', 'md', 'lg', 'auto' (auto scales based on chart height)</p>
             <p><strong>margin:</strong> Custom margin object override</p>
             <p><strong>Auto scaling:</strong> height &lt; 300px = 'sm', 300-500px = 'md', &gt; 500px = 'lg'</p>
-            <p><strong>New margins:</strong> sm: 4-16px, md: 8-16px, lg: 16-24px</p>
+            <p><strong>New margins:</strong> sm: 4-16px, md: 8-20px, lg: 16-28px (all multiples of 4px)</p>
           </div>
         </div>
       </div>
