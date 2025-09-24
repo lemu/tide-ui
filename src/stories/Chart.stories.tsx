@@ -639,15 +639,15 @@ marginSize="auto" → 'sm' margins
       <div className="mt-[var(--space-xlg)]">
         <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Margin Size Presets</h2>
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-[var(--space-lg)]">
-          <div>
-            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Small Margins</h4>
-            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
-              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-[var(--space-2xl)]">
+          <div className="space-y-4">
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)]">Small Margins</h4>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)]">
 {`marginSize="sm"`}
               </pre>
             </div>
-            <div className="h-48">
+            <div className="h-48 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
               <Chart
                 type="bar"
                 data={[
@@ -659,19 +659,21 @@ marginSize="auto" → 'sm' margins
                   value: { label: 'Value' },
                 })}
                 marginSize="sm"
-                className="h-full"
+                height={192}
+                showLegend={false}
+                className="w-full"
               />
             </div>
           </div>
 
-          <div>
-            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Medium Margins</h4>
-            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
-              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+          <div className="space-y-4">
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)]">Medium Margins</h4>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)]">
 {`marginSize="md"`}
               </pre>
             </div>
-            <div className="h-48">
+            <div className="h-48 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
               <Chart
                 type="bar"
                 data={[
@@ -683,19 +685,21 @@ marginSize="auto" → 'sm' margins
                   value: { label: 'Value' },
                 })}
                 marginSize="md"
-                className="h-full"
+                height={192}
+                showLegend={false}
+                className="w-full"
               />
             </div>
           </div>
 
-          <div>
-            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Large Margins</h4>
-            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
-              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+          <div className="space-y-4">
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)]">Large Margins</h4>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)]">
 {`marginSize="lg"`}
               </pre>
             </div>
-            <div className="h-48">
+            <div className="h-48 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
               <Chart
                 type="bar"
                 data={[
@@ -707,7 +711,9 @@ marginSize="auto" → 'sm' margins
                   value: { label: 'Value' },
                 })}
                 marginSize="lg"
-                className="h-full"
+                height={192}
+                showLegend={false}
+                className="w-full"
               />
             </div>
           </div>
