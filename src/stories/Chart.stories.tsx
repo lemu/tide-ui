@@ -226,7 +226,7 @@ export const DashboardCharts: Story = {
             className="h-full"
           />
         </div>
-        
+
         <div className="xl:col-span-2 h-80">
           <h3 className="text-lg font-semibold mb-4">Distribution</h3>
           <Chart
@@ -239,7 +239,7 @@ export const DashboardCharts: Story = {
           />
         </div>
       </div>
-      
+
       <div className="h-64">
         <h3 className="text-lg font-semibold mb-4">Quarterly Comparison</h3>
         <Chart
@@ -252,6 +252,499 @@ export const DashboardCharts: Story = {
           })}
           className="h-full"
         />
+      </div>
+    </div>
+  ),
+}
+
+export const DataConfigurationGuide: Story = {
+  render: () => (
+    <div className="w-full max-w-7xl space-y-8">
+      <div className="prose max-w-none">
+        <h1 className="text-heading-lg text-[var(--color-text-primary)] mb-[var(--space-lg)]">Chart Data Configuration Guide</h1>
+
+        <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-lg)] rounded-lg mb-[var(--space-lg)]">
+          <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Quick Reference</h2>
+          <div className="text-body-sm text-[var(--color-text-secondary)] space-y-2">
+            <p><strong>Required Props:</strong> <code>type</code>, <code>data</code>, <code>config</code></p>
+            <p><strong>Data Key:</strong> Must include <code>name</code> field for X-axis labels (except scatter charts)</p>
+            <p><strong>Scatter Charts:</strong> Must include <code>x</code> and <code>y</code> fields</p>
+            <p><strong>Colors:</strong> Auto-assigned by chart type, or specify custom colors in config</p>
+          </div>
+        </div>
+      </div>
+
+      {/* 1. Basic Data Structure Examples */}
+      <div>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">1. Data Structure Examples</h2>
+
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-[var(--space-lg)]">
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Bar/Line Chart Data</h3>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`const data = [
+  { name: 'Jan', revenue: 4000, sales: 240 },
+  { name: 'Feb', revenue: 3000, sales: 139 },
+  { name: 'Mar', revenue: 5000, sales: 280 },
+]`}
+              </pre>
+            </div>
+            <div className="mt-[var(--space-sm)] h-64">
+              <Chart
+                type="bar"
+                data={[
+                  { name: 'Jan', revenue: 4000, sales: 240 },
+                  { name: 'Feb', revenue: 3000, sales: 139 },
+                  { name: 'Mar', revenue: 5000, sales: 280 },
+                ]}
+                config={createChartConfig({
+                  revenue: { label: 'Revenue ($)' },
+                  sales: { label: 'Sales Units' },
+                })}
+                className="h-full"
+              />
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Scatter Chart Data</h3>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`const data = [
+  { x: 10, y: 30, performance: 85 },
+  { x: 30, y: 50, performance: 92 },
+  { x: 45, y: 80, performance: 78 },
+]`}
+              </pre>
+            </div>
+            <div className="mt-[var(--space-sm)] h-64">
+              <Chart
+                type="scatter"
+                data={[
+                  { x: 10, y: 30, performance: 85 },
+                  { x: 30, y: 50, performance: 92 },
+                  { x: 45, y: 80, performance: 78 },
+                ]}
+                config={createChartConfig({
+                  performance: { label: 'Performance Score' },
+                })}
+                className="h-full"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 2. Configuration Methods */}
+      <div>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">2. Configuration Methods</h2>
+
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-[var(--space-lg)]">
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Manual Configuration</h3>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`const config = {
+  revenue: {
+    label: 'Revenue ($)',
+    color: 'var(--color-chart-bar-1)'
+  },
+  profit: {
+    label: 'Profit ($)',
+    color: 'var(--color-chart-bar-2)'
+  }
+}`}
+              </pre>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Using createChartConfig Helper</h3>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`const config = createChartConfig({
+  revenue: { label: 'Revenue ($)' },
+  profit: { label: 'Profit ($)' }
+})`}
+              </pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Chart Type Examples */}
+      <div>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">3. Chart Types with Code Examples</h2>
+
+        <div className="space-y-8">
+          {/* Composed Chart Example */}
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Composed Chart (Mixed Types)</h3>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`<Chart
+  type="composed"
+  data={data}
+  config={{
+    revenue: { label: 'Revenue', type: 'bar' },
+    target: { label: 'Target', type: 'line' },
+    growth: { label: 'Growth', type: 'area' }
+  }}
+/>`}
+              </pre>
+            </div>
+            <div className="h-80">
+              <Chart
+                type="composed"
+                data={[
+                  { name: 'Q1', revenue: 4000, target: 3500, growth: 200 },
+                  { name: 'Q2', revenue: 5000, target: 4000, growth: 280 },
+                  { name: 'Q3', revenue: 4500, target: 4500, growth: 220 },
+                  { name: 'Q4', revenue: 6000, target: 5000, growth: 350 },
+                ]}
+                config={createChartConfig({
+                  revenue: { label: 'Revenue ($)', type: 'bar' },
+                  target: { label: 'Target ($)', type: 'line' },
+                  growth: { label: 'Growth (%)', type: 'area' },
+                })}
+                className="h-full"
+              />
+            </div>
+          </div>
+
+          {/* Color Customization */}
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Custom Colors & Color Schemes</h3>
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+              <div>
+                <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Custom Colors</h4>
+                <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+                  <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`config={{
+  series1: {
+    label: 'Series 1',
+    color: '#FF6B6B'
+  },
+  series2: {
+    label: 'Series 2',
+    color: '#4ECDC4'
+  }
+}}`}
+                  </pre>
+                </div>
+                <div className="h-48">
+                  <Chart
+                    type="line"
+                    data={[
+                      { name: 'A', series1: 400, series2: 240 },
+                      { name: 'B', series1: 300, series2: 139 },
+                      { name: 'C', series1: 500, series2: 280 },
+                    ]}
+                    config={{
+                      series1: { label: 'Series 1', color: '#FF6B6B' },
+                      series2: { label: 'Series 2', color: '#4ECDC4' },
+                    }}
+                    className="h-full"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Color Schemes</h4>
+                <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+                  <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`<Chart
+  colorScheme="accessible"
+  // Uses high-contrast colors
+  // Other options: 'bar', 'line', 'scatter'
+/>`}
+                  </pre>
+                </div>
+                <div className="h-48">
+                  <Chart
+                    type="bar"
+                    data={[
+                      { name: 'A', series1: 400, series2: 240 },
+                      { name: 'B', series1: 300, series2: 139 },
+                      { name: 'C', series1: 500, series2: 280 },
+                    ]}
+                    config={createChartConfig({
+                      series1: { label: 'Series 1' },
+                      series2: { label: 'Series 2' },
+                    })}
+                    colorScheme="accessible"
+                    className="h-full"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Complete Example */}
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Complete Implementation Example</h3>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`import { Chart, createChartConfig } from '@rafal.lemieszewski/tide-ui'
+
+const MyChart = () => {
+  const salesData = [
+    { name: 'Jan', revenue: 4000, expenses: 2400, profit: 1600 },
+    { name: 'Feb', revenue: 3000, expenses: 1398, profit: 1602 },
+    { name: 'Mar', revenue: 5000, expenses: 2800, profit: 2200 },
+  ]
+
+  const config = createChartConfig({
+    revenue: { label: 'Revenue ($)', color: 'var(--color-chart-bar-1)' },
+    expenses: { label: 'Expenses ($)', color: 'var(--color-chart-bar-2)' },
+    profit: { label: 'Profit ($)', color: 'var(--color-chart-bar-3)' }
+  })
+
+  return (
+    <Chart
+      type="bar"
+      data={salesData}
+      config={config}
+      height={400}
+      showGrid={true}
+      showLegend={true}
+      className="border rounded-lg p-4"
+      onDataPointClick={(data, index) => console.log('Clicked:', data)}
+    />
+  )
+}`}
+              </pre>
+            </div>
+            <div className="h-96 border rounded-lg p-4">
+              <Chart
+                type="bar"
+                data={[
+                  { name: 'Jan', revenue: 4000, expenses: 2400, profit: 1600 },
+                  { name: 'Feb', revenue: 3000, expenses: 1398, profit: 1602 },
+                  { name: 'Mar', revenue: 5000, expenses: 2800, profit: 2200 },
+                ]}
+                config={createChartConfig({
+                  revenue: { label: 'Revenue ($)', color: 'var(--color-chart-bar-1)' },
+                  expenses: { label: 'Expenses ($)', color: 'var(--color-chart-bar-2)' },
+                  profit: { label: 'Profit ($)', color: 'var(--color-chart-bar-3)' }
+                })}
+                height={350}
+                showGrid={true}
+                showLegend={true}
+                className="h-full"
+                onDataPointClick={(data, index) => console.log('Clicked:', data)}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 4. Tips and Best Practices */}
+      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-lg)] rounded-lg">
+        <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">💡 Tips & Best Practices</h3>
+        <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
+          <li><strong>Data Consistency:</strong> Ensure all data points have the same structure</li>
+          <li><strong>Field Names:</strong> Use descriptive field names that match your config labels</li>
+          <li><strong>Color Variables:</strong> Use semantic color tokens (var(--color-chart-*)) for consistency</li>
+          <li><strong>Responsive Design:</strong> Set appropriate height and enable responsive={`{true}`} for mobile</li>
+          <li><strong>Accessibility:</strong> Use the 'accessible' color scheme for better contrast</li>
+          <li><strong>Performance:</strong> For large datasets, consider data pagination or filtering</li>
+        </ul>
+      </div>
+    </div>
+  ),
+}
+
+export const MarginCustomization: Story = {
+  render: () => (
+    <div className="w-full max-w-7xl space-y-8">
+      <div className="prose max-w-none">
+        <h1 className="text-heading-lg text-[var(--color-text-primary)] mb-[var(--space-lg)]">Chart Margin Customization</h1>
+
+        <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-lg)] rounded-lg mb-[var(--space-lg)]">
+          <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Margin Control</h2>
+          <div className="text-body-sm text-[var(--color-text-secondary)] space-y-2">
+            <p><strong>marginSize:</strong> 'sm', 'md', 'lg', 'auto' (auto scales based on chart height)</p>
+            <p><strong>margin:</strong> Custom margin object override</p>
+            <p><strong>Auto scaling:</strong> height &lt; 300px = 'sm', 300-500px = 'md', &gt; 500px = 'lg'</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Small Charts - Before and After */}
+      <div>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Small Charts: Before vs After</h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-[var(--space-lg)]">
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Old Fixed Margins</h3>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`// Old: Fixed 40px margins for scatter
+scatter: { top: 24, right: 40, left: 40, bottom: 40 }`}
+              </pre>
+            </div>
+            <div className="h-64 border-2 border-red-200">
+              <Chart
+                type="scatter"
+                data={[
+                  { x: 10, y: 30, performance: 85 },
+                  { x: 30, y: 50, performance: 92 },
+                  { x: 45, y: 80, performance: 78 },
+                  { x: 60, y: 40, performance: 65 },
+                ]}
+                config={createChartConfig({
+                  performance: { label: 'Performance Score' },
+                })}
+                margin={{ top: 24, right: 40, left: 40, bottom: 40 }}
+                className="h-full"
+              />
+            </div>
+            <p className="text-body-xsm text-[var(--color-text-secondary)] mt-2">❌ Wastes significant space with large margins</p>
+          </div>
+
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">New Auto Margins</h3>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`// New: Auto-calculated for height < 300px
+marginSize="auto" → 'sm' margins
+{ top: 8, right: 16, left: 20, bottom: 20 }`}
+              </pre>
+            </div>
+            <div className="h-64 border-2 border-green-200">
+              <Chart
+                type="scatter"
+                data={[
+                  { x: 10, y: 30, performance: 85 },
+                  { x: 30, y: 50, performance: 92 },
+                  { x: 45, y: 80, performance: 78 },
+                  { x: 60, y: 40, performance: 65 },
+                ]}
+                config={createChartConfig({
+                  performance: { label: 'Performance Score' },
+                })}
+                marginSize="auto"
+                className="h-full"
+              />
+            </div>
+            <p className="text-body-xsm text-[var(--color-text-success)] mt-2">✅ Much more space-efficient for small charts</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Margin Size Presets */}
+      <div>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Margin Size Presets</h2>
+
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-[var(--space-lg)]">
+          <div>
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Small Margins</h4>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`marginSize="sm"`}
+              </pre>
+            </div>
+            <div className="h-48">
+              <Chart
+                type="bar"
+                data={[
+                  { name: 'A', value: 400 },
+                  { name: 'B', value: 300 },
+                  { name: 'C', value: 500 },
+                ]}
+                config={createChartConfig({
+                  value: { label: 'Value' },
+                })}
+                marginSize="sm"
+                className="h-full"
+              />
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Medium Margins</h4>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`marginSize="md"`}
+              </pre>
+            </div>
+            <div className="h-48">
+              <Chart
+                type="bar"
+                data={[
+                  { name: 'A', value: 400 },
+                  { name: 'B', value: 300 },
+                  { name: 'C', value: 500 },
+                ]}
+                config={createChartConfig({
+                  value: { label: 'Value' },
+                })}
+                marginSize="md"
+                className="h-full"
+              />
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Large Margins</h4>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`marginSize="lg"`}
+              </pre>
+            </div>
+            <div className="h-48">
+              <Chart
+                type="bar"
+                data={[
+                  { name: 'A', value: 400 },
+                  { name: 'B', value: 300 },
+                  { name: 'C', value: 500 },
+                ]}
+                config={createChartConfig({
+                  value: { label: 'Value' },
+                })}
+                marginSize="lg"
+                className="h-full"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Usage Examples */}
+      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-lg)] rounded-lg">
+        <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">💡 Usage Examples</h3>
+
+        <div className="space-y-4">
+          <div>
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Dashboard Cards</h4>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`<Chart marginSize="sm" height={200} />`}
+              </pre>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Responsive Charts</h4>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`<Chart marginSize="auto" /> // Auto-scales with chart size`}
+              </pre>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Custom Spacing</h4>
+            <div className="bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] rounded-md">
+              <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
+{`<Chart margin={{ left: 80, bottom: 50 }} /> // Override specific margins`}
+              </pre>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   ),

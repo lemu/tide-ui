@@ -79,6 +79,15 @@ export interface ChartConfig {
   };
 }
 
+export interface ChartMargin {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
+export type ChartMarginSize = 'sm' | 'md' | 'lg' | 'auto';
+
 export interface ChartProps {
   type: ChartType;
   data: ChartDataPoint[];
@@ -96,6 +105,8 @@ export interface ChartProps {
   colorScheme?: ChartColorScheme; // Allow custom color schemes
   responsive?: boolean; // Control responsive behavior
   maintainAspectRatio?: boolean; // Control aspect ratio
+  margin?: Partial<ChartMargin>; // Custom margin override
+  marginSize?: ChartMarginSize; // Preset margin sizes
 }
 
 // Enhanced tooltip component with better accessibility and formatting
@@ -155,6 +166,8 @@ export function Chart({
   colorScheme,
   responsive = true,
   maintainAspectRatio = false,
+  margin,
+  marginSize = 'auto',
   ...props
 }: ChartProps) {
 
@@ -197,16 +210,59 @@ export function Chart({
     onDataPointClick?.(data?.activePayload?.[0]?.payload, index);
   }, [onDataPointClick]);
 
-  // Dynamic margins based on chart type
-  const getMargins = () => {
-    switch (type) {
-      case "horizontal-bar":
-        return { top: 24, right: 50, left: 60, bottom: 24 }; // More space for Y-axis labels
-      case "scatter":
-        return { top: 24, right: 40, left: 40, bottom: 40 }; // More space for number axes
-      default:
-        return { top: 24, right: 24, left: 24, bottom: 24 };
+  // Smart margin calculation based on chart size and type
+  const calculateMargins = (size: ChartMarginSize, chartType: ChartType, chartHeight: number): ChartMargin => {
+    // Base margins for different sizes
+    const marginPresets = {
+      sm: { top: 8, right: 12, left: 16, bottom: 16 },
+      md: { top: 16, right: 20, left: 24, bottom: 24 },
+      lg: { top: 24, right: 32, left: 32, bottom: 32 },
+    };
+
+    // Auto-calculate size based on height
+    const getAutoSize = (height: number): keyof typeof marginPresets => {
+      if (height < 300) return 'sm';
+      if (height <= 500) return 'md';
+      return 'lg';
+    };
+
+    const effectiveSize = size === 'auto' ? getAutoSize(chartHeight) : size;
+    const baseMargins = marginPresets[effectiveSize];
+
+    // Type-specific adjustments
+    const typeAdjustments = {
+      'horizontal-bar': {
+        left: baseMargins.left + 20, // Extra space for Y-axis labels
+        right: baseMargins.right + 8, // Extra space for value labels
+      },
+      'scatter': {
+        left: baseMargins.left + 4, // Slightly more space for number axes
+        right: baseMargins.right + 4,
+        bottom: baseMargins.bottom + 4,
+      },
+      'bar': baseMargins,
+      'line': baseMargins,
+      'composed': baseMargins,
+    };
+
+    return { ...baseMargins, ...typeAdjustments[chartType] };
+  };
+
+  // Dynamic margins based on props, chart type, and size
+  const getMargins = (): ChartMargin => {
+    // If custom margin is provided, use it (with fallbacks for missing values)
+    if (margin) {
+      const defaultMargin = calculateMargins(marginSize || 'auto', type, height);
+      return {
+        top: margin.top ?? defaultMargin.top,
+        right: margin.right ?? defaultMargin.right,
+        bottom: margin.bottom ?? defaultMargin.bottom,
+        left: margin.left ?? defaultMargin.left,
+      };
     }
+
+    // Use calculated margins based on marginSize (defaults to 'auto')
+    return calculateMargins(marginSize || 'auto', type, height);
   };
 
   const commonProps = {
