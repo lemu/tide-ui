@@ -214,7 +214,7 @@ export function Chart({
   const calculateMargins = (size: ChartMarginSize, chartType: ChartType, chartHeight: number): ChartMargin => {
     // Base margins for different sizes - optimized for maximum chart space
     const marginPresets = {
-      sm: { top: 4, right: 8, left: 12, bottom: 12 },
+      sm: { top: 4, right: 8, left: 8, bottom: 16 },
       md: { top: 8, right: 12, left: 16, bottom: 16 },
       lg: { top: 16, right: 20, left: 24, bottom: 24 },
     };
