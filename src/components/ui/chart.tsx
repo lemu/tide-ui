@@ -79,6 +79,7 @@ export interface ChartConfig {
     stroke?: string; // Custom stroke color or "none"
     fill?: string; // Custom fill color
     showDots?: boolean; // Show/hide data point dots on lines (default: false)
+    strokeStyle?: "solid" | "dashed" | "dotted"; // Line style for line charts
   };
 }
 
@@ -120,6 +121,16 @@ export interface ChartProps {
   tooltipMaxWidth?: string; // Custom tooltip max width class (e.g., 'max-w-xs', 'max-w-48')
 }
 
+// Helper function to convert strokeStyle to strokeDasharray values
+const getStrokeDashArray = (strokeStyle?: string): string | undefined => {
+  switch (strokeStyle) {
+    case "dashed": return "5 5";    // 5px line, 5px gap
+    case "dotted": return "2 2";    // 2px dot, 2px gap
+    case "solid":
+    default: return undefined;      // Solid line (default)
+  }
+};
+
 // Enhanced tooltip component with better accessibility and formatting
 const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-w-xs', chartType }: any & { config: ChartConfig; tooltipMaxWidth?: string; chartType?: ChartType }) => {
   if (!active || !payload || !payload.length) {
@@ -160,12 +171,23 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
         const getTooltipMarkerElement = () => {
           switch (chartType) {
             case "line":
+              const strokeStyle = config[entry.dataKey]?.strokeStyle;
+              const strokePattern = getStrokeDashArray(strokeStyle);
               return (
                 <div
-                  className="w-3 h-0.5 flex-shrink-0"
-                  style={{ backgroundColor: entry.color }}
+                  className="w-3 h-0.5 flex-shrink-0 relative"
                   aria-hidden="true"
-                />
+                >
+                  <div
+                    className="w-full h-full"
+                    style={{
+                      background: strokePattern
+                        ? `linear-gradient(to right, ${entry.color} 50%, transparent 50%)`
+                        : entry.color,
+                      backgroundSize: strokePattern === "5 5" ? "6px 100%" : strokePattern === "2 2" ? "2px 100%" : "100% 100%"
+                    }}
+                  />
+                </div>
               );
             case "scatter":
               return (
@@ -409,12 +431,23 @@ export function Chart({
           const getMarkerElement = () => {
             switch (type) {
               case "line":
+                const strokeStyle = config[entry.dataKey]?.strokeStyle;
+                const strokePattern = getStrokeDashArray(strokeStyle);
                 return (
                   <div
-                    className="w-[12px] h-[2px] flex-shrink-0"
-                    style={{ backgroundColor: entry.color }}
+                    className="w-[12px] h-[2px] flex-shrink-0 relative"
                     aria-hidden="true"
-                  />
+                  >
+                    <div
+                      className="w-full h-full"
+                      style={{
+                        background: strokePattern
+                          ? `linear-gradient(to right, ${entry.color} 50%, transparent 50%)`
+                          : entry.color,
+                        backgroundSize: strokePattern === "5 5" ? "8px 100%" : strokePattern === "2 2" ? "3px 100%" : "100% 100%"
+                      }}
+                    />
+                  </div>
                 );
               case "scatter":
                 return (
@@ -569,6 +602,7 @@ export function Chart({
                   name={config[key].label}
                   stroke={baseColor}
                   strokeWidth={2}
+                  strokeDasharray={getStrokeDashArray(config[key].strokeStyle)}
                   dot={config[key].showDots === true ? {
                     fill: baseColor,
                     strokeWidth: 0,

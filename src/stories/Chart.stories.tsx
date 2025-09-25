@@ -92,6 +92,79 @@ export const LineChart: Story = {
   ),
 }
 
+// Sample data for freight rates vs predictions
+const freightData = [
+  { name: 'Jan', freightRate: 2400, prediction: 2200 },
+  { name: 'Feb', freightRate: 2210, prediction: 2300 },
+  { name: 'Mar', freightRate: 2290, prediction: 2350 },
+  { name: 'Apr', freightRate: 2000, prediction: 2100 },
+  { name: 'May', freightRate: 2181, prediction: 2250 },
+  { name: 'Jun', freightRate: 2500, prediction: 2400 },
+  { name: 'Jul', freightRate: null, prediction: 2450 },
+  { name: 'Aug', freightRate: null, prediction: 2350 },
+]
+
+export const LineChartWithStrokeStyles: Story = {
+  render: () => (
+    <div className="w-[600px] h-[400px]">
+      <Chart
+        type="line"
+        data={freightData}
+        config={createChartConfig({
+          freightRate: {
+            label: 'Freight Rate',
+            color: 'var(--color-chart-line-1)',
+            strokeStyle: 'solid'
+          },
+          prediction: {
+            label: 'Prediction',
+            color: 'var(--color-chart-line-2)',
+            strokeStyle: 'dashed'
+          },
+        })}
+        className="h-full"
+      />
+    </div>
+  ),
+}
+
+// Sample data for a continuous line that transitions from actual to predicted
+const continuousFreightData = [
+  { name: 'Jan', actualRate: 2400, predictedRate: null },
+  { name: 'Feb', actualRate: 2210, predictedRate: null },
+  { name: 'Mar', actualRate: 2290, predictedRate: null },
+  { name: 'Apr', actualRate: 2000, predictedRate: null },
+  { name: 'May', actualRate: 2181, predictedRate: null },
+  { name: 'Jun', actualRate: 2500, predictedRate: 2500 }, // Transition point - both values
+  { name: 'Jul', actualRate: null, predictedRate: 2450 },
+  { name: 'Aug', actualRate: null, predictedRate: 2350 },
+  { name: 'Sep', actualRate: null, predictedRate: 2400 },
+]
+
+export const ContinuousLineTransition: Story = {
+  render: () => (
+    <div className="w-[600px] h-[400px]">
+      <Chart
+        type="line"
+        data={continuousFreightData}
+        config={createChartConfig({
+          actualRate: {
+            label: 'Actual Freight Rate',
+            color: 'var(--color-chart-line-1)',
+            strokeStyle: 'solid'
+          },
+          predictedRate: {
+            label: 'Predicted Rate',
+            color: 'var(--color-chart-line-1)', // Same color for continuity
+            strokeStyle: 'dashed'
+          },
+        })}
+        className="h-full"
+      />
+    </div>
+  ),
+}
+
 export const ScatterChart: Story = {
   render: () => (
     <div className="w-[600px] h-[400px]">
