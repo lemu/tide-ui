@@ -78,6 +78,7 @@ export interface ChartConfig {
     type?: "bar" | "line" | "area" | "range-area"; // For composed charts
     stroke?: string; // Custom stroke color or "none"
     fill?: string; // Custom fill color
+    showDots?: boolean; // Show/hide data point dots on lines (default: false)
   };
 }
 
@@ -134,10 +135,26 @@ const CustomTooltip = ({ active, payload, label, config }: any & { config: Chart
         {label}
       </p>
       {payload.map((entry: any, index: number) => {
-        const value = typeof entry.value === 'number' 
-          ? entry.value.toLocaleString() 
-          : entry.value;
-        
+        const configEntry = config[entry.dataKey as string];
+        let displayValue;
+
+        // Handle range-area data specially
+        if (configEntry?.type === 'range-area' && entry.payload) {
+          const originalData = entry.payload[entry.dataKey];
+          if (Array.isArray(originalData) && originalData.length === 2) {
+            // Format range as "min – max"
+            displayValue = `${originalData[0].toLocaleString()} – ${originalData[1].toLocaleString()}`;
+          } else {
+            displayValue = typeof entry.value === 'number'
+              ? entry.value.toLocaleString()
+              : entry.value;
+          }
+        } else {
+          displayValue = typeof entry.value === 'number'
+            ? entry.value.toLocaleString()
+            : entry.value;
+        }
+
         return (
           <div key={index} className="flex items-center gap-[var(--space-xsm)] text-body-sm">
             <div
@@ -146,10 +163,10 @@ const CustomTooltip = ({ active, payload, label, config }: any & { config: Chart
               aria-hidden="true"
             />
             <span className="text-[var(--color-text-secondary)] min-w-0">
-              {config[entry.dataKey as string]?.label || entry.dataKey}:
+              {configEntry?.label || entry.dataKey}:
             </span>
             <span className="font-medium text-[var(--color-text-primary)] ml-auto">
-              {value}
+              {displayValue}
             </span>
           </div>
         );
@@ -485,11 +502,11 @@ export function Chart({
                   name={config[key].label}
                   stroke={baseColor}
                   strokeWidth={2}
-                  dot={{
+                  dot={config[key].showDots ? {
                     fill: baseColor,
                     strokeWidth: 0,
                     r: 3
-                  }}
+                  } : false}
                   activeDot={{
                     r: 5,
                     fill: baseColor
@@ -570,11 +587,11 @@ export function Chart({
                     name={config[key].label}
                     stroke={baseColor}
                     strokeWidth={2}
-                    dot={{
+                    dot={config[key].showDots ? {
                       fill: baseColor,
                       strokeWidth: 0,
                       r: 3
-                    }}
+                    } : false}
                     activeDot={{
                       r: 5,
                       fill: baseColor
