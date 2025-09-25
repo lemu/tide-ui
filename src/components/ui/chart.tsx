@@ -121,7 +121,7 @@ export interface ChartProps {
 }
 
 // Enhanced tooltip component with better accessibility and formatting
-const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-w-xs' }: any & { config: ChartConfig; tooltipMaxWidth?: string }) => {
+const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-w-xs', chartType }: any & { config: ChartConfig; tooltipMaxWidth?: string; chartType?: ChartType }) => {
   if (!active || !payload || !payload.length) {
     return null;
   }
@@ -156,13 +156,43 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
             : entry.value;
         }
 
+        // Get tooltip marker element to match legend markers
+        const getTooltipMarkerElement = () => {
+          switch (chartType) {
+            case "line":
+              return (
+                <div
+                  className="w-3 h-0.5 flex-shrink-0"
+                  style={{ backgroundColor: entry.color }}
+                  aria-hidden="true"
+                />
+              );
+            case "scatter":
+              return (
+                <div
+                  className="w-2 h-2 rounded-full flex-shrink-0"
+                  style={{ backgroundColor: entry.color }}
+                  aria-hidden="true"
+                />
+              );
+            case "bar":
+            case "horizontal-bar":
+            case "area":
+            case "composed":
+            default:
+              return (
+                <div
+                  className="w-2 h-2 flex-shrink-0"
+                  style={{ backgroundColor: entry.color }}
+                  aria-hidden="true"
+                />
+              );
+          }
+        };
+
         return (
           <div key={index} className="flex items-center gap-[var(--space-xsm)] text-body-sm">
-            <div
-              className="w-3 h-3 rounded-full flex-shrink-0"
-              style={{ backgroundColor: entry.color }}
-              aria-hidden="true"
-            />
+            {getTooltipMarkerElement()}
             <span className="text-[var(--color-text-secondary)] min-w-0 break-words">
               {configEntry?.label || entry.dataKey}:
             </span>
@@ -437,7 +467,7 @@ export function Chart({
             <XAxis dataKey="name" {...xAxisProps} />
             <YAxis {...yAxisProps} />
             {showTooltip && <Tooltip 
-              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} />}
+              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />}
               cursor={{ 
                 stroke: "var(--color-border-primary)", 
                 strokeWidth: 1,
@@ -481,7 +511,7 @@ export function Chart({
             <XAxis type="number" {...xAxisProps} />
             <YAxis type="category" dataKey="name" {...yAxisProps} />
             {showTooltip && <Tooltip 
-              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} />}
+              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />}
               cursor={{ 
                 stroke: "var(--color-border-primary)", 
                 strokeWidth: 1,
@@ -522,7 +552,7 @@ export function Chart({
             <XAxis dataKey="name" {...xAxisProps} />
             <YAxis {...yAxisProps} />
             {showTooltip && <Tooltip 
-              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} />} 
+              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />} 
               position={{ x: undefined, y: undefined }}
               offset={10}
               animationDuration={0}
@@ -568,7 +598,7 @@ export function Chart({
             <XAxis dataKey="x" type="number" {...xAxisProps} />
             <YAxis dataKey="y" type="number" {...yAxisProps} />
             {showTooltip && <Tooltip 
-              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} />} 
+              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />} 
               position={{ x: undefined, y: undefined }}
               offset={10}
               animationDuration={0}
@@ -605,7 +635,7 @@ export function Chart({
             <XAxis dataKey="name" {...xAxisProps} />
             <YAxis {...yAxisProps} domain={[0, 'dataMax']} />
             {showTooltip && <Tooltip 
-              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} />} 
+              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />} 
               position={{ x: undefined, y: undefined }}
               offset={10}
               animationDuration={0}
