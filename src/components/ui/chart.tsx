@@ -502,7 +502,7 @@ export function Chart({
                   name={config[key].label}
                   stroke={baseColor}
                   strokeWidth={2}
-                  dot={config[key].showDots ? {
+                  dot={config[key].showDots === true ? {
                     fill: baseColor,
                     strokeWidth: 0,
                     r: 3
@@ -587,7 +587,7 @@ export function Chart({
                     name={config[key].label}
                     stroke={baseColor}
                     strokeWidth={2}
-                    dot={config[key].showDots ? {
+                    dot={config[key].showDots === true ? {
                       fill: baseColor,
                       strokeWidth: 0,
                       r: 3
