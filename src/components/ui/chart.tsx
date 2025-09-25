@@ -143,8 +143,8 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
         if (configEntry?.type === 'range-area' && entry.payload) {
           const originalData = entry.payload[entry.dataKey];
           if (Array.isArray(originalData) && originalData.length === 2) {
-            // Format range as "min – max"
-            displayValue = `${originalData[0].toLocaleString()} – ${originalData[1].toLocaleString()}`;
+            // Format range as "min – max" with non-breaking spaces to prevent awkward line breaks
+            displayValue = `${originalData[0].toLocaleString()}\u00A0–\u00A0${originalData[1].toLocaleString()}`;
           } else {
             displayValue = typeof entry.value === 'number'
               ? entry.value.toLocaleString()
