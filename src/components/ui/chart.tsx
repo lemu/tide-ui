@@ -117,17 +117,18 @@ export interface ChartProps {
   title?: string; // Chart title for screen readers
   description?: string; // Chart description for screen readers
   showDataTable?: boolean; // Show accessible data table fallback
+  tooltipMaxWidth?: string; // Custom tooltip max width class (e.g., 'max-w-xs', 'max-w-48')
 }
 
 // Enhanced tooltip component with better accessibility and formatting
-const CustomTooltip = ({ active, payload, label, config }: any & { config: ChartConfig }) => {
+const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-w-xs' }: any & { config: ChartConfig; tooltipMaxWidth?: string }) => {
   if (!active || !payload || !payload.length) {
     return null;
   }
 
   return (
-    <div 
-      className="rounded-md border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-sm)] shadow-md max-w-xs"
+    <div
+      className={`rounded-md border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-sm)] shadow-md ${tooltipMaxWidth}`}
       role="tooltip"
       aria-label="Chart data tooltip"
     >
@@ -162,7 +163,7 @@ const CustomTooltip = ({ active, payload, label, config }: any & { config: Chart
               style={{ backgroundColor: entry.color }}
               aria-hidden="true"
             />
-            <span className="text-[var(--color-text-secondary)] min-w-0">
+            <span className="text-[var(--color-text-secondary)] min-w-0 break-words">
               {configEntry?.label || entry.dataKey}:
             </span>
             <span className="font-medium text-[var(--color-text-primary)] ml-auto">
@@ -200,6 +201,7 @@ export function Chart({
   title,
   description,
   showDataTable = false,
+  tooltipMaxWidth = 'max-w-xs',
   ...props
 }: ChartProps) {
 
@@ -366,22 +368,57 @@ export function Chart({
     const legendLeftOffset = actualMargins.left + 5; // 5px visual alignment adjustment
 
     return (
-      <div className="flex justify-start items-center gap-[var(--space-md)]" style={{ marginLeft: `${legendLeftOffset}px` }}>
+      <div
+        style={{
+          paddingLeft: `${legendLeftOffset}px`,
+          paddingRight: '16px'
+        }}
+      >
+        <div className="flex flex-wrap justify-start items-start gap-x-[var(--space-md)] gap-y-[var(--space-sm)]">
         {payload.map((entry: any, index: number) => {
-          const isBarChart = type === "bar" || type === "horizontal-bar";
+          const getMarkerElement = () => {
+            switch (type) {
+              case "line":
+                return (
+                  <div
+                    className="w-[12px] h-[2px] flex-shrink-0"
+                    style={{ backgroundColor: entry.color }}
+                    aria-hidden="true"
+                  />
+                );
+              case "scatter":
+                return (
+                  <div
+                    className="w-[6px] h-[6px] rounded-full flex-shrink-0"
+                    style={{ backgroundColor: entry.color }}
+                    aria-hidden="true"
+                  />
+                );
+              case "bar":
+              case "horizontal-bar":
+              case "area":
+              case "composed":
+              default:
+                return (
+                  <div
+                    className="w-[6px] h-[6px] flex-shrink-0"
+                    style={{ backgroundColor: entry.color }}
+                    aria-hidden="true"
+                  />
+                );
+            }
+          };
+
           return (
             <div key={index} className="flex items-center justify-center gap-[var(--space-xsm)]">
-              <div
-                className={isBarChart ? "w-[6px] h-[6px] flex-shrink-0" : "w-[6px] h-[6px] rounded-full flex-shrink-0"}
-                style={{ backgroundColor: entry.color }}
-                aria-hidden="true"
-              />
-              <span className="[&]:text-body-medium-xsm [&]:text-[var(--color-text-secondary)] leading-none">
+              {getMarkerElement()}
+              <span className="[&]:text-body-medium-xsm [&]:text-[var(--color-text-secondary)] leading-none whitespace-nowrap">
                 {entry.value}
               </span>
             </div>
           );
         })}
+        </div>
       </div>
     );
   };
@@ -400,7 +437,7 @@ export function Chart({
             <XAxis dataKey="name" {...xAxisProps} />
             <YAxis {...yAxisProps} />
             {showTooltip && <Tooltip 
-              content={(props) => <CustomTooltip {...props} config={config} />}
+              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} />}
               cursor={{ 
                 stroke: "var(--color-border-primary)", 
                 strokeWidth: 1,
@@ -444,7 +481,7 @@ export function Chart({
             <XAxis type="number" {...xAxisProps} />
             <YAxis type="category" dataKey="name" {...yAxisProps} />
             {showTooltip && <Tooltip 
-              content={(props) => <CustomTooltip {...props} config={config} />}
+              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} />}
               cursor={{ 
                 stroke: "var(--color-border-primary)", 
                 strokeWidth: 1,
@@ -485,7 +522,7 @@ export function Chart({
             <XAxis dataKey="name" {...xAxisProps} />
             <YAxis {...yAxisProps} />
             {showTooltip && <Tooltip 
-              content={(props) => <CustomTooltip {...props} config={config} />} 
+              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} />} 
               position={{ x: undefined, y: undefined }}
               offset={10}
               animationDuration={0}
@@ -531,7 +568,7 @@ export function Chart({
             <XAxis dataKey="x" type="number" {...xAxisProps} />
             <YAxis dataKey="y" type="number" {...yAxisProps} />
             {showTooltip && <Tooltip 
-              content={(props) => <CustomTooltip {...props} config={config} />} 
+              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} />} 
               position={{ x: undefined, y: undefined }}
               offset={10}
               animationDuration={0}
@@ -568,7 +605,7 @@ export function Chart({
             <XAxis dataKey="name" {...xAxisProps} />
             <YAxis {...yAxisProps} domain={[0, 'dataMax']} />
             {showTooltip && <Tooltip 
-              content={(props) => <CustomTooltip {...props} config={config} />} 
+              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} />} 
               position={{ x: undefined, y: undefined }}
               offset={10}
               animationDuration={0}

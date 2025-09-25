@@ -1391,3 +1391,151 @@ Y-axis: 15px (vs old 60px default)`}
   ),
 }
 
+export const MultiMetricLegend: Story = {
+  render: () => (
+    <div className="w-[800px] space-y-8">
+      <div>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Multi-Metric Legend Wrapping</h2>
+        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-lg)]">
+          Tests legend behavior with many metrics to ensure proper row wrapping without text wrapping within labels.
+        </p>
+
+        <div className="space-y-6">
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">8 Metrics Bar Chart</h3>
+            <div className="bg-white border border-[var(--color-border-primary-subtle)] rounded-lg p-4">
+              <Chart
+                type="bar"
+                data={[
+                  {
+                    name: 'Q1',
+                    revenue: 4000,
+                    expenses: 2400,
+                    profit: 1600,
+                    marketing: 800,
+                    operations: 1200,
+                    technology: 600,
+                    humanResources: 400,
+                    research: 300
+                  },
+                  {
+                    name: 'Q2',
+                    revenue: 3000,
+                    expenses: 1398,
+                    profit: 1602,
+                    marketing: 700,
+                    operations: 900,
+                    technology: 500,
+                    humanResources: 350,
+                    research: 280
+                  },
+                  {
+                    name: 'Q3',
+                    revenue: 2000,
+                    expenses: 9800,
+                    profit: -7800,
+                    marketing: 600,
+                    operations: 1100,
+                    technology: 700,
+                    humanResources: 450,
+                    research: 320
+                  },
+                  {
+                    name: 'Q4',
+                    revenue: 2780,
+                    expenses: 3908,
+                    profit: -1128,
+                    marketing: 900,
+                    operations: 1300,
+                    technology: 800,
+                    humanResources: 500,
+                    research: 400
+                  },
+                ]}
+                config={createChartConfig({
+                  revenue: { label: 'Revenue' },
+                  expenses: { label: 'Expenses' },
+                  profit: { label: 'Profit' },
+                  marketing: { label: 'Marketing Budget' },
+                  operations: { label: 'Operations Cost' },
+                  technology: { label: 'Technology Investment' },
+                  humanResources: { label: 'Human Resources' },
+                  research: { label: 'Research & Development' },
+                })}
+                height={320}
+                showGrid={true}
+                showLegend={true}
+                className="w-full"
+              />
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Narrow Container (400px)</h3>
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              Testing legend wrapping in constrained width containers
+            </p>
+            <div className="w-[400px] bg-white border border-[var(--color-border-primary-subtle)] rounded-lg p-4">
+              <Chart
+                type="line"
+                data={[
+                  {
+                    name: 'Week 1',
+                    sales: 4000,
+                    marketing: 2400,
+                    support: 1600,
+                    development: 800,
+                    operations: 1200,
+                    design: 600
+                  },
+                  {
+                    name: 'Week 2',
+                    sales: 3000,
+                    marketing: 1398,
+                    support: 1602,
+                    development: 700,
+                    operations: 900,
+                    design: 500
+                  },
+                  {
+                    name: 'Week 3',
+                    sales: 5000,
+                    marketing: 2800,
+                    support: 2200,
+                    development: 1200,
+                    operations: 1100,
+                    design: 700
+                  },
+                ]}
+                config={createChartConfig({
+                  sales: { label: 'Sales Revenue' },
+                  marketing: { label: 'Marketing Spend' },
+                  support: { label: 'Customer Support' },
+                  development: { label: 'Development Cost' },
+                  operations: { label: 'Operations Budget' },
+                  design: { label: 'Design Investment' },
+                })}
+                height={320}
+                showGrid={true}
+                showLegend={true}
+                className="w-full"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success)] p-[var(--space-lg)] rounded-lg mt-[var(--space-xlg)]">
+          <h4 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">✅ Legend Behavior</h4>
+          <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
+            <li><strong>Multi-row wrapping</strong> - Legend items flow to multiple rows when needed</li>
+            <li><strong>No text wrapping</strong> - Individual legend labels remain intact (whitespace-nowrap)</li>
+            <li><strong>Consistent spacing</strong> - Proper horizontal and vertical gaps between items</li>
+            <li><strong>Chart alignment</strong> - Legend maintains alignment with chart area</li>
+            <li><strong>Responsive behavior</strong> - Adapts to different container widths</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  ),
+}
+
