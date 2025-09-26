@@ -167,15 +167,15 @@ export const ContinuousLineTransition: Story = {
 
 // Sample data for composed chart with continuous transition from solid to dashed
 const composedData = [
-  { name: 'Jan', marketSize: 8000, actualRate: 2400, prediction: null },
-  { name: 'Feb', marketSize: 8200, actualRate: 2210, prediction: null },
-  { name: 'Mar', marketSize: 8500, actualRate: 2290, prediction: null },
-  { name: 'Apr', marketSize: 8100, actualRate: 2000, prediction: null },
-  { name: 'May', marketSize: 8800, actualRate: 2181, prediction: null },
-  { name: 'Jun', marketSize: 9000, actualRate: 2500, prediction: 2500 }, // Transition point
-  { name: 'Jul', marketSize: 9200, actualRate: null, prediction: 2450 },
-  { name: 'Aug', marketSize: 9100, actualRate: null, prediction: 2350 },
-  { name: 'Sep', marketSize: 9300, actualRate: null, prediction: 2400 },
+  { name: 'Jan', marketSize: 8000, actualRate: 2400, prediction: null, sales: 1800 },
+  { name: 'Feb', marketSize: 8200, actualRate: 2210, prediction: null, sales: 1900 },
+  { name: 'Mar', marketSize: 8500, actualRate: 2290, prediction: null, sales: 2100 },
+  { name: 'Apr', marketSize: 8100, actualRate: 2000, prediction: null, sales: 1750 },
+  { name: 'May', marketSize: 8800, actualRate: 2181, prediction: null, sales: 2050 },
+  { name: 'Jun', marketSize: 9000, actualRate: 2500, prediction: 2500, sales: 2200 }, // Transition point
+  { name: 'Jul', marketSize: 9200, actualRate: null, prediction: 2450, sales: 2150 },
+  { name: 'Aug', marketSize: 9100, actualRate: null, prediction: 2350, sales: 2000 },
+  { name: 'Sep', marketSize: 9300, actualRate: null, prediction: 2400, sales: 2100 },
 ]
 
 export const ComposedChartWithLineStyles: Story = {
@@ -186,21 +186,26 @@ export const ComposedChartWithLineStyles: Story = {
         data={composedData}
         config={createChartConfig({
           marketSize: {
-            label: 'Market Size',
+            label: 'Market Size (Area)',
             type: 'area',
             color: 'var(--color-chart-area-4)',
             fill: 'var(--color-chart-area-4)'
           },
+          sales: {
+            label: 'Sales (Bars)',
+            type: 'bar',
+            color: 'var(--color-chart-bar-1)'
+          },
           actualRate: {
-            label: 'Actual Freight Rate',
+            label: 'Actual Rate (Solid Line)',
             type: 'line',
-            color: 'var(--color-chart-line-1)',
+            color: 'var(--color-chart-line-2)',
             strokeStyle: 'solid'
           },
           prediction: {
-            label: 'Predicted Rate',
+            label: 'Predicted Rate (Dashed Line)',
             type: 'line',
-            color: 'var(--color-chart-line-1)', // Same color for visual continuity
+            color: 'var(--color-chart-line-3)',
             strokeStyle: 'dashed'
           },
         })}
@@ -266,6 +271,82 @@ export const ChartWithCustomTickCount: Story = {
             className="h-full"
           />
         </div>
+      </div>
+    </div>
+  ),
+}
+
+// Sample data for demonstrating legend order
+const legendOrderData = [
+  { name: 'Q1', alpha: 100, beta: 200, gamma: 300, delta: 150 },
+  { name: 'Q2', alpha: 120, beta: 180, gamma: 250, delta: 200 },
+  { name: 'Q3', alpha: 140, beta: 220, gamma: 280, delta: 180 },
+  { name: 'Q4', alpha: 160, beta: 240, gamma: 320, delta: 220 },
+]
+
+export const ChartWithCustomLegendOrder: Story = {
+  render: () => (
+    <div className="space-y-8">
+      <div>
+        <h3 className="text-heading-md mb-4">Default Legend Order (Config Key Order)</h3>
+        <div className="w-[600px] h-[300px]">
+          <Chart
+            type="line"
+            data={legendOrderData}
+            config={createChartConfig({
+              alpha: { label: 'Alpha Series', color: 'var(--color-chart-line-1)' },
+              beta: { label: 'Beta Series', color: 'var(--color-chart-line-2)' },
+              gamma: { label: 'Gamma Series', color: 'var(--color-chart-line-3)' },
+              delta: { label: 'Delta Series', color: 'var(--color-chart-line-4)' },
+            })}
+            className="h-full"
+          />
+        </div>
+        <p className="text-body-sm text-[var(--color-text-secondary)] mt-2">
+          Legend shows: Alpha, Beta, Gamma, Delta (config object key order)
+        </p>
+      </div>
+
+      <div>
+        <h3 className="text-heading-md mb-4">Custom Legend Order</h3>
+        <div className="w-[600px] h-[300px]">
+          <Chart
+            type="line"
+            data={legendOrderData}
+            config={createChartConfig({
+              alpha: { label: 'Alpha Series', color: 'var(--color-chart-line-1)' },
+              beta: { label: 'Beta Series', color: 'var(--color-chart-line-2)' },
+              gamma: { label: 'Gamma Series', color: 'var(--color-chart-line-3)' },
+              delta: { label: 'Delta Series', color: 'var(--color-chart-line-4)' },
+            })}
+            legendOrder={['delta', 'gamma', 'beta', 'alpha']}
+            className="h-full"
+          />
+        </div>
+        <p className="text-body-sm text-[var(--color-text-secondary)] mt-2">
+          Legend shows: Delta, Gamma, Beta, Alpha (custom order)
+        </p>
+      </div>
+
+      <div>
+        <h3 className="text-heading-md mb-4">Composed Chart with Custom Legend Order</h3>
+        <div className="w-[600px] h-[300px]">
+          <Chart
+            type="composed"
+            data={legendOrderData}
+            config={createChartConfig({
+              alpha: { label: 'Alpha Bars', type: 'bar', color: 'var(--color-chart-bar-1)' },
+              beta: { label: 'Beta Area', type: 'area', color: 'var(--color-chart-area-1)' },
+              gamma: { label: 'Gamma Line (Solid)', type: 'line', color: 'var(--color-chart-line-1)', strokeStyle: 'solid' },
+              delta: { label: 'Delta Line (Dashed)', type: 'line', color: 'var(--color-chart-line-2)', strokeStyle: 'dashed' },
+            })}
+            legendOrder={['beta', 'delta', 'gamma', 'alpha']}
+            className="h-full"
+          />
+        </div>
+        <p className="text-body-sm text-[var(--color-text-secondary)] mt-2">
+          Legend shows: Beta (area), Delta (dashed), Gamma (solid), Alpha (bars) - with correct marker types
+        </p>
       </div>
     </div>
   ),

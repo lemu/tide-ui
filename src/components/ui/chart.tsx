@@ -120,6 +120,7 @@ export interface ChartProps {
   description?: string; // Chart description for screen readers
   showDataTable?: boolean; // Show accessible data table fallback
   tooltipMaxWidth?: string; // Custom tooltip max width class (e.g., 'max-w-xs', 'max-w-48')
+  legendOrder?: string[]; // Custom order for legend items (array of data keys)
 }
 
 // Helper function to convert strokeStyle to strokeDasharray values
@@ -198,10 +199,51 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
                   aria-hidden="true"
                 />
               );
+            case "composed":
+              // For composed charts, check individual element type
+              const elementType = config[entry.dataKey]?.type;
+              switch (elementType) {
+                case "line":
+                  const strokeStyle = config[entry.dataKey]?.strokeStyle;
+                  const strokePattern = getStrokeDashArray(strokeStyle);
+                  return (
+                    <div
+                      className="w-3 h-0.5 flex-shrink-0 relative"
+                      aria-hidden="true"
+                    >
+                      <div
+                        className="w-full h-full"
+                        style={{
+                          background: strokePattern
+                            ? `linear-gradient(to right, ${entry.color} 50%, transparent 50%)`
+                            : entry.color,
+                          backgroundSize: strokePattern === "5 5" ? "6px 100%" : strokePattern === "2 2" ? "2px 100%" : "100% 100%"
+                        }}
+                      />
+                    </div>
+                  );
+                case "area":
+                case "range-area":
+                  return (
+                    <div
+                      className="w-2.5 h-2.5 flex-shrink-0"
+                      style={{ backgroundColor: entry.color }}
+                      aria-hidden="true"
+                    />
+                  );
+                case "bar":
+                default:
+                  return (
+                    <div
+                      className="w-2 h-2 flex-shrink-0"
+                      style={{ backgroundColor: entry.color }}
+                      aria-hidden="true"
+                    />
+                  );
+              }
             case "bar":
             case "horizontal-bar":
             case "area":
-            case "composed":
             default:
               return (
                 <div
@@ -256,6 +298,7 @@ export function Chart({
   description,
   showDataTable = false,
   tooltipMaxWidth = 'max-w-xs',
+  legendOrder,
   ...props
 }: ChartProps) {
 
@@ -418,6 +461,20 @@ export function Chart({
   const CustomLegend = ({ payload }: any) => {
     if (!payload || !payload.length) return null;
 
+    // Sort payload based on legendOrder if provided
+    const sortedPayload = legendOrder
+      ? [...payload].sort((a, b) => {
+          const aIndex = legendOrder.indexOf(a.dataKey);
+          const bIndex = legendOrder.indexOf(b.dataKey);
+
+          // Items not in legendOrder go to the end
+          if (aIndex === -1) return 1;
+          if (bIndex === -1) return -1;
+
+          return aIndex - bIndex;
+        })
+      : payload;
+
     // Get dynamic left margin based on actual chart margins (not hardcoded)
     const actualMargins = getMargins();
     const legendLeftOffset = actualMargins.left + 5; // 5px visual alignment adjustment
@@ -430,7 +487,7 @@ export function Chart({
         }}
       >
         <div className="flex flex-wrap justify-start items-start gap-x-[var(--space-md)] gap-y-[var(--space-sm)]">
-        {payload.map((entry: any, index: number) => {
+        {sortedPayload.map((entry: any, index: number) => {
           const getMarkerElement = () => {
             switch (type) {
               case "line":
@@ -460,10 +517,51 @@ export function Chart({
                     aria-hidden="true"
                   />
                 );
+              case "composed":
+                // For composed charts, check individual element type
+                const elementType = config[entry.dataKey]?.type;
+                switch (elementType) {
+                  case "line":
+                    const strokeStyle = config[entry.dataKey]?.strokeStyle;
+                    const strokePattern = getStrokeDashArray(strokeStyle);
+                    return (
+                      <div
+                        className="w-[12px] h-[2px] flex-shrink-0 relative"
+                        aria-hidden="true"
+                      >
+                        <div
+                          className="w-full h-full"
+                          style={{
+                            background: strokePattern
+                              ? `linear-gradient(to right, ${entry.color} 50%, transparent 50%)`
+                              : entry.color,
+                            backgroundSize: strokePattern === "5 5" ? "8px 100%" : strokePattern === "2 2" ? "3px 100%" : "100% 100%"
+                          }}
+                        />
+                      </div>
+                    );
+                  case "area":
+                  case "range-area":
+                    return (
+                      <div
+                        className="w-[8px] h-[8px] flex-shrink-0"
+                        style={{ backgroundColor: entry.color }}
+                        aria-hidden="true"
+                      />
+                    );
+                  case "bar":
+                  default:
+                    return (
+                      <div
+                        className="w-[6px] h-[6px] flex-shrink-0"
+                        style={{ backgroundColor: entry.color }}
+                        aria-hidden="true"
+                      />
+                    );
+                }
               case "bar":
               case "horizontal-bar":
               case "area":
-              case "composed":
               default:
                 return (
                   <div
