@@ -165,6 +165,51 @@ export const ContinuousLineTransition: Story = {
   ),
 }
 
+// Sample data for composed chart with continuous transition from solid to dashed
+const composedData = [
+  { name: 'Jan', marketSize: 8000, actualRate: 2400, prediction: null },
+  { name: 'Feb', marketSize: 8200, actualRate: 2210, prediction: null },
+  { name: 'Mar', marketSize: 8500, actualRate: 2290, prediction: null },
+  { name: 'Apr', marketSize: 8100, actualRate: 2000, prediction: null },
+  { name: 'May', marketSize: 8800, actualRate: 2181, prediction: null },
+  { name: 'Jun', marketSize: 9000, actualRate: 2500, prediction: 2500 }, // Transition point
+  { name: 'Jul', marketSize: 9200, actualRate: null, prediction: 2450 },
+  { name: 'Aug', marketSize: 9100, actualRate: null, prediction: 2350 },
+  { name: 'Sep', marketSize: 9300, actualRate: null, prediction: 2400 },
+]
+
+export const ComposedChartWithLineStyles: Story = {
+  render: () => (
+    <div className="w-[600px] h-[400px]">
+      <Chart
+        type="composed"
+        data={composedData}
+        config={createChartConfig({
+          marketSize: {
+            label: 'Market Size',
+            type: 'area',
+            color: 'var(--color-chart-area-4)',
+            fill: 'var(--color-chart-area-4)'
+          },
+          actualRate: {
+            label: 'Actual Freight Rate',
+            type: 'line',
+            color: 'var(--color-chart-line-1)',
+            strokeStyle: 'solid'
+          },
+          prediction: {
+            label: 'Predicted Rate',
+            type: 'line',
+            color: 'var(--color-chart-line-1)', // Same color for visual continuity
+            strokeStyle: 'dashed'
+          },
+        })}
+        className="h-full"
+      />
+    </div>
+  ),
+}
+
 export const ScatterChart: Story = {
   render: () => (
     <div className="w-[600px] h-[400px]">

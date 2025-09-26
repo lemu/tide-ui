@@ -565,6 +565,8 @@ export function Chart({
                   dataKey={key}
                   name={config[key].label}
                   fill={baseColor}
+                  radius={[0, 0, 0, 0]}
+                  className="cursor-pointer transition-colors"
                   isAnimationActive={false}
                   maxBarSize={40}
                 />
@@ -584,8 +586,14 @@ export function Chart({
             {showGrid && <CartesianGrid {...gridProps} />}
             <XAxis dataKey="name" {...xAxisProps} />
             <YAxis {...yAxisProps} />
-            {showTooltip && <Tooltip 
-              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />} 
+            {showTooltip && <Tooltip
+              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />}
+              cursor={{
+                stroke: "var(--color-border-primary)",
+                strokeWidth: 1,
+                fill: "var(--color-background-neutral)",
+                fillOpacity: 1.0
+              }}
               position={{ x: undefined, y: undefined }}
               offset={10}
               animationDuration={0}
@@ -631,8 +639,14 @@ export function Chart({
             {showGrid && <CartesianGrid {...gridProps} />}
             <XAxis dataKey="x" type="number" {...xAxisProps} />
             <YAxis dataKey="y" type="number" {...yAxisProps} />
-            {showTooltip && <Tooltip 
-              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />} 
+            {showTooltip && <Tooltip
+              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />}
+              cursor={{
+                stroke: "var(--color-border-primary)",
+                strokeWidth: 1,
+                fill: "var(--color-background-neutral)",
+                fillOpacity: 1.0
+              }}
               position={{ x: undefined, y: undefined }}
               offset={10}
               animationDuration={0}
@@ -668,8 +682,14 @@ export function Chart({
             {showGrid && <CartesianGrid {...gridProps} />}
             <XAxis dataKey="name" {...xAxisProps} />
             <YAxis {...yAxisProps} domain={[0, 'dataMax']} />
-            {showTooltip && <Tooltip 
-              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />} 
+            {showTooltip && <Tooltip
+              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />}
+              cursor={{
+                stroke: "var(--color-border-primary)",
+                strokeWidth: 1,
+                fill: "var(--color-background-neutral)",
+                fillOpacity: 1.0
+              }}
               position={{ x: undefined, y: undefined }}
               offset={10}
               animationDuration={0}
@@ -688,6 +708,7 @@ export function Chart({
                     name={config[key].label}
                     stroke={baseColor}
                     strokeWidth={2}
+                    strokeDasharray={getStrokeDashArray(config[key].strokeStyle)}
                     dot={config[key].showDots === true ? {
                       fill: baseColor,
                       strokeWidth: 0,
