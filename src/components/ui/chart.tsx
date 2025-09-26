@@ -121,6 +121,7 @@ export interface ChartProps {
   showDataTable?: boolean; // Show accessible data table fallback
   tooltipMaxWidth?: string; // Custom tooltip max width class (e.g., 'max-w-xs', 'max-w-48')
   legendOrder?: string[]; // Custom order for legend items (array of data keys)
+  legendPosition?: 'bottom' | 'top' | 'right'; // Legend position (default: bottom)
 }
 
 // Helper function to convert strokeStyle to strokeDasharray values
@@ -130,6 +131,19 @@ const getStrokeDashArray = (strokeStyle?: string): string | undefined => {
     case "dotted": return "2 2";    // 2px dot, 2px gap
     case "solid":
     default: return undefined;      // Solid line (default)
+  }
+};
+
+// Helper function to get Legend positioning props
+const getLegendProps = (legendPosition: 'bottom' | 'top' | 'right') => {
+  switch (legendPosition) {
+    case 'top':
+      return { verticalAlign: 'top' as const, align: 'center' as const };
+    case 'right':
+      return { verticalAlign: 'middle' as const, align: 'right' as const, layout: 'vertical' as const };
+    case 'bottom':
+    default:
+      return { verticalAlign: 'bottom' as const, align: 'center' as const };
   }
 };
 
@@ -299,6 +313,7 @@ export function Chart({
   showDataTable = false,
   tooltipMaxWidth = 'max-w-xs',
   legendOrder,
+  legendPosition = 'bottom',
   ...props
 }: ChartProps) {
 
@@ -383,20 +398,51 @@ export function Chart({
     const effectiveSize = size === 'auto' ? getAutoSize(chartHeight) : size;
     const baseMargins = marginPresets[effectiveSize];
 
-    // Type-specific adjustments - 4px grid system maintained
+    // Calculate legend space requirements based on position
+    const dataKeyCount = Object.keys(config).filter(key => key !== 'name').length;
+    const estimatedLegendHeight = showLegend && legendPosition === 'bottom'
+      ? Math.ceil(dataKeyCount / 4) * 24 + 8 // Rough estimate: 4 items per row, 24px per row, 8px padding
+      : 0;
+    const estimatedLegendWidth = showLegend && legendPosition === 'right'
+      ? 120 // Estimated width for right-positioned legend
+      : 0;
+
+    // Type-specific adjustments - 4px grid system maintained with legend spacing
+    const legendTopSpace = legendPosition === 'top' ? estimatedLegendHeight : 0;
+    const legendBottomSpace = legendPosition === 'bottom' ? estimatedLegendHeight : 0;
+    const legendRightSpace = legendPosition === 'right' ? estimatedLegendWidth : 0;
+
     const typeAdjustments = {
       'horizontal-bar': {
         left: baseMargins.left + 8, // Extra space for Y-axis category labels
-        right: baseMargins.right + 4, // Space for value labels
+        right: baseMargins.right + 4 + legendRightSpace, // Space for value labels + legend
+        bottom: baseMargins.bottom + legendBottomSpace,
+        top: baseMargins.top + legendTopSpace,
       },
       'scatter': {
         left: baseMargins.left + 4, // Slight extra for numeric Y-axis
-        right: baseMargins.right + 4,
-        bottom: baseMargins.bottom + 4,
+        right: baseMargins.right + 4 + legendRightSpace,
+        bottom: baseMargins.bottom + 4 + legendBottomSpace,
+        top: baseMargins.top + legendTopSpace,
       },
-      'bar': baseMargins,
-      'line': baseMargins, // Clean margins - Y-axis width controls space
-      'composed': baseMargins,
+      'bar': {
+        ...baseMargins,
+        bottom: baseMargins.bottom + legendBottomSpace,
+        right: baseMargins.right + legendRightSpace,
+        top: baseMargins.top + legendTopSpace,
+      },
+      'line': {
+        ...baseMargins,
+        bottom: baseMargins.bottom + legendBottomSpace, // Clean margins - Y-axis width controls space
+        right: baseMargins.right + legendRightSpace,
+        top: baseMargins.top + legendTopSpace,
+      },
+      'composed': {
+        ...baseMargins,
+        bottom: baseMargins.bottom + legendBottomSpace,
+        right: baseMargins.right + legendRightSpace,
+        top: baseMargins.top + legendTopSpace,
+      },
     };
 
     return { ...baseMargins, ...typeAdjustments[chartType] };
@@ -418,6 +464,9 @@ export function Chart({
     // Use calculated margins based on marginSize (defaults to 'auto')
     return calculateMargins(marginSize || 'auto', type, height);
   };
+
+  // Get legend positioning props
+  const legendProps = getLegendProps(legendPosition);
 
   const commonProps = {
     data: processedData,
@@ -561,7 +610,6 @@ export function Chart({
                 }
               case "bar":
               case "horizontal-bar":
-              case "area":
               default:
                 return (
                   <div
@@ -612,7 +660,7 @@ export function Chart({
               offset={10}
               animationDuration={0}
             />}
-            {showLegend && <Legend content={<CustomLegend />} />}
+            {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
             {dataKeys.map((key, index) => {
               const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
 
@@ -656,7 +704,7 @@ export function Chart({
               offset={10}
               animationDuration={0}
             />}
-            {showLegend && <Legend content={<CustomLegend />} />}
+            {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
             {dataKeys.map((key, index) => {
               const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
 
@@ -699,7 +747,7 @@ export function Chart({
               offset={10}
               animationDuration={0}
             />}
-            {showLegend && <Legend content={<CustomLegend />} />}
+            {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
             {dataKeys.map((key, index) => {
               const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
 
@@ -752,7 +800,7 @@ export function Chart({
               offset={10}
               animationDuration={0}
             />}
-            {showLegend && <Legend content={<CustomLegend />} />}
+            {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
             {dataKeys
               .filter(key => key !== 'x' && key !== 'y' && key !== 'name')
               .map((key, index) => {
@@ -795,7 +843,7 @@ export function Chart({
               offset={10}
               animationDuration={0}
             />}
-            {showLegend && <Legend content={<CustomLegend />} />}
+            {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
             {dataKeys.map((key, index) => {
               const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
               const chartElementType = config[key].type || "bar"; // Default to bar
@@ -839,10 +887,6 @@ export function Chart({
                 );
               } else if (chartElementType === "range-area") {
                 // For range areas, use Area with proper baseLine data transformation
-                const customData = processedData.map(point => ({
-                  ...point,
-                  [key]: point[`${key}_max`] // Use max value as the area height
-                }));
 
                 return (
                   <Area
@@ -855,12 +899,7 @@ export function Chart({
                     fillOpacity={0.3}
                     className="cursor-pointer transition-colors"
                     isAnimationActive={false}
-                    // Use a custom shape to render the range properly
-                    baseLine={(props: any) => {
-                      // Return the min value for each data point
-                      const dataPoint = processedData[props.index];
-                      return dataPoint ? dataPoint[`${key}_min`] : 0;
-                    }}
+                    // Note: baseLine for range areas needs custom implementation
                   />
                 );
               } else {

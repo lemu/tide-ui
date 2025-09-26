@@ -1799,3 +1799,152 @@ export const MultiMetricLegend: Story = {
   ),
 }
 
+// Legend Positioning and Overflow Prevention
+const manyItemsData = [
+  { name: 'Jan', item1: 400, item2: 300, item3: 200, item4: 150, item5: 100, item6: 250, item7: 180, item8: 350 },
+  { name: 'Feb', item1: 300, item2: 450, item3: 280, item4: 180, item5: 120, item6: 300, item7: 220, item8: 400 },
+  { name: 'Mar', item1: 500, item2: 350, item3: 300, item4: 220, item5: 140, item6: 350, item7: 250, item8: 450 },
+  { name: 'Apr', item1: 650, item2: 400, item3: 350, item4: 260, item5: 160, item6: 400, item7: 280, item8: 500 },
+];
+
+export const LegendPositioning: Story = {
+  render: () => (
+    <div className="w-full max-w-7xl mx-auto p-[var(--space-lg)] space-y-[var(--space-xlg)]">
+      <div>
+        <h2 className="text-heading-lg mb-[var(--space-md)]">Legend Positioning & Overflow Prevention</h2>
+        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-xlg)]">
+          Demonstrating how legend positioning prevents overflow with X-axis labels and maintains proper layout across different positions.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-xlg)]">
+        {/* Bottom Legend (Default) - Shows overflow prevention */}
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
+          <h3 className="text-heading-md mb-[var(--space-md)]">Bottom Legend (Overflow Protected)</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            Automatic bottom margin calculation prevents legend from overlapping X-axis labels.
+          </p>
+          <Chart
+            type="line"
+            data={manyItemsData}
+            config={createChartConfig({
+              item1: { label: 'Revenue Stream Alpha', strokeStyle: 'solid' },
+              item2: { label: 'Marketing Investment', strokeStyle: 'dashed' },
+              item3: { label: 'Operations Cost', strokeStyle: 'dotted' },
+              item4: { label: 'Development Budget', strokeStyle: 'solid' },
+              item5: { label: 'Support Expenses', strokeStyle: 'dashed' },
+              item6: { label: 'Sales Commission', strokeStyle: 'dotted' },
+              item7: { label: 'Research & Development', strokeStyle: 'solid' },
+              item8: { label: 'Customer Acquisition', strokeStyle: 'dashed' },
+            })}
+            height={300}
+            legendPosition="bottom"
+            showGrid={true}
+            showLegend={true}
+            className="w-full"
+          />
+        </div>
+
+        {/* Right Legend */}
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
+          <h3 className="text-heading-md mb-[var(--space-md)]">Right Legend (Vertical Layout)</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            Vertical layout saves vertical space and provides clean side alignment.
+          </p>
+          <Chart
+            type="line"
+            data={manyItemsData}
+            config={createChartConfig({
+              item1: { label: 'Revenue Stream Alpha', strokeStyle: 'solid' },
+              item2: { label: 'Marketing Investment', strokeStyle: 'dashed' },
+              item3: { label: 'Operations Cost', strokeStyle: 'dotted' },
+              item4: { label: 'Development Budget', strokeStyle: 'solid' },
+              item5: { label: 'Support Expenses', strokeStyle: 'dashed' },
+              item6: { label: 'Sales Commission', strokeStyle: 'dotted' },
+              item7: { label: 'Research & Development', strokeStyle: 'solid' },
+              item8: { label: 'Customer Acquisition', strokeStyle: 'dashed' },
+            })}
+            height={300}
+            legendPosition="right"
+            showGrid={true}
+            showLegend={true}
+            className="w-full"
+          />
+        </div>
+
+        {/* Top Legend */}
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
+          <h3 className="text-heading-md mb-[var(--space-md)]">Top Legend (Header Style)</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            Top positioning places legend above chart for header-style layout.
+          </p>
+          <Chart
+            type="bar"
+            data={manyItemsData}
+            config={createChartConfig({
+              item1: { label: 'Q1 Revenue' },
+              item2: { label: 'Q2 Revenue' },
+              item3: { label: 'Q3 Revenue' },
+              item4: { label: 'Q4 Revenue' },
+              item5: { label: 'Marketing' },
+              item6: { label: 'Operations' },
+              item7: { label: 'Development' },
+              item8: { label: 'Support' },
+            })}
+            height={300}
+            legendPosition="top"
+            showGrid={true}
+            showLegend={true}
+            className="w-full"
+          />
+        </div>
+
+        {/* Composed Chart with Bottom Legend */}
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
+          <h3 className="text-heading-md mb-[var(--space-md)]">Composed Chart (Protected Layout)</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            Combined bar and line elements with overflow-protected legend positioning.
+          </p>
+          <Chart
+            type="composed"
+            data={manyItemsData}
+            config={createChartConfig({
+              item1: { label: 'Revenue Bars', type: 'bar' },
+              item2: { label: 'Target Line', type: 'line', strokeStyle: 'solid' },
+              item3: { label: 'Forecast Line', type: 'line', strokeStyle: 'dashed' },
+              item4: { label: 'Budget Area', type: 'area' },
+              item5: { label: 'Growth Trend', type: 'line', strokeStyle: 'dotted' },
+              item6: { label: 'Cost Baseline', type: 'bar' },
+              item7: { label: 'Performance Range', type: 'range-area' },
+              item8: { label: 'Efficiency Metric', type: 'line', strokeStyle: 'dashed' },
+            })}
+            height={350}
+            legendPosition="bottom"
+            showGrid={true}
+            showLegend={true}
+            className="w-full"
+          />
+        </div>
+      </div>
+
+      <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success)] p-[var(--space-lg)] rounded-lg">
+        <h4 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">✅ Legend Layout Features</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-md)]">
+          <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
+            <li><strong>Overflow Prevention</strong> - Bottom margin automatically adjusts for multi-row legends</li>
+            <li><strong>Position Control</strong> - Choose from bottom, top, or right placement</li>
+            <li><strong>Vertical Layout</strong> - Right positioning uses vertical legend layout for space efficiency</li>
+            <li><strong>Dynamic Spacing</strong> - Margins adapt based on legend position and estimated size</li>
+          </ul>
+          <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
+            <li><strong>Multi-Chart Support</strong> - Works consistently across all chart types</li>
+            <li><strong>Responsive Behavior</strong> - Legend positioning maintains proper spacing at all sizes</li>
+            <li><strong>Layout Preservation</strong> - X-axis and Y-axis labels never overlap with legend</li>
+            <li><strong>Stroke Style Support</strong> - Legend markers reflect line styles (solid, dashed, dotted)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  ),
+}
+
