@@ -210,6 +210,67 @@ export const ComposedChartWithLineStyles: Story = {
   ),
 }
 
+// Sample data for demonstrating yAxisTickCount
+const tickCountData = [
+  { name: 'Q1', revenue: 45000, expenses: 32000 },
+  { name: 'Q2', revenue: 52000, expenses: 38000 },
+  { name: 'Q3', revenue: 48000, expenses: 35000 },
+  { name: 'Q4', revenue: 61000, expenses: 42000 },
+]
+
+export const ChartWithCustomTickCount: Story = {
+  render: () => (
+    <div className="space-y-8">
+      <div>
+        <h3 className="text-heading-md mb-4">Default Y-Axis Ticks</h3>
+        <div className="w-[600px] h-[300px]">
+          <Chart
+            type="bar"
+            data={tickCountData}
+            config={createChartConfig({
+              revenue: { label: 'Revenue', color: 'var(--color-chart-bar-1)' },
+              expenses: { label: 'Expenses', color: 'var(--color-chart-bar-2)' },
+            })}
+            className="h-full"
+          />
+        </div>
+      </div>
+
+      <div>
+        <h3 className="text-heading-md mb-4">Forced 5 Y-Axis Ticks</h3>
+        <div className="w-[600px] h-[300px]">
+          <Chart
+            type="bar"
+            data={tickCountData}
+            config={createChartConfig({
+              revenue: { label: 'Revenue', color: 'var(--color-chart-bar-1)' },
+              expenses: { label: 'Expenses', color: 'var(--color-chart-bar-2)' },
+            })}
+            yAxisTickCount={5}
+            className="h-full"
+          />
+        </div>
+      </div>
+
+      <div>
+        <h3 className="text-heading-md mb-4">Forced 10 Y-Axis Ticks</h3>
+        <div className="w-[600px] h-[300px]">
+          <Chart
+            type="line"
+            data={tickCountData}
+            config={createChartConfig({
+              revenue: { label: 'Revenue', color: 'var(--color-chart-line-1)' },
+              expenses: { label: 'Expenses', color: 'var(--color-chart-line-2)' },
+            })}
+            yAxisTickCount={10}
+            className="h-full"
+          />
+        </div>
+      </div>
+    </div>
+  ),
+}
+
 export const ScatterChart: Story = {
   render: () => (
     <div className="w-[600px] h-[400px]">

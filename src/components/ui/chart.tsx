@@ -112,6 +112,7 @@ export interface ChartProps {
   margin?: Partial<ChartMargin>; // Custom margin override
   marginSize?: ChartMarginSize; // Preset margin sizes
   yAxisWidth?: number; // Override Y-axis space when more room needed
+  yAxisTickCount?: number; // Force specific number of Y-axis ticks
   xAxisTickFormatter?: (value: any, index: number) => string; // Custom X-axis tick formatting
   yAxisTickFormatter?: (value: any, index: number) => string; // Custom Y-axis tick formatting
   // Accessibility
@@ -248,6 +249,7 @@ export function Chart({
   margin,
   marginSize = 'auto',
   yAxisWidth,
+  yAxisTickCount,
   xAxisTickFormatter,
   yAxisTickFormatter,
   title,
@@ -402,6 +404,7 @@ export function Chart({
     },
     width: yAxisWidth || 15, // Ultra-minimal default width (15px) vs Recharts default (~60px)
     tickFormatter: yAxisTickFormatter,
+    ...(yAxisTickCount && { tickCount: yAxisTickCount }), // Force specific number of ticks when provided
   };
 
   const gridProps = {
