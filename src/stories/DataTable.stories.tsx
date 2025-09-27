@@ -15,7 +15,14 @@ const meta: Meta<typeof DataTable> = {
   title: 'NPM/DataTable',
   component: DataTable,
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
+    viewport: {
+      viewports: {
+        mobile: { name: 'Mobile', styles: { width: '375px', height: '812px' } },
+        tablet: { name: 'Tablet', styles: { width: '768px', height: '1024px' } },
+        desktop: { name: 'Desktop', styles: { width: '1200px', height: '800px' } },
+      }
+    }
   },
   tags: ['autodocs'],
   argTypes: {
@@ -932,11 +939,404 @@ export const EmptyState: Story = {
         data={[]}
         columns={userColumns}
         title="Empty Data Table"
-        enableSorting={true}
-        enableFiltering={true}
-        enablePagination={true}
-        pageSize={10}
       />
     </div>
   ),
+}
+
+// Enhanced DataTable with all new features
+interface TradeData {
+  id: string
+  counterparty: string
+  instrument: string
+  side: 'buy' | 'sell'
+  quantity: number
+  price: number
+  notional: number
+  settlement: string
+  trader: string
+  status: 'pending' | 'confirmed' | 'settled' | 'cancelled'
+  timestamp: string
+}
+
+const generateTradeData = (count: number): TradeData[] => {
+  const counterparties = ['Goldman Sachs', 'JPMorgan', 'Morgan Stanley', 'Citigroup', 'Bank of America', 'Deutsche Bank', 'UBS', 'Credit Suisse']
+  const instruments = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA', 'META', 'NVDA', 'NFLX', 'SPY', 'QQQ']
+  const traders = ['John Smith', 'Sarah Johnson', 'Mike Chen', 'Lisa Rodriguez', 'David Kim', 'Anna Wilson']
+  const statuses: TradeData['status'][] = ['pending', 'confirmed', 'settled', 'cancelled']
+
+  return Array.from({ length: count }, (_, i) => ({
+    id: `TRD-${(i + 1).toString().padStart(6, '0')}`,
+    counterparty: counterparties[Math.floor(Math.random() * counterparties.length)],
+    instrument: instruments[Math.floor(Math.random() * instruments.length)],
+    side: Math.random() > 0.5 ? 'buy' : 'sell',
+    quantity: Math.floor(Math.random() * 10000) + 100,
+    price: Math.random() * 500 + 50,
+    notional: 0, // Will be calculated
+    settlement: new Date(Date.now() + Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    trader: traders[Math.floor(Math.random() * traders.length)],
+    status: statuses[Math.floor(Math.random() * statuses.length)],
+    timestamp: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString(),
+  })).map(trade => ({
+    ...trade,
+    notional: trade.quantity * trade.price
+  }))
+}
+
+const tradeColumns: ColumnDef<TradeData>[] = [
+  {
+    accessorKey: 'id',
+    header: 'Trade ID',
+    cell: ({ row }) => (
+      <div className="font-mono text-body-sm text-[var(--color-text-primary)]">{row.getValue('id')}</div>
+    ),
+  },
+  {
+    accessorKey: 'counterparty',
+    header: 'Counterparty',
+    cell: ({ row }) => (
+      <div className="font-medium">{row.getValue('counterparty')}</div>
+    ),
+  },
+  {
+    accessorKey: 'instrument',
+    header: 'Instrument',
+    cell: ({ row }) => (
+      <Badge variant="outline">{row.getValue('instrument')}</Badge>
+    ),
+  },
+  {
+    accessorKey: 'side',
+    header: 'Side',
+    cell: ({ row }) => {
+      const side = row.getValue('side') as string
+      return (
+        <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
+          {side.toUpperCase()}
+        </Badge>
+      )
+    },
+  },
+  {
+    accessorKey: 'quantity',
+    header: 'Quantity',
+    cell: ({ row }) => (
+      <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
+    ),
+  },
+  {
+    accessorKey: 'price',
+    header: 'Price',
+    cell: ({ row }) => (
+      <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
+    ),
+  },
+  {
+    accessorKey: 'notional',
+    header: 'Notional',
+    cell: ({ row }) => (
+      <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
+    ),
+  },
+  {
+    accessorKey: 'trader',
+    header: 'Trader',
+    cell: ({ row }) => (
+      <div className="text-body-sm">{row.getValue('trader')}</div>
+    ),
+  },
+  {
+    accessorKey: 'status',
+    header: 'Status',
+    cell: ({ row }) => {
+      const status = row.getValue('status') as string
+      const variants = {
+        pending: 'secondary',
+        confirmed: 'default',
+        settled: 'default',
+        cancelled: 'secondary'
+      }
+      return (
+        <Badge variant={variants[status as keyof typeof variants] as any}>
+          {status.charAt(0).toUpperCase() + status.slice(1)}
+        </Badge>
+      )
+    },
+  },
+]
+
+export const EnhancedDataTable: Story = {
+  render: () => {
+    const [isLoading, setIsLoading] = useState(false)
+    const [data] = useState(() => generateTradeData(50))
+
+    const handleRefresh = () => {
+      setIsLoading(true)
+      // Simulate loading
+      setTimeout(() => setIsLoading(false), 2000)
+    }
+
+    return (
+      <div className="w-full space-y-4 p-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-heading-lg">Trading Desk - Enhanced DataTable</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mt-1">
+              Demonstrates core DataTable features: sticky headers/columns, responsive scrolling, loading states, and mobile optimization
+            </p>
+          </div>
+          <Button onClick={handleRefresh} disabled={isLoading}>
+            <Icon name="refresh-cw" className="h-4 w-4 mr-2" />
+            {isLoading ? 'Refreshing...' : 'Refresh Data'}
+          </Button>
+        </div>
+
+        <div className="space-y-6">
+          {/* Sticky Header + First Column */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Sticky Header & First Column</CardTitle>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                Perfect for long tables - header stays visible when scrolling vertically, first column stays visible when scrolling horizontally
+              </p>
+            </CardHeader>
+            <CardContent>
+              <DataTable
+                data={data}
+                columns={tradeColumns}
+                title="Trade Blotter"
+                searchKey="counterparty"
+                searchPlaceholder="Search counterparties..."
+                stickyHeader={true}
+                stickyFirstColumn={true}
+                isLoading={isLoading}
+                loadingRowCount={8}
+              />
+            </CardContent>
+          </Card>
+
+          {/* Responsive Scrolling */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Responsive Horizontal Scrolling</CardTitle>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                Table scrolls horizontally on smaller screens with smooth touch-friendly behavior. All columns remain accessible.
+              </p>
+            </CardHeader>
+            <CardContent>
+              <DataTable
+                data={data.slice(0, 15)}
+                columns={tradeColumns}
+                title="Mobile-Optimized View"
+                searchKey="instrument"
+                searchPlaceholder="Search instruments..."
+                enableResponsiveWrapper={true}
+                isLoading={isLoading}
+              />
+            </CardContent>
+          </Card>
+
+          {/* Scroll Indicators */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Scroll Indicators</CardTitle>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                Visual indicators show when more content is available horizontally
+              </p>
+            </CardHeader>
+            <CardContent>
+              <DataTable
+                data={data.slice(0, 10)}
+                columns={tradeColumns}
+                title="Enhanced Scrolling"
+                showScrollIndicators={true}
+                enableResponsiveWrapper={true}
+              />
+            </CardContent>
+          </Card>
+
+          {/* Loading States */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Loading States</CardTitle>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                Built-in skeleton placeholders for better perceived performance
+              </p>
+            </CardHeader>
+            <CardContent>
+              <DataTable
+                data={data.slice(0, 8)}
+                columns={tradeColumns.slice(0, 5)}
+                title="Loading Demo"
+                isLoading={true}
+                loadingRowCount={6}
+              />
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    )
+  },
+}
+
+// Mobile Responsive Testing Story
+export const MobileResponsiveTesting: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'mobile',
+    },
+    layout: 'fullscreen',
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(20))
+
+    return (
+      <div className="w-full h-screen overflow-auto">
+        <div className="p-2 space-y-4">
+          <div className="space-y-2">
+            <h2 className="text-heading-md">Mobile Responsive DataTable</h2>
+            <p className="text-body-sm text-[var(--color-text-secondary)]">
+              Test responsive behavior: horizontal scrolling works smoothly with sticky features
+            </p>
+            <div className="flex gap-2 text-caption-sm text-[var(--color-text-tertiary)]">
+              <span>• Sticky first column for easy reference</span>
+            </div>
+            <div className="flex gap-2 text-caption-sm text-[var(--color-text-tertiary)]">
+              <span>• Touch-friendly scrolling on mobile devices</span>
+            </div>
+          </div>
+
+          {/* Full width responsive table */}
+          <div className="w-full">
+            <DataTable
+              data={data}
+              columns={tradeColumns}
+              title="Mobile Trade Blotter"
+              searchKey="instrument"
+              searchPlaceholder="Search..."
+              stickyHeader={true}
+              stickyFirstColumn={true}
+              enableResponsiveWrapper={true}
+              showScrollIndicators={true}
+            />
+          </div>
+
+          {/* Demo of core features */}
+          <div className="space-y-4">
+            <h3 className="text-heading-sm">Core Features Demo</h3>
+
+            <div className="space-y-2">
+              <h4 className="text-body-medium-sm">Compact Table</h4>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                Smaller dataset with responsive scrolling
+              </p>
+              <DataTable
+                data={data.slice(0, 8)}
+                columns={tradeColumns}
+                searchKey="counterparty"
+                searchPlaceholder="Search counterparties..."
+                enableResponsiveWrapper={true}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="text-body-medium-sm">Essential Columns Only</h4>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                Minimal column set for focused viewing
+              </p>
+              <DataTable
+                data={data.slice(0, 6)}
+                columns={[
+                  tradeColumns[0], // id
+                  tradeColumns[2], // instrument
+                  tradeColumns[6], // notional
+                  tradeColumns[8], // status
+                ]}
+                enableResponsiveWrapper={true}
+                stickyFirstColumn={true}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  },
+}
+
+// Multiple Sticky Columns Testing Story
+export const MultipleStickyColumns: Story = {
+  parameters: {
+    layout: 'fullscreen',
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(15))
+
+    return (
+      <div className="w-full h-screen overflow-auto">
+        <div className="p-6 space-y-6">
+          <div className="space-y-2">
+            <h2 className="text-heading-md">Multiple Sticky Columns</h2>
+            <p className="text-body-sm text-[var(--color-text-secondary)]">
+              Test multiple sticky column configurations for complex data tables
+            </p>
+          </div>
+
+          <div className="space-y-8">
+            <div className="space-y-3">
+              <h4 className="text-body-medium-md">First 3 Columns Sticky</h4>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                ID, Counterparty, and Instrument remain visible during horizontal scroll
+              </p>
+              <DataTable
+                data={data}
+                columns={tradeColumns}
+                searchKey="counterparty"
+                searchPlaceholder="Search counterparties..."
+                enableResponsiveWrapper={true}
+                stickyHeader={true}
+                stickyLeftColumns={3}
+                title="Trade Records - Left Sticky"
+              />
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="text-body-medium-md">First Column + Last Column Sticky</h4>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                ID stays on left, Status/Actions stay on right
+              </p>
+              <DataTable
+                data={data}
+                columns={tradeColumns}
+                searchKey="counterparty"
+                searchPlaceholder="Search counterparties..."
+                enableResponsiveWrapper={true}
+                stickyHeader={true}
+                stickyLeftColumns={1}
+                stickyRightColumns={1}
+                title="Trade Records - Left + Right Sticky"
+              />
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="text-body-medium-md">First 2 + Last 2 Columns Sticky</h4>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                Maximum sticky configuration for complex data analysis
+              </p>
+              <DataTable
+                data={data}
+                columns={tradeColumns}
+                searchKey="counterparty"
+                searchPlaceholder="Search counterparties..."
+                enableResponsiveWrapper={true}
+                stickyHeader={true}
+                stickyLeftColumns={2}
+                stickyRightColumns={2}
+                title="Trade Records - Multiple Sticky"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  },
 }

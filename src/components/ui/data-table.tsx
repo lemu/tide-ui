@@ -24,6 +24,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "./popover"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "./command"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from "./dropdown-menu"
 import { Pagination } from "./pagination"
+import { Skeleton } from "./skeleton"
 
 // Filter variants and types
 export type FilterVariant = "text" | "select" | "multiselect" | "number" | "date" | "boolean"
@@ -55,6 +56,39 @@ const multiSelectFilter: FilterFn<any> = (row, columnId, value) => {
   if (!value || value.length === 0) return true
   const cellValue = row.getValue(columnId)
   return value.includes(cellValue)
+}
+
+// Remove smart column hiding - keeping this simple
+
+// Loading skeleton component
+interface DataTableSkeletonProps {
+  columns: number
+  rows: number
+}
+
+function DataTableSkeleton({ columns, rows }: DataTableSkeletonProps) {
+  return (
+    <>
+      {/* Header skeleton */}
+      <TableRow>
+        {Array.from({ length: columns }).map((_, index) => (
+          <TableHead key={index}>
+            <Skeleton className="h-4 w-[120px]" />
+          </TableHead>
+        ))}
+      </TableRow>
+      {/* Body skeleton rows */}
+      {Array.from({ length: rows }).map((_, rowIndex) => (
+        <TableRow key={rowIndex}>
+          {Array.from({ length: columns }).map((_, colIndex) => (
+            <TableCell key={colIndex}>
+              <Skeleton className="h-4 w-[100px]" />
+            </TableCell>
+          ))}
+        </TableRow>
+      ))}
+    </>
+  )
 }
 
 // Table toolbar with advanced filtering
@@ -362,6 +396,16 @@ export interface DataTableProps<TData, TValue> {
   searchPlaceholder?: string
   title?: string
   className?: string
+  // Responsive and sticky features
+  stickyHeader?: boolean
+  stickyFirstColumn?: boolean
+  stickyLeftColumns?: number
+  stickyRightColumns?: number
+  enableResponsiveWrapper?: boolean
+  showScrollIndicators?: boolean
+  // Loading state
+  isLoading?: boolean
+  loadingRowCount?: number
 }
 
 export function DataTable<TData, TValue>({
@@ -371,15 +415,46 @@ export function DataTable<TData, TValue>({
   searchPlaceholder,
   title,
   className,
+  stickyHeader = false,
+  stickyFirstColumn = false,
+  stickyLeftColumns = 0,
+  stickyRightColumns = 0,
+  enableResponsiveWrapper = true,
+  showScrollIndicators = false,
+  isLoading = false,
+  loadingRowCount = 5,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
 
+  // Calculate effective sticky settings with backward compatibility
+  const effectiveLeftSticky = React.useMemo(() => {
+    if (stickyFirstColumn) return 1
+    return stickyLeftColumns || 0
+  }, [stickyFirstColumn, stickyLeftColumns])
+
+  const effectiveRightSticky = React.useMemo(() => {
+    return stickyRightColumns || 0
+  }, [stickyRightColumns])
+
+  // Memoize columns for performance
+  const memoizedColumns = React.useMemo(() => {
+    return columns.map(column => {
+      // Skip memoization for now to avoid complex TypeScript issues
+      return column
+    })
+  }, [columns])
+
+  // Memoize data for performance
+  const memoizedData = React.useMemo(() => data, [data])
+
+  // Simplified - no automatic column hiding
+
   const table = useReactTable({
-    data,
-    columns,
+    data: memoizedData,
+    columns: memoizedColumns,
     filterFns: {
       fuzzy: fuzzyFilter,
       multiSelect: multiSelectFilter,
@@ -391,6 +466,7 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
     enableRowSelection: true,
+    enableColumnPinning: true, // Enable column pinning
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -400,6 +476,94 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
   })
+
+  // Setup column pinning based on props
+  React.useEffect(() => {
+    const columns = table.getAllColumns()
+
+    // Clear existing pinning
+    columns.forEach(column => column.pin(false))
+
+    // Pin left columns
+    for (let i = 0; i < effectiveLeftSticky; i++) {
+      columns[i]?.pin('left')
+    }
+
+    // Pin right columns
+    const totalColumns = columns.length
+    for (let i = 0; i < effectiveRightSticky; i++) {
+      columns[totalColumns - 1 - i]?.pin('right')
+    }
+  }, [effectiveLeftSticky, effectiveRightSticky, table])
+
+  // Store reference to table for width calculations
+  const tableRef = React.useRef<HTMLTableElement>(null)
+  const [forceUpdate, setForceUpdate] = React.useState(0)
+
+  // Force re-render after table mounts to calculate accurate widths
+  React.useEffect(() => {
+    if (tableRef.current && (effectiveLeftSticky > 0 || effectiveRightSticky > 0)) {
+      // Small delay to ensure table is fully rendered
+      const timer = setTimeout(() => setForceUpdate(prev => prev + 1), 50)
+      return () => clearTimeout(timer)
+    }
+  }, [effectiveLeftSticky, effectiveRightSticky, data])
+
+  // Get actual column widths from DOM
+  const getActualColumnWidths = React.useCallback(() => {
+    if (!tableRef.current) return []
+    const headerRow = tableRef.current.querySelector('thead tr')
+    if (!headerRow) return []
+
+    const cells = Array.from(headerRow.querySelectorAll('th'))
+    return cells.map(cell => cell.getBoundingClientRect().width)
+  }, [forceUpdate])
+
+  // Helper function for manual positioning with actual DOM widths
+  const getManualPinningStyles = (column: any, columnIndex: number): React.CSSProperties => {
+    const isPinned = column.getIsPinned()
+    if (!isPinned) return {}
+
+    const isLastLeftPinnedColumn = isPinned === 'left' && column.getIsLastColumn('left')
+    const isFirstRightPinnedColumn = isPinned === 'right' && column.getIsFirstColumn('right')
+
+    // Get actual column widths
+    const actualWidths = getActualColumnWidths()
+    if (actualWidths.length === 0) {
+      // Fallback to TanStack if DOM not ready
+      return {
+        left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
+        right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
+        position: 'sticky',
+        zIndex: 1,
+        backgroundColor: 'var(--color-surface-primary)',
+      }
+    }
+
+    let leftPos = undefined
+    let rightPos = undefined
+
+    if (isPinned === 'left') {
+      // Calculate cumulative width for left positioning
+      leftPos = actualWidths.slice(0, columnIndex).reduce((sum, width) => sum + width, 0)
+    } else if (isPinned === 'right') {
+      // Calculate cumulative width for right positioning
+      rightPos = actualWidths.slice(columnIndex + 1).reduce((sum, width) => sum + width, 0)
+    }
+
+    return {
+      boxShadow: isLastLeftPinnedColumn
+        ? '2px 0 4px -2px rgba(0, 0, 0, 0.1)'
+        : isFirstRightPinnedColumn
+        ? '-2px 0 4px -2px rgba(0, 0, 0, 0.1)'
+        : undefined,
+      left: leftPos !== undefined ? `${leftPos}px` : undefined,
+      right: rightPos !== undefined ? `${rightPos}px` : undefined,
+      position: 'sticky',
+      zIndex: 1,
+      backgroundColor: 'var(--color-surface-primary)',
+    }
+  }
 
   return (
     <div className={cn("border border-[var(--color-border-primary-subtle)] rounded-lg overflow-hidden bg-[var(--color-surface-primary)]", className)}>
@@ -419,48 +583,108 @@ export function DataTable<TData, TValue>({
         />
       </div>
       
-      {/* Table section - no additional borders */}
-      <div>
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  )
-                })}
-              </TableRow>
-            ))}
+      {/* Table section with responsive wrapper and sticky features */}
+      <div className={cn(
+        "relative",
+        enableResponsiveWrapper && [
+          "overflow-x-auto",
+          "scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[var(--color-border-primary-subtle)]",
+          "hover:scrollbar-thumb-[var(--color-border-primary)]",
+          // Touch-friendly scrollbar
+          "max-sm:scrollbar-none",
+        ]
+      )}>
+        {/* Scroll indicators */}
+        {showScrollIndicators && (
+          <>
+            <div className="absolute top-0 left-0 bottom-0 w-8 bg-gradient-to-r from-[var(--color-surface-primary)] to-transparent z-10 pointer-events-none opacity-0 transition-opacity" />
+            <div className="absolute top-0 right-0 bottom-0 w-8 bg-gradient-to-l from-[var(--color-surface-primary)] to-transparent z-10 pointer-events-none opacity-0 transition-opacity" />
+          </>
+        )}
+
+        <Table
+          ref={tableRef}
+          className={cn(
+            enableResponsiveWrapper && "min-w-[900px]", // Minimum width for readability
+            "border-separate border-spacing-0" // Required for sticky columns to work properly
+          )}
+        >
+          <TableHeader className={cn(
+            stickyHeader && [
+              "sticky top-0 z-20",
+              "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-[var(--grey-50)]"
+            ]
+          )}>
+            {isLoading ? (
+              <DataTableSkeleton columns={memoizedColumns.length} rows={1} />
+            ) : (
+              table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header, index) => {
+                    const pinningStyles = getManualPinningStyles(header.column, index)
+
+                    return (
+                      <TableHead
+                        key={header.id}
+                        className={cn(
+                          // Sticky header has z-index 20
+                          stickyHeader && "z-20",
+                          // Pinned columns get higher z-index
+                          header.column.getIsPinned() && "z-30"
+                        )}
+                        style={pinningStyles}
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    )
+                  })}
+                </TableRow>
+              ))
+            )}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {isLoading ? (
+              <DataTableSkeleton columns={memoizedColumns.length} rows={loadingRowCount} />
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className="group"
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+                  {row.getVisibleCells().map((cell, index) => {
+                    const pinningStyles = getManualPinningStyles(cell.column, index)
+
+                    return (
+                      <TableCell
+                        key={cell.id}
+                        className={cn(
+                          // Pinned columns need background to hide content underneath
+                          cell.column.getIsPinned() && [
+                            "bg-[var(--color-surface-primary)]",
+                            "z-10"
+                          ]
+                        )}
+                        style={pinningStyles}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    )
+                  })}
                 </TableRow>
               ))
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={memoizedColumns.length}
                   className="h-24 text-center"
                 >
                   No results.
@@ -480,11 +704,12 @@ export function DataTable<TData, TValue>({
 }
 
 // Export helper functions and components
-export { 
-  DataTableColumnHeader, 
-  DataTableFilter, 
-  DataTableToolbar, 
+export {
+  DataTableColumnHeader,
+  DataTableFilter,
+  DataTableToolbar,
   DataTablePagination,
+  DataTableSkeleton,
   fuzzyFilter,
-  multiSelectFilter 
+  multiSelectFilter
 }

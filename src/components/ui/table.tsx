@@ -19,7 +19,7 @@ const tableVariants = cva(
 );
 
 const tableRowVariants = cva(
-  "border-b border-[var(--color-border-primary-subtle)] transition-colors",
+  "border-b border-[var(--grey-50)] transition-colors",
   {
     variants: {
       variant: {
@@ -35,7 +35,7 @@ const tableRowVariants = cva(
 );
 
 const tableCellVariants = cva(
-  "align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] border-r border-[var(--color-border-primary-subtle)] last:border-r-0",
+  "align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] border-r border-[var(--grey-50)] last:border-r-0",
   {
     variants: {
       size: {
@@ -62,7 +62,7 @@ const tableCellVariants = cva(
 );
 
 const tableHeaderVariants = cva(
-  "align-middle font-semibold text-[var(--color-text-primary)] [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] border-r border-[var(--color-border-primary-subtle)] last:border-r-0",
+  "align-middle font-semibold text-[var(--color-text-primary)] [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-[linear-gradient(to_right,var(--grey-25)_calc(100%-1px),var(--grey-50)_calc(100%-1px),var(--grey-50)_100%)] last:bg-[var(--grey-25)]",
   {
     variants: {
       size: {
@@ -112,7 +112,7 @@ const TableHeader = React.forwardRef<
   <thead
     ref={ref}
     className={cn(
-      "[&_tr]:border-b [&_tr]:border-[var(--color-border-primary-subtle)] [&_tr]:bg-[#f6f7f8] [&_tr]:hover:bg-[#f6f7f8]",
+      "[&_tr]:border-b [&_tr]:border-[var(--grey-50)]",
       className
     )}
     {...props}
@@ -139,7 +139,7 @@ const TableFooter = React.forwardRef<
   <tfoot
     ref={ref}
     className={cn(
-      "border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-background-neutral-subtle)] font-medium [&>tr]:last:border-b-0",
+      "border-t border-[var(--grey-50)] bg-[var(--color-background-neutral-subtle)] font-medium [&>tr]:last:border-b-0",
       className
     )}
     {...props}
