@@ -870,6 +870,18 @@ export function Chart({
             {showGrid && <CartesianGrid {...gridProps} />}
             <XAxis dataKey="name" {...xAxisProps} />
             <YAxis {...yAxisProps} />
+            {/* Reference lines - rendered BEFORE lines so tooltip activeDots appear on top */}
+            {referenceMarkers?.map((marker, markerIdx) => (
+              marker.showLine !== false && (
+                <ReferenceLine
+                  key={`marker-line-${markerIdx}`}
+                  x={marker.xValue}
+                  stroke={marker.lineStyle?.stroke || '#000000'}
+                  strokeWidth={marker.lineStyle?.strokeWidth || 2}
+                  strokeDasharray={marker.lineStyle?.strokeDasharray}
+                />
+              )
+            ))}
             {showTooltip && <Tooltip
               content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} referenceMarkers={referenceMarkers} />}
               cursor={{
@@ -909,17 +921,9 @@ export function Chart({
                 />
               );
             })}
-            {/* Reference markers - rendered AFTER lines to appear on top */}
+            {/* Reference marker dots - rendered AFTER lines to appear on top */}
             {referenceMarkers?.map((marker, markerIdx) => (
-              <React.Fragment key={`marker-${markerIdx}`}>
-                {marker.showLine !== false && (
-                  <ReferenceLine
-                    x={marker.xValue}
-                    stroke={marker.lineStyle?.stroke || '#000000'}
-                    strokeWidth={marker.lineStyle?.strokeWidth || 2}
-                    strokeDasharray={marker.lineStyle?.strokeDasharray}
-                  />
-                )}
+              <React.Fragment key={`marker-dots-${markerIdx}`}>
                 {marker.dataPoints.map((point, pointIdx) => (
                   <ReferenceDot
                     key={`marker-${markerIdx}-point-${pointIdx}`}
