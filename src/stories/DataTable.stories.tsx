@@ -1,15 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { DataTable } from '../components/ui/data-table'
+import { DataTable, NestedHeaderConfig } from '../components/ui/data-table'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Button } from '../components/ui/button'
 import { Badge } from '../components/ui/badge'
 import { Icon } from '../components/ui/icon'
 import { Checkbox } from '../components/ui/checkbox'
 import { ColumnDef } from '@tanstack/react-table'
-import { formatNumber, formatCurrency, formatDecimal } from '../lib/utils'
+import { formatNumber, formatCurrency, formatDecimal, cn } from '../lib/utils'
 import { SkeletonTable, Skeleton } from '../components/ui/skeleton'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table'
+
 
 const meta: Meta<typeof DataTable> = {
   title: 'NPM/DataTable',
@@ -26,25 +27,21 @@ const meta: Meta<typeof DataTable> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    enableSorting: {
-      control: 'boolean',
-      description: 'Enable column sorting',
-    },
-    enableFiltering: {
+    enableGlobalSearch: {
       control: 'boolean',
       description: 'Enable global search filtering',
     },
-    enableColumnFilters: {
+    enableColumnResizing: {
       control: 'boolean',
-      description: 'Enable individual column filters',
+      description: 'Enable column resizing',
     },
-    enablePagination: {
+    enableNestedHeaders: {
       control: 'boolean',
-      description: 'Enable pagination',
+      description: 'Enable nested column headers',
     },
-    pageSize: {
-      control: { type: 'number', min: 5, max: 100 },
-      description: 'Number of rows per page',
+    stickyHeader: {
+      control: 'boolean',
+      description: 'Make table header sticky',
     },
   },
 } satisfies Meta<typeof DataTable>
@@ -60,10 +57,6 @@ export const Default: Story = {
         data={sampleUsers}
         columns={userColumns}
         title="Default DataTable"
-        enableSorting={true}
-        enableFiltering={true}
-        enablePagination={true}
-        pageSize={5}
       />
     </div>
   ),
@@ -418,11 +411,6 @@ export const AdvancedFeatures: Story = {
         title="Advanced Features Demo"
         searchKey="name"
         searchPlaceholder="Search users..."
-        enableSorting={true}
-        enableFiltering={true}
-        enableColumnFilters={true}
-        enablePagination={true}
-        pageSize={6}
       />
 
       <div className="mt-6 p-4 bg-[var(--color-background-neutral-subtle)] rounded-md">
@@ -664,9 +652,6 @@ export const SimpleTable: Story = {
           data={simpleData}
           columns={simpleColumns}
           title="Simple Table"
-          enableSorting={true}
-          enableFiltering={false}
-          enablePagination={false}
         />
       </div>
     )
@@ -705,11 +690,6 @@ export const WithActions: Story = {
         data={sampleUsers}
         columns={userColumnsWithActions}
         title="User Management with Actions"
-        enableSorting={true}
-        enableFiltering={true}
-        enableColumnFilters={true}
-        enablePagination={true}
-        pageSize={5}
       />
     </div>
   ),
@@ -855,9 +835,6 @@ export const AnalyticsDashboard: Story = {
         data={analyticsData}
         columns={analyticsColumns}
         title="Website Analytics"
-        enableSorting={true}
-        enableFiltering={true}
-        enablePagination={false}
       />
     </div>
   ),
@@ -960,9 +937,9 @@ interface TradeData {
 }
 
 const generateTradeData = (count: number): TradeData[] => {
-  const counterparties = ['Goldman Sachs', 'JPMorgan', 'Morgan Stanley', 'Citigroup', 'Bank of America', 'Deutsche Bank', 'UBS', 'Credit Suisse']
-  const instruments = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA', 'META', 'NVDA', 'NFLX', 'SPY', 'QQQ']
-  const traders = ['John Smith', 'Sarah Johnson', 'Mike Chen', 'Lisa Rodriguez', 'David Kim', 'Anna Wilson']
+  const counterparties = ['Goldman Sachs', 'JPMorgan', 'Morgan Stanley', 'Citigroup', 'Bank of America', 'Deutsche Bank', 'UBS', 'Credit Suisse', 'Barclays', 'Wells Fargo']
+  const instruments = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA', 'META', 'NVDA', 'NFLX', 'SPY', 'QQQ', 'UBER', 'COIN', 'ABNB', 'SNOW', 'PLTR']
+  const traders = ['John Smith', 'Sarah Johnson', 'Mike Chen', 'Lisa Rodriguez', 'David Kim', 'Anna Wilson', 'Tom Brown', 'Emma Davis', 'Alex Garcia', 'Rachel Taylor']
   const statuses: TradeData['status'][] = ['pending', 'confirmed', 'settled', 'cancelled']
 
   return Array.from({ length: count }, (_, i) => ({
@@ -1335,6 +1312,1420 @@ export const MultipleStickyColumns: Story = {
               />
             </div>
           </div>
+        </div>
+      </div>
+    )
+  },
+}
+
+// Border Styling Options Testing Story
+export const BorderStyling: Story = {
+  parameters: {
+    layout: 'fullscreen',
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(8))
+
+    return (
+      <div className="w-full h-screen overflow-auto">
+        <div className="p-6 space-y-6">
+          <div className="space-y-2">
+            <h2 className="text-heading-md">Border Styling Options</h2>
+            <p className="text-body-sm text-[var(--color-text-secondary)]">
+              Configure table borders: vertical only, horizontal only, both, or none
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <h4 className="text-body-medium-md">Both Borders (Default)</h4>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                Traditional table with both horizontal and vertical borders
+              </p>
+              <DataTable
+                data={data}
+                columns={tradeColumns.slice(0, 5)}
+                borderStyle="both"
+                title="Both Borders"
+              />
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="text-body-medium-md">Horizontal Only</h4>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                Clean rows with horizontal separators only
+              </p>
+              <DataTable
+                data={data}
+                columns={tradeColumns.slice(0, 5)}
+                borderStyle="horizontal"
+                title="Horizontal Borders"
+              />
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="text-body-medium-md">Vertical Only</h4>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                Column separation with vertical borders only
+              </p>
+              <DataTable
+                data={data}
+                columns={tradeColumns.slice(0, 5)}
+                borderStyle="vertical"
+                title="Vertical Borders"
+              />
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="text-body-medium-md">No Borders</h4>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                Minimal design with no borders, relying on spacing and hover effects
+              </p>
+              <DataTable
+                data={data}
+                columns={tradeColumns.slice(0, 5)}
+                borderStyle="none"
+                title="No Borders"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <h4 className="text-body-medium-md">Border Styling with Sticky Features</h4>
+            <p className="text-body-sm text-[var(--color-text-secondary)]">
+              Border styles work seamlessly with sticky headers and columns
+            </p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <DataTable
+                data={data}
+                columns={tradeColumns}
+                borderStyle="horizontal"
+                stickyHeader={true}
+                stickyLeftColumns={2}
+                enableResponsiveWrapper={true}
+                title="Horizontal + Sticky Features"
+              />
+              <DataTable
+                data={data}
+                columns={tradeColumns}
+                borderStyle="vertical"
+                stickyHeader={true}
+                stickyLeftColumns={1}
+                enableResponsiveWrapper={true}
+                title="Vertical + Sticky Features"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  },
+}
+
+export const GlobalSearch: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates global search functionality with fuzzy matching and debounced input for performance optimization.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(50))
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Global Search</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)]">
+              Test the global search functionality with fuzzy matching. Try searching for symbols,
+              trader names, or any other data. The search is debounced for optimal performance.
+            </p>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={tradeColumns}
+            enableGlobalSearch={true}
+            title="Searchable Trading Data"
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const ColumnResizing: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates column resizing functionality with initial column widths, resize handles, and localStorage persistence. Columns start with predefined widths and can be adjusted by dragging resize handles. Column sizes are persisted across browser sessions.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(20))
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Column Resizing</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              This example shows initial column widths set via <code>initialState.columnSizing</code>.
+              Drag the resize handles (vertical lines) on the right edge of column headers to adjust widths.
+              Column sizes are automatically saved to localStorage and restored on page reload.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Try resizing columns and then refreshing the page - your column widths will be preserved!
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={tradeColumns}
+            enableColumnResizing={true}
+            columnResizeMode="onChange"
+            enableColumnResizePersistence={true}
+            storageKey="column-resize-demo"
+            title="Resizable Trading Data"
+            initialState={{
+              columnSizing: {
+                'id': 250,
+                'counterparty': 200,
+                'instrument': 150,
+                'side': 100,
+                'quantity': 120,
+                'price': 120,
+                'notional': 140,
+                'trader': 180,
+                'status': 120
+              }
+            }}
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const ExpandingRows: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates expanding/nested rows functionality for hierarchical data. Click the chevron icons to expand and collapse rows with child data.',
+      },
+    },
+  },
+  render: () => {
+    // Generate hierarchical data structure
+    const [data] = useState(() => {
+      const parentData = generateTradeData(5)
+      return parentData.map((parent, index) => ({
+        ...parent,
+        children: index < 3 ? generateTradeData(3).map((child, childIndex) => ({
+          ...child,
+          id: `${parent.id}-child-${childIndex}`,
+          trader: `${parent.trader} (Detail ${childIndex + 1})`,
+          notional: parent.notional / 3, // Split notional among children
+        })) : undefined
+      }))
+    })
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Expanding Rows</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              This example shows hierarchical data with expandable rows. Click the chevron icons to expand and collapse rows to see child data.
+              The nested rows are automatically indented to show the hierarchy.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Parent rows with children show chevron controls. Nested rows are indented to show hierarchy.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={tradeColumns}
+            enableExpanding={true}
+            getSubRows={(row) => row.children}
+            title="Hierarchical Trading Data"
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const GroupingRows: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates grouping functionality where rows are automatically grouped by specific column values. Click chevron icons to expand/collapse groups.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(50))
+
+    // Create custom columns with grouping enabled for specific columns
+    const groupingColumns = tradeColumns.map(col => {
+      if (col.accessorKey === 'instrument' || col.accessorKey === 'side' || col.accessorKey === 'counterparty' || col.accessorKey === 'trader' || col.accessorKey === 'status') {
+        return {
+          ...col,
+          enableGrouping: true,
+        }
+      }
+      return col
+    })
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Row Grouping</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              This example shows dynamic row grouping functionality. Use the "Group by..." dropdown in the toolbar to select different columns to group by.
+              Grouped rows show the group value and count, with expand/collapse controls to show/hide group members.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Try grouping by Instrument, Status, Counterparty, Trader, or Side. Groups are collapsible and show item counts.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={groupingColumns}
+            enableGrouping={true}
+            enableExpanding={true}
+            enableColumnResizing={true}
+            groupedColumnMode="reorder"
+            title="Dynamic Grouped Trading Data"
+            initialState={{
+              grouping: ['instrument'],
+              expanded: {
+                'instrument:AAPL': true,
+                'instrument:GOOGL': true
+              },
+              columnSizing: {
+                'instrument': 250,
+                'trader': 250
+              }
+            }}
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const RowPinning: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates row pinning functionality where rows can be pinned to the top or bottom of the table. Hover over rows to see pin controls.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(170))
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Row Pinning</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              This example shows row pinning where individual rows can be pinned to the top or bottom of the table.
+              Hover over rows to see pin controls (up arrow for top, down arrow for bottom, X to unpin).
+              Test cross-page pinning by pinning rows on one page and navigating to other pages.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Pinned rows appear at the top/bottom of all pages and maintain their position during sorting and filtering. They have neutral background styling to distinguish them.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={tradeColumns}
+            enableRowPinning={true}
+            keepPinnedRows={true}
+            title="Trading Data with Row Pinning"
+            initialState={{
+              rowPinning: {
+                top: [data[0]?.id || ''],
+                bottom: [data[data.length - 1]?.id || '']
+              }
+            }}
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const ColumnFaceting: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates enhanced column faceting with count badges. Filter options show the number of rows that match each filter value.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(30))
+
+    // Enhanced columns with faceting metadata
+    const facetedColumns: ColumnDef<any>[] = [
+      {
+        accessorKey: 'id',
+        header: 'Trade ID',
+        cell: ({ row }) => (
+          <div className="font-mono text-body-sm text-[var(--color-text-primary)]">{row.getValue('id')}</div>
+        ),
+      },
+      {
+        accessorKey: 'counterparty',
+        header: 'Counterparty',
+        meta: {
+          filterVariant: 'multiselect',
+          label: 'Counterparty',
+          filterOptions: [
+            { label: 'Goldman Sachs', value: 'Goldman Sachs' },
+            { label: 'JPMorgan', value: 'JPMorgan' },
+            { label: 'Morgan Stanley', value: 'Morgan Stanley' },
+            { label: 'Citigroup', value: 'Citigroup' },
+            { label: 'Bank of America', value: 'Bank of America' },
+            { label: 'Deutsche Bank', value: 'Deutsche Bank' },
+            { label: 'UBS', value: 'UBS' },
+            { label: 'Credit Suisse', value: 'Credit Suisse' },
+          ],
+        },
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('counterparty')}</div>
+        ),
+      },
+      {
+        accessorKey: 'side',
+        header: 'Side',
+        meta: {
+          filterVariant: 'select',
+          label: 'Side',
+          filterOptions: [
+            { label: 'Buy', value: 'buy' },
+            { label: 'Sell', value: 'sell' },
+          ],
+        },
+        cell: ({ row }) => {
+          const side = row.getValue('side') as string
+          return (
+            <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
+              {side.toUpperCase()}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        meta: {
+          filterVariant: 'multiselect',
+          label: 'Status',
+          filterOptions: [
+            { label: 'Pending', value: 'pending' },
+            { label: 'Confirmed', value: 'confirmed' },
+            { label: 'Settled', value: 'settled' },
+            { label: 'Cancelled', value: 'cancelled' },
+          ],
+        },
+        cell: ({ row }) => {
+          const status = row.getValue('status') as string
+          const variants = {
+            pending: 'secondary',
+            confirmed: 'default',
+            settled: 'default',
+            cancelled: 'secondary'
+          }
+          return (
+            <Badge variant={variants[status as keyof typeof variants] as any}>
+              {status.charAt(0).toUpperCase() + status.slice(1)}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'instrument',
+        header: 'Instrument',
+        meta: {
+          filterVariant: 'multiselect',
+          label: 'Instrument',
+          filterOptions: [
+            { label: 'AAPL', value: 'AAPL' },
+            { label: 'GOOGL', value: 'GOOGL' },
+            { label: 'MSFT', value: 'MSFT' },
+            { label: 'AMZN', value: 'AMZN' },
+            { label: 'TSLA', value: 'TSLA' },
+            { label: 'META', value: 'META' },
+            { label: 'NVDA', value: 'NVDA' },
+            { label: 'NFLX', value: 'NFLX' },
+            { label: 'SPY', value: 'SPY' },
+            { label: 'QQQ', value: 'QQQ' },
+          ],
+        },
+        cell: ({ row }) => (
+          <Badge variant="outline">{row.getValue('instrument')}</Badge>
+        ),
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Quantity',
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'notional',
+        header: 'Notional',
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
+        ),
+      },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Column Faceting with Count Badges</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              This example demonstrates enhanced column faceting where filter options show count badges indicating
+              how many rows match each filter value. The counts update dynamically as you apply and remove filters.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Try filtering by Counterparty, Side, Status, or Instrument. Notice the count badges that show matching row counts for each option.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={facetedColumns}
+            title="Trading Data with Column Faceting"
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const GlobalFaceting: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates global faceting across columns where you can filter multiple columns simultaneously with a single interface. Values from all faceted columns are aggregated and searchable.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(40))
+
+    // Enhanced columns with faceting metadata for global faceting
+    const globalFacetedColumns: ColumnDef<any>[] = [
+      {
+        accessorKey: 'id',
+        header: 'Trade ID',
+        cell: ({ row }) => (
+          <div className="font-mono text-body-sm text-[var(--color-text-primary)]">{row.getValue('id')}</div>
+        ),
+      },
+      {
+        accessorKey: 'counterparty',
+        header: 'Counterparty',
+        meta: {
+          filterVariant: 'multiselect',
+          label: 'Counterparty',
+          filterOptions: [
+            { label: 'Goldman Sachs', value: 'Goldman Sachs' },
+            { label: 'JPMorgan', value: 'JPMorgan' },
+            { label: 'Morgan Stanley', value: 'Morgan Stanley' },
+            { label: 'Citigroup', value: 'Citigroup' },
+            { label: 'Bank of America', value: 'Bank of America' },
+            { label: 'Deutsche Bank', value: 'Deutsche Bank' },
+            { label: 'UBS', value: 'UBS' },
+            { label: 'Credit Suisse', value: 'Credit Suisse' },
+          ],
+        },
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('counterparty')}</div>
+        ),
+      },
+      {
+        accessorKey: 'side',
+        header: 'Side',
+        meta: {
+          filterVariant: 'select',
+          label: 'Side',
+          filterOptions: [
+            { label: 'Buy', value: 'buy' },
+            { label: 'Sell', value: 'sell' },
+          ],
+        },
+        cell: ({ row }) => {
+          const side = row.getValue('side') as string
+          return (
+            <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
+              {side.toUpperCase()}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        meta: {
+          filterVariant: 'multiselect',
+          label: 'Status',
+          filterOptions: [
+            { label: 'Pending', value: 'pending' },
+            { label: 'Confirmed', value: 'confirmed' },
+            { label: 'Settled', value: 'settled' },
+            { label: 'Cancelled', value: 'cancelled' },
+          ],
+        },
+        cell: ({ row }) => {
+          const status = row.getValue('status') as string
+          const variants = {
+            pending: 'secondary',
+            confirmed: 'default',
+            settled: 'default',
+            cancelled: 'secondary'
+          }
+          return (
+            <Badge variant={variants[status as keyof typeof variants] as any}>
+              {status.charAt(0).toUpperCase() + status.slice(1)}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'trader',
+        header: 'Trader',
+        meta: {
+          filterVariant: 'multiselect',
+          label: 'Trader',
+          filterOptions: [
+            { label: 'John Smith', value: 'John Smith' },
+            { label: 'Sarah Johnson', value: 'Sarah Johnson' },
+            { label: 'Mike Chen', value: 'Mike Chen' },
+            { label: 'Lisa Rodriguez', value: 'Lisa Rodriguez' },
+            { label: 'David Kim', value: 'David Kim' },
+            { label: 'Anna Wilson', value: 'Anna Wilson' },
+          ],
+        },
+        cell: ({ row }) => (
+          <div className="text-body-sm">{row.getValue('trader')}</div>
+        ),
+      },
+      {
+        accessorKey: 'instrument',
+        header: 'Instrument',
+        meta: {
+          filterVariant: 'multiselect',
+          label: 'Instrument',
+          filterOptions: [
+            { label: 'AAPL', value: 'AAPL' },
+            { label: 'GOOGL', value: 'GOOGL' },
+            { label: 'MSFT', value: 'MSFT' },
+            { label: 'AMZN', value: 'AMZN' },
+            { label: 'TSLA', value: 'TSLA' },
+            { label: 'META', value: 'META' },
+            { label: 'NVDA', value: 'NVDA' },
+            { label: 'NFLX', value: 'NFLX' },
+          ],
+        },
+        cell: ({ row }) => (
+          <Badge variant="outline">{row.getValue('instrument')}</Badge>
+        ),
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Quantity',
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'notional',
+        header: 'Notional',
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
+        ),
+      },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Global Faceting Across Columns</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              This example demonstrates global faceting where you can search and filter across all columns simultaneously.
+              The "Global Faceting" button aggregates values from all faceted columns (Counterparty, Side, Status, Trader, Instrument)
+              and allows you to filter multiple columns at once with a unified interface.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Click "Global Faceting" to see aggregated values from all columns. Search and select values that will be applied across matching columns automatically.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={globalFacetedColumns}
+            enableGlobalFaceting={true}
+            title="Trading Data with Global Faceting"
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+
+export const NestedHeaders: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates nested column headers for hierarchical data organization. Column headers are grouped under parent categories, ideal for complex financial reports or dashboards.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(5))
+
+    // Define nested column structure for financial dashboard
+    const nestedHeaders: NestedHeaderConfig[] = [
+      {
+        id: 'trade-info',
+        header: 'Trade Information',
+        columns: [
+          {
+            accessorKey: 'id',
+            header: 'Trade ID',
+            cell: ({ row }) => (
+              <div className="font-mono text-body-sm">
+                {row.getValue('id')}
+              </div>
+            ),
+          },
+          {
+            accessorKey: 'trader',
+            header: 'Trader',
+            cell: ({ row }) => (
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <div className="h-6 w-6 rounded-full bg-[var(--color-background-brand-subtle)] flex items-center justify-center">
+                  <span className="text-caption-sm font-medium text-[var(--color-text-brand)]">
+                    {(row.getValue('trader') as string).charAt(0)}
+                  </span>
+                </div>
+                <span className="text-body-sm">{row.getValue('trader')}</span>
+              </div>
+            ),
+          },
+          {
+            accessorKey: 'instrument',
+            header: 'Instrument',
+            cell: ({ row }) => (
+              <Badge variant="secondary" className="font-mono">
+                {row.getValue('instrument')}
+              </Badge>
+            ),
+          },
+        ],
+      },
+      {
+        id: 'financial-metrics',
+        header: 'Financial Metrics',
+        className: 'bg-[var(--color-background-success-subtle)]',
+        columns: [
+          {
+            accessorKey: 'notional',
+            header: 'Notional',
+            cell: ({ row }) => {
+              const amount = parseFloat(row.getValue('notional'))
+              return (
+                <div className="text-right font-mono">
+                  <span className="text-body-sm">
+                    ${amount.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                  </span>
+                </div>
+              )
+            },
+          },
+          {
+            accessorKey: 'pnl',
+            header: 'P&L',
+            cell: ({ row }) => {
+              const pnl = parseFloat(row.getValue('pnl'))
+              const isPositive = pnl >= 0
+              return (
+                <div className={cn(
+                  "text-right font-mono",
+                  isPositive
+                    ? "text-[var(--color-text-success)]"
+                    : "text-[var(--color-text-destructive)]"
+                )}>
+                  {isPositive ? '+' : ''}${pnl.toFixed(0)}
+                </div>
+              )
+            },
+          },
+          {
+            accessorKey: 'price',
+            header: 'Price',
+            cell: ({ row }) => (
+              <div className="text-right font-mono text-body-sm">
+                ${parseFloat(row.getValue('price')).toFixed(2)}
+              </div>
+            ),
+          },
+        ],
+      },
+      {
+        id: 'status-info',
+        header: 'Status & Timing',
+        className: 'bg-[var(--color-background-accent-subtle)]',
+        columns: [
+          {
+            accessorKey: 'status',
+            header: 'Status',
+            cell: ({ row }) => {
+              const status = row.getValue('status') as string
+              const statusColors = {
+                'active': 'text-[var(--color-text-success)] bg-[var(--color-background-success-subtle)]',
+                'pending': 'text-[var(--color-text-warning)] bg-[var(--color-background-warning-subtle)]',
+                'settled': 'text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-subtle)]',
+                'cancelled': 'text-[var(--color-text-destructive)] bg-[var(--color-background-destructive-subtle)]',
+              }
+              return (
+                <Badge
+                  variant="secondary"
+                  className={cn(
+                    "text-caption-strong-sm",
+                    statusColors[status.toLowerCase() as keyof typeof statusColors]
+                  )}
+                >
+                  {status}
+                </Badge>
+              )
+            },
+          },
+          {
+            accessorKey: 'timestamp',
+            header: 'Last Updated',
+            cell: ({ row }) => (
+              <div className="text-body-sm text-[var(--color-text-secondary)]">
+                {new Date(row.getValue('timestamp')).toLocaleString()}
+              </div>
+            ),
+          },
+        ],
+      },
+    ]
+
+    // Flatten columns for the table
+    const flatColumns = nestedHeaders.flatMap(group => group.columns)
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Nested Column Headers</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              This example demonstrates nested column headers that organize related columns under parent categories.
+              The header groups provide logical organization for complex datasets, commonly used in financial reports,
+              dashboards, and analytical interfaces.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Column groups can have custom styling and span multiple sub-columns. This creates a clear visual hierarchy for complex data structures.
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-[var(--space-md)] grid grid-cols-1 md:grid-cols-3 gap-4 text-body-sm">
+              <div className="bg-[var(--color-surface-secondary)] rounded-md p-[var(--space-md)]">
+                <div className="text-heading-sm font-semibold text-[var(--color-text-primary)]">
+                  {nestedHeaders.length}
+                </div>
+                <div className="text-[var(--color-text-secondary)]">Header Groups</div>
+              </div>
+              <div className="bg-[var(--color-surface-secondary)] rounded-md p-[var(--space-md)]">
+                <div className="text-heading-sm font-semibold text-[var(--color-text-primary)]">
+                  {flatColumns.length}
+                </div>
+                <div className="text-[var(--color-text-secondary)]">Total Columns</div>
+              </div>
+              <div className="bg-[var(--color-surface-secondary)] rounded-md p-[var(--space-md)]">
+                <div className="text-heading-sm font-semibold text-[var(--color-text-primary)]">
+                  2 Levels
+                </div>
+                <div className="text-[var(--color-text-secondary)]">Header Depth</div>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={flatColumns}
+            nestedHeaders={nestedHeaders}
+            enableNestedHeaders={true}
+            enableColumnResizing={true}
+            title="Financial Trading Dashboard"
+            stickyHeader={true}
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const ColumnVisibility: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates column visibility controls. Users can show/hide columns using the view options dropdown in the table header.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(100))
+
+    const columns: ColumnDef<any>[] = [
+      {
+        accessorKey: 'id',
+        header: 'Trade ID',
+        meta: { label: 'Trade ID' },
+        cell: ({ row }) => (
+          <div className="font-mono text-body-sm">{row.getValue('id')}</div>
+        ),
+      },
+      {
+        accessorKey: 'counterparty',
+        header: 'Counterparty',
+        meta: { label: 'Counterparty' },
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('counterparty')}</div>
+        ),
+      },
+      {
+        accessorKey: 'instrument',
+        header: 'Instrument',
+        meta: { label: 'Instrument' },
+        cell: ({ row }) => (
+          <Badge variant="outline">{row.getValue('instrument')}</Badge>
+        ),
+      },
+      {
+        accessorKey: 'side',
+        header: 'Side',
+        meta: { label: 'Trade Side' },
+        cell: ({ row }) => {
+          const side = row.getValue('side') as string
+          return (
+            <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
+              {side.toUpperCase()}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Quantity',
+        meta: { label: 'Quantity', numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'price',
+        header: 'Price',
+        meta: { label: 'Price', numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'notional',
+        header: 'Notional',
+        meta: { label: 'Notional Value', numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        meta: { label: 'Trade Status' },
+        cell: ({ row }) => {
+          const status = row.getValue('status') as string
+          const variants = {
+            pending: 'secondary',
+            confirmed: 'default',
+            settled: 'default',
+            cancelled: 'secondary'
+          }
+          return (
+            <Badge variant={variants[status as keyof typeof variants] as any}>
+              {status.charAt(0).toUpperCase() + status.slice(1)}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'trader',
+        header: 'Trader',
+        meta: { label: 'Trader Name' },
+        cell: ({ row }) => (
+          <div className="text-body-sm">{row.getValue('trader')}</div>
+        ),
+      },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Column Visibility Controls</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              Users can show and hide columns using the view options dropdown. Click the three-dot menu in the
+              table header to access column visibility controls. Toggle any column on or off to customize the view.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="eye" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Try hiding some columns (like Trader, Status, or Notional) to see how the table adapts.
+                  Column visibility state is managed automatically.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={columns}
+            title="Trading Activity - Column Visibility Demo"
+            enableGlobalSearch={true}
+            enableColumnResizing={true}
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const ColumnReordering: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates column reordering with drag-and-drop functionality. Users can drag column headers to reorder columns as needed.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(100))
+
+    const columns: ColumnDef<any>[] = [
+      {
+        accessorKey: 'id',
+        header: 'Trade ID',
+        cell: ({ row }) => (
+          <div className="font-mono text-body-sm">{row.getValue('id')}</div>
+        ),
+      },
+      {
+        accessorKey: 'counterparty',
+        header: 'Counterparty',
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('counterparty')}</div>
+        ),
+      },
+      {
+        accessorKey: 'instrument',
+        header: 'Instrument',
+        cell: ({ row }) => (
+          <Badge variant="outline">{row.getValue('instrument')}</Badge>
+        ),
+      },
+      {
+        accessorKey: 'side',
+        header: 'Side',
+        cell: ({ row }) => {
+          const side = row.getValue('side') as string
+          return (
+            <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
+              {side.toUpperCase()}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Quantity',
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'price',
+        header: 'Price',
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        cell: ({ row }) => {
+          const status = row.getValue('status') as string
+          const variants = {
+            pending: 'secondary',
+            confirmed: 'default',
+            settled: 'default',
+            cancelled: 'secondary'
+          }
+          return (
+            <Badge variant={variants[status as keyof typeof variants] as any}>
+              {status.charAt(0).toUpperCase() + status.slice(1)}
+            </Badge>
+          )
+        },
+      },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Column Reordering</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              Drag and drop column headers to reorder columns. Hover over column headers to see the grab cursor,
+              then click and drag to move columns to your preferred position.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="move" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Try dragging the "Status" column to the beginning, or reorder numeric columns to group them together.
+                  The grip icon appears on hover.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={columns}
+            title="Trading Activity - Column Reordering Demo"
+            enableColumnOrdering={true}
+            enableGlobalSearch={true}
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const RowSelection: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates row selection with checkboxes. Users can select individual rows or use the header checkbox to select all rows.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(50))
+
+    const columns: ColumnDef<any>[] = [
+      {
+        accessorKey: 'id',
+        header: 'Trade ID',
+        cell: ({ row }) => (
+          <div className="font-mono text-body-sm">{row.getValue('id')}</div>
+        ),
+      },
+      {
+        accessorKey: 'counterparty',
+        header: 'Counterparty',
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('counterparty')}</div>
+        ),
+      },
+      {
+        accessorKey: 'instrument',
+        header: 'Instrument',
+        cell: ({ row }) => (
+          <Badge variant="outline">{row.getValue('instrument')}</Badge>
+        ),
+      },
+      {
+        accessorKey: 'side',
+        header: 'Side',
+        cell: ({ row }) => {
+          const side = row.getValue('side') as string
+          return (
+            <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
+              {side.toUpperCase()}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Quantity',
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'price',
+        header: 'Price',
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'notional',
+        header: 'Notional',
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        cell: ({ row }) => {
+          const status = row.getValue('status') as string
+          const variants = {
+            pending: 'secondary',
+            confirmed: 'default',
+            settled: 'default',
+            cancelled: 'secondary'
+          }
+          return (
+            <Badge variant={variants[status as keyof typeof variants] as any}>
+              {status.charAt(0).toUpperCase() + status.slice(1)}
+            </Badge>
+          )
+        },
+      },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Row Selection</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              Select individual rows using checkboxes, or use the header checkbox to select all rows at once.
+              The footer shows the current selection count and supports bulk operations.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="check-square" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Try selecting a few rows, then use the header checkbox to select all. The pagination footer
+                  shows the selection count in real-time.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={columns}
+            title="Trading Activity - Row Selection Demo"
+            enableRowSelection={true}
+            enableGlobalSearch={true}
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const PaginationControls: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates pagination controls with page navigation and page size selection. Users can navigate through pages and adjust page size.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(247)) // Odd number to show partial pages
+
+    const columns: ColumnDef<any>[] = [
+      {
+        accessorKey: 'id',
+        header: 'Trade ID',
+        cell: ({ row }) => (
+          <div className="font-mono text-body-sm">{row.getValue('id')}</div>
+        ),
+      },
+      {
+        accessorKey: 'counterparty',
+        header: 'Counterparty',
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('counterparty')}</div>
+        ),
+      },
+      {
+        accessorKey: 'instrument',
+        header: 'Instrument',
+        cell: ({ row }) => (
+          <Badge variant="outline">{row.getValue('instrument')}</Badge>
+        ),
+      },
+      {
+        accessorKey: 'side',
+        header: 'Side',
+        cell: ({ row }) => {
+          const side = row.getValue('side') as string
+          return (
+            <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
+              {side.toUpperCase()}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Quantity',
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'price',
+        header: 'Price',
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'notional',
+        header: 'Notional',
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        cell: ({ row }) => {
+          const status = row.getValue('status') as string
+          const variants = {
+            pending: 'secondary',
+            confirmed: 'default',
+            settled: 'default',
+            cancelled: 'secondary'
+          }
+          return (
+            <Badge variant={variants[status as keyof typeof variants] as any}>
+              {status.charAt(0).toUpperCase() + status.slice(1)}
+            </Badge>
+          )
+        },
+      },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Pagination Controls</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              Navigate through large datasets with comprehensive pagination controls. Change page size,
+              jump to specific pages, and see the current selection status.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="chevrons-right" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  This dataset has 247 items. Try changing the page size (10, 25, 50, 100) and navigating
+                  between pages. Notice how the page numbers adapt.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={columns}
+            title="Trading Activity - Pagination Demo (247 total records)"
+            enableRowSelection={true}
+            enableGlobalSearch={true}
+          />
         </div>
       </div>
     )

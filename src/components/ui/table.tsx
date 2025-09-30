@@ -19,7 +19,7 @@ const tableVariants = cva(
 );
 
 const tableRowVariants = cva(
-  "border-b border-[var(--grey-50)] transition-colors",
+  "transition-colors",
   {
     variants: {
       variant: {
@@ -27,15 +27,20 @@ const tableRowVariants = cva(
         zebra: "",
         selected: "bg-[var(--color-background-brand-selected)]",
       },
+      showBorder: {
+        true: "",
+        false: "",
+      },
     },
     defaultVariants: {
       variant: "default",
+      showBorder: true,
     },
   }
 );
 
 const tableCellVariants = cva(
-  "align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] border-r border-[var(--grey-50)] last:border-r-0",
+  "align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
   {
     variants: {
       size: {
@@ -52,17 +57,27 @@ const tableCellVariants = cva(
         true: "text-right tabular-nums",
         false: "",
       },
+      showBorder: {
+        true: "border-r border-[var(--grey-50)] last:border-r-0",
+        false: "",
+      },
+      showRowBorder: {
+        true: "shadow-[inset_0_-1px_0_0_var(--grey-50)]",
+        false: "",
+      },
     },
     defaultVariants: {
       size: "md",
       align: "left",
       numeric: false,
+      showBorder: true,
+      showRowBorder: false,
     },
   }
 );
 
 const tableHeaderVariants = cva(
-  "align-middle font-semibold text-[var(--color-text-primary)] [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-[linear-gradient(to_right,var(--grey-25)_calc(100%-1px),var(--grey-50)_calc(100%-1px),var(--grey-50)_100%)] last:bg-[var(--grey-25)]",
+  "align-middle font-semibold text-[var(--color-text-primary)] [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-[var(--grey-25)]",
   {
     variants: {
       size: {
@@ -79,11 +94,16 @@ const tableHeaderVariants = cva(
         true: "text-right tabular-nums",
         false: "",
       },
+      showBorder: {
+        true: "bg-[linear-gradient(to_right,var(--grey-25)_calc(100%-1px),var(--grey-50)_calc(100%-1px),var(--grey-50)_100%)] last:bg-[var(--grey-25)]",
+        false: "",
+      },
     },
     defaultVariants: {
       size: "md",
       align: "left",
       numeric: false,
+      showBorder: true,
     },
   }
 );
@@ -152,19 +172,20 @@ interface TableRowProps
     VariantProps<typeof tableRowVariants> {
   zebra?: boolean;
   zebraIndex?: number;
+  showBorder?: boolean;
 }
 
 const TableRow = React.forwardRef<HTMLTableRowElement, TableRowProps>(
-  ({ className, variant, zebra = false, zebraIndex = 0, ...props }, ref) => {
-    const zebraClass = zebra && zebraIndex % 2 === 1 
-      ? "bg-[var(--color-background-neutral-subtle)]" 
+  ({ className, variant, zebra = false, zebraIndex = 0, showBorder = true, ...props }, ref) => {
+    const zebraClass = zebra && zebraIndex % 2 === 1
+      ? "bg-[var(--color-background-neutral-subtle)]"
       : "";
-    
+
     return (
       <tr
         ref={ref}
         className={cn(
-          tableRowVariants({ variant }),
+          tableRowVariants({ variant, showBorder }),
           zebraClass,
           className
         )}
@@ -177,13 +198,15 @@ TableRow.displayName = "TableRow";
 
 interface TableHeadProps
   extends Omit<React.ThHTMLAttributes<HTMLTableCellElement>, 'align'>,
-    VariantProps<typeof tableHeaderVariants> {}
+    VariantProps<typeof tableHeaderVariants> {
+  showBorder?: boolean;
+}
 
 const TableHead = React.forwardRef<HTMLTableCellElement, TableHeadProps>(
-  ({ className, size, align, numeric, ...props }, ref) => (
+  ({ className, size, align, numeric, showBorder = true, ...props }, ref) => (
     <th
       ref={ref}
-      className={cn(tableHeaderVariants({ size, align, numeric }), className)}
+      className={cn(tableHeaderVariants({ size, align, numeric, showBorder }), className)}
       {...props}
     />
   )
@@ -192,13 +215,16 @@ TableHead.displayName = "TableHead";
 
 interface TableCellProps
   extends Omit<React.TdHTMLAttributes<HTMLTableCellElement>, 'align'>,
-    VariantProps<typeof tableCellVariants> {}
+    VariantProps<typeof tableCellVariants> {
+  showBorder?: boolean;
+  showRowBorder?: boolean;
+}
 
 const TableCell = React.forwardRef<HTMLTableCellElement, TableCellProps>(
-  ({ className, size, align, numeric, ...props }, ref) => (
+  ({ className, size, align, numeric, showBorder = true, showRowBorder = false, ...props }, ref) => (
     <td
       ref={ref}
-      className={cn(tableCellVariants({ size, align, numeric }), className)}
+      className={cn(tableCellVariants({ size, align, numeric, showBorder, showRowBorder }), className)}
       {...props}
     />
   )
