@@ -1005,9 +1005,68 @@ export function Chart({
               animationDuration={0}
             />}
             {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
+            {/* Render in order: bars first, then areas, then lines (for proper z-index layering) */}
             {dataKeys.map((key, index) => {
               const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
               const chartElementType = config[key].type || "bar"; // Default to bar
+
+              // Render bars first
+              if (chartElementType === "bar") {
+                return (
+                  <Bar
+                    key={key}
+                    dataKey={key}
+                    name={config[key].label}
+                    fill={baseColor}
+                    radius={[0, 0, 0, 0]}
+                    className="cursor-pointer transition-colors"
+                    isAnimationActive={false}
+                    maxBarSize={60}
+                  />
+                );
+              }
+              return null;
+            })}
+            {/* Render areas second */}
+            {dataKeys.map((key, index) => {
+              const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
+              const chartElementType = config[key].type || "bar";
+
+              if (chartElementType === "area") {
+                return (
+                  <Area
+                    key={key}
+                    type="linear"
+                    dataKey={key}
+                    name={config[key].label}
+                    stroke={config[key].stroke ?? baseColor}
+                    fill={config[key].fill ?? baseColor}
+                    fillOpacity={0.3}
+                    className="cursor-pointer transition-colors"
+                    isAnimationActive={false}
+                  />
+                );
+              } else if (chartElementType === "range-area") {
+                return (
+                  <Area
+                    key={key}
+                    type="linear"
+                    dataKey={key}
+                    name={config[key].label}
+                    stroke={config[key].stroke ?? "none"}
+                    fill={config[key].fill ?? baseColor}
+                    fillOpacity={0.3}
+                    className="cursor-pointer transition-colors"
+                    isAnimationActive={false}
+                  />
+                );
+              }
+              return null;
+            })}
+            {/* Render lines last (on top of bars and areas) */}
+            {dataKeys.map((key, index) => {
+              const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
+              const chartElementType = config[key].type || "bar";
 
               if (chartElementType === "line") {
                 return (
@@ -1032,52 +1091,8 @@ export function Chart({
                     isAnimationActive={false}
                   />
                 );
-              } else if (chartElementType === "area") {
-                return (
-                  <Area
-                    key={key}
-                    type="linear"
-                    dataKey={key}
-                    name={config[key].label}
-                    stroke={config[key].stroke ?? baseColor}
-                    fill={config[key].fill ?? baseColor}
-                    fillOpacity={0.3}
-                    className="cursor-pointer transition-colors"
-                    isAnimationActive={false}
-                  />
-                );
-              } else if (chartElementType === "range-area") {
-                // For range areas, use Area with proper baseLine data transformation
-
-                return (
-                  <Area
-                    key={key}
-                    type="linear"
-                    dataKey={key}
-                    name={config[key].label}
-                    stroke={config[key].stroke ?? "none"}
-                    fill={config[key].fill ?? baseColor}
-                    fillOpacity={0.3}
-                    className="cursor-pointer transition-colors"
-                    isAnimationActive={false}
-                    // Note: baseLine for range areas needs custom implementation
-                  />
-                );
-              } else {
-                // Default to bar
-                return (
-                  <Bar
-                    key={key}
-                    dataKey={key}
-                    name={config[key].label}
-                    fill={baseColor}
-                    radius={[0, 0, 0, 0]}
-                    className="cursor-pointer transition-colors"
-                    isAnimationActive={false}
-                    maxBarSize={60}
-                  />
-                );
               }
+              return null;
             })}
           </ComposedChart>
         );
