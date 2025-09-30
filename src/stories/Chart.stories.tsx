@@ -2140,3 +2140,149 @@ export const LegendPositioning: Story = {
   ),
 }
 
+// Sample data for freight rates with markers
+const freightRatesData = [
+  { name: 'Mar 25', freightRate: 15, prediction: 14 },
+  { name: 'Apr 25', freightRate: 13, prediction: 13.5 },
+  { name: 'May 25', freightRate: 17, prediction: 16 },
+  { name: 'Jun 25', freightRate: 14, prediction: 15 },
+  { name: 'Jul 25', freightRate: 18, prediction: 17.5 },
+  { name: 'Aug 25', freightRate: 16, prediction: 17 },
+  { name: 'Sep 25', freightRate: 20, prediction: 19 },
+  { name: 'Oct 25', freightRate: 18, prediction: 18.5 },
+  { name: 'Nov 25', freightRate: 17, prediction: 19 },
+];
+
+export const ReferenceMarkers: Story = {
+  render: () => (
+    <div className="w-full max-w-7xl mx-auto p-[var(--space-lg)] space-y-[var(--space-xlg)]">
+      <div>
+        <h2 className="text-heading-lg mb-[var(--space-md)]">Reference Markers</h2>
+        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-xlg)]">
+          Reference markers display independent data points (like negotiation offers, bids, or events) at specific X-axis positions
+          with a vertical black line spanning the full chart height. Hover over the marked position to see marker data in the tooltip.
+        </p>
+      </div>
+
+      <div className="space-y-[var(--space-xlg)]">
+        {/* Freight Rates with Negotiation Markers */}
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
+          <h3 className="text-heading-md mb-[var(--space-md)]">Freight Rates with Order Negotiations</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            This chart shows freight rates over time with a reference marker at Sep 25 showing negotiation offers for a specific order.
+            Hover over Sep 25 to see all marker data in the tooltip.
+          </p>
+          <Chart
+            type="line"
+            data={freightRatesData}
+            config={createChartConfig({
+              freightRate: { label: 'Freight rate ($/mt)', strokeStyle: 'solid' },
+              prediction: { label: 'Prediction ($/mt)', strokeStyle: 'dashed' },
+            })}
+            height={350}
+            showGrid={true}
+            showLegend={true}
+            className="w-full"
+            referenceMarkers={[
+              {
+                xValue: 'Sep 25',
+                showLine: true,
+                tooltipLabel: 'Order #1234 Negotiations:',
+                dataPoints: [
+                  {
+                    yValue: 18,
+                    label: 'Counter offer 1',
+                    shape: 'triangle',
+                    size: 5,
+                    fill: '#DCB891',
+                    stroke: '#B8956F',
+                    strokeWidth: 1,
+                  },
+                  {
+                    yValue: 19,
+                    label: 'Initial offer',
+                    shape: 'circle',
+                    size: 4,
+                    fill: '#D27369',
+                    stroke: '#B85E55',
+                    strokeWidth: 1,
+                  },
+                  {
+                    yValue: 20.5,
+                    label: 'Counter offer 2',
+                    shape: 'circle',
+                    size: 4,
+                    fill: '#D27369',
+                    stroke: '#B85E55',
+                    strokeWidth: 1,
+                  },
+                  {
+                    yValue: 21,
+                    label: 'Final agreed price',
+                    shape: 'square',
+                    size: 4,
+                    fill: '#7FB069',
+                    stroke: '#5F8A4F',
+                    strokeWidth: 1,
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
+
+        {/* Multiple Reference Markers */}
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
+          <h3 className="text-heading-md mb-[var(--space-md)]">Multiple Events on Timeline</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            Multiple reference markers can mark different events at different times. Each marker can have its own custom styling and tooltip label.
+          </p>
+          <Chart
+            type="line"
+            data={freightRatesData}
+            config={createChartConfig({
+              freightRate: { label: 'Freight rate ($/mt)', strokeStyle: 'solid' },
+            })}
+            height={350}
+            showGrid={true}
+            showLegend={true}
+            className="w-full"
+            referenceMarkers={[
+              {
+                xValue: 'Jun 25',
+                showLine: true,
+                lineStyle: { stroke: '#487D9A', strokeWidth: 2, strokeDasharray: '5 5' },
+                tooltipLabel: 'Event A:',
+                dataPoints: [
+                  {
+                    yValue: 15,
+                    label: 'Target price',
+                    shape: 'triangle',
+                    size: 5,
+                    fill: '#487D9A',
+                  },
+                ],
+              },
+              {
+                xValue: 'Sep 25',
+                showLine: true,
+                lineStyle: { stroke: '#D27369', strokeWidth: 2 },
+                tooltipLabel: 'Event B:',
+                dataPoints: [
+                  {
+                    yValue: 21,
+                    label: 'Peak price',
+                    shape: 'circle',
+                    size: 5,
+                    fill: '#D27369',
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
+      </div>
+    </div>
+  ),
+}
+

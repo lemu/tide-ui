@@ -14,6 +14,8 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  ReferenceLine,
+  ReferenceDot,
 } from "recharts";
 import { cn } from "@/lib/utils";
 
@@ -92,6 +94,29 @@ export interface ChartMargin {
 
 export type ChartMarginSize = 'sm' | 'md' | 'lg' | 'auto';
 
+// Reference Marker interfaces for vertical lines with independent data points
+export interface ReferenceMarkerDataPoint {
+  yValue: number;                    // Explicit Y-value on chart
+  label?: string;                    // Optional label for tooltip/identification
+  shape?: 'circle' | 'triangle' | 'square';  // Marker shape
+  size?: number;                     // Marker radius/size (default: 4)
+  fill?: string;                     // Fill color
+  stroke?: string;                   // Border color
+  strokeWidth?: number;              // Border width
+}
+
+export interface ReferenceMarker {
+  xValue: string | number;           // X-axis position (e.g., "Sep 25" or timestamp)
+  showLine?: boolean;                // Show vertical line (default: true)
+  lineStyle?: {
+    stroke?: string;                 // Line color (default: #000000 black)
+    strokeWidth?: number;            // Line thickness (default: 2)
+    strokeDasharray?: string;        // Dashed pattern (e.g., "3 3")
+  };
+  tooltipLabel?: string;             // Custom label for tooltip section (default: "Reference Markers:")
+  dataPoints: ReferenceMarkerDataPoint[];  // Independent data points along the line
+}
+
 export interface ChartProps {
   type: ChartType;
   data: ChartDataPoint[];
@@ -122,6 +147,8 @@ export interface ChartProps {
   tooltipMaxWidth?: string; // Custom tooltip max width class (e.g., 'max-w-xs', 'max-w-48')
   legendOrder?: string[]; // Custom order for legend items (array of data keys)
   legendPosition?: 'bottom' | 'top' | 'right'; // Legend position (default: bottom)
+  // Reference Markers
+  referenceMarkers?: ReferenceMarker[]; // Array of reference markers (vertical lines with data points)
 }
 
 // Helper function to convert strokeStyle to strokeDasharray values
@@ -132,6 +159,54 @@ const getStrokeDashArray = (strokeStyle?: string): string | undefined => {
     case "solid":
     default: return undefined;      // Solid line (default)
   }
+};
+
+// Helper function to render custom marker shapes for ReferenceDot
+const renderMarkerShape = (shape: 'circle' | 'triangle' | 'square' = 'circle') => {
+  return (props: any) => {
+    const { cx, cy, r, fill, stroke, strokeWidth } = props;
+    const size = r || 4;
+
+    switch (shape) {
+      case 'triangle':
+        const height = size * 1.5;
+        const width = size * 1.3;
+        const path = `M ${cx},${cy - height} L ${cx + width},${cy + height/2} L ${cx - width},${cy + height/2} Z`;
+        return (
+          <path
+            d={path}
+            fill={fill}
+            stroke={stroke}
+            strokeWidth={strokeWidth || 0}
+          />
+        );
+      case 'square':
+        const squareSize = size * 1.4;
+        return (
+          <rect
+            x={cx - squareSize}
+            y={cy - squareSize}
+            width={squareSize * 2}
+            height={squareSize * 2}
+            fill={fill}
+            stroke={stroke}
+            strokeWidth={strokeWidth || 0}
+          />
+        );
+      case 'circle':
+      default:
+        return (
+          <circle
+            cx={cx}
+            cy={cy}
+            r={size}
+            fill={fill}
+            stroke={stroke}
+            strokeWidth={strokeWidth || 0}
+          />
+        );
+    }
+  };
 };
 
 // Helper function to get Legend positioning props
@@ -148,10 +223,13 @@ const getLegendProps = (legendPosition: 'bottom' | 'top' | 'right') => {
 };
 
 // Enhanced tooltip component with better accessibility and formatting
-const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-w-xs', chartType }: any & { config: ChartConfig; tooltipMaxWidth?: string; chartType?: ChartType }) => {
+const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-w-xs', chartType, referenceMarkers }: any & { config: ChartConfig; tooltipMaxWidth?: string; chartType?: ChartType; referenceMarkers?: ReferenceMarker[] }) => {
   if (!active || !payload || !payload.length) {
     return null;
   }
+
+  // Find reference markers for this X-axis value
+  const markersAtThisPoint = referenceMarkers?.filter(marker => marker.xValue === label) || [];
 
   return (
     <div
@@ -281,6 +359,82 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
           </div>
         );
       })}
+      {/* Display reference marker data if available at this X position */}
+      {markersAtThisPoint.length > 0 && (
+        <>
+          <div className="border-t border-[var(--color-border-primary-subtle)] my-[var(--space-xsm)]" />
+          {markersAtThisPoint.map((marker, markerIdx) => (
+            <React.Fragment key={`marker-section-${markerIdx}`}>
+              {marker.tooltipLabel && (
+                <p className="text-body-sm font-medium mb-[var(--space-xsm)] text-[var(--color-text-secondary)]">
+                  {marker.tooltipLabel}
+                </p>
+              )}
+              {!marker.tooltipLabel && markerIdx === 0 && (
+                <p className="text-body-sm font-medium mb-[var(--space-xsm)] text-[var(--color-text-secondary)]">
+                  Reference Markers:
+                </p>
+              )}
+              {marker.dataPoints.map((point, pointIdx) => {
+                // Render marker shape icon
+                const shapeIcon = () => {
+                  const shapeSize = 8;
+                  switch (point.shape || 'circle') {
+                    case 'triangle':
+                      return (
+                        <svg width={shapeSize} height={shapeSize} className="flex-shrink-0" viewBox="0 0 10 10">
+                          <path
+                            d="M 5,2 L 8,8 L 2,8 Z"
+                            fill={point.fill || 'var(--color-chart-line-1)'}
+                            stroke={point.stroke || 'transparent'}
+                            strokeWidth={point.strokeWidth || 0}
+                          />
+                        </svg>
+                      );
+                    case 'square':
+                      return (
+                        <svg width={shapeSize} height={shapeSize} className="flex-shrink-0" viewBox="0 0 10 10">
+                          <rect
+                            x="2"
+                            y="2"
+                            width="6"
+                            height="6"
+                            fill={point.fill || 'var(--color-chart-line-1)'}
+                            stroke={point.stroke || 'transparent'}
+                            strokeWidth={point.strokeWidth || 0}
+                          />
+                        </svg>
+                      );
+                    case 'circle':
+                    default:
+                      return (
+                        <div
+                          className="w-2 h-2 rounded-full flex-shrink-0"
+                          style={{
+                            backgroundColor: point.fill || 'var(--color-chart-line-1)',
+                            border: point.stroke ? `${point.strokeWidth || 1}px solid ${point.stroke}` : 'none'
+                          }}
+                        />
+                      );
+                  }
+                };
+
+                return (
+                  <div key={`marker-${markerIdx}-point-${pointIdx}`} className="flex items-center gap-[var(--space-xsm)] text-caption-sm">
+                    {shapeIcon()}
+                    <span className="text-[var(--color-text-secondary)] min-w-0 break-words">
+                      {point.label || `Marker ${pointIdx + 1}`}:
+                    </span>
+                    <span className="font-medium text-[var(--color-text-primary)] ml-auto">
+                      {point.yValue.toLocaleString()}
+                    </span>
+                  </div>
+                );
+              })}
+            </React.Fragment>
+          ))}
+        </>
+      )}
     </div>
   );
 };
@@ -314,6 +468,7 @@ export function Chart({
   tooltipMaxWidth = 'max-w-xs',
   legendOrder,
   legendPosition = 'bottom',
+  referenceMarkers,
   ...props
 }: ChartProps) {
 
@@ -726,7 +881,7 @@ export function Chart({
 
       case "line":
         return (
-          <LineChart 
+          <LineChart
             {...commonProps}
             onMouseMove={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
@@ -735,8 +890,34 @@ export function Chart({
             {showGrid && <CartesianGrid {...gridProps} />}
             <XAxis dataKey="name" {...xAxisProps} />
             <YAxis {...yAxisProps} />
+            {/* Reference markers - rendered directly inline for Recharts to detect */}
+            {referenceMarkers?.map((marker, markerIdx) => (
+              <React.Fragment key={`marker-${markerIdx}`}>
+                {marker.showLine !== false && (
+                  <ReferenceLine
+                    x={marker.xValue}
+                    stroke={marker.lineStyle?.stroke || '#000000'}
+                    strokeWidth={marker.lineStyle?.strokeWidth || 2}
+                    strokeDasharray={marker.lineStyle?.strokeDasharray}
+                  />
+                )}
+                {marker.dataPoints.map((point, pointIdx) => (
+                  <ReferenceDot
+                    key={`marker-${markerIdx}-point-${pointIdx}`}
+                    x={marker.xValue}
+                    y={point.yValue}
+                    r={point.size || 4}
+                    fill={point.fill || 'var(--color-chart-line-1)'}
+                    stroke={point.stroke || 'transparent'}
+                    strokeWidth={point.strokeWidth || 0}
+                    shape={renderMarkerShape(point.shape || 'circle')}
+                    isFront={true}
+                  />
+                ))}
+              </React.Fragment>
+            ))}
             {showTooltip && <Tooltip
-              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />}
+              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} referenceMarkers={referenceMarkers} />}
               cursor={{
                 stroke: "var(--color-border-primary)",
                 strokeWidth: 1,
