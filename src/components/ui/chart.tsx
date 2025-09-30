@@ -80,7 +80,6 @@ export interface ChartConfig {
     fill?: string; // Custom fill color
     showDots?: boolean; // Show/hide data point dots on lines (default: false)
     strokeStyle?: "solid" | "dashed" | "dotted"; // Line style for line charts
-    yAxisId?: "left" | "right"; // Which Y-axis to use for dual axis charts
   };
 }
 
@@ -116,11 +115,6 @@ export interface ChartProps {
   yAxisTickCount?: number; // Force specific number of Y-axis ticks
   xAxisTickFormatter?: (value: any, index: number) => string; // Custom X-axis tick formatting
   yAxisTickFormatter?: (value: any, index: number) => string; // Custom Y-axis tick formatting
-  // Dual Y-axis configuration
-  rightYAxisWidth?: number; // Width for right Y-axis when dual axis is used
-  rightYAxisTickCount?: number; // Force specific number of ticks for right Y-axis
-  rightYAxisTickFormatter?: (value: any, index: number) => string; // Custom right Y-axis tick formatting
-  showRightYAxis?: boolean; // Enable dual Y-axis mode (automatically detected if any data uses right axis)
   // Accessibility
   title?: string; // Chart title for screen readers
   description?: string; // Chart description for screen readers
@@ -314,10 +308,6 @@ export function Chart({
   yAxisTickCount,
   xAxisTickFormatter,
   yAxisTickFormatter,
-  rightYAxisWidth,
-  rightYAxisTickCount,
-  rightYAxisTickFormatter,
-  showRightYAxis,
   title,
   description,
   showDataTable = false,
@@ -375,14 +365,6 @@ export function Chart({
     });
   }, [data, config, dataKeys]);
 
-  // Detect if dual Y-axis is needed based on config yAxisId properties
-  const hasDualYAxis = useMemo(() => {
-    if (showRightYAxis !== undefined) return showRightYAxis;
-
-    // Auto-detect: check if any data series specifies right axis
-    return dataKeys.some(key => config[key]?.yAxisId === 'right');
-  }, [dataKeys, config, showRightYAxis]);
-
   const handleMouseEnter = useCallback((data: any) => {
     const index = data?.activeTooltipIndex ?? 0;
     onDataPointHover?.(data?.activePayload?.[0]?.payload, index);
@@ -398,7 +380,7 @@ export function Chart({
   }, [onDataPointClick]);
 
   // Smart margin calculation based on chart size and type
-  const calculateMargins = (size: ChartMarginSize, chartType: ChartType, chartHeight: number, useDualYAxis: boolean = false): ChartMargin => {
+  const calculateMargins = (size: ChartMarginSize, chartType: ChartType, chartHeight: number): ChartMargin => {
     // Comfortable margins with 4px grid system - Y-axis width is the real space controller
     const marginPresets = {
       sm: { top: 4, right: 8, left: 8, bottom: 8 },   // Compact for small charts
@@ -430,38 +412,35 @@ export function Chart({
     const legendBottomSpace = legendPosition === 'bottom' ? estimatedLegendHeight : 0;
     const legendRightSpace = legendPosition === 'right' ? estimatedLegendWidth : 0;
 
-    // Right Y-axis spacing calculation
-    const rightYAxisSpace = useDualYAxis ? (rightYAxisWidth || 60) : 0;
-
     const typeAdjustments = {
       'horizontal-bar': {
         left: baseMargins.left + 8, // Extra space for Y-axis category labels
-        right: baseMargins.right + 4 + legendRightSpace + rightYAxisSpace, // Space for value labels + legend + right Y-axis
+        right: baseMargins.right + 4 + legendRightSpace, // Space for value labels + legend
         bottom: baseMargins.bottom + legendBottomSpace,
         top: baseMargins.top + legendTopSpace,
       },
       'scatter': {
         left: baseMargins.left + 4, // Slight extra for numeric Y-axis
-        right: baseMargins.right + 4 + legendRightSpace + rightYAxisSpace,
+        right: baseMargins.right + 4 + legendRightSpace,
         bottom: baseMargins.bottom + 4 + legendBottomSpace,
         top: baseMargins.top + legendTopSpace,
       },
       'bar': {
         ...baseMargins,
         bottom: baseMargins.bottom + legendBottomSpace,
-        right: baseMargins.right + legendRightSpace + rightYAxisSpace,
+        right: baseMargins.right + legendRightSpace,
         top: baseMargins.top + legendTopSpace,
       },
       'line': {
         ...baseMargins,
         bottom: baseMargins.bottom + legendBottomSpace, // Clean margins - Y-axis width controls space
-        right: baseMargins.right + legendRightSpace + rightYAxisSpace,
+        right: baseMargins.right + legendRightSpace,
         top: baseMargins.top + legendTopSpace,
       },
       'composed': {
         ...baseMargins,
         bottom: baseMargins.bottom + legendBottomSpace,
-        right: baseMargins.right + legendRightSpace + rightYAxisSpace,
+        right: baseMargins.right + legendRightSpace,
         top: baseMargins.top + legendTopSpace,
       },
     };
@@ -473,7 +452,7 @@ export function Chart({
   const getMargins = (): ChartMargin => {
     // If custom margin is provided, use it (with fallbacks for missing values)
     if (margin) {
-      const defaultMargin = calculateMargins(marginSize || 'auto', type, height, hasDualYAxis);
+      const defaultMargin = calculateMargins(marginSize || 'auto', type, height);
       return {
         top: margin.top ?? defaultMargin.top,
         right: margin.right ?? defaultMargin.right,
@@ -483,34 +462,11 @@ export function Chart({
     }
 
     // Use calculated margins based on marginSize (defaults to 'auto')
-    return calculateMargins(marginSize || 'auto', type, height, hasDualYAxis);
+    return calculateMargins(marginSize || 'auto', type, height);
   };
 
   // Get legend positioning props
   const legendProps = getLegendProps(legendPosition);
-
-  // Y-axis configuration for dual axis support
-  const leftYAxisProps = {
-    axisLine: { stroke: "var(--color-border-primary-subtle)", strokeWidth: 2 },
-    tickLine: { stroke: "var(--color-border-primary-subtle)", strokeWidth: 1 },
-    tick: { fill: "var(--color-text-secondary)", fontSize: 12 },
-    width: yAxisWidth || 60,
-    yAxisId: "left",
-    orientation: "left" as const,
-    ...(yAxisTickCount && { tickCount: yAxisTickCount }),
-    ...(yAxisTickFormatter && { tickFormatter: yAxisTickFormatter }),
-  };
-
-  const rightYAxisProps = {
-    axisLine: { stroke: "var(--color-border-primary-subtle)", strokeWidth: 2 },
-    tickLine: { stroke: "var(--color-border-primary-subtle)", strokeWidth: 1 },
-    tick: { fill: "var(--color-text-secondary)", fontSize: 12 },
-    width: rightYAxisWidth || 60,
-    yAxisId: "right",
-    orientation: "right" as const,
-    ...(rightYAxisTickCount && { tickCount: rightYAxisTickCount }),
-    ...(rightYAxisTickFormatter && { tickFormatter: rightYAxisTickFormatter }),
-  };
 
   const commonProps = {
     data: processedData,
@@ -530,8 +486,7 @@ export function Chart({
 
 
 
-  // For backward compatibility, use leftYAxisProps when dual axis is not enabled
-  const yAxisProps = hasDualYAxis ? leftYAxisProps : {
+  const yAxisProps = {
     axisLine: { stroke: "var(--color-border-primary-subtle)", strokeWidth: 2 },
     tickLine: { stroke: "var(--color-border-primary-subtle)", strokeWidth: 1 },
     tick: {
@@ -684,7 +639,7 @@ export function Chart({
     switch (type) {
       case "bar":
         return (
-          <BarChart
+          <BarChart 
             {...commonProps}
             onMouseMove={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
@@ -693,7 +648,6 @@ export function Chart({
             {showGrid && <CartesianGrid {...gridProps} />}
             <XAxis dataKey="name" {...xAxisProps} />
             <YAxis {...yAxisProps} />
-            {hasDualYAxis && <YAxis {...rightYAxisProps} />}
             {showTooltip && <Tooltip 
               content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />}
               cursor={{ 
@@ -720,7 +674,6 @@ export function Chart({
                   className="cursor-pointer transition-colors"
                   isAnimationActive={false}
                   maxBarSize={60}
-                  yAxisId={config[key].yAxisId || "left"}
                 />
               );
             })}
@@ -737,9 +690,8 @@ export function Chart({
             onClick={handleClick}
           >
             {showGrid && <CartesianGrid {...gridProps} horizontal={false} vertical={true} />}
-            <XAxis type="number" {...xAxisProps} xAxisId="left" />
+            <XAxis type="number" {...xAxisProps} />
             <YAxis type="category" dataKey="name" {...yAxisProps} />
-            {hasDualYAxis && <XAxis type="number" {...rightYAxisProps} xAxisId="right" orientation="top" />}
             {showTooltip && <Tooltip 
               content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />}
               cursor={{ 
@@ -766,7 +718,6 @@ export function Chart({
                   className="cursor-pointer transition-colors"
                   isAnimationActive={false}
                   maxBarSize={40}
-                  xAxisId={config[key].yAxisId === 'right' ? 'right' : 'left'}
                 />
               );
             })}
@@ -775,7 +726,7 @@ export function Chart({
 
       case "line":
         return (
-          <LineChart
+          <LineChart 
             {...commonProps}
             onMouseMove={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
@@ -784,7 +735,6 @@ export function Chart({
             {showGrid && <CartesianGrid {...gridProps} />}
             <XAxis dataKey="name" {...xAxisProps} />
             <YAxis {...yAxisProps} />
-            {hasDualYAxis && <YAxis {...rightYAxisProps} />}
             {showTooltip && <Tooltip
               content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />}
               cursor={{
@@ -821,7 +771,6 @@ export function Chart({
                   }}
                   className="cursor-pointer transition-colors"
                   isAnimationActive={false}
-                  yAxisId={config[key].yAxisId || "left"}
                 />
               );
             })}
@@ -839,7 +788,6 @@ export function Chart({
             {showGrid && <CartesianGrid {...gridProps} />}
             <XAxis dataKey="x" type="number" {...xAxisProps} />
             <YAxis dataKey="y" type="number" {...yAxisProps} />
-            {hasDualYAxis && <YAxis {...rightYAxisProps} />}
             {showTooltip && <Tooltip
               content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />}
               cursor={{
@@ -866,7 +814,6 @@ export function Chart({
                     fill={baseColor}
                     className="cursor-pointer transition-colors"
                     isAnimationActive={false}
-                    yAxisId={config[key]?.yAxisId || "left"}
                   />
                 );
               })}
@@ -884,7 +831,6 @@ export function Chart({
             {showGrid && <CartesianGrid {...gridProps} />}
             <XAxis dataKey="name" {...xAxisProps} />
             <YAxis {...yAxisProps} domain={[0, 'dataMax']} />
-            {hasDualYAxis && <YAxis {...rightYAxisProps} domain={[0, 'dataMax']} />}
             {showTooltip && <Tooltip
               content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />}
               cursor={{
@@ -923,7 +869,6 @@ export function Chart({
                     }}
                     className="cursor-pointer transition-colors"
                     isAnimationActive={false}
-                    yAxisId={config[key].yAxisId || "left"}
                   />
                 );
               } else if (chartElementType === "area") {
@@ -938,7 +883,6 @@ export function Chart({
                     fillOpacity={0.3}
                     className="cursor-pointer transition-colors"
                     isAnimationActive={false}
-                    yAxisId={config[key].yAxisId || "left"}
                   />
                 );
               } else if (chartElementType === "range-area") {
@@ -955,7 +899,6 @@ export function Chart({
                     fillOpacity={0.3}
                     className="cursor-pointer transition-colors"
                     isAnimationActive={false}
-                    yAxisId={config[key].yAxisId || "left"}
                     // Note: baseLine for range areas needs custom implementation
                   />
                 );
@@ -971,7 +914,6 @@ export function Chart({
                     className="cursor-pointer transition-colors"
                     isAnimationActive={false}
                     maxBarSize={60}
-                    yAxisId={config[key].yAxisId || "left"}
                   />
                 );
               }
