@@ -7,7 +7,6 @@ import {
   ExpandedState,
   GroupingState,
   ColumnOrderState,
-  ColumnPinningState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -797,6 +796,11 @@ export interface DataTableProps<TData, TValue> {
   enableColumnOrdering?: boolean
   // Row selection
   enableRowSelection?: boolean
+  // Header and footer control
+  showHeader?: boolean
+  showPagination?: boolean
+  // External control
+  onTableReady?: (table: any) => void
   initialState?: {
     grouping?: GroupingState
     expanded?: ExpandedState
@@ -846,6 +850,9 @@ export function DataTable<TData, TValue>({
   enableNestedHeaders = false,
   enableColumnOrdering = false,
   enableRowSelection = false,
+  showHeader = true,
+  showPagination = true,
+  onTableReady,
   initialState,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -1034,6 +1041,13 @@ export function DataTable<TData, TValue>({
 
   // Column pinning useEffect removed - using pure CSS approach instead
 
+  // Expose table instance for external control
+  React.useEffect(() => {
+    if (onTableReady) {
+      onTableReady(table)
+    }
+  }, [table, onTableReady])
+
   // Store reference to table for width calculations
   const tableRef = React.useRef<HTMLTableElement>(null)
 
@@ -1190,28 +1204,39 @@ export function DataTable<TData, TValue>({
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className={cn("border border-[var(--color-border-primary-subtle)] rounded-lg overflow-hidden bg-[var(--color-surface-primary)]", className)}>
+      <div className={cn(
+        "border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] overflow-hidden",
+        // Dynamic rounded corners based on visible sections
+        {
+          "rounded-lg": (showHeader && showPagination) || (!showHeader && !showPagination), // Both sections or table only
+          "rounded-t-lg": !showHeader && showPagination,       // Only pagination footer
+          "rounded-b-lg": showHeader && !showPagination,       // Only header
+        },
+        className
+      )}>
       {/* Header section with title and toolbar */}
-      <div className="border-b border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-[var(--space-lg)] py-[var(--space-md)]">
-        {title && (
-          <div className="flex justify-between items-center">
-            <h3 className="text-heading-sm font-semibold text-[var(--color-text-primary)]">{title}</h3>
-            <DataTableViewOptions table={table} />
-          </div>
-        )}
-        <DataTableToolbar
-          table={table}
-          searchKey={searchKey}
-          searchPlaceholder={searchPlaceholder}
-          showViewOptions={!title}
-          enableGlobalSearch={enableGlobalSearch}
-          globalSearchPlaceholder={globalSearchPlaceholder}
-          globalFilter={globalFilter}
-          onGlobalFilterChange={setGlobalFilter}
-          enableGlobalFaceting={enableGlobalFaceting}
-          enableGrouping={enableGrouping}
-        />
-      </div>
+      {showHeader && (
+        <div className="border-b border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-[var(--space-lg)] py-[var(--space-md)]">
+          {title && (
+            <div className="flex justify-between items-center">
+              <h3 className="text-heading-sm font-semibold text-[var(--color-text-primary)]">{title}</h3>
+              <DataTableViewOptions table={table} />
+            </div>
+          )}
+          <DataTableToolbar
+            table={table}
+            searchKey={searchKey}
+            searchPlaceholder={searchPlaceholder}
+            showViewOptions={!title}
+            enableGlobalSearch={enableGlobalSearch}
+            globalSearchPlaceholder={globalSearchPlaceholder}
+            globalFilter={globalFilter}
+            onGlobalFilterChange={setGlobalFilter}
+            enableGlobalFaceting={enableGlobalFaceting}
+            enableGrouping={enableGrouping}
+          />
+        </div>
+      )}
       
       {/* Table section with responsive wrapper and sticky features */}
       <div className={cn(
@@ -1584,7 +1609,7 @@ export function DataTable<TData, TValue>({
                     )}
                   >
                     {row.getVisibleCells().map((cell, index) => {
-                      const pinningStyles = getManualPinningStyles(cell.column)
+                      const pinningStyles = getPureCSSPinningStyles(cell.column)
 
                       // Add expand/collapse control to first cell if expanding is enabled
                       const isFirstCell = index === 0
@@ -1723,7 +1748,7 @@ export function DataTable<TData, TValue>({
       </div>
       
       {/* Footer section with pagination */}
-      {true && (
+      {showPagination && (
         <div className="border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-[var(--space-lg)] py-[var(--space-md)]">
           <DataTablePagination table={table} />
         </div>
@@ -1733,14 +1758,30 @@ export function DataTable<TData, TValue>({
   )
 }
 
-// Export helper functions and components
+// Export helper functions and components for external control
 export {
   DataTableColumnHeader,
   DataTableFilter,
   DataTableToolbar,
   DataTablePagination,
   DataTableSkeleton,
+  DataTableViewOptions,
   fuzzyFilter,
   multiSelectFilter
 }
+
+// Export TanStack Table utilities for external control
+export { useReactTable } from "@tanstack/react-table"
+
+// Export types for external control
+export type {
+  SortingState,
+  ColumnFiltersState,
+  VisibilityState,
+  ExpandedState,
+  GroupingState,
+  ColumnOrderState,
+  FilterFn,
+  ColumnResizeMode,
+} from "@tanstack/react-table"
 

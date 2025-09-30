@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { DataTable, NestedHeaderConfig } from '../components/ui/data-table'
+import { DataTable, NestedHeaderConfig, DataTableViewOptions } from '../components/ui/data-table'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Button } from '../components/ui/button'
 import { Badge } from '../components/ui/badge'
 import { Icon } from '../components/ui/icon'
+import { Input } from '../components/ui/input'
 import { Checkbox } from '../components/ui/checkbox'
 import { ColumnDef } from '@tanstack/react-table'
 import { formatNumber, formatCurrency, formatDecimal, cn } from '../lib/utils'
@@ -2725,6 +2726,176 @@ export const PaginationControls: Story = {
             title="Trading Activity - Pagination Demo (247 total records)"
             enableRowSelection={true}
             enableGlobalSearch={true}
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const HeaderlessMode: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'DataTable without header section - perfect for custom layouts where you want to control filtering and actions externally. Notice the properly rounded top corners.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(15))
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Headerless DataTable</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              DataTable with no header section, maintaining clean rounded corners. Perfect for embedding
+              in custom layouts or when controls are handled externally.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="layout" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  No header section - clean table with proper rounded top corners for custom layouts.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={tradeColumns}
+            showHeader={false}
+            borderStyle="both"
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const TableOnlyMode: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'DataTable with no header or pagination - pure table with rounded corners on all sides.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(8))
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Table Only Mode</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              Pure table without header or pagination sections. Fully rounded corners for standalone use.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="table" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Pure table component - no headers, no pagination, perfectly rounded corners.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={tradeColumns}
+            showHeader={false}
+            showPagination={false}
+            borderStyle="both"
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const ExternalControlExample: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Example of external control over DataTable functionality. The table exposes its instance for external manipulation of filters, sorting, and other features.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(25))
+    const [tableInstance, setTableInstance] = useState<any>(null)
+    const [globalFilter, setGlobalFilter] = useState("")
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">External Control Example</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              Custom external controls for the DataTable. The table instance is exposed via onTableReady callback,
+              allowing full external control over filtering, sorting, column visibility, and pagination.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="settings" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  External controls: Global search, column visibility, and pagination controls above the table.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* External Controls */}
+          <div className="mb-[var(--space-md)] p-[var(--space-lg)] border border-[var(--color-border-primary-subtle)] rounded-lg bg-[var(--color-surface-primary)]">
+            <div className="flex flex-wrap items-center gap-[var(--space-md)]">
+              <div className="flex-1 min-w-[200px]">
+                <Input
+                  placeholder="Search all columns..."
+                  value={globalFilter}
+                  onChange={(e) => {
+                    setGlobalFilter(e.target.value)
+                    tableInstance?.setGlobalFilter(e.target.value)
+                  }}
+                  className="h-8"
+                />
+              </div>
+              <div className="flex items-center gap-[var(--space-sm)]">
+                {tableInstance && (
+                  <>
+                    <DataTableViewOptions table={tableInstance} />
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        tableInstance.resetColumnFilters()
+                        tableInstance.resetGlobalFilter()
+                        setGlobalFilter("")
+                      }}
+                      className="h-8"
+                    >
+                      Reset All
+                    </Button>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={tradeColumns}
+            showHeader={false}
+            onTableReady={setTableInstance}
+            enableGlobalSearch={true}
+            enableRowSelection={true}
+            borderStyle="both"
           />
         </div>
       </div>
