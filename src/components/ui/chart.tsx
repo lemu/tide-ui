@@ -146,7 +146,7 @@ export interface ChartProps {
   showDataTable?: boolean; // Show accessible data table fallback
   tooltipMaxWidth?: string; // Custom tooltip max width class (e.g., 'max-w-xs', 'max-w-48')
   legendOrder?: string[]; // Custom order for legend items (array of data keys)
-  legendPosition?: 'bottom' | 'top' | 'right'; // Legend position (default: bottom)
+  legendPosition?: 'bottom'; // Legend position (only bottom is supported)
   // Reference Markers
   referenceMarkers?: ReferenceMarker[]; // Array of reference markers (vertical lines with data points)
 }
@@ -210,16 +210,9 @@ const renderMarkerShape = (shape: 'circle' | 'triangle' | 'square' = 'circle') =
 };
 
 // Helper function to get Legend positioning props
-const getLegendProps = (legendPosition: 'bottom' | 'top' | 'right') => {
-  switch (legendPosition) {
-    case 'top':
-      return { verticalAlign: 'top' as const, align: 'center' as const };
-    case 'right':
-      return { verticalAlign: 'middle' as const, align: 'right' as const, layout: 'vertical' as const };
-    case 'bottom':
-    default:
-      return { verticalAlign: 'bottom' as const, align: 'center' as const };
-  }
+const getLegendProps = (legendPosition: 'bottom') => {
+  // Only bottom legend is supported
+  return { verticalAlign: 'bottom' as const, align: 'center' as const };
 };
 
 // Enhanced tooltip component with better accessibility and formatting
@@ -553,50 +546,37 @@ export function Chart({
     const effectiveSize = size === 'auto' ? getAutoSize(chartHeight) : size;
     const baseMargins = marginPresets[effectiveSize];
 
-    // Calculate legend space requirements based on position
+    // Calculate legend space requirements (only bottom position supported)
     const dataKeyCount = Object.keys(config).filter(key => key !== 'name').length;
-    const estimatedLegendHeight = showLegend && legendPosition === 'bottom'
+    const estimatedLegendHeight = showLegend
       ? Math.ceil(dataKeyCount / 4) * 24 + 8 // Rough estimate: 4 items per row, 24px per row, 8px padding
-      : 0;
-    const estimatedLegendWidth = showLegend && legendPosition === 'right'
-      ? 120 // Estimated width for right-positioned legend
       : 0;
 
     // Type-specific adjustments - 4px grid system maintained with legend spacing
-    const legendTopSpace = legendPosition === 'top' ? estimatedLegendHeight : 0;
-    const legendBottomSpace = legendPosition === 'bottom' ? estimatedLegendHeight : 0;
-    const legendRightSpace = legendPosition === 'right' ? estimatedLegendWidth : 0;
-
     const typeAdjustments = {
       'horizontal-bar': {
         left: baseMargins.left + 8, // Extra space for Y-axis category labels
-        right: baseMargins.right + 4 + legendRightSpace, // Space for value labels + legend
-        bottom: baseMargins.bottom + legendBottomSpace,
-        top: baseMargins.top + legendTopSpace,
+        right: baseMargins.right + 4, // Space for value labels
+        bottom: baseMargins.bottom + estimatedLegendHeight,
+        top: baseMargins.top,
       },
       'scatter': {
         left: baseMargins.left + 4, // Slight extra for numeric Y-axis
-        right: baseMargins.right + 4 + legendRightSpace,
-        bottom: baseMargins.bottom + 4 + legendBottomSpace,
-        top: baseMargins.top + legendTopSpace,
+        right: baseMargins.right + 4,
+        bottom: baseMargins.bottom + 4 + estimatedLegendHeight,
+        top: baseMargins.top,
       },
       'bar': {
         ...baseMargins,
-        bottom: baseMargins.bottom + legendBottomSpace,
-        right: baseMargins.right + legendRightSpace,
-        top: baseMargins.top + legendTopSpace,
+        bottom: baseMargins.bottom + estimatedLegendHeight,
       },
       'line': {
         ...baseMargins,
-        bottom: baseMargins.bottom + legendBottomSpace, // Clean margins - Y-axis width controls space
-        right: baseMargins.right + legendRightSpace,
-        top: baseMargins.top + legendTopSpace,
+        bottom: baseMargins.bottom + estimatedLegendHeight, // Clean margins - Y-axis width controls space
       },
       'composed': {
         ...baseMargins,
-        bottom: baseMargins.bottom + legendBottomSpace,
-        right: baseMargins.right + legendRightSpace,
-        top: baseMargins.top + legendTopSpace,
+        bottom: baseMargins.bottom + estimatedLegendHeight,
       },
     };
 
@@ -890,32 +870,6 @@ export function Chart({
             {showGrid && <CartesianGrid {...gridProps} />}
             <XAxis dataKey="name" {...xAxisProps} />
             <YAxis {...yAxisProps} />
-            {/* Reference markers - rendered directly inline for Recharts to detect */}
-            {referenceMarkers?.map((marker, markerIdx) => (
-              <React.Fragment key={`marker-${markerIdx}`}>
-                {marker.showLine !== false && (
-                  <ReferenceLine
-                    x={marker.xValue}
-                    stroke={marker.lineStyle?.stroke || '#000000'}
-                    strokeWidth={marker.lineStyle?.strokeWidth || 2}
-                    strokeDasharray={marker.lineStyle?.strokeDasharray}
-                  />
-                )}
-                {marker.dataPoints.map((point, pointIdx) => (
-                  <ReferenceDot
-                    key={`marker-${markerIdx}-point-${pointIdx}`}
-                    x={marker.xValue}
-                    y={point.yValue}
-                    r={point.size || 4}
-                    fill={point.fill || 'var(--color-chart-line-1)'}
-                    stroke={point.stroke || 'transparent'}
-                    strokeWidth={point.strokeWidth || 0}
-                    shape={renderMarkerShape(point.shape || 'circle')}
-                    isFront={true}
-                  />
-                ))}
-              </React.Fragment>
-            ))}
             {showTooltip && <Tooltip
               content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} referenceMarkers={referenceMarkers} />}
               cursor={{
@@ -955,6 +909,32 @@ export function Chart({
                 />
               );
             })}
+            {/* Reference markers - rendered AFTER lines to appear on top */}
+            {referenceMarkers?.map((marker, markerIdx) => (
+              <React.Fragment key={`marker-${markerIdx}`}>
+                {marker.showLine !== false && (
+                  <ReferenceLine
+                    x={marker.xValue}
+                    stroke={marker.lineStyle?.stroke || '#000000'}
+                    strokeWidth={marker.lineStyle?.strokeWidth || 2}
+                    strokeDasharray={marker.lineStyle?.strokeDasharray}
+                  />
+                )}
+                {marker.dataPoints.map((point, pointIdx) => (
+                  <ReferenceDot
+                    key={`marker-${markerIdx}-point-${pointIdx}`}
+                    x={marker.xValue}
+                    y={point.yValue}
+                    r={point.size || 4}
+                    fill={point.fill || 'var(--color-chart-line-1)'}
+                    stroke={point.stroke || 'transparent'}
+                    strokeWidth={point.strokeWidth || 0}
+                    shape={renderMarkerShape(point.shape || 'circle')}
+                    isFront={true}
+                  />
+                ))}
+              </React.Fragment>
+            ))}
           </LineChart>
         );
 
