@@ -2270,7 +2270,7 @@ export const ReferenceMarkers: Story = {
                 tooltipLabel: 'Event B:',
                 dataPoints: [
                   {
-                    yValue: 21,
+                    yValue: 20,
                     label: 'Peak price',
                     shape: 'circle',
                     size: 5,
