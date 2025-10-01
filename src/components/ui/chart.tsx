@@ -270,11 +270,11 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
 
   return (
     <div
-      className={`rounded-xsm border border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] p-[var(--space-md)] shadow-md min-w-[120px] ${tooltipMaxWidth}`}
+      className={`rounded-sm border border-[var(--color-border-primary-bold)] bg-[var(--color-surface-primary)] p-[var(--space-md)] shadow-md min-w-[120px] ${tooltipMaxWidth}`}
       role="tooltip"
       aria-label="Chart data tooltip"
     >
-      <p className="text-body-xsm font-medium mb-[var(--space-xsm)] text-[var(--color-text-primary)]">
+      <p className="text-label-sm mb-[var(--space-xsm)] text-[var(--color-text-primary)]">
         {label}
       </p>
       {payload.map((entry: any, index: number) => {
@@ -385,12 +385,12 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
         };
 
         return (
-          <div key={index} className="flex items-center gap-[var(--space-xsm)] text-body-xsm">
+          <div key={index} className="flex items-center gap-[var(--space-xsm)]">
             {getTooltipMarkerElement()}
-            <span className="text-[var(--color-text-primary)] min-w-0 break-words">
+            <span className="text-body-sm text-[var(--color-text-primary)] min-w-0 break-words">
               {configEntry?.label || entry.dataKey}:
             </span>
-            <span className="text-label-sm text-[var(--color-text-primary)] ml-auto pl-[16px]">
+            <span className="text-body-medium-sm text-[var(--color-text-primary)] ml-auto pl-[16px]">
               {displayValue}
             </span>
           </div>
