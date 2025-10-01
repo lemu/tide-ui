@@ -128,6 +128,7 @@ export interface ChartConfig {
     fill?: string; // Custom fill color
     showDots?: boolean; // Show/hide data point dots on lines (default: false)
     strokeStyle?: "solid" | "dashed" | "dotted"; // Line style for line charts
+    yAxisId?: "left" | "right"; // Assign data series to Y-axis (for dual Y-axis charts)
   };
 }
 
@@ -184,6 +185,12 @@ export interface ChartProps {
   yAxisDomain?: [number | 'auto' | 'dataMin' | 'dataMax', number | 'auto' | 'dataMin' | 'dataMax']; // Y-axis domain [min, max]
   xAxisTickFormatter?: (value: any, index: number) => string; // Custom X-axis tick formatting
   yAxisTickFormatter?: (value: any, index: number) => string; // Custom Y-axis tick formatting
+  // Right Y-axis (dual Y-axis support for line and composed charts)
+  showRightYAxis?: boolean; // Show right Y-axis
+  rightYAxisWidth?: number; // Override right Y-axis space when more room needed
+  rightYAxisTickCount?: number; // Force specific number of right Y-axis ticks
+  rightYAxisDomain?: [number | 'auto' | 'dataMin' | 'dataMax', number | 'auto' | 'dataMin' | 'dataMax']; // Right Y-axis domain [min, max]
+  rightYAxisTickFormatter?: (value: any, index: number) => string; // Custom right Y-axis tick formatting
   // Accessibility
   title?: string; // Chart title for screen readers
   description?: string; // Chart description for screen readers
@@ -498,6 +505,11 @@ export function Chart({
   yAxisTickCount,
   xAxisTickFormatter,
   yAxisTickFormatter,
+  showRightYAxis = false,
+  rightYAxisWidth,
+  rightYAxisTickCount,
+  rightYAxisDomain,
+  rightYAxisTickFormatter,
   title,
   description,
   showDataTable = false,
@@ -583,7 +595,7 @@ export function Chart({
 
     return {
       top: margin?.top ?? defaultMargin.top,
-      right: margin?.right ?? defaultMargin.right,
+      right: margin?.right ?? (defaultMargin.right + calculatedRightYAxisWidth),
       left: margin?.left ?? defaultMargin.left,
       bottom: margin?.bottom ?? (defaultMargin.bottom + estimatedLegendHeight),
     };
@@ -594,6 +606,21 @@ export function Chart({
     if (yAxisWidth) return yAxisWidth; // Manual override takes precedence
     return calculateYAxisWidth(processedData, dataKeys, yAxisTickFormatter, 20);
   }, [yAxisWidth, processedData, dataKeys, yAxisTickFormatter]);
+
+  // Calculate right Y-axis width for dual Y-axis charts
+  const calculatedRightYAxisWidth = useMemo(() => {
+    if (!showRightYAxis) return 0;
+    if (rightYAxisWidth) return rightYAxisWidth; // Manual override takes precedence
+    const rightKeys = dataKeys.filter(k => config[k].yAxisId === "right");
+    if (rightKeys.length === 0) return 0;
+    return calculateYAxisWidth(processedData, rightKeys, rightYAxisTickFormatter, 20);
+  }, [showRightYAxis, rightYAxisWidth, processedData, dataKeys, config, rightYAxisTickFormatter]);
+
+  // Determine which Y-axis the CartesianGrid should follow (critical for grid line visibility)
+  const gridYAxisId = useMemo(() => {
+    const hasLeftData = dataKeys.some(k => (config[k].yAxisId || "left") === "left");
+    return hasLeftData ? "left" : "right";
+  }, [dataKeys, config]);
 
   // Get legend positioning props
   const legendProps = getLegendProps(legendPosition);
@@ -863,9 +890,26 @@ export function Chart({
             onMouseLeave={handleMouseLeave}
             onClick={handleClick}
           >
-            {showGrid && <CartesianGrid {...gridProps} />}
+            {showGrid && <CartesianGrid {...gridProps} yAxisId={gridYAxisId} />}
             <XAxis dataKey="name" {...xAxisProps} />
-            <YAxis {...yAxisProps} />
+            <YAxis yAxisId="left" {...yAxisProps} />
+            {showRightYAxis && (
+              <YAxis
+                yAxisId="right"
+                orientation="right"
+                axisLine={{ stroke: "var(--color-border-primary-subtle)", strokeWidth: 2 }}
+                tickLine={{ stroke: "var(--color-border-primary-subtle)", strokeWidth: 1 }}
+                tick={{
+                  fontSize: 10,
+                  fill: "var(--color-text-tertiary)",
+                  fontFamily: "Inter, sans-serif"
+                }}
+                width={calculatedRightYAxisWidth}
+                tickFormatter={rightYAxisTickFormatter}
+                {...(rightYAxisTickCount && { tickCount: rightYAxisTickCount })}
+                {...(rightYAxisDomain && { domain: rightYAxisDomain })}
+              />
+            )}
             {/* Reference lines - rendered BEFORE lines so tooltip activeDots appear on top */}
             {referenceMarkers?.map((marker, markerIdx) => (
               marker.showLine !== false && (
@@ -900,6 +944,7 @@ export function Chart({
                   type="linear"
                   dataKey={key}
                   name={config[key].label}
+                  yAxisId={config[key].yAxisId || "left"}
                   stroke={baseColor}
                   strokeWidth={2}
                   strokeDasharray={getStrokeDashArray(config[key].strokeStyle)}
@@ -983,15 +1028,32 @@ export function Chart({
 
       case "composed":
         return (
-          <ComposedChart 
+          <ComposedChart
             {...commonProps}
             onMouseMove={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onClick={handleClick}
           >
-            {showGrid && <CartesianGrid {...gridProps} />}
+            {showGrid && <CartesianGrid {...gridProps} yAxisId={gridYAxisId} />}
             <XAxis dataKey="name" {...xAxisProps} />
-            <YAxis {...yAxisProps} domain={[0, 'dataMax']} />
+            <YAxis yAxisId="left" {...yAxisProps} domain={[0, 'dataMax']} />
+            {showRightYAxis && (
+              <YAxis
+                yAxisId="right"
+                orientation="right"
+                axisLine={{ stroke: "var(--color-border-primary-subtle)", strokeWidth: 2 }}
+                tickLine={{ stroke: "var(--color-border-primary-subtle)", strokeWidth: 1 }}
+                tick={{
+                  fontSize: 10,
+                  fill: "var(--color-text-tertiary)",
+                  fontFamily: "Inter, sans-serif"
+                }}
+                width={calculatedRightYAxisWidth}
+                tickFormatter={rightYAxisTickFormatter}
+                {...(rightYAxisTickCount && { tickCount: rightYAxisTickCount })}
+                {...(rightYAxisDomain && { domain: rightYAxisDomain })}
+              />
+            )}
             {showTooltip && <Tooltip
               content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />}
               cursor={{
@@ -1017,6 +1079,7 @@ export function Chart({
                     key={key}
                     dataKey={key}
                     name={config[key].label}
+                    yAxisId={config[key].yAxisId || "left"}
                     fill={baseColor}
                     radius={[0, 0, 0, 0]}
                     className="cursor-pointer transition-colors"
@@ -1039,6 +1102,7 @@ export function Chart({
                     type="linear"
                     dataKey={key}
                     name={config[key].label}
+                    yAxisId={config[key].yAxisId || "left"}
                     stroke={config[key].stroke ?? baseColor}
                     fill={config[key].fill ?? baseColor}
                     fillOpacity={0.3}
@@ -1053,6 +1117,7 @@ export function Chart({
                     type="linear"
                     dataKey={key}
                     name={config[key].label}
+                    yAxisId={config[key].yAxisId || "left"}
                     stroke={config[key].stroke ?? "none"}
                     fill={config[key].fill ?? baseColor}
                     fillOpacity={0.3}
@@ -1075,6 +1140,7 @@ export function Chart({
                     type="linear"
                     dataKey={key}
                     name={config[key].label}
+                    yAxisId={config[key].yAxisId || "left"}
                     stroke={baseColor}
                     strokeWidth={2}
                     strokeDasharray={getStrokeDashArray(config[key].strokeStyle)}

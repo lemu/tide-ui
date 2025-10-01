@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Chart, generateChartColors, createChartConfig } from '../components/ui/chart'
+import { Chart, generateChartColors, createChartConfig, formatNumber } from '../components/ui/chart'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 
 const meta: Meta<typeof Chart> = {
@@ -1591,45 +1591,53 @@ export const DualYAxisCharts: Story = {
               revenue: {
                 label: 'Revenue ($)',
                 yAxisId: 'left',
-                strokeStyle: 'solid'
+                strokeStyle: 'solid',
+                color: 'var(--color-chart-line-1)'
               },
               growthRate: {
                 label: 'Growth Rate (%)',
                 yAxisId: 'right',
-                strokeStyle: 'dashed'
+                strokeStyle: 'dashed',
+                color: 'var(--color-chart-line-2)'
               },
             })}
             height={300}
             showGrid={true}
             showLegend={true}
+            showRightYAxis={true}
             rightYAxisTickFormatter={(value) => `${value}%`}
-            yAxisTickFormatter={(value) => `$${value}`}
+            yAxisTickFormatter={(value) => `$${formatNumber(value)}`}
             className="w-full"
           />
         </div>
 
-        {/* Bar Chart with Dual Y-Axis */}
+        {/* Composed Chart with Dual Y-Axis - Temperature Line */}
         <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
-          <h3 className="text-heading-md mb-[var(--space-md)]">Bar Chart - Temperature vs Humidity</h3>
+          <h3 className="text-heading-md mb-[var(--space-md)]">Line Chart - Temperature vs Humidity</h3>
           <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
-            Temperature bars (left axis, °C) and Humidity bars (right axis, %) with different scales.
+            Temperature (left axis, °C) and Humidity (right axis, %) on different scales.
           </p>
           <Chart
-            type="bar"
+            type="line"
             data={dualAxisData}
             config={createChartConfig({
               temperature: {
                 label: 'Temperature (°C)',
-                yAxisId: 'left'
+                yAxisId: 'left',
+                strokeStyle: 'solid',
+                color: 'var(--color-chart-line-3)'
               },
               humidity: {
                 label: 'Humidity (%)',
-                yAxisId: 'right'
+                yAxisId: 'right',
+                strokeStyle: 'solid',
+                color: 'var(--color-chart-line-4)'
               },
             })}
             height={300}
             showGrid={true}
             showLegend={true}
+            showRightYAxis={true}
             rightYAxisTickFormatter={(value) => `${value}%`}
             yAxisTickFormatter={(value) => `${value}°C`}
             className="w-full"
@@ -1649,25 +1657,29 @@ export const DualYAxisCharts: Story = {
               revenue: {
                 label: 'Revenue ($)',
                 type: 'bar',
-                yAxisId: 'left'
+                yAxisId: 'left',
+                color: 'var(--color-chart-bar-1)'
               },
               growthRate: {
                 label: 'Growth Rate (%)',
                 type: 'line',
                 yAxisId: 'right',
-                strokeStyle: 'solid'
+                strokeStyle: 'solid',
+                color: 'var(--color-chart-line-2)'
               },
               temperature: {
                 label: 'Temperature Trend',
                 type: 'area',
-                yAxisId: 'left'
+                yAxisId: 'left',
+                color: 'var(--color-chart-area-4)'
               },
             })}
             height={350}
             showGrid={true}
             showLegend={true}
+            showRightYAxis={true}
             rightYAxisTickFormatter={(value) => `${value}%`}
-            yAxisTickFormatter={(value) => `$${value}`}
+            yAxisTickFormatter={(value) => `$${formatNumber(value)}`}
             className="w-full"
           />
         </div>
@@ -1686,27 +1698,30 @@ export const DualYAxisCharts: Story = {
                 label: 'Primary Revenue',
                 yAxisId: 'left',
                 strokeStyle: 'solid',
-                showDots: true
+                showDots: true,
+                color: 'var(--color-chart-line-1)'
               },
               temperature: {
                 label: 'Secondary Metric 1',
                 yAxisId: 'right',
-                strokeStyle: 'dashed'
+                strokeStyle: 'dashed',
+                color: 'var(--color-chart-line-3)'
               },
               humidity: {
                 label: 'Secondary Metric 2',
                 yAxisId: 'right',
-                strokeStyle: 'dotted'
+                strokeStyle: 'dotted',
+                color: 'var(--color-chart-line-4)'
               },
             })}
             height={300}
             showGrid={true}
             showLegend={true}
+            showRightYAxis={true}
             yAxisTickCount={5}
             rightYAxisTickCount={4}
-            rightYAxisWidth={80}
             rightYAxisTickFormatter={(value) => `${value}u`}
-            yAxisTickFormatter={(value) => `$${value/1000}k`}
+            yAxisTickFormatter={(value) => `$${formatNumber(value/1000)}k`}
             className="w-full"
           />
         </div>
@@ -1716,32 +1731,39 @@ export const DualYAxisCharts: Story = {
         <h4 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">✅ Dual Y-Axis Features</h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-md)]">
           <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
-            <li><strong>Auto-Detection</strong> - Dual axis mode automatically enabled when any series uses right axis</li>
             <li><strong>Independent Scaling</strong> - Left and right axes scale independently for different data ranges</li>
             <li><strong>Custom Formatters</strong> - Different tick formatters for left and right axes (currency, percentage, etc.)</li>
             <li><strong>Flexible Configuration</strong> - Configure axis width, tick count, and styling independently</li>
+            <li><strong>Grid Line Support</strong> - CartesianGrid automatically follows primary axis (prevents disappearing grid lines)</li>
           </ul>
           <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
-            <li><strong>Universal Support</strong> - Works with all chart types: line, bar, scatter, composed</li>
-            <li><strong>Smart Margins</strong> - Automatic margin calculation to accommodate right Y-axis</li>
-            <li><strong>Legend Integration</strong> - Legend markers respect stroke styles and positioning</li>
-            <li><strong>Mixed Elements</strong> - Composed charts can mix different element types on different axes</li>
+            <li><strong>Line & Composed Charts</strong> - Dual Y-axis supported for line and composed chart types</li>
+            <li><strong>Smart Margins</strong> - Automatic margin calculation to accommodate right Y-axis width</li>
+            <li><strong>Auto Width Calculation</strong> - Right axis width auto-calculated based on formatted tick values</li>
+            <li><strong>Mixed Elements</strong> - Composed charts can mix bars, lines, and areas on different axes</li>
           </ul>
         </div>
 
         <div className="mt-[var(--space-md)] p-[var(--space-md)] bg-[var(--color-background-info-subtle)] rounded-md">
           <h5 className="text-body-medium-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Configuration Example:</h5>
           <pre className="text-caption-sm text-[var(--color-text-secondary)] font-mono">
-{`config: {
-  revenue: {
-    label: 'Revenue ($)',
-    yAxisId: 'left'  // Use left Y-axis
-  },
-  growthRate: {
-    label: 'Growth (%)',
-    yAxisId: 'right' // Use right Y-axis
-  }
-}`}
+{`<Chart
+  type="line"
+  data={data}
+  config={{
+    revenue: {
+      label: 'Revenue ($)',
+      yAxisId: 'left'  // Left Y-axis
+    },
+    growthRate: {
+      label: 'Growth (%)',
+      yAxisId: 'right' // Right Y-axis
+    }
+  }}
+  showRightYAxis={true}
+  rightYAxisTickFormatter={(v) => \`\${v}%\`}
+  yAxisTickFormatter={(v) => \`$\${v}\`}
+/>`}
           </pre>
         </div>
       </div>
