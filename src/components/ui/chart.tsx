@@ -19,6 +19,52 @@ import {
 } from "recharts";
 import { cn } from "@/lib/utils";
 
+// Format number with spaces as thousands separator, dot for decimals
+export const formatNumber = (value: number, decimals: number = 0): string => {
+  const fixed = value.toFixed(decimals);
+  const parts = fixed.split('.');
+  // Add space every 3 digits from the right
+  const integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  return decimals > 0 && parts[1] ? `${integerPart}.${parts[1]}` : integerPart;
+};
+
+// Calculate Y-axis width based on longest formatted tick value
+const calculateYAxisWidth = (
+  data: ChartDataPoint[],
+  dataKeys: string[],
+  tickFormatter?: (value: any, index: number) => string,
+  defaultWidth: number = 20
+): number => {
+  if (!data.length) return defaultWidth;
+
+  // Find max value across all data keys
+  let maxValue = 0;
+  data.forEach(point => {
+    dataKeys.forEach(key => {
+      const value = point[key];
+      if (typeof value === 'number') {
+        maxValue = Math.max(maxValue, Math.abs(value));
+      } else if (Array.isArray(value)) {
+        // Handle range-area data
+        value.forEach(v => {
+          if (typeof v === 'number') {
+            maxValue = Math.max(maxValue, Math.abs(v));
+          }
+        });
+      }
+    });
+  });
+
+  // Format the max value to get character count
+  const formattedMax = tickFormatter
+    ? tickFormatter(maxValue, 0)
+    : maxValue.toString();
+
+  // Calculate width: ~6px per character + 12px padding
+  const charCount = formattedMax.length;
+  return Math.max(defaultWidth, charCount * 6 + 12);
+};
+
 // Enhanced color palettes for different chart types with accessibility support
 export const chartColorSchemes = {
   bar: [
@@ -92,8 +138,6 @@ export interface ChartMargin {
   left: number;
 }
 
-export type ChartMarginSize = 'sm' | 'md' | 'lg' | 'auto';
-
 // Reference Marker interfaces for vertical lines with independent data points
 export interface ReferenceMarkerDataPoint {
   yValue: number;                    // Explicit Y-value on chart
@@ -135,9 +179,9 @@ export interface ChartProps {
   responsive?: boolean; // Control responsive behavior
   maintainAspectRatio?: boolean; // Control aspect ratio
   margin?: Partial<ChartMargin>; // Custom margin override
-  marginSize?: ChartMarginSize; // Preset margin sizes
   yAxisWidth?: number; // Override Y-axis space when more room needed
   yAxisTickCount?: number; // Force specific number of Y-axis ticks
+  yAxisDomain?: [number | 'auto' | 'dataMin' | 'dataMax', number | 'auto' | 'dataMin' | 'dataMax']; // Y-axis domain [min, max]
   xAxisTickFormatter?: (value: any, index: number) => string; // Custom X-axis tick formatting
   yAxisTickFormatter?: (value: any, index: number) => string; // Custom Y-axis tick formatting
   // Accessibility
@@ -226,11 +270,11 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
 
   return (
     <div
-      className={`rounded-md border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-sm)] shadow-md ${tooltipMaxWidth}`}
+      className={`rounded-xsm border border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] p-[var(--space-md)] shadow-md min-w-[120px] ${tooltipMaxWidth}`}
       role="tooltip"
       aria-label="Chart data tooltip"
     >
-      <p className="text-body-sm font-medium mb-[var(--space-xsm)] text-[var(--color-text-primary)]">
+      <p className="text-body-xsm font-medium mb-[var(--space-xsm)] text-[var(--color-text-primary)]">
         {label}
       </p>
       {payload.map((entry: any, index: number) => {
@@ -242,15 +286,15 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
           const originalData = entry.payload[entry.dataKey];
           if (Array.isArray(originalData) && originalData.length === 2) {
             // Format range as "min – max" with non-breaking spaces to prevent awkward line breaks
-            displayValue = `${originalData[0].toLocaleString()}\u00A0–\u00A0${originalData[1].toLocaleString()}`;
+            displayValue = `${formatNumber(originalData[0])}\u00A0–\u00A0${formatNumber(originalData[1])}`;
           } else {
             displayValue = typeof entry.value === 'number'
-              ? entry.value.toLocaleString()
+              ? formatNumber(entry.value)
               : entry.value;
           }
         } else {
           displayValue = typeof entry.value === 'number'
-            ? entry.value.toLocaleString()
+            ? formatNumber(entry.value)
             : entry.value;
         }
 
@@ -341,12 +385,12 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
         };
 
         return (
-          <div key={index} className="flex items-center gap-[var(--space-xsm)] text-body-sm">
+          <div key={index} className="flex items-center gap-[var(--space-xsm)] text-body-xsm">
             {getTooltipMarkerElement()}
-            <span className="text-[var(--color-text-secondary)] min-w-0 break-words">
+            <span className="text-[var(--color-text-primary)] min-w-0 break-words">
               {configEntry?.label || entry.dataKey}:
             </span>
-            <span className="font-medium text-[var(--color-text-primary)] ml-auto">
+            <span className="text-label-sm text-[var(--color-text-primary)] ml-auto pl-[16px]">
               {displayValue}
             </span>
           </div>
@@ -419,7 +463,7 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
                       {point.label || `Marker ${pointIdx + 1}`}:
                     </span>
                     <span className="font-medium text-[var(--color-text-primary)] ml-auto">
-                      {point.yValue.toLocaleString()}
+                      {formatNumber(point.yValue)}
                     </span>
                   </div>
                 );
@@ -450,7 +494,6 @@ export function Chart({
   responsive = true,
   maintainAspectRatio = false,
   margin,
-  marginSize = 'auto',
   yAxisWidth,
   yAxisTickCount,
   xAxisTickFormatter,
@@ -462,6 +505,7 @@ export function Chart({
   legendOrder,
   legendPosition = 'bottom',
   referenceMarkers,
+  yAxisDomain,
   ...props
 }: ChartProps) {
 
@@ -527,24 +571,9 @@ export function Chart({
     onDataPointClick?.(data?.activePayload?.[0]?.payload, index);
   }, [onDataPointClick]);
 
-  // Smart margin calculation based on chart size and type
-  const calculateMargins = (size: ChartMarginSize, chartType: ChartType, chartHeight: number): ChartMargin => {
-    // Comfortable margins with 4px grid system - Y-axis width is the real space controller
-    const marginPresets = {
-      sm: { top: 4, right: 8, left: 8, bottom: 8 },   // Compact for small charts
-      md: { top: 8, right: 12, left: 12, bottom: 12 },  // Balanced for medium charts
-      lg: { top: 12, right: 16, left: 16, bottom: 16 }, // Spacious for large charts
-    };
-
-    // Auto-calculate size based on height
-    const getAutoSize = (height: number): keyof typeof marginPresets => {
-      if (height < 300) return 'sm';
-      if (height <= 500) return 'md';
-      return 'lg';
-    };
-
-    const effectiveSize = size === 'auto' ? getAutoSize(chartHeight) : size;
-    const baseMargins = marginPresets[effectiveSize];
+  // Simple margin calculation with zero defaults and legend support
+  const getMargins = (): ChartMargin => {
+    const defaultMargin = { top: 0, right: 0, left: 0, bottom: 0 };
 
     // Calculate legend space requirements (only bottom position supported)
     const dataKeyCount = Object.keys(config).filter(key => key !== 'name').length;
@@ -552,53 +581,19 @@ export function Chart({
       ? Math.ceil(dataKeyCount / 4) * 24 + 8 // Rough estimate: 4 items per row, 24px per row, 8px padding
       : 0;
 
-    // Type-specific adjustments - 4px grid system maintained with legend spacing
-    const typeAdjustments = {
-      'horizontal-bar': {
-        left: baseMargins.left + 8, // Extra space for Y-axis category labels
-        right: baseMargins.right + 4, // Space for value labels
-        bottom: baseMargins.bottom + estimatedLegendHeight,
-        top: baseMargins.top,
-      },
-      'scatter': {
-        left: baseMargins.left + 4, // Slight extra for numeric Y-axis
-        right: baseMargins.right + 4,
-        bottom: baseMargins.bottom + 4 + estimatedLegendHeight,
-        top: baseMargins.top,
-      },
-      'bar': {
-        ...baseMargins,
-        bottom: baseMargins.bottom + estimatedLegendHeight,
-      },
-      'line': {
-        ...baseMargins,
-        bottom: baseMargins.bottom + estimatedLegendHeight, // Clean margins - Y-axis width controls space
-      },
-      'composed': {
-        ...baseMargins,
-        bottom: baseMargins.bottom + estimatedLegendHeight,
-      },
+    return {
+      top: margin?.top ?? defaultMargin.top,
+      right: margin?.right ?? defaultMargin.right,
+      left: margin?.left ?? defaultMargin.left,
+      bottom: margin?.bottom ?? (defaultMargin.bottom + estimatedLegendHeight),
     };
-
-    return { ...baseMargins, ...typeAdjustments[chartType] };
   };
 
-  // Dynamic margins based on props, chart type, and size
-  const getMargins = (): ChartMargin => {
-    // If custom margin is provided, use it (with fallbacks for missing values)
-    if (margin) {
-      const defaultMargin = calculateMargins(marginSize || 'auto', type, height);
-      return {
-        top: margin.top ?? defaultMargin.top,
-        right: margin.right ?? defaultMargin.right,
-        bottom: margin.bottom ?? defaultMargin.bottom,
-        left: margin.left ?? defaultMargin.left,
-      };
-    }
-
-    // Use calculated margins based on marginSize (defaults to 'auto')
-    return calculateMargins(marginSize || 'auto', type, height);
-  };
+  // Calculate Y-axis width dynamically based on formatted tick values
+  const calculatedYAxisWidth = useMemo(() => {
+    if (yAxisWidth) return yAxisWidth; // Manual override takes precedence
+    return calculateYAxisWidth(processedData, dataKeys, yAxisTickFormatter, 20);
+  }, [yAxisWidth, processedData, dataKeys, yAxisTickFormatter]);
 
   // Get legend positioning props
   const legendProps = getLegendProps(legendPosition);
@@ -629,9 +624,10 @@ export function Chart({
       fill: "var(--color-text-tertiary)",
       fontFamily: "Inter, sans-serif"
     },
-    width: yAxisWidth || 15, // Ultra-minimal default width (15px) vs Recharts default (~60px)
+    width: calculatedYAxisWidth, // Auto-calculated based on tick formatter, default 20px
     tickFormatter: yAxisTickFormatter,
     ...(yAxisTickCount && { tickCount: yAxisTickCount }), // Force specific number of ticks when provided
+    ...(yAxisDomain && { domain: yAxisDomain }), // Custom Y-axis domain when provided
   };
 
   const gridProps = {
