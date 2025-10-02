@@ -197,6 +197,7 @@ export interface ChartProps {
   description?: string; // Chart description for screen readers
   showDataTable?: boolean; // Show accessible data table fallback
   tooltipMaxWidth?: string; // Custom tooltip max width class (e.g., 'max-w-xs', 'max-w-48')
+  tooltipAllowEscapeViewBox?: { x?: boolean; y?: boolean }; // Allow tooltips to overflow chart boundaries
   legendOrder?: string[]; // Custom order for legend items (array of data keys)
   legendPosition?: 'bottom'; // Legend position (only bottom is supported)
   // Reference Markers
@@ -516,6 +517,7 @@ export function Chart({
   description,
   showDataTable = false,
   tooltipMaxWidth = 'max-w-xs',
+  tooltipAllowEscapeViewBox,
   legendOrder,
   legendPosition = 'bottom',
   referenceMarkers,
@@ -814,10 +816,10 @@ export function Chart({
             {showGrid && <CartesianGrid {...gridProps} />}
             <XAxis dataKey="name" {...xAxisProps} />
             <YAxis {...yAxisProps} />
-            {showTooltip && <Tooltip 
+            {showTooltip && <Tooltip
               content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />}
-              cursor={{ 
-                stroke: "var(--color-border-primary)", 
+              cursor={{
+                stroke: "var(--color-border-primary)",
                 strokeWidth: 1,
                 fill: "var(--color-background-neutral)",
                 fillOpacity: 1.0
@@ -825,6 +827,7 @@ export function Chart({
               position={{ x: undefined, y: undefined }}
               offset={10}
               animationDuration={0}
+              allowEscapeViewBox={tooltipAllowEscapeViewBox}
             />}
             {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
             {dataKeys.map((key, index) => {
@@ -858,10 +861,10 @@ export function Chart({
             {showGrid && <CartesianGrid {...gridProps} horizontal={false} vertical={true} />}
             <XAxis type="number" {...xAxisProps} />
             <YAxis type="category" dataKey="name" {...yAxisProps} />
-            {showTooltip && <Tooltip 
+            {showTooltip && <Tooltip
               content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />}
-              cursor={{ 
-                stroke: "var(--color-border-primary)", 
+              cursor={{
+                stroke: "var(--color-border-primary)",
                 strokeWidth: 1,
                 fill: "var(--color-background-neutral)",
                 fillOpacity: 1.0
@@ -869,6 +872,7 @@ export function Chart({
               position={{ x: undefined, y: undefined }}
               offset={10}
               animationDuration={0}
+              allowEscapeViewBox={tooltipAllowEscapeViewBox}
             />}
             {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
             {dataKeys.map((key, index) => {
@@ -941,6 +945,7 @@ export function Chart({
               position={{ x: undefined, y: undefined }}
               offset={10}
               animationDuration={0}
+              allowEscapeViewBox={tooltipAllowEscapeViewBox}
             />}
             {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
             {dataKeys.map((key, index) => {
@@ -1012,6 +1017,7 @@ export function Chart({
               position={{ x: undefined, y: undefined }}
               offset={10}
               animationDuration={0}
+              allowEscapeViewBox={tooltipAllowEscapeViewBox}
             />}
             {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
             {dataKeys
@@ -1072,6 +1078,7 @@ export function Chart({
               position={{ x: undefined, y: undefined }}
               offset={10}
               animationDuration={0}
+              allowEscapeViewBox={tooltipAllowEscapeViewBox}
             />}
             {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
             {/* Render in order: bars first, then areas, then lines (for proper z-index layering) */}
