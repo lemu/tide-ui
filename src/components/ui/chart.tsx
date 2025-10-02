@@ -183,7 +183,6 @@ export interface ChartProps {
   margin?: Partial<ChartMargin>; // Custom margin override
   yAxisWidth?: number; // Override Y-axis space when more room needed
   yAxisTickCount?: number; // Force specific number of Y-axis ticks
-  yAxisTicks?: number[]; // Explicitly define Y-axis tick values (e.g., [0, 6, 12, 18, 24])
   yAxisDomain?: [number | 'auto' | 'dataMin' | 'dataMax', number | 'auto' | 'dataMin' | 'dataMax']; // Y-axis domain [min, max]
   xAxisTickFormatter?: (value: any, index: number) => string; // Custom X-axis tick formatting
   yAxisTickFormatter?: (value: any, index: number) => string; // Custom Y-axis tick formatting
@@ -191,7 +190,6 @@ export interface ChartProps {
   showRightYAxis?: boolean; // Show right Y-axis
   rightYAxisWidth?: number; // Override right Y-axis space when more room needed
   rightYAxisTickCount?: number; // Force specific number of right Y-axis ticks
-  rightYAxisTicks?: number[]; // Explicitly define right Y-axis tick values
   rightYAxisDomain?: [number | 'auto' | 'dataMin' | 'dataMax', number | 'auto' | 'dataMin' | 'dataMax']; // Right Y-axis domain [min, max]
   rightYAxisTickFormatter?: (value: any, index: number) => string; // Custom right Y-axis tick formatting
   // Accessibility
@@ -508,13 +506,11 @@ export function Chart({
   margin,
   yAxisWidth,
   yAxisTickCount,
-  yAxisTicks,
   xAxisTickFormatter,
   yAxisTickFormatter,
   showRightYAxis = false,
   rightYAxisWidth,
   rightYAxisTickCount,
-  rightYAxisTicks,
   rightYAxisDomain,
   rightYAxisTickFormatter,
   title,
@@ -668,7 +664,7 @@ export function Chart({
     },
     width: calculatedYAxisWidth, // Auto-calculated based on tick formatter, default 20px
     tickFormatter: yAxisTickFormatter,
-    ...(yAxisTicks ? { ticks: yAxisTicks } : yAxisTickCount && { tickCount: yAxisTickCount }), // Explicit ticks takes priority over tickCount
+    ...(yAxisTickCount && { tickCount: yAxisTickCount }), // Force specific number of ticks when provided
     ...(yAxisDomain && { domain: yAxisDomain }), // Custom Y-axis domain when provided
   };
 
@@ -925,7 +921,7 @@ export function Chart({
                 }}
                 width={calculatedRightYAxisWidth}
                 tickFormatter={rightYAxisTickFormatter}
-                {...(rightYAxisTicks ? { ticks: rightYAxisTicks } : rightYAxisTickCount && { tickCount: rightYAxisTickCount })}
+                {...(rightYAxisTickCount && { tickCount: rightYAxisTickCount })}
                 {...(rightYAxisDomain && { domain: rightYAxisDomain })}
               />
             )}
@@ -1074,7 +1070,7 @@ export function Chart({
                 }}
                 width={calculatedRightYAxisWidth}
                 tickFormatter={rightYAxisTickFormatter}
-                {...(rightYAxisTicks ? { ticks: rightYAxisTicks } : rightYAxisTickCount && { tickCount: rightYAxisTickCount })}
+                {...(rightYAxisTickCount && { tickCount: rightYAxisTickCount })}
                 {...(rightYAxisDomain && { domain: rightYAxisDomain })}
               />
             )}
