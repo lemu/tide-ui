@@ -183,6 +183,7 @@ export interface ChartProps {
   margin?: Partial<ChartMargin>; // Custom margin override
   yAxisWidth?: number; // Override Y-axis space when more room needed
   yAxisTickCount?: number; // Force specific number of Y-axis ticks
+  yAxisTicks?: number[]; // Explicitly define Y-axis tick values (e.g., [0, 6, 12, 18, 24])
   yAxisDomain?: [number | 'auto' | 'dataMin' | 'dataMax', number | 'auto' | 'dataMin' | 'dataMax']; // Y-axis domain [min, max]
   xAxisTickFormatter?: (value: any, index: number) => string; // Custom X-axis tick formatting
   yAxisTickFormatter?: (value: any, index: number) => string; // Custom Y-axis tick formatting
@@ -190,6 +191,7 @@ export interface ChartProps {
   showRightYAxis?: boolean; // Show right Y-axis
   rightYAxisWidth?: number; // Override right Y-axis space when more room needed
   rightYAxisTickCount?: number; // Force specific number of right Y-axis ticks
+  rightYAxisTicks?: number[]; // Explicitly define right Y-axis tick values
   rightYAxisDomain?: [number | 'auto' | 'dataMin' | 'dataMax', number | 'auto' | 'dataMin' | 'dataMax']; // Right Y-axis domain [min, max]
   rightYAxisTickFormatter?: (value: any, index: number) => string; // Custom right Y-axis tick formatting
   // Accessibility
@@ -408,16 +410,16 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
       {/* Display reference marker data if available at this X position */}
       {markersAtThisPoint.length > 0 && (
         <>
-          <div className="border-t border-[var(--color-border-primary-subtle)] my-[var(--space-xsm)]" />
+          <div className="my-[var(--space-md)]" />
           {markersAtThisPoint.map((marker: ReferenceMarker, markerIdx: number) => (
             <React.Fragment key={`marker-section-${markerIdx}`}>
               {marker.tooltipLabel && (
-                <p className="text-body-sm font-medium mb-[var(--space-xsm)] text-[var(--color-text-secondary)]">
+                <p className="text-label-sm mb-[var(--space-xsm)] text-[var(--color-text-primary)]">
                   {marker.tooltipLabel}
                 </p>
               )}
               {!marker.tooltipLabel && markerIdx === 0 && (
-                <p className="text-body-sm font-medium mb-[var(--space-xsm)] text-[var(--color-text-secondary)]">
+                <p className="text-label-sm mb-[var(--space-xsm)] text-[var(--color-text-primary)]">
                   Reference Markers:
                 </p>
               )}
@@ -466,12 +468,12 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
                 };
 
                 return (
-                  <div key={`marker-${markerIdx}-point-${pointIdx}`} className="flex items-center gap-[var(--space-xsm)] text-caption-sm">
+                  <div key={`marker-${markerIdx}-point-${pointIdx}`} className="flex items-center gap-[var(--space-xsm)]">
                     {shapeIcon()}
-                    <span className="text-[var(--color-text-secondary)] min-w-0 break-words">
+                    <span className="text-body-sm text-[var(--color-text-primary)] min-w-0 break-words">
                       {point.label || `Marker ${pointIdx + 1}`}:
                     </span>
-                    <span className="font-medium text-[var(--color-text-primary)] ml-auto">
+                    <span className="text-body-medium-sm text-[var(--color-text-primary)] ml-auto pl-[16px]">
                       {formatNumber(point.yValue)}
                     </span>
                   </div>
@@ -506,11 +508,13 @@ export function Chart({
   margin,
   yAxisWidth,
   yAxisTickCount,
+  yAxisTicks,
   xAxisTickFormatter,
   yAxisTickFormatter,
   showRightYAxis = false,
   rightYAxisWidth,
   rightYAxisTickCount,
+  rightYAxisTicks,
   rightYAxisDomain,
   rightYAxisTickFormatter,
   title,
@@ -630,7 +634,8 @@ export function Chart({
           left: 0,
           right: 0,
           height: legendHeight,
-          paddingTop: 8
+          paddingTop: 8,
+          zIndex: 1
         }
       }
     : getLegendProps(legendPosition);
@@ -663,7 +668,7 @@ export function Chart({
     },
     width: calculatedYAxisWidth, // Auto-calculated based on tick formatter, default 20px
     tickFormatter: yAxisTickFormatter,
-    ...(yAxisTickCount && { tickCount: yAxisTickCount }), // Force specific number of ticks when provided
+    ...(yAxisTicks ? { ticks: yAxisTicks } : yAxisTickCount && { tickCount: yAxisTickCount }), // Explicit ticks takes priority over tickCount
     ...(yAxisDomain && { domain: yAxisDomain }), // Custom Y-axis domain when provided
   };
 
@@ -828,6 +833,7 @@ export function Chart({
               offset={10}
               animationDuration={0}
               allowEscapeViewBox={tooltipAllowEscapeViewBox}
+              wrapperStyle={{ zIndex: 100 }}
             />}
             {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
             {dataKeys.map((key, index) => {
@@ -873,6 +879,7 @@ export function Chart({
               offset={10}
               animationDuration={0}
               allowEscapeViewBox={tooltipAllowEscapeViewBox}
+              wrapperStyle={{ zIndex: 100 }}
             />}
             {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
             {dataKeys.map((key, index) => {
@@ -918,22 +925,23 @@ export function Chart({
                 }}
                 width={calculatedRightYAxisWidth}
                 tickFormatter={rightYAxisTickFormatter}
-                {...(rightYAxisTickCount && { tickCount: rightYAxisTickCount })}
+                {...(rightYAxisTicks ? { ticks: rightYAxisTicks } : rightYAxisTickCount && { tickCount: rightYAxisTickCount })}
                 {...(rightYAxisDomain && { domain: rightYAxisDomain })}
               />
             )}
             {/* Reference lines - rendered BEFORE lines so tooltip activeDots appear on top */}
-            {referenceMarkers?.map((marker, markerIdx) => (
-              marker.showLine !== false && (
+            {referenceMarkers?.map((marker, markerIdx) =>
+              marker.showLine !== false ? (
                 <ReferenceLine
                   key={`marker-line-${markerIdx}`}
                   x={marker.xValue}
+                  yAxisId="left"
                   stroke={marker.lineStyle?.stroke || '#000000'}
                   strokeWidth={marker.lineStyle?.strokeWidth || 2}
                   strokeDasharray={marker.lineStyle?.strokeDasharray}
                 />
-              )
-            ))}
+              ) : null
+            )}
             {showTooltip && <Tooltip
               content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} referenceMarkers={referenceMarkers} />}
               cursor={{
@@ -946,6 +954,7 @@ export function Chart({
               offset={10}
               animationDuration={0}
               allowEscapeViewBox={tooltipAllowEscapeViewBox}
+              wrapperStyle={{ zIndex: 100 }}
             />}
             {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
             {dataKeys.map((key, index) => {
@@ -983,6 +992,7 @@ export function Chart({
                     key={`marker-${markerIdx}-point-${pointIdx}`}
                     x={marker.xValue}
                     y={point.yValue}
+                    yAxisId="left"
                     r={point.size || 4}
                     fill={point.fill || 'var(--color-chart-line-1)'}
                     stroke={point.stroke || 'transparent'}
@@ -1018,6 +1028,7 @@ export function Chart({
               offset={10}
               animationDuration={0}
               allowEscapeViewBox={tooltipAllowEscapeViewBox}
+              wrapperStyle={{ zIndex: 100 }}
             />}
             {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
             {dataKeys
@@ -1063,7 +1074,7 @@ export function Chart({
                 }}
                 width={calculatedRightYAxisWidth}
                 tickFormatter={rightYAxisTickFormatter}
-                {...(rightYAxisTickCount && { tickCount: rightYAxisTickCount })}
+                {...(rightYAxisTicks ? { ticks: rightYAxisTicks } : rightYAxisTickCount && { tickCount: rightYAxisTickCount })}
                 {...(rightYAxisDomain && { domain: rightYAxisDomain })}
               />
             )}
@@ -1079,6 +1090,7 @@ export function Chart({
               offset={10}
               animationDuration={0}
               allowEscapeViewBox={tooltipAllowEscapeViewBox}
+              wrapperStyle={{ zIndex: 100 }}
             />}
             {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
             {/* Render in order: bars first, then areas, then lines (for proper z-index layering) */}
