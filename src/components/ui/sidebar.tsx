@@ -673,7 +673,9 @@ const SidebarMenuButton = React.forwardRef<
           "bg-[var(--color-background-brand-selected)]",
           "text-[var(--color-text-brand)]",
           "[&]:text-body-medium-md [&]:font-normal",
-          "[&>svg]:text-[var(--color-text-brand)]"
+          "[&>svg]:text-[var(--color-text-brand)]",
+          "hover:bg-[var(--color-background-brand-selected-hovered)]",
+          "hover:[&>svg]:text-[var(--color-icon-brand-hover)]"
         ],
 
 
@@ -959,7 +961,8 @@ const SidebarMenuSubButton = React.forwardRef<
       isActive && !isFocused && [
         "bg-[var(--color-background-brand-selected)]",
         "text-[var(--color-text-brand)]",
-        "[&]:text-body-md [&]:font-normal"
+        "[&]:text-body-md [&]:font-normal",
+        "hover:bg-[var(--color-background-brand-selected-hovered)]"
       ],
 
 
