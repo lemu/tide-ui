@@ -29,7 +29,7 @@ export const formatNumber = (value: number, decimals: number = 0): string => {
 };
 
 // Calculate Y-axis width based on longest formatted tick value
-// Calculate nice rounded Y-axis domain for clean tick values
+// Calculate nice rounded Y-axis domain for clean tick values with equal spacing
 const calculateNiceYAxisDomain = (
   data: ChartDataPoint[],
   dataKeys: string[],
@@ -80,9 +80,11 @@ const calculateNiceYAxisDomain = (
     niceInterval = 10 * magnitude;
   }
 
-  // Round min down and max up to nearest nice interval
+  // Round min down to nearest nice interval
   const niceMin = Math.floor(min / niceInterval) * niceInterval;
-  const niceMax = Math.ceil(max / niceInterval) * niceInterval;
+
+  // Calculate max based on exact number of intervals to ensure equal spacing
+  const niceMax = niceMin + (niceInterval * (tickCount - 1));
 
   return [niceMin, niceMax];
 };

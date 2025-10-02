@@ -1415,7 +1415,8 @@ export const RoundedYAxis: Story = {
         <h2 className="text-heading-lg mb-[var(--space-md)]">Rounded Y-Axis Ticks</h2>
         <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-xlg)]">
           Use <code className="text-caption-sm px-1 py-0.5 bg-[var(--grey-100)] rounded">roundYAxis=true</code> to automatically
-          calculate nice rounded Y-axis domains. This ensures clean tick values (0, 200, 400, 600) instead of awkward decimals (0, 187.5, 375, 562.5).
+          calculate nice rounded Y-axis domains with equal spacing. This ensures clean tick values (0, 200, 400, 600) with consistent
+          intervals instead of awkward decimals (0, 187.5, 375, 562.5) with uneven spacing.
         </p>
       </div>
 
