@@ -321,7 +321,7 @@ const renderMarkerShape = (shape: 'circle' | 'triangle' | 'square' = 'circle') =
 };
 
 // Helper function to get Legend positioning props
-const getLegendProps = (legendPosition: 'bottom') => {
+const getLegendProps = (_legendPosition: 'bottom') => {
   // Only bottom legend is supported
   return { verticalAlign: 'bottom' as const, align: 'center' as const };
 };
@@ -333,7 +333,7 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
   }
 
   // Find reference markers for this X-axis value
-  const markersAtThisPoint = referenceMarkers?.filter(marker => marker.xValue === label) || [];
+  const markersAtThisPoint = referenceMarkers?.filter((marker: ReferenceMarker) => marker.xValue === label) || [];
 
   return (
     <div
@@ -467,7 +467,7 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
       {markersAtThisPoint.length > 0 && (
         <>
           <div className="border-t border-[var(--color-border-primary-subtle)] my-[var(--space-xsm)]" />
-          {markersAtThisPoint.map((marker, markerIdx) => (
+          {markersAtThisPoint.map((marker: ReferenceMarker, markerIdx: number) => (
             <React.Fragment key={`marker-section-${markerIdx}`}>
               {marker.tooltipLabel && (
                 <p className="text-body-sm font-medium mb-[var(--space-xsm)] text-[var(--color-text-secondary)]">
@@ -479,7 +479,7 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
                   Reference Markers:
                 </p>
               )}
-              {marker.dataPoints.map((point, pointIdx) => {
+              {marker.dataPoints.map((point: ReferenceMarkerDataPoint, pointIdx: number) => {
                 // Render marker shape icon
                 const shapeIcon = () => {
                   const shapeSize = 8;
@@ -1066,7 +1066,6 @@ export function Chart({
                     stroke={point.stroke || 'transparent'}
                     strokeWidth={point.strokeWidth || 0}
                     shape={renderMarkerShape(point.shape || 'circle')}
-                    isFront={true}
                   />
                 ))}
               </React.Fragment>
