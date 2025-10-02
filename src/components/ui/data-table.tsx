@@ -810,6 +810,10 @@ export interface DataTableProps<TData, TValue> {
       bottom?: string[]
     }
   }
+  // Section header rows
+  renderSectionHeaderRow?: (row: any) => React.ReactNode | null
+  // Auto-expand children when parent is expanded
+  autoExpandChildren?: boolean
 }
 
 export function DataTable<TData, TValue>({
@@ -854,6 +858,8 @@ export function DataTable<TData, TValue>({
   showPagination = true,
   onTableReady,
   initialState,
+  renderSectionHeaderRow,
+  autoExpandChildren = false,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -1013,6 +1019,7 @@ export function DataTable<TData, TValue>({
     columnResizeMode: columnResizeMode,
     enableExpanding: enableExpanding,
     getSubRows: getSubRows,
+    paginateExpandedRows: false, // Only paginate top-level rows, not expanded children
     enableGrouping: enableGrouping,
     groupedColumnMode: groupedColumnMode,
     manualGrouping: enableManualGrouping,
@@ -1040,6 +1047,44 @@ export function DataTable<TData, TValue>({
   })
 
   // Column pinning useEffect removed - using pure CSS approach instead
+
+  // Track which parent rows were just expanded to auto-expand their children
+  const previousExpandedRef = React.useRef<ExpandedState>({})
+
+  // Auto-expand children when parent is expanded
+  React.useEffect(() => {
+    if (!autoExpandChildren) return
+
+    const currentExpanded = table.getState().expanded
+    const previousExpanded = previousExpandedRef.current
+    const newExpanded = { ...currentExpanded }
+    let hasChanges = false
+
+    // Check all rows
+    table.getRowModel().rows.forEach((row) => {
+      const rowId = row.id
+      const isExpanded = currentExpanded[rowId] === true
+      const wasExpanded = previousExpanded[rowId] === true
+
+      // If this row was just expanded (changed from false/undefined to true) and has children
+      // then expand all immediate children
+      if (isExpanded && !wasExpanded && row.subRows && row.subRows.length > 0) {
+        row.subRows.forEach((subRow) => {
+          if (currentExpanded[subRow.id] !== true) {
+            newExpanded[subRow.id] = true
+            hasChanges = true
+          }
+        })
+      }
+    })
+
+    // Update the ref to track current state for next comparison
+    previousExpandedRef.current = currentExpanded
+
+    if (hasChanges) {
+      setExpanded(newExpanded)
+    }
+  }, [expanded, autoExpandChildren, table])
 
   // Expose table instance for external control
   React.useEffect(() => {
@@ -1114,6 +1159,11 @@ export function DataTable<TData, TValue>({
 
   // Pure CSS sticky positioning with visual separators
   const getPureCSSPinningStyles = (column: any, isHeader = false): React.CSSProperties => {
+    // Handle nested header configs that don't have column methods
+    if (!column || typeof column.getSize !== 'function') {
+      return {}
+    }
+
     // Get all visible columns in their display order
     const allColumns = table.getVisibleFlatColumns()
     const currentColumnIndex = allColumns.findIndex(col => col.id === column.id)
@@ -1153,8 +1203,10 @@ export function DataTable<TData, TValue>({
       if (isRightmostLeftSticky) {
         return {
           ...baseStyles,
-          borderRight: '1px solid var(--color-border-primary-subtle)',
-          boxShadow: '2px 0 4px rgba(0, 0, 0, 0.08)',
+          // For headers: only vertical drop shadow. For body cells: combine with horizontal border
+          boxShadow: isHeader
+            ? '2px 0 4px 0 rgba(0, 0, 0, 0.08)'
+            : 'inset 0 -1px 0 0 var(--color-border-primary-bold), 2px 0 4px 0 rgba(0, 0, 0, 0.08)',
         }
       }
 
@@ -1186,8 +1238,10 @@ export function DataTable<TData, TValue>({
       if (isLeftmostRightSticky) {
         return {
           ...baseStyles,
-          borderLeft: '1px solid var(--color-border-primary-subtle)',
-          boxShadow: '-2px 0 4px rgba(0, 0, 0, 0.08)',
+          // For headers: only vertical drop shadow. For body cells: combine with horizontal border
+          boxShadow: isHeader
+            ? '-2px 0 4px 0 rgba(0, 0, 0, 0.08)'
+            : 'inset 0 -1px 0 0 var(--color-border-primary-bold), -2px 0 4px 0 rgba(0, 0, 0, 0.08)',
         }
       }
 
@@ -1205,18 +1259,12 @@ export function DataTable<TData, TValue>({
       onDragEnd={handleDragEnd}
     >
       <div className={cn(
-        "border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] overflow-hidden",
-        // Dynamic rounded corners based on visible sections
-        {
-          "rounded-lg": (showHeader && showPagination) || (!showHeader && !showPagination), // Both sections or table only
-          "rounded-t-lg": !showHeader && showPagination,       // Only pagination footer
-          "rounded-b-lg": showHeader && !showPagination,       // Only header
-        },
+        "border border-[var(--color-border-primary-bold)] bg-[var(--color-surface-primary)] overflow-hidden rounded-lg",
         className
       )}>
       {/* Header section with title and toolbar */}
       {showHeader && (
-        <div className="border-b border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-[var(--space-lg)] py-[var(--space-md)]">
+        <div className="border-b border-[var(--color-border-primary-bold)] bg-[var(--color-surface-primary)] px-[var(--space-lg)] py-[var(--space-md)]">
           {title && (
             <div className="flex justify-between items-center">
               <h3 className="text-heading-sm font-semibold text-[var(--color-text-primary)]">{title}</h3>
@@ -1268,8 +1316,10 @@ export function DataTable<TData, TValue>({
           <TableHeader className={cn(
             stickyHeader && [
               "sticky top-0 z-20",
-              "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-[var(--grey-50)]"
-            ]
+              "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-[var(--color-border-primary-bold)]"
+            ],
+            // Remove bottom border from last header row when pagination is enabled to avoid double border
+            showPagination && "[&_tr:last-child]:border-b-0"
           )}>
             {isLoading ? (
               <DataTableSkeleton
@@ -1283,7 +1333,7 @@ export function DataTable<TData, TValue>({
               <>
                 {/* Parent header row with groups */}
                 <TableRow showBorder={borderSettings.showRowBorder}>
-                  {nestedHeaders.map((headerConfig) => {
+                  {nestedHeaders.map((headerConfig, index) => {
                     const groupColumnCount = headerConfig.columns.length
 
                     // Simple column group styling
@@ -1295,8 +1345,10 @@ export function DataTable<TData, TValue>({
                         colSpan={groupColumnCount}
                         showBorder={borderSettings.showCellBorder}
                         className={cn(
-                          "text-center bg-[var(--color-background-neutral-subtle)] font-medium border-b border-[var(--grey-50)]",
+                          "text-center bg-[var(--color-background-neutral-subtle)] font-medium border-b border-[var(--color-border-primary-bold)]",
                           stickyHeader && "z-20",
+                          !showHeader && index === 0 && "rounded-tl-lg",
+                          !showHeader && index === nestedHeaders.length - 1 && "rounded-tr-lg",
                           headerConfig.className
                         )}
                         style={{
@@ -1318,13 +1370,14 @@ export function DataTable<TData, TValue>({
 
                 {/* Child header row with individual columns */}
                 <TableRow showBorder={borderSettings.showRowBorder}>
-                  {table.getHeaderGroups()[0]?.headers.map((header) => {
+                  {table.getHeaderGroups()[0]?.headers.map((header, index) => {
                     const pinningStyles = getPureCSSPinningStyles(header.column, true)
+                    const isLastHeader = index === table.getHeaderGroups()[0].headers.length - 1
 
                     return (
                       <TableHead
                         key={header.id}
-                        showBorder={borderSettings.showCellBorder}
+                        showBorder={isLastHeader ? false : borderSettings.showCellBorder}
                         className={cn(
                           stickyHeader && "z-20",
                           (effectiveLeftSticky > 0 || effectiveRightSticky > 0) && "z-30",
@@ -1371,18 +1424,22 @@ export function DataTable<TData, TValue>({
                   strategy={horizontalListSortingStrategy}
                 >
                   <TableRow showBorder={borderSettings.showRowBorder}>
-                    {headerGroup.headers.map((header) => {
+                    {headerGroup.headers.map((header, index) => {
                     const pinningStyles = getPureCSSPinningStyles(header.column, true)
+
+                    const isLastHeader = index === headerGroup.headers.length - 1
 
                     return (
                       <TableHead
                         key={header.id}
-                        showBorder={borderSettings.showCellBorder}
+                        showBorder={isLastHeader ? false : borderSettings.showCellBorder}
                         className={cn(
                           stickyHeader && "z-20",
                           (effectiveLeftSticky > 0 || effectiveRightSticky > 0) && "z-30",
                           enableColumnResizing && "relative",
-                          enableColumnOrdering && "group"
+                          enableColumnOrdering && "group",
+                          !showHeader && index === 0 && "rounded-tl-lg",
+                          !showHeader && index === headerGroup.headers.length - 1 && "rounded-tr-lg"
                         )}
                         style={{
                           ...pinningStyles,
@@ -1446,6 +1503,12 @@ export function DataTable<TData, TValue>({
                       showBorder={borderSettings.showRowBorder}
                       className={cn(
                         "group",
+                        // Selected row styling
+                        row.getIsSelected() && "bg-[var(--blue-25)] hover:bg-[var(--blue-25)]",
+                        // Expanded parent row styling (Level 1 when expanded AND has children)
+                        row.getIsExpanded() && row.depth === 0 && row.subRows && row.subRows.length > 0 && "bg-[var(--blue-25)] hover:bg-[var(--blue-25)]",
+                        // Level 3 row styling (depth 2)
+                        row.depth === 2 && "bg-[var(--blue-25)] hover:bg-[var(--blue-25)]",
                         // Pinned row styling using existing CSS variables
                         row.getIsPinned() === 'top' && "!bg-[var(--color-background-neutral-selected)] hover:!bg-[var(--color-background-neutral-selected)] !border-b-2 !border-[var(--color-border-primary-bold)]",
                         row.getIsPinned() === 'bottom' && "!bg-[var(--color-background-neutral-selected)] hover:!bg-[var(--color-background-neutral-selected)] !border-t-2 !border-[var(--color-border-primary-bold)]",
@@ -1463,24 +1526,40 @@ export function DataTable<TData, TValue>({
                         const depth = row.depth
                         const isGroupedRow = enableGrouping && row.getIsGrouped()
 
+                        // Check if this row should be rendered as a section header
+                        const sectionHeaderContent = renderSectionHeaderRow?.(row)
+                        const isSectionHeader = sectionHeaderContent !== null && sectionHeaderContent !== undefined
+
+                        // If it's a section header row and not the first cell, skip rendering
+                        if (isSectionHeader && !isFirstCell) {
+                          return null
+                        }
+
                         return (
                           <TableCell
                             key={cell.id}
                             showBorder={borderSettings.showCellBorder}
                             showRowBorder={borderSettings.showRowBorder}
+                            colSpan={isSectionHeader ? row.getVisibleCells().length : undefined}
+                            data-section-header={isSectionHeader ? true : undefined}
                             className={cn(
                               // Sticky columns need higher z-index but inherit background
-                              Object.keys(pinningStyles).length > 0 && "z-10"
+                              Object.keys(pinningStyles).length > 0 && "z-10",
+                              // Section header background
+                              isSectionHeader && "bg-[var(--blue-50)]"
                             )}
                             style={{
                               ...pinningStyles,
                               // Add left padding for nested rows
-                              paddingLeft: isFirstCell && depth > 0
+                              paddingLeft: isFirstCell && depth > 0 && !isSectionHeader
                                 ? `calc(var(--space-md) + ${depth * 20}px)`
                                 : undefined,
                             }}
                           >
-                            {isGroupedRow ? (
+                            {isSectionHeader ? (
+                              // Section header row - render custom content
+                              sectionHeaderContent
+                            ) : isGroupedRow ? (
                               // Grouped row rendering - only show content in first cell
                               isFirstCell ? (
                                 <div className="flex items-center gap-[var(--space-sm)] font-medium text-[var(--color-text-primary)]">
@@ -1601,6 +1680,12 @@ export function DataTable<TData, TValue>({
                     showBorder={borderSettings.showRowBorder}
                     className={cn(
                       "group",
+                      // Selected row styling
+                      row.getIsSelected() && "bg-[var(--blue-25)] hover:bg-[var(--blue-25)]",
+                      // Expanded parent row styling (Level 1 when expanded AND has children)
+                      row.getIsExpanded() && row.depth === 0 && row.subRows && row.subRows.length > 0 && "bg-[var(--blue-25)] hover:bg-[var(--blue-25)]",
+                      // Level 3 row styling (depth 2)
+                      row.depth === 2 && "bg-[var(--blue-25)] hover:bg-[var(--blue-25)]",
                       // Pinned row styling using existing CSS variables
                       row.getIsPinned() === 'top' && "!bg-[var(--color-background-neutral-selected)] hover:!bg-[var(--color-background-neutral-selected)] !border-b-2 !border-[var(--color-border-primary-bold)]",
                       row.getIsPinned() === 'bottom' && "!bg-[var(--color-background-neutral-selected)] hover:!bg-[var(--color-background-neutral-selected)] !border-t-2 !border-[var(--color-border-primary-bold)]",
@@ -1618,25 +1703,42 @@ export function DataTable<TData, TValue>({
                       const depth = row.depth
                       const isGroupedRow = enableGrouping && row.getIsGrouped()
 
+                      // Check if this row should be rendered as a section header
+                      const sectionHeaderContent = renderSectionHeaderRow?.(row)
+                      const isSectionHeader = sectionHeaderContent !== null && sectionHeaderContent !== undefined
+
+                      // If it's a section header row and not the first cell, skip rendering
+                      if (isSectionHeader && !isFirstCell) {
+                        return null
+                      }
+
                       return (
                         <TableCell
                           key={cell.id}
                           showBorder={borderSettings.showCellBorder}
                           showRowBorder={borderSettings.showRowBorder}
+                          colSpan={isSectionHeader ? row.getVisibleCells().length : undefined}
                           className={cn(
                             // Sticky columns need higher z-index but inherit background
-                            Object.keys(pinningStyles).length > 0 && "z-10"
+                            Object.keys(pinningStyles).length > 0 && "z-10",
+                            // Section header background
+                            isSectionHeader && "bg-[var(--blue-50)]"
                           )}
                           style={{
                             ...pinningStyles,
                             width: cell.column.getSize(),
+                            // Section header: fixed height with no padding
+                            ...(isSectionHeader ? { height: '32px', padding: '0' } : {}),
                             // Add left padding for nested rows
-                            paddingLeft: isFirstCell && depth > 0
+                            paddingLeft: isFirstCell && depth > 0 && !isSectionHeader
                               ? `calc(var(--space-md) + ${depth * 20}px)`
                               : undefined,
                           }}
                         >
-                          {isGroupedRow ? (
+                          {isSectionHeader ? (
+                            // Section header row - render custom content
+                            sectionHeaderContent
+                          ) : isGroupedRow ? (
                             // Grouped row rendering - only show content in first cell
                             isFirstCell ? (
                               <div className="flex items-center gap-[var(--space-sm)] font-medium text-[var(--color-text-primary)]">
@@ -1749,7 +1851,7 @@ export function DataTable<TData, TValue>({
       
       {/* Footer section with pagination */}
       {showPagination && (
-        <div className="border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-[var(--space-lg)] py-[var(--space-md)]">
+        <div className="border-t border-[var(--color-border-primary-bold)] bg-[var(--color-surface-primary)] px-[var(--space-lg)] py-[var(--space-md)]">
           <DataTablePagination table={table} />
         </div>
       )}

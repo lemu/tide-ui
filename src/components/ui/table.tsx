@@ -7,9 +7,9 @@ const tableVariants = cva(
   {
     variants: {
       size: {
-        sm: "[&_td]:!text-body-xsm [&_th]:!text-body-strong-xsm [&_td]:!px-3 [&_td]:!py-1 [&_td]:!h-7 [&_th]:!px-3 [&_th]:!py-1",
-        md: "[&_td]:!text-body-sm [&_th]:!text-body-strong-sm [&_td]:!px-4 [&_td]:!py-2 [&_td]:!h-9 [&_th]:!px-4 [&_th]:!py-2",
-        lg: "[&_td]:!text-body-md [&_th]:!text-body-strong-md [&_td]:!px-6 [&_td]:!py-3 [&_td]:!h-11 [&_th]:!px-6 [&_th]:!py-3",
+        sm: "[&_td:not([data-section-header])]:!text-body-xsm [&_th]:!text-body-strong-xsm [&_td:not([data-section-header])]:!px-3 [&_td:not([data-section-header])]:!py-1 [&_td:not([data-section-header])]:!h-7 [&_th]:!px-3 [&_th]:!py-1 [&_td[data-section-header]]:!p-0 [&_td[data-section-header]]:!h-5",
+        md: "[&_td:not([data-section-header])]:!text-body-sm [&_th]:!text-body-strong-sm [&_td:not([data-section-header])]:!px-4 [&_td:not([data-section-header])]:!py-2 [&_td:not([data-section-header])]:!h-9 [&_th]:!px-4 [&_th]:!py-2 [&_td[data-section-header]]:!p-0 [&_td[data-section-header]]:!h-7",
+        lg: "[&_td:not([data-section-header])]:!text-body-md [&_th]:!text-body-strong-md [&_td:not([data-section-header])]:!px-6 [&_td:not([data-section-header])]:!py-3 [&_td:not([data-section-header])]:!h-11 [&_th]:!px-6 [&_th]:!py-3 [&_td[data-section-header]]:!p-0 [&_td[data-section-header]]:!h-9",
       },
     },
     defaultVariants: {
@@ -25,7 +25,7 @@ const tableRowVariants = cva(
       variant: {
         default: "hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:bg-opacity-50",
         zebra: "",
-        selected: "bg-[var(--color-background-brand-selected)]",
+        selected: "bg-[var(--blue-25)]",
       },
       showBorder: {
         true: "",
@@ -58,11 +58,11 @@ const tableCellVariants = cva(
         false: "",
       },
       showBorder: {
-        true: "border-r border-[var(--grey-50)] last:border-r-0",
+        true: "border-r border-[var(--color-border-primary-bold)] last:border-r-0",
         false: "",
       },
       showRowBorder: {
-        true: "shadow-[inset_0_-1px_0_0_var(--grey-50)]",
+        true: "shadow-[inset_0_-1px_0_0_var(--color-border-primary-bold)]",
         false: "",
       },
     },
@@ -77,7 +77,7 @@ const tableCellVariants = cva(
 );
 
 const tableHeaderVariants = cva(
-  "align-middle font-semibold text-[var(--color-text-primary)] [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-[var(--grey-25)]",
+  "align-middle font-semibold text-[var(--color-text-primary)] [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-[var(--grey-25)] border-b border-[var(--grey-50)]",
   {
     variants: {
       size: {
@@ -95,7 +95,7 @@ const tableHeaderVariants = cva(
         false: "",
       },
       showBorder: {
-        true: "bg-[linear-gradient(to_right,var(--grey-25)_calc(100%-1px),var(--grey-50)_calc(100%-1px),var(--grey-50)_100%)] last:bg-[var(--grey-25)]",
+        true: "bg-[linear-gradient(to_right,var(--grey-25)_calc(100%-1px),var(--color-border-primary-bold)_calc(100%-1px),var(--color-border-primary-bold)_100%)] last:bg-[var(--grey-25)]",
         false: "",
       },
     },
@@ -132,7 +132,7 @@ const TableHeader = React.forwardRef<
   <thead
     ref={ref}
     className={cn(
-      "[&_tr]:border-b [&_tr]:border-[var(--grey-50)]",
+      "[&_tr]:border-b [&_tr]:border-[var(--color-border-primary-bold)]",
       className
     )}
     {...props}
@@ -146,7 +146,7 @@ const TableBody = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tbody
     ref={ref}
-    className={cn("[&_tr:last-child]:border-0 [&_tr:last-child:hover_td:first-child]:rounded-bl-lg [&_tr:last-child:hover_td:last-child]:rounded-br-lg", className)}
+    className={cn("[&_tr:last-child]:border-0 [&_tr:last-child_td]:shadow-[none]", className)}
     {...props}
   />
 ));
@@ -159,7 +159,7 @@ const TableFooter = React.forwardRef<
   <tfoot
     ref={ref}
     className={cn(
-      "border-t border-[var(--grey-50)] bg-[var(--color-background-neutral-subtle)] font-medium [&>tr]:last:border-b-0",
+      "border-t border-[var(--color-border-primary-bold)] bg-[var(--color-background-neutral-subtle)] font-medium [&>tr]:last:border-b-0",
       className
     )}
     {...props}
