@@ -29,66 +29,6 @@ export const formatNumber = (value: number, decimals: number = 0): string => {
 };
 
 // Calculate Y-axis width based on longest formatted tick value
-// Calculate nice rounded Y-axis domain for clean tick values with equal spacing
-const calculateNiceYAxisDomain = (
-  data: ChartDataPoint[],
-  dataKeys: string[],
-  tickCount: number = 5
-): [number, number] => {
-  if (!data.length || !dataKeys.length) return [0, 100];
-
-  // Find min and max values across all data keys
-  let min = Infinity;
-  let max = -Infinity;
-
-  data.forEach(point => {
-    dataKeys.forEach(key => {
-      const value = point[key];
-      if (typeof value === 'number') {
-        min = Math.min(min, value);
-        max = Math.max(max, value);
-      } else if (Array.isArray(value)) {
-        // Handle range-area data
-        value.forEach(v => {
-          if (typeof v === 'number') {
-            min = Math.min(min, v);
-            max = Math.max(max, v);
-          }
-        });
-      }
-    });
-  });
-
-  if (min === Infinity || max === -Infinity) return [0, 100];
-
-  // Calculate range and determine nice interval
-  const range = max - min;
-  const roughInterval = range / (tickCount - 1);
-
-  // Find the magnitude (power of 10)
-  const magnitude = Math.pow(10, Math.floor(Math.log10(roughInterval)));
-
-  // Determine nice interval (1, 2, 5, or 10 times the magnitude)
-  let niceInterval;
-  if (roughInterval / magnitude < 1.5) {
-    niceInterval = magnitude;
-  } else if (roughInterval / magnitude < 3) {
-    niceInterval = 2 * magnitude;
-  } else if (roughInterval / magnitude < 7) {
-    niceInterval = 5 * magnitude;
-  } else {
-    niceInterval = 10 * magnitude;
-  }
-
-  // Round min down to nearest nice interval
-  const niceMin = Math.floor(min / niceInterval) * niceInterval;
-
-  // Calculate max based on exact number of intervals to ensure equal spacing
-  const niceMax = niceMin + (niceInterval * (tickCount - 1));
-
-  return [niceMin, niceMax];
-};
-
 const calculateYAxisWidth = (
   data: ChartDataPoint[],
   dataKeys: string[],
@@ -244,7 +184,6 @@ export interface ChartProps {
   yAxisWidth?: number; // Override Y-axis space when more room needed
   yAxisTickCount?: number; // Force specific number of Y-axis ticks
   yAxisDomain?: [number | 'auto' | 'dataMin' | 'dataMax', number | 'auto' | 'dataMin' | 'dataMax']; // Y-axis domain [min, max]
-  roundYAxis?: boolean; // Auto-calculate nice rounded Y-axis domain for clean tick values
   xAxisTickFormatter?: (value: any, index: number) => string; // Custom X-axis tick formatting
   yAxisTickFormatter?: (value: any, index: number) => string; // Custom Y-axis tick formatting
   // Right Y-axis (dual Y-axis support for line and composed charts)
@@ -581,7 +520,6 @@ export function Chart({
   legendPosition = 'bottom',
   referenceMarkers,
   yAxisDomain,
-  roundYAxis = false,
   ...props
 }: ChartProps) {
 
@@ -713,27 +651,6 @@ export function Chart({
 
 
 
-  // Calculate nice rounded domain if roundYAxis is enabled
-  const leftYAxisKeys = useMemo(() =>
-    dataKeys.filter(k => (config[k].yAxisId || "left") === "left"),
-    [dataKeys, config]
-  );
-
-  const rightYAxisKeys = useMemo(() =>
-    dataKeys.filter(k => config[k].yAxisId === "right"),
-    [dataKeys, config]
-  );
-
-  const calculatedYAxisDomain = useMemo(() => {
-    if (!roundYAxis || yAxisDomain) return yAxisDomain; // Don't override manual domain
-    return calculateNiceYAxisDomain(processedData, leftYAxisKeys, yAxisTickCount || 5);
-  }, [roundYAxis, yAxisDomain, processedData, leftYAxisKeys, yAxisTickCount]);
-
-  const calculatedRightYAxisDomain = useMemo(() => {
-    if (!roundYAxis || rightYAxisDomain) return rightYAxisDomain; // Don't override manual domain
-    return calculateNiceYAxisDomain(processedData, rightYAxisKeys, rightYAxisTickCount || 5);
-  }, [roundYAxis, rightYAxisDomain, processedData, rightYAxisKeys, rightYAxisTickCount]);
-
   const yAxisProps = {
     axisLine: { stroke: "var(--color-border-primary-subtle)", strokeWidth: 2 },
     tickLine: { stroke: "var(--color-border-primary-subtle)", strokeWidth: 1 },
@@ -745,8 +662,7 @@ export function Chart({
     width: calculatedYAxisWidth, // Auto-calculated based on tick formatter, default 20px
     tickFormatter: yAxisTickFormatter,
     ...(yAxisTickCount && { tickCount: yAxisTickCount }), // Force specific number of ticks when provided
-    ...(calculatedYAxisDomain && { domain: calculatedYAxisDomain }), // Use calculated or manual domain
-    ...(roundYAxis && { allowDecimals: false }), // Prevent decimal ticks when rounding is enabled
+    ...(yAxisDomain && { domain: yAxisDomain }), // Custom Y-axis domain when provided
   };
 
   const gridProps = {
@@ -999,8 +915,7 @@ export function Chart({
                 width={calculatedRightYAxisWidth}
                 tickFormatter={rightYAxisTickFormatter}
                 {...(rightYAxisTickCount && { tickCount: rightYAxisTickCount })}
-                {...(calculatedRightYAxisDomain && { domain: calculatedRightYAxisDomain })}
-                {...(roundYAxis && { allowDecimals: false })}
+                {...(rightYAxisDomain && { domain: rightYAxisDomain })}
               />
             )}
             {/* Reference lines - rendered BEFORE lines so tooltip activeDots appear on top */}
@@ -1143,8 +1058,7 @@ export function Chart({
                 width={calculatedRightYAxisWidth}
                 tickFormatter={rightYAxisTickFormatter}
                 {...(rightYAxisTickCount && { tickCount: rightYAxisTickCount })}
-                {...(calculatedRightYAxisDomain && { domain: calculatedRightYAxisDomain })}
-                {...(roundYAxis && { allowDecimals: false })}
+                {...(rightYAxisDomain && { domain: rightYAxisDomain })}
               />
             )}
             {showTooltip && <Tooltip
