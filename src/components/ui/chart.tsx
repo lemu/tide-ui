@@ -1043,7 +1043,7 @@ export function Chart({
           >
             {showGrid && <CartesianGrid {...gridProps} yAxisId={gridYAxisId} />}
             <XAxis dataKey="name" {...xAxisProps} />
-            <YAxis yAxisId="left" {...yAxisProps} domain={[0, 'dataMax']} />
+            <YAxis yAxisId="left" {...yAxisProps} />
             {showRightYAxis && (
               <YAxis
                 yAxisId="right"
