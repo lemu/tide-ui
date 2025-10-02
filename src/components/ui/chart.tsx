@@ -179,6 +179,7 @@ export interface ChartProps {
   colorScheme?: ChartColorScheme; // Allow custom color schemes
   responsive?: boolean; // Control responsive behavior
   maintainAspectRatio?: boolean; // Control aspect ratio
+  dynamicHeight?: boolean; // When true, height applies to plotting area + axes only, legend height is added on top
   margin?: Partial<ChartMargin>; // Custom margin override
   yAxisWidth?: number; // Override Y-axis space when more room needed
   yAxisTickCount?: number; // Force specific number of Y-axis ticks
@@ -500,6 +501,7 @@ export function Chart({
   colorScheme,
   responsive = true,
   maintainAspectRatio = false,
+  dynamicHeight = false,
   margin,
   yAxisWidth,
   yAxisTickCount,
@@ -593,11 +595,14 @@ export function Chart({
       ? Math.ceil(dataKeyCount / 4) * 24 + 8 // Rough estimate: 4 items per row, 24px per row, 8px padding
       : 0;
 
+    // When dynamicHeight is true, don't add legend height to bottom margin
+    const bottomMargin = dynamicHeight ? 0 : estimatedLegendHeight;
+
     return {
       top: margin?.top ?? defaultMargin.top,
       right: margin?.right ?? (defaultMargin.right + calculatedRightYAxisWidth),
       left: margin?.left ?? defaultMargin.left,
-      bottom: margin?.bottom ?? (defaultMargin.bottom + estimatedLegendHeight),
+      bottom: margin?.bottom ?? (defaultMargin.bottom + bottomMargin),
     };
   };
 

@@ -2067,3 +2067,163 @@ export const ReferenceMarkers: Story = {
   ),
 }
 
+export const DynamicHeightMode: Story = {
+  render: () => (
+    <div className="w-full max-w-7xl mx-auto p-[var(--space-lg)] space-y-[var(--space-xlg)]">
+      <div>
+        <h2 className="text-heading-lg mb-[var(--space-md)]">Dynamic Height Mode</h2>
+        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-xlg)]">
+          When <code className="text-caption-sm px-1 py-0.5 bg-[var(--grey-100)] rounded">dynamicHeight=true</code>, the height prop applies only to the plotting area + axes.
+          The legend height is added dynamically on top, allowing you to control the exact chart body size while letting the component grow to fit the legend.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-xlg)]">
+        {/* Standard Height (Default Behavior) */}
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
+          <h3 className="text-heading-md mb-[var(--space-md)]">Standard Mode (dynamicHeight=false)</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            Total height = 200px (includes legend space). Notice the plotting area is smaller to accommodate the legend within the 200px total height.
+          </p>
+          <div className="border border-dashed border-[var(--color-border-accent)] rounded p-2">
+            <p className="text-caption-sm text-[var(--color-text-secondary)] mb-2">Container: 200px total</p>
+            <Chart
+              type="line"
+              data={monthlyData}
+              config={createChartConfig({
+                value: { label: 'Revenue', color: 'var(--color-chart-line-1)' },
+                sales: { label: 'Sales', color: 'var(--color-chart-line-2)' },
+                profit: { label: 'Profit', color: 'var(--color-chart-line-3)' },
+              })}
+              height={200}
+              dynamicHeight={false}
+              showLegend={true}
+              className="w-full"
+            />
+          </div>
+        </div>
+
+        {/* Dynamic Height Mode */}
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
+          <h3 className="text-heading-md mb-[var(--space-md)]">Dynamic Height Mode (dynamicHeight=true)</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            Plotting area = 200px exactly. Legend adds ~30px on top. Total height grows to ~230px. The chart body gets the full 200px.
+          </p>
+          <div className="border border-dashed border-[var(--color-border-accent)] rounded p-2">
+            <p className="text-caption-sm text-[var(--color-text-secondary)] mb-2">Container: ~230px total (200px chart + legend)</p>
+            <Chart
+              type="line"
+              data={monthlyData}
+              config={createChartConfig({
+                value: { label: 'Revenue', color: 'var(--color-chart-line-1)' },
+                sales: { label: 'Sales', color: 'var(--color-chart-line-2)' },
+                profit: { label: 'Profit', color: 'var(--color-chart-line-3)' },
+              })}
+              height={200}
+              dynamicHeight={true}
+              showLegend={true}
+              className="w-full"
+            />
+          </div>
+        </div>
+
+        {/* Dynamic Height with Many Legend Items */}
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg lg:col-span-2">
+          <h3 className="text-heading-md mb-[var(--space-md)]">Dynamic Height with Multi-Row Legend</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            With many legend items, the legend wraps to multiple rows. In dynamic height mode, the plotting area remains exactly 250px,
+            and the total height grows to accommodate the wrapped legend (~300px total).
+          </p>
+          <div className="border border-dashed border-[var(--color-border-accent)] rounded p-2">
+            <p className="text-caption-sm text-[var(--color-text-secondary)] mb-2">Container: ~300px total (250px chart + ~50px multi-row legend)</p>
+            <Chart
+              type="line"
+              data={[
+                { name: 'Jan', metric1: 400, metric2: 300, metric3: 200, metric4: 350, metric5: 280, metric6: 320 },
+                { name: 'Feb', metric1: 300, metric2: 450, metric3: 280, metric4: 300, metric5: 320, metric6: 380 },
+                { name: 'Mar', metric1: 500, metric2: 380, metric3: 220, metric4: 420, metric5: 360, metric6: 340 },
+                { name: 'Apr', metric1: 280, metric2: 520, metric3: 350, metric4: 380, metric5: 400, metric6: 360 },
+              ]}
+              config={createChartConfig({
+                metric1: { label: 'Revenue', color: 'var(--color-chart-line-1)' },
+                metric2: { label: 'Sales', color: 'var(--color-chart-line-2)' },
+                metric3: { label: 'Profit', color: 'var(--color-chart-line-3)' },
+                metric4: { label: 'Cost', color: 'var(--color-chart-line-4)' },
+                metric5: { label: 'Marketing', color: 'var(--color-chart-line-5)' },
+                metric6: { label: 'Operations', color: 'var(--color-chart-bar-1)' },
+              })}
+              height={250}
+              dynamicHeight={true}
+              showLegend={true}
+              className="w-full"
+            />
+          </div>
+        </div>
+
+        {/* Use Case: Dashboard Grid */}
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg lg:col-span-2">
+          <h3 className="text-heading-md mb-[var(--space-md)]">Use Case: Consistent Dashboard Grid</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            With <code className="text-caption-sm px-1 py-0.5 bg-[var(--grey-100)] rounded">dynamicHeight=true</code>, all chart bodies have the same height (180px),
+            regardless of legend content. Perfect for dashboard layouts where you want visual consistency.
+          </p>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="border border-[var(--color-border-primary-subtle)] rounded p-3">
+              <h4 className="text-body-strong-sm mb-2">2 Metrics</h4>
+              <Chart
+                type="line"
+                data={monthlyData.slice(0, 4)}
+                config={createChartConfig({
+                  value: { label: 'Revenue', color: 'var(--color-chart-line-1)' },
+                  sales: { label: 'Sales', color: 'var(--color-chart-line-2)' },
+                })}
+                height={180}
+                dynamicHeight={true}
+                showLegend={true}
+                className="w-full"
+              />
+            </div>
+            <div className="border border-[var(--color-border-primary-subtle)] rounded p-3">
+              <h4 className="text-body-strong-sm mb-2">3 Metrics</h4>
+              <Chart
+                type="line"
+                data={monthlyData.slice(0, 4)}
+                config={createChartConfig({
+                  value: { label: 'Revenue', color: 'var(--color-chart-line-1)' },
+                  sales: { label: 'Sales', color: 'var(--color-chart-line-2)' },
+                  profit: { label: 'Profit', color: 'var(--color-chart-line-3)' },
+                })}
+                height={180}
+                dynamicHeight={true}
+                showLegend={true}
+                className="w-full"
+              />
+            </div>
+            <div className="border border-[var(--color-border-primary-subtle)] rounded p-3">
+              <h4 className="text-body-strong-sm mb-2">4 Metrics</h4>
+              <Chart
+                type="line"
+                data={monthlyData.slice(0, 4)}
+                config={createChartConfig({
+                  value: { label: 'Revenue', color: 'var(--color-chart-line-1)' },
+                  sales: { label: 'Sales', color: 'var(--color-chart-line-2)' },
+                  profit: { label: 'Profit', color: 'var(--color-chart-line-3)' },
+                  cost: { label: 'Cost', color: 'var(--color-chart-line-4)' },
+                })}
+                height={180}
+                dynamicHeight={true}
+                showLegend={true}
+                className="w-full"
+              />
+            </div>
+          </div>
+          <p className="text-caption-sm text-[var(--color-text-secondary)] mt-4">
+            Notice all three chart bodies are exactly 180px tall. The containers grow to accommodate different legend heights,
+            but the plotting areas remain perfectly aligned.
+          </p>
+        </div>
+      </div>
+    </div>
+  ),
+}
+
