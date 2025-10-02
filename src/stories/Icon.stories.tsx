@@ -131,7 +131,7 @@ export const CustomIcon: Story = {
 
 export const ChartIcon: Story = {
   args: {
-    name: 'chart-bar',
+    name: 'chart-marker-bar',
     color: 'primary',
     size: 'lg',
   },
@@ -212,8 +212,8 @@ export const PopularLucideIcons: Story = {
 export const CustomIcons: Story = {
   render: () => {
     const customIcons = [
-      'chart-bar', 'chart-line', 'chart-dashline', 'chart-dashline-2',
-      'chart-dotline', 'chart-dot', 'dot', 'bubble-size', 'broken-scale',
+      'chart-marker-bar', 'chart-marker-line', 'chart-marker-dashline', 'chart-marker-dashline2',
+      'chart-marker-dotline', 'chart-marker-dot', 'dot', 'bubble-size', 'broken-scale',
       'ship-unload', 'ship-load'
     ];
 

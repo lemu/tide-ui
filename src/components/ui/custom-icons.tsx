@@ -2,18 +2,18 @@ import React from "react";
 
 // Custom icon definitions - organized by category for better maintainability
 export const customIcons = {
-  // Chart icons
-  "chart-bar": (
+  // Chart marker icons
+  "chart-marker-bar": (
     <g>
       <path d="M7.2 7.2H16.8V16.8H7.2V7.2Z" fill="currentColor" />
     </g>
   ),
-  "chart-line": (
+  "chart-marker-line": (
     <g>
       <path d="M4.8 9.6H19.2V14.4H4.8V9.6Z" fill="currentColor" />
     </g>
   ),
-  "chart-dashline": (
+  "chart-marker-dashline": (
     <g>
       <g>
         <path d="M16.8 9.6H20.4V14.4H16.8V9.6Z" fill="currentColor" />
@@ -22,7 +22,7 @@ export const customIcons = {
       </g>
     </g>
   ),
-  "chart-dashline-2": (
+  "chart-marker-dashline2": (
     <g>
       <g>
         <path d="M12.8 9.6H20.4V14.4H12.8V9.6Z" fill="currentColor" />
@@ -30,7 +30,7 @@ export const customIcons = {
       </g>
     </g>
   ),
-  "chart-dotline": (
+  "chart-marker-dotline": (
     <g>
       <g>
         <path
@@ -48,7 +48,7 @@ export const customIcons = {
       </g>
     </g>
   ),
-  "chart-dot": (
+  "chart-marker-dot": (
     <g>
       <path
         d="M16.8 12C16.8 14.651 14.651 16.8 12 16.8C9.34903 16.8 7.2 14.651 7.2 12C7.2 9.34903 9.34903 7.2 12 7.2C14.651 7.2 16.8 9.34903 16.8 12Z"
