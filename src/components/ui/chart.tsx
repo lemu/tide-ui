@@ -601,7 +601,7 @@ export function Chart({
 
     return {
       top: margin?.top ?? defaultMargin.top,
-      right: margin?.right ?? (defaultMargin.right + calculatedRightYAxisWidth),
+      right: margin?.right ?? defaultMargin.right, // Don't add rightYAxisWidth - Recharts handles it via YAxis width prop
       left: margin?.left ?? defaultMargin.left,
       bottom: margin?.bottom ?? defaultMargin.bottom,
     };
