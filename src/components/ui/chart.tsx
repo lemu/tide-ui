@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -525,6 +525,8 @@ export function Chart({
   ...props
 }: ChartProps) {
 
+  // Track tooltip index for automatic direction reversal
+  const [tooltipIndex, setTooltipIndex] = useState<number>(0);
 
   // Get color scheme based on chart type or custom scheme
   const activeColorScheme = useMemo(() => {
@@ -575,6 +577,7 @@ export function Chart({
 
   const handleMouseEnter = useCallback((data: any) => {
     const index = data?.activeTooltipIndex ?? 0;
+    setTooltipIndex(index);
     onDataPointHover?.(data?.activePayload?.[0]?.payload, index);
   }, [onDataPointHover]);
 
@@ -586,6 +589,11 @@ export function Chart({
     const index = data?.activeTooltipIndex ?? 0;
     onDataPointClick?.(data?.activePayload?.[0]?.payload, index);
   }, [onDataPointClick]);
+
+  // Calculate if tooltip should reverse direction (2nd half of chart)
+  const shouldReverseTooltip = useMemo(() => {
+    return tooltipIndex >= Math.floor(processedData.length / 2);
+  }, [tooltipIndex, processedData.length]);
 
   // Simple margin calculation with zero defaults
   const getMargins = (): ChartMargin => {
@@ -829,6 +837,7 @@ export function Chart({
               offset={10}
               animationDuration={0}
               allowEscapeViewBox={tooltipAllowEscapeViewBox}
+              reverseDirection={{ x: shouldReverseTooltip }}
               wrapperStyle={{ zIndex: 100 }}
             />}
             {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
@@ -875,6 +884,7 @@ export function Chart({
               offset={10}
               animationDuration={0}
               allowEscapeViewBox={tooltipAllowEscapeViewBox}
+              reverseDirection={{ x: shouldReverseTooltip }}
               wrapperStyle={{ zIndex: 100 }}
             />}
             {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
@@ -950,6 +960,7 @@ export function Chart({
               offset={10}
               animationDuration={0}
               allowEscapeViewBox={tooltipAllowEscapeViewBox}
+              reverseDirection={{ x: shouldReverseTooltip }}
               wrapperStyle={{ zIndex: 100 }}
             />}
             {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
@@ -1024,6 +1035,7 @@ export function Chart({
               offset={10}
               animationDuration={0}
               allowEscapeViewBox={tooltipAllowEscapeViewBox}
+              reverseDirection={{ x: shouldReverseTooltip }}
               wrapperStyle={{ zIndex: 100 }}
             />}
             {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
@@ -1086,6 +1098,7 @@ export function Chart({
               offset={10}
               animationDuration={0}
               allowEscapeViewBox={tooltipAllowEscapeViewBox}
+              reverseDirection={{ x: shouldReverseTooltip }}
               wrapperStyle={{ zIndex: 100 }}
             />}
             {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
