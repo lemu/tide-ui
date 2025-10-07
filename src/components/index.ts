@@ -274,6 +274,16 @@ export type {
 // DataTable component
 export { DataTable } from './ui/data-table'
 
+// Filters components
+export { Filters, FilterPanelContent, FilterDropdownMenu } from './ui/filters'
+export type {
+  FiltersProps,
+  FilterDefinition,
+  FilterOption,
+  FilterOptionGroup,
+  FilterValue,
+} from './ui/filters'
+
 // LinkedChart component
 export { LinkedChart, createLinkedChartColumns } from './ui/linked-chart'
 export type { LinkedChartProps, LinkedChartColumn } from './ui/linked-chart'

@@ -25,7 +25,7 @@ const badgeVariants = cva(
         outline: "bg-transparent",
       },
       size: {
-        sm: "px-[var(--space-xsm)] h-5 [&]:text-body-strong-xsm",
+        sm: "px-[var(--space-xsm)] h-5 [&]:text-body-strong-xsm min-w-[20px] justify-center",
         md: "px-[var(--space-sm)] h-6 [&]:text-body-strong-sm",
         lg: "px-[var(--space-md)] h-7 [&]:text-body-strong-md",
       },
