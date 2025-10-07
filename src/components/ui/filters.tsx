@@ -68,22 +68,38 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
 
   // Filter options based on search query
   const filteredGroups = React.useMemo(() => {
-    if (!filter.groups) return []
+    // Handle grouped options
+    if (filter.groups) {
+      if (!searchQuery) return filter.groups
 
-    if (!searchQuery) return filter.groups
-
-    return filter.groups
-      .map(group => ({
-        ...group,
-        options: group.options.filter(option =>
-          option.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          option.children?.some(child =>
-            child.label.toLowerCase().includes(searchQuery.toLowerCase())
+      return filter.groups
+        .map(group => ({
+          ...group,
+          options: group.options.filter(option =>
+            option.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            option.children?.some(child =>
+              child.label.toLowerCase().includes(searchQuery.toLowerCase())
+            )
           )
-        )
-      }))
-      .filter(group => group.options.length > 0)
-  }, [filter.groups, searchQuery])
+        }))
+        .filter(group => group.options.length > 0)
+    }
+
+    // Handle flat options array - convert to single group
+    if (filter.options) {
+      const filteredOptions = !searchQuery
+        ? filter.options
+        : filter.options.filter(option =>
+            option.label.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+
+      return filteredOptions.length > 0
+        ? [{ label: filter.label, options: filteredOptions }]
+        : []
+    }
+
+    return []
+  }, [filter.groups, filter.options, filter.label, searchQuery])
 
   const handleToggleOption = (optionValue: string) => {
     if (filter.type === 'multiselect') {

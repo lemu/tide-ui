@@ -10,6 +10,55 @@ const meta: Meta<typeof Filters> = {
   component: Filters,
   parameters: {
     layout: 'padded',
+    docs: {
+      description: {
+        component: `
+A flexible filtering component with pinned filter slots and dropdown menu.
+
+## Filter Options Format
+
+Filters support two formats for defining options:
+
+**1. Flat Array (Simple)** - Use for single, ungrouped lists:
+\`\`\`typescript
+{
+  id: 'status',
+  label: 'Status',
+  type: 'multiselect',
+  options: [
+    { value: 'active', label: 'Active' },
+    { value: 'pending', label: 'Pending' },
+  ],
+}
+\`\`\`
+
+**2. Grouped Array** - Use for categorized/sectioned options:
+\`\`\`typescript
+{
+  id: 'port',
+  label: 'Port',
+  type: 'multiselect',
+  groups: [
+    {
+      label: 'European Ports',
+      options: [
+        { value: 'rotterdam', label: 'Rotterdam' },
+      ],
+    },
+    {
+      label: 'Asian Ports',
+      options: [
+        { value: 'singapore', label: 'Singapore' },
+      ],
+    },
+  ],
+}
+\`\`\`
+
+Both formats support search filtering and work identically. The Status filter in the examples uses flat options, while Load/Discharge ports use grouped options.
+        `,
+      },
+    },
   },
   tags: ['autodocs'],
   argTypes: {
@@ -80,16 +129,12 @@ const sampleFilters: FilterDefinition[] = [
     icon: CheckIcon,
     type: 'multiselect',
     searchPlaceholder: 'Search statuses...',
-    groups: [
-      {
-        label: 'Status options',
-        options: [
-          { value: 'open', label: 'Open' },
-          { value: 'in-progress', label: 'In Progress' },
-          { value: 'completed', label: 'Completed' },
-          { value: 'cancelled', label: 'Cancelled' },
-        ],
-      },
+    // Using flat options array (simpler format)
+    options: [
+      { value: 'open', label: 'Open' },
+      { value: 'in-progress', label: 'In Progress' },
+      { value: 'completed', label: 'Completed' },
+      { value: 'cancelled', label: 'Cancelled' },
     ],
   },
   {
@@ -463,15 +508,11 @@ export const WithCustomFormatter: Story = {
         type: 'multiselect',
         searchPlaceholder: 'Search statuses...',
         formatValue: formatStatusValue,
-        groups: [
-          {
-            label: 'Status options',
-            options: [
-              { value: 'fully-fixed', label: 'Fully fixed' },
-              { value: 'part-fixed', label: 'Part fixed' },
-              { value: 'open', label: 'Open' },
-            ],
-          },
+        // Using flat options array (simpler format)
+        options: [
+          { value: 'fully-fixed', label: 'Fully fixed' },
+          { value: 'part-fixed', label: 'Part fixed' },
+          { value: 'open', label: 'Open' },
         ],
       },
     ]
