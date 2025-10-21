@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Label } from '../components/ui/label'
 
 const meta: Meta<typeof Filters> = {
-  title: 'NPM/Filters',
+  title: 'NPM • Product Components/Filters',
   component: Filters,
   parameters: {
     layout: 'padded',
@@ -89,6 +89,10 @@ Both formats support search filtering and work identically. The Status filter in
     onFilterReset: {
       description: 'Callback when user clicks Reset to clear all filters',
       action: 'filtersReset',
+    },
+    hideReset: {
+      description: 'Hide the Reset button (useful when integrating with Bookmarks component which provides its own reset functionality)',
+      control: { type: 'boolean' },
     },
   },
 } satisfies Meta<typeof Filters>
@@ -545,6 +549,200 @@ export const WithCustomFormatter: Story = {
           }}
           onFilterReset={() => setActiveFilters({})}
         />
+      </div>
+    )
+  },
+}
+
+// With Global Search (empty state)
+export const WithGlobalSearch: Story = {
+  render: () => {
+    const [pinnedFilters, setPinnedFilters] = useState<string[]>(['date', 'status', 'cargoType', 'loadPort'])
+    const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({})
+    const [globalSearchTerms, setGlobalSearchTerms] = useState<string[]>([])
+
+    return (
+      <div className="p-4 space-y-2">
+        <div className="text-caption-sm text-[var(--color-text-secondary)]">
+          Global search allows searching across all data. Press Enter to add search terms.
+        </div>
+        <Filters
+          filters={sampleFilters}
+          pinnedFilters={pinnedFilters}
+          activeFilters={activeFilters}
+          onPinnedFiltersChange={setPinnedFilters}
+          onFilterChange={(filterId, value) => {
+            setActiveFilters(prev => ({ ...prev, [filterId]: value }))
+          }}
+          onFilterClear={(filterId) => {
+            setActiveFilters(prev => {
+              const next = { ...prev }
+              delete next[filterId]
+              return next
+            })
+          }}
+          onFilterReset={() => setActiveFilters({})}
+          enableGlobalSearch={true}
+          globalSearchTerms={globalSearchTerms}
+          onGlobalSearchChange={setGlobalSearchTerms}
+        />
+      </div>
+    )
+  },
+}
+
+// With Global Search Terms (no icon matches)
+export const WithGlobalSearchTerms: Story = {
+  render: () => {
+    const [pinnedFilters, setPinnedFilters] = useState<string[]>(['date', 'status', 'cargoType'])
+    const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({})
+    const [globalSearchTerms, setGlobalSearchTerms] = useState<string[]>(['Lorem ipsum', 'Custom term'])
+
+    return (
+      <div className="p-4 space-y-2">
+        <div className="text-caption-sm text-[var(--color-text-secondary)]">
+          Global search terms that don't match any filter options are shown without icons
+        </div>
+        <Filters
+          filters={sampleFilters}
+          pinnedFilters={pinnedFilters}
+          activeFilters={activeFilters}
+          onPinnedFiltersChange={setPinnedFilters}
+          onFilterChange={(filterId, value) => {
+            setActiveFilters(prev => ({ ...prev, [filterId]: value }))
+          }}
+          onFilterClear={(filterId) => {
+            setActiveFilters(prev => {
+              const next = { ...prev }
+              delete next[filterId]
+              return next
+            })
+          }}
+          onFilterReset={() => setActiveFilters({})}
+          enableGlobalSearch={true}
+          globalSearchTerms={globalSearchTerms}
+          onGlobalSearchChange={setGlobalSearchTerms}
+        />
+      </div>
+    )
+  },
+}
+
+// With Global Search Terms (with icon matches)
+export const WithGlobalSearchAndIcons: Story = {
+  render: () => {
+    const [pinnedFilters, setPinnedFilters] = useState<string[]>(['date', 'status', 'cargoType', 'loadPort'])
+    const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({
+      status: ['open', 'in-progress'],
+    })
+    const [globalSearchTerms, setGlobalSearchTerms] = useState<string[]>(['Rotterdam', 'Maersk', 'Custom search'])
+
+    return (
+      <div className="p-4 space-y-2">
+        <div className="text-caption-sm text-[var(--color-text-secondary)]">
+          When search terms match filter options, the filter's icon is displayed. "Rotterdam" matches Load port, "Maersk" matches Owner.
+        </div>
+        <Filters
+          filters={sampleFilters}
+          pinnedFilters={pinnedFilters}
+          activeFilters={activeFilters}
+          onPinnedFiltersChange={setPinnedFilters}
+          onFilterChange={(filterId, value) => {
+            setActiveFilters(prev => ({ ...prev, [filterId]: value }))
+          }}
+          onFilterClear={(filterId) => {
+            setActiveFilters(prev => {
+              const next = { ...prev }
+              delete next[filterId]
+              return next
+            })
+          }}
+          onFilterReset={() => setActiveFilters({})}
+          enableGlobalSearch={true}
+          globalSearchTerms={globalSearchTerms}
+          onGlobalSearchChange={setGlobalSearchTerms}
+        />
+      </div>
+    )
+  },
+}
+
+// With Global Search and Active Filters
+export const WithGlobalSearchAndFilters: Story = {
+  render: () => {
+    const [pinnedFilters, setPinnedFilters] = useState<string[]>(['date', 'status', 'cargoType', 'loadPort'])
+    const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({
+      date: ['today'],
+      status: ['open', 'in-progress'],
+      cargoType: ['iron-ore', 'coal'],
+    })
+    const [globalSearchTerms, setGlobalSearchTerms] = useState<string[]>(['Singapore', 'Custom term'])
+
+    return (
+      <div className="p-4 space-y-2">
+        <div className="text-caption-sm text-[var(--color-text-secondary)]">
+          Global search works together with regular filters. Reset button clears both filters and search terms.
+        </div>
+        <Filters
+          filters={sampleFilters}
+          pinnedFilters={pinnedFilters}
+          activeFilters={activeFilters}
+          onPinnedFiltersChange={setPinnedFilters}
+          onFilterChange={(filterId, value) => {
+            setActiveFilters(prev => ({ ...prev, [filterId]: value }))
+          }}
+          onFilterClear={(filterId) => {
+            setActiveFilters(prev => {
+              const next = { ...prev }
+              delete next[filterId]
+              return next
+            })
+          }}
+          onFilterReset={() => setActiveFilters({})}
+          enableGlobalSearch={true}
+          globalSearchTerms={globalSearchTerms}
+          onGlobalSearchChange={setGlobalSearchTerms}
+        />
+      </div>
+    )
+  },
+}
+
+// Responsive Container Query Test (Tablet View)
+export const ResponsiveTabletView: Story = {
+  render: () => {
+    const [pinnedFilters, setPinnedFilters] = useState<string[]>(['date', 'status', 'cargoType', 'loadPort', 'dischargePort'])
+    const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({
+      date: ['today'],
+      status: ['open', 'in-progress', 'completed'],
+      cargoType: ['iron-ore', 'coal', 'grain', 'bauxite', 'phosphate'],
+      loadPort: ['rotterdam', 'singapore'],
+    })
+
+    return (
+      <div className="p-4 space-y-4">
+        <div className="text-caption-sm text-[var(--color-text-secondary)]">
+          Resize your browser window to tablet size (below 1024px) to see labels hide and only icons (+ badges) remain visible in pinned filters.
+        </div>
+        <div className="max-w-[800px] border-2 border-dashed border-[var(--color-border-primary)] p-4">
+          <Filters
+            filters={sampleFilters}
+            pinnedFilters={pinnedFilters}
+            activeFilters={activeFilters}
+            onPinnedFiltersChange={setPinnedFilters}
+            onFilterChange={(filterId, value) => {
+              setActiveFilters(prev => ({ ...prev, [filterId]: value }))
+            }}
+            onFilterClear={(filterId) => {
+              setActiveFilters(prev => {
+                const next = { ...prev }
+                delete next[filterId]
+                return next
+              })
+            }}
+            onFilterReset={() => setActiveFilters({})}
+          />
+        </div>
       </div>
     )
   },

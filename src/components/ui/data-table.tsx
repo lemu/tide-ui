@@ -51,9 +51,9 @@ import { Icon } from "./icon"
 import { Badge } from "./badge"
 import { Popover, PopoverContent, PopoverTrigger } from "./popover"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "./command"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from "./dropdown-menu"
 import { Pagination } from "./pagination"
 import { Skeleton } from "./skeleton"
+import { DataTableSettingsMenu } from "./data-table-settings-menu"
 
 // Debounced value hook for performance
 function useDebounce<T>(value: T, delay: number): T {
@@ -156,26 +156,26 @@ interface DataTableToolbarProps<_TData = any> {
   table: any
   searchKey?: string
   searchPlaceholder?: string
-  showViewOptions?: boolean
   enableGlobalSearch?: boolean
   globalSearchPlaceholder?: string
   globalFilter?: string
   onGlobalFilterChange?: (value: string) => void
   enableGlobalFaceting?: boolean
   enableGrouping?: boolean
+  showSettingsMenu?: boolean
 }
 
 function DataTableToolbar<TData>({
   table,
   searchKey,
   searchPlaceholder = "Search...",
-  showViewOptions = true,
   enableGlobalSearch = false,
   globalSearchPlaceholder = "Search all columns...",
   globalFilter = "",
   onGlobalFilterChange,
   enableGlobalFaceting = false,
-  enableGrouping = false
+  enableGrouping = false,
+  showSettingsMenu = false,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0 || (enableGlobalSearch && globalFilter.length > 0)
 
@@ -201,7 +201,7 @@ function DataTableToolbar<TData>({
             className="h-8 w-[150px] lg:w-[250px]"
           />
         )}
-        
+
         {/* Column filters */}
         {table.getAllColumns()
           .filter((column: any) => column.getCanFilter() && column.columnDef.meta?.filterVariant)
@@ -212,11 +212,6 @@ function DataTableToolbar<TData>({
         {/* Global faceting */}
         {enableGlobalFaceting && (
           <DataTableGlobalFaceting table={table} />
-        )}
-
-        {/* Grouping control */}
-        {enableGrouping && (
-          <DataTableGrouping table={table} />
         )}
 
         {isFiltered && (
@@ -235,10 +230,10 @@ function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
-      
-      {showViewOptions && (
+
+      {showSettingsMenu && (
         <div className="flex items-center space-x-2">
-          <DataTableViewOptions table={table} />
+          <DataTableSettingsMenuWrapper table={table} enableGrouping={enableGrouping} />
         </div>
       )}
     </div>
@@ -373,54 +368,6 @@ function DataTableGlobalFaceting({ table }: DataTableGlobalFacetingProps) {
   )
 }
 
-// Grouping control component
-interface DataTableGroupingProps {
-  table: any
-}
-
-function DataTableGrouping({ table }: DataTableGroupingProps) {
-  const currentGrouping = table.getState().grouping
-  const [selectedColumn, setSelectedColumn] = React.useState<string>(currentGrouping[0] || 'no-grouping')
-
-  // Get all columns that can be grouped
-  const groupableColumns = table.getAllColumns().filter((column: any) =>
-    column.getCanGroup?.() || column.columnDef.enableGrouping
-  )
-
-  const handleGroupingChange = (columnId: string) => {
-    setSelectedColumn(columnId)
-    if (columnId === 'no-grouping') {
-      // Clear grouping
-      table.setGrouping([])
-    } else {
-      // Set grouping to the selected column
-      table.setGrouping([columnId])
-    }
-  }
-
-  if (groupableColumns.length === 0) {
-    return null
-  }
-
-  return (
-    <Select value={selectedColumn} onValueChange={handleGroupingChange}>
-      <SelectTrigger className="h-8 w-[180px]">
-        <SelectValue placeholder="Group by..." />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="no-grouping">No grouping</SelectItem>
-        {groupableColumns.map((column: any) => (
-          <SelectItem key={column.id} value={column.id}>
-            <div className="flex items-center gap-2">
-              <Icon name="group" className="h-4 w-4" />
-              {column.columnDef.meta?.label || column.columnDef.header || column.id}
-            </div>
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  )
-}
 
 // Individual column filter component
 interface DataTableFilterProps {
@@ -625,41 +572,91 @@ function DraggableColumnHeader({ header, enableColumnOrdering, children }: Dragg
   )
 }
 
-// Column visibility toggle
-interface DataTableViewOptionsProps<_TData = any> {
+// Settings menu component - integrates sorting, grouping, and column visibility
+interface DataTableSettingsMenuWrapperProps {
   table: any
+  enableGrouping?: boolean
 }
 
-function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps<TData>) {
+function DataTableSettingsMenuWrapper({ table, enableGrouping = false }: DataTableSettingsMenuWrapperProps) {
+  // Extract sortable columns
+  const sortableColumns = table.getAllColumns()
+    .filter((col: any) => col.getCanSort())
+    .map((col: any) => ({
+      id: col.id,
+      label: col.columnDef.meta?.label || col.columnDef.header || col.id
+    }))
+
+  // Extract groupable columns
+  const groupableColumns = table.getAllColumns()
+    .filter((col: any) => col.getCanGroup?.() || col.columnDef.enableGrouping)
+    .map((col: any) => ({
+      id: col.id,
+      label: col.columnDef.meta?.label || col.columnDef.header || col.id
+    }))
+
+  // Extract columns that can be hidden
+  const columns = table.getAllColumns()
+    .filter((col: any) => typeof col.accessorFn !== "undefined" && col.getCanHide())
+    .map((col: any) => ({
+      id: col.id,
+      label: col.columnDef.meta?.label || col.columnDef.header || col.id
+    }))
+
+  // Get visible column IDs
+  const visibleColumns = columns
+    .filter((col: any) => table.getColumn(col.id)?.getIsVisible())
+    .map((col: any) => col.id)
+
+  // Get current sorting state
+  const currentSort = table.getState().sorting[0]
+  const selectedSortColumn = currentSort?.id
+  const sortDirection = currentSort?.desc ? 'desc' : 'asc'
+
+  // Get current grouping state
+  const currentGrouping = table.getState().grouping
+  const selectedGroupColumn = currentGrouping[0] || ''
+
+  // Handle sort change
+  const handleSortChange = (columnId: string) => {
+    table.setSorting([{ id: columnId, desc: sortDirection === 'desc' }])
+  }
+
+  // Handle sort direction change
+  const handleSortDirectionChange = (direction: 'asc' | 'desc') => {
+    if (currentSort) {
+      table.setSorting([{ id: currentSort.id, desc: direction === 'desc' }])
+    }
+  }
+
+  // Handle group change
+  const handleGroupChange = (columnId: string) => {
+    if (!columnId || columnId === 'none') {
+      table.setGrouping([])
+    } else {
+      table.setGrouping([columnId])
+    }
+  }
+
+  // Handle column visibility change
+  const handleColumnVisibilityChange = (columnId: string, visible: boolean) => {
+    table.getColumn(columnId)?.toggleVisibility(visible)
+  }
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-          <span className="sr-only">Open menu</span>
-          <Icon name="more-horizontal" className="h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[200px]">
-        <DropdownMenuLabel>View settings</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuLabel className="text-label-sm">Display columns</DropdownMenuLabel>
-        {table
-          .getAllColumns()
-          .filter((column: any) => typeof column.accessorFn !== "undefined" && column.getCanHide())
-          .map((column: any) => {
-            return (
-              <DropdownMenuCheckboxItem
-                key={column.id}
-                className="capitalize"
-                checked={column.getIsVisible()}
-                onCheckedChange={(checked) => column.toggleVisibility(checked)}
-              >
-                {column.columnDef.meta?.label || column.id}
-              </DropdownMenuCheckboxItem>
-            )
-          })}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <DataTableSettingsMenu
+      sortableColumns={sortableColumns}
+      selectedSortColumn={selectedSortColumn}
+      sortDirection={sortDirection}
+      onSortChange={handleSortChange}
+      onSortDirectionChange={handleSortDirectionChange}
+      groupableColumns={enableGrouping ? groupableColumns : []}
+      selectedGroupColumn={selectedGroupColumn}
+      onGroupChange={handleGroupChange}
+      columns={columns}
+      visibleColumns={visibleColumns}
+      onColumnVisibilityChange={handleColumnVisibilityChange}
+    />
   )
 }
 
@@ -810,6 +807,17 @@ export interface DataTableProps<TData, TValue> {
       bottom?: string[]
     }
   }
+  // Controlled state
+  sorting?: SortingState
+  onSortingChange?: (updaterOrValue: SortingState | ((old: SortingState) => SortingState)) => void
+  columnVisibility?: VisibilityState
+  onColumnVisibilityChange?: (updaterOrValue: VisibilityState | ((old: VisibilityState) => VisibilityState)) => void
+  grouping?: GroupingState
+  onGroupingChange?: (updaterOrValue: GroupingState | ((old: GroupingState) => GroupingState)) => void
+  columnOrder?: ColumnOrderState
+  onColumnOrderChange?: (updaterOrValue: ColumnOrderState | ((old: ColumnOrderState) => ColumnOrderState)) => void
+  columnSizing?: Record<string, number>
+  onColumnSizingChange?: (updaterOrValue: Record<string, number> | ((old: Record<string, number>) => Record<string, number>)) => void
   // Section header rows
   renderSectionHeaderRow?: (row: any) => React.ReactNode | null
   // Auto-expand children when parent is expanded
@@ -858,23 +866,57 @@ export function DataTable<TData, TValue>({
   showPagination = true,
   onTableReady,
   initialState,
+  // Controlled state props
+  sorting: controlledSorting,
+  onSortingChange: onControlledSortingChange,
+  columnVisibility: controlledColumnVisibility,
+  onColumnVisibilityChange: onControlledColumnVisibilityChange,
+  grouping: controlledGrouping,
+  onGroupingChange: onControlledGroupingChange,
+  columnOrder: controlledColumnOrder,
+  onColumnOrderChange: onControlledColumnOrderChange,
+  columnSizing: controlledColumnSizing,
+  onColumnSizingChange: onControlledColumnSizingChange,
   renderSectionHeaderRow,
   autoExpandChildren = false,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
-  const [globalFilter, setGlobalFilter] = React.useState("")
-  const [columnSizing, setColumnSizing] = React.useState(initialState?.columnSizing || {})
-  const [expanded, setExpanded] = React.useState<ExpandedState>(initialState?.expanded || {})
-  const [grouping, setGrouping] = React.useState<GroupingState>(initialState?.grouping || [])
-  const [rowPinning, setRowPinning] = React.useState(initialState?.rowPinning || { top: [], bottom: [] })
-  const [columnOrder, setColumnOrder] = React.useState<ColumnOrderState>(() => {
+  // Internal state for uncontrolled mode
+  const [internalSorting, setInternalSorting] = React.useState<SortingState>([])
+  const [internalColumnVisibility, setInternalColumnVisibility] = React.useState<VisibilityState>({})
+  const [internalGrouping, setInternalGrouping] = React.useState<GroupingState>(initialState?.grouping || [])
+  const [internalColumnOrder, setInternalColumnOrder] = React.useState<ColumnOrderState>(() => {
     const baseColumns = columns.map((col) => (col as any).id || (col as any).accessorKey || `column-${Math.random()}`)
-    // Add selection column ID if row selection is enabled
     return enableRowSelection ? ['select', ...baseColumns] : baseColumns
   })
+  const [internalColumnSizing, setInternalColumnSizing] = React.useState(controlledColumnSizing || initialState?.columnSizing || {})
+
+  // Always internal state (not exposed for control)
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
+  const [rowSelection, setRowSelection] = React.useState({})
+  const [globalFilter, setGlobalFilter] = React.useState("")
+  const [expanded, setExpanded] = React.useState<ExpandedState>(initialState?.expanded || {})
+  const [rowPinning, setRowPinning] = React.useState(initialState?.rowPinning || { top: [], bottom: [] })
+
+  // Determine if controlled or uncontrolled
+  const isSortingControlled = controlledSorting !== undefined
+  const isColumnVisibilityControlled = controlledColumnVisibility !== undefined
+  const isGroupingControlled = controlledGrouping !== undefined
+  const isColumnOrderControlled = controlledColumnOrder !== undefined
+  const isColumnSizingControlled = controlledColumnSizing !== undefined
+
+  // Use controlled values if provided, otherwise use internal state
+  const sorting = isSortingControlled ? controlledSorting! : internalSorting
+  const columnVisibility = isColumnVisibilityControlled ? controlledColumnVisibility! : internalColumnVisibility
+  const grouping = isGroupingControlled ? controlledGrouping! : internalGrouping
+  const columnOrder = isColumnOrderControlled ? controlledColumnOrder! : internalColumnOrder
+  const columnSizing = isColumnSizingControlled ? controlledColumnSizing! : internalColumnSizing
+
+  // Use controlled setters if provided, otherwise use internal setters
+  const setSorting = isSortingControlled ? onControlledSortingChange! : setInternalSorting
+  const setColumnVisibility = isColumnVisibilityControlled ? onControlledColumnVisibilityChange! : setInternalColumnVisibility
+  const setGrouping = isGroupingControlled ? onControlledGroupingChange! : setInternalGrouping
+  const setColumnOrder = isColumnOrderControlled ? onControlledColumnOrderChange! : setInternalColumnOrder
+  const setColumnSizing = isColumnSizingControlled ? onControlledColumnSizingChange! : setInternalColumnSizing
 
   // Column pinning state removed - using pure CSS approach instead
 
@@ -1268,14 +1310,14 @@ export function DataTable<TData, TValue>({
           {title && (
             <div className="flex justify-between items-center">
               <h3 className="text-heading-sm font-semibold text-[var(--color-text-primary)]">{title}</h3>
-              <DataTableViewOptions table={table} />
+              <DataTableSettingsMenuWrapper table={table} enableGrouping={enableGrouping} />
             </div>
           )}
           <DataTableToolbar
             table={table}
             searchKey={searchKey}
             searchPlaceholder={searchPlaceholder}
-            showViewOptions={!title}
+            showSettingsMenu={!title}
             enableGlobalSearch={enableGlobalSearch}
             globalSearchPlaceholder={globalSearchPlaceholder}
             globalFilter={globalFilter}
@@ -1289,6 +1331,7 @@ export function DataTable<TData, TValue>({
       {/* Table section with responsive wrapper and sticky features */}
       <div className={cn(
         "relative",
+        showPagination && "border-b border-[var(--color-border-primary-bold)]",
         enableResponsiveWrapper && [
           "overflow-x-auto",
           "scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[var(--color-border-primary-subtle)]",
@@ -1851,7 +1894,7 @@ export function DataTable<TData, TValue>({
       
       {/* Footer section with pagination */}
       {showPagination && (
-        <div className="border-t border-[var(--color-border-primary-bold)] bg-[var(--color-surface-primary)] px-[var(--space-lg)] py-[var(--space-md)]">
+        <div className="bg-[var(--color-surface-primary)] px-[var(--space-lg)] py-[var(--space-md)]">
           <DataTablePagination table={table} />
         </div>
       )}
@@ -1867,7 +1910,6 @@ export {
   DataTableToolbar,
   DataTablePagination,
   DataTableSkeleton,
-  DataTableViewOptions,
   fuzzyFilter,
   multiSelectFilter
 }

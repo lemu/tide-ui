@@ -10,7 +10,7 @@ import {
 } from '../components/ui/tooltip'
 
 const meta: Meta<typeof Kbd> = {
-  title: 'NPM/Kbd',
+  title: 'NPM • Fundamental/Kbd',
   component: Kbd,
   parameters: {
     layout: 'centered',

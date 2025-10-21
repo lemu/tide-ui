@@ -274,6 +274,10 @@ export type {
 // DataTable component
 export { DataTable } from './ui/data-table'
 
+// DataTableSettingsMenu component
+export { DataTableSettingsMenu } from './ui/data-table-settings-menu'
+export type { DataTableSettingsMenuProps, ColumnOption } from './ui/data-table-settings-menu'
+
 // Filters components
 export { Filters, FilterPanelContent, FilterDropdownMenu } from './ui/filters'
 export type {
@@ -282,7 +286,17 @@ export type {
   FilterOption,
   FilterOptionGroup,
   FilterValue,
+  GlobalSearchTerm,
 } from './ui/filters'
+
+// Bookmarks components
+export { Bookmarks } from './ui/bookmarks'
+export type {
+  Bookmark,
+  BookmarksProps,
+  FiltersState,
+  TableState,
+} from './ui/bookmarks'
 
 // LinkedChart component
 export { LinkedChart, createLinkedChartColumns } from './ui/linked-chart'

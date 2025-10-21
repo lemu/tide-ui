@@ -3,7 +3,7 @@ import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 
 const meta: Meta<typeof Input> = {
-  title: 'NPM/Input',
+  title: 'NPM • Fundamental/Input',
   component: Input,
   parameters: {
     layout: 'centered',

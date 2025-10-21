@@ -6,7 +6,7 @@ import { Button } from '../components/ui/button'
 import { Icon } from '../components/ui/icon'
 
 const meta: Meta<typeof Textarea> = {
-  title: 'NPM/Textarea',
+  title: 'NPM • Fundamental/Textarea',
   component: Textarea,
   parameters: {
     layout: 'centered',

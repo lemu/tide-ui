@@ -6,7 +6,7 @@ import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 
 const meta: Meta<typeof Tabs> = {
-  title: 'NPM/Tabs',
+  title: 'NPM • Fundamental/Tabs',
   component: Tabs,
   parameters: {
     layout: 'centered',

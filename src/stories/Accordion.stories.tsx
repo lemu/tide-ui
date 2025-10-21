@@ -10,7 +10,7 @@ import { Icon } from '../components/ui/icon'
 import { Badge } from '../components/ui/badge'
 
 const meta: Meta<typeof Accordion> = {
-  title: 'NPM/Accordion',
+  title: 'NPM • Fundamental/Accordion',
   component: Accordion,
   parameters: {
     layout: 'centered',

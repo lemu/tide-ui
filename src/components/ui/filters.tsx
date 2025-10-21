@@ -36,6 +36,14 @@ export interface FilterDefinition {
   formatValue?: (values: string[], count: number) => string
 }
 
+export interface GlobalSearchTerm {
+  value: string
+  matchedFilter?: {
+    filterId: string
+    icon: React.ComponentType<{ className?: string }>
+  }
+}
+
 export interface FiltersProps {
   filters: FilterDefinition[]
   pinnedFilters: string[]
@@ -44,6 +52,65 @@ export interface FiltersProps {
   onFilterChange: (filterId: string, value: FilterValue) => void
   onFilterClear: (filterId: string) => void
   onFilterReset: () => void
+  // Global search props (optional)
+  enableGlobalSearch?: boolean
+  globalSearchTerms?: string[]
+  onGlobalSearchChange?: (terms: string[]) => void
+  globalSearchPlaceholder?: string
+  // Hide reset button (useful when integrating with bookmarks)
+  hideReset?: boolean
+  // Action buttons (optional, for bookmark integration)
+  actionButtons?: React.ReactNode
+}
+
+// ============================================================================
+// Helper Functions
+// ============================================================================
+
+/**
+ * Finds the first filter that contains an option matching the search term
+ * Returns the filter's icon if a match is found
+ */
+function findMatchingFilter(
+  searchTerm: string,
+  filters: FilterDefinition[]
+): { filterId: string; icon: React.ComponentType<{ className?: string }> } | null {
+  if (!searchTerm) return null
+
+  const normalizedSearch = searchTerm.toLowerCase()
+
+  for (const filter of filters) {
+    // Check grouped options
+    if (filter.groups) {
+      for (const group of filter.groups) {
+        for (const option of group.options) {
+          // Check parent option
+          if (option.label.toLowerCase().includes(normalizedSearch)) {
+            return { filterId: filter.id, icon: filter.icon }
+          }
+          // Check child options
+          if (option.children) {
+            for (const child of option.children) {
+              if (child.label.toLowerCase().includes(normalizedSearch)) {
+                return { filterId: filter.id, icon: filter.icon }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Check flat options array
+    if (filter.options) {
+      for (const option of filter.options) {
+        if (option.label.toLowerCase().includes(normalizedSearch)) {
+          return { filterId: filter.id, icon: filter.icon }
+        }
+      }
+    }
+  }
+
+  return null
 }
 
 // ============================================================================
@@ -61,13 +128,13 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
   const [searchQuery, setSearchQuery] = React.useState("")
 
   // Get current selected values as array
-  const selectedValues = React.useMemo(() => {
+  const selectedValues: string[] = React.useMemo(() => {
     if (!value) return []
-    return Array.isArray(value) ? value : [String(value)]
+    return Array.isArray(value) ? value.map(String) : [String(value)]
   }, [value])
 
   // Filter options based on search query
-  const filteredGroups = React.useMemo(() => {
+  const filteredGroups: FilterOptionGroup[] = React.useMemo(() => {
     // Handle grouped options
     if (filter.groups) {
       if (!searchQuery) return filter.groups
@@ -181,7 +248,7 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
                 </div>
 
                 {/* Child Options (Indented) */}
-                {option.children?.map((child) => (
+                {option.children && option.children.map((child: FilterOption) => (
                   <div key={child.value} className="flex gap-[var(--space-sm)] h-[20px] items-center pl-[var(--space-2xlg)]">
                     <Checkbox
                       checked={selectedValues.includes(child.value)}
@@ -311,6 +378,45 @@ function FilterSidebarItem({ filter, isSelected, isPinned, valueCount, onSelect,
 }
 
 // ============================================================================
+// GlobalSearchInput - Search input for global filtering
+// ============================================================================
+
+interface GlobalSearchInputProps {
+  placeholder?: string
+  onAddSearchTerm: (term: string) => void
+}
+
+function GlobalSearchInput({ placeholder = "Search for keyword...", onAddSearchTerm }: GlobalSearchInputProps) {
+  const [inputValue, setInputValue] = React.useState("")
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && inputValue.trim()) {
+      e.preventDefault()
+      onAddSearchTerm(inputValue.trim())
+      setInputValue("")
+    }
+  }
+
+  return (
+    <div className="relative min-w-[200px] w-[280px]">
+      <Icon
+        name="search"
+        className="absolute left-[var(--space-md)] top-1/2 -translate-y-1/2 h-[var(--size-xsm)] w-[var(--size-xsm)] text-[var(--color-text-tertiary)] pointer-events-none"
+      />
+      <Input
+        type="text"
+        size="lg"
+        placeholder={placeholder}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        onKeyDown={handleKeyDown}
+        className="pl-[calc(var(--space-md)+var(--size-xsm)+var(--space-sm))] h-[var(--size-md)]"
+      />
+    </div>
+  )
+}
+
+// ============================================================================
 // FilterDropdownMenu - Full dropdown with sidebar navigation
 // ============================================================================
 
@@ -393,6 +499,12 @@ export function Filters({
   onFilterChange,
   onFilterClear,
   onFilterReset,
+  enableGlobalSearch = false,
+  globalSearchTerms = [],
+  onGlobalSearchChange,
+  globalSearchPlaceholder,
+  hideReset = false,
+  actionButtons,
 }: FiltersProps) {
   const [isFilterMenuOpen, setIsFilterMenuOpen] = React.useState(false)
   const [openSlotId, setOpenSlotId] = React.useState<string | null>(null)
@@ -401,6 +513,9 @@ export function Filters({
   const hasActiveFilters = Object.keys(activeFilters).some(
     key => activeFilters[key] !== undefined && activeFilters[key] !== null
   )
+
+  // Check if any global search terms are active
+  const hasGlobalSearch = globalSearchTerms.length > 0
 
   // Count number of filters with active values
   const activeFilterCount = Object.keys(activeFilters).filter(
@@ -439,8 +554,9 @@ export function Filters({
     if (Array.isArray(value)) {
       if (value.length <= 3) {
         // Show icon + comma-separated values with proper labels
-        const displayValue = filter.formatValue?.(value, value.length) ??
-          value.map(v => getOptionLabel(filter, v)).join(', ')
+        const stringValues = value.map(String)
+        const displayValue = filter.formatValue?.(stringValues, stringValues.length) ??
+          stringValues.map(v => getOptionLabel(filter, v)).join(', ')
         return { type: 'values' as const, icon: filter.icon, content: displayValue }
       } else {
         // Show icon + label + badge with count
@@ -461,8 +577,47 @@ export function Filters({
   const pinnedFilterObjects = filters
     .filter(f => pinnedFilters.includes(f.id))
 
+  // Compute enriched search terms with matched filter icons
+  const enrichedSearchTerms: GlobalSearchTerm[] = React.useMemo(() => {
+    // Filter out any invalid values (undefined, null, non-strings)
+    const validTerms = globalSearchTerms.filter(term => term && typeof term === 'string')
+
+    return validTerms.map(term => {
+      const matchedFilter = findMatchingFilter(term, filters)
+      return {
+        value: term,
+        matchedFilter: matchedFilter ? {
+          filterId: matchedFilter.filterId,
+          icon: matchedFilter.icon
+        } : undefined
+      }
+    })
+  }, [globalSearchTerms, filters])
+
+  // Handler for adding a new search term
+  const handleAddSearchTerm = (term: string) => {
+    if (!onGlobalSearchChange) return
+    // Prevent duplicates
+    if (globalSearchTerms.includes(term)) return
+    onGlobalSearchChange([...globalSearchTerms, term])
+  }
+
+  // Handler for removing a search term
+  const handleRemoveSearchTerm = (term: string) => {
+    if (!onGlobalSearchChange) return
+    onGlobalSearchChange(globalSearchTerms.filter(t => t !== term))
+  }
+
+  // Handler for reset - clears both filters and search terms
+  const handleReset = () => {
+    onFilterReset()
+    if (onGlobalSearchChange && hasGlobalSearch) {
+      onGlobalSearchChange([])
+    }
+  }
+
   return (
-    <div className="flex gap-[7px] items-center">
+    <div className="@container flex gap-[7px] items-center">
       {/* Filter Button */}
       <Popover open={isFilterMenuOpen} onOpenChange={setIsFilterMenuOpen}>
         <PopoverTrigger asChild>
@@ -490,13 +645,62 @@ export function Filters({
         </PopoverContent>
       </Popover>
 
-      {/* Dot Separator */}
-      {pinnedFilterObjects.length > 0 && (
+      {/* Dot Separator (before global search) */}
+      {enableGlobalSearch && (
         <Separator type="dot" layout="horizontal" />
       )}
 
-      {/* Pinned Filter Slots */}
-      {pinnedFilterObjects.map((filter) => {
+      {/* Global Search Input */}
+      {enableGlobalSearch && (
+        <GlobalSearchInput
+          placeholder={globalSearchPlaceholder}
+          onAddSearchTerm={handleAddSearchTerm}
+        />
+      )}
+
+      {/* Action Buttons (Revert/Save) - positioned right after global search */}
+      {actionButtons}
+
+      {/* Search Term Tags */}
+      {enrichedSearchTerms.map((searchTerm) => {
+        const IconComponent = searchTerm.matchedFilter?.icon
+
+        return (
+          <div
+            key={searchTerm.value}
+            className="h-[var(--size-md)] rounded-lg bg-[var(--color-background-neutral-selected)] hover:bg-[var(--color-background-neutral-hovered)] px-[var(--space-md)] pr-[4px] flex items-center gap-[var(--space-sm)] transition-colors"
+          >
+            {/* Optional Icon */}
+            {IconComponent && (
+              <IconComponent className="h-[var(--size-2xsm)] w-[var(--size-2xsm)] text-[var(--color-icon-primary)]" />
+            )}
+
+            {/* Search Term Text */}
+            <span className="whitespace-nowrap [&]:text-label-md text-[var(--color-text-primary)]">
+              {searchTerm.value}
+            </span>
+
+            {/* Remove Button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => handleRemoveSearchTerm(searchTerm.value)}
+              className="h-auto w-auto p-[var(--space-xsm)]"
+            >
+              <Icon name="x" className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]" />
+            </Button>
+          </div>
+        )
+      })}
+
+      {/* Dot Separator (between search area and pinned filters) - hide on small containers */}
+      {pinnedFilterObjects.length > 0 && (
+        <Separator type="dot" layout="horizontal" className="@[768px]:block hidden" />
+      )}
+
+      {/* Pinned Filter Slots - hide on small containers */}
+      <div className="@[768px]:contents hidden">
+        {pinnedFilterObjects.map((filter) => {
         const slotContent = getSlotContent(filter)
         const isActive = slotContent.type !== 'empty'
         const IconComponent = slotContent.icon
@@ -519,6 +723,7 @@ export function Filters({
                 }}
                 className={cn(
                   "group/slot h-[var(--size-md)] rounded-lg flex items-center justify-center gap-[var(--space-sm)] transition-colors cursor-pointer",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
                   isActive
                     ? "bg-[var(--color-background-neutral-selected)] hover:bg-[var(--color-background-neutral-hovered)] px-[var(--space-md)] pr-[4px]"
                     : "border border-dashed border-[var(--color-border-primary-strong)] px-[var(--space-md)] pr-[var(--space-sm)] hover:border-[var(--grey-400)] active:bg-[var(--grey-25)]"
@@ -586,12 +791,13 @@ export function Filters({
           </Popover>
         )
       })}
+      </div>
 
       {/* Reset Button */}
-      {hasActiveFilters && (
+      {!hideReset && (hasActiveFilters || hasGlobalSearch) && (
         <Button
           variant="ghost"
-          onClick={onFilterReset}
+          onClick={handleReset}
           className="h-[var(--size-md)] rounded-sm px-[var(--space-md)]"
         >
           <span className="text-label-md">Reset</span>

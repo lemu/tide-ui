@@ -52,7 +52,7 @@ import {
 } from '../components/ui/breadcrumb'
 
 const meta: Meta<typeof SidebarProvider> = {
-  title: 'NPM/AppFrame',
+  title: 'NPM • Fundamental/AppFrame',
   component: SidebarProvider,
   parameters: {
     layout: 'fullscreen',

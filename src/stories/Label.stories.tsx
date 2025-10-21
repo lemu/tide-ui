@@ -7,7 +7,7 @@ import { Switch } from '../components/ui/switch'
 import { Textarea } from '../components/ui/textarea'
 
 const meta: Meta<typeof Label> = {
-  title: 'NPM/Label',
+  title: 'NPM • Fundamental/Label',
   component: Label,
   parameters: {
     layout: 'centered',

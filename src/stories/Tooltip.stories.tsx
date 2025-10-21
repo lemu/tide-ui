@@ -11,7 +11,7 @@ import { TextLink } from '../components/ui/text-link'
 import { Kbd } from '../components/ui/kbd'
 
 const meta: Meta<typeof Tooltip> = {
-  title: 'NPM/Tooltip',
+  title: 'NPM • Fundamental/Tooltip',
   component: Tooltip,
   parameters: {
     layout: 'centered',

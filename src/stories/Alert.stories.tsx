@@ -7,7 +7,7 @@ import { Badge } from '../components/ui/badge'
 import { Card, CardContent } from '../components/ui/card'
 
 const meta: Meta<typeof Alert> = {
-  title: 'npm/Alert',
+  title: 'NPM • Fundamental/Alert',
   component: Alert,
   parameters: {
     layout: 'centered',

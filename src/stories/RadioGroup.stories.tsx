@@ -7,7 +7,7 @@ import { Icon } from '../components/ui/icon'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
 
 const meta: Meta<typeof RadioGroup> = {
-  title: 'NPM/RadioGroup',
+  title: 'NPM • Fundamental/RadioGroup',
   component: RadioGroup,
   parameters: {
     layout: 'centered',

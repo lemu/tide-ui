@@ -20,7 +20,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar'
 import { formatNumber, formatCurrency, formatDecimal } from '../lib/utils'
 
 const meta: Meta<typeof Table> = {
-  title: 'NPM/Table',
+  title: 'NPM • Fundamental/Table',
   component: Table,
   parameters: {
     layout: 'centered',

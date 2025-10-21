@@ -57,7 +57,7 @@ import {
 } from '../components/ui/breadcrumb'
 
 const meta: Meta<typeof Sidebar> = {
-  title: 'NPM/Sidebar',
+  title: 'NPM • Fundamental/Sidebar',
   component: Sidebar,
   parameters: {
     layout: 'fullscreen',

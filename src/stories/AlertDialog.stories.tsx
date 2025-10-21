@@ -13,7 +13,7 @@ import {
 import { Button } from '../components/ui/button'
 
 const meta: Meta<typeof AlertDialog> = {
-  title: 'NPM/AlertDialog',
+  title: 'NPM • Fundamental/AlertDialog',
   component: AlertDialog,
   parameters: {
     layout: 'centered',

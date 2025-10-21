@@ -3,7 +3,7 @@ import { Switch } from '../components/ui/switch'
 import { Label } from '../components/ui/label'
 
 const meta: Meta<typeof Switch> = {
-  title: 'NPM/Switch',
+  title: 'NPM • Fundamental/Switch',
   component: Switch,
   parameters: {
     layout: 'centered',

@@ -7,7 +7,7 @@ import { Badge } from '../components/ui/badge'
 import { Icon } from '../components/ui/icon'
 
 const meta: Meta<typeof Progress> = {
-  title: 'NPM/Progress',
+  title: 'NPM • Fundamental/Progress',
   component: Progress,
   parameters: {
     layout: 'centered',

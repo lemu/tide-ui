@@ -5,19 +5,17 @@ import { cn } from "../../lib/utils";
 import { Icon } from "./icon";
 
 const selectTriggerVariants = cva(
-  "flex w-full items-center justify-between rounded-md border bg-[var(--color-surface-primary)] text-[var(--color-text-primary)] ring-offset-background placeholder:text-[var(--color-text-tertiary)] focus:outline-none focus:ring-2 focus:ring-[var(--ring-color)] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-100 disabled:bg-[var(--color-background-disabled)] disabled:text-[var(--color-text-disabled)]",
+  "flex w-full items-center justify-between rounded-md border bg-[var(--color-surface-primary)] text-[var(--color-text-primary)] ring-offset-background placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-100 disabled:bg-[var(--color-background-disabled)] disabled:text-[var(--color-text-disabled)]",
   {
     variants: {
       variant: {
         default: [
           "border-[var(--color-border-input)]",
           "hover:border-[var(--color-border-input-hovered)]",
-          "focus:border-[var(--color-border-brand)]",
         ],
         error: [
           "border-[var(--color-border-error)]",
           "hover:border-[var(--color-border-error)]",
-          "focus:border-[var(--color-border-error)]",
         ],
       },
       size: {

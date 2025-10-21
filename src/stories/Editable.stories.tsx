@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Editable, EditablePreview, EditableInput } from '../components/ui/editable'
 
 const meta: Meta<typeof Editable> = {
-  title: 'NPM/Editable',
+  title: 'NPM • Fundamental/Editable',
   component: Editable,
   parameters: {
     layout: 'centered',

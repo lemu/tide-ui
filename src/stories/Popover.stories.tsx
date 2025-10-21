@@ -14,7 +14,7 @@ import { Label } from '../components/ui/label'
 import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar'
 
 const meta: Meta<typeof Popover> = {
-  title: 'NPM/Popover',
+  title: 'NPM • Fundamental/Popover',
   component: Popover,
   parameters: {
     layout: 'centered',

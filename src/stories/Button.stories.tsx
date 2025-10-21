@@ -10,7 +10,7 @@ import {
 import { Icon } from '../components/ui/icon'
 
 const meta: Meta<typeof Button> = {
-  title: 'NPM/Button',
+  title: 'NPM • Fundamental/Button',
   component: Button,
   parameters: {
     layout: 'centered',

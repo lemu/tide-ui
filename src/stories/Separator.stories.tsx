@@ -4,7 +4,7 @@ import { Button } from '../components/ui/button'
 import { Icon } from '../components/ui/icon'
 
 const meta: Meta<typeof Separator> = {
-  title: 'NPM/Separator',
+  title: 'NPM • Fundamental/Separator',
   component: Separator,
   parameters: {
     layout: 'centered',

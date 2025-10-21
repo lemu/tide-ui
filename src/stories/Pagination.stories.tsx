@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"
 import { Badge } from "../components/ui/badge";
 
 const meta: Meta<typeof Pagination> = {
-  title: "NPM/Pagination",
+  title: "NPM • Fundamental/Pagination",
   component: Pagination,
   parameters: {
     layout: "centered",

@@ -4,7 +4,7 @@ import { Button } from "../components/ui/button";
 import { Icon } from "../components/ui/icon";
 
 const meta: Meta<typeof ButtonGroup> = {
-  title: "NPM/ButtonGroup",
+  title: "NPM • Fundamental/ButtonGroup",
   component: ButtonGroup,
   parameters: {
     layout: "centered",

@@ -5,7 +5,7 @@ import { Badge } from '../components/ui/badge'
 import { Separator } from '../components/ui/separator'
 
 const meta: Meta<typeof Avatar> = {
-  title: 'NPM/Avatar',
+  title: 'NPM • Fundamental/Avatar',
   component: Avatar,
   parameters: {
     layout: 'centered',

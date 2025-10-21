@@ -3,7 +3,7 @@ import { TextLink } from '../components/ui/text-link'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 
 const meta: Meta<typeof TextLink> = {
-  title: 'NPM/TextLink',
+  title: 'NPM • Fundamental/TextLink',
   component: TextLink,
   parameters: {
     layout: 'centered',

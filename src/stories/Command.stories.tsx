@@ -17,7 +17,7 @@ import { Badge } from '../components/ui/badge'
 import { Avatar, AvatarFallback } from '../components/ui/avatar'
 
 const meta: Meta<typeof Command> = {
-  title: 'NPM/Command',
+  title: 'NPM • Fundamental/Command',
   component: Command,
   parameters: {
     layout: 'centered',

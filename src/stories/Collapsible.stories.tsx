@@ -11,7 +11,7 @@ import { Badge } from '../components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 
 const meta: Meta<typeof Collapsible> = {
-  title: 'NPM/Collapsible',
+  title: 'NPM • Fundamental/Collapsible',
   component: Collapsible,
   parameters: {
     layout: 'centered',

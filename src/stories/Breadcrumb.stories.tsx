@@ -12,7 +12,7 @@ import { Icon } from '../components/ui/icon'
 import { TextLink } from '../components/ui/text-link'
 
 const meta: Meta<typeof Breadcrumb> = {
-  title: 'NPM/Breadcrumb',
+  title: 'NPM • Fundamental/Breadcrumb',
   component: Breadcrumb,
   parameters: {
     layout: 'centered',
