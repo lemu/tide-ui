@@ -535,7 +535,7 @@ function DraggableColumnHeader({ header, enableColumnOrdering, children }: Dragg
   })
 
   const style = {
-    transform: CSS.Transform.toString(transform),
+    transform: CSS.Translate.toString(transform),  // Only translate, no scale
     transition,
     opacity: isDragging ? 0.5 : 1,
   }
@@ -1428,6 +1428,8 @@ export function DataTable<TData, TValue>({
                         )}
                         style={{
                           ...pinningStyles,
+                          // For table-fixed layout, all columns need explicit width
+                          ...(enableColumnResizing && !pinningStyles.width ? { width: header.column.getSize() } : {}),
                         }}
                       >
                         <div className="flex items-center justify-between">
@@ -1486,6 +1488,8 @@ export function DataTable<TData, TValue>({
                         )}
                         style={{
                           ...pinningStyles,
+                          // For table-fixed layout, all columns need explicit width
+                          ...(enableColumnResizing && !pinningStyles.width ? { width: header.column.getSize() } : {}),
                         }}
                       >
                         <DraggableColumnHeader header={header} enableColumnOrdering={enableColumnOrdering}>
