@@ -13,7 +13,6 @@ import {
   SelectItem,
 } from "./select";
 import { Toggle } from "./toggle";
-import { Icon } from "./icon";
 
 interface ColumnOption {
   id: string;

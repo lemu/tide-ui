@@ -12,7 +12,6 @@ import {
   SelectLabel,
   SelectSeparator,
   SelectTrigger,
-  SelectValue,
 } from "./select";
 import {
   DropdownMenu,
@@ -358,10 +357,10 @@ interface BookmarkTabProps {
 }
 
 const BookmarkTab = React.forwardRef<HTMLDivElement, BookmarkTabProps>(
-  ({ bookmark, isActive, isVisible = true, onSelect, onRename, onDelete, onSetDefault }, ref) => {
+  ({ bookmark, isActive, isVisible = true, onSelect, onRename, onDelete, onSetDefault: _onSetDefault }, ref) => {
     const [isHovered, setIsHovered] = React.useState(false);
     const isUserBookmark = bookmark.type === "user";
-    const isSystemBookmark = bookmark.type === "system";
+    // const isSystemBookmark = bookmark.type === "system";
 
     return (
       <div
@@ -563,7 +562,7 @@ function BookmarkTabs({
   }, [allBookmarks.length, systemBookmarks.length, bookmarks.length]);
 
   // Determine visible and overflow bookmarks
-  const visibleBookmarks = visibleCount === null ? allBookmarks : allBookmarks.slice(0, visibleCount);
+  // const visibleBookmarks = visibleCount === null ? allBookmarks : allBookmarks.slice(0, visibleCount);
   const overflowBookmarks = visibleCount === null ? [] : allBookmarks.slice(visibleCount);
 
   return (

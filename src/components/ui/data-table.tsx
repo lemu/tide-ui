@@ -1097,9 +1097,9 @@ export function DataTable<TData, TValue>({
   React.useEffect(() => {
     if (!autoExpandChildren) return
 
-    const currentExpanded = table.getState().expanded
-    const previousExpanded = previousExpandedRef.current
-    const newExpanded = { ...currentExpanded }
+    const currentExpanded = table.getState().expanded as Record<string, boolean>
+    const previousExpanded = previousExpandedRef.current as Record<string, boolean>
+    const newExpanded: Record<string, boolean> = { ...currentExpanded }
     let hasChanges = false
 
     // Check all rows
