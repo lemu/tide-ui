@@ -64,7 +64,7 @@ const DialogHeader = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col space-y-[var(--space-sm)] border-b border-[var(--color-border-primary-subtle)] px-6 py-4 text-center sm:text-left",
+      "flex flex-col space-y-[var(--space-sm)] border-b border-[var(--color-border-primary-subtle)] px-[var(--space-xlg)] py-[var(--space-lg)] text-center sm:text-left",
       className,
     )}
     {...props}
@@ -76,7 +76,7 @@ const DialogBody = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("px-6 py-4", className)} {...props} />
+  <div className={cn("px-[var(--space-xlg)] py-[var(--space-lg)]", className)} {...props} />
 );
 DialogBody.displayName = "DialogBody";
 
