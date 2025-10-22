@@ -405,12 +405,11 @@ function GlobalSearchInput({ placeholder = "Search for keyword...", onAddSearchT
       />
       <Input
         type="text"
-        size="lg"
         placeholder={placeholder}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="pl-[calc(var(--space-md)+var(--size-xsm)+var(--space-sm))] h-[var(--size-md)]"
+        className="h-[var(--size-lg)] pl-[calc(var(--space-md)+var(--size-xsm)+var(--space-sm))] pr-[var(--space-lg)] py-[var(--space-md)] text-body-md"
       />
     </div>
   )
@@ -658,9 +657,6 @@ export function Filters({
         />
       )}
 
-      {/* Action Buttons (Revert/Save) - positioned right after global search */}
-      {actionButtons}
-
       {/* Search Term Tags */}
       {enrichedSearchTerms.map((searchTerm) => {
         const IconComponent = searchTerm.matchedFilter?.icon
@@ -693,13 +689,13 @@ export function Filters({
         )
       })}
 
-      {/* Dot Separator (between search area and pinned filters) - hide on small containers */}
+      {/* Dot Separator (between search area and pinned filters) - hide on tablet and mobile */}
       {pinnedFilterObjects.length > 0 && (
-        <Separator type="dot" layout="horizontal" className="@[768px]:block hidden" />
+        <Separator type="dot" layout="horizontal" className="lg:block hidden" />
       )}
 
-      {/* Pinned Filter Slots - hide on small containers */}
-      <div className="@[768px]:contents hidden">
+      {/* Pinned Filter Slots - hide on tablet and mobile, show on desktop only */}
+      <div className="lg:contents hidden">
         {pinnedFilterObjects.map((filter) => {
         const slotContent = getSlotContent(filter)
         const isActive = slotContent.type !== 'empty'
@@ -792,6 +788,9 @@ export function Filters({
         )
       })}
       </div>
+
+      {/* Action Buttons (Revert/Save) - positioned after pinned filters */}
+      {actionButtons}
 
       {/* Reset Button */}
       {!hideReset && (hasActiveFilters || hasGlobalSearch) && (

@@ -25,6 +25,7 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
+  DialogBody,
   DialogTitle,
   DialogFooter,
 } from "./dialog";
@@ -129,7 +130,7 @@ function BookmarkNameDialog({
             {mode === "create" ? "Create Bookmark" : "Rename Bookmark"}
           </DialogTitle>
         </DialogHeader>
-        <div className="flex flex-col gap-[var(--space-md)] py-[var(--space-md)]">
+        <DialogBody>
           <div className="flex flex-col gap-[var(--space-sm)]">
             <Label htmlFor="bookmark-name">Bookmark Name</Label>
             <Input
@@ -146,12 +147,12 @@ function BookmarkNameDialog({
               autoFocus
             />
           </div>
-        </div>
+        </DialogBody>
         <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
+          <Button variant="secondary" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button onClick={handleSave} disabled={!name.trim()}>
+          <Button variant="default" onClick={handleSave} disabled={!name.trim()}>
             {mode === "create" ? "Create" : "Save"}
           </Button>
         </DialogFooter>
