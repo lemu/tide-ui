@@ -642,11 +642,11 @@ export function Filters({
 
       {/* Dot Separator (after Filter button) */}
       {pinnedFilterObjects.length > 0 && (
-        <Separator type="dot" layout="horizontal" className="lg:block hidden" />
+        <Separator type="dot" layout="horizontal" />
       )}
 
-      {/* Pinned Filter Slots - hide on tablet and mobile, show on desktop only */}
-      <div className="lg:contents hidden">
+      {/* Pinned Filter Slots */}
+      <div className="flex gap-[7px] overflow-x-auto scrollbar-hide">
         {pinnedFilterObjects.map((filter) => {
         const slotContent = getSlotContent(filter)
         const isActive = slotContent.type !== 'empty'
@@ -669,7 +669,7 @@ export function Filters({
                   }
                 }}
                 className={cn(
-                  "group/slot h-[var(--size-md)] rounded-lg flex items-center justify-center gap-[var(--space-sm)] transition-colors cursor-pointer",
+                  "group/slot h-[var(--size-md)] rounded-lg flex items-center justify-center gap-[var(--space-sm)] transition-colors cursor-pointer flex-shrink-0",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
                   isActive
                     ? "bg-[var(--color-background-neutral-selected)] hover:bg-[var(--color-background-neutral-hovered)] px-[var(--space-md)] pr-[4px]"
