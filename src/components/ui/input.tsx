@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
+import { Icon } from "./icon";
 
 const inputVariants = cva(
   "flex w-full rounded-md border transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:shadow-[0px_0px_0px_2px_rgba(0,95,133,0.2),0px_3px_4px_0px_rgba(0,14,20,0.03)] disabled:cursor-not-allowed disabled:opacity-50",
@@ -38,6 +39,31 @@ export interface InputProps
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, variant, size, type = "text", ...props }, ref) => {
+    const isSearchInput = type === "search";
+
+    if (isSearchInput) {
+      return (
+        <div className="relative">
+          <Icon
+            name="search"
+            size={size === "sm" ? "sm" : "md"}
+            color="tertiary"
+            className="absolute left-[var(--space-md)] top-1/2 -translate-y-1/2 pointer-events-none"
+          />
+          <input
+            type={type}
+            className={cn(
+              inputVariants({ variant, size }),
+              "pl-[var(--space-2xlg)]",
+              className,
+            )}
+            ref={ref}
+            {...props}
+          />
+        </div>
+      );
+    }
+
     return (
       <input
         type={type}
