@@ -60,6 +60,7 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 **CRITICAL: Follow these exact patterns for all styling:**
 
 #### 1. Typography
+
 - **ALWAYS use semantic typography utilities** from the `@theme` instead of combining individual classes
 - Use `text-heading-lg`, `text-body-md`, `text-label-sm`, etc.
 - These utilities include font-size, line-height, font-weight, and letter-spacing automatically
@@ -74,6 +75,7 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 ```
 
 #### 2. Border Radius & Shadows
+
 - **ALWAYS use theme utilities** for border radius and shadows
 - Use `rounded-sm`, `rounded-md`, `shadow-xs`, `shadow-lg`, etc.
 
@@ -86,6 +88,7 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 ```
 
 #### 3. Colors
+
 - **ALWAYS use Tailwind utilities with CSS variables** for colors
 - Use semantic color tokens: `bg-[var(--color-background-brand)]`, `text-[var(--color-text-primary)]`
 - Base color variables (grey-500, blue-200, etc.) are only for prototyping or missing semantic tokens
@@ -104,6 +107,7 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 ```
 
 #### 4. Spacing & Sizing
+
 - **ALWAYS use CSS variables with Tailwind utilities** for spacing and sizing
 - Use semantic spacing tokens: `p-[var(--space-lg)]`, `m-[var(--space-md)]`, `gap-[var(--space-sm)]`
 - Use semantic sizing tokens: `w-[var(--size-md)]`, `h-[var(--size-lg)]`
@@ -119,6 +123,7 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 ```
 
 #### 5. Borders
+
 - **ALWAYS use CSS variables** for border colors and widths
 - Use `border-[var(--color-border-input)]`, `border-[var(--border-width-sm)]`
 
@@ -133,6 +138,7 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 #### Complete Component Examples
 
 **Button Component:**
+
 ```tsx
 <button className="text-heading-sm rounded-md shadow-sm bg-[var(--color-background-brand)] text-[var(--color-text-on-action)] px-[var(--space-lg)] py-[var(--space-md)]">
   Submit
@@ -140,10 +146,13 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 ```
 
 **Card Component:**
+
 ```tsx
 <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-lg p-[var(--space-lg)] shadow-md">
   <h2 className="text-heading-md mb-[var(--space-md)]">Card Title</h2>
-  <p className="text-body-md text-[var(--color-text-secondary)]">Card content</p>
+  <p className="text-body-md text-[var(--color-text-secondary)]">
+    Card content
+  </p>
 </div>
 ```
 
@@ -157,13 +166,18 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 
 ## Button Variants
 
-**IMPORTANT**: Our design system does NOT include an "outline" button variant. Available button variants are:
-- `default` - Primary button with brand background
-- `secondary` - Secondary button styling  
-- `ghost` - Transparent button with hover effects
-- `link` - Link-styled button
+**IMPORTANT**: Our design system does NOT include an "outline" or "link" button variant. Available button variants are:
 
-**Always use `ghost` variant instead of non-existent `outline` variant.**
+- `primary` - Primary CTA button with brand background (use for main actions like "Save", "Create", "Submit")
+- `default` - Default button with neutral background and border
+- `destructive` - Destructive actions with red background (use for "Delete", "Remove")
+- `success` - Success actions with green background
+- `ghost` - Transparent button with hover effects (use for tertiary actions like "Cancel")
+
+**Button hierarchy for dialogs:**
+
+- Primary action: `variant="primary"` (e.g., "Save", "Create", "Confirm")
+- Secondary action: `variant="default"` (e.g., "Cancel", "Close")
 
 ## Component Development Process
 
@@ -172,6 +186,7 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 **Before implementing any new component or functionality, ALWAYS ask clarifying questions to ensure complete understanding of requirements:**
 
 #### Required Clarification Areas:
+
 1. **Functional Requirements:**
    - What is the primary purpose and use case?
    - What props/API should the component expose?
@@ -215,9 +230,46 @@ When adding new components to the library:
 
 - **Minimal overrides needed**: Base components should work well without extensive className overrides
 - **Semantic defaults**: Use design tokens and semantic typography as defaults
-- **Accessibility first**: Follow ARIA guidelines and keyboard navigation standards  
+- **Accessibility first**: Follow ARIA guidelines and keyboard navigation standards
 - **TypeScript safety**: Export all component props and variants as types
 - **Storybook coverage**: Document all variants, states, and usage examples
+
+### **CRITICAL: Storybook Stories - No Custom Styling**
+
+**Storybook stories should demonstrate components as they are, without custom styling or className overrides.**
+
+#### Rules:
+
+1. **NO className overrides on components** - If you need to customize a component's appearance in a story, the component itself needs to support that variation through props (variants, sizes, etc.)
+2. **NO custom styling wrappers** - Minimize layout wrappers with custom flex/grid/spacing classes
+3. **Use component APIs only** - Demonstrate components using their built-in props, variants, and sizes
+4. **If styling is needed, it belongs in the component** - Custom styles in stories indicate missing component features
+
+#### Examples:
+
+```tsx
+// ❌ WRONG - Custom styling in story
+<Separator type="line" layout="horizontal" className="h-[var(--size-md)]" />
+
+// ✅ CORRECT - Use component props
+<Separator type="line" layout="horizontal" size="md" />
+// (If size prop doesn't exist, add it to the component!)
+```
+
+```tsx
+// ❌ WRONG - Custom layout wrapper
+<div className="flex gap-[var(--space-md)] items-center">
+  <Bookmarks {...props} />
+  <Separator {...props} />
+  <Filters {...props} />
+</div>
+
+// ✅ CORRECT - Minimal wrapper or create a layout component
+<BookmarksWithFilters {...props} />
+// (Or accept minimal wrappers ONLY for story demonstration, never for styling overrides)
+```
+
+**The goal**: Stories should showcase components exactly as consumers would use them, relying entirely on the component's API.
 
 No test framework is currently configured in this project.
 
@@ -236,6 +288,7 @@ No test framework is currently configured in this project.
 3. **Version Justification**: Explain why the proposed version is appropriate based on recent changes
 
 4. **Automated Publishing Process**:
+
    ```bash
    # 1. User controls versioning (creates commit + tag)
    npm version [patch|minor|major]

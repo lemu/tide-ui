@@ -79,13 +79,39 @@ export interface BookmarksProps {
   activeBookmarkId?: string;
   defaultBookmarkId?: string;
   isDirty: boolean;
-  hideActions?: boolean; // Hide action buttons (for custom layout)
+  children?: React.ReactNode; // Slot content (e.g., Filters)
   onSelect: (bookmark: Bookmark) => void;
   onRevert: () => void;
   onSave: (action: "update" | "create", name?: string) => Promise<void>;
   onRename: (id: string, newName: string) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
   onSetDefault: (id: string) => Promise<void>;
+}
+
+// ============================================================================
+// Context for Actions
+// ============================================================================
+
+interface BookmarksContextValue {
+  isDirty: boolean;
+  isSystemBookmark: boolean;
+  activeBookmark?: Bookmark;
+  openCreateDialog: () => void;
+  openRenameDialog: (id?: string) => void;
+  handleRevert: () => void;
+  handleUpdate: () => void;
+  handleDelete: (id?: string) => void;
+  handleSetDefault: (id?: string) => void;
+}
+
+const BookmarksContext = React.createContext<BookmarksContextValue | null>(null);
+
+export function useBookmarksActions() {
+  const context = React.useContext(BookmarksContext);
+  if (!context) {
+    throw new Error("useBookmarksActions must be used within Bookmarks");
+  }
+  return context;
 }
 
 // ============================================================================
@@ -149,10 +175,14 @@ function BookmarkNameDialog({
           </div>
         </DialogBody>
         <DialogFooter>
-          <Button variant="secondary" onClick={() => onOpenChange(false)}>
+          <Button variant="ghost" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button variant="default" onClick={handleSave} disabled={!name.trim()}>
+          <Button
+            variant="primary"
+            onClick={handleSave}
+            disabled={!name.trim()}
+          >
             {mode === "create" ? "Create" : "Save"}
           </Button>
         </DialogFooter>
@@ -200,17 +230,17 @@ function BookmarkSplitButton({
           if (bookmark) onSelect(bookmark);
         }}
       >
-        <SelectTrigger className="h-[var(--size-md)] w-auto gap-[var(--space-xsm)] !rounded-r-none !border-r-0 rounded-l-md bg-[var(--color-background-neutral-subtle)] text-[var(--color-text-primary)] border border-[var(--color-border-action-outline)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:border-[var(--color-border-action-hovered)] hover:shadow-sm focus:border-[var(--color-border-action-outline)] focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 data-[state=open]:ring-0 active:bg-[var(--grey-alpha-50)] active:translate-y-px active:shadow-xs pl-[var(--space-sm)] pr-[var(--space-md)] text-label-md relative z-0 focus-visible:z-10">
+        <SelectTrigger className="!text-label-md relative z-0 h-[var(--size-md)] w-auto gap-[var(--space-xsm)] rounded-l-md !rounded-r-none border !border-r-0 border-[var(--color-border-action-outline)] bg-[var(--color-background-neutral-subtle)] pr-[var(--space-md)] pl-[var(--space-sm)] text-[var(--color-text-primary)] hover:border-[var(--color-border-action-hovered)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:shadow-sm focus:border-[var(--color-border-action-outline)] focus:ring-0 focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 active:translate-y-px active:bg-[var(--grey-alpha-50)] active:shadow-xs data-[state=open]:ring-0">
           <Icon name="bookmark" size="md" color="primary" />
           {activeBookmark?.name || "Bookmarks"}
         </SelectTrigger>
-        <SelectContent align="start" position="popper">
+        <SelectContent align="start" position="popper" className="min-w-[200px]">
           {/* System Bookmarks */}
           {systemBookmarks.length > 0 && (
             <>
               {systemBookmarks.map((bookmark) => (
                 <SelectItem key={bookmark.id} value={bookmark.id}>
-                  <div className="flex items-center gap-[var(--space-sm)]">
+                  <div className="flex items-center gap-[var(--space-sm)] pr-6">
                     <span>{bookmark.name}</span>
                   </div>
                 </SelectItem>
@@ -238,7 +268,7 @@ function BookmarkSplitButton({
                     {bookmark.isDefault && (
                       <Icon
                         name="star"
-                        className="h-[var(--size-2xsm)] w-[var(--size-2xsm)] text-[var(--color-icon-warning)] flex-shrink-0"
+                        className="h-[var(--size-2xsm)] w-[var(--size-2xsm)] flex-shrink-0 text-[var(--color-icon-warning)]"
                       />
                     )}
                   </div>
@@ -252,7 +282,10 @@ function BookmarkSplitButton({
       {/* Bookmark Options Button */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button icon="more-horizontal" className="!rounded-l-none rounded-r-md focus:ring-0 data-[state=open]:ring-0" />
+          <Button
+            icon="more-horizontal"
+            className="!rounded-l-none rounded-r-md focus:ring-0 data-[state=open]:ring-0"
+          />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem
@@ -332,9 +365,7 @@ function SaveDropdown({ onUpdate, onCreate }: SaveDropdownProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={onUpdate}>
-          Update Bookmark
-        </DropdownMenuItem>
+        <DropdownMenuItem onClick={onUpdate}>Update Bookmark</DropdownMenuItem>
         <DropdownMenuItem onClick={onCreate}>
           Create New Bookmark
         </DropdownMenuItem>
@@ -358,7 +389,18 @@ interface BookmarkTabProps {
 }
 
 const BookmarkTab = React.forwardRef<HTMLDivElement, BookmarkTabProps>(
-  ({ bookmark, isActive, isVisible = true, onSelect, onRename, onDelete, onSetDefault: _onSetDefault }, ref) => {
+  (
+    {
+      bookmark,
+      isActive,
+      isVisible = true,
+      onSelect,
+      onRename,
+      onDelete,
+      onSetDefault: _onSetDefault,
+    },
+    ref,
+  ) => {
     const [isHovered, setIsHovered] = React.useState(false);
     const isUserBookmark = bookmark.type === "user";
     // const isSystemBookmark = bookmark.type === "system";
@@ -378,11 +420,11 @@ const BookmarkTab = React.forwardRef<HTMLDivElement, BookmarkTabProps>(
           }
         }}
         className={cn(
-          "relative flex min-w-[160px] cursor-pointer flex-col gap-[var(--space-xsm)] rounded-lg p-[var(--space-lg)] transition-colors flex-shrink-0",
+          "relative flex min-w-[160px] flex-shrink-0 cursor-pointer flex-col gap-[var(--space-xsm)] rounded-lg p-[var(--space-lg)] transition-colors",
           isActive
             ? "bg-[var(--blue-50)] hover:bg-[var(--blue-50)]"
             : "bg-[var(--color-background-neutral)] hover:bg-[var(--color-background-neutral-hovered)]",
-          !isVisible && "absolute invisible pointer-events-none"
+          !isVisible && "pointer-events-none invisible absolute",
         )}
       >
         {/* Top row: icon, name, and three-dot menu */}
@@ -396,7 +438,7 @@ const BookmarkTab = React.forwardRef<HTMLDivElement, BookmarkTabProps>(
                 className="flex-shrink-0"
               />
             )}
-            <div className="text-body-md text-[var(--color-text-primary)] whitespace-nowrap">
+            <div className="text-body-md whitespace-nowrap text-[var(--color-text-primary)]">
               {bookmark.name}
             </div>
           </div>
@@ -453,7 +495,7 @@ const BookmarkTab = React.forwardRef<HTMLDivElement, BookmarkTabProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 BookmarkTab.displayName = "BookmarkTab";
@@ -512,7 +554,10 @@ function BookmarkTabs({
       // Find if there's a separator in the bookmarks
       const systemBookmarksCount = systemBookmarks.length;
       const hasUserBookmarks = bookmarks.length > 0;
-      const separatorIndex = systemBookmarksCount > 0 && hasUserBookmarks ? systemBookmarksCount : -1;
+      const separatorIndex =
+        systemBookmarksCount > 0 && hasUserBookmarks
+          ? systemBookmarksCount
+          : -1;
 
       for (let i = 0; i < allBookmarks.length; i++) {
         const bookmark = allBookmarks[i];
@@ -527,11 +572,14 @@ function BookmarkTabs({
           totalWidth += separatorWidth + gap;
         }
 
-        const nextWidth = totalWidth + itemWidth + (count > 0 || hasSeparator ? gap : 0);
+        const nextWidth =
+          totalWidth + itemWidth + (count > 0 || hasSeparator ? gap : 0);
 
         // Reserve space for overflow button if we have more items
         const needsOverflow = i < allBookmarks.length - 1;
-        const spaceNeeded = needsOverflow ? nextWidth + gap + overflowButtonWidth : nextWidth;
+        const spaceNeeded = needsOverflow
+          ? nextWidth + gap + overflowButtonWidth
+          : nextWidth;
 
         if (spaceNeeded > containerWidth) {
           break;
@@ -564,10 +612,14 @@ function BookmarkTabs({
 
   // Determine visible and overflow bookmarks
   // const visibleBookmarks = visibleCount === null ? allBookmarks : allBookmarks.slice(0, visibleCount);
-  const overflowBookmarks = visibleCount === null ? [] : allBookmarks.slice(visibleCount);
+  const overflowBookmarks =
+    visibleCount === null ? [] : allBookmarks.slice(visibleCount);
 
   return (
-    <div ref={containerRef} className="flex items-center gap-[var(--space-sm)] overflow-hidden">
+    <div
+      ref={containerRef}
+      className="flex items-center gap-[var(--space-sm)] overflow-hidden"
+    >
       {allBookmarks.map((bookmark, index) => {
         const isVisible = visibleCount === null || index < visibleCount;
         const isLastSystemInVisible =
@@ -595,7 +647,13 @@ function BookmarkTabs({
               onSetDefault={() => onSetDefault(bookmark.id)}
             />
             {/* Add separator between system and user bookmarks */}
-            {isLastSystemInVisible && <Separator type="line" layout="horizontal" className="h-20 flex-shrink-0" />}
+            {isLastSystemInVisible && (
+              <Separator
+                type="line"
+                layout="horizontal"
+                className="h-20 flex-shrink-0"
+              />
+            )}
           </React.Fragment>
         );
       })}
@@ -606,9 +664,9 @@ function BookmarkTabs({
           <PopoverTrigger asChild>
             <button
               className={cn(
-                "flex items-center justify-center rounded-lg border border-[var(--color-border-action-outline)] bg-transparent px-[var(--space-md)] transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] flex-shrink-0",
+                "flex flex-shrink-0 items-center justify-center rounded-lg border border-[var(--color-border-action-outline)] bg-transparent px-[var(--space-md)] transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)]",
                 "min-h-[88px]", // Match the height of bookmark tabs (padding + content + padding)
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-brand)] focus-visible:ring-offset-2"
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-brand)] focus-visible:ring-offset-2",
               )}
             >
               <Icon
@@ -617,7 +675,11 @@ function BookmarkTabs({
               />
             </button>
           </PopoverTrigger>
-          <PopoverContent align="end" side="bottom" className="w-[280px] p-[var(--space-sm)]">
+          <PopoverContent
+            align="end"
+            side="bottom"
+            className="w-[280px] p-[var(--space-sm)]"
+          >
             <div className="flex flex-col">
               {overflowBookmarks.map((bookmark) => {
                 const isActive = activeBookmarkId === bookmark.id;
@@ -629,8 +691,8 @@ function BookmarkTabs({
                       setShowOverflow(false);
                     }}
                     className={cn(
-                      "text-body-md flex items-center gap-[var(--space-sm)] px-[var(--space-md)] py-[var(--space-sm)] text-left transition-colors rounded-md",
-                      "hover:bg-[var(--color-background-neutral-subtle-hovered)]"
+                      "text-body-md flex items-center gap-[var(--space-sm)] rounded-md px-[var(--space-md)] py-[var(--space-sm)] text-left transition-colors",
+                      "hover:bg-[var(--color-background-neutral-subtle-hovered)]",
                     )}
                   >
                     {bookmark.type === "user" && (
@@ -642,7 +704,7 @@ function BookmarkTabs({
                     {bookmark.type === "system" && (
                       <div className="w-[var(--size-2xsm)]" />
                     )}
-                    <div className="flex-1 flex items-center gap-[var(--space-xsm)]">
+                    <div className="flex flex-1 items-center gap-[var(--space-xsm)]">
                       <span>{bookmark.name}</span>
                       {bookmark.count !== undefined && (
                         <Badge size="sm" intent="neutral" appearance="subtle">
@@ -674,6 +736,103 @@ function BookmarkTabs({
 }
 
 // ============================================================================
+// Slot Marker Components
+// ============================================================================
+
+export function BookmarksContent({ children }: { children?: React.ReactNode }) {
+  // Just a marker component - rendered by parent
+  return <>{children}</>;
+}
+
+export function BookmarksActions({ children }: { children?: React.ReactNode }) {
+  // Just a marker component - rendered by parent
+  return <>{children}</>;
+}
+
+export function BookmarksSettings({ children }: { children?: React.ReactNode }) {
+  // Just a marker component - rendered by parent
+  return <>{children}</>;
+}
+
+export function BookmarksRevertButton() {
+  const { isDirty, handleRevert } = useBookmarksActions();
+  if (!isDirty) return null;
+
+  return (
+    <Button variant="ghost" onClick={handleRevert} className="h-[var(--size-md)]">
+      Revert Changes
+    </Button>
+  );
+}
+
+export function BookmarksCreateButton() {
+  const { isDirty, isSystemBookmark, openCreateDialog } = useBookmarksActions();
+  if (!isDirty || !isSystemBookmark) return null;
+
+  return (
+    <Button variant="ghost" onClick={openCreateDialog} className="h-[var(--size-md)]">
+      Create Bookmark
+    </Button>
+  );
+}
+
+export function BookmarksSaveButton() {
+  const { isDirty, isSystemBookmark, handleUpdate } = useBookmarksActions();
+  if (!isDirty || isSystemBookmark) return null;
+
+  return (
+    <Button variant="ghost" onClick={handleUpdate} className="h-[var(--size-md)]">
+      Update Bookmark
+    </Button>
+  );
+}
+
+export function BookmarksResetButton() {
+  const { isDirty, isSystemBookmark, handleRevert } = useBookmarksActions();
+  if (!isDirty || !isSystemBookmark) return null;
+
+  return (
+    <Button variant="ghost" onClick={handleRevert} className="h-[var(--size-md)]">
+      Reset
+    </Button>
+  );
+}
+
+export function BookmarksSaveDropdown() {
+  const { isDirty, isSystemBookmark, handleUpdate, openCreateDialog } = useBookmarksActions();
+  if (!isDirty || isSystemBookmark) return null;
+
+  return (
+    <SaveDropdown
+      onUpdate={handleUpdate}
+      onCreate={openCreateDialog}
+    />
+  );
+}
+
+export function BookmarksDefaultActions() {
+  const { isDirty, isSystemBookmark } = useBookmarksActions();
+  if (!isDirty) return null;
+
+  return (
+    <>
+      <Separator type="dot" layout="horizontal" />
+      {isSystemBookmark ? (
+        <>
+          <BookmarksResetButton />
+          <BookmarksCreateButton />
+        </>
+      ) : (
+        <>
+          <BookmarksRevertButton />
+          <BookmarksSaveDropdown />
+        </>
+      )}
+    </>
+  );
+}
+
+// ============================================================================
 // Bookmarks - Main wrapper component
 // ============================================================================
 
@@ -683,7 +842,7 @@ export function Bookmarks({
   systemBookmarks,
   activeBookmarkId,
   isDirty,
-  hideActions = false,
+  children,
   onSelect,
   onRevert,
   onSave,
@@ -733,9 +892,58 @@ export function Bookmarks({
     (b) => b.id === renameBookmarkId,
   );
 
+  // Separate children into content, actions, and settings slots
+  const { contentSlot, actionsSlot, settingsSlot } = React.useMemo(() => {
+    let content: React.ReactNode = null;
+    let actions: React.ReactNode = null;
+    let settings: React.ReactNode = null;
+    const fallbackContent: React.ReactNode[] = [];
+
+    React.Children.forEach(children, (child) => {
+      if (React.isValidElement(child)) {
+        if (child.type === BookmarksContent) {
+          content = child.props.children;
+        } else if (child.type === BookmarksActions) {
+          actions = child.props.children;
+        } else if (child.type === BookmarksSettings) {
+          settings = child.props.children;
+        } else {
+          // For backwards compatibility: non-slot children go to content
+          fallbackContent.push(child);
+        }
+      } else {
+        fallbackContent.push(child);
+      }
+    });
+
+    // If no explicit content slot, use fallback content
+    if (!content && fallbackContent.length > 0) {
+      content = fallbackContent;
+    }
+
+    return {
+      contentSlot: content,
+      actionsSlot: actions,
+      settingsSlot: settings
+    };
+  }, [children]);
+
+  // Context value for actions
+  const contextValue: BookmarksContextValue = {
+    isDirty,
+    isSystemBookmark: isSystemBookmarkActive,
+    activeBookmark,
+    openCreateDialog: () => setCreateDialogOpen(true),
+    openRenameDialog: handleRenameClick,
+    handleRevert: onRevert,
+    handleUpdate: () => onSave("update"),
+    handleDelete,
+    handleSetDefault,
+  };
+
   if (variant === "tabs") {
     return (
-      <>
+      <BookmarksContext.Provider value={contextValue}>
         {/* Tabs row */}
         <BookmarkTabs
           bookmarks={bookmarks}
@@ -747,44 +955,24 @@ export function Bookmarks({
           onSetDefault={handleSetDefault}
         />
 
-        {/* Action buttons row - only when dirty and not hidden */}
-        {!hideActions && isDirty && (
+        {/* Content + Actions + Settings row */}
+        {(contentSlot || actionsSlot || settingsSlot) && (
           <div className="flex items-center gap-[7px]">
-            <Separator type="dot" layout="horizontal" />
+            {/* Content and Actions grouped together (can grow) */}
+            {(contentSlot || actionsSlot) && (
+              <div className="flex items-center gap-[7px] flex-1 min-w-0">
+                {contentSlot}
+                {actionsSlot}
+              </div>
+            )}
 
-            {isSystemBookmarkActive ? (
-              // System bookmark actions
+            {/* Settings slot (always right-aligned, doesn't shrink) */}
+            {settingsSlot && (
               <>
-                <Button
-                  variant="ghost"
-                  onClick={onRevert}
-                  className="h-[var(--size-md)]"
-                >
-                  Reset
-                </Button>
-                <Button
-                  variant="ghost"
-                  onClick={() => setCreateDialogOpen(true)}
-                  className="h-[var(--size-md)]"
-                >
-                  Create Bookmark
-                </Button>
-              </>
-            ) : (
-              // User bookmark actions
-              <>
-                <Button
-                  variant="ghost"
-                  onClick={onRevert}
-                  className="h-[var(--size-md)]"
-                >
-                  Revert Changes
-                </Button>
-                <SaveDropdown
-                  bookmarkName={activeBookmark?.name}
-                  onUpdate={() => onSave("update")}
-                  onCreate={() => setCreateDialogOpen(true)}
-                />
+                <Separator type="dot" layout="horizontal" className="flex-shrink-0" />
+                <div className="flex-shrink-0">
+                  {settingsSlot}
+                </div>
               </>
             )}
           </div>
@@ -804,13 +992,13 @@ export function Bookmarks({
           initialName={renameBookmark?.name}
           onSave={handleRenameSave}
         />
-      </>
+      </BookmarksContext.Provider>
     );
   }
 
   // List variant
   return (
-    <>
+    <BookmarksContext.Provider value={contextValue}>
       {/* Split button */}
       <BookmarkSplitButton
         bookmarks={bookmarks}
@@ -822,48 +1010,14 @@ export function Bookmarks({
         onSetDefault={() => handleSetDefault()}
       />
 
-      {/* Action buttons - only when dirty and not hidden */}
-      {!hideActions && isDirty && (
-        <>
-          <Separator type="dot" layout="horizontal" />
+      {/* Content slot */}
+      {contentSlot}
 
-          {isSystemBookmarkActive ? (
-            // System bookmark actions
-            <>
-              <Button
-                variant="ghost"
-                onClick={onRevert}
-                className="h-[var(--size-md)]"
-              >
-                Reset
-              </Button>
-              <Button
-                variant="ghost"
-                onClick={() => setCreateDialogOpen(true)}
-                className="h-[var(--size-md)]"
-              >
-                Create Bookmark
-              </Button>
-            </>
-          ) : (
-            // User bookmark actions
-            <>
-              <Button
-                variant="ghost"
-                onClick={onRevert}
-                className="h-[var(--size-md)]"
-              >
-                Revert Changes
-              </Button>
-              <SaveDropdown
-                bookmarkName={activeBookmark?.name}
-                onUpdate={() => onSave("update")}
-                onCreate={() => setCreateDialogOpen(true)}
-              />
-            </>
-          )}
-        </>
-      )}
+      {/* Actions slot */}
+      {actionsSlot}
+
+      {/* Settings slot */}
+      {settingsSlot}
 
       {/* Dialogs */}
       <BookmarkNameDialog
@@ -879,6 +1033,17 @@ export function Bookmarks({
         initialName={renameBookmark?.name}
         onSave={handleRenameSave}
       />
-    </>
+    </BookmarksContext.Provider>
   );
 }
+
+// Attach sub-components
+Bookmarks.Content = BookmarksContent;
+Bookmarks.Actions = BookmarksActions;
+Bookmarks.Settings = BookmarksSettings;
+Bookmarks.DefaultActions = BookmarksDefaultActions;
+Bookmarks.RevertButton = BookmarksRevertButton;
+Bookmarks.CreateButton = BookmarksCreateButton;
+Bookmarks.SaveButton = BookmarksSaveButton;
+Bookmarks.ResetButton = BookmarksResetButton;
+Bookmarks.SaveDropdown = BookmarksSaveDropdown;

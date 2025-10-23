@@ -189,7 +189,9 @@ export const ListVariantDefault: Story = {
               setActiveBookmarkId(sampleSystemBookmarks[0]?.id || bookmarks[0]?.id)
             }
           }}
-        />
+        >
+          <Bookmarks.DefaultActions />
+        </Bookmarks>
         <div className="mt-4 p-4 bg-[var(--color-background-neutral)] rounded-md">
           <button
             onClick={() => setIsDirty(!isDirty)}
@@ -245,7 +247,9 @@ export const ListVariantUserBookmarkDirty: Story = {
           onDelete={async (id) => {
             setBookmarks(bookmarks.filter(b => b.id !== id))
           }}
-        />
+        >
+          <Bookmarks.DefaultActions />
+        </Bookmarks>
       </div>
     )
   },
@@ -293,7 +297,9 @@ export const ListVariantSystemBookmarkDirty: Story = {
           onDelete={async (id) => {
             setBookmarks(bookmarks.filter(b => b.id !== id))
           }}
-        />
+        >
+          <Bookmarks.DefaultActions />
+        </Bookmarks>
       </div>
     )
   },
@@ -320,7 +326,9 @@ export const ListVariantSystemOnly: Story = {
           onSave={async () => {}}
           onRename={async () => {}}
           onDelete={async () => {}}
-        />
+        >
+          <Bookmarks.DefaultActions />
+        </Bookmarks>
       </div>
     )
   },
@@ -377,7 +385,9 @@ export const TabsVariantDefault: Story = {
               setActiveBookmarkId(sampleSystemBookmarks[0]?.id || bookmarks[0]?.id)
             }
           }}
-        />
+        >
+          <Bookmarks.DefaultActions />
+        </Bookmarks>
         <div className="mt-4 p-4 bg-[var(--color-background-neutral)] rounded-md">
           <button
             onClick={() => setIsDirty(!isDirty)}
@@ -434,7 +444,9 @@ export const TabsVariantWithActions: Story = {
           onDelete={async (id) => {
             setBookmarks(bookmarks.filter(b => b.id !== id))
           }}
-        />
+        >
+          <Bookmarks.DefaultActions />
+        </Bookmarks>
       </div>
     )
   },
@@ -474,7 +486,9 @@ export const EmptyState: Story = {
           }}
           onRename={async () => {}}
           onDelete={async () => {}}
-        />
+        >
+          <Bookmarks.DefaultActions />
+        </Bookmarks>
       </div>
     )
   },

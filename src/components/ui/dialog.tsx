@@ -76,7 +76,7 @@ const DialogBody = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("px-[var(--space-xlg)] py-[var(--space-lg)]", className)} {...props} />
+  <div className={cn("px-[var(--space-xlg)] py-[var(--space-xlg)]", className)} {...props} />
 );
 DialogBody.displayName = "DialogBody";
 

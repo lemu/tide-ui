@@ -290,7 +290,19 @@ export type {
 } from './ui/filters'
 
 // Bookmarks components
-export { Bookmarks } from './ui/bookmarks'
+export {
+  Bookmarks,
+  BookmarksContent,
+  BookmarksActions,
+  BookmarksSettings,
+  BookmarksDefaultActions,
+  BookmarksRevertButton,
+  BookmarksCreateButton,
+  BookmarksSaveButton,
+  BookmarksResetButton,
+  BookmarksSaveDropdown,
+  useBookmarksActions,
+} from './ui/bookmarks'
 export type {
   Bookmark,
   BookmarksProps,

@@ -398,18 +398,14 @@ function GlobalSearchInput({ placeholder = "Search for keyword...", onAddSearchT
   }
 
   return (
-    <div className="relative min-w-[200px] w-[280px]">
-      <Icon
-        name="search"
-        className="absolute left-[var(--space-md)] top-1/2 -translate-y-1/2 h-[var(--size-xsm)] w-[var(--size-xsm)] text-[var(--color-text-tertiary)] pointer-events-none"
-      />
+    <div className="min-w-[200px] w-[280px]">
       <Input
-        type="text"
+        type="search"
         placeholder={placeholder}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="h-[var(--size-lg)] pl-[calc(var(--space-md)+var(--size-xsm)+var(--space-sm))] pr-[var(--space-lg)] py-[var(--space-md)] text-body-md"
+        size="md"
       />
     </div>
   )
