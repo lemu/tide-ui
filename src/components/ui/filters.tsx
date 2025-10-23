@@ -612,13 +612,13 @@ export function Filters({
   }
 
   return (
-    <div className="@container flex gap-[7px] items-center">
+    <div className="flex gap-[7px] items-center">
       {/* Filter Button */}
       <Popover open={isFilterMenuOpen} onOpenChange={setIsFilterMenuOpen}>
         <PopoverTrigger asChild>
           <Button className="h-[var(--size-md)] gap-[var(--space-xsm)]">
             <Icon name="list-filter" className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]" />
-            <span className="text-label-md">Filter</span>
+            <span className="text-label-md">Filters</span>
             {activeFilterCount > 0 && (
               <Badge size="sm" intent="neutral" appearance="subtle">
                 {activeFilterCount}
@@ -640,52 +640,7 @@ export function Filters({
         </PopoverContent>
       </Popover>
 
-      {/* Dot Separator (before global search) */}
-      {enableGlobalSearch && (
-        <Separator type="dot" layout="horizontal" />
-      )}
-
-      {/* Global Search Input */}
-      {enableGlobalSearch && (
-        <GlobalSearchInput
-          placeholder={globalSearchPlaceholder}
-          onAddSearchTerm={handleAddSearchTerm}
-        />
-      )}
-
-      {/* Search Term Tags */}
-      {enrichedSearchTerms.map((searchTerm) => {
-        const IconComponent = searchTerm.matchedFilter?.icon
-
-        return (
-          <div
-            key={searchTerm.value}
-            className="h-[var(--size-md)] rounded-lg bg-[var(--color-background-neutral-selected)] hover:bg-[var(--color-background-neutral-hovered)] px-[var(--space-md)] pr-[4px] flex items-center gap-[var(--space-sm)] transition-colors"
-          >
-            {/* Optional Icon */}
-            {IconComponent && (
-              <IconComponent className="h-[var(--size-2xsm)] w-[var(--size-2xsm)] text-[var(--color-icon-primary)]" />
-            )}
-
-            {/* Search Term Text */}
-            <span className="whitespace-nowrap [&]:text-label-md text-[var(--color-text-primary)]">
-              {searchTerm.value}
-            </span>
-
-            {/* Remove Button */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => handleRemoveSearchTerm(searchTerm.value)}
-              className="h-auto w-auto p-[var(--space-xsm)]"
-            >
-              <Icon name="x" className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]" />
-            </Button>
-          </div>
-        )
-      })}
-
-      {/* Dot Separator (between search area and pinned filters) - hide on tablet and mobile */}
+      {/* Dot Separator (after Filter button) */}
       {pinnedFilterObjects.length > 0 && (
         <Separator type="dot" layout="horizontal" className="lg:block hidden" />
       )}
@@ -785,8 +740,58 @@ export function Filters({
       })}
       </div>
 
-      {/* Action Buttons (Revert/Save) - positioned after pinned filters */}
+      {/* Vertical Line Separator (before global search) */}
+      {enableGlobalSearch && (
+        <Separator type="line" layout="horizontal" className="mx-[var(--space-sm)]" />
+      )}
+
+      {/* Global Search Input */}
+      {enableGlobalSearch && (
+        <GlobalSearchInput
+          placeholder={globalSearchPlaceholder}
+          onAddSearchTerm={handleAddSearchTerm}
+        />
+      )}
+
+      {/* Search Term Tags */}
+      {enrichedSearchTerms.map((searchTerm) => {
+        const IconComponent = searchTerm.matchedFilter?.icon
+
+        return (
+          <div
+            key={searchTerm.value}
+            className="h-[var(--size-md)] rounded-lg bg-[var(--color-background-neutral-selected)] hover:bg-[var(--color-background-neutral-hovered)] px-[var(--space-md)] pr-[4px] flex items-center gap-[var(--space-sm)] transition-colors"
+          >
+            {/* Optional Icon */}
+            {IconComponent && (
+              <IconComponent className="h-[var(--size-2xsm)] w-[var(--size-2xsm)] text-[var(--color-icon-primary)]" />
+            )}
+
+            {/* Search Term Text */}
+            <span className="whitespace-nowrap [&]:text-label-md text-[var(--color-text-primary)]">
+              {searchTerm.value}
+            </span>
+
+            {/* Remove Button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => handleRemoveSearchTerm(searchTerm.value)}
+              className="h-auto w-auto p-[var(--space-xsm)]"
+            >
+              <Icon name="x" className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]" />
+            </Button>
+          </div>
+        )
+      })}
+
+      {/* Action Buttons (Revert/Save) - positioned after global search */}
       {actionButtons}
+
+      {/* Dot Separator (before Reset) */}
+      {!hideReset && (hasActiveFilters || hasGlobalSearch) && (
+        <Separator type="dot" layout="horizontal" />
+      )}
 
       {/* Reset Button */}
       {!hideReset && (hasActiveFilters || hasGlobalSearch) && (

@@ -156,6 +156,18 @@ When using DataTable with Filters component:
 2. **Performance**: Use \`useMemo\` for filtered data
 3. **Pin Common Filters**: Start with 2-3 commonly used filters pinned
 4. **Value Types**: Use strings for filter values (convert if needed)
+
+## Filter Persistence & Bookmarks
+
+**Pinned Filters** are UI preferences that control which filters appear in the toolbar:
+- Not part of the data filtering logic
+- User can pin/unpin filters without affecting the filtered data
+- Should be managed separately from filter values
+
+**With Bookmarks Integration**: See the "DataTable with Bookmarks" stories for advanced state management where:
+- **User bookmarks**: Each saves its own pinnedFilters configuration
+- **System bookmarks**: Share a global pinnedFilters state
+- Filter values (activeFilters) are always saved with bookmarks
         `,
       },
     },
@@ -318,27 +330,27 @@ const shippingFilterDefinitions: FilterDefinition[] = [
       {
         label: 'European ports',
         options: [
-          { value: 'rotterdam', label: 'Rotterdam, Netherlands' },
-          { value: 'antwerp', label: 'Antwerp, Belgium' },
-          { value: 'piraeus', label: 'Piraeus, Greece' },
-          { value: 'gdansk', label: 'Gdansk, Poland' },
-          { value: 'murmansk', label: 'Murmansk, Russia' },
+          { value: 'rotterdam', label: 'Rotterdam (NL)' },
+          { value: 'antwerp', label: 'Antwerp (BE)' },
+          { value: 'piraeus', label: 'Piraeus (GR)' },
+          { value: 'gdansk', label: 'Gdansk (PL)' },
+          { value: 'murmansk', label: 'Murmansk (RU)' },
         ],
       },
       {
         label: 'Asian ports',
         options: [
-          { value: 'shanghai', label: 'Shanghai, China' },
-          { value: 'singapore', label: 'Singapore' },
-          { value: 'mumbai', label: 'Mumbai, India' },
+          { value: 'shanghai', label: 'Shanghai (CN)' },
+          { value: 'singapore', label: 'Singapore (SG)' },
+          { value: 'mumbai', label: 'Mumbai (IN)' },
         ],
       },
       {
         label: 'Other regions',
         options: [
-          { value: 'sydney', label: 'Sydney, Australia' },
-          { value: 'jeddah', label: 'Jeddah, Saudi Arabia' },
-          { value: 'kingston', label: 'Kingston, Jamaica' },
+          { value: 'sydney', label: 'Sydney (AU)' },
+          { value: 'jeddah', label: 'Jeddah (SA)' },
+          { value: 'kingston', label: 'Kingston (JM)' },
         ],
       },
     ],
@@ -353,24 +365,24 @@ const shippingFilterDefinitions: FilterDefinition[] = [
       {
         label: 'European ports',
         options: [
-          { value: 'rotterdam', label: 'Rotterdam, Netherlands' },
-          { value: 'liverpool', label: 'Liverpool, UK' },
-          { value: 'oslo', label: 'Oslo, Norway' },
-          { value: 'alexandria', label: 'Alexandria, Egypt' },
+          { value: 'rotterdam', label: 'Rotterdam (NL)' },
+          { value: 'liverpool', label: 'Liverpool (UK)' },
+          { value: 'oslo', label: 'Oslo (NO)' },
+          { value: 'alexandria', label: 'Alexandria (EG)' },
         ],
       },
       {
         label: 'Asian ports',
         options: [
-          { value: 'singapore', label: 'Singapore' },
+          { value: 'singapore', label: 'Singapore (SG)' },
         ],
       },
       {
         label: 'Other regions',
         options: [
-          { value: 'losangeles', label: 'Los Angeles, USA' },
-          { value: 'miami', label: 'Miami, USA' },
-          { value: 'auckland', label: 'Auckland, New Zealand' },
+          { value: 'losangeles', label: 'Los Angeles (US)' },
+          { value: 'miami', label: 'Miami (US)' },
+          { value: 'auckland', label: 'Auckland (NZ)' },
         ],
       },
     ],
@@ -684,6 +696,119 @@ export const WithExternalFiltersAndGlobalSearch: Story = {
           Search terms that match filter options (like "Rotterdam", "Singapore", "Coal") will automatically
           show the corresponding filter icon. The search looks across all fields including vessel names,
           ports, cargo types, and status.
+        </div>
+
+        {/* Filters with Global Search */}
+        <Filters
+          filters={shippingFilterDefinitions}
+          pinnedFilters={pinnedFilters}
+          activeFilters={activeFilters}
+          onPinnedFiltersChange={setPinnedFilters}
+          onFilterChange={handleFilterChange}
+          onFilterClear={handleFilterClear}
+          onFilterReset={handleFilterReset}
+          enableGlobalSearch={true}
+          globalSearchTerms={globalSearchTerms}
+          onGlobalSearchChange={setGlobalSearchTerms}
+          globalSearchPlaceholder="Search for keyword..."
+        />
+
+        {/* Data Summary */}
+        <div className="text-body-sm text-[var(--color-text-secondary)]">
+          Showing <strong>{filteredData.length}</strong> of <strong>{allFixtures.length}</strong> fixtures
+        </div>
+
+        {/* Data Table */}
+        <DataTable
+          data={filteredData}
+          columns={shippingFixtureColumns}
+          enableGlobalSearch={false}
+          enableColumnVisibility={false}
+          stickyHeader
+        />
+      </div>
+    )
+  },
+}
+
+export const WithGlobalSearchOnly: Story = {
+  render: () => {
+    const [pinnedFilters, setPinnedFilters] = useState<string[]>([])
+    const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({})
+    const [globalSearchTerms, setGlobalSearchTerms] = useState<string[]>([])
+    const allFixtures = useMemo(() => generateFixtures(), [])
+
+    // Filter the data based on active filters AND global search terms
+    const filteredData = useMemo(() => {
+      return allFixtures.filter((fixture) => {
+        // Check regular filters
+        for (const [filterId, filterValue] of Object.entries(activeFilters)) {
+          if (!filterValue) continue
+
+          const values = Array.isArray(filterValue) ? filterValue : [filterValue]
+          if (values.length === 0) continue
+
+          // Check if fixture matches any of the selected values
+          const fixtureValue = fixture[filterId as keyof ShippingFixture]
+          if (!values.includes(String(fixtureValue))) {
+            return false
+          }
+        }
+
+        // Check global search terms
+        if (globalSearchTerms.length > 0) {
+          // Combine all searchable fields into one string
+          const searchableText = [
+            fixture.vesselName,
+            fixture.loadPort,
+            fixture.dischargePort,
+            fixture.cargo,
+            fixture.status,
+            fixture.chartererType,
+            String(fixture.quantity),
+            String(fixture.freightRate),
+          ].join(' ').toLowerCase()
+
+          // Check if ALL search terms are found in the searchable text
+          const allTermsMatch = globalSearchTerms.every(term =>
+            searchableText.includes(term.toLowerCase())
+          )
+
+          if (!allTermsMatch) {
+            return false
+          }
+        }
+
+        return true
+      })
+    }, [allFixtures, activeFilters, globalSearchTerms])
+
+    const handleFilterChange = (filterId: string, value: FilterValue) => {
+      setActiveFilters((prev) => ({
+        ...prev,
+        [filterId]: value,
+      }))
+    }
+
+    const handleFilterClear = (filterId: string) => {
+      setActiveFilters((prev) => {
+        const newFilters = { ...prev }
+        delete newFilters[filterId]
+        return newFilters
+      })
+    }
+
+    const handleFilterReset = () => {
+      setActiveFilters({})
+    }
+
+    return (
+      <div className="flex flex-col gap-[var(--space-lg)] w-full">
+        {/* Info Banner */}
+        <div className="text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral)] p-[var(--space-lg)] rounded-md">
+          <strong>Global Search Only:</strong> This variant demonstrates global search without pinned filters.
+          The layout shows Filter button → vertical separator → global search. Users can still access all filters
+          through the Filter dropdown menu, but no filters are pinned for quick access in the toolbar.
         </div>
 
         {/* Filters with Global Search */}

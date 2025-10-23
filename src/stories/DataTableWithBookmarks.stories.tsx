@@ -33,22 +33,23 @@ DataTable examples demonstrating integration with Bookmarks component for persis
 
 ### Data Storage Strategy
 
-1. **Pinned Filters** (User Preferences)
-   - Store globally per user in your database
-   - Not tied to any specific bookmark
-   - Persists across all bookmarks and sessions
-   - Example table: \`userPreferences\`
-
-2. **Bookmarks** (Saved States)
-   - Store per user in your database
-   - Contains filter values and table state
-   - Does NOT contain pinned filters
-   - Example table: \`bookmarks\`
-
-3. **System Bookmarks** (App Configuration)
+1. **System Bookmarks** (App Configuration)
    - Defined in your application code
    - Read-only for users
    - Can be different per route/page
+   - Share a global pinnedFilters state across all system bookmarks
+
+2. **User Bookmarks** (Saved States)
+   - Store per user in your database
+   - Contains filter values, pinned filters, and table state
+   - Each user bookmark saves its own pinnedFilters configuration
+   - Example table: \`bookmarks\`
+
+3. **Global Pinned Filters** (System Bookmarks Only)
+   - Shared state for all system bookmarks
+   - Not saved per system bookmark
+   - Updates when user modifies pinned filters on system bookmark
+   - Store in component state or user session (optional persistence)
 
 ## Database Schema Example (Convex)
 
@@ -58,15 +59,7 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
-  // User preferences (pinned filters, etc.)
-  userPreferences: defineTable({
-    userId: v.string(),
-    pinnedFilters: v.array(v.string()), // Array of filter IDs
-    createdAt: v.number(),
-    updatedAt: v.number(),
-  }).index("by_user", ["userId"]),
-
-  // User bookmarks
+  // User bookmarks (contains filters, pinned filters, and table state)
   bookmarks: defineTable({
     userId: v.string(),
     name: v.string(),
@@ -75,6 +68,7 @@ export default defineSchema({
 
     // Filters state
     activeFilters: v.optional(v.any()), // Record<string, FilterValue>
+    pinnedFilters: v.array(v.string()), // Array of filter IDs to pin (saved per user bookmark)
     globalSearchTerms: v.optional(v.array(v.string())),
 
     // Table state
@@ -90,6 +84,8 @@ export default defineSchema({
 });
 \`\`\`
 
+**Note**: System bookmarks are defined in your application code, not stored in the database.
+
 ## React Component Integration
 
 \`\`\`tsx
@@ -100,10 +96,6 @@ import { useAuth } from "@clerk/clerk-react";
 export function MyDataTablePage() {
   const { userId } = useAuth();
 
-  // Load user preferences (pinned filters)
-  const userPrefs = useQuery(api.userPreferences.get, { userId: userId! });
-  const updatePinnedFilters = useMutation(api.userPreferences.updatePinnedFilters);
-
   // Load user bookmarks
   const bookmarks = useQuery(api.bookmarks.list, { userId: userId! });
   const saveBookmark = useMutation(api.bookmarks.save);
@@ -113,23 +105,23 @@ export function MyDataTablePage() {
   // Local state for current view
   const [activeBookmarkId, setActiveBookmarkId] = useState<string>();
   const [pinnedFilters, setPinnedFilters] = useState<string[]>([]);
+  const [globalPinnedFilters, setGlobalPinnedFilters] = useState<string[]>(['field1', 'field2']); // Default for system bookmarks
   const [activeFilters, setActiveFilters] = useState<Record<string, any>>({});
   const [globalSearchTerms, setGlobalSearchTerms] = useState<string[]>([]);
 
-  // Initialize pinned filters from database
-  useEffect(() => {
-    if (userPrefs?.pinnedFilters) {
-      setPinnedFilters(userPrefs.pinnedFilters);
-    }
-  }, [userPrefs]);
+  // Get active bookmark
+  const activeBookmark = useMemo(() => {
+    return [...systemBookmarks, ...bookmarks].find(b => b.id === activeBookmarkId)
+  }, [systemBookmarks, bookmarks, activeBookmarkId]);
 
-  // Save pinned filters to database when they change
-  const handlePinnedFiltersChange = async (newPinnedFilters: string[]) => {
+  // Handle pinned filters change
+  const handlePinnedFiltersChange = (newPinnedFilters: string[]) => {
     setPinnedFilters(newPinnedFilters);
-    await updatePinnedFilters({
-      userId: userId!,
-      pinnedFilters: newPinnedFilters,
-    });
+
+    // If on a system bookmark, update the global pinned filters
+    if (activeBookmark?.type === 'system') {
+      setGlobalPinnedFilters(newPinnedFilters);
+    }
   };
 
   // Handle bookmark selection
@@ -139,14 +131,23 @@ export function MyDataTablePage() {
     if (bookmark.filtersState) {
       setActiveFilters(bookmark.filtersState.activeFilters);
       setGlobalSearchTerms(bookmark.filtersState.globalSearchTerms);
-      // Note: pinnedFilters are NOT loaded from bookmarks
+
+      // Handle pinned filters based on bookmark type
+      if (bookmark.type === 'user') {
+        // User bookmarks: restore saved pinned filters
+        setPinnedFilters(bookmark.filtersState.pinnedFilters);
+      } else {
+        // System bookmarks: restore global pinned filters
+        setPinnedFilters(globalPinnedFilters);
+      }
     }
 
     if (bookmark.tableState) {
       setSorting(bookmark.tableState.sorting);
       setColumnVisibility(bookmark.tableState.columnVisibility);
       setGrouping(bookmark.tableState.grouping);
-      // ... etc
+      setColumnOrder(bookmark.tableState.columnOrder);
+      setColumnSizing(bookmark.tableState.columnSizing);
     }
   };
 
@@ -156,6 +157,7 @@ export function MyDataTablePage() {
       userId: userId!,
       name: name || activeBookmark?.name || 'New Bookmark',
       activeFilters,
+      pinnedFilters, // Save current pinned filters with user bookmark
       globalSearchTerms,
       sorting,
       columnVisibility,
@@ -196,7 +198,7 @@ export function MyDataTablePage() {
             filters={filterDefinitions}
             activeFilters={activeFilters}
             pinnedFilters={pinnedFilters}
-            onPinnedFiltersChange={handlePinnedFiltersChange}
+            onPinnedFiltersChange={handlePinnedFiltersChange} // Handles both user and system bookmark logic
             onFilterChange={handleFilterChange}
             onFilterClear={handleFilterClear}
             onFilterReset={handleFilterReset}
@@ -236,17 +238,23 @@ export function MyDataTablePage() {
 
 ## Key Implementation Points
 
-### 1. Separation of Concerns
+### 1. Pinned Filters Behavior
 
-- **Pinned Filters**: Global user preference stored in \`userPreferences\` table
-- **Bookmarks**: Saved filter values and table state stored in \`bookmarks\` table
-- **System Bookmarks**: Defined in app code, not in database
+**System Bookmarks:**
+- Share a global pinnedFilters state
+- Changing pinned filters updates the shared state for all system bookmarks
+- NOT marked as dirty when pinned filters change
+
+**User Bookmarks:**
+- Each saves its own pinnedFilters in filtersState.pinnedFilters
+- Restores saved pinned filters when loaded
+- Marked as dirty when pinned filters change
 
 ### 2. Loading Order
 
-1. Load user preferences (pinned filters)
-2. Load user bookmarks
-3. Load system bookmarks from app config
+1. Load user bookmarks from database
+2. Define system bookmarks in app config
+3. Initialize globalPinnedFilters with default values
 4. Apply default bookmark or last used bookmark
 
 ### 3. Dirty State Detection
@@ -255,39 +263,90 @@ Compare current state with saved bookmark state:
 - Active filters changed?
 - Global search terms changed?
 - Table sorting/visibility/grouping changed?
-- **Do NOT compare pinned filters** (they're not part of bookmark state)
+- **For user bookmarks ONLY**: Pinned filters changed?
+
+\`\`\`tsx
+const isDirty = useMemo(() => {
+  if (!activeBookmark) return false;
+
+  const filtersMatch =
+    JSON.stringify(activeFilters) === JSON.stringify(savedFiltersState.activeFilters) &&
+    JSON.stringify(globalSearchTerms) === JSON.stringify(savedFiltersState.globalSearchTerms);
+
+  // For user bookmarks, also compare pinned filters
+  if (activeBookmark.type === 'user') {
+    filtersMatch = filtersMatch &&
+      JSON.stringify(pinnedFilters) === JSON.stringify(savedFiltersState.pinnedFilters);
+  }
+
+  // Compare table state...
+  return !filtersMatch || !tableMatch;
+}, [activeBookmark, activeFilters, globalSearchTerms, pinnedFilters, sorting, columnVisibility]);
+\`\`\`
 
 ### 4. Saving Bookmarks
 
 When user saves a bookmark, include:
 - ✅ Active filters
 - ✅ Global search terms
+- ✅ **Pinned filters** (saved with user bookmarks)
 - ✅ Table sorting, visibility, grouping, order, sizing
-- ❌ Pinned filters (saved separately in user preferences)
-
-### 5. Optimistic Updates
-
-For better UX, update local state immediately and sync to database:
 
 \`\`\`tsx
-const handlePinnedFiltersChange = async (newFilters: string[]) => {
-  // Update UI immediately
+const bookmarkData = {
+  userId,
+  name,
+  activeFilters,
+  pinnedFilters, // Include current pinned filters
+  globalSearchTerms,
+  sorting,
+  columnVisibility,
+  grouping,
+  columnOrder,
+  columnSizing,
+};
+\`\`\`
+
+### 5. Pinned Filters State Management
+
+Handle pinned filters differently based on bookmark type:
+
+\`\`\`tsx
+const handlePinnedFiltersChange = (newFilters: string[]) => {
   setPinnedFilters(newFilters);
 
-  // Sync to database (can be debounced)
-  await updatePinnedFilters({ userId, pinnedFilters: newFilters });
+  // If on a system bookmark, update the global pinned filters
+  if (activeBookmark?.type === 'system') {
+    setGlobalPinnedFilters(newFilters);
+  }
+  // For user bookmarks, just update local state (saved on bookmark save)
 };
 \`\`\`
 
 ## Testing Checklist
 
-- [ ] Pinned filters persist across bookmark switches
-- [ ] Pinned filters persist across page reloads
-- [ ] Bookmarks save without pinned filters
-- [ ] Loading a bookmark doesn't reset pinned filters
-- [ ] Creating a bookmark saves current filter values
+**User Bookmarks:**
+- [ ] Each user bookmark restores its own saved pinned filters
+- [ ] Changing pinned filters on a user bookmark marks it as dirty
+- [ ] Saving a user bookmark includes current pinned filters
+- [ ] Reverting a user bookmark restores its saved pinned filters
+
+**System Bookmarks:**
+- [ ] All system bookmarks share the same global pinned filters
+- [ ] Changing pinned filters on a system bookmark does NOT mark it as dirty
+- [ ] Changing pinned filters on a system bookmark updates the global state
+- [ ] Switching between system bookmarks preserves the global pinned filters
+
+**Cross-Bookmark Behavior:**
+- [ ] System → User: Loads user bookmark's saved pinned filters
+- [ ] User → System: Restores global pinned filters (last used for system bookmarks)
+- [ ] User → User: Each user bookmark has independent pinned filters
+- [ ] System → System: Pinned filters remain unchanged (shared state)
+
+**General:**
+- [ ] Creating a bookmark saves current filter values and pinned filters
 - [ ] System bookmarks are read-only
-- [ ] Dirty state detection works correctly
+- [ ] Dirty state detection works correctly for all state changes
         `,
       },
     },
@@ -451,27 +510,27 @@ const shippingFilterDefinitions: FilterDefinition[] = [
       {
         label: 'European ports',
         options: [
-          { value: 'rotterdam', label: 'Rotterdam, Netherlands' },
-          { value: 'antwerp', label: 'Antwerp, Belgium' },
-          { value: 'piraeus', label: 'Piraeus, Greece' },
-          { value: 'gdansk', label: 'Gdansk, Poland' },
-          { value: 'murmansk', label: 'Murmansk, Russia' },
+          { value: 'rotterdam', label: 'Rotterdam (NL)' },
+          { value: 'antwerp', label: 'Antwerp (BE)' },
+          { value: 'piraeus', label: 'Piraeus (GR)' },
+          { value: 'gdansk', label: 'Gdansk (PL)' },
+          { value: 'murmansk', label: 'Murmansk (RU)' },
         ],
       },
       {
         label: 'Asian ports',
         options: [
-          { value: 'shanghai', label: 'Shanghai, China' },
-          { value: 'singapore', label: 'Singapore' },
-          { value: 'mumbai', label: 'Mumbai, India' },
+          { value: 'shanghai', label: 'Shanghai (CN)' },
+          { value: 'singapore', label: 'Singapore (SG)' },
+          { value: 'mumbai', label: 'Mumbai (IN)' },
         ],
       },
       {
         label: 'Other regions',
         options: [
-          { value: 'sydney', label: 'Sydney, Australia' },
-          { value: 'jeddah', label: 'Jeddah, Saudi Arabia' },
-          { value: 'kingston', label: 'Kingston, Jamaica' },
+          { value: 'sydney', label: 'Sydney (AU)' },
+          { value: 'jeddah', label: 'Jeddah (SA)' },
+          { value: 'kingston', label: 'Kingston (JM)' },
         ],
       },
     ],
@@ -486,24 +545,24 @@ const shippingFilterDefinitions: FilterDefinition[] = [
       {
         label: 'European ports',
         options: [
-          { value: 'rotterdam', label: 'Rotterdam, Netherlands' },
-          { value: 'liverpool', label: 'Liverpool, UK' },
-          { value: 'oslo', label: 'Oslo, Norway' },
-          { value: 'alexandria', label: 'Alexandria, Egypt' },
+          { value: 'rotterdam', label: 'Rotterdam (NL)' },
+          { value: 'liverpool', label: 'Liverpool (UK)' },
+          { value: 'oslo', label: 'Oslo (NO)' },
+          { value: 'alexandria', label: 'Alexandria (EG)' },
         ],
       },
       {
         label: 'Asian ports',
         options: [
-          { value: 'singapore', label: 'Singapore' },
+          { value: 'singapore', label: 'Singapore (SG)' },
         ],
       },
       {
         label: 'Other regions',
         options: [
-          { value: 'losangeles', label: 'Los Angeles, USA' },
-          { value: 'miami', label: 'Miami, USA' },
-          { value: 'auckland', label: 'Auckland, New Zealand' },
+          { value: 'losangeles', label: 'Los Angeles (US)' },
+          { value: 'miami', label: 'Miami (US)' },
+          { value: 'auckland', label: 'Auckland (NZ)' },
         ],
       },
     ],
@@ -717,6 +776,7 @@ export const WithBookmarksListVariant: Story = {
         count: allFixtures.length,
         filtersState: {
           activeFilters: {},
+          pinnedFilters: [], // System bookmarks use global pinned filters, but interface requires this field
           globalSearchTerms: [],
         },
         tableState: {
@@ -751,6 +811,7 @@ export const WithBookmarksListVariant: Story = {
             cargo: ['coal'],
             status: ['fixed'],
           },
+          pinnedFilters: ['cargo', 'status'], // User's saved pinned filters
           globalSearchTerms: [],
         },
         tableState: {
@@ -770,6 +831,7 @@ export const WithBookmarksListVariant: Story = {
         count: 6,
         filtersState: {
           activeFilters: {},
+          pinnedFilters: ['loadPort', 'dischargePort'], // User's saved pinned filters
           globalSearchTerms: ['voyage'],
         },
         tableState: {
@@ -789,6 +851,7 @@ export const WithBookmarksListVariant: Story = {
     // Filters state
     const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({})
     const [pinnedFilters, setPinnedFilters] = useState<string[]>(['loadPort', 'dischargePort', 'status'])
+    const [globalPinnedFilters, setGlobalPinnedFilters] = useState<string[]>(['loadPort', 'dischargePort', 'status']) // Shared state for all system bookmarks
     const [globalSearchTerms, setGlobalSearchTerms] = useState<string[]>([])
 
     // Helper function to calculate count for a bookmark
@@ -860,6 +923,7 @@ export const WithBookmarksListVariant: Story = {
 
       const savedFiltersState = activeBookmark.filtersState || {
         activeFilters: {},
+        pinnedFilters: [],
         globalSearchTerms: [],
       }
 
@@ -872,9 +936,15 @@ export const WithBookmarksListVariant: Story = {
       }
 
       // Compare filters state
-      const filtersMatch =
+      let filtersMatch =
         JSON.stringify(activeFilters) === JSON.stringify(savedFiltersState.activeFilters) &&
         JSON.stringify(globalSearchTerms) === JSON.stringify(savedFiltersState.globalSearchTerms)
+
+      // For user bookmarks, also compare pinned filters
+      if (activeBookmark.type === 'user') {
+        filtersMatch = filtersMatch &&
+          JSON.stringify(pinnedFilters) === JSON.stringify(savedFiltersState.pinnedFilters)
+      }
 
       // Compare table state
       const tableMatch =
@@ -883,7 +953,7 @@ export const WithBookmarksListVariant: Story = {
         JSON.stringify(grouping) === JSON.stringify(savedTableState.grouping)
 
       return !filtersMatch || !tableMatch
-    }, [activeBookmark, activeFilters, globalSearchTerms, sorting, columnVisibility, grouping])
+    }, [activeBookmark, activeFilters, globalSearchTerms, pinnedFilters, sorting, columnVisibility, grouping])
 
     // Load bookmark state
     const loadBookmark = (bookmark: Bookmark) => {
@@ -892,11 +962,23 @@ export const WithBookmarksListVariant: Story = {
       if (bookmark.filtersState) {
         setActiveFilters(bookmark.filtersState.activeFilters)
         setGlobalSearchTerms(bookmark.filtersState.globalSearchTerms)
-        // Note: pinnedFilters are NOT loaded from bookmarks - they're a global UI preference
+
+        // Handle pinned filters based on bookmark type
+        if (bookmark.type === 'user') {
+          // User bookmarks: restore saved pinned filters
+          setPinnedFilters(bookmark.filtersState.pinnedFilters)
+        } else {
+          // System bookmarks: restore global pinned filters
+          setPinnedFilters(globalPinnedFilters)
+        }
       } else {
         setActiveFilters({})
         setGlobalSearchTerms([])
-        // Note: pinnedFilters are preserved across all bookmark switches
+
+        // If no filtersState, use global pinned filters (for system bookmarks)
+        if (bookmark.type === 'system') {
+          setPinnedFilters(globalPinnedFilters)
+        }
       }
 
       if (bookmark.tableState) {
@@ -921,10 +1003,15 @@ export const WithBookmarksListVariant: Story = {
 
     const handleRevert = () => {
       if (activeBookmark) {
-        // Only revert filters and table state, preserve pinnedFilters (UI preference)
+        // Revert filters, table state, and pinnedFilters (for user bookmarks)
         if (activeBookmark.filtersState) {
           setActiveFilters(activeBookmark.filtersState.activeFilters)
           setGlobalSearchTerms(activeBookmark.filtersState.globalSearchTerms)
+
+          // Restore pinned filters for user bookmarks
+          if (activeBookmark.type === 'user') {
+            setPinnedFilters(activeBookmark.filtersState.pinnedFilters)
+          }
         } else {
           setActiveFilters({})
           setGlobalSearchTerms([])
@@ -956,8 +1043,8 @@ export const WithBookmarksListVariant: Story = {
         count: filteredData.length,
         filtersState: {
           activeFilters,
+          pinnedFilters, // Save current pinned filters with user bookmark
           globalSearchTerms,
-          // Note: pinnedFilters are NOT saved in bookmarks - they're a global UI preference
         },
         tableState: {
           sorting,
@@ -994,6 +1081,15 @@ export const WithBookmarksListVariant: Story = {
       setBookmarks(bookmarks.map(b => ({ ...b, isDefault: b.id === id })))
     }
 
+    // Handle pinned filters change
+    const handlePinnedFiltersChange = (newPinnedFilters: string[]) => {
+      setPinnedFilters(newPinnedFilters)
+
+      // If on a system bookmark, update the global pinned filters
+      if (activeBookmark?.type === 'system') {
+        setGlobalPinnedFilters(newPinnedFilters)
+      }
+    }
 
     // Filter handlers
     const handleFilterChange = (filterId: string, value: FilterValue) => {
@@ -1057,30 +1153,27 @@ export const WithBookmarksListVariant: Story = {
         </div>
 
         {/* Bookmarks + Filters Row */}
-        <div className="flex gap-[var(--space-md)] items-center">
-          {/* Bookmarks */}
-          <Bookmarks
-            variant="list"
-            bookmarks={bookmarksWithCounts}
-            systemBookmarks={systemBookmarksWithCounts}
-            activeBookmarkId={activeBookmarkId}
-            isDirty={isDirty}
-            onSelect={handleBookmarkSelect}
-            onRevert={handleRevert}
-            onSave={handleSave}
-            onRename={handleRename}
-            onDelete={handleDelete}
-            onSetDefault={handleSetDefault}
-          >
-            {/* Separator */}
+        <Bookmarks
+          variant="list"
+          bookmarks={bookmarksWithCounts}
+          systemBookmarks={systemBookmarksWithCounts}
+          activeBookmarkId={activeBookmarkId}
+          isDirty={isDirty}
+          onSelect={handleBookmarkSelect}
+          onRevert={handleRevert}
+          onSave={handleSave}
+          onRename={handleRename}
+          onDelete={handleDelete}
+          onSetDefault={handleSetDefault}
+        >
+          <Bookmarks.Content>
             <Separator type="line" layout="horizontal" />
 
-            {/* Filters */}
             <Filters
               filters={shippingFilterDefinitions}
               activeFilters={activeFilters}
               pinnedFilters={pinnedFilters}
-              onPinnedFiltersChange={setPinnedFilters}
+              onPinnedFiltersChange={handlePinnedFiltersChange}
               onFilterChange={handleFilterChange}
               onFilterClear={handleFilterClear}
               onFilterReset={handleFilterReset}
@@ -1090,17 +1183,15 @@ export const WithBookmarksListVariant: Story = {
               globalSearchPlaceholder="Search fixtures..."
               hideReset={true}
             />
+          </Bookmarks.Content>
 
-            {/* Bookmark Action Buttons - only when dirty and has changes */}
-            <Bookmarks.Actions>
-              <CustomBookmarkActions
-                hasActiveFilters={Object.keys(activeFilters).length > 0 || globalSearchTerms.length > 0}
-              />
-            </Bookmarks.Actions>
-          </Bookmarks>
+          <Bookmarks.Actions>
+            <CustomBookmarkActions
+              hasActiveFilters={Object.keys(activeFilters).length > 0 || globalSearchTerms.length > 0}
+            />
+          </Bookmarks.Actions>
 
-          {/* Settings Menu */}
-          <div className="ml-auto flex items-center gap-[7px]">
+          <Bookmarks.Settings>
             <DataTableSettingsMenu
             sortableColumns={shippingFixtureColumns
               .filter(col => col.accessorKey)
@@ -1160,8 +1251,8 @@ export const WithBookmarksListVariant: Story = {
             align="end"
             triggerClassName="h-[var(--size-md)]"
           />
-          </div>
-        </div>
+          </Bookmarks.Settings>
+        </Bookmarks>
 
         {/* Data Summary */}
         <div className="text-body-sm text-[var(--color-text-secondary)]">
@@ -1217,6 +1308,7 @@ export const WithBookmarksTabsVariant: Story = {
         count: allFixtures.length,
         filtersState: {
           activeFilters: {},
+          pinnedFilters: [], // System bookmarks use global pinned filters, but interface requires this field
           globalSearchTerms: [],
         },
         tableState: {
@@ -1259,6 +1351,7 @@ export const WithBookmarksTabsVariant: Story = {
             cargo: ['coal'],
             status: ['fixed'],
           },
+          pinnedFilters: ['cargo', 'status'], // User's saved pinned filters
           globalSearchTerms: [],
         },
         tableState: {
@@ -1280,7 +1373,7 @@ export const WithBookmarksTabsVariant: Story = {
           activeFilters: {
             cargo: ['iron-ore'],
           },
-          pinnedFilters: ['cargo'],
+          pinnedFilters: ['cargo'], // User's saved pinned filters
           globalSearchTerms: [],
         },
         tableState: {
@@ -1300,6 +1393,7 @@ export const WithBookmarksTabsVariant: Story = {
         count: 6,
         filtersState: {
           activeFilters: {},
+          pinnedFilters: ['loadPort', 'dischargePort', 'chartererType'], // User's saved pinned filters
           globalSearchTerms: ['voyage'],
         },
         tableState: {
@@ -1323,6 +1417,7 @@ export const WithBookmarksTabsVariant: Story = {
     const [pinnedFilters, setPinnedFilters] = useState<string[]>(
       initialUserBookmarks[0].filtersState?.pinnedFilters || ['loadPort', 'dischargePort', 'status']
     )
+    const [globalPinnedFilters, setGlobalPinnedFilters] = useState<string[]>(['loadPort', 'dischargePort', 'status']) // Shared state for all system bookmarks
     const [globalSearchTerms, setGlobalSearchTerms] = useState<string[]>([])
 
     // Table state
@@ -1396,6 +1491,7 @@ export const WithBookmarksTabsVariant: Story = {
 
       const savedFiltersState = activeBookmark.filtersState || {
         activeFilters: {},
+        pinnedFilters: [],
         globalSearchTerms: [],
       }
 
@@ -1408,9 +1504,15 @@ export const WithBookmarksTabsVariant: Story = {
       }
 
       // Compare filters state
-      const filtersMatch =
+      let filtersMatch =
         JSON.stringify(activeFilters) === JSON.stringify(savedFiltersState.activeFilters) &&
         JSON.stringify(globalSearchTerms) === JSON.stringify(savedFiltersState.globalSearchTerms)
+
+      // For user bookmarks, also compare pinned filters
+      if (activeBookmark.type === 'user') {
+        filtersMatch = filtersMatch &&
+          JSON.stringify(pinnedFilters) === JSON.stringify(savedFiltersState.pinnedFilters)
+      }
 
       // Compare table state
       const tableMatch =
@@ -1419,7 +1521,7 @@ export const WithBookmarksTabsVariant: Story = {
         JSON.stringify(grouping) === JSON.stringify(savedTableState.grouping)
 
       return !filtersMatch || !tableMatch
-    }, [activeBookmark, activeFilters, globalSearchTerms, sorting, columnVisibility, grouping])
+    }, [activeBookmark, activeFilters, globalSearchTerms, pinnedFilters, sorting, columnVisibility, grouping])
 
     // Load bookmark state
     const loadBookmark = (bookmark: Bookmark) => {
@@ -1428,11 +1530,23 @@ export const WithBookmarksTabsVariant: Story = {
       if (bookmark.filtersState) {
         setActiveFilters(bookmark.filtersState.activeFilters)
         setGlobalSearchTerms(bookmark.filtersState.globalSearchTerms)
-        // Note: pinnedFilters are NOT loaded from bookmarks - they're a global UI preference
+
+        // Handle pinned filters based on bookmark type
+        if (bookmark.type === 'user') {
+          // User bookmarks: restore saved pinned filters
+          setPinnedFilters(bookmark.filtersState.pinnedFilters)
+        } else {
+          // System bookmarks: restore global pinned filters
+          setPinnedFilters(globalPinnedFilters)
+        }
       } else {
         setActiveFilters({})
         setGlobalSearchTerms([])
-        // Note: pinnedFilters are preserved across all bookmark switches
+
+        // If no filtersState, use global pinned filters (for system bookmarks)
+        if (bookmark.type === 'system') {
+          setPinnedFilters(globalPinnedFilters)
+        }
       }
 
       if (bookmark.tableState) {
@@ -1457,10 +1571,15 @@ export const WithBookmarksTabsVariant: Story = {
 
     const handleRevert = () => {
       if (activeBookmark) {
-        // Only revert filters and table state, preserve pinnedFilters (UI preference)
+        // Revert filters, table state, and pinnedFilters (for user bookmarks)
         if (activeBookmark.filtersState) {
           setActiveFilters(activeBookmark.filtersState.activeFilters)
           setGlobalSearchTerms(activeBookmark.filtersState.globalSearchTerms)
+
+          // Restore pinned filters for user bookmarks
+          if (activeBookmark.type === 'user') {
+            setPinnedFilters(activeBookmark.filtersState.pinnedFilters)
+          }
         } else {
           setActiveFilters({})
           setGlobalSearchTerms([])
@@ -1492,8 +1611,8 @@ export const WithBookmarksTabsVariant: Story = {
         count: filteredData.length,
         filtersState: {
           activeFilters,
+          pinnedFilters, // Save current pinned filters with user bookmark
           globalSearchTerms,
-          // Note: pinnedFilters are NOT saved in bookmarks - they're a global UI preference
         },
         tableState: {
           sorting,
@@ -1530,6 +1649,15 @@ export const WithBookmarksTabsVariant: Story = {
       setBookmarks(bookmarks.map(b => ({ ...b, isDefault: b.id === id })))
     }
 
+    // Handle pinned filters change
+    const handlePinnedFiltersChange = (newPinnedFilters: string[]) => {
+      setPinnedFilters(newPinnedFilters)
+
+      // If on a system bookmark, update the global pinned filters
+      if (activeBookmark?.type === 'system') {
+        setGlobalPinnedFilters(newPinnedFilters)
+      }
+    }
 
     // Filter handlers
     const handleFilterChange = (filterId: string, value: FilterValue) => {
@@ -1611,7 +1739,7 @@ export const WithBookmarksTabsVariant: Story = {
               filters={shippingFilterDefinitions}
               activeFilters={activeFilters}
               pinnedFilters={pinnedFilters}
-              onPinnedFiltersChange={setPinnedFilters}
+              onPinnedFiltersChange={handlePinnedFiltersChange}
               onFilterChange={handleFilterChange}
               onFilterClear={handleFilterClear}
               onFilterReset={handleFilterReset}

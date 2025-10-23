@@ -48,7 +48,7 @@ import type {
 
 export interface FiltersState {
   activeFilters: Record<string, FilterValue>;
-  pinnedFilters?: string[]; // Optional: not saved in bookmarks (global UI preference)
+  pinnedFilters: string[]; // For user bookmarks: saved with bookmark. For system bookmarks: use globalPinnedFilters
   globalSearchTerms: string[];
 }
 
@@ -957,19 +957,28 @@ export function Bookmarks({
 
         {/* Content + Actions + Settings row */}
         {(contentSlot || actionsSlot || settingsSlot) && (
-          <div className="flex items-center gap-[7px]">
-            {/* Content and Actions grouped together (can grow) */}
-            {(contentSlot || actionsSlot) && (
-              <div className="flex items-center gap-[7px] flex-1 min-w-0">
-                {contentSlot}
-                {actionsSlot}
-              </div>
-            )}
+          <div className="flex items-center">
+            {/* Content + Actions grouped (7px gap throughout) */}
+            <div className="flex items-center gap-[7px] flex-1 min-w-0">
+              {/* Content slot - let Filters expand naturally */}
+              {contentSlot && (
+                <div className="flex items-center gap-[7px]">
+                  {contentSlot}
+                </div>
+              )}
 
-            {/* Settings slot (always right-aligned, doesn't shrink) */}
+              {/* Actions slot - prevent shrinking */}
+              {actionsSlot && (
+                <div className="flex items-center gap-[7px] flex-shrink-0">
+                  {actionsSlot}
+                </div>
+              )}
+            </div>
+
+            {/* Settings slot (separated, always right-aligned) */}
             {settingsSlot && (
               <>
-                <Separator type="dot" layout="horizontal" className="flex-shrink-0" />
+                <div className="w-[var(--space-md)]" />
                 <div className="flex-shrink-0">
                   {settingsSlot}
                 </div>
@@ -999,25 +1008,42 @@ export function Bookmarks({
   // List variant
   return (
     <BookmarksContext.Provider value={contextValue}>
-      {/* Split button */}
-      <BookmarkSplitButton
-        bookmarks={bookmarks}
-        systemBookmarks={systemBookmarks}
-        activeBookmarkId={activeBookmarkId}
-        onSelect={onSelect}
-        onRename={() => handleRenameClick()}
-        onDelete={() => handleDelete()}
-        onSetDefault={() => handleSetDefault()}
-      />
+      <div className="flex items-center gap-[var(--space-md)]">
+        {/* Split button */}
+        <BookmarkSplitButton
+          bookmarks={bookmarks}
+          systemBookmarks={systemBookmarks}
+          activeBookmarkId={activeBookmarkId}
+          onSelect={onSelect}
+          onRename={() => handleRenameClick()}
+          onDelete={() => handleDelete()}
+          onSetDefault={() => handleSetDefault()}
+        />
 
-      {/* Content slot */}
-      {contentSlot}
+        {/* Content + Actions grouped (7px gap throughout) */}
+        <div className="flex items-center gap-[7px] flex-1 min-w-0">
+          {/* Content slot - let Filters expand naturally */}
+          {contentSlot && (
+            <div className="flex items-center gap-[7px]">
+              {contentSlot}
+            </div>
+          )}
 
-      {/* Actions slot */}
-      {actionsSlot}
+          {/* Actions slot - prevent shrinking */}
+          {actionsSlot && (
+            <div className="flex items-center gap-[7px] flex-shrink-0">
+              {actionsSlot}
+            </div>
+          )}
+        </div>
 
-      {/* Settings slot */}
-      {settingsSlot}
+        {/* Settings slot (separated, always right-aligned) */}
+        {settingsSlot && (
+          <div className="flex-shrink-0">
+            {settingsSlot}
+          </div>
+        )}
+      </div>
 
       {/* Dialogs */}
       <BookmarkNameDialog
