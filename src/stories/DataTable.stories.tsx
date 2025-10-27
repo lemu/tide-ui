@@ -1112,6 +1112,7 @@ const tradeColumns: ColumnDef<TradeData>[] = [
   {
     accessorKey: 'quantity',
     header: 'Quantity',
+    meta: { align: 'right' },
     cell: ({ row }) => (
       <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
     ),
@@ -1119,6 +1120,7 @@ const tradeColumns: ColumnDef<TradeData>[] = [
   {
     accessorKey: 'price',
     header: 'Price',
+    meta: { align: 'right' },
     cell: ({ row }) => (
       <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
     ),
@@ -1126,6 +1128,7 @@ const tradeColumns: ColumnDef<TradeData>[] = [
   {
     accessorKey: 'notional',
     header: 'Notional',
+    meta: { align: 'right' },
     cell: ({ row }) => (
       <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
     ),
@@ -1577,16 +1580,128 @@ export const ColumnResizing: Story = {
     layout: 'fullscreen',
     docs: {
       description: {
-        story: 'Demonstrates column resizing functionality with initial column widths, resize handles, and localStorage persistence. Columns start with predefined widths and can be adjusted by dragging resize handles. Column sizes are persisted across browser sessions.',
+        story: 'Demonstrates column resizing functionality with initial column widths, resize handles, text truncation, and localStorage persistence. Columns start with predefined widths and can be adjusted by dragging resize handles. Text automatically truncates with tooltips when columns are narrow. Column sizes are persisted across browser sessions.',
       },
     },
   },
   render: () => {
-    const [data] = useState(() => generateTradeData(20))
+    // Enhanced trade data with longer text fields
+    interface EnhancedTradeData extends TradeData {
+      notes: string
+      email: string
+    }
+
+    const generateEnhancedTradeData = (count: number): EnhancedTradeData[] => {
+      const baseData = generateTradeData(count)
+      const noteTemplates = [
+        'Complex cross-border transaction requiring regulatory approval from multiple jurisdictions',
+        'High-priority trade execution with strict settlement timeline and margin requirements',
+        'Algorithmic trading order with sophisticated risk management parameters and real-time monitoring',
+        'Special handling required due to counterparty credit considerations and enhanced due diligence',
+        'Multi-leg structured product with custom settlement instructions and collateral arrangements',
+      ]
+      const domains = ['example-company.com', 'financial-services.com', 'investment-bank.com', 'trading-desk.com', 'global-markets.com']
+
+      return baseData.map((trade, i) => ({
+        ...trade,
+        notes: noteTemplates[i % noteTemplates.length],
+        email: `${trade.trader.toLowerCase().replace(' ', '.')}.trading@${domains[i % domains.length]}`,
+      }))
+    }
+
+    const [data] = useState(() => generateEnhancedTradeData(20))
+
+    const enhancedTradeColumns: ColumnDef<EnhancedTradeData>[] = [
+      {
+        accessorKey: 'id',
+        header: 'Trade ID',
+        cell: ({ row }) => (
+          <div className="font-mono text-body-sm text-[var(--color-text-primary)]">{row.getValue('id')}</div>
+        ),
+      },
+      {
+        accessorKey: 'counterparty',
+        header: 'Counterparty',
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('counterparty')}</div>
+        ),
+      },
+      {
+        accessorKey: 'notes',
+        header: 'Trade Notes',
+        cell: ({ row }) => (
+          <div className="text-body-sm text-[var(--color-text-secondary)]">{row.getValue('notes')}</div>
+        ),
+        meta: {
+          label: 'Notes',
+          truncate: true, // Text will truncate with tooltip
+        },
+      },
+      {
+        accessorKey: 'instrument',
+        header: 'Instrument',
+        cell: ({ row }) => (
+          <Badge variant="outline">{row.getValue('instrument')}</Badge>
+        ),
+      },
+      {
+        accessorKey: 'email',
+        header: 'Trader Email',
+        cell: ({ row }) => (
+          <div className="text-body-sm">{row.getValue('email')}</div>
+        ),
+        meta: {
+          label: 'Email',
+          truncate: true, // Text will truncate with tooltip
+        },
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Quantity',
+        meta: { align: 'right' },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'price',
+        header: 'Price',
+        meta: { align: 'right' },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'notional',
+        header: 'Notional',
+        meta: { align: 'right' },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        cell: ({ row }) => {
+          const status = row.getValue('status') as string
+          const variants = {
+            pending: 'secondary',
+            confirmed: 'default',
+            settled: 'default',
+            cancelled: 'secondary'
+          }
+          return (
+            <Badge variant={variants[status as keyof typeof variants] as any}>
+              {status.charAt(0).toUpperCase() + status.slice(1)}
+            </Badge>
+          )
+        },
+      },
+    ]
 
     return (
       <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1200px] mx-auto">
+        <div className="max-w-[1400px] mx-auto">
           <div className="mb-[var(--space-lg)]">
             <h2 className="text-heading-lg mb-[var(--space-sm)]">Column Resizing</h2>
             <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
@@ -1594,19 +1709,33 @@ export const ColumnResizing: Story = {
               Drag the resize handles (vertical lines) on the right edge of column headers to adjust widths.
               Column sizes are automatically saved to localStorage and restored on page reload.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
-                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
-                <span className="text-body-sm text-[var(--color-text-accent)]">
-                  Try resizing columns and then refreshing the page - your column widths will be preserved!
-                </span>
+            <div className="space-y-[var(--space-sm)] mb-[var(--space-md)]">
+              <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+                <div className="flex items-center gap-[var(--space-sm)]">
+                  <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                  <span className="text-body-sm text-[var(--color-text-accent)]">
+                    Try resizing columns and then refreshing the page - your column widths will be preserved!
+                  </span>
+                </div>
+              </div>
+              <div className="bg-[var(--blue-25)] border border-[var(--blue-100)] rounded-md p-[var(--space-md)]">
+                <div className="flex items-start gap-[var(--space-sm)]">
+                  <Icon name="lightbulb" className="h-4 w-4 text-[var(--blue-700)] mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-body-sm text-[var(--blue-900)] font-medium mb-1">Text Truncation:</p>
+                    <p className="text-body-sm text-[var(--blue-800)]">
+                      Resize the "Trade Notes" and "Trader Email" columns to narrow widths.
+                      Text will automatically truncate with ellipsis (...) and show the full content in a tooltip when you hover over it.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           <DataTable
             data={data}
-            columns={tradeColumns}
+            columns={enhancedTradeColumns}
             enableColumnResizing={true}
             columnResizeMode="onChange"
             enableColumnResizePersistence={true}
@@ -1614,15 +1743,186 @@ export const ColumnResizing: Story = {
             title="Resizable Trading Data"
             initialState={{
               columnSizing: {
-                'id': 250,
-                'counterparty': 200,
-                'instrument': 150,
-                'side': 100,
+                'id': 150,
+                'counterparty': 180,
+                'notes': 300,
+                'instrument': 120,
+                'email': 250,
                 'quantity': 120,
                 'price': 120,
                 'notional': 140,
-                'trader': 180,
                 'status': 120
+              }
+            }}
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const ColumnResizingWithTextTruncation: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates text truncation with tooltips when columns are resized to narrow widths. Text automatically truncates with ellipsis (...) and shows full content in a tooltip on hover. The truncate behavior can be controlled per column via the `truncate` metadata property.',
+      },
+    },
+  },
+  render: () => {
+    interface DataWithLongText {
+      id: string
+      shortName: string
+      longDescription: string
+      veryLongEmail: string
+      status: string
+      noTruncate: string
+    }
+
+    const dataWithLongText: DataWithLongText[] = [
+      {
+        id: 'TRD-2024-001',
+        shortName: 'Trade #1',
+        longDescription: 'This is a very long description that will definitely overflow when the column is resized to a smaller width',
+        veryLongEmail: 'very.long.email.address.that.will.overflow@example-company-domain.com',
+        status: 'Active',
+        noTruncate: 'This column wraps instead of truncating',
+      },
+      {
+        id: 'TRD-2024-002',
+        shortName: 'Trade #2',
+        longDescription: 'Another lengthy description with lots of text content that needs to be truncated when space is limited',
+        veryLongEmail: 'another.extremely.long.email.address@very-long-company-name.com',
+        status: 'Pending',
+        noTruncate: 'This text will wrap to multiple lines',
+      },
+      {
+        id: 'TRD-2024-003',
+        shortName: 'Trade #3',
+        longDescription: 'Complex algorithmic trading strategy execution with multiple counterparties and extensive settlement instructions',
+        veryLongEmail: 'complex.trading.operations.team@multinational-investment-bank.com',
+        status: 'Completed',
+        noTruncate: 'Wrapping text example here',
+      },
+      {
+        id: 'TRD-2024-004',
+        shortName: 'Trade #4',
+        longDescription: 'High-frequency trading order with sophisticated risk management parameters and real-time market data integration',
+        veryLongEmail: 'automated.trading.systems.department@global-financial-services.com',
+        status: 'Active',
+        noTruncate: 'Another wrapping example',
+      },
+      {
+        id: 'TRD-2024-005',
+        shortName: 'Trade #5',
+        longDescription: 'Cross-border securities transaction involving multiple regulatory jurisdictions and compliance requirements',
+        veryLongEmail: 'international.compliance.and.operations@worldwide-brokerage-firm.com',
+        status: 'Active',
+        noTruncate: 'This also wraps to multiple lines',
+      },
+    ]
+
+    const columnsWithLongText: ColumnDef<DataWithLongText>[] = [
+      {
+        accessorKey: 'id',
+        header: 'Trade ID',
+        size: 150,
+        meta: {
+          label: 'Trade ID',
+        },
+      },
+      {
+        accessorKey: 'longDescription',
+        header: 'Long Description (Truncates)',
+        size: 300,
+        meta: {
+          label: 'Description',
+          truncate: true, // Explicitly enable truncation (default)
+        },
+      },
+      {
+        accessorKey: 'veryLongEmail',
+        header: 'Email Address (Truncates)',
+        size: 250,
+        meta: {
+          label: 'Email',
+          truncate: true,
+        },
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        size: 120,
+        cell: ({ row }) => (
+          <Badge
+            variant={row.getValue('status') === 'Active' ? 'success' : row.getValue('status') === 'Pending' ? 'warning' : 'default'}
+          >
+            {row.getValue('status')}
+          </Badge>
+        ),
+      },
+      {
+        accessorKey: 'noTruncate',
+        header: 'No Truncate (Wraps)',
+        size: 200,
+        meta: {
+          label: 'Wrapping Column',
+          truncate: false, // Disable truncation for this column
+        },
+        cell: ({ row }) => (
+          <div className="whitespace-normal">{row.getValue('noTruncate')}</div>
+        ),
+      },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Column Resizing with Text Truncation</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              This example demonstrates how text automatically truncates with ellipsis (...) when columns are resized to narrow widths.
+              Hover over truncated text to see the full content in a tooltip.
+            </p>
+            <div className="space-y-[var(--space-sm)] mb-[var(--space-md)]">
+              <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+                <div className="flex items-center gap-[var(--space-sm)]">
+                  <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                  <span className="text-body-sm text-[var(--color-text-accent)]">
+                    Try resizing columns to very narrow widths and hover over the truncated text to see tooltips!
+                  </span>
+                </div>
+              </div>
+              <div className="bg-[var(--blue-25)] border border-[var(--blue-100)] rounded-md p-[var(--space-md)]">
+                <div className="flex items-start gap-[var(--space-sm)]">
+                  <Icon name="lightbulb" className="h-4 w-4 text-[var(--blue-700)] mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-body-sm text-[var(--blue-900)] font-medium mb-1">Per-Column Control:</p>
+                    <ul className="text-body-sm text-[var(--blue-800)] space-y-1 ml-4 list-disc">
+                      <li><strong>Truncate enabled (default):</strong> "Long Description" and "Email" columns show tooltips on hover</li>
+                      <li><strong>Truncate disabled:</strong> "No Truncate" column wraps text to multiple lines instead</li>
+                      <li><strong>Configure via column meta:</strong> <code className="bg-[var(--blue-100)] px-1 rounded">meta: {"{ truncate: false }"}</code></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={dataWithLongText}
+            columns={columnsWithLongText}
+            enableColumnResizing={true}
+            columnResizeMode="onChange"
+            title="Text Truncation Demo"
+            initialState={{
+              columnSizing: {
+                'id': 150,
+                'longDescription': 300,
+                'veryLongEmail': 250,
+                'status': 120,
+                'noTruncate': 200,
               }
             }}
           />
@@ -1750,6 +2050,372 @@ export const GroupingRows: Story = {
               }
             }}
           />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const GroupingWithActions: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: `Demonstrates grouping functionality with action buttons in a pinned right column for both grouped rows and individual data rows. Use the settings menu to dynamically change the grouping column.
+
+## Rendering Custom Content in Grouped Rows
+
+By default, grouped rows show "—" for all columns except the first column (which displays the group info). To render custom content in grouped rows, add the \`renderInGroupedRows: true\` flag to your column's meta:
+
+\`\`\`typescript
+{
+  id: 'actions',
+  header: 'Actions',
+  cell: ({ row }) => {
+    const isGrouped = row.getIsGrouped?.()
+
+    if (isGrouped) {
+      // Render bulk actions for grouped rows
+      return <Button>Bulk Action</Button>
+    } else {
+      // Render individual actions for data rows
+      return <Button>Single Action</Button>
+    }
+  },
+  meta: {
+    renderInGroupedRows: true  // <-- Enable rendering in grouped rows
+  }
+}
+\`\`\`
+
+This feature is useful for:
+- Action buttons (shown in this example)
+- Status badges that apply to the entire group
+- Custom icons or indicators
+- Any content that should appear in both grouped and individual rows`,
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(50))
+
+    // Create custom columns with grouping enabled for specific columns
+    const groupingColumns: ColumnDef<TradeData>[] = tradeColumns.map(col => {
+      // Add right alignment for quantity column
+      if (col.accessorKey === 'quantity') {
+        return {
+          ...col,
+          meta: {
+            ...col.meta,
+            align: 'right'
+          }
+        }
+      }
+
+      // Custom aggregation for price column (2 decimal places)
+      if (col.accessorKey === 'price') {
+        return {
+          ...col,
+          meta: {
+            ...col.meta,
+            align: 'right',
+            aggregation: (rows: any[], accessor: any) => {
+              const values = rows
+                .map(row => typeof accessor === 'function' ? accessor(row.original) : row.original?.[accessor])
+                .filter(v => v != null) as number[]
+              if (values.length === 0) return ''
+              const min = Math.min(...values)
+              const max = Math.max(...values)
+              if (min === max) return min.toFixed(2)
+              return `${min.toFixed(2)} – ${max.toFixed(2)}`
+            }
+          }
+        }
+      }
+
+      // Custom aggregation for notional column (2 decimal places with thousand separator)
+      if (col.accessorKey === 'notional') {
+        return {
+          ...col,
+          meta: {
+            ...col.meta,
+            align: 'right',
+            aggregation: (rows: any[], accessor: any) => {
+              const values = rows
+                .map(row => typeof accessor === 'function' ? accessor(row.original) : row.original?.[accessor])
+                .filter(v => v != null) as number[]
+              if (values.length === 0) return ''
+              const min = Math.min(...values)
+              const max = Math.max(...values)
+              const formatNumber = (num: number) => num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+              if (min === max) return formatNumber(min)
+              return `${formatNumber(min)} – ${formatNumber(max)}`
+            }
+          }
+        }
+      }
+
+      // Disable aggregation for side column
+      if (col.accessorKey === 'side') {
+        return {
+          ...col,
+          enableGrouping: true,
+          meta: {
+            ...col.meta,
+            aggregation: false
+          }
+        }
+      }
+
+      // Enable grouping for specific columns
+      if (col.accessorKey === 'instrument' || col.accessorKey === 'counterparty' || col.accessorKey === 'trader' || col.accessorKey === 'status') {
+        return {
+          ...col,
+          enableGrouping: true,
+        }
+      }
+
+      return col
+    })
+
+    // Add Actions column at the end
+    const columnsWithActions: ColumnDef<TradeData>[] = [
+      ...groupingColumns,
+      {
+        id: 'actions',
+        header: 'Actions',
+        size: 200,
+        enableGrouping: false,
+        enableSorting: false,
+        enableHiding: false,
+        cell: ({ row }) => {
+          // Check if this is a grouped row
+          const isGrouped = row.getIsGrouped?.()
+
+          if (isGrouped) {
+            // Group-level actions - Only Export and Approve for bulk operations
+            const groupValue = String(row.getGroupingValue(row.groupingColumnId!))
+            const groupColumn = row.groupingColumnId
+            const itemCount = row.subRows.length
+
+            return (
+              <div className="flex items-center gap-[var(--space-xs)]">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    console.log(`Export action for ${groupColumn}: ${groupValue} (${itemCount} items)`, row.subRows)
+                  }}
+                  title="Export all items in this group"
+                  className="h-[var(--size-md)] px-[var(--space-sm)]"
+                >
+                  <Icon name="download" className="h-3 w-3" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    console.log(`Approve action for ${groupColumn}: ${groupValue} (${itemCount} items)`, row.subRows)
+                  }}
+                  title="Approve all items in this group"
+                  className="h-[var(--size-md)] px-[var(--space-sm)]"
+                >
+                  <Icon name="check" className="h-3 w-3" />
+                </Button>
+              </div>
+            )
+          } else {
+            // Individual row actions
+            const rowData = row.original
+
+            return (
+              <div className="flex items-center gap-[var(--space-xs)]">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    console.log(`Edit action for row:`, rowData)
+                  }}
+                  title="Edit this item"
+                  className="h-[var(--size-md)] px-[var(--space-sm)]"
+                >
+                  <Icon name="pencil" className="h-3 w-3" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    console.log(`Delete action for row:`, rowData)
+                  }}
+                  title="Delete this item"
+                  className="h-[var(--size-md)] px-[var(--space-sm)]"
+                >
+                  <Icon name="trash-2" className="h-3 w-3" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    console.log(`Export action for row:`, rowData)
+                  }}
+                  title="Export this item"
+                  className="h-[var(--size-md)] px-[var(--space-sm)]"
+                >
+                  <Icon name="download" className="h-3 w-3" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    console.log(`Approve action for row:`, rowData)
+                  }}
+                  title="Approve this item"
+                  className="h-[var(--size-md)] px-[var(--space-sm)]"
+                >
+                  <Icon name="check" className="h-3 w-3" />
+                </Button>
+              </div>
+            )
+          }
+        },
+        meta: {
+          label: 'Actions',
+          renderInGroupedRows: true,
+        },
+      },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Row Grouping with Actions</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              This example shows dynamic row grouping with action buttons in a pinned right column.
+              Grouped rows show bulk actions (Export, Approve), while individual rows show all actions (Edit, Delete, Export, Approve).
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)] mb-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  The Actions column is pinned to the right. Grouped rows show bulk actions (Export, Approve only), individual rows show all actions. Check the console to see logged actions.
+                </span>
+              </div>
+            </div>
+
+            <div className="bg-[var(--color-background-neutral-subtle)] border border-[var(--color-border-primary-subtle)] rounded-md p-[var(--space-md)]">
+              <h3 className="text-heading-sm mb-[var(--space-sm)]">Implementation: renderInGroupedRows</h3>
+              <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+                By default, grouped rows show "—" for all columns except the first. To render custom content in grouped rows, add the <code className="bg-[var(--color-background-neutral-subtle)] px-[var(--space-xs)] py-[1px] rounded text-body-sm">renderInGroupedRows: true</code> flag to your column's meta:
+              </p>
+              <pre className="bg-[var(--color-background-primary)] border border-[var(--color-border-primary-subtle)] rounded-md p-[var(--space-md)] overflow-x-auto">
+                <code className="text-caption-sm">{`{
+  id: 'actions',
+  header: 'Actions',
+  cell: ({ row }) => {
+    const isGrouped = row.getIsGrouped?.()
+    // Render different content for grouped vs individual rows
+    return isGrouped ? <BulkActions /> : <SingleActions />
+  },
+  meta: {
+    renderInGroupedRows: true  // Enable rendering in grouped rows
+  }
+}`}</code>
+              </pre>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={columnsWithActions}
+            enableGrouping={true}
+            enableExpanding={true}
+            enableColumnResizing={true}
+            stickyRightColumns={1}
+            groupedColumnMode="reorder"
+            title="Trading Data with Group Actions - Default Borders"
+            borderStyle="both"
+            initialState={{
+              grouping: ['status'],
+              expanded: {
+                'status:Active': true,
+                'status:Pending': true
+              },
+              columnSizing: {
+                'instrument': 250,
+                'trader': 250,
+                'actions': 200
+              }
+            }}
+          />
+
+          {/* Cell Borders Variation */}
+          <div className="mt-[var(--space-2xlg)]">
+            <h3 className="text-heading-md mb-[var(--space-sm)]">Cell Borders (Vertical Lines)</h3>
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+              Vertical borders between cells create clear column separation, useful when data needs strong visual column boundaries.
+            </p>
+            <DataTable
+              data={data}
+              columns={columnsWithActions}
+              enableGrouping={true}
+              enableExpanding={true}
+              enableColumnResizing={true}
+              stickyRightColumns={1}
+              groupedColumnMode="reorder"
+              title="Trading Data with Group Actions - Cell Borders"
+              borderStyle="vertical"
+              initialState={{
+                grouping: ['status'],
+                expanded: {
+                  'status:Active': true,
+                  'status:Pending': true
+                },
+                columnSizing: {
+                  'instrument': 250,
+                  'trader': 250,
+                  'actions': 200
+                }
+              }}
+            />
+          </div>
+
+          {/* Row Borders Variation */}
+          <div className="mt-[var(--space-2xlg)]">
+            <h3 className="text-heading-md mb-[var(--space-sm)]">Row Borders (Horizontal Lines)</h3>
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+              Horizontal borders between rows provide clear row separation, useful for dense data where row distinction is important.
+            </p>
+            <DataTable
+              data={data}
+              columns={columnsWithActions}
+              enableGrouping={true}
+              enableExpanding={true}
+              enableColumnResizing={true}
+              stickyRightColumns={1}
+              groupedColumnMode="reorder"
+              title="Trading Data with Group Actions - Row Borders"
+              borderStyle="horizontal"
+              initialState={{
+                grouping: ['status'],
+                expanded: {
+                  'status:Active': true,
+                  'status:Pending': true
+                },
+                columnSizing: {
+                  'instrument': 250,
+                  'trader': 250,
+                  'actions': 200
+                }
+              }}
+            />
+          </div>
         </div>
       </div>
     )

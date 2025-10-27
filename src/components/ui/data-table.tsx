@@ -54,6 +54,7 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Pagination } from "./pagination"
 import { Skeleton } from "./skeleton"
 import { DataTableSettingsMenu } from "./data-table-settings-menu"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip"
 
 // Debounced value hook for performance
 function useDebounce<T>(value: T, delay: number): T {
@@ -72,6 +73,74 @@ function useDebounce<T>(value: T, delay: number): T {
   return debouncedValue
 }
 
+// TruncatedCell component with tooltip for overflow text
+interface TruncatedCellProps {
+  children: React.ReactNode
+  align?: 'left' | 'right'
+}
+
+function TruncatedCell({ children, align = 'left' }: TruncatedCellProps) {
+  const ref = React.useRef<HTMLDivElement>(null)
+  const [isTruncated, setIsTruncated] = React.useState(false)
+  const [textContent, setTextContent] = React.useState('')
+
+  // Check if content is truncated
+  React.useEffect(() => {
+    const checkTruncation = () => {
+      if (ref.current) {
+        // Check both the wrapper and first child for truncation
+        const wrapperTruncated = ref.current.scrollWidth > ref.current.clientWidth
+        const firstChild = ref.current.firstElementChild as HTMLElement | null
+        const childTruncated = firstChild ? firstChild.scrollWidth > firstChild.clientWidth : false
+        const truncated = wrapperTruncated || childTruncated
+        setIsTruncated(truncated)
+      }
+    }
+
+    checkTruncation()
+
+    // Recheck on window resize
+    window.addEventListener('resize', checkTruncation)
+    return () => window.removeEventListener('resize', checkTruncation)
+  }, [children])
+
+  // Extract text content from DOM element for tooltip
+  React.useEffect(() => {
+    if (ref.current) {
+      // Use textContent from DOM for more reliable extraction
+      setTextContent(ref.current.textContent || '')
+    }
+  }, [children])
+
+  if (!isTruncated) {
+    // No tooltip needed if content isn't truncated
+    return (
+      <div
+        ref={ref}
+        className={cn("min-w-0 overflow-hidden truncate [&>*]:truncate [&>*]:block", align === 'right' && 'text-right')}
+      >
+        {children}
+      </div>
+    )
+  }
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <div
+          ref={ref}
+          className={cn("min-w-0 overflow-hidden truncate [&>*]:truncate [&>*]:block", align === 'right' && 'text-right')}
+        >
+          {children}
+        </div>
+      </TooltipTrigger>
+      <TooltipContent side="top" className="max-w-xs">
+        {textContent}
+      </TooltipContent>
+    </Tooltip>
+  )
+}
+
 // Filter variants and types
 export type FilterVariant = "text" | "select" | "multiselect" | "number" | "date" | "boolean"
 
@@ -84,12 +153,44 @@ export interface NestedHeaderConfig {
   columns: ColumnDef<any, any>[]
 }
 
+// Aggregation types for grouped rows
+export type AggregationType =
+  | 'range'
+  | 'average'
+  | 'sum'
+  | 'count'
+  | 'uniqueCount'
+  | 'mostCommon'
+  | 'dateRange'
+  | false // explicitly disable
+  | ((rows: any[], accessor: any) => string) // custom function
+
 export interface ColumnMeta {
   label?: string
   filterVariant?: FilterVariant
   filterOptions?: Array<{ label: string; value: string; icon?: React.ComponentType<any> }>
   placeholder?: string
   icon?: React.ComponentType<any>
+  renderInGroupedRows?: boolean
+  aggregation?: AggregationType
+  align?: 'left' | 'right'
+  truncate?: boolean // Enable text truncation with tooltip (default: true)
+}
+
+// Extend TanStack Table's ColumnMeta type with our custom properties
+declare module '@tanstack/react-table' {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface ColumnMeta<TData extends unknown, TValue> {
+    label?: string
+    filterVariant?: FilterVariant
+    filterOptions?: Array<{ label: string; value: string; icon?: React.ComponentType<any> }>
+    placeholder?: string
+    icon?: React.ComponentType<any>
+    renderInGroupedRows?: boolean
+    aggregation?: AggregationType
+    align?: 'left' | 'right'
+    truncate?: boolean
+  }
 }
 
 // Advanced filter functions
@@ -114,6 +215,174 @@ const multiSelectFilter: FilterFn<any> = (row, columnId, value) => {
   if (!value || value.length === 0) return true
   const cellValue = row.getValue(columnId)
   return value.includes(cellValue)
+}
+
+// Aggregation helper functions for grouped rows
+
+// Detect data type from first non-null value
+function detectColumnDataType(rows: any[], accessor: any): 'number' | 'string' | 'date' | 'unknown' {
+  for (const row of rows) {
+    const value = typeof accessor === 'function' ? accessor(row.original) : row.original?.[accessor]
+    if (value != null) {
+      if (typeof value === 'number') return 'number'
+      if (value instanceof Date) return 'date'
+      if (typeof value === 'string') {
+        // Check if string is a parseable date
+        const parsed = Date.parse(value)
+        if (!isNaN(parsed)) return 'date'
+        return 'string'
+      }
+      return 'unknown'
+    }
+  }
+  return 'unknown'
+}
+
+// Aggregation implementations
+function aggregateRange(values: number[]): string {
+  if (values.length === 0) return ''
+  const min = Math.min(...values)
+  const max = Math.max(...values)
+  if (min === max) return String(min)
+  return `${min} – ${max}`
+}
+
+function aggregateAverage(values: number[]): string {
+  if (values.length === 0) return ''
+  const sum = values.reduce((acc, val) => acc + val, 0)
+  const avg = sum / values.length
+  return `Avg: ${avg.toFixed(2)}`
+}
+
+function aggregateSum(values: number[]): string {
+  if (values.length === 0) return ''
+  const sum = values.reduce((acc, val) => acc + val, 0)
+  return `Total: ${sum}`
+}
+
+function aggregateCount(count: number): string {
+  return `${count} ${count === 1 ? 'item' : 'items'}`
+}
+
+function aggregateUniqueCount(values: string[], label: string): string {
+  if (values.length === 0) return ''
+  const unique = new Set(values)
+  const count = unique.size
+  // Pluralize label intelligently
+  const pluralLabel = count === 1 ? label :
+    label.endsWith('s') ? label :
+    label.endsWith('y') ? label.slice(0, -1) + 'ies' :
+    label + 's'
+  return `${count} ${pluralLabel.toLowerCase()}`
+}
+
+function aggregateMostCommon(values: string[]): string {
+  if (values.length === 0) return ''
+  const counts = new Map<string, number>()
+  values.forEach(val => counts.set(val, (counts.get(val) || 0) + 1))
+  let maxCount = 0
+  let mostCommon = ''
+  counts.forEach((count, value) => {
+    if (count > maxCount) {
+      maxCount = count
+      mostCommon = value
+    }
+  })
+  return `${mostCommon} (${maxCount})`
+}
+
+function aggregateDateRange(values: Date[]): string {
+  if (values.length === 0) return ''
+  const dates = values.map(v => v instanceof Date ? v : new Date(v))
+  const validDates = dates.filter(d => !isNaN(d.getTime()))
+  if (validDates.length === 0) return ''
+
+  const min = new Date(Math.min(...validDates.map(d => d.getTime())))
+  const max = new Date(Math.max(...validDates.map(d => d.getTime())))
+
+  const formatDate = (d: Date) => d.toISOString().split('T')[0]
+
+  if (min.getTime() === max.getTime()) return formatDate(min)
+  return `${formatDate(min)} – ${formatDate(max)}`
+}
+
+// Main aggregation calculation function
+function calculateAggregation(
+  column: any, // Column<TData, TValue> from TanStack Table
+  rows: any[],
+  groupingColumnId: string
+): string | null {
+  // Get the column definition from the column object
+  const columnDef = column.columnDef as ColumnDef<any, any>
+
+  // Skip if this IS the grouped column
+  if (column.id === groupingColumnId) return null
+
+  // Skip if column has renderInGroupedRows (already custom rendered)
+  if (columnDef?.meta?.renderInGroupedRows) return null
+
+  // Check for explicit disable
+  if (columnDef?.meta?.aggregation === false) return null
+
+  // Custom aggregation function
+  if (typeof columnDef?.meta?.aggregation === 'function') {
+    return columnDef.meta.aggregation(rows, columnDef.accessorKey)
+  }
+
+  // Extract values from rows using accessor
+  const accessor = columnDef?.accessorKey || columnDef?.accessorFn
+  if (!accessor) return null
+
+  const values = rows
+    .map(row => {
+      const value = typeof accessor === 'function' ? accessor(row.original) : row.original?.[accessor]
+      return value
+    })
+    .filter(v => v != null)
+
+  if (values.length === 0) return null
+
+  // Manual aggregation type
+  const aggType = columnDef?.meta?.aggregation
+  if (aggType && typeof aggType === 'string') {
+    switch (aggType) {
+      case 'range':
+        return aggregateRange(values as number[])
+      case 'average':
+        return aggregateAverage(values as number[])
+      case 'sum':
+        return aggregateSum(values as number[])
+      case 'count':
+        return aggregateCount(values.length)
+      case 'uniqueCount':
+        return aggregateUniqueCount(
+          values.map(String),
+          columnDef?.meta?.label || String(column.id)
+        )
+      case 'mostCommon':
+        return aggregateMostCommon(values.map(String))
+      case 'dateRange':
+        return aggregateDateRange(values as Date[])
+      default:
+        return null
+    }
+  }
+
+  // Auto-detect and aggregate
+  const dataType = detectColumnDataType(rows, accessor)
+  switch (dataType) {
+    case 'number':
+      return aggregateRange(values as number[])
+    case 'string':
+      return aggregateUniqueCount(
+        values.map(String),
+        columnDef?.meta?.label || String(column.id)
+      )
+    case 'date':
+      return aggregateDateRange(values as Date[])
+    default:
+      return aggregateCount(values.length)
+  }
 }
 
 // Remove smart column hiding - keeping this simple
@@ -671,19 +940,38 @@ function DataTableColumnHeader<TData, TValue>({
   title,
   className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
+  const align = column.columnDef.meta?.align || 'left'
+  const shouldTruncate = column.columnDef.meta?.truncate !== false
+
   if (!column.getCanSort()) {
-    return <div className={cn(className)}>{title}</div>
+    return shouldTruncate ? (
+      <TruncatedCell align={align}>
+        <div className={cn(align === 'right' ? 'text-right' : 'text-left', className)}>
+          {title}
+        </div>
+      </TruncatedCell>
+    ) : (
+      <div className={cn(align === 'right' ? 'text-right' : 'text-left', className)}>
+        {title}
+      </div>
+    )
   }
 
   return (
-    <div className={cn("flex items-center space-x-2", className)}>
+    <div className={cn("flex items-center space-x-2", align === 'right' && 'justify-end', className)}>
       <Button
         variant="ghost"
         size="sm"
         className="-ml-3 h-8 data-[state=open]:bg-accent"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        <span>{title}</span>
+        {shouldTruncate ? (
+          <TruncatedCell align={align}>
+            <span>{title}</span>
+          </TruncatedCell>
+        ) : (
+          <span>{title}</span>
+        )}
         {column.getIsSorted() === "desc" ? (
           <Icon name="arrow-down" className="ml-2 h-4 w-4" />
         ) : column.getIsSorted() === "asc" ? (
@@ -974,10 +1262,17 @@ export function DataTable<TData, TValue>({
   // Memoize columns for performance
   const memoizedColumns = React.useMemo(() => {
     const processedColumns = columns.map(column => {
+      // Base column with min width for resizing
+      let processedColumn = {
+        ...column,
+        // Set default minimum column width when resizing is enabled
+        ...(enableColumnResizing && !column.minSize ? { minSize: 80 } : {})
+      }
+
       // Add grouping configuration for columns with enableGrouping
       if (column.enableGrouping || (column as any).meta?.enableGrouping) {
         return {
-          ...column,
+          ...processedColumn,
           enableGrouping: true,
           getGroupingValue: (row: any) => {
             // Use the column's accessor to get the grouping value
@@ -992,7 +1287,7 @@ export function DataTable<TData, TValue>({
           }
         }
       }
-      return column
+      return processedColumn
     })
 
     // Add selection column if row selection is enabled
@@ -1200,7 +1495,7 @@ export function DataTable<TData, TValue>({
   // }, [])
 
   // Pure CSS sticky positioning with visual separators
-  const getPureCSSPinningStyles = (column: any, isHeader = false): React.CSSProperties => {
+  const getPureCSSPinningStyles = (column: any, isHeader = false, showRowBorder = true): React.CSSProperties => {
     // Handle nested header configs that don't have column methods
     if (!column || typeof column.getSize !== 'function') {
       return {}
@@ -1234,8 +1529,7 @@ export function DataTable<TData, TValue>({
       const baseStyles = {
         position: 'sticky' as const,
         left: `${leftPosition}px`,
-        zIndex: 2,
-        backgroundColor: isHeader ? 'var(--grey-25)' : 'var(--color-surface-primary)',
+        ...(isHeader && { backgroundColor: 'var(--grey-25)' }),
         width: `${column.getSize()}px`,
         minWidth: `${column.getSize()}px`,
         maxWidth: `${column.getSize()}px`,
@@ -1245,10 +1539,12 @@ export function DataTable<TData, TValue>({
       if (isRightmostLeftSticky) {
         return {
           ...baseStyles,
-          // For headers: only vertical drop shadow. For body cells: combine with horizontal border
+          // For headers: only vertical drop shadow. For body cells: combine with horizontal border if showRowBorder
           boxShadow: isHeader
             ? '2px 0 4px 0 rgba(0, 0, 0, 0.08)'
-            : 'inset 0 -1px 0 0 var(--color-border-primary-bold), 2px 0 4px 0 rgba(0, 0, 0, 0.08)',
+            : showRowBorder
+              ? 'inset 0 -1px 0 0 var(--color-border-primary-bold), 2px 0 4px 0 rgba(0, 0, 0, 0.08)'
+              : '2px 0 4px 0 rgba(0, 0, 0, 0.08)',
         }
       }
 
@@ -1269,8 +1565,7 @@ export function DataTable<TData, TValue>({
       const baseStyles = {
         position: 'sticky' as const,
         right: `${rightPosition}px`,
-        zIndex: 2,
-        backgroundColor: isHeader ? 'var(--grey-25)' : 'var(--color-surface-primary)',
+        ...(isHeader && { backgroundColor: 'var(--grey-25)' }),
         width: `${column.getSize()}px`,
         minWidth: `${column.getSize()}px`,
         maxWidth: `${column.getSize()}px`,
@@ -1280,10 +1575,12 @@ export function DataTable<TData, TValue>({
       if (isLeftmostRightSticky) {
         return {
           ...baseStyles,
-          // For headers: only vertical drop shadow. For body cells: combine with horizontal border
+          // For headers: only vertical drop shadow. For body cells: combine with horizontal border if showRowBorder
           boxShadow: isHeader
             ? '-2px 0 4px 0 rgba(0, 0, 0, 0.08)'
-            : 'inset 0 -1px 0 0 var(--color-border-primary-bold), -2px 0 4px 0 rgba(0, 0, 0, 0.08)',
+            : showRowBorder
+              ? 'inset 0 -1px 0 0 var(--color-border-primary-bold), -2px 0 4px 0 rgba(0, 0, 0, 0.08)'
+              : '-2px 0 4px 0 rgba(0, 0, 0, 0.08)',
         }
       }
 
@@ -1294,12 +1591,13 @@ export function DataTable<TData, TValue>({
   }
 
   return (
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-    >
+    <TooltipProvider>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+      >
       <div className={cn(
         "border border-[var(--color-border-primary-bold)] bg-[var(--color-surface-primary)] overflow-hidden rounded-lg",
         className
@@ -1380,7 +1678,7 @@ export function DataTable<TData, TValue>({
                     const groupColumnCount = headerConfig.columns.length
 
                     // Simple column group styling
-                    const pinningStyles = getPureCSSPinningStyles(headerConfig, true)
+                    const pinningStyles = getPureCSSPinningStyles(headerConfig, true, borderSettings.showRowBorder)
 
                     return (
                       <TableHead
@@ -1414,7 +1712,8 @@ export function DataTable<TData, TValue>({
                 {/* Child header row with individual columns */}
                 <TableRow showBorder={borderSettings.showRowBorder}>
                   {table.getHeaderGroups()[0]?.headers.map((header, index) => {
-                    const pinningStyles = getPureCSSPinningStyles(header.column, true)
+                    const pinningStyles = getPureCSSPinningStyles(header.column, true, borderSettings.showRowBorder)
+                    const align = header.column.columnDef.meta?.align || 'left'
                     const isLastHeader = index === table.getHeaderGroups()[0].headers.length - 1
 
                     return (
@@ -1432,7 +1731,9 @@ export function DataTable<TData, TValue>({
                           ...(enableColumnResizing && !pinningStyles.width ? { width: header.column.getSize() } : {}),
                         }}
                       >
-                        <div className="flex items-center justify-between">
+                        <div className={cn(
+                          align === 'right' ? 'text-right' : 'text-left'
+                        )}>
                           {header.isPlaceholder
                             ? null
                             : flexRender(
@@ -1470,8 +1771,8 @@ export function DataTable<TData, TValue>({
                 >
                   <TableRow showBorder={borderSettings.showRowBorder}>
                     {headerGroup.headers.map((header, index) => {
-                    const pinningStyles = getPureCSSPinningStyles(header.column, true)
-
+                    const pinningStyles = getPureCSSPinningStyles(header.column, true, borderSettings.showRowBorder)
+                    const align = header.column.columnDef.meta?.align || 'left'
                     const isLastHeader = index === headerGroup.headers.length - 1
 
                     return (
@@ -1493,7 +1794,9 @@ export function DataTable<TData, TValue>({
                         }}
                       >
                         <DraggableColumnHeader header={header} enableColumnOrdering={enableColumnOrdering}>
-                          <div className="flex items-center justify-between">
+                          <div className={cn(
+                            align === 'right' ? 'text-right' : 'text-left'
+                          )}>
                             {header.isPlaceholder
                               ? null
                               : flexRender(
@@ -1551,20 +1854,23 @@ export function DataTable<TData, TValue>({
                       className={cn(
                         "group",
                         // Selected row styling
-                        row.getIsSelected() && "bg-[var(--blue-25)] hover:bg-[var(--blue-25)]",
+                        row.getIsSelected() && "bg-[var(--blue-25)]",
                         // Expanded parent row styling (Level 1 when expanded AND has children)
-                        row.getIsExpanded() && row.depth === 0 && row.subRows && row.subRows.length > 0 && "bg-[var(--blue-25)] hover:bg-[var(--blue-25)]",
+                        row.getIsExpanded() && row.depth === 0 && row.subRows && row.subRows.length > 0 && "bg-[var(--blue-25)]",
                         // Level 3 row styling (depth 2)
-                        row.depth === 2 && "bg-[var(--blue-25)] hover:bg-[var(--blue-25)]",
+                        row.depth === 2 && "bg-[var(--blue-25)]",
                         // Pinned row styling using existing CSS variables
-                        row.getIsPinned() === 'top' && "!bg-[var(--color-background-neutral-selected)] hover:!bg-[var(--color-background-neutral-selected)] !border-b-2 !border-[var(--color-border-primary-bold)]",
-                        row.getIsPinned() === 'bottom' && "!bg-[var(--color-background-neutral-selected)] hover:!bg-[var(--color-background-neutral-selected)] !border-t-2 !border-[var(--color-border-primary-bold)]",
-                        // Grouped row styling
-                        row.getIsGrouped?.() && "bg-[var(--color-background-neutral-subtle)] hover:bg-[var(--color-background-neutral-subtle-hovered)] font-medium"
+                        row.getIsPinned() === 'top' && "!bg-[var(--color-background-neutral-selected)] !border-b-2 !border-[var(--color-border-primary-bold)]",
+                        row.getIsPinned() === 'bottom' && "!bg-[var(--color-background-neutral-selected)] !border-t-2 !border-[var(--color-border-primary-bold)]",
+                        // Grouped row styling - blue-50 when expanded, neutral otherwise
+                        row.getIsGrouped?.() && row.getIsExpanded() && "bg-[var(--blue-50)] font-medium",
+                        row.getIsGrouped?.() && !row.getIsExpanded() && "bg-[var(--color-background-neutral-subtle)] font-medium",
+                        // Second level (children of grouped rows) - blue-25
+                        enableGrouping && row.depth === 1 && "bg-[var(--blue-25)]"
                       )}
                     >
                       {row.getVisibleCells().map((cell, index) => {
-                        const pinningStyles = getPureCSSPinningStyles(cell.column)
+                        const pinningStyles = getPureCSSPinningStyles(cell.column, false, borderSettings.showRowBorder)
 
                         // Add expand/collapse control to first cell if expanding is enabled
                         const isFirstCell = index === 0
@@ -1590,8 +1896,19 @@ export function DataTable<TData, TValue>({
                             colSpan={isSectionHeader ? row.getVisibleCells().length : undefined}
                             data-section-header={isSectionHeader ? true : undefined}
                             className={cn(
-                              // Sticky columns need higher z-index but inherit background
-                              Object.keys(pinningStyles).length > 0 && "z-10",
+                              // Sticky columns need higher z-index and explicit backgrounds
+                              Object.keys(pinningStyles).length > 0 && [
+                                "z-10",
+                                // Match row backgrounds for sticky cells to prevent transparency
+                                // Grouped expanded rows
+                                row.getIsGrouped?.() && row.getIsExpanded() && "bg-[var(--blue-50)]",
+                                // Grouped collapsed rows
+                                row.getIsGrouped?.() && !row.getIsExpanded() && "bg-[var(--color-background-neutral-subtle)]",
+                                // Second level rows (children of grouped rows)
+                                enableGrouping && row.depth === 1 && "bg-[var(--blue-25)]",
+                                // Default rows (not grouped, not depth 1)
+                                !row.getIsGrouped?.() && !(enableGrouping && row.depth === 1) && "bg-[var(--color-surface-primary)]",
+                              ],
                               // Section header background
                               isSectionHeader && "bg-[var(--blue-50)]"
                             )}
@@ -1624,14 +1941,39 @@ export function DataTable<TData, TValue>({
                                     <span className="font-semibold">
                                       {String(row.getGroupingValue(row.groupingColumnId!))}
                                     </span>
-                                    <Badge variant="secondary" className="text-caption-sm">
-                                      {row.subRows.length} {row.subRows.length === 1 ? 'item' : 'items'}
+                                    <Badge appearance="outline" size="sm">
+                                      {row.subRows.length}
                                     </Badge>
                                   </div>
                                 </div>
+                              ) : cell.column.columnDef.meta?.renderInGroupedRows ? (
+                                // Render custom cell content for columns with renderInGroupedRows flag
+                                flexRender(cell.column.columnDef.cell, cell.getContext())
                               ) : (
-                                // Empty cell for other columns in grouped row
-                                <div className="text-[var(--color-text-tertiary)]">—</div>
+                                // Calculate and show aggregation for other columns in grouped row
+                                (() => {
+                                  const aggregatedValue = calculateAggregation(
+                                    cell.column,
+                                    row.subRows,
+                                    row.groupingColumnId!
+                                  )
+
+                                  if (!aggregatedValue) return <div></div>
+
+                                  // Get alignment from column metadata
+                                  const align = cell.column.columnDef.meta?.align || 'left'
+
+                                  return (
+                                    <TruncatedCell align={align}>
+                                      <span className={cn(
+                                        "text-[var(--color-text-secondary)] text-body-sm",
+                                        align === 'right' ? "tabular-nums" : ""
+                                      )}>
+                                        {aggregatedValue}
+                                      </span>
+                                    </TruncatedCell>
+                                  )
+                                })()
                               )
                             ) : (
                               // Regular row rendering
@@ -1687,10 +2029,24 @@ export function DataTable<TData, TValue>({
                                 )}
 
                                 {/* Cell content */}
-                                <div className="flex-1">
-                                  {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext()
+                                <div className="flex-1 min-w-0">
+                                  {enableGrouping && row.depth > 0 && cell.column.id === row.getParentRow()?.groupingColumnId ? (
+                                    // Hide grouped column value in detail rows
+                                    <div></div>
+                                  ) : cell.column.columnDef.meta?.truncate !== false ? (
+                                    // Wrap in TruncatedCell for overflow handling with tooltip
+                                    <TruncatedCell align={cell.column.columnDef.meta?.align}>
+                                      {flexRender(
+                                        cell.column.columnDef.cell,
+                                        cell.getContext()
+                                      )}
+                                    </TruncatedCell>
+                                  ) : (
+                                    // No truncation for this column
+                                    flexRender(
+                                      cell.column.columnDef.cell,
+                                      cell.getContext()
+                                    )
                                   )}
                                 </div>
                               </div>
@@ -1728,20 +2084,23 @@ export function DataTable<TData, TValue>({
                     className={cn(
                       "group",
                       // Selected row styling
-                      row.getIsSelected() && "bg-[var(--blue-25)] hover:bg-[var(--blue-25)]",
+                      row.getIsSelected() && "bg-[var(--blue-25)]",
                       // Expanded parent row styling (Level 1 when expanded AND has children)
-                      row.getIsExpanded() && row.depth === 0 && row.subRows && row.subRows.length > 0 && "bg-[var(--blue-25)] hover:bg-[var(--blue-25)]",
+                      row.getIsExpanded() && row.depth === 0 && row.subRows && row.subRows.length > 0 && "bg-[var(--blue-25)]",
                       // Level 3 row styling (depth 2)
-                      row.depth === 2 && "bg-[var(--blue-25)] hover:bg-[var(--blue-25)]",
+                      row.depth === 2 && "bg-[var(--blue-25)]",
                       // Pinned row styling using existing CSS variables
-                      row.getIsPinned() === 'top' && "!bg-[var(--color-background-neutral-selected)] hover:!bg-[var(--color-background-neutral-selected)] !border-b-2 !border-[var(--color-border-primary-bold)]",
-                      row.getIsPinned() === 'bottom' && "!bg-[var(--color-background-neutral-selected)] hover:!bg-[var(--color-background-neutral-selected)] !border-t-2 !border-[var(--color-border-primary-bold)]",
-                      // Grouped row styling
-                      row.getIsGrouped?.() && "bg-[var(--color-background-neutral-subtle)] hover:bg-[var(--color-background-neutral-subtle-hovered)] font-medium"
+                      row.getIsPinned() === 'top' && "!bg-[var(--color-background-neutral-selected)] !border-b-2 !border-[var(--color-border-primary-bold)]",
+                      row.getIsPinned() === 'bottom' && "!bg-[var(--color-background-neutral-selected)] !border-t-2 !border-[var(--color-border-primary-bold)]",
+                      // Grouped row styling - blue-50 when expanded, neutral otherwise
+                      row.getIsGrouped?.() && row.getIsExpanded() && "bg-[var(--blue-50)] font-medium",
+                      row.getIsGrouped?.() && !row.getIsExpanded() && "bg-[var(--color-background-neutral-subtle)] font-medium",
+                      // Second level (children of grouped rows) - blue-25
+                      enableGrouping && row.depth === 1 && "bg-[var(--blue-25)]"
                     )}
                   >
                     {row.getVisibleCells().map((cell, index) => {
-                      const pinningStyles = getPureCSSPinningStyles(cell.column)
+                      const pinningStyles = getPureCSSPinningStyles(cell.column, false, borderSettings.showRowBorder)
 
                       // Add expand/collapse control to first cell if expanding is enabled
                       const isFirstCell = index === 0
@@ -1766,8 +2125,19 @@ export function DataTable<TData, TValue>({
                           showRowBorder={borderSettings.showRowBorder}
                           colSpan={isSectionHeader ? row.getVisibleCells().length : undefined}
                           className={cn(
-                            // Sticky columns need higher z-index but inherit background
-                            Object.keys(pinningStyles).length > 0 && "z-10",
+                            // Sticky columns need higher z-index and explicit backgrounds
+                            Object.keys(pinningStyles).length > 0 && [
+                              "z-10",
+                              // Match row backgrounds for sticky cells to prevent transparency
+                              // Grouped expanded rows
+                              row.getIsGrouped?.() && row.getIsExpanded() && "bg-[var(--blue-50)]",
+                              // Grouped collapsed rows
+                              row.getIsGrouped?.() && !row.getIsExpanded() && "bg-[var(--color-background-neutral-subtle)]",
+                              // Second level rows (children of grouped rows)
+                              enableGrouping && row.depth === 1 && "bg-[var(--blue-25)]",
+                              // Default rows (not grouped, not depth 1)
+                              !row.getIsGrouped?.() && !(enableGrouping && row.depth === 1) && "bg-[var(--color-surface-primary)]",
+                            ],
                             // Section header background
                             isSectionHeader && "bg-[var(--blue-50)]"
                           )}
@@ -1803,14 +2173,39 @@ export function DataTable<TData, TValue>({
                                   <span className="font-semibold">
                                     {String(row.getGroupingValue(row.groupingColumnId!))}
                                   </span>
-                                  <Badge variant="secondary" className="text-caption-sm">
-                                    {row.subRows.length} {row.subRows.length === 1 ? 'item' : 'items'}
+                                  <Badge appearance="outline" size="sm">
+                                    {row.subRows.length}
                                   </Badge>
                                 </div>
                               </div>
+                            ) : cell.column.columnDef.meta?.renderInGroupedRows ? (
+                              // Render custom cell content for columns with renderInGroupedRows flag
+                              flexRender(cell.column.columnDef.cell, cell.getContext())
                             ) : (
-                              // Empty cell for other columns in grouped row
-                              <div className="text-[var(--color-text-tertiary)]">—</div>
+                              // Calculate and show aggregation for other columns in grouped row
+                              (() => {
+                                const aggregatedValue = calculateAggregation(
+                                  cell.column,
+                                  row.subRows,
+                                  row.groupingColumnId!
+                                )
+
+                                if (!aggregatedValue) return <div></div>
+
+                                // Get alignment from column metadata
+                                const align = cell.column.columnDef.meta?.align || 'left'
+
+                                return (
+                                  <TruncatedCell align={align}>
+                                    <span className={cn(
+                                      "text-[var(--color-text-secondary)] text-body-sm",
+                                      align === 'right' ? "tabular-nums" : ""
+                                    )}>
+                                      {aggregatedValue}
+                                    </span>
+                                  </TruncatedCell>
+                                )
+                              })()
                             )
                           ) : (
                             // Regular row rendering
@@ -1866,10 +2261,24 @@ export function DataTable<TData, TValue>({
                               )}
 
                               {/* Cell content */}
-                              <div className="flex-1">
-                                {flexRender(
-                                  cell.column.columnDef.cell,
-                                  cell.getContext()
+                              <div className="flex-1 min-w-0">
+                                {enableGrouping && row.depth > 0 && cell.column.id === row.getParentRow()?.groupingColumnId ? (
+                                  // Hide grouped column value in detail rows
+                                  <div></div>
+                                ) : cell.column.columnDef.meta?.truncate !== false ? (
+                                  // Wrap in TruncatedCell for overflow handling with tooltip
+                                  <TruncatedCell align={cell.column.columnDef.meta?.align}>
+                                    {flexRender(
+                                      cell.column.columnDef.cell,
+                                      cell.getContext()
+                                    )}
+                                  </TruncatedCell>
+                                ) : (
+                                  // No truncation for this column
+                                  flexRender(
+                                    cell.column.columnDef.cell,
+                                    cell.getContext()
+                                  )
                                 )}
                               </div>
                             </div>
@@ -1904,6 +2313,7 @@ export function DataTable<TData, TValue>({
       )}
       </div>
     </DndContext>
+    </TooltipProvider>
   )
 }
 

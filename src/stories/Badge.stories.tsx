@@ -11,7 +11,7 @@ const meta: Meta<typeof Badge> = {
   argTypes: {
     intent: {
       control: { type: 'select' },
-      options: ['neutral', 'brand', 'success', 'warning', 'destructive'],
+      options: ['neutral', 'brand', 'success', 'warning', 'destructive', 'information', 'violet', 'magenta'],
     },
     appearance: {
       control: { type: 'select' },
@@ -88,5 +88,26 @@ export const Small: Story = {
   args: {
     size: 'sm',
     children: 'Small',
+  },
+}
+
+export const Information: Story = {
+  args: {
+    intent: 'information',
+    children: 'Information',
+  },
+}
+
+export const Violet: Story = {
+  args: {
+    intent: 'violet',
+    children: 'Violet',
+  },
+}
+
+export const Magenta: Story = {
+  args: {
+    intent: 'magenta',
+    children: 'Magenta',
   },
 }

@@ -42,11 +42,19 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const isSearchInput = type === "search";
 
     if (isSearchInput) {
+      // Calculate left padding: icon_position + icon_width + spacing
+      // For sm: 12px + 12px + 8px = 32px
+      // For md/lg: 12px + 16px + 8px = 36px
+      const iconSize = size === "sm" ? "sm" : "md";
+      const leftPadding = size === "sm"
+        ? "pl-[calc(var(--space-md)+var(--size-3xsm)+var(--space-sm))]"
+        : "pl-[calc(var(--space-md)+var(--size-2xsm)+var(--space-sm))]";
+
       return (
         <div className="relative">
           <Icon
             name="search"
-            size={size === "sm" ? "sm" : "md"}
+            size={iconSize}
             color="tertiary"
             className="absolute left-[var(--space-md)] top-1/2 -translate-y-1/2 pointer-events-none"
           />
@@ -54,7 +62,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             type={type}
             className={cn(
               inputVariants({ variant, size }),
-              "pl-[var(--space-2xlg)]",
+              leftPadding,
               className,
             )}
             ref={ref}

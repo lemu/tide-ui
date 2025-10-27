@@ -1,0 +1,59 @@
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+  categories:
+    - title: ✨ New Features
+      labels:
+        - enhancement
+        - feature
+      # Matches commits starting with "feat:" or "feat("
+      rules:
+        - pattern: '^feat(\(.*\))?:'
+
+    - title: 🐛 Bug Fixes
+      labels:
+        - bug
+        - fix
+      rules:
+        - pattern: '^fix(\(.*\))?:'
+
+    - title: 📚 Documentation
+      labels:
+        - documentation
+      rules:
+        - pattern: '^docs(\(.*\))?:'
+
+    - title: ♻️ Refactoring
+      labels:
+        - refactor
+      rules:
+        - pattern: '^refactor(\(.*\))?:'
+
+    - title: ⚡ Performance
+      labels:
+        - performance
+      rules:
+        - pattern: '^perf(\(.*\))?:'
+
+    - title: 🎨 Styling
+      labels:
+        - style
+      rules:
+        - pattern: '^style(\(.*\))?:'
+
+    - title: 🧪 Tests
+      labels:
+        - test
+      rules:
+        - pattern: '^test(\(.*\))?:'
+
+    - title: 🔧 Chores
+      labels:
+        - chore
+      rules:
+        - pattern: '^chore(\(.*\))?:'
+
+    - title: 🔄 Other Changes
+      labels:
+        - "*"

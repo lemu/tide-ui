@@ -53,17 +53,6 @@ jobs:
         run: |
           gh release create ${{ steps.version.outputs.tag }} \
             --title "Release ${{ steps.version.outputs.tag }}" \
-            --notes "## Changes in ${{ steps.version.outputs.tag }}
-
-          - Published from commit: ${{ github.sha }}
-          - Version: ${{ steps.version.outputs.version }}
-
-          ### Installation
-          \`\`\`bash
-          npm install @rafal.lemieszewski/tide-ui@${{ steps.version.outputs.version }}
-          \`\`\`
-
-          ### Documentation
-          View the component library at: https://tide-ui-storybook.vercel.app"
+            --generate-notes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
