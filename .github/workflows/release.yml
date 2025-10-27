@@ -49,10 +49,50 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Generate Release Notes
+        id: release_notes
+        run: |
+          # Get previous tag
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 ${{ steps.version.outputs.tag }}^ 2>/dev/null || echo "")
+
+          # Generate release notes body
+          cat > release_notes.md << 'EOF'
+          ## Changes in ${{ steps.version.outputs.tag }}
+
+          EOF
+
+          # If there's a previous tag, show what's new
+          if [ ! -z "$PREVIOUS_TAG" ]; then
+            echo "### What's New" >> release_notes.md
+            echo "" >> release_notes.md
+
+            # Get commits between tags and format them
+            git log ${PREVIOUS_TAG}..${{ steps.version.outputs.tag }} --pretty=format:"- %s (%h)" --no-merges >> release_notes.md
+            echo "" >> release_notes.md
+            echo "" >> release_notes.md
+          fi
+
+          # Add installation instructions
+          cat >> release_notes.md << 'EOF'
+          ### Installation
+
+          ```bash
+          npm install @rafal.lemieszewski/tide-ui@${{ steps.version.outputs.version }}
+          ```
+
+          ### Documentation
+
+          View the component library at: [Tide UI Storybook](https://tide-ui-storybook.vercel.app)
+
+          ### Full Changelog
+
+          [Compare $PREVIOUS_TAG...${{ steps.version.outputs.tag }}](https://github.com/${{ github.repository }}/compare/${PREVIOUS_TAG}...${{ steps.version.outputs.tag }})
+          EOF
+
       - name: Create GitHub Release
         run: |
           gh release create ${{ steps.version.outputs.tag }} \
             --title "Release ${{ steps.version.outputs.tag }}" \
-            --generate-notes
+            --notes-file release_notes.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
