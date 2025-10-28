@@ -2483,14 +2483,12 @@ export const GroupingWithCustomDisplay: Story = {
     layout: 'fullscreen',
     docs: {
       description: {
-        story: `Demonstrates the groupDisplayColumn feature where you can group by one column but display a different column's content in parent rows.
+        story: `Demonstrates the groupDisplayColumn feature and custom aggregatedCell functions for grouped rows with real-world fixture scenarios.
 
-## Use Case: Fixtures Grouped by Fixture ID, Displaying Order ID
+## Fixture Hierarchy
 
-In this example, we're grouping fixtures by their Fixture ID (hidden), but displaying the Order ID in parent rows. This is useful when:
-- Fixtures are logically grouped by Fixture ID (one fixture can have multiple contracts)
-- Each fixture has an Order ID, and all contracts within the same fixture share the same Order ID
-- Users want to see fixtures grouped together, identified by their Order ID (not Fixture ID)
+This example models the complete fixture lifecycle:
+- **Fixture** (grouping level) → **Order** → **Negotiation** → **Contract**
 
 ## Implementation
 
@@ -2506,27 +2504,121 @@ The \`groupDisplayColumn\` prop allows you to specify which column should render
 />
 \`\`\`
 
-The \`orderId\` column defines an \`aggregatedCell\` that renders custom content for group rows, including the order ID and contract count.`,
+## Real-World Scenarios Covered
+
+This demo includes all edge cases encountered in production:
+
+### f1: Simple Case (1 Order → 1 Negotiation → 1 Contract)
+- Order ID: 23vds38vo
+- Negotiation ID: 2352342342
+- Contract ID: asdr4233
+- **Displays**: Order ID with count, single negotiation ID, single contract ID
+
+### f2: No Deal Capture (No Order, No Negotiation, 1 Contract)
+- Order ID: —
+- Negotiation ID: —
+- Contract ID: dkdk024bf
+- **Displays**: "—" for missing Order and Negotiation IDs
+
+### f3: Open Negotiations (1 Order → Multiple Negotiations → No Contracts Yet)
+- Order ID: 93kdfgfnn
+- Negotiation IDs: 7476457657, 1661455454
+- Contract ID: —
+- **Displays**: Order ID, "2 negotiations", "—" for contracts
+
+### f4: Complex Case (1 Order → 3 Negotiations → 3 Contracts)
+- Order ID: 715aabgfkl
+- 3 Negotiation/Contract pairs
+- **Displays**: Order ID, "3 negotiations", "3 contracts"
+
+## Custom aggregatedCell Logic
+
+Each column demonstrates intelligent aggregation:
+
+1. **Order ID** (groupDisplayColumn): Shows order ID or "—"
+2. **Negotiation ID**: Shows single ID, count, or "—" if none
+3. **Contract ID**: Shows single ID, count, or "—" if none
+4. **Vessel**: Shows vessel name or count
+5. **Quantity**: Shows range (min-max) or single value if all the same
+6. **Status**: Shows status summary with badges
+
+Check the browser console to see the \`aggregatedCell\` functions being called!`,
       },
     },
   },
   render: () => {
-    // Generate fixture data
+    // Generate fixture data matching real-world scenarios
     const fixtureData = [
-      // Fixture 1: ORD29061 with 3 contracts
-      { fixtureId: 'FIX001', orderId: 'ORD29061', contractId: 'CNT001', vessel: 'Oceanic Star', quantity: 50000, status: 'Active' },
-      { fixtureId: 'FIX001', orderId: 'ORD29061', contractId: 'CNT002', vessel: 'Oceanic Star', quantity: 75000, status: 'Active' },
-      { fixtureId: 'FIX001', orderId: 'ORD29061', contractId: 'CNT003', vessel: 'Oceanic Star', quantity: 60000, status: 'Pending' },
+      // f1: Simple case - 1 Order → 1 Negotiation → 1 Contract
+      {
+        fixtureId: 'f1',
+        orderId: '23vds38vo',
+        negotiationId: '2352342342',
+        contractId: 'asdr4233',
+        vessel: 'Oceanic Star',
+        quantity: 50000,
+        status: 'Active'
+      },
 
-      // Fixture 2: ORD29062 with 2 contracts
-      { fixtureId: 'FIX002', orderId: 'ORD29062', contractId: 'CNT004', vessel: 'Pacific Dawn', quantity: 100000, status: 'Active' },
-      { fixtureId: 'FIX002', orderId: 'ORD29062', contractId: 'CNT005', vessel: 'Pacific Dawn', quantity: 85000, status: 'Completed' },
+      // f2: No deal capture - No Order, No Negotiation, but 1 Contract
+      {
+        fixtureId: 'f2',
+        orderId: undefined,
+        negotiationId: undefined,
+        contractId: 'dkdk024bf',
+        vessel: 'Pacific Dawn',
+        quantity: 75000,
+        status: 'Active'
+      },
 
-      // Fixture 3: ORD29063 with 4 contracts
-      { fixtureId: 'FIX003', orderId: 'ORD29063', contractId: 'CNT006', vessel: 'Atlantic Wave', quantity: 45000, status: 'Active' },
-      { fixtureId: 'FIX003', orderId: 'ORD29063', contractId: 'CNT007', vessel: 'Atlantic Wave', quantity: 55000, status: 'Active' },
-      { fixtureId: 'FIX003', orderId: 'ORD29063', contractId: 'CNT008', vessel: 'Atlantic Wave', quantity: 50000, status: 'Pending' },
-      { fixtureId: 'FIX003', orderId: 'ORD29063', contractId: 'CNT009', vessel: 'Atlantic Wave', quantity: 65000, status: 'Active' },
+      // f3: Order with open negotiations - No contracts yet
+      {
+        fixtureId: 'f3',
+        orderId: '93kdfgfnn',
+        negotiationId: '7476457657',
+        contractId: undefined,
+        vessel: 'Atlantic Wave',
+        quantity: 45000,
+        status: 'Pending'
+      },
+      {
+        fixtureId: 'f3',
+        orderId: '93kdfgfnn',
+        negotiationId: '1661455454',
+        contractId: undefined,
+        vessel: 'Atlantic Horizon',
+        quantity: 55000,
+        status: 'Pending'
+      },
+
+      // f4: Complex case - 1 Order → 3 Negotiations → 3 Contracts
+      {
+        fixtureId: 'f4',
+        orderId: '715aabgfkl',
+        negotiationId: '352345345',
+        contractId: 'fsj312343',
+        vessel: 'Mediterranean Sun',
+        quantity: 80000,
+        status: 'Active'
+      },
+      {
+        fixtureId: 'f4',
+        orderId: '715aabgfkl',
+        negotiationId: '913345345',
+        contractId: 'k38djfk',
+        vessel: 'Mediterranean Star',
+        quantity: 90000,
+        status: 'Active'
+      },
+      {
+        fixtureId: 'f4',
+        orderId: '715aabgfkl',
+        negotiationId: '733262456',
+        contractId: 'asdr4233',
+        vessel: 'Mediterranean Dawn',
+        quantity: 85000,
+        status: 'Completed'
+      },
     ]
 
     const fixtureColumns: ColumnDef<typeof fixtureData[0]>[] = [
@@ -2541,25 +2633,82 @@ The \`orderId\` column defines an \`aggregatedCell\` that renders custom content
         enableGrouping: false,
         // Custom aggregatedCell for group rows
         aggregatedCell: ({ row }) => {
+          console.log('✅ Order ID aggregatedCell called for row:', row.id)
           const orderId = row.subRows[0]?.original?.orderId
-          const contractCount = row.subRows.length
-          return (
-            <div className="flex items-center gap-[var(--space-sm)]">
-              <span className="font-semibold text-[var(--color-text-primary)]">{orderId}</span>
-              <span className="text-body-sm text-[var(--color-text-secondary)]">
-                ({contractCount} {contractCount === 1 ? 'contract' : 'contracts'})
-              </span>
-            </div>
-          )
+
+          // Handle case when there's no order (f2 scenario)
+          if (!orderId) {
+            return <span className="text-[var(--color-text-secondary)]">—</span>
+          }
+
+          return <span className="font-semibold text-[var(--color-text-primary)]">{orderId}</span>
+        },
+      },
+      {
+        accessorKey: 'negotiationId',
+        header: 'Negotiation ID',
+        // Custom aggregatedCell: show single negotiation ID or count
+        aggregatedCell: ({ row }) => {
+          console.log('✅ Negotiation ID aggregatedCell called for row:', row.id)
+          const negotiationIds = row.subRows.map(r => r.original?.negotiationId).filter(Boolean)
+          const uniqueNegotiationIds = Array.from(new Set(negotiationIds))
+
+          // Handle case when there's no negotiation (f2 scenario)
+          if (uniqueNegotiationIds.length === 0) {
+            return <span className="text-[var(--color-text-secondary)]">—</span>
+          }
+
+          if (uniqueNegotiationIds.length === 1) {
+            return <span className="text-[var(--color-text-primary)]">{uniqueNegotiationIds[0]}</span>
+          } else {
+            return (
+              <div className="flex items-center gap-[var(--space-xsm)]">
+                <span className="text-[var(--color-text-secondary)]">{uniqueNegotiationIds.length} negotiations</span>
+              </div>
+            )
+          }
         },
       },
       {
         accessorKey: 'contractId',
         header: 'Contract ID',
+        // Custom aggregatedCell: show single contract, count, or "—"
+        aggregatedCell: ({ row }) => {
+          console.log('✅ Contract ID aggregatedCell called for row:', row.id)
+          const contractIds = row.subRows.map(r => r.original?.contractId).filter(Boolean)
+          const uniqueContractIds = Array.from(new Set(contractIds))
+
+          // Handle case when there are no contracts (f3 scenario - open negotiations)
+          if (uniqueContractIds.length === 0) {
+            return <span className="text-[var(--color-text-secondary)]">—</span>
+          }
+
+          if (uniqueContractIds.length === 1) {
+            return <span className="text-[var(--color-text-primary)]">{uniqueContractIds[0]}</span>
+          } else {
+            return (
+              <div className="flex items-center gap-[var(--space-xsm)]">
+                <span className="text-[var(--color-text-secondary)]">{uniqueContractIds.length} contracts</span>
+              </div>
+            )
+          }
+        },
       },
       {
         accessorKey: 'vessel',
         header: 'Vessel',
+        // Custom aggregatedCell: show single vessel or "Multiple"
+        aggregatedCell: ({ row }) => {
+          console.log('✅ Vessel aggregatedCell called for row:', row.id)
+          const vessels = row.subRows.map(r => r.original?.vessel).filter(Boolean)
+          const uniqueVessels = Array.from(new Set(vessels))
+
+          if (uniqueVessels.length === 1) {
+            return <span className="text-[var(--color-text-primary)]">{uniqueVessels[0]}</span>
+          } else {
+            return <span className="text-[var(--color-text-secondary)]">{uniqueVessels.length} vessels</span>
+          }
+        },
       },
       {
         accessorKey: 'quantity',
@@ -2569,6 +2718,40 @@ The \`orderId\` column defines an \`aggregatedCell\` that renders custom content
         },
         cell: ({ getValue }) => {
           return <span className="tabular-nums">{Number(getValue()).toLocaleString()}</span>
+        },
+        // Custom aggregatedCell: show range with formatting
+        aggregatedCell: ({ row }) => {
+          console.log('✅ Quantity aggregatedCell called for row:', row.id)
+          const quantities = row.subRows.map(r => r.original?.quantity).filter(Boolean) as number[]
+
+          if (quantities.length === 0) {
+            return (
+              <div className="text-right">
+                <span className="text-[var(--color-text-secondary)]">—</span>
+              </div>
+            )
+          }
+
+          const min = Math.min(...quantities)
+          const max = Math.max(...quantities)
+
+          // Show single value if min equals max
+          if (min === max) {
+            return (
+              <div className="text-right">
+                <span className="text-[var(--color-text-primary)] tabular-nums">{min.toLocaleString()}</span>
+              </div>
+            )
+          }
+
+          // Show range if different values
+          return (
+            <div className="text-right">
+              <span className="text-[var(--color-text-primary)] tabular-nums">
+                {min.toLocaleString()} - {max.toLocaleString()}
+              </span>
+            </div>
+          )
         },
       },
       {
@@ -2589,6 +2772,33 @@ The \`orderId\` column defines an \`aggregatedCell\` that renders custom content
             </Badge>
           )
         },
+        // Custom aggregatedCell: show status summary
+        aggregatedCell: ({ row }) => {
+          console.log('✅ Status aggregatedCell called for row:', row.id)
+          const statuses = row.subRows.map(r => r.original?.status).filter(Boolean)
+          const statusCounts = statuses.reduce((acc, status) => {
+            acc[status] = (acc[status] || 0) + 1
+            return acc
+          }, {} as Record<string, number>)
+
+          return (
+            <div className="flex items-center gap-[var(--space-xsm)]">
+              {Object.entries(statusCounts).map(([status, count]) => (
+                <Badge
+                  key={status}
+                  appearance={
+                    status === 'Active' ? 'success' :
+                    status === 'Completed' ? 'default' :
+                    'accent'
+                  }
+                  size="sm"
+                >
+                  {count} {status}
+                </Badge>
+              ))}
+            </div>
+          )
+        },
       },
     ]
 
@@ -2596,18 +2806,18 @@ The \`orderId\` column defines an \`aggregatedCell\` that renders custom content
       <div className="p-[var(--space-lg)]">
         <div className="max-w-[1200px] mx-auto">
           <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Group by Fixture ID, Display Order ID</h2>
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Fixture Lifecycle: Order → Negotiation → Contract</h2>
             <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-              This example demonstrates grouping by Fixture ID while displaying Order ID in parent rows.
-              The Fixture ID column is hidden, and parent rows show the Order ID with contract count.
-              Both Fixture ID and Order ID are automatically hidden in child rows to avoid repetition.
+              This example models the complete fixture lifecycle with all real-world edge cases:
+              simple orders, missing deal capture, open negotiations, and complex multi-contract scenarios.
+              Each column uses custom aggregatedCell logic to intelligently display data.
             </p>
             <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
               <div className="flex items-center gap-[var(--space-sm)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
-                  Parent rows display Order ID (e.g., "ORD29061 (3 contracts)") even though grouping is by Fixture ID.
-                  The folder icon is removed, and both Fixture ID and Order ID columns are hidden in child rows.
+                  Open your browser console to see aggregatedCell functions being called! The demo includes:
+                  f1 (simple), f2 (no deal capture), f3 (open negotiations), and f4 (complex multi-contract).
                 </span>
               </div>
             </div>
@@ -2620,13 +2830,12 @@ The \`orderId\` column defines an \`aggregatedCell\` that renders custom content
             enableExpanding={true}
             grouping={["fixtureId"]}
             groupDisplayColumn="orderId"
+            hideChildrenForSingleItemGroups={true}
             columnVisibility={{ fixtureId: false }}
-            title="Fixtures Grouped by Fixture ID"
+            title="Fixture Lifecycle Scenarios"
             initialState={{
               expanded: {
-                'fixtureId:FIX001': true,
-                'fixtureId:FIX002': true,
-                'fixtureId:FIX003': true,
+                // All groups collapsed by default
               },
             }}
           />

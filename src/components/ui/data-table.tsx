@@ -1035,7 +1035,8 @@ function renderGroupDisplayContent(
   groupDisplayColumn: string | undefined,
   isExpanded: boolean
 ): React.ReactNode {
-  const chevronButton = (
+  // Only show chevron button when there are 2 or more items to expand
+  const chevronButton = row.subRows.length > 1 ? (
     <button
       onClick={row.getToggleExpandedHandler()}
       className="flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]"
@@ -1045,13 +1046,17 @@ function renderGroupDisplayContent(
         className="h-3 w-3"
       />
     </button>
+  ) : (
+    // Spacer to maintain alignment when there's only 1 item
+    <div className="h-[var(--size-sm)] w-[var(--size-sm)]" />
   )
 
-  const countBadge = (
+  // Only show count badge when there are 2 or more items
+  const countBadge = row.subRows.length > 1 ? (
     <Badge appearance="outline" size="sm">
       {row.subRows.length}
     </Badge>
-  )
+  ) : null
 
   // If groupDisplayColumn is specified, use that column's content
   if (groupDisplayColumn) {
@@ -1160,6 +1165,20 @@ export interface DataTableProps<TData, TValue> {
    * columnVisibility={{ fixtureId: false }}
    */
   groupDisplayColumn?: string
+  /**
+   * When grouping is enabled, hides child rows for groups that contain
+   * only a single item. This flattens single-item groups to show only
+   * the parent row, reducing visual redundancy.
+   *
+   * When enabled:
+   * - Groups with 1 item: Only parent row shown (not expandable)
+   * - Groups with 2+ items: Parent + expandable children shown normally
+   *
+   * @default false
+   * @example
+   * hideChildrenForSingleItemGroups={true}
+   */
+  hideChildrenForSingleItemGroups?: boolean
   // Row pinning
   enableRowPinning?: boolean
   keepPinnedRows?: boolean
@@ -1235,6 +1254,7 @@ export function DataTable<TData, TValue>({
   groupedColumnMode = false,
   enableManualGrouping = false,
   groupDisplayColumn,
+  hideChildrenForSingleItemGroups = false,
   enableRowPinning = false,
   keepPinnedRows = true,
   enableVirtualization = false,
@@ -1941,7 +1961,19 @@ export function DataTable<TData, TValue>({
               (() => {
                 if (!enableRowPinning || !keepPinnedRows) {
                   // Standard rendering when cross-page pinning is disabled
-                  return table.getRowModel().rows.map((row) => (
+                  return table.getRowModel().rows
+                    .filter((row) => {
+                      // Skip child rows when hideChildrenForSingleItemGroups is enabled
+                      // and the parent has only 1 child
+                      if (hideChildrenForSingleItemGroups && row.depth > 0) {
+                        const parent = row.getParentRow()
+                        if (parent && parent.subRows && parent.subRows.length === 1) {
+                          return false // Hide this single child row
+                        }
+                      }
+                      return true // Show the row
+                    })
+                    .map((row) => (
                     <TableRow
                       key={row.id}
                       data-state={row.getIsSelected() && "selected"}
@@ -2025,6 +2057,9 @@ export function DataTable<TData, TValue>({
                               ) : cell.column.columnDef.meta?.renderInGroupedRows ? (
                                 // Render custom cell content for columns with renderInGroupedRows flag
                                 flexRender(cell.column.columnDef.cell, cell.getContext())
+                              ) : cell.column.columnDef.aggregatedCell ? (
+                                // Render custom aggregatedCell if defined
+                                flexRender(cell.column.columnDef.aggregatedCell, cell.getContext())
                               ) : (
                                 // Calculate and show aggregation for other columns in grouped row
                                 (() => {
@@ -2152,7 +2187,19 @@ export function DataTable<TData, TValue>({
                   ...pinnedBottomRows
                 ]
 
-                return organizedRows.map((row) => (
+                return organizedRows
+                  .filter((row) => {
+                    // Skip child rows when hideChildrenForSingleItemGroups is enabled
+                    // and the parent has only 1 child
+                    if (hideChildrenForSingleItemGroups && row.depth > 0) {
+                      const parent = row.getParentRow()
+                      if (parent && parent.subRows && parent.subRows.length === 1) {
+                        return false // Hide this single child row
+                      }
+                    }
+                    return true // Show the row
+                  })
+                  .map((row) => (
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
@@ -2238,6 +2285,9 @@ export function DataTable<TData, TValue>({
                             ) : cell.column.columnDef.meta?.renderInGroupedRows ? (
                               // Render custom cell content for columns with renderInGroupedRows flag
                               flexRender(cell.column.columnDef.cell, cell.getContext())
+                            ) : cell.column.columnDef.aggregatedCell ? (
+                              // Render custom aggregatedCell if defined
+                              flexRender(cell.column.columnDef.aggregatedCell, cell.getContext())
                             ) : (
                               // Calculate and show aggregation for other columns in grouped row
                               (() => {
