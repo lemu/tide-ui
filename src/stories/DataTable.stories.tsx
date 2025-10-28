@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Button } from '../components/ui/button'
 import { Badge } from '../components/ui/badge'
 import { Icon } from '../components/ui/icon'
+import { TextLink } from '../components/ui/text-link'
 import { Input } from '../components/ui/input'
 import { Checkbox } from '../components/ui/checkbox'
 import { Separator } from '../components/ui/separator'
@@ -1776,6 +1777,8 @@ export const ColumnResizingWithTextTruncation: Story = {
       shortName: string
       longDescription: string
       veryLongEmail: string
+      documentUrl: string
+      attachment: string
       status: string
       noTruncate: string
     }
@@ -1786,6 +1789,8 @@ export const ColumnResizingWithTextTruncation: Story = {
         shortName: 'Trade #1',
         longDescription: 'This is a very long description that will definitely overflow when the column is resized to a smaller width',
         veryLongEmail: 'very.long.email.address.that.will.overflow@example-company-domain.com',
+        documentUrl: 'https://documents.trading-platform.com/very-long-path/quarterly-reports/2024/Q4/detailed-analysis/trade-reconciliation-report-TRD-2024-001.pdf',
+        attachment: 'approval_document_trade_reconciliation_Q4_2024_final_version.pdf',
         status: 'Active',
         noTruncate: 'This column wraps instead of truncating',
       },
@@ -1794,6 +1799,8 @@ export const ColumnResizingWithTextTruncation: Story = {
         shortName: 'Trade #2',
         longDescription: 'Another lengthy description with lots of text content that needs to be truncated when space is limited',
         veryLongEmail: 'another.extremely.long.email.address@very-long-company-name.com',
+        documentUrl: 'https://secure-storage.financial-services.com/documents/compliance/annual-audit-reports/2024/comprehensive-trading-activity-analysis-TRD-2024-002.pdf',
+        attachment: 'compliance_audit_report_comprehensive_analysis_2024_detailed.pdf',
         status: 'Pending',
         noTruncate: 'This text will wrap to multiple lines',
       },
@@ -1802,6 +1809,8 @@ export const ColumnResizingWithTextTruncation: Story = {
         shortName: 'Trade #3',
         longDescription: 'Complex algorithmic trading strategy execution with multiple counterparties and extensive settlement instructions',
         veryLongEmail: 'complex.trading.operations.team@multinational-investment-bank.com',
+        documentUrl: 'https://data-repository.enterprise-trading-systems.com/archived-documents/historical-records/2024/algorithmic-strategies/execution-analysis-TRD-2024-003.pdf',
+        attachment: 'algorithmic_trading_strategy_execution_summary_with_counterparty_details.pdf',
         status: 'Completed',
         noTruncate: 'Wrapping text example here',
       },
@@ -1810,6 +1819,8 @@ export const ColumnResizingWithTextTruncation: Story = {
         shortName: 'Trade #4',
         longDescription: 'High-frequency trading order with sophisticated risk management parameters and real-time market data integration',
         veryLongEmail: 'automated.trading.systems.department@global-financial-services.com',
+        documentUrl: 'https://cloud-storage.high-frequency-trading-platform.com/reports/risk-management/detailed-analysis/market-data-integration-report-TRD-2024-004.pdf',
+        attachment: 'high_frequency_trading_risk_management_parameters_and_market_data_report.pdf',
         status: 'Active',
         noTruncate: 'Another wrapping example',
       },
@@ -1818,6 +1829,8 @@ export const ColumnResizingWithTextTruncation: Story = {
         shortName: 'Trade #5',
         longDescription: 'Cross-border securities transaction involving multiple regulatory jurisdictions and compliance requirements',
         veryLongEmail: 'international.compliance.and.operations@worldwide-brokerage-firm.com',
+        documentUrl: 'https://regulatory-compliance-portal.international-securities.com/documentation/cross-border-transactions/jurisdictional-requirements-report-TRD-2024-005.pdf',
+        attachment: 'cross_border_securities_regulatory_jurisdictional_compliance_requirements.pdf',
         status: 'Active',
         noTruncate: 'This also wraps to multiple lines',
       },
@@ -1849,6 +1862,45 @@ export const ColumnResizingWithTextTruncation: Story = {
           label: 'Email',
           truncate: true,
         },
+      },
+      {
+        accessorKey: 'documentUrl',
+        header: 'Document Link (Truncates)',
+        size: 280,
+        meta: {
+          label: 'Document',
+          truncate: true,
+        },
+        cell: ({ row }) => (
+          <TextLink
+            href={row.getValue('documentUrl')}
+            target="_blank"
+            icon="external-link"
+            iconPosition="right"
+            size="sm"
+          >
+            {row.getValue('documentUrl')}
+          </TextLink>
+        ),
+      },
+      {
+        accessorKey: 'attachment',
+        header: 'Attachment (Icon Left)',
+        size: 280,
+        meta: {
+          label: 'Attachment',
+          truncate: true,
+        },
+        cell: ({ row }) => (
+          <TextLink
+            href="#"
+            icon="paperclip"
+            iconPosition="left"
+            size="sm"
+          >
+            {row.getValue('attachment')}
+          </TextLink>
+        ),
       },
       {
         accessorKey: 'status',
@@ -1900,7 +1952,9 @@ export const ColumnResizingWithTextTruncation: Story = {
                   <div className="flex-1">
                     <p className="text-body-sm text-[var(--blue-900)] font-medium mb-1">Per-Column Control:</p>
                     <ul className="text-body-sm text-[var(--blue-800)] space-y-1 ml-4 list-disc">
-                      <li><strong>Truncate enabled (default):</strong> "Long Description" and "Email" columns show tooltips on hover</li>
+                      <li><strong>Truncate enabled (default):</strong> "Long Description", "Email", "Document Link", and "Attachment" columns show tooltips on hover</li>
+                      <li><strong>TextLink with right icon:</strong> "Document Link" column demonstrates truncation with external link icon on the right</li>
+                      <li><strong>TextLink with left icon:</strong> "Attachment" column demonstrates truncation with paperclip icon on the left</li>
                       <li><strong>Truncate disabled:</strong> "No Truncate" column wraps text to multiple lines instead</li>
                       <li><strong>Configure via column meta:</strong> <code className="bg-[var(--blue-100)] px-1 rounded">meta: {"{ truncate: false }"}</code></li>
                     </ul>
@@ -1921,6 +1975,8 @@ export const ColumnResizingWithTextTruncation: Story = {
                 'id': 150,
                 'longDescription': 300,
                 'veryLongEmail': 250,
+                'documentUrl': 280,
+                'attachment': 280,
                 'status': 120,
                 'noTruncate': 200,
               }
@@ -2065,7 +2121,7 @@ export const GroupingWithActions: Story = {
 
 ## Rendering Custom Content in Grouped Rows
 
-By default, grouped rows show "—" for all columns except the first column (which displays the group info). To render custom content in grouped rows, add the \`renderInGroupedRows: true\` flag to your column's meta:
+By default, grouped rows show empty cells (or aggregated data if configured) for all columns except the first column (which displays the group info). To render custom content in grouped rows, add the \`renderInGroupedRows: true\` flag to your column's meta:
 
 \`\`\`typescript
 {
@@ -2312,7 +2368,7 @@ This feature is useful for:
             <div className="bg-[var(--color-background-neutral-subtle)] border border-[var(--color-border-primary-subtle)] rounded-md p-[var(--space-md)]">
               <h3 className="text-heading-sm mb-[var(--space-sm)]">Implementation: renderInGroupedRows</h3>
               <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-                By default, grouped rows show "—" for all columns except the first. To render custom content in grouped rows, add the <code className="bg-[var(--color-background-neutral-subtle)] px-[var(--space-xs)] py-[1px] rounded text-body-sm">renderInGroupedRows: true</code> flag to your column's meta:
+                By default, grouped rows show empty cells (or aggregated data if configured) for all columns except the first. To render custom content in grouped rows, add the <code className="bg-[var(--color-background-neutral-subtle)] px-[var(--space-xs)] py-[1px] rounded text-body-sm">renderInGroupedRows: true</code> flag to your column's meta:
               </p>
               <pre className="bg-[var(--color-background-primary)] border border-[var(--color-border-primary-subtle)] rounded-md p-[var(--space-md)] overflow-x-auto">
                 <code className="text-caption-sm">{`{

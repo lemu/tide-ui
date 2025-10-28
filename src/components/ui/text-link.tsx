@@ -4,7 +4,7 @@ import { cn } from "../../lib/utils";
 import { Icon, IconType } from "./icon";
 
 const textLinkVariants = cva(
-  "inline-flex items-center gap-[var(--space-xsm)] transition-colors underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2",
+  "inline-flex items-center gap-[var(--space-xsm)] min-w-0 max-w-full transition-colors underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2",
   {
     variants: {
       size: {
@@ -114,15 +114,17 @@ const TextLink = React.forwardRef<HTMLAnchorElement, TextLinkProps>(
             size={iconSize}
             color={iconColor}
             aria-hidden="true"
+            className="flex-shrink-0"
           />
         )}
-        {children}
+        <span className="min-w-0 truncate">{children}</span>
         {icon && iconPosition === "right" && (
           <Icon
             name={icon}
             size={iconSize}
             color={iconColor}
             aria-hidden="true"
+            className="flex-shrink-0"
           />
         )}
       </a>

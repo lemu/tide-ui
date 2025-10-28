@@ -117,7 +117,7 @@ function TruncatedCell({ children, align = 'left' }: TruncatedCellProps) {
     return (
       <div
         ref={ref}
-        className={cn("min-w-0 overflow-hidden truncate [&>*]:truncate [&>*]:block", align === 'right' && 'text-right')}
+        className={cn("min-w-0 overflow-hidden truncate [&>*]:truncate", align === 'right' && 'text-right')}
       >
         {children}
       </div>
@@ -129,7 +129,7 @@ function TruncatedCell({ children, align = 'left' }: TruncatedCellProps) {
       <TooltipTrigger asChild>
         <div
           ref={ref}
-          className={cn("min-w-0 overflow-hidden truncate [&>*]:truncate [&>*]:block", align === 'right' && 'text-right')}
+          className={cn("min-w-0 overflow-hidden truncate [&>*]:truncate", align === 'right' && 'text-right')}
         >
           {children}
         </div>
