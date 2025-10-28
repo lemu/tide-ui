@@ -1779,6 +1779,7 @@ export const ColumnResizingWithTextTruncation: Story = {
       veryLongEmail: string
       documentUrl: string
       attachment: string
+      relatedLinks: Array<{ label: string; href: string }>
       status: string
       noTruncate: string
     }
@@ -1791,7 +1792,10 @@ export const ColumnResizingWithTextTruncation: Story = {
         veryLongEmail: 'very.long.email.address.that.will.overflow@example-company-domain.com',
         documentUrl: 'https://documents.trading-platform.com/very-long-path/quarterly-reports/2024/Q4/detailed-analysis/trade-reconciliation-report-TRD-2024-001.pdf',
         attachment: 'approval_document_trade_reconciliation_Q4_2024_final_version.pdf',
-        status: 'Active',
+        relatedLinks: [
+          { label: 'Compliance Documentation for Quarter 4 2024', href: '#' },
+        ],
+        status: 'Active - In Progress',
         noTruncate: 'This column wraps instead of truncating',
       },
       {
@@ -1801,7 +1805,11 @@ export const ColumnResizingWithTextTruncation: Story = {
         veryLongEmail: 'another.extremely.long.email.address@very-long-company-name.com',
         documentUrl: 'https://secure-storage.financial-services.com/documents/compliance/annual-audit-reports/2024/comprehensive-trading-activity-analysis-TRD-2024-002.pdf',
         attachment: 'compliance_audit_report_comprehensive_analysis_2024_detailed.pdf',
-        status: 'Pending',
+        relatedLinks: [
+          { label: 'Annual Audit Report 2024', href: '#' },
+          { label: 'Comprehensive Trading Activity Analysis', href: '#' },
+        ],
+        status: 'Pending Approval',
         noTruncate: 'This text will wrap to multiple lines',
       },
       {
@@ -1811,7 +1819,12 @@ export const ColumnResizingWithTextTruncation: Story = {
         veryLongEmail: 'complex.trading.operations.team@multinational-investment-bank.com',
         documentUrl: 'https://data-repository.enterprise-trading-systems.com/archived-documents/historical-records/2024/algorithmic-strategies/execution-analysis-TRD-2024-003.pdf',
         attachment: 'algorithmic_trading_strategy_execution_summary_with_counterparty_details.pdf',
-        status: 'Completed',
+        relatedLinks: [
+          { label: 'Algorithmic Trading Strategy Overview Document', href: '#' },
+          { label: 'Counterparty Settlement Instructions', href: '#' },
+          { label: 'Execution Analysis and Performance Report', href: '#' },
+        ],
+        status: 'Completed Successfully',
         noTruncate: 'Wrapping text example here',
       },
       {
@@ -1821,7 +1834,11 @@ export const ColumnResizingWithTextTruncation: Story = {
         veryLongEmail: 'automated.trading.systems.department@global-financial-services.com',
         documentUrl: 'https://cloud-storage.high-frequency-trading-platform.com/reports/risk-management/detailed-analysis/market-data-integration-report-TRD-2024-004.pdf',
         attachment: 'high_frequency_trading_risk_management_parameters_and_market_data_report.pdf',
-        status: 'Active',
+        relatedLinks: [
+          { label: 'Risk Management Parameters Configuration', href: '#' },
+          { label: 'Market Data Integration Documentation', href: '#' },
+        ],
+        status: 'Active - Monitoring',
         noTruncate: 'Another wrapping example',
       },
       {
@@ -1831,7 +1848,10 @@ export const ColumnResizingWithTextTruncation: Story = {
         veryLongEmail: 'international.compliance.and.operations@worldwide-brokerage-firm.com',
         documentUrl: 'https://regulatory-compliance-portal.international-securities.com/documentation/cross-border-transactions/jurisdictional-requirements-report-TRD-2024-005.pdf',
         attachment: 'cross_border_securities_regulatory_jurisdictional_compliance_requirements.pdf',
-        status: 'Active',
+        relatedLinks: [
+          { label: 'Cross-Border Securities Regulatory Requirements', href: '#' },
+        ],
+        status: 'Awaiting Compliance Review',
         noTruncate: 'This also wraps to multiple lines',
       },
     ]
@@ -1903,16 +1923,50 @@ export const ColumnResizingWithTextTruncation: Story = {
         ),
       },
       {
+        accessorKey: 'relatedLinks',
+        header: 'Related Links (Multiple)',
+        size: 300,
+        meta: {
+          label: 'Related Links',
+          truncate: true,
+        },
+        cell: ({ row }) => {
+          const links = row.getValue('relatedLinks') as Array<{ label: string; href: string }>
+          return (
+            <div className="flex flex-col gap-[var(--space-xsm)]">
+              {links.map((link, index) => (
+                <TextLink
+                  key={index}
+                  href={link.href}
+                  icon="link"
+                  iconPosition="left"
+                  size="sm"
+                >
+                  {link.label}
+                </TextLink>
+              ))}
+            </div>
+          )
+        },
+      },
+      {
         accessorKey: 'status',
         header: 'Status',
         size: 120,
-        cell: ({ row }) => (
-          <Badge
-            variant={row.getValue('status') === 'Active' ? 'success' : row.getValue('status') === 'Pending' ? 'warning' : 'default'}
-          >
-            {row.getValue('status')}
-          </Badge>
-        ),
+        cell: ({ row }) => {
+          const status = row.getValue('status') as string
+          const getVariant = () => {
+            if (status.includes('Active')) return 'success'
+            if (status.includes('Pending') || status.includes('Awaiting')) return 'warning'
+            if (status.includes('Completed')) return 'default'
+            return 'default'
+          }
+          return (
+            <Badge variant={getVariant()}>
+              {status}
+            </Badge>
+          )
+        },
       },
       {
         accessorKey: 'noTruncate',
@@ -1952,9 +2006,10 @@ export const ColumnResizingWithTextTruncation: Story = {
                   <div className="flex-1">
                     <p className="text-body-sm text-[var(--blue-900)] font-medium mb-1">Per-Column Control:</p>
                     <ul className="text-body-sm text-[var(--blue-800)] space-y-1 ml-4 list-disc">
-                      <li><strong>Truncate enabled (default):</strong> "Long Description", "Email", "Document Link", and "Attachment" columns show tooltips on hover</li>
+                      <li><strong>Truncate enabled (default):</strong> "Long Description", "Email", "Document Link", "Attachment", and "Related Links" columns show tooltips on hover</li>
                       <li><strong>TextLink with right icon:</strong> "Document Link" column demonstrates truncation with external link icon on the right</li>
                       <li><strong>TextLink with left icon:</strong> "Attachment" column demonstrates truncation with paperclip icon on the left</li>
+                      <li><strong>Multiple TextLinks:</strong> "Related Links" column shows 1-3 text links stacked vertically with truncation</li>
                       <li><strong>Truncate disabled:</strong> "No Truncate" column wraps text to multiple lines instead</li>
                       <li><strong>Configure via column meta:</strong> <code className="bg-[var(--blue-100)] px-1 rounded">meta: {"{ truncate: false }"}</code></li>
                     </ul>
@@ -1977,6 +2032,7 @@ export const ColumnResizingWithTextTruncation: Story = {
                 'veryLongEmail': 250,
                 'documentUrl': 280,
                 'attachment': 280,
+                'relatedLinks': 300,
                 'status': 120,
                 'noTruncate': 200,
               }

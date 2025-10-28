@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center w-fit rounded-sm px-[var(--space-sm)] py-[var(--space-xsm)] text-caption-medium-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-1 cursor-default",
+  "inline-flex items-center w-fit max-w-full rounded-sm px-[var(--space-sm)] py-[var(--space-xsm)] text-caption-medium-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-1 cursor-default",
   {
     variants: {
       variant: {
@@ -203,7 +203,7 @@ export interface BadgeProps
     VariantProps<typeof badgeVariants> {}
 
 const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
-  ({ className, variant, intent, appearance, size, ...props }, ref) => {
+  ({ className, variant, intent, appearance, size, children, ...props }, ref) => {
     return (
       <div
         ref={ref}
@@ -212,7 +212,11 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
           className,
         )}
         {...props}
-      />
+      >
+        <span className="min-w-0 truncate">
+          {children}
+        </span>
+      </div>
     );
   },
 );
