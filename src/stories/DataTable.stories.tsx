@@ -2478,6 +2478,164 @@ This feature is useful for:
   },
 }
 
+export const GroupingWithCustomDisplay: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: `Demonstrates the groupDisplayColumn feature where you can group by one column but display a different column's content in parent rows.
+
+## Use Case: Fixtures Grouped by Fixture ID, Displaying Order ID
+
+In this example, we're grouping fixtures by their Fixture ID (hidden), but displaying the Order ID in parent rows. This is useful when:
+- Fixtures are logically grouped by Fixture ID (one fixture can have multiple contracts)
+- Each fixture has an Order ID, and all contracts within the same fixture share the same Order ID
+- Users want to see fixtures grouped together, identified by their Order ID (not Fixture ID)
+
+## Implementation
+
+The \`groupDisplayColumn\` prop allows you to specify which column should render in parent rows:
+
+\`\`\`typescript
+<DataTable
+  data={data}
+  columns={columns}
+  grouping={["fixtureId"]}              // Group by Fixture ID
+  groupDisplayColumn="orderId"          // Display Order ID in parent rows
+  columnVisibility={{ fixtureId: false }} // Hide Fixture ID column
+/>
+\`\`\`
+
+The \`orderId\` column defines an \`aggregatedCell\` that renders custom content for group rows, including the order ID and contract count.`,
+      },
+    },
+  },
+  render: () => {
+    // Generate fixture data
+    const fixtureData = [
+      // Fixture 1: ORD29061 with 3 contracts
+      { fixtureId: 'FIX001', orderId: 'ORD29061', contractId: 'CNT001', vessel: 'Oceanic Star', quantity: 50000, status: 'Active' },
+      { fixtureId: 'FIX001', orderId: 'ORD29061', contractId: 'CNT002', vessel: 'Oceanic Star', quantity: 75000, status: 'Active' },
+      { fixtureId: 'FIX001', orderId: 'ORD29061', contractId: 'CNT003', vessel: 'Oceanic Star', quantity: 60000, status: 'Pending' },
+
+      // Fixture 2: ORD29062 with 2 contracts
+      { fixtureId: 'FIX002', orderId: 'ORD29062', contractId: 'CNT004', vessel: 'Pacific Dawn', quantity: 100000, status: 'Active' },
+      { fixtureId: 'FIX002', orderId: 'ORD29062', contractId: 'CNT005', vessel: 'Pacific Dawn', quantity: 85000, status: 'Completed' },
+
+      // Fixture 3: ORD29063 with 4 contracts
+      { fixtureId: 'FIX003', orderId: 'ORD29063', contractId: 'CNT006', vessel: 'Atlantic Wave', quantity: 45000, status: 'Active' },
+      { fixtureId: 'FIX003', orderId: 'ORD29063', contractId: 'CNT007', vessel: 'Atlantic Wave', quantity: 55000, status: 'Active' },
+      { fixtureId: 'FIX003', orderId: 'ORD29063', contractId: 'CNT008', vessel: 'Atlantic Wave', quantity: 50000, status: 'Pending' },
+      { fixtureId: 'FIX003', orderId: 'ORD29063', contractId: 'CNT009', vessel: 'Atlantic Wave', quantity: 65000, status: 'Active' },
+    ]
+
+    const fixtureColumns: ColumnDef<typeof fixtureData[0]>[] = [
+      {
+        accessorKey: 'fixtureId',
+        header: 'Fixture ID',
+        enableGrouping: true,
+      },
+      {
+        accessorKey: 'orderId',
+        header: 'Order ID',
+        enableGrouping: false,
+        // Custom aggregatedCell for group rows
+        aggregatedCell: ({ row }) => {
+          const orderId = row.subRows[0]?.original?.orderId
+          const contractCount = row.subRows.length
+          return (
+            <div className="flex items-center gap-[var(--space-sm)]">
+              <span className="font-semibold text-[var(--color-text-primary)]">{orderId}</span>
+              <span className="text-body-sm text-[var(--color-text-secondary)]">
+                ({contractCount} {contractCount === 1 ? 'contract' : 'contracts'})
+              </span>
+            </div>
+          )
+        },
+      },
+      {
+        accessorKey: 'contractId',
+        header: 'Contract ID',
+      },
+      {
+        accessorKey: 'vessel',
+        header: 'Vessel',
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Quantity (MT)',
+        meta: {
+          align: 'right',
+        },
+        cell: ({ getValue }) => {
+          return <span className="tabular-nums">{Number(getValue()).toLocaleString()}</span>
+        },
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        cell: ({ getValue }) => {
+          const status = getValue() as string
+          return (
+            <Badge
+              appearance={
+                status === 'Active' ? 'success' :
+                status === 'Completed' ? 'default' :
+                'accent'
+              }
+              size="sm"
+            >
+              {status}
+            </Badge>
+          )
+        },
+      },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Group by Fixture ID, Display Order ID</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              This example demonstrates grouping by Fixture ID while displaying Order ID in parent rows.
+              The Fixture ID column is hidden, and parent rows show the Order ID with contract count.
+              Both Fixture ID and Order ID are automatically hidden in child rows to avoid repetition.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Parent rows display Order ID (e.g., "ORD29061 (3 contracts)") even though grouping is by Fixture ID.
+                  The folder icon is removed, and both Fixture ID and Order ID columns are hidden in child rows.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={fixtureData}
+            columns={fixtureColumns}
+            enableGrouping={true}
+            enableExpanding={true}
+            grouping={["fixtureId"]}
+            groupDisplayColumn="orderId"
+            columnVisibility={{ fixtureId: false }}
+            title="Fixtures Grouped by Fixture ID"
+            initialState={{
+              expanded: {
+                'fixtureId:FIX001': true,
+                'fixtureId:FIX002': true,
+                'fixtureId:FIX003': true,
+              },
+            }}
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
 export const RowPinning: Story = {
   parameters: {
     layout: 'fullscreen',

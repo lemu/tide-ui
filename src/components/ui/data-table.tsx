@@ -1028,6 +1028,83 @@ function DataTablePagination<TData>({ table }: DataTablePaginationProps<TData>) 
 // Border styling options
 export type BorderStyle = "vertical" | "horizontal" | "both" | "none"
 
+// Helper function to render group display content
+function renderGroupDisplayContent(
+  row: any,
+  table: any,
+  groupDisplayColumn: string | undefined,
+  isExpanded: boolean
+): React.ReactNode {
+  const chevronButton = (
+    <button
+      onClick={row.getToggleExpandedHandler()}
+      className="flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]"
+    >
+      <Icon
+        name={isExpanded ? "chevron-down" : "chevron-right"}
+        className="h-3 w-3"
+      />
+    </button>
+  )
+
+  const countBadge = (
+    <Badge appearance="outline" size="sm">
+      {row.subRows.length}
+    </Badge>
+  )
+
+  // If groupDisplayColumn is specified, use that column's content
+  if (groupDisplayColumn) {
+    const displayColumn = table.getAllColumns().find((col: any) => col.id === groupDisplayColumn)
+
+    if (displayColumn) {
+      const columnDef = displayColumn.columnDef
+
+      // Check if column has aggregatedCell defined
+      if (columnDef.aggregatedCell) {
+        // Create a mock cell context for the display column
+        const displayCell = row.getAllCells().find((cell: any) => cell.column.id === groupDisplayColumn)
+
+        return (
+          <div className="flex items-center gap-[var(--space-sm)] font-medium text-[var(--color-text-primary)]">
+            {chevronButton}
+            <div className="flex items-center gap-[var(--space-sm)]">
+              {displayCell ? flexRender(columnDef.aggregatedCell, displayCell.getContext()) : null}
+              {countBadge}
+            </div>
+          </div>
+        )
+      } else {
+        // Fall back to showing value from first row
+        const firstRowValue = row.subRows[0]?.original?.[groupDisplayColumn]
+
+        return (
+          <div className="flex items-center gap-[var(--space-sm)] font-medium text-[var(--color-text-primary)]">
+            {chevronButton}
+            <div className="flex items-center gap-[var(--space-sm)]">
+              <span className="font-semibold">{String(firstRowValue)}</span>
+              {countBadge}
+            </div>
+          </div>
+        )
+      }
+    }
+  }
+
+  // Default behavior: show folder icon with grouped column value
+  return (
+    <div className="flex items-center gap-[var(--space-sm)] font-medium text-[var(--color-text-primary)]">
+      {chevronButton}
+      <div className="flex items-center gap-[var(--space-sm)]">
+        <Icon name="folder" className="h-4 w-4 text-[var(--color-text-secondary)]" />
+        <span className="font-semibold">
+          {String(row.getGroupingValue(row.groupingColumnId!))}
+        </span>
+        {countBadge}
+      </div>
+    </div>
+  )
+}
 
 // Main DataTable component
 export interface DataTableProps<TData, TValue> {
@@ -1066,6 +1143,23 @@ export interface DataTableProps<TData, TValue> {
   enableGrouping?: boolean
   groupedColumnMode?: 'reorder' | 'remove' | false
   enableManualGrouping?: boolean
+  /**
+   * When grouping is enabled, specifies which column should be used to
+   * render the parent/group rows instead of the grouped column itself.
+   *
+   * Use case: Group by one field (e.g., "fixtureId") but display another
+   * field's aggregatedCell in parent rows (e.g., "orderId").
+   *
+   * The specified column should define an aggregatedCell in its columnDef
+   * to customize how the group header is rendered. If no aggregatedCell is
+   * defined, it will fall back to showing the value from the first row.
+   *
+   * @example
+   * grouping={["fixtureId"]}
+   * groupDisplayColumn="orderId"
+   * columnVisibility={{ fixtureId: false }}
+   */
+  groupDisplayColumn?: string
   // Row pinning
   enableRowPinning?: boolean
   keepPinnedRows?: boolean
@@ -1140,6 +1234,7 @@ export function DataTable<TData, TValue>({
   enableGrouping = false,
   groupedColumnMode = false,
   enableManualGrouping = false,
+  groupDisplayColumn,
   enableRowPinning = false,
   keepPinnedRows = true,
   enableVirtualization = false,
@@ -1926,26 +2021,7 @@ export function DataTable<TData, TValue>({
                             ) : isGroupedRow ? (
                               // Grouped row rendering - only show content in first cell
                               isFirstCell ? (
-                                <div className="flex items-center gap-[var(--space-sm)] font-medium text-[var(--color-text-primary)]">
-                                  <button
-                                    onClick={row.getToggleExpandedHandler()}
-                                    className="flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]"
-                                  >
-                                    <Icon
-                                      name={isExpanded ? "chevron-down" : "chevron-right"}
-                                      className="h-3 w-3"
-                                    />
-                                  </button>
-                                  <div className="flex items-center gap-[var(--space-sm)]">
-                                    <Icon name="folder" className="h-4 w-4 text-[var(--color-text-secondary)]" />
-                                    <span className="font-semibold">
-                                      {String(row.getGroupingValue(row.groupingColumnId!))}
-                                    </span>
-                                    <Badge appearance="outline" size="sm">
-                                      {row.subRows.length}
-                                    </Badge>
-                                  </div>
-                                </div>
+                                renderGroupDisplayContent(row, table, groupDisplayColumn, isExpanded)
                               ) : cell.column.columnDef.meta?.renderInGroupedRows ? (
                                 // Render custom cell content for columns with renderInGroupedRows flag
                                 flexRender(cell.column.columnDef.cell, cell.getContext())
@@ -2030,8 +2106,8 @@ export function DataTable<TData, TValue>({
 
                                 {/* Cell content */}
                                 <div className="flex-1 min-w-0">
-                                  {enableGrouping && row.depth > 0 && cell.column.id === row.getParentRow()?.groupingColumnId ? (
-                                    // Hide grouped column value in detail rows
+                                  {enableGrouping && row.depth > 0 && (cell.column.id === row.getParentRow()?.groupingColumnId || cell.column.id === groupDisplayColumn) ? (
+                                    // Hide grouped column and groupDisplayColumn in detail rows
                                     <div></div>
                                   ) : cell.column.columnDef.meta?.truncate !== false ? (
                                     // Wrap in TruncatedCell for overflow handling with tooltip
@@ -2158,26 +2234,7 @@ export function DataTable<TData, TValue>({
                           ) : isGroupedRow ? (
                             // Grouped row rendering - only show content in first cell
                             isFirstCell ? (
-                              <div className="flex items-center gap-[var(--space-sm)] font-medium text-[var(--color-text-primary)]">
-                                <button
-                                  onClick={row.getToggleExpandedHandler()}
-                                  className="flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]"
-                                >
-                                  <Icon
-                                    name={isExpanded ? "chevron-down" : "chevron-right"}
-                                    className="h-3 w-3"
-                                  />
-                                </button>
-                                <div className="flex items-center gap-[var(--space-sm)]">
-                                  <Icon name="folder" className="h-4 w-4 text-[var(--color-text-secondary)]" />
-                                  <span className="font-semibold">
-                                    {String(row.getGroupingValue(row.groupingColumnId!))}
-                                  </span>
-                                  <Badge appearance="outline" size="sm">
-                                    {row.subRows.length}
-                                  </Badge>
-                                </div>
-                              </div>
+                              renderGroupDisplayContent(row, table, groupDisplayColumn, isExpanded)
                             ) : cell.column.columnDef.meta?.renderInGroupedRows ? (
                               // Render custom cell content for columns with renderInGroupedRows flag
                               flexRender(cell.column.columnDef.cell, cell.getContext())
@@ -2262,8 +2319,8 @@ export function DataTable<TData, TValue>({
 
                               {/* Cell content */}
                               <div className="flex-1 min-w-0">
-                                {enableGrouping && row.depth > 0 && cell.column.id === row.getParentRow()?.groupingColumnId ? (
-                                  // Hide grouped column value in detail rows
+                                {enableGrouping && row.depth > 0 && (cell.column.id === row.getParentRow()?.groupingColumnId || cell.column.id === groupDisplayColumn) ? (
+                                  // Hide grouped column and groupDisplayColumn in detail rows
                                   <div></div>
                                 ) : cell.column.columnDef.meta?.truncate !== false ? (
                                   // Wrap in TruncatedCell for overflow handling with tooltip
