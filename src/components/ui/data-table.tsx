@@ -1096,12 +1096,11 @@ function renderGroupDisplayContent(
     }
   }
 
-  // Default behavior: show folder icon with grouped column value
+  // Default behavior: show grouped column value
   return (
     <div className="flex items-center gap-[var(--space-sm)] font-medium text-[var(--color-text-primary)]">
       {chevronButton}
       <div className="flex items-center gap-[var(--space-sm)]">
-        <Icon name="folder" className="h-4 w-4 text-[var(--color-text-secondary)]" />
         <span className="font-semibold">
           {String(row.getGroupingValue(row.groupingColumnId!))}
         </span>
