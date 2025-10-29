@@ -1034,11 +1034,18 @@ function renderGroupDisplayContent(
   table: any,
   groupDisplayColumn: string | undefined,
   isExpanded: boolean,
-  hideChildrenForSingleItemGroups: boolean,
-  hideExpanderForSingleItemGroups: boolean
+  hideChildrenForSingleItemGroups: Record<string, boolean>,
+  hideExpanderForSingleItemGroups: Record<string, boolean>
 ): React.ReactNode {
+  // Get the column ID for this grouped row
+  const columnId = row.groupingColumnId!
+
+  // Check per-column settings (default to false if not specified)
+  const hideChildrenForThisColumn = hideChildrenForSingleItemGroups[columnId] ?? false
+  const hideExpanderForThisColumn = hideExpanderForSingleItemGroups[columnId] ?? false
+
   // Determine if we should hide the expander completely
-  const shouldHideExpander = hideChildrenForSingleItemGroups && hideExpanderForSingleItemGroups && row.subRows.length <= 1
+  const shouldHideExpander = hideChildrenForThisColumn && hideExpanderForThisColumn && row.subRows.length <= 1
 
   // Only show chevron button when there are 2 or more items to expand
   const chevronButton = shouldHideExpander ? null : row.subRows.length > 1 ? (
@@ -1174,28 +1181,27 @@ export interface DataTableProps<TData, TValue> {
    * only a single item. This flattens single-item groups to show only
    * the parent row, reducing visual redundancy.
    *
-   * When enabled:
+   * Per-column configuration using column ID as key:
    * - Groups with 1 item: Only parent row shown (not expandable)
    * - Groups with 2+ items: Parent + expandable children shown normally
    *
-   * @default false
    * @example
-   * hideChildrenForSingleItemGroups={true}
+   * hideChildrenForSingleItemGroups={{ category: true, status: false }}
    */
-  hideChildrenForSingleItemGroups?: boolean
+  hideChildrenForSingleItemGroups?: Record<string, boolean>
   /**
-   * When both this and hideChildrenForSingleItemGroups are enabled,
+   * When both this and hideChildrenForSingleItemGroups are enabled for a column,
    * removes the expander button spacer for groups without expandable children.
    * This eliminates the left padding for single-item groups, improving visual alignment.
    *
-   * Only takes effect when hideChildrenForSingleItemGroups is also true.
+   * Per-column configuration using column ID as key.
+   * Only takes effect when hideChildrenForSingleItemGroups is also enabled for that column.
    *
-   * @default false
    * @example
-   * hideChildrenForSingleItemGroups={true}
-   * hideExpanderForSingleItemGroups={true}
+   * hideChildrenForSingleItemGroups={{ category: true, status: true }}
+   * hideExpanderForSingleItemGroups={{ category: true, status: true }}
    */
-  hideExpanderForSingleItemGroups?: boolean
+  hideExpanderForSingleItemGroups?: Record<string, boolean>
   // Row pinning
   enableRowPinning?: boolean
   keepPinnedRows?: boolean
@@ -1271,8 +1277,8 @@ export function DataTable<TData, TValue>({
   groupedColumnMode = false,
   enableManualGrouping = false,
   groupDisplayColumn,
-  hideChildrenForSingleItemGroups = false,
-  hideExpanderForSingleItemGroups = false,
+  hideChildrenForSingleItemGroups = {},
+  hideExpanderForSingleItemGroups = {},
   enableRowPinning = false,
   keepPinnedRows = true,
   enableVirtualization = false,
@@ -1981,12 +1987,15 @@ export function DataTable<TData, TValue>({
                   // Standard rendering when cross-page pinning is disabled
                   return table.getRowModel().rows
                     .filter((row) => {
-                      // Skip child rows when hideChildrenForSingleItemGroups is enabled
+                      // Skip child rows when hideChildrenForSingleItemGroups is enabled for this column
                       // and the parent has only 1 child
-                      if (hideChildrenForSingleItemGroups && row.depth > 0) {
+                      if (row.depth > 0) {
                         const parent = row.getParentRow()
-                        if (parent && parent.subRows && parent.subRows.length === 1) {
-                          return false // Hide this single child row
+                        if (parent && parent.subRows && parent.subRows.length === 1 && parent.groupingColumnId) {
+                          const hideForColumn = hideChildrenForSingleItemGroups[parent.groupingColumnId] ?? false
+                          if (hideForColumn) {
+                            return false // Hide this single child row
+                          }
                         }
                       }
                       return true // Show the row
@@ -2207,12 +2216,15 @@ export function DataTable<TData, TValue>({
 
                 return organizedRows
                   .filter((row) => {
-                    // Skip child rows when hideChildrenForSingleItemGroups is enabled
+                    // Skip child rows when hideChildrenForSingleItemGroups is enabled for this column
                     // and the parent has only 1 child
-                    if (hideChildrenForSingleItemGroups && row.depth > 0) {
+                    if (row.depth > 0) {
                       const parent = row.getParentRow()
-                      if (parent && parent.subRows && parent.subRows.length === 1) {
-                        return false // Hide this single child row
+                      if (parent && parent.subRows && parent.subRows.length === 1 && parent.groupingColumnId) {
+                        const hideForColumn = hideChildrenForSingleItemGroups[parent.groupingColumnId] ?? false
+                        if (hideForColumn) {
+                          return false // Hide this single child row
+                        }
                       }
                     }
                     return true // Show the row
