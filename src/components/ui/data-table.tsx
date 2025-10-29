@@ -1283,6 +1283,42 @@ export interface DataTableProps<TData, TValue> {
   renderSectionHeaderRow?: (row: any) => React.ReactNode | null
   // Auto-expand children when parent is expanded
   autoExpandChildren?: boolean
+  // Row click handling
+  /**
+   * Callback fired when a row is clicked.
+   * Receives the row object from @tanstack/react-table and the click event.
+   * Use row.original to access the underlying data.
+   *
+   * By default, only leaf rows and single-item groups are clickable.
+   * Use isRowClickable to customize which rows can be clicked.
+   *
+   * @example
+   * onRowClick={(row, event) => {
+   *   console.log('Clicked data:', row.original);
+   *   setSelectedItem(row.original);
+   * }}
+   */
+  onRowClick?: (row: any, event: React.MouseEvent<HTMLTableRowElement>) => void
+  /**
+   * Filter which rows should be clickable.
+   * Return false to prevent row from being clickable.
+   *
+   * By default, leaf rows and single-item groups are clickable.
+   *
+   * @example
+   * // Only allow leaf rows to be clicked
+   * isRowClickable={(row) => !row.getIsGrouped()}
+   *
+   * @example
+   * // Allow all rows including parent groups
+   * isRowClickable={(row) => true}
+   */
+  isRowClickable?: (row: any) => boolean
+  /**
+   * CSS class name to apply to clickable rows.
+   * Default: applies cursor-pointer and hover background if onRowClick is provided
+   */
+  clickableRowClassName?: string
 }
 
 export function DataTable<TData, TValue>({
@@ -1343,6 +1379,10 @@ export function DataTable<TData, TValue>({
   onColumnSizingChange: onControlledColumnSizingChange,
   renderSectionHeaderRow,
   autoExpandChildren = false,
+  // Row click props
+  onRowClick,
+  isRowClickable,
+  clickableRowClassName,
 }: DataTableProps<TData, TValue>) {
   // Internal state for uncontrolled mode
   const [internalSorting, setInternalSorting] = React.useState<SortingState>([])
@@ -1424,6 +1464,64 @@ export function DataTable<TData, TValue>({
         return { showRowBorder: true, showCellBorder: true }
     }
   }, [borderStyle])
+
+  // Row click handler with smart default filtering
+  const handleRowClick = React.useCallback((row: any, event: React.MouseEvent<HTMLTableRowElement>) => {
+    if (!onRowClick) return
+
+    // Don't trigger if clicking on interactive elements
+    const target = event.target as HTMLElement
+    if (
+      target.tagName === 'BUTTON' ||
+      target.tagName === 'A' ||
+      target.tagName === 'INPUT' ||
+      target.closest('button') ||
+      target.closest('a') ||
+      target.closest('input')
+    ) {
+      return
+    }
+
+    // Apply custom filter if provided
+    if (isRowClickable && !isRowClickable(row)) return
+
+    // Smart default: only allow leaf rows and single-item groups
+    // This prevents confusion about what clicking a multi-item parent group would do
+    if (!isRowClickable) {
+      const isGrouped = row.getIsGrouped()
+
+      if (isGrouped) {
+        // Check if this is a single-item group
+        const columnId = row.groupingColumnId
+        const hideChildrenForThisColumn = hideChildrenForSingleItemGroups[columnId] ?? false
+        const isSingleItemGroup = hideChildrenForThisColumn && row.subRows && row.subRows.length === 1
+
+        // Only allow clicks on single-item groups (which behave like leaf rows)
+        if (!isSingleItemGroup) return
+      }
+    }
+
+    onRowClick(row, event)
+  }, [onRowClick, isRowClickable, hideChildrenForSingleItemGroups])
+
+  // Helper to determine if a row should be clickable (for styling purposes)
+  const getRowClickableState = React.useCallback((row: any): boolean => {
+    if (!onRowClick) return false
+
+    // Apply custom filter if provided
+    if (isRowClickable) return isRowClickable(row)
+
+    // Smart default: only allow leaf rows and single-item groups
+    const isGrouped = row.getIsGrouped()
+    if (!isGrouped) return true // Leaf rows are clickable
+
+    // Check if this is a single-item group
+    const columnId = row.groupingColumnId
+    const hideChildrenForThisColumn = hideChildrenForSingleItemGroups[columnId] ?? false
+    const isSingleItemGroup = hideChildrenForThisColumn && row.subRows && row.subRows.length === 1
+
+    return isSingleItemGroup
+  }, [onRowClick, isRowClickable, hideChildrenForSingleItemGroups])
 
   // Calculate effective sticky settings with backward compatibility
   const effectiveLeftSticky = React.useMemo(() => {
@@ -2068,8 +2166,20 @@ export function DataTable<TData, TValue>({
                         row.getIsGrouped?.() && row.getIsExpanded() && "bg-[var(--blue-50)] font-medium",
                         row.getIsGrouped?.() && !row.getIsExpanded() && "bg-[var(--color-background-neutral-subtle)] font-medium",
                         // Second level (children of grouped rows) - blue-25
-                        enableGrouping && row.depth === 1 && "bg-[var(--blue-25)]"
+                        enableGrouping && row.depth === 1 && "bg-[var(--blue-25)]",
+                        // Row click styling with smart hover
+                        onRowClick && getRowClickableState(row) && (clickableRowClassName || "cursor-pointer hover:[background-image:linear-gradient(rgba(0,0,0,0.02),rgba(0,0,0,0.02))]")
                       )}
+                      onClick={onRowClick && getRowClickableState(row) ? (e) => handleRowClick(row, e) : undefined}
+                      onKeyDown={(e) => {
+                        if (onRowClick && getRowClickableState(row) && (e.key === 'Enter' || e.key === ' ')) {
+                          e.preventDefault()
+                          handleRowClick(row, e as any)
+                        }
+                      }}
+                      tabIndex={onRowClick && getRowClickableState(row) ? 0 : undefined}
+                      role={onRowClick && getRowClickableState(row) ? "button" : undefined}
+                      aria-label={onRowClick && getRowClickableState(row) ? `View details for row ${row.id}` : undefined}
                     >
                       {row.getVisibleCells().map((cell, index) => {
                         const pinningStyles = getPureCSSPinningStyles(cell.column, false, borderSettings.showRowBorder)
@@ -2283,8 +2393,20 @@ export function DataTable<TData, TValue>({
                       row.getIsGrouped?.() && row.getIsExpanded() && "bg-[var(--blue-50)] font-medium",
                       row.getIsGrouped?.() && !row.getIsExpanded() && "bg-[var(--color-background-neutral-subtle)] font-medium",
                       // Second level (children of grouped rows) - blue-25
-                      enableGrouping && row.depth === 1 && "bg-[var(--blue-25)]"
+                      enableGrouping && row.depth === 1 && "bg-[var(--blue-25)]",
+                      // Row click styling with smart hover
+                      onRowClick && getRowClickableState(row) && (clickableRowClassName || "cursor-pointer hover:[background-image:linear-gradient(rgba(0,0,0,0.02),rgba(0,0,0,0.02))]")
                     )}
+                    onClick={onRowClick && getRowClickableState(row) ? (e) => handleRowClick(row, e) : undefined}
+                    onKeyDown={(e) => {
+                      if (onRowClick && getRowClickableState(row) && (e.key === 'Enter' || e.key === ' ')) {
+                        e.preventDefault()
+                        handleRowClick(row, e as any)
+                      }
+                    }}
+                    tabIndex={onRowClick && getRowClickableState(row) ? 0 : undefined}
+                    role={onRowClick && getRowClickableState(row) ? "button" : undefined}
+                    aria-label={onRowClick && getRowClickableState(row) ? `View details for row ${row.id}` : undefined}
                   >
                     {row.getVisibleCells().map((cell, index) => {
                       const pinningStyles = getPureCSSPinningStyles(cell.column, false, borderSettings.showRowBorder)

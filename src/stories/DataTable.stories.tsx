@@ -4484,6 +4484,265 @@ export const MultiLevelOrderTable: Story = {
 }
 
 // ============================================================================
+// Row Click
+// ============================================================================
+
+export const RowClick: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: `
+Demonstrates row click functionality with full accessibility support.
+
+**Features:**
+- Click any row to view details
+- Keyboard navigation (Tab to focus, Enter/Space to activate)
+- Smart default: only leaf rows and single-item groups are clickable
+- Interactive elements (buttons, links) don't trigger row clicks
+- Visual feedback with hover states and selected row highlighting
+
+**Smart Default Behavior:**
+By default, only "actual data rows" are clickable:
+- ✅ Leaf rows (non-grouped rows) are clickable
+- ✅ Single-item groups are clickable (when using hideChildrenForSingleItemGroups)
+- ❌ Multi-item parent groups are NOT clickable (prevents confusion)
+
+Use \`isRowClickable\` to customize which rows can be clicked.
+        `,
+      },
+    },
+  },
+  render: () => {
+    const [selectedRow, setSelectedRow] = useState<any>(null)
+    const [clickCount, setClickCount] = useState(0)
+
+    // Sample product data with categories for grouping
+    const productData = useMemo(() => [
+      { id: '1', name: 'MacBook Pro 16"', category: 'Laptops', price: 2499, stock: 15, sku: 'MBP16-001' },
+      { id: '2', name: 'MacBook Air M2', category: 'Laptops', price: 1199, stock: 28, sku: 'MBA-M2-001' },
+      { id: '3', name: 'iPad Pro 12.9"', category: 'Tablets', price: 1099, stock: 22, sku: 'IPD12-001' },
+      { id: '4', name: 'Magic Mouse', category: 'Accessories', price: 79, stock: 45, sku: 'MM-001' },
+      { id: '5', name: 'Magic Keyboard', category: 'Accessories', price: 149, stock: 32, sku: 'MK-001' },
+      { id: '6', name: 'AirPods Pro', category: 'Audio', price: 249, stock: 67, sku: 'APP-001' },
+      { id: '7', name: 'iPhone 15 Pro', category: 'Phones', price: 999, stock: 41, sku: 'IP15P-001' },
+    ], [])
+
+    const productColumns: ColumnDef<any>[] = useMemo(() => [
+      {
+        accessorKey: 'name',
+        header: 'Product Name',
+        meta: { label: 'Product Name' },
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('name')}</div>
+        ),
+      },
+      {
+        accessorKey: 'category',
+        header: 'Category',
+        meta: { label: 'Category' },
+      },
+      {
+        accessorKey: 'sku',
+        header: 'SKU',
+        meta: { label: 'SKU Code' },
+        cell: ({ row }) => (
+          <div className="font-mono text-body-sm text-[var(--color-text-secondary)]">
+            {row.getValue('sku')}
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'price',
+        header: 'Price',
+        meta: { label: 'Price', align: 'right' },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'stock',
+        header: 'Stock',
+        meta: { label: 'In Stock', align: 'right' },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{row.getValue('stock')}</div>
+        ),
+      },
+      {
+        id: 'actions',
+        header: 'Actions',
+        cell: ({ row }) => (
+          <div className="flex gap-[var(--space-sm)]">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={(e) => {
+                e.stopPropagation()
+                alert(`Edit ${row.original.name}`)
+              }}
+            >
+              Edit
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={(e) => {
+                e.stopPropagation()
+                alert(`Delete ${row.original.name}`)
+              }}
+            >
+              Delete
+            </Button>
+          </div>
+        ),
+      },
+    ], [])
+
+    return (
+      <div className="p-[var(--space-xlg)]">
+        <div className="max-w-6xl mx-auto space-y-[var(--space-lg)]">
+          {/* Header */}
+          <div>
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Row Click Example</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)]">
+              Click any row to view details. Notice that buttons within rows don't trigger the row click.
+            </p>
+          </div>
+
+          {/* Stats */}
+          <div className="flex gap-[var(--space-md)]">
+            <Card>
+              <CardContent className="p-[var(--space-lg)]">
+                <div className="text-caption-sm text-[var(--color-text-secondary)] mb-[var(--space-xsm)]">
+                  Total Clicks
+                </div>
+                <div className="text-heading-lg font-semibold">{clickCount}</div>
+              </CardContent>
+            </Card>
+            <Card className="flex-1">
+              <CardContent className="p-[var(--space-lg)]">
+                <div className="text-caption-sm text-[var(--color-text-secondary)] mb-[var(--space-xsm)]">
+                  Selected Row
+                </div>
+                <div className="text-body-md font-medium">
+                  {selectedRow ? selectedRow.name : 'None'}
+                </div>
+                {selectedRow && (
+                  <div className="mt-[var(--space-sm)] text-body-sm text-[var(--color-text-secondary)]">
+                    SKU: {selectedRow.sku} • Price: {formatCurrency(selectedRow.price)} • Stock: {selectedRow.stock}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Basic Example */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Basic Row Click</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <DataTable
+                data={productData}
+                columns={productColumns}
+                onRowClick={(row, event) => {
+                  console.log('Row clicked:', row.original)
+                  setSelectedRow(row.original)
+                  setClickCount(prev => prev + 1)
+                }}
+              />
+            </CardContent>
+          </Card>
+
+          {/* With Grouping Example */}
+          <Card>
+            <CardHeader>
+              <CardTitle>With Grouping (Smart Default)</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-[var(--space-md)]">
+              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-md)] rounded-md">
+                <strong>Try clicking:</strong> Notice that parent category rows with multiple items are NOT clickable (no cursor change),
+                but individual product rows are. This is the smart default behavior.
+              </div>
+              <DataTable
+                data={productData}
+                columns={productColumns}
+                enableGrouping
+                enableExpanding
+                initialState={{
+                  grouping: ['category'],
+                }}
+                hideChildrenForSingleItemGroups={{ category: true }}
+                onRowClick={(row, event) => {
+                  console.log('Row clicked:', row.original)
+                  setSelectedRow(row.original)
+                  setClickCount(prev => prev + 1)
+                }}
+              />
+            </CardContent>
+          </Card>
+
+          {/* Custom Filter Example */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Custom Clickable Filter</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-[var(--space-md)]">
+              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-md)] rounded-md">
+                <strong>Custom behavior:</strong> This example uses <code>isRowClickable</code> to allow ALL rows (including parent groups) to be clicked.
+              </div>
+              <DataTable
+                data={productData}
+                columns={productColumns}
+                enableGrouping
+                enableExpanding
+                initialState={{
+                  grouping: ['category'],
+                }}
+                hideChildrenForSingleItemGroups={{ category: true }}
+                onRowClick={(row, event) => {
+                  const data = row.getIsGrouped() && row.subRows?.length === 1
+                    ? row.subRows[0].original
+                    : row.original
+
+                  console.log('Row clicked:', data)
+                  setSelectedRow(data)
+                  setClickCount(prev => prev + 1)
+                }}
+                // Allow all rows to be clickable
+                isRowClickable={(row) => true}
+              />
+            </CardContent>
+          </Card>
+
+          {/* Keyboard Navigation Example */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Keyboard Navigation</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-[var(--space-md)]">
+              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-md)] rounded-md">
+                <strong>Accessibility:</strong> Press <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-bold)] rounded">Tab</kbd> to navigate between rows,
+                then press <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-bold)] rounded">Enter</kbd> or <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-bold)] rounded">Space</kbd> to activate.
+              </div>
+              <DataTable
+                data={productData.slice(0, 5)}
+                columns={productColumns.slice(0, 4)}
+                onRowClick={(row, event) => {
+                  console.log('Row clicked (keyboard):', row.original)
+                  setSelectedRow(row.original)
+                  setClickCount(prev => prev + 1)
+                }}
+              />
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    )
+  },
+}
+
+// ============================================================================
 // Filters Integration
 // ============================================================================
 

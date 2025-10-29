@@ -23,7 +23,7 @@ const tableRowVariants = cva(
   {
     variants: {
       variant: {
-        default: "hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:bg-opacity-50",
+        default: "",
         zebra: "",
         selected: "bg-[var(--blue-25)]",
       },
