@@ -987,12 +987,42 @@ function DataTableColumnHeader<TData, TValue>({
 // Pagination component
 interface DataTablePaginationProps<_TData = any> {
   table: any
+  enableGrouping?: boolean
+  hideChildrenForSingleItemGroups?: Record<string, boolean>
 }
 
-function DataTablePagination<TData>({ table }: DataTablePaginationProps<TData>) {
+function DataTablePagination<TData>({
+  table,
+  enableGrouping = false,
+  hideChildrenForSingleItemGroups = {}
+}: DataTablePaginationProps<TData>) {
   const currentPage = table.getState().pagination.pageIndex + 1
   const pageSize = table.getState().pagination.pageSize
-  const totalItems = table.getFilteredRowModel().rows.length
+
+  // Calculate visible row count, accounting for grouping and hidden children
+  const totalItems = (() => {
+    let rows = table.getFilteredRowModel().rows
+
+    // When grouping is enabled, filter to count only visible rows
+    if (enableGrouping) {
+      rows = rows.filter((row: any) => {
+        // Skip child rows when hideChildrenForSingleItemGroups is enabled for this column
+        if (row.depth > 0) {
+          const parent = row.getParentRow()
+          if (parent && parent.subRows && parent.subRows.length === 1 && parent.groupingColumnId) {
+            const hideForColumn = hideChildrenForSingleItemGroups[parent.groupingColumnId] ?? false
+            if (hideForColumn) {
+              return false // Hide this single child row
+            }
+          }
+        }
+        return true // Show the row
+      })
+    }
+
+    return rows.length
+  })()
+
   const selectedCount = table.getFilteredSelectedRowModel().rows.length
 
   const handlePageChange = (page: number) => {
@@ -2445,7 +2475,11 @@ export function DataTable<TData, TValue>({
       {/* Footer section with pagination */}
       {showPagination && (
         <div className="bg-[var(--color-surface-primary)] px-[var(--space-lg)] py-[var(--space-md)]">
-          <DataTablePagination table={table} />
+          <DataTablePagination
+            table={table}
+            enableGrouping={enableGrouping}
+            hideChildrenForSingleItemGroups={hideChildrenForSingleItemGroups}
+          />
         </div>
       )}
       </div>
