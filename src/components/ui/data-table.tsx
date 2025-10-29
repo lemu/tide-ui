@@ -999,28 +999,15 @@ function DataTablePagination<TData>({
   const currentPage = table.getState().pagination.pageIndex + 1
   const pageSize = table.getState().pagination.pageSize
 
-  // Calculate visible row count, accounting for grouping and hidden children
+  // Calculate visible row count, accounting for grouping
   const totalItems = (() => {
-    let rows = table.getFilteredRowModel().rows
-
-    // When grouping is enabled, filter to count only visible rows
     if (enableGrouping) {
-      rows = rows.filter((row: any) => {
-        // Skip child rows when hideChildrenForSingleItemGroups is enabled for this column
-        if (row.depth > 0) {
-          const parent = row.getParentRow()
-          if (parent && parent.subRows && parent.subRows.length === 1 && parent.groupingColumnId) {
-            const hideForColumn = hideChildrenForSingleItemGroups[parent.groupingColumnId] ?? false
-            if (hideForColumn) {
-              return false // Hide this single child row
-            }
-          }
-        }
-        return true // Show the row
-      })
+      // When grouping: count only top-level group rows (depth === 0)
+      return table.getPrePaginationRowModel().rows.filter((row: any) => row.depth === 0).length
     }
 
-    return rows.length
+    // Without grouping: count all filtered rows
+    return table.getFilteredRowModel().rows.length
   })()
 
   const selectedCount = table.getFilteredSelectedRowModel().rows.length
@@ -1563,75 +1550,38 @@ export function DataTable<TData, TValue>({
     onColumnOrderChange: setColumnOrder,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: (enableVirtualization || enableGrouping) ? undefined : getPaginationRowModel(),
+    getPaginationRowModel: enableVirtualization ? undefined : getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getExpandedRowModel: enableExpanding ? getExpandedRowModel() : undefined,
     getGroupedRowModel: enableGrouping ? getGroupedRowModel() : undefined,
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
-    manualPagination: enableGrouping ? true : false,
   })
 
-  // Calculate page count for grouped data with manual pagination
-  const { pageCount: calculatedPageCount } = React.useMemo(() => {
-    if (!enableGrouping) {
-      return { filteredRowCount: 0, pageCount: -1 }
-    }
-
-    // Get all rows before pagination (from expanded model which includes grouped + expanded rows)
-    const allRows = table.getExpandedRowModel().rows
-
-    // Filter rows to exclude hidden children
-    const filtered = filterGroupedRows(allRows, hideChildrenForSingleItemGroups)
-
-    // Calculate page count
-    const pageSize = table.getState().pagination.pageSize
-    const count = Math.ceil(filtered.length / pageSize)
-
-    return { filteredRowCount: filtered.length, pageCount: count }
-  }, [
-    enableGrouping,
-    table,
-    hideChildrenForSingleItemGroups,
-    // Re-calculate when these states change
-    table.getState().pagination.pageSize,
-    table.getState().expanded,
-    table.getState().grouping,
-  ])
-
-  // Update table's page count when using manual pagination
+  // Override page count when grouping is enabled to count only top-level groups
   React.useEffect(() => {
-    if (enableGrouping && calculatedPageCount >= 0) {
-      table.setPageCount(calculatedPageCount)
-    }
-  }, [enableGrouping, calculatedPageCount, table])
+    if (!enableGrouping) return
 
-  // Get manually paginated rows for grouped data
-  const getPaginatedRows = React.useCallback(() => {
-    if (!enableGrouping) {
-      // Standard pagination via TanStack
-      return table.getRowModel().rows
-    }
+    // Get rows before pagination is applied
+    const prePaginationRows = table.getPrePaginationRowModel().rows
 
-    // Manual pagination for grouped data
-    const allRows = table.getExpandedRowModel().rows
-    const filtered = filterGroupedRows(allRows, hideChildrenForSingleItemGroups)
+    // Count only top-level rows (depth === 0) - these are the group headers
+    const topLevelRowCount = prePaginationRows.filter((row: any) => row.depth === 0).length
 
-    const pageIndex = table.getState().pagination.pageIndex
+    // Calculate page count based on top-level rows
     const pageSize = table.getState().pagination.pageSize
-    const start = pageIndex * pageSize
-    const end = start + pageSize
+    const calculatedPageCount = Math.max(1, Math.ceil(topLevelRowCount / pageSize))
 
-    return filtered.slice(start, end)
+    // Override TanStack's default page count calculation
+    table.setPageCount(calculatedPageCount)
   }, [
     enableGrouping,
     table,
-    hideChildrenForSingleItemGroups,
-    table.getState().pagination.pageIndex,
+    // Re-run when these values change
     table.getState().pagination.pageSize,
-    table.getState().expanded,
     table.getState().grouping,
+    table.getPrePaginationRowModel().rows.length,
   ])
 
   // Column pinning useEffect removed - using pure CSS approach instead
@@ -2097,7 +2047,7 @@ export function DataTable<TData, TValue>({
               (() => {
                 if (!enableRowPinning || !keepPinnedRows) {
                   // Standard rendering when cross-page pinning is disabled
-                  return getPaginatedRows()
+                  return table.getRowModel().rows
                     .map((row) => (
                     <TableRow
                       key={row.id}
@@ -2295,11 +2245,8 @@ export function DataTable<TData, TValue>({
                 }
 
                 // Manual cross-page pinning implementation
-                // When grouping is enabled, use filtered rows; otherwise use standard row model
-                const allRows = enableGrouping
-                  ? filterGroupedRows(table.getExpandedRowModel().rows, hideChildrenForSingleItemGroups)
-                  : table.getCoreRowModel().rows
-                const currentPageRows = getPaginatedRows()
+                const allRows = table.getCoreRowModel().rows // Get all rows from all pages
+                const currentPageRows = table.getRowModel().rows // Current page rows
 
                 // Extract pinned rows from all rows (across all pages)
                 const pinnedTopRows = allRows.filter(row => row.getIsPinned() === 'top')
