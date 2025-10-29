@@ -1033,10 +1033,15 @@ function renderGroupDisplayContent(
   row: any,
   table: any,
   groupDisplayColumn: string | undefined,
-  isExpanded: boolean
+  isExpanded: boolean,
+  hideChildrenForSingleItemGroups: boolean,
+  hideExpanderForSingleItemGroups: boolean
 ): React.ReactNode {
+  // Determine if we should hide the expander completely
+  const shouldHideExpander = hideChildrenForSingleItemGroups && hideExpanderForSingleItemGroups && row.subRows.length <= 1
+
   // Only show chevron button when there are 2 or more items to expand
-  const chevronButton = row.subRows.length > 1 ? (
+  const chevronButton = shouldHideExpander ? null : row.subRows.length > 1 ? (
     <button
       onClick={row.getToggleExpandedHandler()}
       className="flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]"
@@ -1087,7 +1092,7 @@ function renderGroupDisplayContent(
           <div className="flex items-center gap-[var(--space-sm)] font-medium text-[var(--color-text-primary)]">
             {chevronButton}
             <div className="flex items-center gap-[var(--space-sm)]">
-              <span className="font-semibold">{String(firstRowValue)}</span>
+              <span className="font-medium">{String(firstRowValue)}</span>
               {countBadge}
             </div>
           </div>
@@ -1101,7 +1106,7 @@ function renderGroupDisplayContent(
     <div className="flex items-center gap-[var(--space-sm)] font-medium text-[var(--color-text-primary)]">
       {chevronButton}
       <div className="flex items-center gap-[var(--space-sm)]">
-        <span className="font-semibold">
+        <span className="font-medium">
           {String(row.getGroupingValue(row.groupingColumnId!))}
         </span>
         {countBadge}
@@ -1178,6 +1183,19 @@ export interface DataTableProps<TData, TValue> {
    * hideChildrenForSingleItemGroups={true}
    */
   hideChildrenForSingleItemGroups?: boolean
+  /**
+   * When both this and hideChildrenForSingleItemGroups are enabled,
+   * removes the expander button spacer for groups without expandable children.
+   * This eliminates the left padding for single-item groups, improving visual alignment.
+   *
+   * Only takes effect when hideChildrenForSingleItemGroups is also true.
+   *
+   * @default false
+   * @example
+   * hideChildrenForSingleItemGroups={true}
+   * hideExpanderForSingleItemGroups={true}
+   */
+  hideExpanderForSingleItemGroups?: boolean
   // Row pinning
   enableRowPinning?: boolean
   keepPinnedRows?: boolean
@@ -1254,6 +1272,7 @@ export function DataTable<TData, TValue>({
   enableManualGrouping = false,
   groupDisplayColumn,
   hideChildrenForSingleItemGroups = false,
+  hideExpanderForSingleItemGroups = false,
   enableRowPinning = false,
   keepPinnedRows = true,
   enableVirtualization = false,
@@ -2052,7 +2071,7 @@ export function DataTable<TData, TValue>({
                             ) : isGroupedRow ? (
                               // Grouped row rendering - only show content in first cell
                               isFirstCell ? (
-                                renderGroupDisplayContent(row, table, groupDisplayColumn, isExpanded)
+                                renderGroupDisplayContent(row, table, groupDisplayColumn, isExpanded, hideChildrenForSingleItemGroups, hideExpanderForSingleItemGroups)
                               ) : cell.column.columnDef.meta?.renderInGroupedRows ? (
                                 // Render custom cell content for columns with renderInGroupedRows flag
                                 flexRender(cell.column.columnDef.cell, cell.getContext())
@@ -2280,7 +2299,7 @@ export function DataTable<TData, TValue>({
                           ) : isGroupedRow ? (
                             // Grouped row rendering - only show content in first cell
                             isFirstCell ? (
-                              renderGroupDisplayContent(row, table, groupDisplayColumn, isExpanded)
+                              renderGroupDisplayContent(row, table, groupDisplayColumn, isExpanded, hideChildrenForSingleItemGroups, hideExpanderForSingleItemGroups)
                             ) : cell.column.columnDef.meta?.renderInGroupedRows ? (
                               // Render custom cell content for columns with renderInGroupedRows flag
                               flexRender(cell.column.columnDef.cell, cell.getContext())
