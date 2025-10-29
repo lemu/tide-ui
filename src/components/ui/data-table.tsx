@@ -1058,6 +1058,26 @@ function DataTablePagination<TData>({
 // Border styling options
 export type BorderStyle = "vertical" | "horizontal" | "both" | "none"
 
+// Helper function to filter rows based on hideChildrenForSingleItemGroups settings
+function filterGroupedRows(
+  rows: any[],
+  hideChildrenForSingleItemGroups: Record<string, boolean>
+): any[] {
+  return rows.filter((row) => {
+    // Skip child rows when hideChildrenForSingleItemGroups is enabled for this column
+    if (row.depth > 0) {
+      const parent = row.getParentRow()
+      if (parent && parent.subRows && parent.subRows.length === 1 && parent.groupingColumnId) {
+        const hideForColumn = hideChildrenForSingleItemGroups[parent.groupingColumnId] ?? false
+        if (hideForColumn) {
+          return false // Hide this single child row
+        }
+      }
+    }
+    return true // Show the row
+  })
+}
+
 // Helper function to render group display content
 function renderGroupDisplayContent(
   row: any,
@@ -1543,14 +1563,76 @@ export function DataTable<TData, TValue>({
     onColumnOrderChange: setColumnOrder,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: enableVirtualization ? undefined : getPaginationRowModel(),
+    getPaginationRowModel: (enableVirtualization || enableGrouping) ? undefined : getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getExpandedRowModel: enableExpanding ? getExpandedRowModel() : undefined,
     getGroupedRowModel: enableGrouping ? getGroupedRowModel() : undefined,
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
+    manualPagination: enableGrouping ? true : false,
   })
+
+  // Calculate page count for grouped data with manual pagination
+  const { pageCount: calculatedPageCount } = React.useMemo(() => {
+    if (!enableGrouping) {
+      return { filteredRowCount: 0, pageCount: -1 }
+    }
+
+    // Get all rows before pagination (from expanded model which includes grouped + expanded rows)
+    const allRows = table.getExpandedRowModel().rows
+
+    // Filter rows to exclude hidden children
+    const filtered = filterGroupedRows(allRows, hideChildrenForSingleItemGroups)
+
+    // Calculate page count
+    const pageSize = table.getState().pagination.pageSize
+    const count = Math.ceil(filtered.length / pageSize)
+
+    return { filteredRowCount: filtered.length, pageCount: count }
+  }, [
+    enableGrouping,
+    table,
+    hideChildrenForSingleItemGroups,
+    // Re-calculate when these states change
+    table.getState().pagination.pageSize,
+    table.getState().expanded,
+    table.getState().grouping,
+  ])
+
+  // Update table's page count when using manual pagination
+  React.useEffect(() => {
+    if (enableGrouping && calculatedPageCount >= 0) {
+      table.setPageCount(calculatedPageCount)
+    }
+  }, [enableGrouping, calculatedPageCount, table])
+
+  // Get manually paginated rows for grouped data
+  const getPaginatedRows = React.useCallback(() => {
+    if (!enableGrouping) {
+      // Standard pagination via TanStack
+      return table.getRowModel().rows
+    }
+
+    // Manual pagination for grouped data
+    const allRows = table.getExpandedRowModel().rows
+    const filtered = filterGroupedRows(allRows, hideChildrenForSingleItemGroups)
+
+    const pageIndex = table.getState().pagination.pageIndex
+    const pageSize = table.getState().pagination.pageSize
+    const start = pageIndex * pageSize
+    const end = start + pageSize
+
+    return filtered.slice(start, end)
+  }, [
+    enableGrouping,
+    table,
+    hideChildrenForSingleItemGroups,
+    table.getState().pagination.pageIndex,
+    table.getState().pagination.pageSize,
+    table.getState().expanded,
+    table.getState().grouping,
+  ])
 
   // Column pinning useEffect removed - using pure CSS approach instead
 
@@ -2015,21 +2097,7 @@ export function DataTable<TData, TValue>({
               (() => {
                 if (!enableRowPinning || !keepPinnedRows) {
                   // Standard rendering when cross-page pinning is disabled
-                  return table.getRowModel().rows
-                    .filter((row) => {
-                      // Skip child rows when hideChildrenForSingleItemGroups is enabled for this column
-                      // and the parent has only 1 child
-                      if (row.depth > 0) {
-                        const parent = row.getParentRow()
-                        if (parent && parent.subRows && parent.subRows.length === 1 && parent.groupingColumnId) {
-                          const hideForColumn = hideChildrenForSingleItemGroups[parent.groupingColumnId] ?? false
-                          if (hideForColumn) {
-                            return false // Hide this single child row
-                          }
-                        }
-                      }
-                      return true // Show the row
-                    })
+                  return getPaginatedRows()
                     .map((row) => (
                     <TableRow
                       key={row.id}
@@ -2227,8 +2295,11 @@ export function DataTable<TData, TValue>({
                 }
 
                 // Manual cross-page pinning implementation
-                const allRows = table.getCoreRowModel().rows // Get all rows from all pages
-                const currentPageRows = table.getRowModel().rows // Current page rows
+                // When grouping is enabled, use filtered rows; otherwise use standard row model
+                const allRows = enableGrouping
+                  ? filterGroupedRows(table.getExpandedRowModel().rows, hideChildrenForSingleItemGroups)
+                  : table.getCoreRowModel().rows
+                const currentPageRows = getPaginatedRows()
 
                 // Extract pinned rows from all rows (across all pages)
                 const pinnedTopRows = allRows.filter(row => row.getIsPinned() === 'top')
@@ -2245,20 +2316,6 @@ export function DataTable<TData, TValue>({
                 ]
 
                 return organizedRows
-                  .filter((row) => {
-                    // Skip child rows when hideChildrenForSingleItemGroups is enabled for this column
-                    // and the parent has only 1 child
-                    if (row.depth > 0) {
-                      const parent = row.getParentRow()
-                      if (parent && parent.subRows && parent.subRows.length === 1 && parent.groupingColumnId) {
-                        const hideForColumn = hideChildrenForSingleItemGroups[parent.groupingColumnId] ?? false
-                        if (hideForColumn) {
-                          return false // Hide this single child row
-                        }
-                      }
-                    }
-                    return true // Show the row
-                  })
                   .map((row) => (
                   <TableRow
                     key={row.id}
