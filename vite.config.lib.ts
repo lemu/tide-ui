@@ -29,8 +29,8 @@ export default defineConfig({
       fileName: (format) => `index.${format}.js`,
     },
     rollupOptions: {
-      // Externalize React and React-DOM to avoid bundling them
-      external: ['react', 'react-dom', 'react/jsx-runtime'],
+      // Externalize React, React-DOM, and icon library to avoid bundling them
+      external: ['react', 'react-dom', 'react/jsx-runtime', 'lucide-react'],
       output: {
         globals: {
           react: 'React',

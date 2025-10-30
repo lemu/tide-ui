@@ -41,10 +41,35 @@ export { Separator } from './ui/separator'
 
 export { Skeleton, SkeletonAvatar, SkeletonButton, SkeletonCard, SkeletonTable, skeletonVariants } from './ui/skeleton'
 
+export { Status, statusConfig } from './ui/status'
+export type { StatusProps, StatusValue, StatusConfig } from './ui/status'
+
 export { Switch } from './ui/switch'
 
 export { Textarea } from './ui/textarea'
 export type { TextareaProps } from './ui/textarea'
+
+// Timeline components
+export {
+  Timeline,
+  TimelineItem,
+  TimelineSeparator,
+  TimelineHeader,
+  TimelineContent,
+  TimelineDescription,
+  TimelineTime,
+  TimelineChevron,
+} from './ui/timeline'
+export type {
+  TimelineProps,
+  TimelineItemProps,
+  TimelineSeparatorProps,
+  TimelineHeaderProps,
+  TimelineContentProps,
+  TimelineDescriptionProps,
+  TimelineTimeProps,
+  TimelineChevronProps,
+} from './ui/timeline'
 
 // Editable components
 export { Editable, EditablePreview, EditableInput, EditableDisplay, EditableField } from './ui/editable'
