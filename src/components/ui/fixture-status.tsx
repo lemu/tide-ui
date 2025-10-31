@@ -121,9 +121,9 @@ const textColorClasses: Record<IconColor, string> = {
 
 type StatusSize = keyof typeof textSizeClasses;
 
-export interface StatusProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface FixtureStatusProps extends React.HTMLAttributes<HTMLDivElement> {
   /** The status value (e.g., "order-draft", "negotiation-firm-offer") */
-  status: StatusValue;
+  value: StatusValue;
   /** Size variant */
   size?: StatusSize;
   /** Whether to show the object prefix in the label (e.g., "Order • Draft" vs "Draft") */
@@ -132,10 +132,10 @@ export interface StatusProps extends React.HTMLAttributes<HTMLDivElement> {
   coloredLabel?: boolean;
 }
 
-const Status = React.forwardRef<HTMLDivElement, StatusProps>(
+const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
   (
     {
-      status,
+      value,
       size = "md",
       showObject = true,
       coloredLabel = true,
@@ -145,12 +145,12 @@ const Status = React.forwardRef<HTMLDivElement, StatusProps>(
     ref,
   ) => {
     // Get status configuration
-    const config = statusConfig[status];
+    const config = statusConfig[value];
 
     // Fallback for unknown status
     if (!config) {
       console.warn(
-        `Unknown status "${status}". Available statuses:`,
+        `Unknown status "${value}". Available statuses:`,
         Object.keys(statusConfig),
       );
       return (
@@ -205,7 +205,7 @@ const Status = React.forwardRef<HTMLDivElement, StatusProps>(
   },
 );
 
-Status.displayName = "Status";
+FixtureStatus.displayName = "FixtureStatus";
 
-export { Status, statusConfig };
+export { FixtureStatus, statusConfig };
 export type { StatusConfig };

@@ -11,7 +11,7 @@ import {
 } from '../components/ui/timeline'
 import { Avatar, AvatarImage, AvatarFallback } from '../components/ui/avatar'
 import { Icon } from '../components/ui/icon'
-import { Status } from '../components/ui/status'
+import { FixtureStatus } from '../components/ui/fixture-status'
 import { Card, CardContent } from '../components/ui/card'
 
 const meta: Meta<typeof Timeline> = {
@@ -160,7 +160,7 @@ export const CollapsibleItems: Story = {
             <TimelineDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>created</span>
-              <Status value="order-draft" />
+              <FixtureStatus value="order-draft" />
             </TimelineDescription>
             <TimelineTime>Jul 4, 2025 at 12:37</TimelineTime>
             <TimelineChevron />
@@ -195,7 +195,7 @@ export const CollapsibleItems: Story = {
             <TimelineDescription>
               <span className="text-body-medium-sm">Ivy Chu</span>
               <span>sent</span>
-              <Status value="negotiation-indicative-bid" />
+              <FixtureStatus value="negotiation-indicative-bid" />
             </TimelineDescription>
             <TimelineTime>Jul 6, 2025 at 13:36</TimelineTime>
             <TimelineChevron />
@@ -230,7 +230,7 @@ export const CollapsibleItems: Story = {
             <TimelineDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>answered with</span>
-              <Status value="negotiation-indicative-offer" />
+              <FixtureStatus value="negotiation-indicative-offer" />
             </TimelineDescription>
             <TimelineTime>Jul 6, 2025 at 15:52</TimelineTime>
             <TimelineChevron />
@@ -270,7 +270,7 @@ export const RichContent: Story = {
             <TimelineDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>created</span>
-              <Status value="order-draft" />
+              <FixtureStatus value="order-draft" />
             </TimelineDescription>
             <TimelineTime>Jul 4, 2025 at 12:37</TimelineTime>
             <TimelineChevron />
@@ -283,7 +283,7 @@ export const RichContent: Story = {
               <AvatarFallback>RL</AvatarFallback>
             </Avatar>
             <TimelineDescription>
-              <Status value="order-distributed" />
+              <FixtureStatus value="order-distributed" />
               <span>the order to the market.</span>
             </TimelineDescription>
             <TimelineTime>Jul 4, 2025 at 12:43</TimelineTime>
@@ -305,7 +305,7 @@ export const RichContent: Story = {
             <TimelineDescription>
               <span className="text-body-medium-sm">Ivy Chu</span>
               <span>sent</span>
-              <Status value="negotiation-indicative-bid" />
+              <FixtureStatus value="negotiation-indicative-bid" />
             </TimelineDescription>
             <TimelineTime>Jul 6, 2025 at 13:36</TimelineTime>
             <TimelineChevron />
@@ -331,7 +331,7 @@ export const RichContent: Story = {
             <TimelineDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>answered with</span>
-              <Status value="negotiation-indicative-offer" />
+              <FixtureStatus value="negotiation-indicative-offer" />
             </TimelineDescription>
             <TimelineTime>Jul 6, 2025 at 15:52</TimelineTime>
             <TimelineChevron />
@@ -351,7 +351,7 @@ export const RichContent: Story = {
             <TimelineDescription>
               <span className="text-body-medium-sm">Ivy Chu</span>
               <span>sent</span>
-              <Status value="negotiation-firm-bid" />
+              <FixtureStatus value="negotiation-firm-bid" />
             </TimelineDescription>
             <TimelineTime>Jul 6, 2025 at 16:14</TimelineTime>
             <TimelineChevron />
@@ -378,7 +378,7 @@ export const RichContent: Story = {
             <TimelineDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>accepted firm bid. Offer is now</span>
-              <Status value="negotiation-firm" />
+              <FixtureStatus value="negotiation-firm" />
             </TimelineDescription>
             <TimelineTime>Jul 7, 2025 at 7:53</TimelineTime>
             <TimelineChevron />
@@ -404,7 +404,7 @@ export const RichContent: Story = {
             <TimelineDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>went</span>
-              <Status value="on-subs" />
+              <FixtureStatus value="on-subs" />
             </TimelineDescription>
             <TimelineTime>Jul 7, 2025 at 7:55</TimelineTime>
             <TimelineChevron />
@@ -447,7 +447,7 @@ export const RichContent: Story = {
             <TimelineDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>set negotiation as</span>
-              <Status value="negotiation-firm-offer-fixed" />
+              <FixtureStatus value="negotiation-firm-offer-fixed" />
             </TimelineDescription>
             <TimelineTime>Jul 12, 2025 at 7:02</TimelineTime>
             <TimelineChevron />

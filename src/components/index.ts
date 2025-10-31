@@ -41,8 +41,8 @@ export { Separator } from './ui/separator'
 
 export { Skeleton, SkeletonAvatar, SkeletonButton, SkeletonCard, SkeletonTable, skeletonVariants } from './ui/skeleton'
 
-export { Status, statusConfig } from './ui/status'
-export type { StatusProps, StatusValue, StatusConfig } from './ui/status'
+export { FixtureStatus, statusConfig } from './ui/fixture-status'
+export type { FixtureStatusProps, StatusValue, StatusConfig } from './ui/fixture-status'
 
 export { Switch } from './ui/switch'
 
