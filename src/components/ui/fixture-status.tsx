@@ -72,7 +72,7 @@ const statusConfig: Record<StatusValue, StatusConfig> = {
   "contract-draft": { icon: "contract-draft", color: "tertiary", objectLabel: "Contract", statusLabel: "Draft" },
   "contract-working-copy": { icon: "contract-working-copy", color: "information", objectLabel: "Contract", statusLabel: "Working copy" },
   "contract-final": { icon: "contract-final", color: "success", objectLabel: "Contract", statusLabel: "Final" },
-  "contract-rejected": { icon: "contract-rejected", color: "error", objectLabel: "Contract", statusLabel: "Rejected?" },
+  "contract-rejected": { icon: "contract-rejected", color: "error", objectLabel: "Contract", statusLabel: "Rejected" },
 
   // Addenda statuses
   "addenda-draft": { icon: "addenda-draft", color: "tertiary", objectLabel: "Addenda", statusLabel: "Draft" },
