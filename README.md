@@ -25,26 +25,12 @@ Make sure you have React 18+ installed:
 npm install react@>=18.0.0 react-dom@>=18.0.0
 ```
 
-### Setup Tailwind CSS
-
-This library requires Tailwind CSS. Add the preset to your `tailwind.config.js`:
-
-```javascript
-module.exports = {
-  presets: [
-    // Add Tide UI preset here when available
-  ],
-  content: [
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@rafal.lemieszewski/tide-ui/**/*.{js,ts,jsx,tsx}",
-  ],
-  // ... rest of your config
-}
-```
-
 ## Quick Start
 
+Import the CSS styles and components:
+
 ```typescript
+import '@rafal.lemieszewski/tide-ui/styles'
 import { Button, Card, CardContent, Badge } from '@rafal.lemieszewski/tide-ui'
 
 function App() {
@@ -60,6 +46,52 @@ function App() {
   )
 }
 ```
+
+## Styling & Customization
+
+### CSS Variables
+
+Override design tokens by customizing CSS variables:
+
+```css
+:root {
+  --color-background-brand: #your-color;
+  --color-text-primary: #your-color;
+  /* See src/index.css for all available variables */
+}
+```
+
+### className Prop
+
+All components accept a `className` prop for custom styling:
+
+```tsx
+import { Button } from '@rafal.lemieszewski/tide-ui'
+
+// Using custom CSS classes
+<Button className="my-custom-class">Custom Button</Button>
+
+// Using inline styles
+<Button style={{ backgroundColor: 'purple' }}>Purple Button</Button>
+```
+
+### Tailwind Utility Classes
+
+**For apps with Tailwind CSS installed:** You can use Tailwind utility classes to override component styles. Use the `!` prefix for guaranteed specificity:
+
+```tsx
+// Override background color
+<Button className="!bg-purple-500 !hover:bg-purple-600">
+  Purple Button
+</Button>
+
+// Override spacing
+<Card className="!p-8 !rounded-xl">
+  Custom Card
+</Card>
+```
+
+**Note:** Tailwind is not required. The library includes all necessary styles out-of-the-box.
 
 ## Available Components
 

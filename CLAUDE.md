@@ -49,6 +49,33 @@ The library follows a clean component architecture:
 - Path mapping for clean imports during development
 - Module resolution set to "bundler" for Vite compatibility
 
+### Library Distribution Model
+
+**Self-Contained Library**: This library is designed to work without requiring consumers to install or configure Tailwind CSS.
+
+**Key Architecture Decisions:**
+- **Tailwind CSS** is a `devDependency` (build-time only, not shipped to consumers)
+- All Tailwind styles are compiled and bundled into `dist/style.css` during build
+- Consumers only need to import: `import '@rafal.lemieszewski/tide-ui/styles'`
+- No Tailwind configuration required in consumer applications
+
+**Consumer Flexibility:**
+- **Apps without Tailwind**: Works immediately, no additional setup
+- **Apps with Tailwind**: Can use Tailwind utilities to override component styles via `className` prop
+- **All apps**: Can override design tokens via CSS variables or custom CSS
+
+**Build Output:**
+- `dist/style.css` - Complete compiled CSS including all design tokens, base styles, and Tailwind utilities
+- `dist/index.es.js` - ESM bundle
+- `dist/index.cjs.js` - CommonJS bundle
+- `dist/**/*.d.ts` - TypeScript type definitions
+
+**Override Methods Available to Consumers:**
+1. CSS Variables: `--color-background-brand`, `--color-text-primary`, etc.
+2. className prop: Pass custom classes to any component
+3. Tailwind utilities: Use `!bg-purple-500` syntax (if consumer has Tailwind)
+4. Regular CSS: Target components with custom CSS rules
+
 ## Theme System
 
 ### **PRIORITY: Always use semantic design tokens when styling**
