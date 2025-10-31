@@ -1,6 +1,7 @@
 import React from "react";
 import { Icon, IconColor } from "./icon";
 import { cn } from "@/lib/utils";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
 
 // Status configuration with combined object-status keys
 type StatusConfig = {
@@ -56,15 +57,15 @@ const statusConfig: Record<StatusValue, StatusConfig> = {
   // Negotiation statuses
   "negotiation-indicative-offer": { icon: "negotiation-indicative-offer", color: "information", objectLabel: "Negotiation", statusLabel: "Indicative offer" },
   "negotiation-indicative-bid": { icon: "negotiation-indicative-bid", color: "information", objectLabel: "Negotiation", statusLabel: "Indicative bid" },
-  "negotiation-firm-offer": { icon: "negotiation-firm-offer", color: "success", objectLabel: "Negotiation", statusLabel: "Firm offer" },
-  "negotiation-firm-bid": { icon: "negotiation-firm-bid", color: "success", objectLabel: "Negotiation", statusLabel: "Firm bid" },
-  "negotiation-firm": { icon: "negotiation-firm", color: "success", objectLabel: "Negotiation", statusLabel: "Firm" },
+  "negotiation-firm-offer": { icon: "negotiation-firm-offer", color: "information", objectLabel: "Negotiation", statusLabel: "Firm offer" },
+  "negotiation-firm-bid": { icon: "negotiation-firm-bid", color: "information", objectLabel: "Negotiation", statusLabel: "Firm bid" },
+  "negotiation-firm": { icon: "negotiation-firm", color: "violet", objectLabel: "Negotiation", statusLabel: "Firm" },
   "negotiation-on-subs": { icon: "on-subs", color: "warning", objectLabel: "Negotiation", statusLabel: "On Subs" },
   "negotiation-fixed": { icon: "negotiation-fixed", color: "success", objectLabel: "Negotiation", statusLabel: "Fixed" },
-  "negotiation-firm-offer-expired": { icon: "negotiation-expired", color: "warning", objectLabel: "Negotiation", statusLabel: "(Firm offer) Expired" },
+  "negotiation-firm-offer-expired": { icon: "negotiation-expired", color: "error", objectLabel: "Negotiation", statusLabel: "(Firm offer) Expired" },
   "negotiation-withdrawn": { icon: "negotiation-withdrawn", color: "error", objectLabel: "Negotiation", statusLabel: "Withdrawn" },
-  "negotiation-firm-amendment": { icon: "negotiation-on-subs-amendment", color: "brand", objectLabel: "Negotiation", statusLabel: "Firm (Amendment)" },
-  "negotiation-subs-expired": { icon: "negotiation-expired", color: "warning", objectLabel: "Negotiation", statusLabel: "Subs expired" },
+  "negotiation-firm-amendment": { icon: "negotiation-on-subs-amendment", color: "violet", objectLabel: "Negotiation", statusLabel: "Firm (Amendment)" },
+  "negotiation-subs-expired": { icon: "negotiation-expired", color: "error", objectLabel: "Negotiation", statusLabel: "Subs expired" },
   "negotiation-subs-failed": { icon: "negotiation-subs-failed", color: "error", objectLabel: "Negotiation", statusLabel: "Subs failed" },
   "negotiation-on-subs-amendment": { icon: "negotiation-on-subs-amendment", color: "warning", objectLabel: "Negotiation", statusLabel: "On Subs (Amendment)" },
 
@@ -108,7 +109,7 @@ const iconTranslateClasses = {
 } as const;
 
 // Color mapping for text to match icon colors
-const textColorClasses: Record<IconColor, string> = {
+const textColorClasses: Partial<Record<IconColor, string>> = {
   primary: "text-[var(--color-text-primary)]",
   secondary: "text-[var(--color-text-secondary)]",
   tertiary: "text-[var(--color-text-tertiary)]",
@@ -117,6 +118,7 @@ const textColorClasses: Record<IconColor, string> = {
   success: "text-[var(--color-text-success)]",
   warning: "text-[var(--color-text-warning)]",
   error: "text-[var(--color-text-error)]",
+  violet: "text-[var(--violet-500)]",
 };
 
 type StatusSize = keyof typeof textSizeClasses;
@@ -130,6 +132,8 @@ export interface FixtureStatusProps extends React.HTMLAttributes<HTMLDivElement>
   showObject?: boolean;
   /** Whether the label color should match the icon color (default: true) */
   coloredLabel?: boolean;
+  /** Whether to show only the icon with a tooltip (default: false) */
+  iconOnly?: boolean;
 }
 
 const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
@@ -139,6 +143,7 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
       size = "md",
       showObject = true,
       coloredLabel = true,
+      iconOnly = false,
       className,
       ...props
     },
@@ -180,6 +185,33 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
     const labelText = showObject
       ? `${config.objectLabel} • ${config.statusLabel}`
       : config.statusLabel;
+
+    // Icon-only mode with tooltip
+    if (iconOnly) {
+      return (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div
+                ref={ref}
+                className={cn("inline-flex", className)}
+                {...props}
+              >
+                <Icon
+                  name={config.icon}
+                  size={iconSizeMapping[size]}
+                  color={config.color}
+                  aria-label={labelText}
+                />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              {labelText}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      );
+    }
 
     return (
       <div

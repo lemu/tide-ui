@@ -103,6 +103,7 @@ const iconColors = {
   "brand-hover": "text-[var(--color-icon-brand-hover)]",
   "on-action": "text-[var(--color-icon-on-action)]",
   inverse: "text-[var(--color-icon-inverse)]",
+  violet: "text-[var(--violet-500)]",
 } as const;
 
 // Size mapping for semantic size tokens - using Tailwind classes with CSS variables

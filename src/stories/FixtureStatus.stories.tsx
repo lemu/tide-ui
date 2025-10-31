@@ -196,3 +196,120 @@ export const LabelColors: Story = {
     </div>
   ),
 }
+
+export const IconOnly: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '48px', padding: '24px' }}>
+      {/* Order Statuses */}
+      <div>
+        <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>Order (Icon Only)</h3>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+          <FixtureStatus value="order-draft" iconOnly />
+          <FixtureStatus value="order-distributed" iconOnly />
+          <FixtureStatus value="order-withdrawn" iconOnly />
+        </div>
+      </div>
+
+      {/* Negotiation Statuses */}
+      <div>
+        <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>Negotiation (Icon Only)</h3>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+          <FixtureStatus value="negotiation-indicative-offer" iconOnly />
+          <FixtureStatus value="negotiation-indicative-bid" iconOnly />
+          <FixtureStatus value="negotiation-firm-offer" iconOnly />
+          <FixtureStatus value="negotiation-firm-bid" iconOnly />
+          <FixtureStatus value="negotiation-firm" iconOnly />
+          <FixtureStatus value="negotiation-on-subs" iconOnly />
+          <FixtureStatus value="negotiation-fixed" iconOnly />
+          <FixtureStatus value="negotiation-firm-offer-expired" iconOnly />
+          <FixtureStatus value="negotiation-withdrawn" iconOnly />
+          <FixtureStatus value="negotiation-firm-amendment" iconOnly />
+          <FixtureStatus value="negotiation-subs-expired" iconOnly />
+          <FixtureStatus value="negotiation-subs-failed" iconOnly />
+          <FixtureStatus value="negotiation-on-subs-amendment" iconOnly />
+        </div>
+      </div>
+
+      {/* Contract Statuses */}
+      <div>
+        <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>Contract (Icon Only)</h3>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+          <FixtureStatus value="contract-draft" iconOnly />
+          <FixtureStatus value="contract-working-copy" iconOnly />
+          <FixtureStatus value="contract-final" iconOnly />
+          <FixtureStatus value="contract-rejected" iconOnly />
+        </div>
+      </div>
+
+      {/* Addenda Statuses */}
+      <div>
+        <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>Addenda (Icon Only)</h3>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+          <FixtureStatus value="addenda-draft" iconOnly />
+          <FixtureStatus value="addenda-working-copy" iconOnly />
+          <FixtureStatus value="addenda-final" iconOnly />
+        </div>
+      </div>
+
+      {/* Recap Manager Statuses */}
+      <div>
+        <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>Recap Manager (Icon Only)</h3>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+          <FixtureStatus value="recap-manager-draft" iconOnly />
+          <FixtureStatus value="recap-manager-on-subs" iconOnly />
+          <FixtureStatus value="recap-manager-fully-fixed" iconOnly />
+          <FixtureStatus value="recap-manager-canceled" iconOnly />
+          <FixtureStatus value="recap-manager-failed" iconOnly />
+        </div>
+      </div>
+    </div>
+  ),
+}
+
+export const IconOnlySizes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '24px' }}>
+      <div>
+        <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Small</h3>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+          <FixtureStatus value="negotiation-firm-offer" size="sm" iconOnly />
+          <FixtureStatus value="negotiation-firm" size="sm" iconOnly />
+          <FixtureStatus value="negotiation-fixed" size="sm" iconOnly />
+          <FixtureStatus value="contract-final" size="sm" iconOnly />
+        </div>
+      </div>
+
+      <div>
+        <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Medium (Default)</h3>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+          <FixtureStatus value="negotiation-firm-offer" size="md" iconOnly />
+          <FixtureStatus value="negotiation-firm" size="md" iconOnly />
+          <FixtureStatus value="negotiation-fixed" size="md" iconOnly />
+          <FixtureStatus value="contract-final" size="md" iconOnly />
+        </div>
+      </div>
+
+      <div>
+        <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Large</h3>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+          <FixtureStatus value="negotiation-firm-offer" size="lg" iconOnly />
+          <FixtureStatus value="negotiation-firm" size="lg" iconOnly />
+          <FixtureStatus value="negotiation-fixed" size="lg" iconOnly />
+          <FixtureStatus value="contract-final" size="lg" iconOnly />
+        </div>
+      </div>
+    </div>
+  ),
+}
+
+export const IconOnlyWithoutObjectLabel: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', padding: '24px' }}>
+      <FixtureStatus value="order-draft" iconOnly showObject={false} />
+      <FixtureStatus value="negotiation-firm-offer" iconOnly showObject={false} />
+      <FixtureStatus value="contract-final" iconOnly showObject={false} />
+      <FixtureStatus value="addenda-working-copy" iconOnly showObject={false} />
+      <FixtureStatus value="recap-manager-fully-fixed" iconOnly showObject={false} />
+    </div>
+  ),
+}
