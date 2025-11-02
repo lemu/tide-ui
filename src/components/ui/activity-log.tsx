@@ -1,6 +1,5 @@
 import * as React from "react";
 import { cn } from "../../lib/utils";
-import { Separator } from "./separator";
 import {
   Collapsible,
   CollapsibleTrigger,
@@ -8,24 +7,24 @@ import {
 } from "./collapsible";
 import { Icon } from "./icon";
 
-// Timeline root component with optional automatic separator insertion
-export interface TimelineProps extends React.HTMLAttributes<HTMLDivElement> {
+// ActivityLog root component with optional automatic separator insertion
+export interface ActivityLogProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Time threshold in milliseconds. If the time difference between consecutive
-   * TimelineItem timestamps exceeds this value, a TimelineSeparator will be
+   * ActivityLogItem timestamps exceeds this value, a ActivityLogSeparator will be
    * automatically inserted between them.
    */
   separatorThreshold?: number;
 }
 
-const Timeline = React.forwardRef<HTMLDivElement, TimelineProps>(
+const ActivityLog = React.forwardRef<HTMLDivElement, ActivityLogProps>(
   ({ className, children, separatorThreshold, ...props }, ref) => {
     // If no threshold is set, render children as-is
     if (!separatorThreshold) {
       return (
         <div
           ref={ref}
-          className={cn("flex flex-col gap-[var(--space-sm)]", className)}
+          className={cn("flex flex-col gap-[var(--space-lg)]", className)}
           {...props}
         >
           {children}
@@ -41,17 +40,17 @@ const Timeline = React.forwardRef<HTMLDivElement, TimelineProps>(
       const child = childrenArray[i];
       processedChildren.push(child);
 
-      // Check if this and next child are TimelineItems with timestamps
+      // Check if this and next child are ActivityLogItems with timestamps
       const nextChild = childrenArray[i + 1];
       if (
         nextChild &&
         React.isValidElement(child) &&
         React.isValidElement(nextChild) &&
-        child.type === TimelineItem &&
-        nextChild.type === TimelineItem
+        child.type === ActivityLogItem &&
+        nextChild.type === ActivityLogItem
       ) {
-        const currentTimestamp = (child.props as TimelineItemProps).timestamp;
-        const nextTimestamp = (nextChild.props as TimelineItemProps).timestamp;
+        const currentTimestamp = (child.props as ActivityLogItemProps).timestamp;
+        const nextTimestamp = (nextChild.props as ActivityLogItemProps).timestamp;
 
         if (currentTimestamp && nextTimestamp) {
           // Convert timestamps to Date objects for comparison
@@ -64,7 +63,7 @@ const Timeline = React.forwardRef<HTMLDivElement, TimelineProps>(
           // Insert separator if threshold is exceeded
           if (timeDiff >= separatorThreshold) {
             processedChildren.push(
-              <TimelineSeparator key={`separator-${i}`} />
+              <ActivityLogSeparator key={`separator-${i}`} />
             );
           }
         }
@@ -74,7 +73,7 @@ const Timeline = React.forwardRef<HTMLDivElement, TimelineProps>(
     return (
       <div
         ref={ref}
-        className={cn("flex flex-col gap-[var(--space-sm)]", className)}
+        className={cn("flex flex-col gap-[var(--space-lg)]", className)}
         {...props}
       >
         {processedChildren}
@@ -82,10 +81,10 @@ const Timeline = React.forwardRef<HTMLDivElement, TimelineProps>(
     );
   }
 );
-Timeline.displayName = "Timeline";
+ActivityLog.displayName = "ActivityLog";
 
-// Timeline item component with optional collapsible functionality
-export interface TimelineItemProps extends React.HTMLAttributes<HTMLDivElement> {
+// ActivityLog item component with optional collapsible functionality
+export interface ActivityLogItemProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Whether this timeline item can be expanded/collapsed
    */
@@ -103,12 +102,12 @@ export interface TimelineItemProps extends React.HTMLAttributes<HTMLDivElement> 
    */
   onOpenChange?: (open: boolean) => void;
   /**
-   * Timestamp for this timeline item (used for automatic separator insertion)
+   * Timestamp for this activity log item (used for automatic separator insertion)
    */
   timestamp?: Date | number | string;
 }
 
-const TimelineItem = React.forwardRef<HTMLDivElement, TimelineItemProps>(
+const ActivityLogItem = React.forwardRef<HTMLDivElement, ActivityLogItemProps>(
   (
     {
       className,
@@ -129,7 +128,7 @@ const TimelineItem = React.forwardRef<HTMLDivElement, TimelineItemProps>(
           defaultOpen={defaultOpen}
           open={open}
           onOpenChange={onOpenChange}
-          className={cn("w-full", className)}
+          className={cn("w-full group", className)}
           {...props}
         >
           {children}
@@ -144,47 +143,46 @@ const TimelineItem = React.forwardRef<HTMLDivElement, TimelineItemProps>(
     );
   }
 );
-TimelineItem.displayName = "TimelineItem";
+ActivityLogItem.displayName = "ActivityLogItem";
 
-// Timeline separator - vertical line connector between items
-export interface TimelineSeparatorProps
+// ActivityLog separator - vertical line (1px wide, 12px tall) between items
+export interface ActivityLogSeparatorProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-const TimelineSeparator = React.forwardRef<
+const ActivityLogSeparator = React.forwardRef<
   HTMLDivElement,
-  TimelineSeparatorProps
+  ActivityLogSeparatorProps
 >(({ className, ...props }, ref) => {
   return (
     <div
       ref={ref}
-      className={cn("h-[12px] w-[16px] shrink-0", className)}
+      className={cn("flex items-center ml-[7.5px] -my-[var(--space-sm)]", className)}
       {...props}
     >
-      <Separator layout="vertical" className="h-full" />
+      <div className="w-px h-[12px] bg-[var(--grey-alpha-100)]" />
     </div>
   );
 });
-TimelineSeparator.displayName = "TimelineSeparator";
+ActivityLogSeparator.displayName = "ActivityLogSeparator";
 
-// Timeline header - contains avatar, description, timestamp, and optional chevron
-export interface TimelineHeaderProps
+// ActivityLog header - contains avatar, description, timestamp, and optional chevron
+export interface ActivityLogHeaderProps
   extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * If true, the header will render as a CollapsibleTrigger
-   * This is automatically set when TimelineItem has collapsible={true}
+   * This is automatically set when ActivityLogItem has collapsible={true}
    */
   asCollapsibleTrigger?: boolean;
 }
 
-const TimelineHeader = React.forwardRef<HTMLDivElement, TimelineHeaderProps>(
+const ActivityLogHeader = React.forwardRef<HTMLDivElement, ActivityLogHeaderProps>(
   ({ className, children, asCollapsibleTrigger, ...props }, ref) => {
     const content = (
       <div
         ref={!asCollapsibleTrigger ? ref : undefined}
         className={cn(
           "flex gap-[var(--space-sm)] items-center w-full",
-          asCollapsibleTrigger &&
-            "cursor-pointer hover:opacity-80 transition-opacity",
+          asCollapsibleTrigger && "cursor-pointer",
           className
         )}
         {...props}
@@ -204,41 +202,44 @@ const TimelineHeader = React.forwardRef<HTMLDivElement, TimelineHeaderProps>(
     return content;
   }
 );
-TimelineHeader.displayName = "TimelineHeader";
+ActivityLogHeader.displayName = "ActivityLogHeader";
 
-// Timeline content - expandable detail section
-export interface TimelineContentProps
+// ActivityLog content - expandable detail section
+export interface ActivityLogContentProps
   extends React.ComponentPropsWithoutRef<typeof CollapsibleContent> {}
 
-const TimelineContent = React.forwardRef<
+const ActivityLogContent = React.forwardRef<
   React.ElementRef<typeof CollapsibleContent>,
-  TimelineContentProps
+  ActivityLogContentProps
 >(({ className, children, ...props }, ref) => {
   return (
     <CollapsibleContent
       ref={ref}
-      className={cn("mt-[var(--space-sm)]", className)}
+      className={cn(
+        "mt-[var(--space-sm)] pl-[var(--space-lg)] ml-[7.5px] border-l border-l-[var(--grey-alpha-100)] max-w-[320px]",
+        className
+      )}
       {...props}
     >
       {children}
     </CollapsibleContent>
   );
 });
-TimelineContent.displayName = "TimelineContent";
+ActivityLogContent.displayName = "ActivityLogContent";
 
-// Timeline description - wrapper for the action text content
-export interface TimelineDescriptionProps
+// ActivityLog description - wrapper for the action text content
+export interface ActivityLogDescriptionProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-const TimelineDescription = React.forwardRef<
+const ActivityLogDescription = React.forwardRef<
   HTMLDivElement,
-  TimelineDescriptionProps
+  ActivityLogDescriptionProps
 >(({ className, children, ...props }, ref) => {
   return (
     <div
       ref={ref}
       className={cn(
-        "flex gap-[var(--space-xsm)] items-center shrink text-body-sm text-[var(--color-text-primary)]",
+        "flex gap-[var(--space-xsm)] items-center shrink [&]:text-body-sm text-[var(--color-text-primary)]",
         className
       )}
       {...props}
@@ -247,19 +248,19 @@ const TimelineDescription = React.forwardRef<
     </div>
   );
 });
-TimelineDescription.displayName = "TimelineDescription";
+ActivityLogDescription.displayName = "ActivityLogDescription";
 
-// Timeline time - timestamp display
-export interface TimelineTimeProps
+// ActivityLog time - timestamp display
+export interface ActivityLogTimeProps
   extends React.HTMLAttributes<HTMLParagraphElement> {}
 
-const TimelineTime = React.forwardRef<HTMLParagraphElement, TimelineTimeProps>(
+const ActivityLogTime = React.forwardRef<HTMLParagraphElement, ActivityLogTimeProps>(
   ({ className, children, ...props }, ref) => {
     return (
       <p
         ref={ref}
         className={cn(
-          "text-caption-xsm text-[var(--color-text-tertiary)] shrink-0 whitespace-nowrap",
+          "[&]:text-body-xsm text-[var(--color-text-tertiary)] shrink-0 whitespace-nowrap",
           className
         )}
         {...props}
@@ -269,13 +270,13 @@ const TimelineTime = React.forwardRef<HTMLParagraphElement, TimelineTimeProps>(
     );
   }
 );
-TimelineTime.displayName = "TimelineTime";
+ActivityLogTime.displayName = "ActivityLogTime";
 
-// Timeline chevron - indicator for collapsible items
-export interface TimelineChevronProps
+// ActivityLog chevron - indicator for collapsible items
+export interface ActivityLogChevronProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-const TimelineChevron = React.forwardRef<HTMLDivElement, TimelineChevronProps>(
+const ActivityLogChevron = React.forwardRef<HTMLDivElement, ActivityLogChevronProps>(
   ({ className, ...props }, ref) => {
     return (
       <div ref={ref} className={cn("shrink-0", className)} {...props}>
@@ -283,21 +284,46 @@ const TimelineChevron = React.forwardRef<HTMLDivElement, TimelineChevronProps>(
           name="chevron-down"
           size="sm"
           color="tertiary"
-          className="transition-transform duration-200 [.group[data-state=open]_&]:rotate-180"
+          className="[.group[data-state=open]_&]:rotate-180"
         />
       </div>
     );
   }
 );
-TimelineChevron.displayName = "TimelineChevron";
+ActivityLogChevron.displayName = "ActivityLogChevron";
+
+// ActivityLog value - displays changed values with badge styling
+export interface ActivityLogValueProps
+  extends React.HTMLAttributes<HTMLDivElement> {}
+
+const ActivityLogValue = React.forwardRef<HTMLDivElement, ActivityLogValueProps>(
+  ({ className, children, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "inline-flex items-center gap-[var(--space-xsm)] px-[4px] py-[2px] bg-[var(--color-background-neutral-subtle)] border border-[var(--color-border-primary-bold)] rounded-xsm shrink-0",
+          className
+        )}
+        {...props}
+      >
+        <span className="[&]:text-body-medium-xsm text-[var(--color-text-primary)] whitespace-nowrap">
+          {children}
+        </span>
+      </div>
+    );
+  }
+);
+ActivityLogValue.displayName = "ActivityLogValue";
 
 export {
-  Timeline,
-  TimelineItem,
-  TimelineSeparator,
-  TimelineHeader,
-  TimelineContent,
-  TimelineDescription,
-  TimelineTime,
-  TimelineChevron,
+  ActivityLog,
+  ActivityLogItem,
+  ActivityLogSeparator,
+  ActivityLogHeader,
+  ActivityLogContent,
+  ActivityLogDescription,
+  ActivityLogTime,
+  ActivityLogChevron,
+  ActivityLogValue,
 };

@@ -11,18 +11,50 @@ const avatarVariants = cva(
         xxs: "h-4 w-4", // 16px
         xs: "h-[var(--size-sm)] w-[var(--size-sm)]", // 20px
         sm: "h-[var(--size-md)] w-[var(--size-md)]", // 24px
-        md: "h-[var(--size-lg)] w-[var(--size-lg)]", // 32px  
+        md: "h-[var(--size-lg)] w-[var(--size-lg)]", // 32px
         lg: "h-[var(--size-xlg)] w-[var(--size-xlg)]", // 48px
         xl: "h-[var(--size-2xlg)] w-[var(--size-2xlg)]", // 64px
       },
-      shape: {
-        circle: "rounded-full",
-        rounded: "rounded-md",
+      type: {
+        user: "rounded-full",
+        organization: "",
       },
     },
+    compoundVariants: [
+      {
+        type: "organization",
+        size: "xxs",
+        className: "rounded-[2px]",
+      },
+      {
+        type: "organization",
+        size: "xs",
+        className: "rounded-[3px]",
+      },
+      {
+        type: "organization",
+        size: "sm",
+        className: "rounded-sm",
+      },
+      {
+        type: "organization",
+        size: "md",
+        className: "rounded-md",
+      },
+      {
+        type: "organization",
+        size: "lg",
+        className: "rounded-md",
+      },
+      {
+        type: "organization",
+        size: "xl",
+        className: "rounded-lg",
+      },
+    ],
     defaultVariants: {
       size: "md",
-      shape: "circle",
+      type: "user",
     },
   }
 );
@@ -32,16 +64,16 @@ const avatarFallbackVariants = cva(
   {
     variants: {
       size: {
-        xxs: "text-caption-xsm",
-        xs: "text-caption-xsm",
+        xxs: "text-[7px] leading-none",
+        xs: "text-[9px] leading-none",
         sm: "text-caption-sm",
-        md: "text-label-sm", 
+        md: "text-label-sm",
         lg: "text-label-md",
         xl: "text-heading-sm",
       },
-      shape: {
-        circle: "rounded-full",
-        rounded: "rounded-md",
+      type: {
+        user: "rounded-full",
+        organization: "",
       },
       variant: {
         information: "bg-[var(--color-background-information-bold)]",
@@ -52,9 +84,41 @@ const avatarFallbackVariants = cva(
         magenta: "bg-[var(--magenta-500)]",
       },
     },
+    compoundVariants: [
+      {
+        type: "organization",
+        size: "xxs",
+        className: "rounded-[2px]",
+      },
+      {
+        type: "organization",
+        size: "xs",
+        className: "rounded-[3px]",
+      },
+      {
+        type: "organization",
+        size: "sm",
+        className: "rounded-sm",
+      },
+      {
+        type: "organization",
+        size: "md",
+        className: "rounded-md",
+      },
+      {
+        type: "organization",
+        size: "lg",
+        className: "rounded-md",
+      },
+      {
+        type: "organization",
+        size: "xl",
+        className: "rounded-lg",
+      },
+    ],
     defaultVariants: {
       size: "md",
-      shape: "circle",
+      type: "user",
       variant: "information",
     },
   }
@@ -67,10 +131,10 @@ interface AvatarProps
 const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,
   AvatarProps
->(({ className, size, shape, ...props }, ref) => (
+>(({ className, size, type, ...props }, ref) => (
   <AvatarPrimitive.Root
     ref={ref}
-    className={cn(avatarVariants({ size, shape }), className)}
+    className={cn(avatarVariants({ size, type }), className)}
     {...props}
   />
 ));
@@ -98,10 +162,10 @@ interface AvatarFallbackProps
 const AvatarFallback = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Fallback>,
   AvatarFallbackProps
->(({ className, size, shape, variant, ...props }, ref) => (
+>(({ className, size, type, variant, ...props }, ref) => (
   <AvatarPrimitive.Fallback
     ref={ref}
-    className={cn(avatarFallbackVariants({ size, shape, variant }), className)}
+    className={cn(avatarFallbackVariants({ size, type, variant }), className)}
     {...props}
   />
 ));

@@ -108,6 +108,13 @@ const iconTranslateClasses = {
   lg: "translate-y-[1px]",
 } as const;
 
+// Size-specific gap between icon and label
+const gapClasses = {
+  sm: "gap-[var(--space-xsm)]",
+  md: "gap-[var(--space-sm)]",
+  lg: "gap-[var(--space-sm)]",
+} as const;
+
 // Color mapping for text to match icon colors
 const textColorClasses: Partial<Record<IconColor, string>> = {
   primary: "text-[var(--color-text-primary)]",
@@ -140,8 +147,8 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
   (
     {
       value,
-      size = "md",
-      showObject = true,
+      size = "sm",
+      showObject = false,
       coloredLabel = true,
       iconOnly = false,
       className,
@@ -162,7 +169,8 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
         <div
           ref={ref}
           className={cn(
-            "inline-flex items-center gap-[var(--space-sm)] leading-none",
+            "inline-flex items-center leading-none",
+            gapClasses[size],
             textSizeClasses[size],
             className,
           )}
@@ -217,7 +225,8 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
       <div
         ref={ref}
         className={cn(
-          "inline-flex items-center gap-[var(--space-sm)] leading-none",
+          "inline-flex items-center leading-none",
+          gapClasses[size],
           textSizeClasses[size],
           className,
         )}

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Avatar, AvatarImage, AvatarFallback } from '../components/ui/avatar'
+import { AvatarGroup } from '../components/ui/avatar-group'
 import { Icon } from '../components/ui/icon'
 import { Badge } from '../components/ui/badge'
 import { Separator } from '../components/ui/separator'
@@ -16,9 +17,9 @@ const meta: Meta<typeof Avatar> = {
       control: { type: 'select' },
       options: ['xxs', 'xs', 'sm', 'md', 'lg', 'xl'],
     },
-    shape: {
+    type: {
       control: { type: 'select' },
-      options: ['circle', 'rounded'],
+      options: ['user', 'organization'],
     },
   },
 } satisfies Meta<typeof Avatar>
@@ -27,66 +28,127 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  render: () => (
-    <Avatar>
+  args: {
+    size: 'md',
+    type: 'user',
+  },
+  render: (args) => (
+    <Avatar {...args}>
       <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="User" />
-      <AvatarFallback>JD</AvatarFallback>
+      <AvatarFallback size={args.size} type={args.type}>JD</AvatarFallback>
     </Avatar>
   ),
 }
 
 export const WithFallback: Story = {
-  render: () => (
-    <Avatar>
-      <AvatarFallback variant="information">JD</AvatarFallback>
+  args: {
+    size: 'md',
+    type: 'user',
+  },
+  render: (args) => (
+    <Avatar {...args}>
+      <AvatarFallback size={args.size} type={args.type} variant="information">JD</AvatarFallback>
     </Avatar>
   ),
 }
 
 export const Sizes: Story = {
   render: () => (
-    <div className="flex items-center gap-[var(--space-md)]">
-      <div className="flex flex-col items-center gap-[var(--space-sm)]">
+    <div className="flex flex-col gap-[var(--space-xlg)] items-start">
+      <div className="flex flex-col gap-[var(--space-sm)]">
+        <span className="text-caption-sm text-[var(--color-text-tertiary)]">XXS (16px)</span>
         <Avatar size="xxs">
           <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=16&h=16&fit=crop&crop=face" alt="Extra Extra Small" />
-          <AvatarFallback size="xxs">XX</AvatarFallback>
+          <AvatarFallback size="xxs" variant="information">JD</AvatarFallback>
         </Avatar>
-        <span className="text-caption-sm text-[var(--color-text-tertiary)]">XXS</span>
       </div>
-      <div className="flex flex-col items-center gap-[var(--space-sm)]">
+
+      <div className="flex flex-col gap-[var(--space-sm)]">
+        <span className="text-caption-sm text-[var(--color-text-tertiary)]">XS (20px)</span>
         <Avatar size="xs">
           <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=20&h=20&fit=crop&crop=face" alt="Extra Small" />
-          <AvatarFallback size="xs">XS</AvatarFallback>
+          <AvatarFallback size="xs" variant="information">JD</AvatarFallback>
         </Avatar>
-        <span className="text-caption-sm text-[var(--color-text-tertiary)]">XS</span>
       </div>
-      <div className="flex flex-col items-center gap-[var(--space-sm)]">
+
+      <div className="flex flex-col gap-[var(--space-sm)]">
+        <span className="text-caption-sm text-[var(--color-text-tertiary)]">SM (24px)</span>
         <Avatar size="sm">
           <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=24&h=24&fit=crop&crop=face" alt="Small" />
-          <AvatarFallback size="sm">SM</AvatarFallback>
+          <AvatarFallback size="sm" variant="information">JD</AvatarFallback>
         </Avatar>
-        <span className="text-caption-sm text-[var(--color-text-tertiary)]">Small</span>
       </div>
-      <div className="flex flex-col items-center gap-[var(--space-sm)]">
+
+      <div className="flex flex-col gap-[var(--space-sm)]">
+        <span className="text-caption-sm text-[var(--color-text-tertiary)]">MD (32px)</span>
         <Avatar size="md">
           <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="Medium" />
-          <AvatarFallback size="md">MD</AvatarFallback>
+          <AvatarFallback size="md" variant="information">JD</AvatarFallback>
         </Avatar>
-        <span className="text-caption-sm text-[var(--color-text-tertiary)]">Medium</span>
       </div>
-      <div className="flex flex-col items-center gap-[var(--space-sm)]">
+
+      <div className="flex flex-col gap-[var(--space-sm)]">
+        <span className="text-caption-sm text-[var(--color-text-tertiary)]">LG (48px)</span>
         <Avatar size="lg">
           <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=48&h=48&fit=crop&crop=face" alt="Large" />
-          <AvatarFallback size="lg">LG</AvatarFallback>
+          <AvatarFallback size="lg" variant="information">JD</AvatarFallback>
         </Avatar>
-        <span className="text-caption-sm text-[var(--color-text-tertiary)]">Large</span>
       </div>
-      <div className="flex flex-col items-center gap-[var(--space-sm)]">
+
+      <div className="flex flex-col gap-[var(--space-sm)]">
+        <span className="text-caption-sm text-[var(--color-text-tertiary)]">XL (64px)</span>
         <Avatar size="xl">
           <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop&crop=face" alt="Extra Large" />
-          <AvatarFallback size="xl">XL</AvatarFallback>
+          <AvatarFallback size="xl" variant="information">JD</AvatarFallback>
         </Avatar>
-        <span className="text-caption-sm text-[var(--color-text-tertiary)]">Extra Large</span>
+      </div>
+    </div>
+  ),
+}
+
+export const SizesWithFallback: Story = {
+  render: () => (
+    <div className="flex flex-col gap-[var(--space-xlg)] items-start">
+      <div className="flex flex-col gap-[var(--space-sm)]">
+        <span className="text-caption-sm text-[var(--color-text-tertiary)]">XXS (16px)</span>
+        <Avatar size="xxs">
+          <AvatarFallback size="xxs" variant="information">JD</AvatarFallback>
+        </Avatar>
+      </div>
+
+      <div className="flex flex-col gap-[var(--space-sm)]">
+        <span className="text-caption-sm text-[var(--color-text-tertiary)]">XS (20px)</span>
+        <Avatar size="xs">
+          <AvatarFallback size="xs" variant="information">JD</AvatarFallback>
+        </Avatar>
+      </div>
+
+      <div className="flex flex-col gap-[var(--space-sm)]">
+        <span className="text-caption-sm text-[var(--color-text-tertiary)]">SM (24px)</span>
+        <Avatar size="sm">
+          <AvatarFallback size="sm" variant="information">JD</AvatarFallback>
+        </Avatar>
+      </div>
+
+      <div className="flex flex-col gap-[var(--space-sm)]">
+        <span className="text-caption-sm text-[var(--color-text-tertiary)]">MD (32px)</span>
+        <Avatar size="md">
+          <AvatarFallback size="md" variant="information">JD</AvatarFallback>
+        </Avatar>
+      </div>
+
+      <div className="flex flex-col gap-[var(--space-sm)]">
+        <span className="text-caption-sm text-[var(--color-text-tertiary)]">LG (48px)</span>
+        <Avatar size="lg">
+          <AvatarFallback size="lg" variant="information">JD</AvatarFallback>
+        </Avatar>
+      </div>
+
+      <div className="flex flex-col gap-[var(--space-sm)]">
+        <span className="text-caption-sm text-[var(--color-text-tertiary)]">XL (64px)</span>
+        <Avatar size="xl">
+          <AvatarFallback size="xl" variant="information">JD</AvatarFallback>
+        </Avatar>
       </div>
     </div>
   ),
@@ -164,39 +226,39 @@ export const IconFallbacks: Story = {
   ),
 }
 
-// Avatar shapes
-export const Shapes: Story = {
+// Avatar types
+export const Types: Story = {
   render: () => (
     <div className="space-y-[var(--space-lg)]">
       <div>
-        <h3 className="text-heading-sm mb-[var(--space-sm)]">Circular (Default)</h3>
+        <h3 className="text-heading-sm mb-[var(--space-sm)]">User (Default)</h3>
         <div className="flex items-center gap-[var(--space-sm)]">
-          <Avatar shape="circle">
+          <Avatar type="user">
             <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="User" />
-            <AvatarFallback shape="circle" variant="information">JD</AvatarFallback>
+            <AvatarFallback type="user" variant="information">JD</AvatarFallback>
           </Avatar>
-          <Avatar shape="circle">
-            <AvatarFallback shape="circle" variant="success">AB</AvatarFallback>
+          <Avatar type="user">
+            <AvatarFallback type="user" variant="success">AB</AvatarFallback>
           </Avatar>
-          <Avatar shape="circle">
-            <AvatarFallback shape="circle" variant="magenta">
+          <Avatar type="user">
+            <AvatarFallback type="user" variant="magenta">
               <Icon name="user" size="sm" color="inverse" />
             </AvatarFallback>
           </Avatar>
         </div>
       </div>
       <div>
-        <h3 className="text-heading-sm mb-[var(--space-sm)]">Rounded</h3>
+        <h3 className="text-heading-sm mb-[var(--space-sm)]">Organization</h3>
         <div className="flex items-center gap-[var(--space-sm)]">
-          <Avatar shape="rounded">
+          <Avatar type="organization">
             <AvatarImage src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt="User" />
-            <AvatarFallback shape="rounded" variant="information">EM</AvatarFallback>
+            <AvatarFallback type="organization" variant="information">EM</AvatarFallback>
           </Avatar>
-          <Avatar shape="rounded">
-            <AvatarFallback shape="rounded" variant="success">CD</AvatarFallback>
+          <Avatar type="organization">
+            <AvatarFallback type="organization" variant="success">CD</AvatarFallback>
           </Avatar>
-          <Avatar shape="rounded">
-            <AvatarFallback shape="rounded" variant="success">
+          <Avatar type="organization">
+            <AvatarFallback type="organization" variant="success">
               <Icon name="circle-check-big" size="sm" color="inverse" />
             </AvatarFallback>
           </Avatar>
@@ -313,44 +375,44 @@ export const AvatarStack: Story = {
     <div className="space-y-[var(--space-lg)]">
       <div className="space-y-[var(--space-md)]">
         <div className="text-body-medium-sm">Project Team (5 members)</div>
-        <div className="flex items-center">
-          <Avatar size="sm" className="border-2 border-[var(--color-surface-primary)]">
-            <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="User 1" />
-            <AvatarFallback size="sm" variant="information">JD</AvatarFallback>
-          </Avatar>
-          <Avatar size="sm" className="border-2 border-[var(--color-surface-primary)] -ml-[var(--space-sm)]">
-            <AvatarImage src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face" alt="User 2" />
-            <AvatarFallback size="sm" variant="magenta">SW</AvatarFallback>
-          </Avatar>
-          <Avatar size="sm" className="border-2 border-[var(--color-surface-primary)] -ml-[var(--space-sm)]">
-            <AvatarFallback size="sm" variant="success">AL</AvatarFallback>
-          </Avatar>
-          <Avatar size="sm" className="border-2 border-[var(--color-surface-primary)] -ml-[var(--space-sm)]">
-            <AvatarFallback size="sm" variant="warning">EM</AvatarFallback>
-          </Avatar>
-          <Avatar size="sm" className="border-2 border-[var(--color-surface-primary)] -ml-[var(--space-sm)]">
-            <AvatarFallback size="sm" className="bg-[var(--color-background-inverse)] text-[var(--color-text-primary)]">+1</AvatarFallback>
-          </Avatar>
+        <div className="flex items-center gap-[var(--space-xsm)]">
+          <AvatarGroup size="sm">
+            <Avatar size="sm">
+              <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="User 1" />
+              <AvatarFallback size="sm" variant="information">JD</AvatarFallback>
+            </Avatar>
+            <Avatar size="sm">
+              <AvatarImage src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face" alt="User 2" />
+              <AvatarFallback size="sm" variant="magenta">SW</AvatarFallback>
+            </Avatar>
+            <Avatar size="sm">
+              <AvatarFallback size="sm" variant="success">AL</AvatarFallback>
+            </Avatar>
+            <Avatar size="sm">
+              <AvatarFallback size="sm" variant="warning">EM</AvatarFallback>
+            </Avatar>
+          </AvatarGroup>
+          <span className="text-body-medium-sm text-[var(--color-text-tertiary)]">+1</span>
         </div>
       </div>
 
       <div className="space-y-[var(--space-md)]">
         <div className="text-body-medium-sm">Design Team (8+ members)</div>
-        <div className="flex items-center">
-          <Avatar size="md" className="border-2 border-[var(--color-surface-primary)]">
-            <AvatarImage src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt="User 1" />
-            <AvatarFallback size="md" variant="information">MJ</AvatarFallback>
-          </Avatar>
-          <Avatar size="md" className="border-2 border-[var(--color-surface-primary)] -ml-[var(--space-md)]">
-            <AvatarImage src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt="User 2" />
-            <AvatarFallback size="md" variant="magenta">ED</AvatarFallback>
-          </Avatar>
-          <Avatar size="md" className="border-2 border-[var(--color-surface-primary)] -ml-[var(--space-md)]">
-            <AvatarFallback size="md" variant="success">RH</AvatarFallback>
-          </Avatar>
-          <Avatar size="md" className="border-2 border-[var(--color-surface-primary)] -ml-[var(--space-md)]">
-            <AvatarFallback size="md" className="bg-[var(--color-background-inverse)] text-[var(--color-text-primary)]">+5</AvatarFallback>
-          </Avatar>
+        <div className="flex items-center gap-[var(--space-xsm)]">
+          <AvatarGroup size="md">
+            <Avatar size="md">
+              <AvatarImage src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt="User 1" />
+              <AvatarFallback size="md" variant="information">MJ</AvatarFallback>
+            </Avatar>
+            <Avatar size="md">
+              <AvatarImage src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt="User 2" />
+              <AvatarFallback size="md" variant="magenta">ED</AvatarFallback>
+            </Avatar>
+            <Avatar size="md">
+              <AvatarFallback size="md" variant="success">RH</AvatarFallback>
+            </Avatar>
+          </AvatarGroup>
+          <span className="text-body-medium-md text-[var(--color-text-secondary)]">+5</span>
         </div>
       </div>
     </div>
@@ -364,9 +426,9 @@ export const CompanyAvatars: Story = {
       <div>
         <h3 className="text-heading-sm mb-[var(--space-sm)]">Company Logo</h3>
         <div className="flex items-center gap-[var(--space-md)]">
-          <Avatar shape="rounded">
+          <Avatar type="organization">
             <AvatarImage src="https://useful-toucan-91.convex.cloud/api/storage/5e36a31d-3f0a-4bb0-95db-f5b1c8e8af93" alt="Company Logo" />
-            <AvatarFallback shape="rounded" variant="information">CO</AvatarFallback>
+            <AvatarFallback type="organization" variant="information">CO</AvatarFallback>
           </Avatar>
         </div>
       </div>
@@ -374,17 +436,17 @@ export const CompanyAvatars: Story = {
       <div>
         <h3 className="text-heading-sm mb-[var(--space-sm)]">Company Initials</h3>
         <div className="flex items-center gap-[var(--space-md)]">
-          <Avatar shape="rounded">
-            <AvatarFallback shape="rounded" variant="information">AC</AvatarFallback>
+          <Avatar type="organization">
+            <AvatarFallback type="organization" variant="information">AC</AvatarFallback>
           </Avatar>
-          <Avatar shape="rounded">
-            <AvatarFallback shape="rounded" variant="magenta">AB</AvatarFallback>
+          <Avatar type="organization">
+            <AvatarFallback type="organization" variant="magenta">AB</AvatarFallback>
           </Avatar>
-          <Avatar shape="rounded">
-            <AvatarFallback shape="rounded" variant="success">AG</AvatarFallback>
+          <Avatar type="organization">
+            <AvatarFallback type="organization" variant="success">AG</AvatarFallback>
           </Avatar>
-          <Avatar shape="rounded">
-            <AvatarFallback shape="rounded" variant="warning">AM</AvatarFallback>
+          <Avatar type="organization">
+            <AvatarFallback type="organization" variant="warning">AM</AvatarFallback>
           </Avatar>
         </div>
       </div>
@@ -392,23 +454,23 @@ export const CompanyAvatars: Story = {
       <div>
         <h3 className="text-heading-sm mb-[var(--space-sm)]">Brand Icons</h3>
         <div className="flex items-center gap-[var(--space-md)]">
-          <Avatar shape="rounded">
-            <AvatarFallback shape="rounded" variant="information">
+          <Avatar type="organization">
+            <AvatarFallback type="organization" variant="information">
               <Icon name="package" size="sm" color="inverse" />
             </AvatarFallback>
           </Avatar>
-          <Avatar shape="rounded">
-            <AvatarFallback shape="rounded" variant="magenta">
+          <Avatar type="organization">
+            <AvatarFallback type="organization" variant="magenta">
               <Icon name="ship" size="sm" color="inverse" />
             </AvatarFallback>
           </Avatar>
-          <Avatar shape="rounded">
-            <AvatarFallback shape="rounded" variant="success">
+          <Avatar type="organization">
+            <AvatarFallback type="organization" variant="success">
               <Icon name="star" size="sm" color="inverse" />
             </AvatarFallback>
           </Avatar>
-          <Avatar shape="rounded">
-            <AvatarFallback shape="rounded" variant="warning">
+          <Avatar type="organization">
+            <AvatarFallback type="organization" variant="warning">
               <Icon name="handshake" size="sm" color="inverse" />
             </AvatarFallback>
           </Avatar>

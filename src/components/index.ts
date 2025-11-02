@@ -10,6 +10,8 @@ export { Chart, generateChartColors, createChartConfig, chartColorSchemes } from
 export type { ChartProps, ChartConfig, ChartDataPoint, ChartType, ChartColorScheme } from './ui/chart'
 export { Avatar, AvatarImage, AvatarFallback, avatarVariants, avatarFallbackVariants } from './ui/avatar'
 export type { AvatarProps, AvatarFallbackProps } from './ui/avatar'
+export { AvatarGroup } from './ui/avatar-group'
+export type { AvatarGroupProps, AvatarGroupSize } from './ui/avatar-group'
 
 export { Badge } from './ui/badge'
 export type { BadgeProps } from './ui/badge'
@@ -49,27 +51,53 @@ export { Switch } from './ui/switch'
 export { Textarea } from './ui/textarea'
 export type { TextareaProps } from './ui/textarea'
 
-// Timeline components
+// ActivityLog components
 export {
-  Timeline,
-  TimelineItem,
-  TimelineSeparator,
-  TimelineHeader,
-  TimelineContent,
-  TimelineDescription,
-  TimelineTime,
-  TimelineChevron,
-} from './ui/timeline'
+  ActivityLog,
+  ActivityLogItem,
+  ActivityLogSeparator,
+  ActivityLogHeader,
+  ActivityLogContent,
+  ActivityLogDescription,
+  ActivityLogTime,
+  ActivityLogChevron,
+  ActivityLogValue,
+} from './ui/activity-log'
 export type {
-  TimelineProps,
-  TimelineItemProps,
-  TimelineSeparatorProps,
-  TimelineHeaderProps,
-  TimelineContentProps,
-  TimelineDescriptionProps,
-  TimelineTimeProps,
-  TimelineChevronProps,
-} from './ui/timeline'
+  ActivityLogProps,
+  ActivityLogItemProps,
+  ActivityLogSeparatorProps,
+  ActivityLogHeaderProps,
+  ActivityLogContentProps,
+  ActivityLogDescriptionProps,
+  ActivityLogTimeProps,
+  ActivityLogChevronProps,
+  ActivityLogValueProps,
+} from './ui/activity-log'
+
+// AttributesList components
+export {
+  AttributesList,
+  AttributesSeparator,
+  AttributesGroup,
+  AttributesItem,
+  AttributesRow,
+  AttributesLabel,
+  AttributesValue,
+  AttributesContent,
+  AttributesChevron,
+} from './ui/attributes-list'
+export type {
+  AttributesListProps,
+  AttributesSeparatorProps,
+  AttributesGroupProps,
+  AttributesItemProps,
+  AttributesRowProps,
+  AttributesLabelProps,
+  AttributesValueProps,
+  AttributesContentProps,
+  AttributesChevronProps,
+} from './ui/attributes-list'
 
 // Editable components
 export { Editable, EditablePreview, EditableInput, EditableDisplay, EditableField } from './ui/editable'
