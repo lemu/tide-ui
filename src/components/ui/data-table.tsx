@@ -2024,9 +2024,24 @@ export function DataTable<TData, TValue>({
     // Check if this column has a custom cell renderer
     const hasCustomRenderer = columnsWithCustomRenderers.has(cell.column.id)
 
-    // If there's a custom cell renderer, use it (preserve transformations like uppercase, formatting, etc.)
+    // If there's a custom cell renderer, render it and apply highlighting to the JSX tree
     if (hasCustomRenderer) {
-      return flexRender(cell.column.columnDef.cell, cell.getContext())
+      const customJSX = flexRender(cell.column.columnDef.cell, cell.getContext())
+
+      // Safety check
+      if (customJSX == null) {
+        return customJSX
+      }
+
+      // Check if the content contains matching text
+      const hasMatch = hasMatchingText(customJSX, debouncedGlobalFilter)
+
+      if (!hasMatch) {
+        return customJSX
+      }
+
+      // Apply highlighting to the JSX tree
+      return applyHighlightToReactNode(customJSX, debouncedGlobalFilter)
     }
 
     // For columns without custom renderers, apply highlighting to raw values
@@ -2038,7 +2053,7 @@ export function DataTable<TData, TValue>({
 
     // Fallback: render normally for null/undefined/complex values
     return flexRender(cell.column.columnDef.cell, cell.getContext())
-  }, [enableGlobalSearch, debouncedGlobalFilter, highlightMatches, columnsWithCustomRenderers])
+  }, [enableGlobalSearch, debouncedGlobalFilter, highlightMatches, columnsWithCustomRenderers, hasMatchingText, applyHighlightToReactNode])
 
   const renderAggregatedCellWithHighlighting = React.useCallback((cell: any): React.ReactNode => {
     // Only apply highlighting when global search is enabled and there's a search term
