@@ -1097,12 +1097,39 @@ const tradeColumns: ColumnDef<TradeData>[] = [
     cell: ({ row }) => (
       <Badge variant="outline">{row.getValue('instrument')}</Badge>
     ),
+    aggregatedCell: ({ row }) => {
+      // Show unique instruments in grouped row
+      const subRows = row.subRows || []
+      const instruments = [...new Set(subRows.map((r: any) => r.original.instrument).filter(Boolean))]
+      if (instruments.length === 0) return null
+
+      // If 4+ instruments, show count instead of all badges
+      if (instruments.length >= 4) {
+        return (
+          <span className="text-[var(--color-text-secondary)] text-body-sm">
+            {instruments.length} instruments
+          </span>
+        )
+      }
+
+      // Show individual badges for 1-3 instruments
+      return (
+        <div className="flex gap-[var(--space-xs)] flex-wrap">
+          {instruments.map((instrument: string) => (
+            <Badge key={instrument} variant="outline">
+              {instrument}
+            </Badge>
+          ))}
+        </div>
+      )
+    },
   },
   {
     accessorKey: 'side',
     header: 'Side',
     cell: ({ row }) => {
       const side = row.getValue('side') as string
+      if (!side) return null
       return (
         <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
           {side.toUpperCase()}
@@ -1125,6 +1152,18 @@ const tradeColumns: ColumnDef<TradeData>[] = [
     cell: ({ row }) => (
       <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
     ),
+    aggregatedCell: ({ row }) => {
+      const subRows = row.subRows || []
+      const prices = subRows.map((r: any) => r.original.price).filter((v): v is number => v != null)
+      if (prices.length === 0) return null
+      const min = Math.min(...prices)
+      const max = Math.max(...prices)
+      return (
+        <div className="text-right tabular-nums text-[var(--color-text-secondary)] text-body-sm">
+          ${min.toFixed(2)} - ${max.toFixed(2)}
+        </div>
+      )
+    },
   },
   {
     accessorKey: 'notional',
@@ -1133,6 +1172,18 @@ const tradeColumns: ColumnDef<TradeData>[] = [
     cell: ({ row }) => (
       <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
     ),
+    aggregatedCell: ({ row }) => {
+      const subRows = row.subRows || []
+      const notionals = subRows.map((r: any) => r.original.notional).filter((v): v is number => v != null)
+      if (notionals.length === 0) return null
+      const min = Math.min(...notionals)
+      const max = Math.max(...notionals)
+      return (
+        <div className="text-right tabular-nums font-medium text-[var(--color-text-secondary)] text-body-sm">
+          ${min.toFixed(2)} - ${max.toFixed(2)}
+        </div>
+      )
+    },
   },
   {
     accessorKey: 'trader',
@@ -1146,6 +1197,7 @@ const tradeColumns: ColumnDef<TradeData>[] = [
     header: 'Status',
     cell: ({ row }) => {
       const status = row.getValue('status') as string
+      if (!status) return null
       const variants = {
         pending: 'secondary',
         confirmed: 'default',
@@ -1157,6 +1209,93 @@ const tradeColumns: ColumnDef<TradeData>[] = [
           {status.charAt(0).toUpperCase() + status.slice(1)}
         </Badge>
       )
+    },
+    aggregatedCell: ({ row }) => {
+      // Show unique values with counts in grouped row
+      const subRows = row.subRows || []
+      const statusCounts = subRows.reduce((acc: Record<string, number>, r: any) => {
+        const status = r.original.status
+        if (status) acc[status] = (acc[status] || 0) + 1
+        return acc
+      }, {})
+      const statuses = Object.keys(statusCounts)
+      if (statuses.length === 0) return null
+      const variants = {
+        pending: 'secondary',
+        confirmed: 'default',
+        settled: 'default',
+        cancelled: 'secondary'
+      }
+      return (
+        <div className="flex gap-[var(--space-xs)] flex-wrap">
+          {statuses.map((status: string) => (
+            <Badge key={status} variant={variants[status as keyof typeof variants] as any}>
+              {status.charAt(0).toUpperCase() + status.slice(1)} ({statusCounts[status]})
+            </Badge>
+          ))}
+        </div>
+      )
+    },
+  },
+]
+
+// Simplified columns for group-preserving search (no custom renderers)
+// This allows highlighting to work directly on cell values
+const tradeColumnsSimple: ColumnDef<TradeData>[] = [
+  {
+    accessorKey: 'id',
+    header: 'Trade ID',
+    meta: { align: 'left' },
+  },
+  {
+    accessorKey: 'counterparty',
+    header: 'Counterparty',
+    meta: { align: 'left' },
+  },
+  {
+    accessorKey: 'instrument',
+    header: 'Instrument',
+    meta: { align: 'left' },
+  },
+  {
+    accessorKey: 'side',
+    header: 'Side',
+    meta: { align: 'left' },
+    cell: ({ row }) => {
+      const side = row.getValue('side') as string | undefined
+      return side ? side.toUpperCase() : ''
+    },
+  },
+  {
+    accessorKey: 'quantity',
+    header: 'Quantity',
+    meta: { align: 'right' },
+    cell: ({ row }) => formatNumber(row.getValue('quantity')),
+  },
+  {
+    accessorKey: 'price',
+    header: 'Price',
+    meta: { align: 'right' },
+    cell: ({ row }) => formatCurrency(row.getValue('price')),
+  },
+  {
+    accessorKey: 'notional',
+    header: 'Notional',
+    meta: { align: 'right' },
+    cell: ({ row }) => formatCurrency(row.getValue('notional')),
+  },
+  {
+    accessorKey: 'trader',
+    header: 'Trader',
+    meta: { align: 'left' },
+  },
+  {
+    accessorKey: 'status',
+    header: 'Status',
+    meta: { align: 'left' },
+    cell: ({ row }) => {
+      const status = row.getValue('status') as string | undefined
+      return status ? status.charAt(0).toUpperCase() + status.slice(1) : ''
     },
   },
 ]
@@ -1685,6 +1824,7 @@ export const ColumnResizing: Story = {
         header: 'Status',
         cell: ({ row }) => {
           const status = row.getValue('status') as string
+          if (!status) return null
           const variants = {
             pending: 'secondary',
             confirmed: 'default',
@@ -2534,6 +2674,105 @@ This feature is useful for:
   },
 }
 
+export const GroupPreservingSearch: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: `Demonstrates group-preserving search functionality. When searching with groups enabled,
+if any row in a group matches the search term, the entire group is shown and automatically expanded.
+
+## Key Features
+
+- **Group Preservation**: Groups remain intact during search - never flattened or broken apart
+- **Auto-Expand**: Groups containing matches automatically expand to show all members
+- **Visual Highlighting**: Matched search terms are highlighted with a subtle background
+- **Smart Filtering**: Searches across all columns, showing complete groups when any member matches
+
+## Try It Out
+
+Search for terms like:
+- "AAPL" or "GOOGL" (instruments)
+- "John" or "Sarah" (trader names)
+- "Buy" or "Sell" (sides)
+- "Goldman" or "Morgan" (counterparties)
+
+Notice how the entire group stays visible and expands automatically, with matched terms highlighted.`,
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(100))
+
+    // Use simplified columns for highlighting to work properly
+    // Memoize to ensure stable column references across renders
+    const groupingColumns = useMemo(() => {
+      return tradeColumnsSimple.map(col => {
+        if (col.accessorKey === 'instrument' || col.accessorKey === 'side' || col.accessorKey === 'counterparty' || col.accessorKey === 'trader' || col.accessorKey === 'status') {
+          return {
+            ...col,
+            enableGrouping: true,
+          }
+        }
+        return col
+      })
+    }, [])
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Group-Preserving Search</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              This example demonstrates the group-preserving search mode. When you search, entire groups
+              are preserved - if any row in a group matches, all rows in that group remain visible.
+              Matching groups automatically expand and matched terms are highlighted.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)] mb-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Try using the global search above the table. Groups containing your search term will
+                  automatically expand with matches highlighted in yellow.
+                </span>
+              </div>
+            </div>
+            <div className="bg-[var(--color-background-warning-subtle)] border border-[var(--color-border-warning-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="lightbulb" className="h-4 w-4 text-[var(--color-text-warning)]" />
+                <span className="text-body-sm text-[var(--color-text-warning)]">
+                  <strong>Tip:</strong> Use the settings menu (gear icon) to try different grouping options
+                  (Instrument, Counterparty, Trader, Status, Side) and see how the search preserves the group structure.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={groupingColumns}
+            enableGrouping={true}
+            enableExpanding={true}
+            enableGlobalSearch={true}
+            groupPreservingSearch={true}
+            enableColumnResizing={true}
+            groupedColumnMode="reorder"
+            title="Trading Data with Group-Preserving Search"
+            globalSearchPlaceholder="Search across all columns..."
+            initialState={{
+              grouping: ['instrument'],
+              columnSizing: {
+                'instrument': 250,
+                'trader': 250
+              }
+            }}
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
 export const GroupingWithCustomDisplay: Story = {
   parameters: {
     layout: 'fullscreen',
@@ -2884,11 +3123,14 @@ Check the browser console to see the \`aggregatedCell\` functions being called!`
             columns={fixtureColumns}
             enableGrouping={true}
             enableExpanding={true}
+            enableGlobalSearch={true}
+            groupPreservingSearch={true}
             grouping={["fixtureId"]}
             groupDisplayColumn="orderId"
             hideChildrenForSingleItemGroups={true}
             columnVisibility={{ fixtureId: false }}
             title="Fixture Lifecycle Scenarios"
+            globalSearchPlaceholder="Search fixtures..."
             initialState={{
               expanded: {
                 // All groups collapsed by default
@@ -3007,6 +3249,7 @@ export const ColumnFaceting: Story = {
         },
         cell: ({ row }) => {
           const side = row.getValue('side') as string
+          if (!side) return null
           return (
             <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
               {side.toUpperCase()}
@@ -3168,6 +3411,7 @@ export const GlobalFaceting: Story = {
         },
         cell: ({ row }) => {
           const side = row.getValue('side') as string
+          if (!side) return null
           return (
             <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
               {side.toUpperCase()}
@@ -3324,16 +3568,20 @@ export const NestedHeaders: Story = {
           {
             accessorKey: 'trader',
             header: 'Trader',
-            cell: ({ row }) => (
-              <div className="flex items-center gap-[var(--space-sm)]">
-                <div className="h-6 w-6 rounded-full bg-[var(--color-background-brand-subtle)] flex items-center justify-center">
-                  <span className="text-caption-sm font-medium text-[var(--color-text-brand)]">
-                    {(row.getValue('trader') as string).charAt(0)}
-                  </span>
+            cell: ({ row }) => {
+              const trader = row.getValue('trader') as string
+              if (!trader) return null
+              return (
+                <div className="flex items-center gap-[var(--space-sm)]">
+                  <div className="h-6 w-6 rounded-full bg-[var(--color-background-brand-subtle)] flex items-center justify-center">
+                    <span className="text-caption-sm font-medium text-[var(--color-text-brand)]">
+                      {trader.charAt(0)}
+                    </span>
+                  </div>
+                  <span className="text-body-sm">{trader}</span>
                 </div>
-                <span className="text-body-sm">{row.getValue('trader')}</span>
-              </div>
-            ),
+              )
+            },
           },
           {
             accessorKey: 'instrument',
@@ -3538,6 +3786,7 @@ export const ColumnVisibility: Story = {
         meta: { label: 'Trade Side' },
         cell: ({ row }) => {
           const side = row.getValue('side') as string
+          if (!side) return null
           return (
             <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
               {side.toUpperCase()}
@@ -3670,6 +3919,7 @@ export const ColumnReordering: Story = {
         header: 'Side',
         cell: ({ row }) => {
           const side = row.getValue('side') as string
+          if (!side) return null
           return (
             <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
               {side.toUpperCase()}
@@ -3698,6 +3948,7 @@ export const ColumnReordering: Story = {
         header: 'Status',
         cell: ({ row }) => {
           const status = row.getValue('status') as string
+          if (!status) return null
           const variants = {
             pending: 'secondary',
             confirmed: 'default',
@@ -3785,6 +4036,7 @@ export const RowSelection: Story = {
         header: 'Side',
         cell: ({ row }) => {
           const side = row.getValue('side') as string
+          if (!side) return null
           return (
             <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
               {side.toUpperCase()}
@@ -3821,6 +4073,7 @@ export const RowSelection: Story = {
         header: 'Status',
         cell: ({ row }) => {
           const status = row.getValue('status') as string
+          if (!status) return null
           const variants = {
             pending: 'secondary',
             confirmed: 'default',
@@ -3908,6 +4161,7 @@ export const PaginationControls: Story = {
         header: 'Side',
         cell: ({ row }) => {
           const side = row.getValue('side') as string
+          if (!side) return null
           return (
             <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
               {side.toUpperCase()}
@@ -3944,6 +4198,7 @@ export const PaginationControls: Story = {
         header: 'Status',
         cell: ({ row }) => {
           const status = row.getValue('status') as string
+          if (!status) return null
           const variants = {
             pending: 'secondary',
             confirmed: 'default',
@@ -4736,6 +4991,70 @@ Use \`isRowClickable\` to customize which rows can be clicked.
               />
             </CardContent>
           </Card>
+        </div>
+      </div>
+    )
+  },
+}
+
+export const CustomFooterLabel: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: `Demonstrates the optional footer label feature. This is useful for showing custom information
+when using external filtering or data states that the DataTable doesn't track internally.
+
+## Use Case
+
+When you have external filtering or data processing that affects the number of visible items,
+you can use \`footerLabel\` to inform users about what they're viewing.
+
+## Examples
+
+- "Showing 269 of 500 items" (external filtering)
+- "Displaying cached results"
+- Custom status messages or warnings`,
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(50))
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Custom Footer Label</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              This example shows how to use the optional <code>footerLabel</code> prop to display
+              custom information in the table footer. This is particularly useful when you have
+              external filtering or other data states that affect what's being displayed.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  The footer label can be a string or any React node, allowing for custom styling
+                  and dynamic content.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={tradeColumns}
+            title="Trading Data with Footer Info"
+            footerLabel={
+              <span className="text-body-sm text-[var(--color-text-secondary)]">
+                Showing <strong className="text-[var(--color-text-primary)]">{data.length}</strong> of{' '}
+                <strong className="text-[var(--color-text-primary)]">500</strong> items
+                {' · '}
+                <span className="text-[var(--color-text-tertiary)]">Filtered by external criteria</span>
+              </span>
+            }
+          />
         </div>
       </div>
     )

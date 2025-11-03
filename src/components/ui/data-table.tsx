@@ -217,6 +217,51 @@ const multiSelectFilter: FilterFn<any> = (row, columnId, value) => {
   return value.includes(cellValue)
 }
 
+// Group-preserving global filter
+// This works with TanStack Table's filtering which happens BEFORE grouping
+// Strategy: Mark all rows that should be visible by checking if they belong to a matching group
+const groupPreservingGlobalFilter: FilterFn<any> = (row, _columnId, filterValue, addMeta) => {
+  if (!filterValue || filterValue.trim() === '') return true
+
+  const searchValue = String(filterValue).toLowerCase()
+
+  // Helper: Check if a single row matches the search
+  const rowMatches = (r: any): boolean => {
+    const allColumnIds = r.getAllCells().map((cell: any) => cell.column.id)
+    for (const colId of allColumnIds) {
+      const cellValue = r.getValue(colId)
+      if (cellValue != null) {
+        const stringValue = String(cellValue).toLowerCase()
+        if (stringValue.includes(searchValue)) {
+          return true
+        }
+      }
+    }
+    return false
+  }
+
+  // Get the table instance to access all rows
+  const table = row.getParentRow?.()?.getParentRow?.() || row.getParentRow?.() || { getRowModel: () => ({ rows: [] }) }
+
+  // Try to get grouping state from the table
+  // Since we don't have direct access to table instance here, we'll use row metadata
+  // to track which group this row belongs to
+
+  // For group-preserving mode: check this row AND store metadata for group processing
+  const thisRowMatches = rowMatches(row)
+
+  // Mark this row with match status for use by rendering logic
+  if (addMeta && thisRowMatches) {
+    addMeta({ itemRank: 1 })
+  }
+
+  // IMPORTANT: When using group-preserving search, we need to return true for ALL rows
+  // in groups that have at least one match. Since filtering happens before grouping,
+  // we'll mark matching rows and then use the expand logic to show entire groups.
+  // For now, return true if this row matches
+  return thisRowMatches
+}
+
 // Aggregation helper functions for grouped rows
 
 // Detect data type from first non-null value
@@ -1319,6 +1364,12 @@ export interface DataTableProps<TData, TValue> {
    * Default: applies cursor-pointer and hover background if onRowClick is provided
    */
   clickableRowClassName?: string
+  /**
+   * When enabled with grouping, preserves entire groups during global search.
+   * If any row in a group matches, the entire group is shown and auto-expanded.
+   * Also enables highlighting of matched search terms.
+   */
+  groupPreservingSearch?: boolean
 }
 
 export function DataTable<TData, TValue>({
@@ -1383,6 +1434,7 @@ export function DataTable<TData, TValue>({
   onRowClick,
   isRowClickable,
   clickableRowClassName,
+  groupPreservingSearch = false,
 }: DataTableProps<TData, TValue>) {
   // Internal state for uncontrolled mode
   const [internalSorting, setInternalSorting] = React.useState<SortingState>([])
@@ -1426,6 +1478,53 @@ export function DataTable<TData, TValue>({
 
   // Debounce global filter for performance
   const debouncedGlobalFilter = useDebounce(globalFilter, 300)
+
+
+  // Create group-preserving filter function with access to grouping state
+  const createGroupPreservingFilter = React.useCallback((searchTerm: string, groupingCols: string[], data: TData[]) => {
+    if (!searchTerm || !groupingCols || groupingCols.length === 0) {
+      return () => true
+    }
+
+    const searchValue = searchTerm.toLowerCase()
+
+    // Build a set of group values that have at least one matching row
+    const matchingGroups = new Set<string>()
+
+    data.forEach((row: any) => {
+      // Check if this row matches the search
+      let rowMatches = false
+      for (const key in row) {
+        const value = row[key]
+        if (value != null && String(value).toLowerCase().includes(searchValue)) {
+          rowMatches = true
+          break
+        }
+      }
+
+      // If this row matches, add its group value(s) to the set
+      if (rowMatches) {
+        groupingCols.forEach(groupCol => {
+          const groupValue = row[groupCol]
+          if (groupValue != null) {
+            matchingGroups.add(String(groupValue))
+          }
+        })
+      }
+    })
+
+    // Return a filter function that passes rows belonging to matching groups
+    return (row: any) => {
+      // Check if this row belongs to any matching group
+      for (const groupCol of groupingCols) {
+        const groupValue = row.getValue(groupCol)
+        if (groupValue != null && matchingGroups.has(String(groupValue))) {
+          return true
+        }
+      }
+      return false
+    }
+  }, [])
 
   // Load column sizing from localStorage
   React.useEffect(() => {
@@ -1533,6 +1632,20 @@ export function DataTable<TData, TValue>({
     return stickyRightColumns || 0
   }, [stickyRightColumns])
 
+  // Track which columns have custom cell renderers (for highlighting logic)
+  const columnsWithCustomRenderers = React.useMemo(() => {
+    const customRendererSet = new Set<string>()
+    columns.forEach(column => {
+      if ((column as any).cell) {
+        const columnId = (column as any).id || (column as any).accessorKey
+        if (columnId) {
+          customRendererSet.add(String(columnId))
+        }
+      }
+    })
+    return customRendererSet
+  }, [columns])
+
   // Memoize columns for performance
   const memoizedColumns = React.useMemo(() => {
     const processedColumns = columns.map(column => {
@@ -1601,6 +1714,14 @@ export function DataTable<TData, TValue>({
   // Memoize data for performance
   const memoizedData = React.useMemo(() => data, [data])
 
+  // Create the actual group-preserving filter when needed
+  const groupPreservingFilterFn = React.useMemo(() => {
+    if (!groupPreservingSearch || !debouncedGlobalFilter) {
+      return fuzzyFilter
+    }
+    return createGroupPreservingFilter(debouncedGlobalFilter, grouping, memoizedData)
+  }, [groupPreservingSearch, debouncedGlobalFilter, grouping, memoizedData, createGroupPreservingFilter])
+
   // Simplified - no automatic column hiding
 
   const table = useReactTable({
@@ -1625,7 +1746,7 @@ export function DataTable<TData, TValue>({
     enableRowSelection: enableRowSelection,
     enableColumnPinning: false, // Disable TanStack Table pinning - using CSS approach
     enableGlobalFilter: enableGlobalSearch, // Enable global filtering
-    globalFilterFn: fuzzyFilter, // Use fuzzy filter for global search
+    globalFilterFn: groupPreservingFilterFn, // Use group-preserving filter when enabled
     enableColumnResizing: enableColumnResizing,
     columnResizeMode: columnResizeMode,
     enableExpanding: enableExpanding,
@@ -1722,12 +1843,103 @@ export function DataTable<TData, TValue>({
     }
   }, [expanded, autoExpandChildren, table])
 
+  // Auto-expand groups that match the search term when groupPreservingSearch is enabled
+  React.useEffect(() => {
+    if (!groupPreservingSearch || !debouncedGlobalFilter || !enableGrouping) {
+      return
+    }
+
+    const newExpanded: ExpandedState = {}
+    const rows = table.getFilteredRowModel().rows
+
+    // Expand all group rows that have subRows (which means they matched the filter)
+    rows.forEach((row) => {
+      if (row.getIsGrouped() && row.subRows && row.subRows.length > 0) {
+        newExpanded[row.id] = true
+      }
+    })
+
+    // Only update if the expanded state changed
+    setExpanded((prevExpanded) => {
+      const prevKeys = Object.keys(prevExpanded).sort().join(',')
+      const newKeys = Object.keys(newExpanded).sort().join(',')
+      return prevKeys === newKeys ? prevExpanded : newExpanded
+    })
+  }, [debouncedGlobalFilter, groupPreservingSearch, enableGrouping])
+
   // Expose table instance for external control
   React.useEffect(() => {
     if (onTableReady) {
       onTableReady(table)
     }
   }, [table, onTableReady])
+
+  // Highlighting helper functions
+  const highlightMatches = React.useCallback((text: string, searchTerm: string): React.ReactNode => {
+    if (!searchTerm || !text) return text
+
+    const lowerText = text.toLowerCase()
+    const lowerSearch = searchTerm.toLowerCase()
+    const parts: React.ReactNode[] = []
+    let lastIndex = 0
+
+    let index = lowerText.indexOf(lowerSearch)
+    while (index !== -1) {
+      // Add text before match
+      if (index > lastIndex) {
+        parts.push(text.substring(lastIndex, index))
+      }
+
+      // Add highlighted match with inline styles for guaranteed visibility
+      parts.push(
+        <span
+          key={`highlight-${lastIndex}-${index}`}
+          style={{
+            backgroundColor: '#fef3c7', // Light yellow
+            fontWeight: 600,
+            padding: '2px 0',
+          }}
+        >
+          {text.substring(index, index + searchTerm.length)}
+        </span>
+      )
+
+      lastIndex = index + searchTerm.length
+      index = lowerText.indexOf(lowerSearch, lastIndex)
+    }
+
+    // Add remaining text
+    if (lastIndex < text.length) {
+      parts.push(text.substring(lastIndex))
+    }
+
+    return <>{parts}</>
+  }, [])
+
+  const renderCellWithHighlighting = React.useCallback((cell: any): React.ReactNode => {
+    // Only apply highlighting when groupPreservingSearch is enabled and there's a search term
+    if (!groupPreservingSearch || !debouncedGlobalFilter) {
+      return flexRender(cell.column.columnDef.cell, cell.getContext())
+    }
+
+    // Check if this column has a custom cell renderer
+    const hasCustomRenderer = columnsWithCustomRenderers.has(cell.column.id)
+
+    // If there's a custom cell renderer, use it (preserve transformations like uppercase, formatting, etc.)
+    if (hasCustomRenderer) {
+      return flexRender(cell.column.columnDef.cell, cell.getContext())
+    }
+
+    // For columns without custom renderers, apply highlighting to raw values
+    const cellValue = cell.getValue()
+    if (typeof cellValue === 'string' || typeof cellValue === 'number') {
+      const stringValue = String(cellValue)
+      return highlightMatches(stringValue, debouncedGlobalFilter)
+    }
+
+    // Fallback: render normally for null/undefined/complex values
+    return flexRender(cell.column.columnDef.cell, cell.getContext())
+  }, [groupPreservingSearch, debouncedGlobalFilter, highlightMatches, columnsWithCustomRenderers])
 
   // Store reference to table for width calculations
   const tableRef = React.useRef<HTMLTableElement>(null)
@@ -2241,7 +2453,7 @@ export function DataTable<TData, TValue>({
                                 renderGroupDisplayContent(row, table, groupDisplayColumn, isExpanded, hideChildrenForSingleItemGroups, hideExpanderForSingleItemGroups)
                               ) : cell.column.columnDef.meta?.renderInGroupedRows ? (
                                 // Render custom cell content for columns with renderInGroupedRows flag
-                                flexRender(cell.column.columnDef.cell, cell.getContext())
+                                renderCellWithHighlighting(cell)
                               ) : cell.column.columnDef.aggregatedCell ? (
                                 // Render custom aggregatedCell if defined
                                 flexRender(cell.column.columnDef.aggregatedCell, cell.getContext())
@@ -2332,17 +2544,11 @@ export function DataTable<TData, TValue>({
                                   ) : cell.column.columnDef.meta?.truncate !== false ? (
                                     // Wrap in TruncatedCell for overflow handling with tooltip
                                     <TruncatedCell align={cell.column.columnDef.meta?.align}>
-                                      {flexRender(
-                                        cell.column.columnDef.cell,
-                                        cell.getContext()
-                                      )}
+                                      {renderCellWithHighlighting(cell)}
                                     </TruncatedCell>
                                   ) : (
                                     // No truncation for this column
-                                    flexRender(
-                                      cell.column.columnDef.cell,
-                                      cell.getContext()
-                                    )
+                                    renderCellWithHighlighting(cell)
                                   )}
                                 </div>
                               </div>
@@ -2470,7 +2676,7 @@ export function DataTable<TData, TValue>({
                               renderGroupDisplayContent(row, table, groupDisplayColumn, isExpanded, hideChildrenForSingleItemGroups, hideExpanderForSingleItemGroups)
                             ) : cell.column.columnDef.meta?.renderInGroupedRows ? (
                               // Render custom cell content for columns with renderInGroupedRows flag
-                              flexRender(cell.column.columnDef.cell, cell.getContext())
+                              renderCellWithHighlighting(cell)
                             ) : cell.column.columnDef.aggregatedCell ? (
                               // Render custom aggregatedCell if defined
                               flexRender(cell.column.columnDef.aggregatedCell, cell.getContext())
@@ -2561,17 +2767,11 @@ export function DataTable<TData, TValue>({
                                 ) : cell.column.columnDef.meta?.truncate !== false ? (
                                   // Wrap in TruncatedCell for overflow handling with tooltip
                                   <TruncatedCell align={cell.column.columnDef.meta?.align}>
-                                    {flexRender(
-                                      cell.column.columnDef.cell,
-                                      cell.getContext()
-                                    )}
+                                    {renderCellWithHighlighting(cell)}
                                   </TruncatedCell>
                                 ) : (
                                   // No truncation for this column
-                                  flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext()
-                                  )
+                                  renderCellWithHighlighting(cell)
                                 )}
                               </div>
                             </div>
@@ -2622,7 +2822,8 @@ export {
   DataTablePagination,
   DataTableSkeleton,
   fuzzyFilter,
-  multiSelectFilter
+  multiSelectFilter,
+  groupPreservingGlobalFilter
 }
 
 // Export TanStack Table utilities for external control
