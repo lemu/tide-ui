@@ -1062,12 +1062,14 @@ interface DataTablePaginationProps<_TData = any> {
   table: any
   enableGrouping?: boolean
   hideChildrenForSingleItemGroups?: Record<string, boolean>
+  footerLabel?: React.ReactNode
 }
 
 function DataTablePagination<TData>({
   table,
   enableGrouping = false,
-  hideChildrenForSingleItemGroups = {}
+  hideChildrenForSingleItemGroups = {},
+  footerLabel
 }: DataTablePaginationProps<TData>) {
   const currentPage = table.getState().pagination.pageIndex + 1
   const pageSize = table.getState().pagination.pageSize
@@ -1096,10 +1098,21 @@ function DataTablePagination<TData>({
   return (
     <div className="flex items-center justify-between">
       <div className="flex-1 text-body-sm text-[var(--color-text-secondary)]">
-        {selectedCount > 0 && (
-          <span>
-            {selectedCount} of {totalItems} row(s) selected.
-          </span>
+        {footerLabel ? (
+          <div className="flex items-center gap-[var(--space-md)]">
+            {footerLabel}
+            {selectedCount > 0 && (
+              <span>
+                · {selectedCount} of {totalItems} row(s) selected
+              </span>
+            )}
+          </div>
+        ) : (
+          selectedCount > 0 && (
+            <span>
+              {selectedCount} of {totalItems} row(s) selected.
+            </span>
+          )
         )}
       </div>
       <Pagination
@@ -1346,6 +1359,8 @@ export interface DataTableProps<TData, TValue> {
   // Header and footer control
   showHeader?: boolean
   showPagination?: boolean
+  /** Custom content to display in the table footer, useful for showing filtered item counts or other status information */
+  footerLabel?: React.ReactNode
   // External control
   onTableReady?: (table: any) => void
   initialState?: {
@@ -1476,6 +1491,7 @@ export function DataTable<TData, TValue>({
   enableRowSelection = false,
   showHeader = true,
   showPagination = true,
+  footerLabel,
   onTableReady,
   initialState,
   // Controlled state props
@@ -3219,6 +3235,7 @@ export function DataTable<TData, TValue>({
             table={table}
             enableGrouping={enableGrouping}
             hideChildrenForSingleItemGroups={hideChildrenForSingleItemGroups}
+            footerLabel={footerLabel}
           />
         </div>
       )}
