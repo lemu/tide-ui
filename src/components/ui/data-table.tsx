@@ -2016,8 +2016,8 @@ export function DataTable<TData, TValue>({
   }, [highlightMatches])
 
   const renderCellWithHighlighting = React.useCallback((cell: any): React.ReactNode => {
-    // Only apply highlighting when groupPreservingSearch is enabled and there's a search term
-    if (!groupPreservingSearch || !debouncedGlobalFilter) {
+    // Only apply highlighting when global search is enabled and there's a search term
+    if (!enableGlobalSearch || !debouncedGlobalFilter) {
       return flexRender(cell.column.columnDef.cell, cell.getContext())
     }
 
@@ -2038,11 +2038,11 @@ export function DataTable<TData, TValue>({
 
     // Fallback: render normally for null/undefined/complex values
     return flexRender(cell.column.columnDef.cell, cell.getContext())
-  }, [groupPreservingSearch, debouncedGlobalFilter, highlightMatches, columnsWithCustomRenderers])
+  }, [enableGlobalSearch, debouncedGlobalFilter, highlightMatches, columnsWithCustomRenderers])
 
   const renderAggregatedCellWithHighlighting = React.useCallback((cell: any): React.ReactNode => {
-    // Only apply highlighting when groupPreservingSearch is enabled and there's a search term
-    if (!groupPreservingSearch || !debouncedGlobalFilter) {
+    // Only apply highlighting when global search is enabled and there's a search term
+    if (!enableGlobalSearch || !debouncedGlobalFilter) {
       return flexRender(cell.column.columnDef.aggregatedCell, cell.getContext())
     }
 
@@ -2064,7 +2064,7 @@ export function DataTable<TData, TValue>({
     // Apply highlighting to the JSX tree
     const highlighted = applyHighlightToReactNode(aggregatedJSX, debouncedGlobalFilter)
     return highlighted
-  }, [groupPreservingSearch, debouncedGlobalFilter, hasMatchingText, applyHighlightToReactNode, extractTextFromNode])
+  }, [enableGlobalSearch, debouncedGlobalFilter, hasMatchingText, applyHighlightToReactNode, extractTextFromNode])
 
   // Store reference to table for width calculations
   const tableRef = React.useRef<HTMLTableElement>(null)
