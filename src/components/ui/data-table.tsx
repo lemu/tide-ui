@@ -1916,6 +1916,105 @@ export function DataTable<TData, TValue>({
     return <>{parts}</>
   }, [])
 
+  // Helper to extract text from React nodes for matching
+  const extractTextFromNode = React.useCallback((node: React.ReactNode): string => {
+    if (node == null) return ''
+    if (typeof node === 'string' || typeof node === 'number') return String(node)
+    if (Array.isArray(node)) return node.map(extractTextFromNode).join('')
+    if (React.isValidElement(node)) {
+      const element = node as React.ReactElement<any>
+
+      // If it's a function component, we need to call it to get its output
+      if (typeof element.type === 'function') {
+        try {
+          const rendered = element.type(element.props)
+          return extractTextFromNode(rendered)
+        } catch (e) {
+          // If calling fails, try to extract from props.children
+          return extractTextFromNode(element.props.children)
+        }
+      }
+
+      // For regular elements, extract from children
+      return extractTextFromNode(element.props.children)
+    }
+    return ''
+  }, [])
+
+  // Helper to check if a React node contains matching text
+  const hasMatchingText = React.useCallback((node: React.ReactNode, searchTerm: string): boolean => {
+    if (!searchTerm) return false
+    const text = extractTextFromNode(node)
+    return text.toLowerCase().includes(searchTerm.toLowerCase())
+  }, [extractTextFromNode])
+
+  // Helper to recursively apply highlighting to React nodes
+  const applyHighlightToReactNode = React.useCallback((node: React.ReactNode, searchTerm: string): React.ReactNode => {
+    if (!searchTerm) return node
+
+    // Handle null/undefined
+    if (node == null) return node
+
+    // Handle strings - apply highlighting
+    if (typeof node === 'string') {
+      return highlightMatches(node, searchTerm)
+    }
+
+    // Handle numbers - convert to string and highlight
+    if (typeof node === 'number') {
+      return highlightMatches(String(node), searchTerm)
+    }
+
+    // Handle arrays - recursively process each element
+    if (Array.isArray(node)) {
+      return node.map((child, index) => (
+        <React.Fragment key={index}>
+          {applyHighlightToReactNode(child, searchTerm)}
+        </React.Fragment>
+      ))
+    }
+
+    // Handle React elements - preserve element but process children
+    if (React.isValidElement(node)) {
+      const element = node as React.ReactElement<any>
+
+      // If it's a function component, call it to get its rendered output
+      if (typeof element.type === 'function') {
+        try {
+          const rendered = element.type(element.props)
+          return applyHighlightToReactNode(rendered, searchTerm)
+        } catch (e) {
+          // If calling fails, try to process children
+          const { children, ...propsWithoutChildren } = element.props
+          if (children === undefined || children === null) {
+            return element
+          }
+          return React.cloneElement(
+            element,
+            propsWithoutChildren,
+            applyHighlightToReactNode(children, searchTerm)
+          )
+        }
+      }
+
+      // If no children, return as-is
+      if (element.props.children === undefined || element.props.children === null) {
+        return element
+      }
+
+      // Clone element with highlighted children
+      // Don't pass props with children since we're overriding them
+      const { children, ...propsWithoutChildren } = element.props
+      return React.cloneElement(
+        element,
+        propsWithoutChildren,
+        applyHighlightToReactNode(children, searchTerm)
+      )
+    }
+
+    return node
+  }, [highlightMatches])
+
   const renderCellWithHighlighting = React.useCallback((cell: any): React.ReactNode => {
     // Only apply highlighting when groupPreservingSearch is enabled and there's a search term
     if (!groupPreservingSearch || !debouncedGlobalFilter) {
@@ -1940,6 +2039,32 @@ export function DataTable<TData, TValue>({
     // Fallback: render normally for null/undefined/complex values
     return flexRender(cell.column.columnDef.cell, cell.getContext())
   }, [groupPreservingSearch, debouncedGlobalFilter, highlightMatches, columnsWithCustomRenderers])
+
+  const renderAggregatedCellWithHighlighting = React.useCallback((cell: any): React.ReactNode => {
+    // Only apply highlighting when groupPreservingSearch is enabled and there's a search term
+    if (!groupPreservingSearch || !debouncedGlobalFilter) {
+      return flexRender(cell.column.columnDef.aggregatedCell, cell.getContext())
+    }
+
+    // Render the aggregatedCell to get JSX
+    const aggregatedJSX = flexRender(cell.column.columnDef.aggregatedCell, cell.getContext())
+
+    // Safety check - if aggregatedJSX is null/undefined, return as-is
+    if (aggregatedJSX == null) {
+      return aggregatedJSX
+    }
+
+    // Check if the aggregated content contains matching text
+    const hasMatch = hasMatchingText(aggregatedJSX, debouncedGlobalFilter)
+
+    if (!hasMatch) {
+      return aggregatedJSX
+    }
+
+    // Apply highlighting to the JSX tree
+    const highlighted = applyHighlightToReactNode(aggregatedJSX, debouncedGlobalFilter)
+    return highlighted
+  }, [groupPreservingSearch, debouncedGlobalFilter, hasMatchingText, applyHighlightToReactNode, extractTextFromNode])
 
   // Store reference to table for width calculations
   const tableRef = React.useRef<HTMLTableElement>(null)
@@ -2456,7 +2581,7 @@ export function DataTable<TData, TValue>({
                                 renderCellWithHighlighting(cell)
                               ) : cell.column.columnDef.aggregatedCell ? (
                                 // Render custom aggregatedCell if defined
-                                flexRender(cell.column.columnDef.aggregatedCell, cell.getContext())
+                                renderAggregatedCellWithHighlighting(cell)
                               ) : (
                                 // Calculate and show aggregation for other columns in grouped row
                                 (() => {
@@ -2679,7 +2804,7 @@ export function DataTable<TData, TValue>({
                               renderCellWithHighlighting(cell)
                             ) : cell.column.columnDef.aggregatedCell ? (
                               // Render custom aggregatedCell if defined
-                              flexRender(cell.column.columnDef.aggregatedCell, cell.getContext())
+                              renderAggregatedCellWithHighlighting(cell)
                             ) : (
                               // Calculate and show aggregation for other columns in grouped row
                               (() => {
