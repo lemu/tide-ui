@@ -119,7 +119,7 @@ export const DialogExample: Story = {
               <CommandItem onSelect={() => setOpen(false)}>
                 <Icon name="inbox" className="mr-2 h-4 w-4" />
                 <span>Inbox</span>
-                <Badge variant="secondary" className="ml-auto">
+                <Badge className="ml-auto">
                   12
                 </Badge>
               </CommandItem>
@@ -181,7 +181,7 @@ export const FileSearch: Story = {
             <Icon name="folder" className="mr-2 h-4 w-4" />
             <span>components</span>
             <div className="ml-auto flex items-center gap-1">
-              <Badge variant="outline" size="sm">
+              <Badge appearance="outline" size="sm">
                 24 files
               </Badge>
             </div>
@@ -190,7 +190,7 @@ export const FileSearch: Story = {
             <Icon name="folder" className="mr-2 h-4 w-4" />
             <span>utils</span>
             <div className="ml-auto flex items-center gap-1">
-              <Badge variant="outline" size="sm">
+              <Badge appearance="outline" size="sm">
                 8 files
               </Badge>
             </div>
@@ -213,7 +213,7 @@ export const WithStatusIndicators: Story = {
             <Icon name="git-branch" className="mr-2 h-4 w-4" />
             <span>Create Branch</span>
             <div className="ml-auto flex items-center gap-2">
-              <Badge variant="secondary" size="sm">
+              <Badge size="sm">
                 Git
               </Badge>
               <CommandShortcut>⌘B</CommandShortcut>
@@ -231,7 +231,7 @@ export const WithStatusIndicators: Story = {
             <Icon name="git-pull-request" className="mr-2 h-4 w-4" />
             <span>Create Pull Request</span>
             <div className="ml-auto flex items-center gap-2">
-              <Badge variant="outline" size="sm">
+              <Badge appearance="outline" size="sm">
                 Unavailable
               </Badge>
             </div>
@@ -256,7 +256,7 @@ export const WithStatusIndicators: Story = {
             <Icon name="upload" className="mr-2 h-4 w-4" />
             <span>Deploy to Staging</span>
             <div className="ml-auto flex items-center gap-2">
-              <Badge variant="outline" size="sm" className="text-[var(--color-text-information)]">
+              <Badge appearance="outline" size="sm" className="text-[var(--color-text-information)]">
                 Ready
               </Badge>
             </div>
@@ -286,7 +286,7 @@ export const TeamSwitcher: Story = {
                   acme-corp.com
                 </span>
               </div>
-              <Badge variant="secondary" size="sm">
+              <Badge size="sm">
                 Current
               </Badge>
             </div>
@@ -449,7 +449,7 @@ export const HelpSearch: Story = {
                 Learn the basics in 5 minutes
               </span>
             </div>
-            <Badge variant="secondary" size="sm">
+            <Badge size="sm">
               Popular
             </Badge>
           </CommandItem>

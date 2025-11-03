@@ -330,7 +330,7 @@ export const ProjectTimeline: Story = {
               <div className="space-y-2">
                 {timeline.planning?.from && timeline.planning?.to && (
                   <div className="flex items-center gap-2">
-                    <Badge variant="outline">Planning</Badge>
+                    <Badge appearance="outline">Planning</Badge>
                     <span className="text-body-sm">
                       {timeline.planning.from.toLocaleDateString()} - {timeline.planning.to.toLocaleDateString()}
                     </span>
@@ -338,7 +338,7 @@ export const ProjectTimeline: Story = {
                 )}
                 {timeline.development?.from && timeline.development?.to && (
                   <div className="flex items-center gap-2">
-                    <Badge variant="outline">Development</Badge>
+                    <Badge appearance="outline">Development</Badge>
                     <span className="text-body-sm">
                       {timeline.development.from.toLocaleDateString()} - {timeline.development.to.toLocaleDateString()}
                     </span>
@@ -346,7 +346,7 @@ export const ProjectTimeline: Story = {
                 )}
                 {timeline.testing?.from && timeline.testing?.to && (
                   <div className="flex items-center gap-2">
-                    <Badge variant="outline">Testing</Badge>
+                    <Badge appearance="outline">Testing</Badge>
                     <span className="text-body-sm">
                       {timeline.testing.from.toLocaleDateString()} - {timeline.testing.to.toLocaleDateString()}
                     </span>
@@ -354,7 +354,7 @@ export const ProjectTimeline: Story = {
                 )}
                 {timeline.launch && (
                   <div className="flex items-center gap-2">
-                    <Badge variant="default">Launch</Badge>
+                    <Badge>Launch</Badge>
                     <span className="text-body-sm">
                       {timeline.launch.toLocaleDateString()}
                     </span>

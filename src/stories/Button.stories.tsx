@@ -295,7 +295,7 @@ export const AllVariants: Story = {
       <div className="space-y-2">
         <h4 className="text-sm font-medium">Button Variants</h4>
         <div className="flex space-x-2">
-          <Button variant="default">Default</Button>
+          <Button>Default</Button>
           <Button variant="primary">Primary</Button>
           <Button variant="destructive">Destructive</Button>
           <Button variant="success">Success</Button>

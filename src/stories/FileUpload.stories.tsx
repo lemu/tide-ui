@@ -335,8 +335,8 @@ export const BatchUpload: Story = {
             <div className="flex items-center justify-between">
               <CardTitle>Batch File Upload</CardTitle>
               <div className="flex gap-1">
-                <Badge variant="secondary" size="sm">{successCount} done</Badge>
-                <Badge variant="secondary" size="sm">{pendingCount} pending</Badge>
+                <Badge size="sm">{successCount} done</Badge>
+                <Badge size="sm">{pendingCount} pending</Badge>
               </div>
             </div>
           </CardHeader>

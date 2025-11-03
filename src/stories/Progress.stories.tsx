@@ -86,7 +86,7 @@ export const Variants: Story = {
     <div className="w-80 space-y-6">
       <div>
         <p className="text-body-sm font-medium mb-2">Default</p>
-        <Progress value={70} variant="default" showLabel />
+        <Progress value={70} showLabel />
       </div>
       <div>
         <p className="text-body-sm font-medium mb-2">Success</p>
@@ -206,7 +206,7 @@ export const DashboardMetrics: Story = {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-body-sm font-medium">Overall Completion</span>
-                <Badge variant="default">On Track</Badge>
+                <Badge>On Track</Badge>
               </div>
               <Progress value={78} variant="success" showLabel />
             </div>
@@ -214,7 +214,7 @@ export const DashboardMetrics: Story = {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-body-sm font-medium">Budget Used</span>
-                <Badge variant="secondary">Under Budget</Badge>
+                <Badge>Under Budget</Badge>
               </div>
               <Progress value={45} showLabel />
             </div>
@@ -222,7 +222,7 @@ export const DashboardMetrics: Story = {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-body-sm font-medium">Time Remaining</span>
-                <Badge variant="outline">2 weeks left</Badge>
+                <Badge appearance="outline">2 weeks left</Badge>
               </div>
               <Progress value={85} variant="warning" showLabel />
             </div>
@@ -230,7 +230,7 @@ export const DashboardMetrics: Story = {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-body-sm font-medium">Risk Assessment</span>
-                <Badge variant="secondary">Low Risk</Badge>
+                <Badge>Low Risk</Badge>
               </div>
               <Progress value={15} variant="error" showLabel />
             </div>
@@ -340,7 +340,7 @@ export const LoadingStates: Story = {
                   <Icon name="download" size="sm" />
                 </Button>
               </div>
-              <Progress value={loadingStates.download} variant="default" showLabel />
+              <Progress value={loadingStates.download} showLabel />
             </div>
             
             <div className="space-y-2">

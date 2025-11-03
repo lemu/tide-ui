@@ -133,7 +133,7 @@ export const SystemStatus: Story = {
             We're experiencing intermittent connectivity issues that may affect performance.
           </p>
           <div className="flex items-center gap-2">
-            <Badge variant="outline">Investigating</Badge>
+            <Badge appearance="outline">Investigating</Badge>
             <span className="text-caption-sm text-[var(--color-text-secondary)]">
               Started 15 minutes ago
             </span>

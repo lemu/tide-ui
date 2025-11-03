@@ -185,7 +185,7 @@ export const TeamMemberSelection: Story = {
                     <h4 className="text-body-sm font-medium mb-2">Tasks Assigned to {getMemberInfo(selectedMember)}:</h4>
                     <div className="flex flex-wrap gap-1">
                       {assignedTasks.map((task, index) => (
-                        <Badge key={index} variant="outline" className="text-xs">
+                        <Badge key={index} appearance="outline" className="text-xs">
                           {task}
                         </Badge>
                       ))}
@@ -299,7 +299,7 @@ export const TagManagement: Story = {
                       return (
                         <div key={tagValue} className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            <Badge variant="outline" className="text-xs">
+                            <Badge appearance="outline" className="text-xs">
                               {tag?.label}
                             </Badge>
                           </div>
@@ -320,7 +320,7 @@ export const TagManagement: Story = {
                       {selectedTags.map((tagValue) => {
                         const tag = availableTags.find(t => t.value === tagValue)
                         return (
-                          <Badge key={tagValue} variant="secondary" className="text-xs">
+                          <Badge key={tagValue} className="text-xs">
                             #{tag?.label.toLowerCase().replace(/\s+/g, '')}
                           </Badge>
                         )
@@ -581,7 +581,7 @@ export const SkillFiltering: Story = {
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               Job Search Filters
-              <Badge variant="outline">{jobResults} jobs found</Badge>
+              <Badge appearance="outline">{jobResults} jobs found</Badge>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -627,8 +627,8 @@ export const SkillFiltering: Story = {
                       return (
                         <div key={skillValue} className="flex items-center justify-between">
                           <span className="text-body-sm">{skill?.label}</span>
-                          <Badge 
-                            variant={demand === 'Very High' ? 'default' : demand === 'High' ? 'secondary' : 'outline'} 
+                          <Badge
+                            appearance={demand === 'Very High' || demand === 'High' ? undefined : 'outline'}
                             className="text-xs"
                           >
                             {demand}
@@ -881,7 +881,7 @@ export const FormIntegration: Story = {
                         {formData.tags.map((tagValue) => {
                           const tag = tagOptions.find(t => t.value === tagValue)
                           return (
-                            <Badge key={tagValue} variant="outline" className="text-xs">
+                            <Badge key={tagValue} appearance="outline" className="text-xs">
                               {tag?.label}
                             </Badge>
                           )

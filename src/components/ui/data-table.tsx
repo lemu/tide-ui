@@ -665,7 +665,7 @@ function DataTableGlobalFaceting({ table }: DataTableGlobalFacetingProps) {
           {selectedValues.length > 0 && (
             <>
               <div className="mx-2 h-4 w-px bg-[var(--color-border-primary)]" />
-              <Badge variant="secondary" className="rounded-sm px-1 font-normal">
+              <Badge className="rounded-sm px-1 font-normal">
                 {selectedValues.length} selected
               </Badge>
             </>
@@ -695,7 +695,7 @@ function DataTableGlobalFaceting({ table }: DataTableGlobalFacetingProps) {
                           </span>
                         </div>
                       </div>
-                      <Badge variant="secondary" className="ml-auto text-caption-sm px-1 py-0">
+                      <Badge className="ml-auto text-caption-sm px-1 py-0">
                         {item.count}
                       </Badge>
                     </div>
@@ -744,7 +744,7 @@ function DataTableFilter({ column }: DataTableFilterProps) {
                     {option.label}
                   </div>
                   {count > 0 && (
-                    <Badge variant="secondary" className="ml-auto text-caption-sm px-1 py-0">
+                    <Badge className="ml-auto text-caption-sm px-1 py-0">
                       {count}
                     </Badge>
                   )}
@@ -769,19 +769,19 @@ function DataTableFilter({ column }: DataTableFilterProps) {
             {selectedValues.length > 0 && (
               <>
                 <div className="mx-2 h-4 w-px bg-[var(--color-border-primary)]" />
-                <Badge variant="secondary" className="rounded-sm px-1 font-normal lg:hidden">
+                <Badge className="rounded-sm px-1 font-normal lg:hidden">
                   {selectedValues.length}
                 </Badge>
                 <div className="hidden space-x-1 lg:flex">
                   {selectedValues.length > 2 ? (
-                    <Badge variant="secondary" className="rounded-sm px-1 font-normal">
+                    <Badge className="rounded-sm px-1 font-normal">
                       {selectedValues.length} selected
                     </Badge>
                   ) : (
                     filterOptions
                       .filter(option => selectedValues.includes(option.value))
                       .map(option => (
-                        <Badge key={option.value} variant="secondary" className="rounded-sm px-1 font-normal">
+                        <Badge key={option.value} className="rounded-sm px-1 font-normal">
                           {option.label}
                         </Badge>
                       ))
@@ -817,7 +817,7 @@ function DataTableFilter({ column }: DataTableFilterProps) {
                           <span>{option.label}</span>
                         </div>
                         {count > 0 && (
-                          <Badge variant="secondary" className="ml-auto text-caption-sm px-1 py-0">
+                          <Badge className="ml-auto text-caption-sm px-1 py-0">
                             {count}
                           </Badge>
                         )}

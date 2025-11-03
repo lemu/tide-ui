@@ -551,7 +551,7 @@ export const MixedFeatures: Story = {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-[var(--color-text-secondary)]">Status:</span>
-                      <Badge variant="success" size="sm">Active</Badge>
+                      <Badge intent="success" size="sm">Active</Badge>
                     </div>
                   </div>
                 </CardContent>
@@ -627,7 +627,7 @@ export const CustomValues: Story = {
           <AttributesRow>
             <AttributesLabel>Status</AttributesLabel>
             <AttributesValue>
-              <Badge variant="success" size="sm">Active</Badge>
+              <Badge intent="success" size="sm">Active</Badge>
             </AttributesValue>
           </AttributesRow>
         </AttributesItem>
@@ -636,7 +636,7 @@ export const CustomValues: Story = {
           <AttributesRow>
             <AttributesLabel>Priority</AttributesLabel>
             <AttributesValue>
-              <Badge variant="default" size="sm">High</Badge>
+              <Badge size="sm">High</Badge>
             </AttributesValue>
           </AttributesRow>
         </AttributesItem>
@@ -646,9 +646,9 @@ export const CustomValues: Story = {
             <AttributesLabel>Tags</AttributesLabel>
             <AttributesValue>
               <div className="flex gap-[var(--space-xsm)] flex-wrap">
-                <Badge variant="default" size="sm">Urgent</Badge>
-                <Badge variant="default" size="sm">Verified</Badge>
-                <Badge variant="default" size="sm">Premium</Badge>
+                <Badge size="sm">Urgent</Badge>
+                <Badge size="sm">Verified</Badge>
+                <Badge size="sm">Premium</Badge>
               </div>
             </AttributesValue>
           </AttributesRow>
@@ -658,7 +658,7 @@ export const CustomValues: Story = {
           <AttributesRow>
             <AttributesLabel>Compliance</AttributesLabel>
             <AttributesValue>
-              <Badge variant="success" size="sm">Compliant</Badge>
+              <Badge intent="success" size="sm">Compliant</Badge>
             </AttributesValue>
           </AttributesRow>
         </AttributesItem>
@@ -682,7 +682,7 @@ export const ExternalLinks: Story = {
             >
               <AttributesLabel>Negotiation</AttributesLabel>
               <AttributesValue>
-                <Badge variant="success" size="sm">Fixed</Badge>
+                <Badge intent="success" size="sm">Fixed</Badge>
               </AttributesValue>
             </AttributesRow>
           </AttributesItem>
@@ -696,7 +696,7 @@ export const ExternalLinks: Story = {
             >
               <AttributesLabel>Contract</AttributesLabel>
               <AttributesValue>
-                <Badge variant="default" size="sm">Working copy</Badge>
+                <Badge size="sm">Working copy</Badge>
               </AttributesValue>
             </AttributesRow>
           </AttributesItem>

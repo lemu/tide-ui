@@ -206,7 +206,7 @@ export const WithActions: Story = {
           {
             id: 'frontend',
             name: 'Frontend Developers',
-            actions: <Badge variant="secondary">3 members</Badge>,
+            actions: <Badge>3 members</Badge>,
             children: [
               {
                 id: 'john',
@@ -242,7 +242,7 @@ export const WithActions: Story = {
           {
             id: 'backend',
             name: 'Backend Developers',
-            actions: <Badge variant="secondary">2 members</Badge>,
+            actions: <Badge>2 members</Badge>,
             children: [
               {
                 id: 'bob',
@@ -409,7 +409,7 @@ export const DisabledItems: Story = {
             name: 'Analytics',
             icon: ({ className }) => <Icon name="bar-chart" className={className} />,
             disabled: true,
-            actions: <Badge variant="secondary">Premium</Badge>,
+            actions: <Badge>Premium</Badge>,
           },
         ],
       },

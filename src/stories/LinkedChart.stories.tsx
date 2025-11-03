@@ -266,15 +266,15 @@ export const RevenueAnalytics: Story = {
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="flex items-center gap-2">
-                <Badge variant="default" className="text-xs">Best Month</Badge>
+                <Badge className="text-xs">Best Month</Badge>
                 <span className="text-body-sm">December - $289k revenue</span>
               </div>
               <div className="flex items-center gap-2">
-                <Badge variant="secondary" className="text-xs">Highest Growth</Badge>
+                <Badge className="text-xs">Highest Growth</Badge>
                 <span className="text-body-sm">November - 38% growth</span>
               </div>
               <div className="flex items-center gap-2">
-                <Badge variant="outline" className="text-xs">Avg Margin</Badge>
+                <Badge appearance="outline" className="text-xs">Avg Margin</Badge>
                 <span className="text-body-sm">42% profit margin</span>
               </div>
             </CardContent>
@@ -528,8 +528,7 @@ export const TrafficAnalytics: Story = {
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-body-sm font-medium">{source.percentage}%</span>
-                      <Badge 
-                        variant={source.change.startsWith('+') ? 'default' : 'secondary'} 
+                      <Badge
                         className="text-xs"
                       >
                         {source.change}

@@ -110,7 +110,7 @@ export const Variants: Story = {
           <h3 className="text-heading-sm mb-4">Spinner Variants</h3>
           <div className="grid grid-cols-3 gap-6">
             <div className="text-center">
-              <Spinner variant="default" size="lg" />
+              <Spinner size="lg" />
               <p className="mt-2 text-caption-sm text-[var(--color-text-secondary)]">Default</p>
             </div>
             <div className="text-center">
@@ -118,7 +118,7 @@ export const Variants: Story = {
               <p className="mt-2 text-caption-sm text-[var(--color-text-secondary)]">Primary</p>
             </div>
             <div className="text-center">
-              <Spinner variant="secondary" size="lg" />
+              <Spinner size="lg" />
               <p className="mt-2 text-caption-sm text-[var(--color-text-secondary)]">Secondary</p>
             </div>
             <div className="text-center">
@@ -245,7 +245,7 @@ export const InButtons: Story = {
           </Button>
 
           <Button 
-            variant="secondary"
+           
             onClick={() => simulateAction('delete')}
             disabled={loading === 'delete'}
             className="w-full"
@@ -569,7 +569,7 @@ export const LoadingDashboard: Story = {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-body-sm">Total Views</span>
-                  <Badge variant="secondary">12.5K</Badge>
+                  <Badge>12.5K</Badge>
                 </div>
               </div>
             )}

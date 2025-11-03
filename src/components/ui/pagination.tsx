@@ -62,7 +62,7 @@ const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
         {...props}
       >
         {/* Navigation ButtonGroup */}
-        <ButtonGroup variant="default" size="sm">
+        <ButtonGroup size="sm">
           {variant === "full" && (
             <Button
               onClick={goToFirstPage}

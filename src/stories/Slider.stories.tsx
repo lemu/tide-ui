@@ -474,7 +474,7 @@ export const SettingsPanel: Story = {
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label>Quality Level</Label>
-                  <Badge variant="outline">{
+                  <Badge appearance="outline">{
                     settings.quality[0] <= 3 ? 'Low' :
                     settings.quality[0] <= 6 ? 'Medium' :
                     settings.quality[0] <= 8 ? 'High' : 'Ultra'

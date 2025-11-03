@@ -144,7 +144,7 @@ export const Positioning: Story = {
     <div className="grid min-h-[200px] grid-cols-2 place-items-center gap-[var(--space-lg)]">
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="default" size="sm">
+          <Button size="sm">
             Top
           </Button>
         </TooltipTrigger>
@@ -155,7 +155,7 @@ export const Positioning: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="default" size="sm">
+          <Button size="sm">
             Right
           </Button>
         </TooltipTrigger>
@@ -166,7 +166,7 @@ export const Positioning: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="default" size="sm">
+          <Button size="sm">
             Bottom
           </Button>
         </TooltipTrigger>
@@ -177,7 +177,7 @@ export const Positioning: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="default" size="sm">
+          <Button size="sm">
             Left
           </Button>
         </TooltipTrigger>
@@ -195,7 +195,7 @@ export const RichContent: Story = {
     <div className="flex items-center gap-[var(--space-md)]">
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="default">Feature Info</Button>
+          <Button>Feature Info</Button>
         </TooltipTrigger>
         <TooltipContent className="max-w-72">
           <div className="space-y-[var(--space-xsm)]">
@@ -209,7 +209,7 @@ export const RichContent: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="default">Keyboard Shortcut</Button>
+          <Button>Keyboard Shortcut</Button>
         </TooltipTrigger>
         <TooltipContent>
           <div className="flex items-center gap-[var(--space-sm)]">
@@ -447,7 +447,7 @@ export const LongContent: Story = {
   render: () => (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Button variant="default">Complex Feature</Button>
+        <Button>Complex Feature</Button>
       </TooltipTrigger>
       <TooltipContent className="max-w-sm">
         <div className="space-y-[var(--space-sm)]">

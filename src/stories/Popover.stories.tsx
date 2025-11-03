@@ -101,7 +101,7 @@ export const UserProfile: Story = {
               <h4 className="text-body-md font-semibold">John Doe</h4>
               <p className="text-body-sm text-[var(--color-text-secondary)]">john@example.com</p>
               <div className="flex items-center gap-2">
-                <Badge variant="secondary" className="text-xs">Admin</Badge>
+                <Badge className="text-xs">Admin</Badge>
                 <div className="flex items-center gap-1">
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
                   <span className="text-caption-sm text-[var(--color-text-secondary)]">Online</span>
@@ -442,7 +442,7 @@ export const SearchPopover: Story = {
                             {'email' in item ? item.email : item.path}
                           </p>
                         </div>
-                        <Badge variant="outline" className="text-xs capitalize">
+                        <Badge appearance="outline" className="text-xs capitalize">
                           {item.type}
                         </Badge>
                       </div>
@@ -561,7 +561,7 @@ export const SharePopover: Story = {
                     </Avatar>
                     <span className="text-body-sm">John Doe</span>
                   </div>
-                  <Badge variant="outline" className="text-xs">Owner</Badge>
+                  <Badge appearance="outline" className="text-xs">Owner</Badge>
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">

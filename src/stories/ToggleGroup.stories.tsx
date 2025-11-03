@@ -147,7 +147,7 @@ export const Variants: Story = {
       <div className="space-y-6">
         <div className="space-y-2">
           <Label>Default Variant</Label>
-          <ToggleGroup type="single" variant="default" value={defaultValue} onValueChange={setDefaultValue}>
+          <ToggleGroup type="single" value={defaultValue} onValueChange={setDefaultValue}>
             <ToggleGroupItem value="option1">Option 1</ToggleGroupItem>
             <ToggleGroupItem value="option2">Option 2</ToggleGroupItem>
             <ToggleGroupItem value="option3">Option 3</ToggleGroupItem>
@@ -306,7 +306,7 @@ export const ViewModeSelector: Story = {
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               View Options
-              <Badge variant="outline">{getItemCount()} items</Badge>
+              <Badge appearance="outline">{getItemCount()} items</Badge>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">

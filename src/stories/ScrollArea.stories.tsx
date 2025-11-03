@@ -122,7 +122,7 @@ export function MyComponent() {
             <p>{item.description}</p>
             <div className="flex gap-2 mt-2">
               {item.tags.map((tag, tagIndex) => (
-                <Badge key={tagIndex} variant="outline">
+                <Badge key={tagIndex} appearance="outline">
                   {tag}
                 </Badge>
               ))}
@@ -193,7 +193,7 @@ export const SidebarNavigation: Story = {
                   <Icon name={item.icon as any} size="sm" className="mr-2" />
                   <span className="flex-1 text-left">{item.label}</span>
                   {item.count && (
-                    <Badge variant="secondary" className="text-xs">
+                    <Badge className="text-xs">
                       {item.count}
                     </Badge>
                   )}
@@ -229,7 +229,7 @@ export const TagsList: Story = {
                 'Tailwind CSS', 'Styled Components', 'SASS', 'CSS Modules',
                 'Design System', 'Storybook', 'Figma', 'Accessibility',
               ].map((tag, i) => (
-                <Badge key={i} variant="outline" className="text-xs">
+                <Badge key={i} appearance="outline" className="text-xs">
                   {tag}
                 </Badge>
               ))}

@@ -51,7 +51,7 @@ export const Default: Story = {
           </p>
         </div>
         <Pagination
-          variant="default"
+         
           currentPage={currentPage}
           totalItems={totalItems}
           pageSize={pageSize}
@@ -111,14 +111,14 @@ export const Interactive: Story = {
               Pagination Demo
               <div className="flex gap-2">
                 <Badge
-                  variant={variant === "default" ? "default" : "secondary"}
+                  
                   className="cursor-pointer"
                   onClick={() => setVariant("default")}
                 >
                   Default
                 </Badge>
                 <Badge
-                  variant={variant === "full" ? "default" : "secondary"}
+                  
                   className="cursor-pointer"
                   onClick={() => setVariant("full")}
                 >
@@ -147,7 +147,7 @@ export const Interactive: Story = {
                     className="flex items-center justify-between p-2 bg-[var(--color-background-neutral-subtle)] rounded"
                   >
                     <span className="font-medium">Item #{itemNumber}</span>
-                    <Badge variant="outline">Type {((itemNumber - 1) % 4) + 1}</Badge>
+                    <Badge appearance="outline">Type {((itemNumber - 1) % 4) + 1}</Badge>
                   </div>
                 );
               })}
@@ -220,21 +220,21 @@ export const EdgeCases: Story = {
           <p className="text-body-sm font-medium">Edge Cases</p>
           <div className="flex justify-center gap-2">
             <Badge
-              variant={scenario === "empty" ? "default" : "secondary"}
+              
               className="cursor-pointer"
               onClick={() => setScenario("empty")}
             >
               No Items
             </Badge>
             <Badge
-              variant={scenario === "single" ? "default" : "secondary"}
+              
               className="cursor-pointer"
               onClick={() => setScenario("single")}
             >
               Single Page
             </Badge>
             <Badge
-              variant={scenario === "few" ? "default" : "secondary"}
+              
               className="cursor-pointer"
               onClick={() => setScenario("few")}
             >
@@ -284,7 +284,7 @@ export const DataTableExample: Story = {
     const currentUsers = allUsers.slice(startIndex, endIndex);
 
     const getStatusBadge = (status: string) => (
-      <Badge variant={status === "Active" ? "default" : "secondary"}>
+      <Badge>
         {status}
       </Badge>
     );
@@ -318,7 +318,7 @@ export const DataTableExample: Story = {
                         {user.email}
                       </td>
                       <td className="px-4 py-2">
-                        <Badge variant="outline">{user.role}</Badge>
+                        <Badge appearance="outline">{user.role}</Badge>
                       </td>
                       <td className="px-4 py-2">{getStatusBadge(user.status)}</td>
                     </tr>
@@ -333,7 +333,7 @@ export const DataTableExample: Story = {
                 Total: {totalItems} users
               </div>
               <Pagination
-                variant="default"
+               
                 currentPage={currentPage}
                 totalItems={totalItems}
                 pageSize={pageSize}
@@ -377,7 +377,7 @@ export const VariantComparison: Story = {
               </div>
               <div className="flex justify-center">
                 <Pagination
-                  variant="default"
+                 
                   currentPage={currentPage1}
                   totalItems={totalItems}
                   pageSize={pageSize1}

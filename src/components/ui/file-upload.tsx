@@ -402,17 +402,7 @@ const FileUploadItemMetadata = React.forwardRef<
     <div ref={ref} className={cn("flex-1 space-y-1", className)} {...props}>
       <div className="flex items-center gap-2">
         <p className="text-body-sm truncate font-medium">{file.file.name}</p>
-        <Badge
-          variant={
-            file.status === "success"
-              ? "default"
-              : file.status === "error"
-                ? "secondary"
-                : file.status === "uploading"
-                  ? "secondary"
-                  : "secondary"
-          }
-        >
+        <Badge>
           {file.status}
         </Badge>
       </div>

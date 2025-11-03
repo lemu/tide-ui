@@ -299,7 +299,7 @@ export const WithSelection: Story = {
                 <TableCell className="font-medium">{row.name}</TableCell>
                 <TableCell>{row.email}</TableCell>
                 <TableCell>
-                  <Badge variant="secondary">{row.role}</Badge>
+                  <Badge>{row.role}</Badge>
                 </TableCell>
                 <TableCell>
                   <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
@@ -453,12 +453,8 @@ export const UserManagement: Story = {
     ]
 
     const getStatusBadge = (status: string) => {
-      const variants: Record<string, any> = {
-        Active: 'default',
-        Inactive: 'secondary',
-        Pending: 'outline',
-      }
-      return <Badge variant={variants[status] || 'secondary'}>{status}</Badge>
+      const appearance = status === 'Pending' ? 'outline' : undefined
+      return <Badge appearance={appearance}>{status}</Badge>
     }
 
     const formatLastLogin = (dateString: string | null) => {
@@ -515,7 +511,7 @@ export const UserManagement: Story = {
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="outline">{user.role}</Badge>
+                  <Badge appearance="outline">{user.role}</Badge>
                 </TableCell>
                 <TableCell>{getStatusBadge(user.status)}</TableCell>
                 <TableCell>
@@ -585,14 +581,12 @@ export const WithPagination: Story = {
               <TableRow key={product.id}>
                 <TableCell className="font-medium">{product.name}</TableCell>
                 <TableCell>
-                  <Badge variant="outline">{product.category}</Badge>
+                  <Badge appearance="outline">{product.category}</Badge>
                 </TableCell>
                 <TableCell className="text-right">${product.price}</TableCell>
                 <TableCell className="text-right">{product.stock}</TableCell>
                 <TableCell>
-                  <Badge
-                    variant={product.status === 'In Stock' ? 'default' : 'secondary'}
-                  >
+                  <Badge>
                     {product.status}
                   </Badge>
                 </TableCell>
@@ -734,13 +728,13 @@ export const ZebraStripes: Story = {
     ]
 
     const getPriorityBadge = (priority: string) => {
-      const colors = {
-        Critical: 'destructive',
-        High: 'default',
-        Medium: 'secondary',
-        Low: 'outline',
+      if (priority === 'Critical') {
+        return <Badge intent="destructive" appearance="solid">{priority}</Badge>
       }
-      return <Badge variant={colors[priority as keyof typeof colors] as any}>{priority}</Badge>
+      if (priority === 'Low') {
+        return <Badge appearance="outline">{priority}</Badge>
+      }
+      return <Badge>{priority}</Badge>
     }
 
     return (

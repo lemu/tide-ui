@@ -96,7 +96,7 @@ export function DataTableSettingsMenu({
                     </Select>
                     {selectedSortColumn && (
                       <Button
-                        variant="default"
+                       
                         size="sm"
                         icon={sortDirection === 'asc' ? 'arrow-up' : 'arrow-down'}
                         onClick={() => onSortDirectionChange?.(sortDirection === 'asc' ? 'desc' : 'asc')}

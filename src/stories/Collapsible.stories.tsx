@@ -166,7 +166,7 @@ export const SettingsSection: Story = {
                 <CollapsibleTrigger>
                   <div className="flex items-center gap-2">
                     <span>Debug Options</span>
-                    <Badge variant="outline" className="text-xs">Developer</Badge>
+                    <Badge appearance="outline" className="text-xs">Developer</Badge>
                   </div>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="mt-4 space-y-3">
@@ -259,7 +259,7 @@ export const NavigationSidebar: Story = {
                     <div className="flex items-center gap-2">
                       <Icon name="folder" size="sm" />
                       <span className="text-body-sm">Projects</span>
-                      <Badge variant="secondary" className="text-xs">3</Badge>
+                      <Badge className="text-xs">3</Badge>
                     </div>
                     <Icon
                       name="chevron-down"

@@ -28,7 +28,7 @@ export const Default: Story = {
   render: () => (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="default">Show Dialog</Button>
+        <Button>Show Dialog</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -53,7 +53,7 @@ export const Destructive: Story = {
   render: () => (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="default">Delete Account</Button>
+        <Button>Delete Account</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -78,7 +78,7 @@ export const SimpleConfirmation: Story = {
   render: () => (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="secondary">Save Changes</Button>
+        <Button>Save Changes</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -127,7 +127,7 @@ export const FileOperations: Story = {
     <div className="flex space-x-4">
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="default">Delete File</Button>
+          <Button>Delete File</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -147,7 +147,7 @@ export const FileOperations: Story = {
 
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="default">Replace File</Button>
+          <Button>Replace File</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -172,7 +172,7 @@ export const LongContent: Story = {
   render: () => (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="default">Terms & Conditions</Button>
+        <Button>Terms & Conditions</Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="max-w-md">
         <AlertDialogHeader>

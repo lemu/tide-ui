@@ -192,11 +192,11 @@ export const FAQ: Story = {
                     Data Sources
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    <Badge variant="secondary">MySQL</Badge>
-                    <Badge variant="secondary">PostgreSQL</Badge>
-                    <Badge variant="secondary">MongoDB</Badge>
-                    <Badge variant="secondary">Redis</Badge>
-                    <Badge variant="secondary">Elasticsearch</Badge>
+                    <Badge>MySQL</Badge>
+                    <Badge>PostgreSQL</Badge>
+                    <Badge>MongoDB</Badge>
+                    <Badge>Redis</Badge>
+                    <Badge>Elasticsearch</Badge>
                   </div>
                 </div>
                 
@@ -206,10 +206,10 @@ export const FAQ: Story = {
                     Cloud Platforms
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    <Badge variant="secondary">AWS</Badge>
-                    <Badge variant="secondary">Google Cloud</Badge>
-                    <Badge variant="secondary">Azure</Badge>
-                    <Badge variant="secondary">Digital Ocean</Badge>
+                    <Badge>AWS</Badge>
+                    <Badge>Google Cloud</Badge>
+                    <Badge>Azure</Badge>
+                    <Badge>Digital Ocean</Badge>
                   </div>
                 </div>
                 
@@ -219,11 +219,11 @@ export const FAQ: Story = {
                     Development Tools
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    <Badge variant="secondary">GitHub</Badge>
-                    <Badge variant="secondary">GitLab</Badge>
-                    <Badge variant="secondary">Bitbucket</Badge>
-                    <Badge variant="secondary">Jira</Badge>
-                    <Badge variant="secondary">Slack</Badge>
+                    <Badge>GitHub</Badge>
+                    <Badge>GitLab</Badge>
+                    <Badge>Bitbucket</Badge>
+                    <Badge>Jira</Badge>
+                    <Badge>Slack</Badge>
                   </div>
                 </div>
               </div>
@@ -345,7 +345,7 @@ export const SettingsAccordion: Story = {
             <div className="flex items-center gap-2">
               <Icon name="bell" size="sm" />
               Notifications
-              <Badge variant="outline" className="ml-auto">3 enabled</Badge>
+              <Badge appearance="outline" className="ml-auto">3 enabled</Badge>
             </div>
           </AccordionTrigger>
           <AccordionContent>
@@ -625,7 +625,7 @@ export const ProductShowcase: Story = {
                 <div className="p-4 border border-[var(--color-border-primary-subtle)] rounded-md">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium">Auto-scaling</span>
-                    <Badge variant="outline">Enabled</Badge>
+                    <Badge appearance="outline">Enabled</Badge>
                   </div>
                   <p className="text-body-sm text-[var(--color-text-secondary)]">
                     Resources automatically adjust based on demand
@@ -634,7 +634,7 @@ export const ProductShowcase: Story = {
                 <div className="p-4 border border-[var(--color-border-primary-subtle)] rounded-md">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium">Load Balancing</span>
-                    <Badge variant="outline">Active</Badge>
+                    <Badge appearance="outline">Active</Badge>
                   </div>
                   <p className="text-body-sm text-[var(--color-text-secondary)]">
                     Traffic distributed across multiple servers for optimal performance
@@ -643,7 +643,7 @@ export const ProductShowcase: Story = {
                 <div className="p-4 border border-[var(--color-border-primary-subtle)] rounded-md">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium">Database Clustering</span>
-                    <Badge variant="outline">Multi-region</Badge>
+                    <Badge appearance="outline">Multi-region</Badge>
                   </div>
                   <p className="text-body-sm text-[var(--color-text-secondary)]">
                     Data replicated across multiple regions for reliability

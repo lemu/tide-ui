@@ -82,7 +82,7 @@ export const MultipleSelection: Story = {
           <Label>Selected Dates ({selectedDates.length}):</Label>
           <div className="mt-2 flex flex-wrap gap-1">
             {selectedDates.map((date, index) => (
-              <Badge key={index} variant="secondary" className="text-xs">
+              <Badge key={index} className="text-xs">
                 {date.toLocaleDateString()}
               </Badge>
             ))}
@@ -277,7 +277,7 @@ export const VacationBooking: Story = {
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               Vacation Request
-              <Badge variant="outline">25 days remaining</Badge>
+              <Badge appearance="outline">25 days remaining</Badge>
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -444,13 +444,8 @@ export const ProjectDeadlines: Story = {
       }
     }
 
-    const getStatusBadge = (status: string) => {
-      switch (status) {
-        case 'in-progress': return 'default'
-        case 'planning': return 'secondary'
-        case 'review': return 'outline'
-        default: return 'secondary'
-      }
+    const getStatusAppearance = (status: string) => {
+      return status === 'review' ? 'outline' : undefined
     }
 
     return (
@@ -503,7 +498,7 @@ export const ProjectDeadlines: Story = {
                     <div key={index} className="p-4 border border-[var(--color-border-primary-subtle)] rounded-md">
                       <div className="flex items-start justify-between mb-2">
                         <h4 className="text-body-md font-medium">{project.name}</h4>
-                        <Badge variant={getStatusBadge(project.status)} className="text-xs capitalize">
+                        <Badge appearance={getStatusAppearance(project.status)} className="text-xs capitalize">
                           {project.status.replace('-', ' ')}
                         </Badge>
                       </div>
@@ -771,7 +766,7 @@ export const CustomCalendar: Story = {
             <CardContent>
               <div className="flex flex-wrap gap-2">
                 {selectedDates.map((date, index) => (
-                  <Badge key={index} variant="secondary">
+                  <Badge key={index}>
                     {date.toLocaleDateString()}
                   </Badge>
                 ))}

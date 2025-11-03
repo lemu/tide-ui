@@ -35,7 +35,7 @@ export const Default: Story = {
   render: () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="default">
+        <Button>
           Open Menu
           <Icon name="chevron-down" size="sm" className="ml-2" />
         </Button>
@@ -55,7 +55,7 @@ export const SimpleMenu: Story = {
   render: () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="default">
+        <Button>
           Actions
           <Icon name="chevron-down" size="sm" className="ml-2" />
         </Button>
@@ -157,7 +157,7 @@ export const WithSubmenu: Story = {
   render: () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="default">
+        <Button>
           More Options
           <Icon name="chevron-down" size="sm" className="ml-2" />
         </Button>
@@ -378,7 +378,7 @@ export const ComplexMenuWithGroups: Story = {
   render: () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="default">
+        <Button>
           File Menu
           <Icon name="chevron-down" size="sm" className="ml-2" />
         </Button>
@@ -562,7 +562,7 @@ export const ResponsivePreview: Story = {
             <h3 className="text-heading-sm">Basic Menu</h3>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="default">
+                <Button>
                   Open Menu
                   <Icon name="chevron-down" size="sm" className="ml-2" />
                 </Button>
@@ -669,7 +669,7 @@ export const AutomaticIconIntegration: Story = {
           <h4 className="text-heading-sm">✨ New: Automatic Icons</h4>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="default">
+              <Button>
                 User Menu (Auto)
                 <Icon name="chevron-down" size="sm" className="ml-2" />
               </Button>
@@ -841,7 +841,7 @@ export const MobileAutoDismissTest: Story = {
           <h3 className="text-heading-sm mb-[var(--space-md)]">Regular Menu Items (Auto-Close)</h3>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="default">
+              <Button>
                 Actions Menu
                 <Icon name="chevron-down" size="sm" className="ml-2" />
               </Button>
@@ -997,7 +997,7 @@ export const MultiLevelNavigation: Story = {
       
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="default">
+          <Button>
             Navigation Menu
             <Icon name="chevron-down" size="sm" className="ml-2" />
           </Button>

@@ -313,7 +313,7 @@ const userColumns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const role = row.getValue('role') as string
       return (
-        <Badge variant={role === 'Admin' ? 'default' : role === 'Editor' ? 'secondary' : 'secondary'}>
+        <Badge>
           {role}
         </Badge>
       )
@@ -325,12 +325,7 @@ const userColumns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const status = row.getValue('status') as string
       return (
-        <Badge
-          variant={
-            status === 'active' ? 'default' :
-            status === 'pending' ? 'secondary' : 'secondary'
-          }
-        >
+        <Badge>
           {status}
         </Badge>
       )
@@ -391,7 +386,7 @@ const userColumnsAdvanced: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const role = row.getValue('role') as string
       return (
-        <Badge variant={role === 'Admin' ? 'default' : role === 'Editor' ? 'secondary' : 'secondary'}>
+        <Badge>
           {role}
         </Badge>
       )
@@ -412,12 +407,7 @@ const userColumnsAdvanced: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const status = row.getValue('status') as string
       return (
-        <Badge
-          variant={
-            status === 'active' ? 'default' :
-            status === 'pending' ? 'secondary' : 'secondary'
-          }
-        >
+        <Badge>
           {status}
         </Badge>
       )
@@ -557,7 +547,7 @@ const productColumns: ColumnDef<Product>[] = [
     accessorKey: 'category',
     header: 'Category',
     cell: ({ row }) => (
-      <Badge variant="secondary">{row.getValue('category')}</Badge>
+      <Badge>{row.getValue('category')}</Badge>
     ),
   },
   {
@@ -577,13 +567,13 @@ const productColumns: ColumnDef<Product>[] = [
       const stock = row.getValue('stock') as number
       const getStockBadge = () => {
         if (stock === 0) {
-          return <Badge variant="destructive" className="ml-2">Out of Stock</Badge>
+          return <Badge intent="destructive" appearance="solid" className="ml-2">Out of Stock</Badge>
         } else if (stock <= 10) {
-          return <Badge variant="secondary" className="ml-2 bg-[var(--color-background-warning-subtle)] text-[var(--color-text-warning)] border-[var(--color-border-warning)]">Low Stock</Badge>
+          return <Badge className="ml-2 bg-[var(--color-background-warning-subtle)] text-[var(--color-text-warning)] border-[var(--color-border-warning)]">Low Stock</Badge>
         } else if (stock <= 50) {
-          return <Badge variant="secondary" className="ml-2">In Stock</Badge>
+          return <Badge className="ml-2">In Stock</Badge>
         } else {
-          return <Badge variant="default" className="ml-2 bg-[var(--color-background-success-subtle)] text-[var(--color-text-success)] border-[var(--color-border-success)]">High Stock</Badge>
+          return <Badge className="ml-2 bg-[var(--color-background-success-subtle)] text-[var(--color-text-success)] border-[var(--color-border-success)]">High Stock</Badge>
         }
       }
 
@@ -601,12 +591,7 @@ const productColumns: ColumnDef<Product>[] = [
     cell: ({ row }) => {
       const status = row.getValue('status') as string
       return (
-        <Badge
-          variant={
-            status === 'in-stock' ? 'default' :
-            status === 'low-stock' ? 'secondary' : 'secondary'
-          }
-        >
+        <Badge>
           {status.replace('-', ' ')}
         </Badge>
       )
@@ -676,7 +661,7 @@ export const SimpleTable: Story = {
         cell: ({ row }) => {
           const status = row.getValue('status') as string
           return (
-            <Badge variant={status === 'active' ? 'default' : 'secondary'}>
+            <Badge>
               {status}
             </Badge>
           )
@@ -734,7 +719,7 @@ export const Sorting: Story = {
         cell: ({ row }) => {
           const status = row.getValue('status') as string
           return (
-            <Badge variant={status === 'active' ? 'default' : 'secondary'}>
+            <Badge>
               {status}
             </Badge>
           )
@@ -917,7 +902,7 @@ const analyticsColumns: ColumnDef<AnalyticsData>[] = [
       return (
         <div className="flex items-center gap-2">
           <span>{rate}%</span>
-          <Badge variant={rate > 5 ? 'default' : rate > 2 ? 'secondary' : 'secondary'}>
+          <Badge>
             {rate > 5 ? 'High' : rate > 2 ? 'Medium' : 'Low'}
           </Badge>
         </div>
@@ -1095,7 +1080,7 @@ const tradeColumns: ColumnDef<TradeData>[] = [
     accessorKey: 'instrument',
     header: 'Instrument',
     cell: ({ row }) => (
-      <Badge variant="outline">{row.getValue('instrument')}</Badge>
+      <Badge appearance="outline">{row.getValue('instrument')}</Badge>
     ),
     aggregatedCell: ({ row }) => {
       // Show unique instruments in grouped row
@@ -1116,7 +1101,7 @@ const tradeColumns: ColumnDef<TradeData>[] = [
       return (
         <div className="flex gap-[var(--space-xs)] flex-wrap">
           {instruments.map((instrument: string) => (
-            <Badge key={instrument} variant="outline">
+            <Badge key={instrument} appearance="outline">
               {instrument}
             </Badge>
           ))}
@@ -1131,7 +1116,7 @@ const tradeColumns: ColumnDef<TradeData>[] = [
       const side = row.getValue('side') as string
       if (!side) return null
       return (
-        <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
+        <Badge>
           {side.toUpperCase()}
         </Badge>
       )
@@ -1205,7 +1190,7 @@ const tradeColumns: ColumnDef<TradeData>[] = [
         cancelled: 'secondary'
       }
       return (
-        <Badge variant={variants[status as keyof typeof variants] as any}>
+        <Badge>
           {status.charAt(0).toUpperCase() + status.slice(1)}
         </Badge>
       )
@@ -1229,7 +1214,7 @@ const tradeColumns: ColumnDef<TradeData>[] = [
       return (
         <div className="flex gap-[var(--space-xs)] flex-wrap">
           {statuses.map((status: string) => (
-            <Badge key={status} variant={variants[status as keyof typeof variants] as any}>
+            <Badge key={status}>
               {status.charAt(0).toUpperCase() + status.slice(1)} ({statusCounts[status]})
             </Badge>
           ))}
@@ -1781,7 +1766,7 @@ export const ColumnResizing: Story = {
         accessorKey: 'instrument',
         header: 'Instrument',
         cell: ({ row }) => (
-          <Badge variant="outline">{row.getValue('instrument')}</Badge>
+          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
         ),
       },
       {
@@ -1832,7 +1817,7 @@ export const ColumnResizing: Story = {
             cancelled: 'secondary'
           }
           return (
-            <Badge variant={variants[status as keyof typeof variants] as any}>
+            <Badge>
               {status.charAt(0).toUpperCase() + status.slice(1)}
             </Badge>
           )
@@ -2095,14 +2080,13 @@ export const ColumnResizingWithTextTruncation: Story = {
         size: 120,
         cell: ({ row }) => {
           const status = row.getValue('status') as string
-          const getVariant = () => {
+          const getIntent = () => {
             if (status.includes('Active')) return 'success'
             if (status.includes('Pending') || status.includes('Awaiting')) return 'warning'
-            if (status.includes('Completed')) return 'default'
-            return 'default'
+            return 'neutral'
           }
           return (
-            <Badge variant={getVariant()}>
+            <Badge intent={getIntent()}>
               {status}
             </Badge>
           )
@@ -2402,7 +2386,7 @@ const orderColumns: ColumnDef<OrderData>[] = [
       const stage = row.getValue('stage') as string
       if (!stage) return null
       return (
-        <Badge variant={stage === 'Active' ? 'default' : 'secondary'} className="text-caption-sm">
+        <Badge className="text-caption-sm">
           {stage}
         </Badge>
       )
@@ -3541,7 +3525,7 @@ export const ColumnFaceting: Story = {
           const side = row.getValue('side') as string
           if (!side) return null
           return (
-            <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
+            <Badge>
               {side.toUpperCase()}
             </Badge>
           )
@@ -3569,7 +3553,7 @@ export const ColumnFaceting: Story = {
             cancelled: 'secondary'
           }
           return (
-            <Badge variant={variants[status as keyof typeof variants] as any}>
+            <Badge>
               {status.charAt(0).toUpperCase() + status.slice(1)}
             </Badge>
           )
@@ -3595,7 +3579,7 @@ export const ColumnFaceting: Story = {
           ],
         },
         cell: ({ row }) => (
-          <Badge variant="outline">{row.getValue('instrument')}</Badge>
+          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
         ),
       },
       {
@@ -3703,7 +3687,7 @@ export const GlobalFaceting: Story = {
           const side = row.getValue('side') as string
           if (!side) return null
           return (
-            <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
+            <Badge>
               {side.toUpperCase()}
             </Badge>
           )
@@ -3731,7 +3715,7 @@ export const GlobalFaceting: Story = {
             cancelled: 'secondary'
           }
           return (
-            <Badge variant={variants[status as keyof typeof variants] as any}>
+            <Badge>
               {status.charAt(0).toUpperCase() + status.slice(1)}
             </Badge>
           )
@@ -3774,7 +3758,7 @@ export const GlobalFaceting: Story = {
           ],
         },
         cell: ({ row }) => (
-          <Badge variant="outline">{row.getValue('instrument')}</Badge>
+          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
         ),
       },
       {
@@ -3877,7 +3861,7 @@ export const NestedHeaders: Story = {
             accessorKey: 'instrument',
             header: 'Instrument',
             cell: ({ row }) => (
-              <Badge variant="secondary" className="font-mono">
+              <Badge className="font-mono">
                 {row.getValue('instrument')}
               </Badge>
             ),
@@ -3950,7 +3934,7 @@ export const NestedHeaders: Story = {
               }
               return (
                 <Badge
-                  variant="secondary"
+                 
                   className={cn(
                     "text-caption-strong-sm",
                     statusColors[status.toLowerCase() as keyof typeof statusColors]
@@ -4067,7 +4051,7 @@ export const ColumnVisibility: Story = {
         header: 'Instrument',
         meta: { label: 'Instrument' },
         cell: ({ row }) => (
-          <Badge variant="outline">{row.getValue('instrument')}</Badge>
+          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
         ),
       },
       {
@@ -4078,7 +4062,7 @@ export const ColumnVisibility: Story = {
           const side = row.getValue('side') as string
           if (!side) return null
           return (
-            <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
+            <Badge>
               {side.toUpperCase()}
             </Badge>
           )
@@ -4121,7 +4105,7 @@ export const ColumnVisibility: Story = {
             cancelled: 'secondary'
           }
           return (
-            <Badge variant={variants[status as keyof typeof variants] as any}>
+            <Badge>
               {status.charAt(0).toUpperCase() + status.slice(1)}
             </Badge>
           )
@@ -4201,7 +4185,7 @@ export const ColumnReordering: Story = {
         accessorKey: 'instrument',
         header: 'Instrument',
         cell: ({ row }) => (
-          <Badge variant="outline">{row.getValue('instrument')}</Badge>
+          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
         ),
       },
       {
@@ -4211,7 +4195,7 @@ export const ColumnReordering: Story = {
           const side = row.getValue('side') as string
           if (!side) return null
           return (
-            <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
+            <Badge>
               {side.toUpperCase()}
             </Badge>
           )
@@ -4246,7 +4230,7 @@ export const ColumnReordering: Story = {
             cancelled: 'secondary'
           }
           return (
-            <Badge variant={variants[status as keyof typeof variants] as any}>
+            <Badge>
               {status.charAt(0).toUpperCase() + status.slice(1)}
             </Badge>
           )
@@ -4318,7 +4302,7 @@ export const RowSelection: Story = {
         accessorKey: 'instrument',
         header: 'Instrument',
         cell: ({ row }) => (
-          <Badge variant="outline">{row.getValue('instrument')}</Badge>
+          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
         ),
       },
       {
@@ -4328,7 +4312,7 @@ export const RowSelection: Story = {
           const side = row.getValue('side') as string
           if (!side) return null
           return (
-            <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
+            <Badge>
               {side.toUpperCase()}
             </Badge>
           )
@@ -4371,7 +4355,7 @@ export const RowSelection: Story = {
             cancelled: 'secondary'
           }
           return (
-            <Badge variant={variants[status as keyof typeof variants] as any}>
+            <Badge>
               {status.charAt(0).toUpperCase() + status.slice(1)}
             </Badge>
           )
@@ -4443,7 +4427,7 @@ export const PaginationControls: Story = {
         accessorKey: 'instrument',
         header: 'Instrument',
         cell: ({ row }) => (
-          <Badge variant="outline">{row.getValue('instrument')}</Badge>
+          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
         ),
       },
       {
@@ -4453,7 +4437,7 @@ export const PaginationControls: Story = {
           const side = row.getValue('side') as string
           if (!side) return null
           return (
-            <Badge variant={side === 'buy' ? 'default' : 'secondary'}>
+            <Badge>
               {side.toUpperCase()}
             </Badge>
           )
@@ -4496,7 +4480,7 @@ export const PaginationControls: Story = {
             cancelled: 'secondary'
           }
           return (
-            <Badge variant={variants[status as keyof typeof variants] as any}>
+            <Badge>
               {status.charAt(0).toUpperCase() + status.slice(1)}
             </Badge>
           )

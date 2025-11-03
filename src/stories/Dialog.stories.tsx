@@ -129,7 +129,7 @@ export const ConfirmationDialog: Story = {
           </DialogBody>
           <DialogFooter className="gap-2">
             <DialogClose asChild>
-              <Button variant="default">Cancel</Button>
+              <Button>Cancel</Button>
             </DialogClose>
             <Button
               variant="destructive"
@@ -292,7 +292,7 @@ export const FormDialog: Story = {
           </DialogBody>
           <DialogFooter className="gap-2">
             <DialogClose asChild>
-              <Button variant="default">Cancel</Button>
+              <Button>Cancel</Button>
             </DialogClose>
             <Button variant="primary" onClick={handleSubmit}>
               <Icon name="plus" size="sm" className="mr-2" />
@@ -359,7 +359,7 @@ export const AlertDialog: Story = {
         </DialogBody>
         <DialogFooter className="gap-2">
           <DialogClose asChild>
-            <Button variant="default">Remind Me Later</Button>
+            <Button>Remind Me Later</Button>
           </DialogClose>
           <Button variant="primary">
             <Icon name="zap" size="sm" className="mr-2" />
@@ -430,7 +430,7 @@ export const ComplexContentDialog: Story = {
                 <span className="text-body-sm font-medium">
                   {users.length} members
                 </span>
-                <Badge variant="secondary">
+                <Badge>
                   {users.filter((u) => u.status === "online").length} online
                 </Badge>
               </div>
@@ -479,7 +479,7 @@ export const ComplexContentDialog: Story = {
                         <div>
                           <div className="flex items-center gap-2">
                             <span className="font-medium">{user.name}</span>
-                            <Badge variant="outline" className="text-xs">
+                            <Badge appearance="outline" className="text-xs">
                               {user.role}
                             </Badge>
                           </div>

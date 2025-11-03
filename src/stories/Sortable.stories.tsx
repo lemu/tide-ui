@@ -321,7 +321,7 @@ export const MusicPlaylist: Story = {
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>My Playlist</CardTitle>
-              <Badge variant="secondary">{songs.length} songs</Badge>
+              <Badge>{songs.length} songs</Badge>
             </div>
           </CardHeader>
           <CardContent>

@@ -73,7 +73,7 @@ export const UserProfile: Story = {
                   <h4 className="text-body-md font-semibold">John Doe</h4>
                   <p className="text-body-sm text-[var(--color-text-secondary)]">Senior Developer</p>
                   <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="text-xs">Pro</Badge>
+                    <Badge className="text-xs">Pro</Badge>
                     <div className="flex items-center gap-1">
                       <div className="w-2 h-2 bg-green-400 rounded-full"></div>
                       <span className="text-caption-sm text-[var(--color-text-secondary)]">Online</span>
@@ -139,7 +139,7 @@ export const UserProfile: Story = {
                   <h4 className="text-body-md font-semibold">Jane Smith</h4>
                   <p className="text-body-sm text-[var(--color-text-secondary)]">Product Designer</p>
                   <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="text-xs">Designer</Badge>
+                    <Badge className="text-xs">Designer</Badge>
                     <div className="flex items-center gap-1">
                       <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
                       <span className="text-caption-sm text-[var(--color-text-secondary)]">Away</span>
@@ -204,7 +204,7 @@ export const UserProfile: Story = {
                   <h4 className="text-body-md font-semibold">Mike Johnson</h4>
                   <p className="text-body-sm text-[var(--color-text-secondary)]">DevOps Engineer</p>
                   <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="text-xs">DevOps</Badge>
+                    <Badge className="text-xs">DevOps</Badge>
                     <div className="flex items-center gap-1">
                       <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
                       <span className="text-caption-sm text-[var(--color-text-secondary)]">Offline</span>
@@ -542,7 +542,7 @@ export const ProductCard: Story = {
                 <div>
                   <span className="text-lg font-bold">$999</span>
                 </div>
-                <Badge variant="secondary">New</Badge>
+                <Badge>New</Badge>
               </div>
               
               <div className="flex gap-2">

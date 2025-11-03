@@ -53,7 +53,7 @@ export const Variants: Story = {
 
       <div>
         <p className="text-body-sm font-medium mb-2">Secondary</p>
-        <ButtonGroup variant="secondary">
+        <ButtonGroup>
           <Button>Option 1</Button>
           <Button>Option 2</Button>
           <Button>Option 3</Button>
@@ -112,7 +112,7 @@ export const WithIcons: Story = {
     <div className="space-y-4">
       <div>
         <p className="text-body-sm font-medium mb-2">View Options</p>
-        <ButtonGroup variant="secondary">
+        <ButtonGroup>
           <Button>
             <Icon name="list" className="w-4 h-4" />
           </Button>
@@ -145,7 +145,7 @@ export const WithIcons: Story = {
 
       <div>
         <p className="text-body-sm font-medium mb-2">Alignment</p>
-        <ButtonGroup variant="secondary">
+        <ButtonGroup>
           <Button>
             <Icon name="align-left" className="w-4 h-4 mr-2" />
             Left
@@ -171,14 +171,14 @@ export const TwoButtons: Story = {
       <div>
         <p className="text-body-sm font-medium mb-2">Yes/No Choice</p>
         <ButtonGroup>
-          <Button variant="secondary">Cancel</Button>
+          <Button>Cancel</Button>
           <Button>Confirm</Button>
         </ButtonGroup>
       </div>
 
       <div>
         <p className="text-body-sm font-medium mb-2">Previous/Next</p>
-        <ButtonGroup variant="secondary">
+        <ButtonGroup>
           <Button>
             <Icon name="chevron-left" className="w-4 h-4 mr-1" />
             Previous
@@ -199,7 +199,7 @@ export const ManyButtons: Story = {
     <div className="space-y-4">
       <div>
         <p className="text-body-sm font-medium mb-2">Number Picker</p>
-        <ButtonGroup variant="secondary" size="sm">
+        <ButtonGroup size="sm">
           <Button>1</Button>
           <Button>2</Button>
           <Button>3</Button>
@@ -253,7 +253,7 @@ export const FilterExample: Story = {
           <div className="space-y-4">
             <div>
               <p className="text-body-sm font-medium mb-2">Status Filter</p>
-              <ButtonGroup variant="secondary" size="sm">
+              <ButtonGroup size="sm">
                 <Button>All</Button>
                 <Button>Active</Button>
                 <Button>Pending</Button>
@@ -276,7 +276,7 @@ export const FilterExample: Story = {
         <div>
           <h3 className="text-heading-sm font-medium mb-4">Toolbar Actions</h3>
           <div className="flex gap-4">
-            <ButtonGroup variant="secondary">
+            <ButtonGroup>
               <Button>
                 <Icon name="download" className="w-4 h-4 mr-2" />
                 Export
@@ -316,9 +316,9 @@ export const MixedButtons: Story = {
       <div>
         <p className="text-body-sm font-medium mb-2">Individual Button Overrides</p>
         <ButtonGroup>
-          <Button variant="secondary">Cancel</Button>
-          <Button variant="default">Save Draft</Button>
-          <Button variant="default">Publish</Button>
+          <Button>Cancel</Button>
+          <Button>Save Draft</Button>
+          <Button>Publish</Button>
         </ButtonGroup>
       </div>
 
@@ -340,7 +340,7 @@ export const WithDisabledButtons: Story = {
     <div className="space-y-6">
       <div>
         <p className="text-body-sm font-medium mb-2">Some Disabled Buttons</p>
-        <ButtonGroup variant="default" size="sm">
+        <ButtonGroup size="sm">
           <Button disabled>
             <Icon name="arrow-left" className="w-4 h-4" />
           </Button>
@@ -352,7 +352,7 @@ export const WithDisabledButtons: Story = {
 
       <div>
         <p className="text-body-sm font-medium mb-2">Pagination-like (matching Pagination component)</p>
-        <ButtonGroup variant="default" size="sm">
+        <ButtonGroup size="sm">
           <Button disabled>
             <Icon name="arrow-left" className="w-4 h-4" />
           </Button>

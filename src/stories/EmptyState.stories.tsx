@@ -269,7 +269,7 @@ export const DashboardNoData: Story = {
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Sales Analytics</CardTitle>
-              <Badge variant="secondary">0 sales</Badge>
+              <Badge>0 sales</Badge>
             </div>
           </CardHeader>
           <CardContent>
@@ -358,7 +358,7 @@ export const ECommerceStates: Story = {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Shopping Cart</CardTitle>
-                <Badge variant="secondary">{cartItems} items</Badge>
+                <Badge>{cartItems} items</Badge>
               </div>
             </CardHeader>
             <CardContent>
@@ -399,7 +399,7 @@ export const ECommerceStates: Story = {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Wishlist</CardTitle>
-                <Badge variant="secondary">{wishlistItems} items</Badge>
+                <Badge>{wishlistItems} items</Badge>
               </div>
             </CardHeader>
             <CardContent>
@@ -556,7 +556,7 @@ export const NotificationsCenter: Story = {
             <div className="flex items-center justify-between">
               <CardTitle>Notifications</CardTitle>
               <div className="flex items-center gap-2">
-                <Badge variant="secondary">
+                <Badge>
                   {hasNotifications ? '3' : '0'} new
                 </Badge>
                 <Button 

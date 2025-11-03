@@ -101,7 +101,7 @@ export const WithConstraints: Story = {
         </div>
         <div className="flex items-center gap-2">
           <span className="text-body-sm">Value: {value}</span>
-          <Badge variant={value > 80 ? "destructive" : value > 50 ? "warning" : "success"}>
+          <Badge intent={value > 80 ? "destructive" : value > 50 ? "warning" : "success"}>
             {value > 80 ? "High" : value > 50 ? "Medium" : "Low"}
           </Badge>
         </div>
@@ -166,7 +166,7 @@ export const Variants: Story = {
           <NumberScrubber
             value={defaultValue}
             onChange={setDefaultValue}
-            variant="default"
+           
             className="w-full"
           />
         </div>
@@ -525,7 +525,7 @@ export const WithScrubCallbacks: Story = {
         
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Badge variant={isScrubbing ? "default" : "secondary"}>
+            <Badge>
               {isScrubbing ? "Scrubbing" : "Idle"}
             </Badge>
             <span className="text-body-sm">Current value: {value}</span>

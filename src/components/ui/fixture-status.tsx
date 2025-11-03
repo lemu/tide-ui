@@ -197,7 +197,7 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
     // Icon-only mode with tooltip
     if (iconOnly) {
       return (
-        <TooltipProvider>
+        <TooltipProvider delayDuration={200}>
           <Tooltip>
             <TooltipTrigger asChild>
               <div

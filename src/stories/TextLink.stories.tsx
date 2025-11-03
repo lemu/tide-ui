@@ -59,7 +59,7 @@ export const Variants: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <TextLink href="#" variant="default">Default variant link</TextLink>
+        <TextLink href="#">Default variant link</TextLink>
       </div>
       <div>
         <TextLink href="#" variant="subtle">Subtle variant link</TextLink>

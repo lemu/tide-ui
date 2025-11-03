@@ -413,7 +413,7 @@ export const RichContent: Story = {
             <Icon name="shield-check" size="md" color="primary" />
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Compliance check has finished with the result</span>
-              <Badge variant="success" size="sm">Compliant</Badge>
+              <Badge intent="success" size="sm">Compliant</Badge>
             </ActivityLogDescription>
             <ActivityLogTime>Jul 10, 2025 at 14:28</ActivityLogTime>
           </ActivityLogHeader>
