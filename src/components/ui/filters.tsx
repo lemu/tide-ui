@@ -4,6 +4,7 @@ import { Button } from "./button"
 import { Input } from "./input"
 import { Icon } from "./icon"
 import { Checkbox } from "./checkbox"
+import { RadioGroup, RadioGroupItem } from "./radio-group"
 import { Popover, PopoverContent, PopoverTrigger } from "./popover"
 import { Separator } from "./separator"
 import { Badge } from "./badge"
@@ -23,7 +24,7 @@ export interface FilterOptionGroup {
   options: FilterOption[]
 }
 
-export type FilterValue = string | string[] | number | [number, number] | Date | [Date, Date]
+export type FilterValue = string | string[] | number | [number, number] | Date | [Date, Date] | undefined
 
 export interface FilterDefinition {
   id: string
@@ -34,6 +35,9 @@ export interface FilterDefinition {
   groups?: FilterOptionGroup[]
   searchPlaceholder?: string
   formatValue?: (values: string[], count: number) => string
+  showSearch?: boolean | 'auto' // Control search visibility: true (always), false (never), 'auto' (based on threshold)
+  searchThreshold?: number // Minimum number of options to show search (default: 8, only applies when showSearch is 'auto')
+  group?: string // Optional group name for organizing filters in the dropdown menu sidebar
 }
 
 export interface GlobalSearchTerm {
@@ -113,6 +117,32 @@ function findMatchingFilter(
   return null
 }
 
+/**
+ * Counts the total number of options in a filter (including nested children)
+ */
+function getTotalOptionCount(filter: FilterDefinition): number {
+  let count = 0
+
+  // Count grouped options
+  if (filter.groups) {
+    for (const group of filter.groups) {
+      for (const option of group.options) {
+        count++ // Parent option
+        if (option.children) {
+          count += option.children.length // Child options
+        }
+      }
+    }
+  }
+
+  // Count flat options array
+  if (filter.options) {
+    count = filter.options.length
+  }
+
+  return count
+}
+
 // ============================================================================
 // FilterPanelContent - Reusable filter options panel
 // ============================================================================
@@ -132,6 +162,19 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
     if (!value) return []
     return Array.isArray(value) ? value.map(String) : [String(value)]
   }, [value])
+
+  // Determine if search should be shown
+  const shouldShowSearch = React.useMemo(() => {
+    const showSearchProp = filter.showSearch ?? 'auto'
+
+    if (showSearchProp === true) return true
+    if (showSearchProp === false) return false
+
+    // Auto mode: show search if total options >= threshold
+    const totalOptions = getTotalOptionCount(filter)
+    const threshold = filter.searchThreshold ?? 8
+    return totalOptions >= threshold
+  }, [filter])
 
   // Filter options based on search query
   const filteredGroups: FilterOptionGroup[] = React.useMemo(() => {
@@ -173,38 +216,42 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
       const newValues = selectedValues.includes(optionValue)
         ? selectedValues.filter(v => v !== optionValue)
         : [...selectedValues, optionValue]
-      onChange(newValues.length > 0 ? newValues : undefined as any)
+      onChange(newValues.length > 0 ? newValues : undefined)
     } else {
-      onChange(optionValue === selectedValues[0] ? undefined as any : optionValue)
+      onChange(optionValue === selectedValues[0] ? undefined : optionValue)
     }
   }
 
   const handleResetGroup = (group: FilterOptionGroup) => {
+    if (filter.type !== 'multiselect') return
+
     const groupValues = group.options.flatMap(opt =>
       [opt.value, ...(opt.children?.map(c => c.value) || [])]
     )
     const newValues = selectedValues.filter(v => !groupValues.includes(v))
-    onChange(newValues.length > 0 ? newValues : undefined as any)
+    onChange(newValues.length > 0 ? newValues : undefined)
   }
 
   return (
     <div className="flex flex-col gap-[var(--space-2xlg)]">
-      {/* Search Input */}
-      <div className="relative">
-        <Icon
-          name="search"
-          className="absolute left-[var(--space-md)] top-1/2 -translate-y-1/2 h-[var(--size-xsm)] w-[var(--size-xsm)] text-[var(--color-text-tertiary)] pointer-events-none"
-        />
-        <Input
-          type="text"
-          size="lg"
-          placeholder={filter.searchPlaceholder || `Search for a ${filter.label.toLowerCase()}`}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-[calc(var(--space-md)+var(--size-xsm)+var(--space-sm))]"
-          autoFocus
-        />
-      </div>
+      {/* Search Input - conditionally rendered */}
+      {shouldShowSearch && (
+        <div className="relative">
+          <Icon
+            name="search"
+            className="absolute left-[var(--space-md)] top-1/2 -translate-y-1/2 h-[var(--size-xsm)] w-[var(--size-xsm)] text-[var(--color-text-tertiary)] pointer-events-none"
+          />
+          <Input
+            type="text"
+            size="lg"
+            placeholder={filter.searchPlaceholder || `Search for a ${filter.label.toLowerCase()}`}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-[calc(var(--space-md)+var(--size-xsm)+var(--space-sm))]"
+            autoFocus
+          />
+        </div>
+      )}
 
       {/* Option Groups */}
       {filteredGroups.map((group) => (
@@ -214,10 +261,10 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
             <div className="flex-1 text-[var(--color-text-primary)] tracking-[0.1px]">
               {group.label}
             </div>
-            {onReset && (
+            {onReset && filter.type === 'multiselect' && (
               <button
                 onClick={() => handleResetGroup(group)}
-                className="text-label-sm text-[var(--color-text-action-brand-bold)] hover:underline"
+                className="text-body-medium-sm text-[var(--color-text-brand)] hover:text-[var(--color-text-brand-hovered)] hover:underline"
               >
                 Reset
               </button>
@@ -230,41 +277,75 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
           </div>
 
           {/* Options */}
-          <div className="flex flex-col gap-[var(--space-sm)]">
-            {group.options.map((option) => (
-              <React.Fragment key={option.value}>
-                {/* Parent Option */}
-                <div className="flex gap-[var(--space-sm)] h-[20px] items-center">
-                  <Checkbox
-                    checked={selectedValues.includes(option.value)}
-                    onCheckedChange={() => handleToggleOption(option.value)}
-                  />
-                  <label
-                    className="flex-1 text-body-md text-[var(--color-text-primary)] cursor-pointer"
-                    onClick={() => handleToggleOption(option.value)}
-                  >
-                    {option.label}
-                  </label>
-                </div>
-
-                {/* Child Options (Indented) */}
-                {option.children && option.children.map((child: FilterOption) => (
-                  <div key={child.value} className="flex gap-[var(--space-sm)] h-[20px] items-center pl-[var(--space-2xlg)]">
+          {filter.type === 'multiselect' ? (
+            <div className="flex flex-col gap-[var(--space-sm)]">
+              {group.options.map((option) => (
+                <React.Fragment key={option.value}>
+                  {/* Parent Option */}
+                  <div className="flex gap-[var(--space-sm)] h-[20px] items-center">
                     <Checkbox
-                      checked={selectedValues.includes(child.value)}
-                      onCheckedChange={() => handleToggleOption(child.value)}
+                      checked={selectedValues.includes(option.value)}
+                      onCheckedChange={() => handleToggleOption(option.value)}
                     />
                     <label
                       className="flex-1 text-body-md text-[var(--color-text-primary)] cursor-pointer"
-                      onClick={() => handleToggleOption(child.value)}
+                      onClick={() => handleToggleOption(option.value)}
                     >
-                      {child.label}
+                      {option.label}
                     </label>
                   </div>
+
+                  {/* Child Options (Indented) */}
+                  {option.children && option.children.map((child: FilterOption) => (
+                    <div key={child.value} className="flex gap-[var(--space-sm)] h-[20px] items-center pl-[var(--space-2xlg)]">
+                      <Checkbox
+                        checked={selectedValues.includes(child.value)}
+                        onCheckedChange={() => handleToggleOption(child.value)}
+                      />
+                      <label
+                        className="flex-1 text-body-md text-[var(--color-text-primary)] cursor-pointer"
+                        onClick={() => handleToggleOption(child.value)}
+                      >
+                        {child.label}
+                      </label>
+                    </div>
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
+          ) : (
+            <RadioGroup value={selectedValues[0] || ''} onValueChange={handleToggleOption}>
+              <div className="flex flex-col gap-[var(--space-sm)]">
+                {group.options.map((option) => (
+                  <React.Fragment key={option.value}>
+                    {/* Parent Option */}
+                    <div className="flex gap-[var(--space-sm)] h-[20px] items-center">
+                      <RadioGroupItem value={option.value} />
+                      <label
+                        className="flex-1 text-body-md text-[var(--color-text-primary)] cursor-pointer"
+                        onClick={() => handleToggleOption(option.value)}
+                      >
+                        {option.label}
+                      </label>
+                    </div>
+
+                    {/* Child Options (Indented) */}
+                    {option.children && option.children.map((child: FilterOption) => (
+                      <div key={child.value} className="flex gap-[var(--space-sm)] h-[20px] items-center pl-[var(--space-2xlg)]">
+                        <RadioGroupItem value={child.value} />
+                        <label
+                          className="flex-1 text-body-md text-[var(--color-text-primary)] cursor-pointer"
+                          onClick={() => handleToggleOption(child.value)}
+                        >
+                          {child.label}
+                        </label>
+                      </div>
+                    ))}
+                  </React.Fragment>
                 ))}
-              </React.Fragment>
-            ))}
-          </div>
+              </div>
+            </RadioGroup>
+          )}
         </div>
       ))}
     </div>
@@ -441,13 +522,35 @@ export function FilterDropdownMenu({
     onPinnedFiltersChange(newPinned)
   }
 
+  // Group filters by their group property
+  const groupedFilters = React.useMemo(() => {
+    const grouped: Record<string, FilterDefinition[]> = {}
+    const ungrouped: FilterDefinition[] = []
+    const groupOrder: string[] = []
+
+    filters.forEach(filter => {
+      if (filter.group) {
+        if (!grouped[filter.group]) {
+          grouped[filter.group] = []
+          groupOrder.push(filter.group)
+        }
+        grouped[filter.group].push(filter)
+      } else {
+        ungrouped.push(filter)
+      }
+    })
+
+    return { grouped, ungrouped, groupOrder }
+  }, [filters])
+
   return (
     <div className="bg-[var(--color-surface-primary)] relative rounded-md max-h-[480px] flex flex-col">
       <div className="flex items-stretch justify-start min-h-0 overflow-hidden rounded-md flex-1">
         {/* Left Sidebar */}
         <div className="bg-[var(--color-background-neutral)] relative w-[240px] shrink-0 border-r border-[var(--color-border-primary-subtle)] flex flex-col">
           <div className="box-border flex flex-col gap-[var(--space-sm)] p-[var(--space-sm)] overflow-y-auto">
-            {filters.map((filter) => {
+            {/* Render ungrouped filters first */}
+            {groupedFilters.ungrouped.map((filter) => {
               const value = activeFilters[filter.id]
               const valueCount = Array.isArray(value) ? value.length : (value !== undefined && value !== null ? 1 : 0)
 
@@ -463,6 +566,43 @@ export function FilterDropdownMenu({
                 />
               )
             })}
+
+            {/* Render grouped filters with section headers */}
+            {groupedFilters.groupOrder.map((groupName, groupIndex) => {
+              const groupFilters = groupedFilters.grouped[groupName]
+
+              return (
+                <div key={groupName} className="flex flex-col gap-[var(--space-sm)]">
+                  {/* Group Header */}
+                  <div className={cn(
+                    "px-[var(--space-md)] pb-[var(--space-xsm)]",
+                    groupIndex === 0 && groupedFilters.ungrouped.length === 0 ? "pt-0" : "pt-[var(--space-md)]"
+                  )}>
+                    <div className="text-caption-sm text-[var(--color-text-tertiary)] tracking-[0.1px]">
+                      {groupName}
+                    </div>
+                  </div>
+
+                  {/* Group Filters */}
+                  {groupFilters.map((filter) => {
+                    const value = activeFilters[filter.id]
+                    const valueCount = Array.isArray(value) ? value.length : (value !== undefined && value !== null ? 1 : 0)
+
+                    return (
+                      <FilterSidebarItem
+                        key={filter.id}
+                        filter={filter}
+                        isSelected={filter.id === selectedFilterId}
+                        isPinned={pinnedFilters.includes(filter.id)}
+                        valueCount={valueCount}
+                        onSelect={() => setSelectedFilterId(filter.id)}
+                        onTogglePin={() => handleTogglePin(filter.id)}
+                      />
+                    )
+                  })}
+                </div>
+              )
+            })}
           </div>
         </div>
 
@@ -473,7 +613,7 @@ export function FilterDropdownMenu({
               filter={selectedFilter}
               value={activeFilters[selectedFilter.id]}
               onChange={(value) => onFilterChange(selectedFilter.id, value)}
-              onReset={() => onFilterChange(selectedFilter.id, undefined as any)}
+              onReset={() => onFilterChange(selectedFilter.id, undefined)}
             />
           )}
         </div>
@@ -612,7 +752,7 @@ export function Filters({
   }
 
   return (
-    <div className="flex gap-[7px] items-center">
+    <div className="flex gap-[3px] items-center">
       {/* Filter Button */}
       <Popover open={isFilterMenuOpen} onOpenChange={setIsFilterMenuOpen}>
         <PopoverTrigger asChild>
@@ -646,7 +786,7 @@ export function Filters({
       )}
 
       {/* Pinned Filter Slots */}
-      <div className="flex gap-[7px] overflow-x-auto scrollbar-hide">
+      <div className="flex gap-[7px] overflow-x-auto scrollbar-hide p-1">
         {pinnedFilterObjects.map((filter) => {
         const slotContent = getSlotContent(filter)
         const isActive = slotContent.type !== 'empty'

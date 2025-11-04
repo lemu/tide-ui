@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { useState, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { DataTable, NestedHeaderConfig } from '../components/ui/data-table'
 import { DataTableSettingsMenu } from '../components/ui/data-table-settings-menu'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
@@ -3039,6 +3039,841 @@ Notice how the entire group stays visible and expands automatically, with matche
                 'instrument': 250,
                 'trader': 250
               }
+            }}
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const GroupingWithCustomDisplayAndFilters: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: `Demonstrates external filtering with the Filters component, tag-based global search, and custom highlighting for grouped data.
+
+## Features
+
+- **External Filters**: Status, Vessel, and Counterparty filters managed via Filters component
+- **Tag-Based Search**: Global search with search terms displayed as tags
+- **Custom Highlighting**: Yellow highlighting for search matches in both regular and aggregated cells
+- **Group-Preserving**: Maintains grouping structure during filtering and search
+
+## Implementation
+
+This story combines the Filters component with DataTable grouping:
+
+\`\`\`typescript
+// 1. State management
+const [pinnedFilters, setPinnedFilters] = useState(['status', 'counterparty'])
+const [activeFilters, setActiveFilters] = useState({})
+const [globalSearchTerms, setGlobalSearchTerms] = useState([])
+
+// 2. Filter data
+const filteredData = useMemo(() => {
+  return data.filter(item => {
+    // Apply active filters
+    // Apply global search terms (all must match)
+  })
+}, [data, activeFilters, globalSearchTerms])
+
+// 3. Wrap columns with highlighting
+const highlightedColumns = useMemo(() => {
+  return columns.map(col => ({
+    ...col,
+    cell: col.cell ? wrapWithHighlighting(col.cell) : undefined,
+    aggregatedCell: col.aggregatedCell ? wrapWithHighlighting(col.aggregatedCell) : undefined
+  }))
+}, [columns, globalSearchTerms])
+\`\`\`
+
+## Real-World Scenarios
+
+Same fixture lifecycle scenarios as GroupingWithCustomDisplay:
+- **f1**: Simple case (1 Order → 1 Negotiation → 1 Contract)
+- **f2**: No deal capture (No Order/Negotiation, 1 Contract)
+- **f3**: Open negotiations (1 Order → 2 Negotiations, No Contracts)
+- **f4**: Complex case (1 Order → 3 Negotiations → 3 Contracts)`,
+      },
+    },
+  },
+  render: () => {
+    // State management
+    const [pinnedFilters, setPinnedFilters] = useState<string[]>(['status', 'counterparty'])
+    const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({})
+    const [globalSearchTerms, setGlobalSearchTerms] = useState<string[]>([])
+
+    // Generate fixture data matching real-world scenarios
+    const fixtureData = [
+      // f1: Simple case - 1 Order → 1 Negotiation → 1 Contract
+      {
+        fixtureId: 'f1',
+        orderId: '23vds38vo',
+        negotiationId: '2352342342',
+        contractId: 'asdr4233',
+        vessel: 'Oceanic Star',
+        counterparty: 'Maritime Trading Co',
+        quantity: 50000,
+        status: 'Contract'
+      },
+
+      // f2: No deal capture - No Order, No Negotiation, but 1 Contract
+      {
+        fixtureId: 'f2',
+        orderId: undefined,
+        negotiationId: undefined,
+        contractId: 'dkdk024bf',
+        vessel: 'Pacific Dawn',
+        counterparty: 'Global Shipping Ltd',
+        quantity: 75000,
+        status: 'Contract'
+      },
+
+      // f3: Order with open negotiations - No contracts yet
+      {
+        fixtureId: 'f3',
+        orderId: '93kdfgfnn',
+        negotiationId: '7476457657',
+        contractId: undefined,
+        vessel: 'Atlantic Wave',
+        counterparty: 'Ocean Freight Inc',
+        quantity: 45000,
+        status: 'Negotiation'
+      },
+      {
+        fixtureId: 'f3',
+        orderId: '93kdfgfnn',
+        negotiationId: '1661455454',
+        contractId: undefined,
+        vessel: 'Atlantic Horizon',
+        counterparty: 'Ocean Freight Inc',
+        quantity: 55000,
+        status: 'Negotiation'
+      },
+
+      // f4: Complex case - 1 Order → 3 Negotiations → 3 Contracts
+      {
+        fixtureId: 'f4',
+        orderId: '715aabgfkl',
+        negotiationId: '352345345',
+        contractId: 'fsj312343',
+        vessel: 'Mediterranean Sun',
+        counterparty: 'Euro Marine Services',
+        quantity: 80000,
+        status: 'Contract'
+      },
+      {
+        fixtureId: 'f4',
+        orderId: '715aabgfkl',
+        negotiationId: '913345345',
+        contractId: 'k38djfk',
+        vessel: 'Mediterranean Star',
+        counterparty: 'Euro Marine Services',
+        quantity: 90000,
+        status: 'Contract'
+      },
+      {
+        fixtureId: 'f4',
+        orderId: '715aabgfkl',
+        negotiationId: '733262456',
+        contractId: 'asdr4233',
+        vessel: 'Mediterranean Dawn',
+        counterparty: 'Euro Marine Services',
+        quantity: 85000,
+        status: 'Order'
+      },
+
+      // f5: Simple case - 1 Order → 1 Negotiation → 1 Contract
+      {
+        fixtureId: 'f5',
+        orderId: '8jdk39fks',
+        negotiationId: '9384756483',
+        contractId: 'cx9283hf',
+        vessel: 'Nordic Spirit',
+        counterparty: 'Asian Shipping Group',
+        quantity: 65000,
+        status: 'Contract'
+      },
+
+      // f6: Two negotiations → two contracts
+      {
+        fixtureId: 'f6',
+        orderId: 'kf84jfks9',
+        negotiationId: '5647382910',
+        contractId: 'ab123xyz',
+        vessel: 'Baltic Trader',
+        counterparty: 'Nordic Transport AS',
+        quantity: 70000,
+        status: 'Contract'
+      },
+      {
+        fixtureId: 'f6',
+        orderId: 'kf84jfks9',
+        negotiationId: '8374920165',
+        contractId: 'mn456def',
+        vessel: 'Baltic Explorer',
+        counterparty: 'Nordic Transport AS',
+        quantity: 68000,
+        status: 'Contract'
+      },
+
+      // f7: Missing deal capture - No Order/Negotiation, 1 Contract
+      {
+        fixtureId: 'f7',
+        orderId: undefined,
+        negotiationId: undefined,
+        contractId: 'qr789ghi',
+        vessel: 'Aegean Pearl',
+        counterparty: 'Mediterranean Trade Co',
+        quantity: 82000,
+        status: 'Contract'
+      },
+
+      // f8: Three open negotiations
+      {
+        fixtureId: 'f8',
+        orderId: 'zx928kdf4',
+        negotiationId: '1029384756',
+        contractId: undefined,
+        vessel: 'Arctic Navigator',
+        counterparty: 'Pacific Logistics Corp',
+        quantity: 95000,
+        status: 'Negotiation'
+      },
+      {
+        fixtureId: 'f8',
+        orderId: 'zx928kdf4',
+        negotiationId: '5647382901',
+        contractId: undefined,
+        vessel: 'Arctic Voyager',
+        counterparty: 'Pacific Logistics Corp',
+        quantity: 92000,
+        status: 'Negotiation'
+      },
+      {
+        fixtureId: 'f8',
+        orderId: 'zx928kdf4',
+        negotiationId: '7483920156',
+        contractId: undefined,
+        vessel: 'Arctic Pioneer',
+        counterparty: 'Pacific Logistics Corp',
+        quantity: 98000,
+        status: 'Negotiation'
+      },
+
+      // f9: Simple completed case
+      {
+        fixtureId: 'f9',
+        orderId: 'lm483jdk2',
+        negotiationId: '3948576201',
+        contractId: 'st101uvw',
+        vessel: 'Caribbean Dream',
+        counterparty: 'Atlantic Carriers Ltd',
+        quantity: 58000,
+        status: 'Contract'
+      },
+
+      // f10: Multiple contracts with mixed statuses
+      {
+        fixtureId: 'f10',
+        orderId: 'pq728djf3',
+        negotiationId: '6574839201',
+        contractId: 'xy202abc',
+        vessel: 'Indian Breeze',
+        counterparty: 'Global Shipping Ltd',
+        quantity: 105000,
+        status: 'Contract'
+      },
+      {
+        fixtureId: 'f10',
+        orderId: 'pq728djf3',
+        negotiationId: '2019384756',
+        contractId: undefined,
+        vessel: 'Indian Spirit',
+        counterparty: 'Global Shipping Ltd',
+        quantity: 110000,
+        status: 'Negotiation'
+      },
+      {
+        fixtureId: 'f10',
+        orderId: 'pq728djf3',
+        negotiationId: '8475620193',
+        contractId: 'de303fgh',
+        vessel: 'Indian Horizon',
+        counterparty: 'Global Shipping Ltd',
+        quantity: 108000,
+        status: 'Contract'
+      },
+
+      // f11: Single negotiation in progress
+      {
+        fixtureId: 'f11',
+        orderId: 'rt394kfj8',
+        negotiationId: '4738201956',
+        contractId: undefined,
+        vessel: 'Horizon Explorer',
+        counterparty: 'Baltic Shipping Lines',
+        quantity: 42000,
+        status: 'Negotiation'
+      },
+
+      // f12: Missing deal capture with large quantity
+      {
+        fixtureId: 'f12',
+        orderId: undefined,
+        negotiationId: undefined,
+        contractId: 'jk404lmn',
+        vessel: 'Pacific Voyager',
+        counterparty: 'Ocean Freight Inc',
+        quantity: 120000,
+        status: 'Contract'
+      },
+
+      // f13: Complex multi-contract scenario (4 contracts)
+      {
+        fixtureId: 'f13',
+        orderId: 'uw573hdk9',
+        negotiationId: '9102837465',
+        contractId: 'op505qrs',
+        vessel: 'Nordic Breeze',
+        counterparty: 'Maritime Trading Co',
+        quantity: 72000,
+        status: 'Contract'
+      },
+      {
+        fixtureId: 'f13',
+        orderId: 'uw573hdk9',
+        negotiationId: '5647382910',
+        contractId: 'tu606vwx',
+        vessel: 'Nordic Wave',
+        counterparty: 'Maritime Trading Co',
+        quantity: 75000,
+        status: 'Contract'
+      },
+      {
+        fixtureId: 'f13',
+        orderId: 'uw573hdk9',
+        negotiationId: '3847561029',
+        contractId: 'yz707abc',
+        vessel: 'Nordic Dawn',
+        counterparty: 'Maritime Trading Co',
+        quantity: 78000,
+        status: 'Contract'
+      },
+      {
+        fixtureId: 'f13',
+        orderId: 'uw573hdk9',
+        negotiationId: '7382019564',
+        contractId: 'de808fgh',
+        vessel: 'Nordic Star',
+        counterparty: 'Maritime Trading Co',
+        quantity: 76000,
+        status: 'Contract'
+      },
+
+      // f14: Simple active contract
+      {
+        fixtureId: 'f14',
+        orderId: 'ab639fjk2',
+        negotiationId: '2938475610',
+        contractId: 'ij909klm',
+        vessel: 'Oceanic Voyager',
+        counterparty: 'Asian Shipping Group',
+        quantity: 88000,
+        status: 'Contract'
+      },
+
+      // f15: Multiple open negotiations (4 negotiations)
+      {
+        fixtureId: 'f15',
+        orderId: 'cd847gkl5',
+        negotiationId: '6574839201',
+        contractId: undefined,
+        vessel: 'Atlantic Breeze',
+        counterparty: 'Euro Marine Services',
+        quantity: 52000,
+        status: 'Negotiation'
+      },
+      {
+        fixtureId: 'f15',
+        orderId: 'cd847gkl5',
+        negotiationId: '1029384756',
+        contractId: undefined,
+        vessel: 'Atlantic Spirit',
+        counterparty: 'Euro Marine Services',
+        quantity: 48000,
+        status: 'Negotiation'
+      },
+      {
+        fixtureId: 'f15',
+        orderId: 'cd847gkl5',
+        negotiationId: '4837561029',
+        contractId: undefined,
+        vessel: 'Atlantic Pioneer',
+        counterparty: 'Euro Marine Services',
+        quantity: 54000,
+        status: 'Negotiation'
+      },
+      {
+        fixtureId: 'f15',
+        orderId: 'cd847gkl5',
+        negotiationId: '8475620193',
+        contractId: undefined,
+        vessel: 'Atlantic Navigator',
+        counterparty: 'Euro Marine Services',
+        quantity: 51000,
+        status: 'Negotiation'
+      },
+    ]
+
+    // Extract unique values for filters
+    const uniqueStatuses = Array.from(new Set(fixtureData.map(d => d.status).filter(Boolean)))
+    const uniqueVessels = Array.from(new Set(fixtureData.map(d => d.vessel).filter(Boolean)))
+    const uniqueCounterparties = Array.from(new Set(fixtureData.map(d => d.counterparty).filter(Boolean)))
+
+    // Define filters
+    const filterDefinitions: FilterDefinition[] = [
+      {
+        id: 'status',
+        label: 'Status',
+        icon: 'circle-check',
+        options: uniqueStatuses.map(status => ({
+          value: status,
+          label: status,
+        })),
+      },
+      {
+        id: 'vessel',
+        label: 'Vessel',
+        icon: 'ship',
+        options: uniqueVessels.map(vessel => ({
+          value: vessel,
+          label: vessel,
+        })),
+      },
+      {
+        id: 'counterparty',
+        label: 'Counterparty',
+        icon: 'building',
+        options: uniqueCounterparties.map(counterparty => ({
+          value: counterparty,
+          label: counterparty,
+        })),
+      },
+    ]
+
+    // Filter handlers
+    const handleFilterChange = (filterId: string, value: FilterValue) => {
+      setActiveFilters(prev => ({ ...prev, [filterId]: value }))
+    }
+
+    const handleFilterClear = (filterId: string) => {
+      setActiveFilters(prev => {
+        const newFilters = { ...prev }
+        delete newFilters[filterId]
+        return newFilters
+      })
+    }
+
+    const handleFilterReset = () => {
+      setActiveFilters({})
+      setGlobalSearchTerms([])
+    }
+
+    // Filter data based on active filters and search terms
+    const filteredData = useMemo(() => {
+      return fixtureData.filter((item) => {
+        // Check active filters
+        for (const [filterId, filterValue] of Object.entries(activeFilters)) {
+          if (!filterValue) continue
+          const values = Array.isArray(filterValue) ? filterValue : [filterValue]
+          if (values.length === 0) continue
+
+          // Get the item's value for this filter
+          const itemValue = String(item[filterId as keyof typeof item] || '')
+          if (!values.includes(itemValue)) return false
+        }
+
+        // Check global search terms (all must match)
+        if (globalSearchTerms.length > 0) {
+          const searchableText = Object.values(item)
+            .map(v => String(v || ''))
+            .join(' ')
+            .toLowerCase()
+
+          const allTermsMatch = globalSearchTerms.every(term =>
+            searchableText.includes(term.toLowerCase())
+          )
+          if (!allTermsMatch) return false
+        }
+
+        return true
+      })
+    }, [fixtureData, activeFilters, globalSearchTerms])
+
+    // Highlighting utility functions
+    const highlightMatches = (text: string, searchTerms: string[]): React.ReactNode => {
+      if (!searchTerms || searchTerms.length === 0 || !text) return text
+
+      const lowerText = text.toLowerCase()
+      const matches: Array<{ start: number; end: number; term: string }> = []
+
+      // Find all matches for all search terms
+      searchTerms.forEach(term => {
+        if (!term) return
+        const lowerTerm = term.toLowerCase()
+        let index = lowerText.indexOf(lowerTerm)
+        while (index !== -1) {
+          matches.push({ start: index, end: index + term.length, term })
+          index = lowerText.indexOf(lowerTerm, index + 1)
+        }
+      })
+
+      // If no matches, return original text
+      if (matches.length === 0) return text
+
+      // Sort matches by start position
+      matches.sort((a, b) => a.start - b.start)
+
+      // Merge overlapping matches
+      const mergedMatches: Array<{ start: number; end: number }> = []
+      matches.forEach(match => {
+        if (mergedMatches.length === 0) {
+          mergedMatches.push(match)
+        } else {
+          const last = mergedMatches[mergedMatches.length - 1]
+          if (match.start <= last.end) {
+            // Overlapping or adjacent, merge
+            last.end = Math.max(last.end, match.end)
+          } else {
+            mergedMatches.push(match)
+          }
+        }
+      })
+
+      // Build highlighted text
+      const parts: React.ReactNode[] = []
+      let lastIndex = 0
+
+      mergedMatches.forEach((match, i) => {
+        // Add text before match
+        if (match.start > lastIndex) {
+          parts.push(text.substring(lastIndex, match.start))
+        }
+
+        // Add highlighted match
+        parts.push(
+          <span
+            key={`highlight-${i}`}
+            style={{
+              backgroundColor: '#fef3c7',
+              fontWeight: 600,
+              padding: '2px 0',
+            }}
+          >
+            {text.substring(match.start, match.end)}
+          </span>
+        )
+
+        lastIndex = match.end
+      })
+
+      // Add remaining text
+      if (lastIndex < text.length) {
+        parts.push(text.substring(lastIndex))
+      }
+
+      return <>{parts}</>
+    }
+
+    const applyHighlightToReactNode = (node: React.ReactNode, searchTerms: string[]): React.ReactNode => {
+      if (!searchTerms || searchTerms.length === 0) return node
+
+      // Handle null/undefined
+      if (node == null) return node
+
+      // Handle strings
+      if (typeof node === 'string') {
+        return highlightMatches(node, searchTerms)
+      }
+
+      // Handle numbers
+      if (typeof node === 'number') {
+        return highlightMatches(String(node), searchTerms)
+      }
+
+      // Handle arrays
+      if (Array.isArray(node)) {
+        return node.map((child, index) => (
+          <React.Fragment key={index}>
+            {applyHighlightToReactNode(child, searchTerms)}
+          </React.Fragment>
+        ))
+      }
+
+      // Handle React elements
+      if (React.isValidElement(node)) {
+        const element = node as React.ReactElement<any>
+
+        // Clone the element and recursively process children
+        return React.cloneElement(
+          element,
+          element.props,
+          applyHighlightToReactNode(element.props.children, searchTerms)
+        )
+      }
+
+      return node
+    }
+
+    // Base column definitions (without highlighting)
+    const baseColumns: ColumnDef<typeof fixtureData[0]>[] = [
+      {
+        accessorKey: 'fixtureId',
+        header: 'Fixture ID',
+        enableGrouping: true,
+      },
+      {
+        accessorKey: 'orderId',
+        header: 'Order ID',
+        enableGrouping: false,
+        cell: ({ getValue }) => {
+          const value = getValue()
+          return value || <span className="text-[var(--color-text-secondary)]">—</span>
+        },
+        aggregatedCell: ({ row }) => {
+          const orderId = row.subRows[0]?.original?.orderId
+
+          if (!orderId) {
+            return <span className="text-[var(--color-text-secondary)]">—</span>
+          }
+
+          return <span className="font-semibold text-[var(--color-text-primary)]">{orderId}</span>
+        },
+      },
+      {
+        accessorKey: 'negotiationId',
+        header: 'Negotiation ID',
+        cell: ({ getValue }) => {
+          const value = getValue()
+          return value || <span className="text-[var(--color-text-secondary)]">—</span>
+        },
+        aggregatedCell: ({ row }) => {
+          const negotiationIds = row.subRows.map(r => r.original?.negotiationId).filter(Boolean)
+          const uniqueNegotiationIds = Array.from(new Set(negotiationIds))
+
+          if (uniqueNegotiationIds.length === 0) {
+            return <span className="text-[var(--color-text-secondary)]">—</span>
+          }
+
+          if (uniqueNegotiationIds.length === 1) {
+            return <span className="text-[var(--color-text-primary)]">{uniqueNegotiationIds[0]}</span>
+          } else {
+            return (
+              <div className="flex items-center gap-[var(--space-xsm)]">
+                <span className="text-[var(--color-text-secondary)]">{uniqueNegotiationIds.length} negotiations</span>
+              </div>
+            )
+          }
+        },
+      },
+      {
+        accessorKey: 'contractId',
+        header: 'Contract ID',
+        cell: ({ getValue }) => {
+          const value = getValue()
+          return value || <span className="text-[var(--color-text-secondary)]">—</span>
+        },
+        aggregatedCell: ({ row }) => {
+          const contractIds = row.subRows.map(r => r.original?.contractId).filter(Boolean)
+          const uniqueContractIds = Array.from(new Set(contractIds))
+
+          if (uniqueContractIds.length === 0) {
+            return <span className="text-[var(--color-text-secondary)]">—</span>
+          }
+
+          if (uniqueContractIds.length === 1) {
+            return <span className="text-[var(--color-text-primary)]">{uniqueContractIds[0]}</span>
+          } else {
+            return (
+              <div className="flex items-center gap-[var(--space-xsm)]">
+                <span className="text-[var(--color-text-secondary)]">{uniqueContractIds.length} contracts</span>
+              </div>
+            )
+          }
+        },
+      },
+      {
+        accessorKey: 'vessel',
+        header: 'Vessel',
+        aggregatedCell: ({ row }) => {
+          const vessels = row.subRows.map(r => r.original?.vessel).filter(Boolean)
+          const uniqueVessels = Array.from(new Set(vessels))
+
+          if (uniqueVessels.length === 1) {
+            return <span className="text-[var(--color-text-primary)]">{uniqueVessels[0]}</span>
+          } else {
+            return <span className="text-[var(--color-text-secondary)]">{uniqueVessels.length} vessels</span>
+          }
+        },
+      },
+      {
+        accessorKey: 'counterparty',
+        header: 'Counterparty',
+        aggregatedCell: ({ row }) => {
+          const counterparties = row.subRows.map(r => r.original?.counterparty).filter(Boolean)
+          const uniqueCounterparties = Array.from(new Set(counterparties))
+
+          if (uniqueCounterparties.length === 1) {
+            return <span className="text-[var(--color-text-primary)]">{uniqueCounterparties[0]}</span>
+          } else {
+            return <span className="text-[var(--color-text-secondary)]">{uniqueCounterparties.length} counterparties</span>
+          }
+        },
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Quantity (MT)',
+        meta: {
+          align: 'right',
+        },
+        cell: ({ getValue }) => {
+          return <span className="tabular-nums">{Number(getValue()).toLocaleString()}</span>
+        },
+        aggregatedCell: ({ row }) => {
+          const quantities = row.subRows.map(r => r.original?.quantity).filter(Boolean) as number[]
+
+          if (quantities.length === 0) {
+            return (
+              <div className="text-right">
+                <span className="text-[var(--color-text-secondary)]">—</span>
+              </div>
+            )
+          }
+
+          const min = Math.min(...quantities)
+          const max = Math.max(...quantities)
+
+          if (min === max) {
+            return (
+              <div className="text-right">
+                <span className="text-[var(--color-text-primary)] tabular-nums">{min.toLocaleString()}</span>
+              </div>
+            )
+          }
+
+          return (
+            <div className="text-right">
+              <span className="text-[var(--color-text-primary)] tabular-nums">
+                {min.toLocaleString()} - {max.toLocaleString()}
+              </span>
+            </div>
+          )
+        },
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        cell: ({ getValue }) => {
+          const status = getValue() as string
+          return (
+            <Badge
+              appearance={
+                status === 'Contract' ? 'success' :
+                status === 'Order' ? 'default' :
+                'accent'
+              }
+              size="sm"
+            >
+              {status}
+            </Badge>
+          )
+        },
+        aggregatedCell: ({ row }) => {
+          const statuses = row.subRows.map(r => r.original?.status).filter(Boolean)
+          const statusCounts = statuses.reduce((acc, status) => {
+            acc[status] = (acc[status] || 0) + 1
+            return acc
+          }, {} as Record<string, number>)
+
+          return (
+            <div className="flex items-center gap-[var(--space-xsm)]">
+              {Object.entries(statusCounts).map(([status, count]) => (
+                <Badge
+                  key={status}
+                  appearance={
+                    status === 'Contract' ? 'success' :
+                    status === 'Order' ? 'default' :
+                    'accent'
+                  }
+                  size="sm"
+                >
+                  {count} {status}
+                </Badge>
+              ))}
+            </div>
+          )
+        },
+      },
+    ]
+
+    // Wrap columns with highlighting
+    const highlightedColumns = useMemo(() => {
+      return baseColumns.map(col => ({
+        ...col,
+        cell: col.cell ? (props: any) => {
+          const result = col.cell!(props)
+          return applyHighlightToReactNode(result, globalSearchTerms)
+        } : undefined,
+        aggregatedCell: col.aggregatedCell ? (props: any) => {
+          const result = col.aggregatedCell!(props)
+          return applyHighlightToReactNode(result, globalSearchTerms)
+        } : undefined,
+      }))
+    }, [baseColumns, globalSearchTerms])
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Fixture Lifecycle with External Filters</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+              This example demonstrates external filtering with the Filters component, tag-based global search,
+              and custom highlighting for grouped data. Filter by Status, Vessel, or Counterparty, and use the
+              search bar to highlight matching text across all cells.
+            </p>
+          </div>
+
+          <Filters
+            filters={filterDefinitions}
+            pinnedFilters={pinnedFilters}
+            activeFilters={activeFilters}
+            onPinnedFiltersChange={setPinnedFilters}
+            onFilterChange={handleFilterChange}
+            onFilterClear={handleFilterClear}
+            onFilterReset={handleFilterReset}
+            enableGlobalSearch={true}
+            globalSearchTerms={globalSearchTerms}
+            onGlobalSearchChange={setGlobalSearchTerms}
+            globalSearchPlaceholder="Search fixtures..."
+          />
+
+          <DataTable
+            data={filteredData}
+            columns={highlightedColumns}
+            enableGrouping={true}
+            enableExpanding={true}
+            enableGlobalSearch={false}
+            grouping={["fixtureId"]}
+            groupDisplayColumn="orderId"
+            hideChildrenForSingleItemGroups={true}
+            columnVisibility={{ fixtureId: false }}
+            title="Fixture Lifecycle Scenarios"
+            stickyHeader
+            initialState={{
+              expanded: {},
             }}
           />
         </div>

@@ -169,7 +169,7 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
         <div
           ref={ref}
           className={cn(
-            "inline-flex items-center leading-none px-1",
+            "inline-flex items-center leading-none p-0.5",
             gapClasses[size],
             textSizeClasses[size],
             className,
@@ -202,7 +202,7 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
             <TooltipTrigger asChild>
               <div
                 ref={ref}
-                className={cn("inline-flex px-1", className)}
+                className={cn("inline-flex p-0.5", className)}
                 {...props}
               >
                 <Icon
@@ -225,7 +225,7 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
       <div
         ref={ref}
         className={cn(
-          "inline-flex items-center leading-none px-1",
+          "inline-flex items-center leading-none p-0.5",
           gapClasses[size],
           textSizeClasses[size],
           className,

@@ -114,6 +114,7 @@ const sampleFilters: FilterDefinition[] = [
     label: 'Date',
     icon: CalendarIcon,
     type: 'multiselect',
+    group: 'Date & Time',
     searchPlaceholder: 'Search dates...',
     groups: [
       {
@@ -132,6 +133,7 @@ const sampleFilters: FilterDefinition[] = [
     label: 'Status',
     icon: CheckIcon,
     type: 'multiselect',
+    group: 'Status',
     searchPlaceholder: 'Search statuses...',
     // Using flat options array (simpler format)
     options: [
@@ -146,6 +148,7 @@ const sampleFilters: FilterDefinition[] = [
     label: 'Cargo type',
     icon: PackageIcon,
     type: 'multiselect',
+    group: 'Cargo',
     searchPlaceholder: 'Search for a cargo type',
     groups: [
       {
@@ -183,6 +186,7 @@ const sampleFilters: FilterDefinition[] = [
     label: 'Load port',
     icon: ({ className }: { className?: string }) => <Icon name="ship-load" className={className} />,
     type: 'multiselect',
+    group: 'Location',
     searchPlaceholder: 'Search for a port...',
     groups: [
       {
@@ -227,6 +231,7 @@ const sampleFilters: FilterDefinition[] = [
     label: 'Discharge port',
     icon: ({ className }: { className?: string }) => <Icon name="ship-unload" className={className} />,
     type: 'multiselect',
+    group: 'Location',
     searchPlaceholder: 'Search for a port...',
     groups: [
       {
@@ -245,6 +250,7 @@ const sampleFilters: FilterDefinition[] = [
     label: 'Owner',
     icon: UserIcon,
     type: 'multiselect',
+    group: 'Parties',
     searchPlaceholder: 'Search owners...',
     groups: [
       {
@@ -742,6 +748,482 @@ export const ResponsiveTabletView: Story = {
             }}
             onFilterReset={() => setActiveFilters({})}
           />
+        </div>
+      </div>
+    )
+  },
+}
+
+/**
+ * Demonstrates single-select filters using radio buttons vs multiselect filters using checkboxes.
+ * Single-select filters use `type: 'select'` while multiselect use `type: 'multiselect'`.
+ */
+export const SingleSelectVsMultiselect: Story = {
+  render: () => {
+    const [pinnedFilters, setPinnedFilters] = useState<string[]>(['priority', 'status', 'country', 'department'])
+    const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({})
+
+    // Filter definitions with both single-select and multiselect, demonstrating search visibility
+    const filters: FilterDefinition[] = [
+      {
+        id: 'priority',
+        label: 'Priority',
+        icon: (props) => <Icon name="alert-circle" {...props} />,
+        type: 'select', // Single-select - uses radio buttons
+        showSearch: false, // Explicitly hide search (only 4 options)
+        options: [
+          { value: 'low', label: 'Low' },
+          { value: 'medium', label: 'Medium' },
+          { value: 'high', label: 'High' },
+          { value: 'urgent', label: 'Urgent' },
+        ],
+      },
+      {
+        id: 'status',
+        label: 'Status',
+        icon: (props) => <Icon name="circle-check" {...props} />,
+        type: 'multiselect', // Multi-select - uses checkboxes
+        // showSearch: 'auto' (default) - No search (only 4 options)
+        options: [
+          { value: 'open', label: 'Open' },
+          { value: 'in-progress', label: 'In Progress' },
+          { value: 'completed', label: 'Completed' },
+          { value: 'cancelled', label: 'Cancelled' },
+        ],
+      },
+      {
+        id: 'country',
+        label: 'Country',
+        icon: (props) => <Icon name="map-pin" {...props} />,
+        type: 'select', // Single-select with auto search (10 options >= 8 threshold)
+        // showSearch: 'auto' (default) - Shows search (10 options >= 8)
+        options: [
+          { value: 'us', label: 'United States' },
+          { value: 'uk', label: 'United Kingdom' },
+          { value: 'ca', label: 'Canada' },
+          { value: 'au', label: 'Australia' },
+          { value: 'de', label: 'Germany' },
+          { value: 'fr', label: 'France' },
+          { value: 'jp', label: 'Japan' },
+          { value: 'cn', label: 'China' },
+          { value: 'in', label: 'India' },
+          { value: 'br', label: 'Brazil' },
+        ],
+      },
+      {
+        id: 'department',
+        label: 'Department',
+        icon: (props) => <Icon name="briefcase" {...props} />,
+        type: 'multiselect', // Multi-select with forced search
+        showSearch: true, // Force search even with few options
+        options: [
+          { value: 'engineering', label: 'Engineering' },
+          { value: 'design', label: 'Design' },
+          { value: 'product', label: 'Product' },
+          { value: 'marketing', label: 'Marketing' },
+          { value: 'sales', label: 'Sales' },
+        ],
+      },
+    ]
+
+    const handleFilterChange = (filterId: string, value: FilterValue) => {
+      setActiveFilters(prev => ({ ...prev, [filterId]: value }))
+    }
+
+    const handleFilterClear = (filterId: string) => {
+      setActiveFilters(prev => {
+        const newFilters = { ...prev }
+        delete newFilters[filterId]
+        return newFilters
+      })
+    }
+
+    const handleFilterReset = () => {
+      setActiveFilters({})
+    }
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Single-Select vs Multi-Select Filters</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+              This example demonstrates the difference between single-select and multi-select filters, as well as conditional search visibility.
+              Single-select filters use radio buttons (one choice only), while multi-select filters use checkboxes (multiple choices).
+            </p>
+
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)] mb-[var(--space-md)]">
+              <div className="flex flex-col gap-[var(--space-sm)]">
+                <div className="text-body-sm font-medium text-[var(--color-text-accent)] mb-[var(--space-xsm)]">Selection Types:</div>
+                <div className="flex items-start gap-[var(--space-sm)]">
+                  <Icon name="circle" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
+                  <div>
+                    <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Single-Select (Radio Buttons):</span>
+                    <span className="text-body-sm text-[var(--color-text-accent)]"> Priority, Country - Choose only one option</span>
+                  </div>
+                </div>
+                <div className="flex items-start gap-[var(--space-sm)]">
+                  <Icon name="square" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
+                  <div>
+                    <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Multi-Select (Checkboxes):</span>
+                    <span className="text-body-sm text-[var(--color-text-accent)]"> Status, Department - Choose multiple options</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)] mb-[var(--space-lg)]">
+              <div className="flex flex-col gap-[var(--space-sm)]">
+                <div className="text-body-sm font-medium text-[var(--color-text-accent)] mb-[var(--space-xsm)]">Search Visibility:</div>
+                <div className="flex items-start gap-[var(--space-sm)]">
+                  <Icon name="search" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
+                  <div>
+                    <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Auto (default):</span>
+                    <span className="text-body-sm text-[var(--color-text-accent)]"> Status (4 options) - No search. Country (10 options) - Has search (≥8 threshold)</span>
+                  </div>
+                </div>
+                <div className="flex items-start gap-[var(--space-sm)]">
+                  <Icon name="eye-off" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
+                  <div>
+                    <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Hidden:</span>
+                    <span className="text-body-sm text-[var(--color-text-accent)]"> Priority (showSearch: false) - Search always hidden</span>
+                  </div>
+                </div>
+                <div className="flex items-start gap-[var(--space-sm)]">
+                  <Icon name="eye" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
+                  <div>
+                    <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Forced:</span>
+                    <span className="text-body-sm text-[var(--color-text-accent)]"> Department (showSearch: true) - Search always shown</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <Filters
+            filters={filters}
+            pinnedFilters={pinnedFilters}
+            activeFilters={activeFilters}
+            onPinnedFiltersChange={setPinnedFilters}
+            onFilterChange={handleFilterChange}
+            onFilterClear={handleFilterClear}
+            onFilterReset={handleFilterReset}
+          />
+
+          {/* Display active filters */}
+          <div className="mt-[var(--space-lg)]">
+            <Card>
+              <CardHeader>
+                <CardTitle>Active Filters</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {Object.keys(activeFilters).length === 0 ? (
+                  <p className="text-body-md text-[var(--color-text-secondary)]">No filters applied</p>
+                ) : (
+                  <div className="flex flex-col gap-[var(--space-sm)]">
+                    {Object.entries(activeFilters).map(([filterId, value]) => {
+                      const filter = filters.find(f => f.id === filterId)
+                      const displayValue = Array.isArray(value)
+                        ? value.join(', ')
+                        : String(value)
+
+                      return (
+                        <div key={filterId} className="flex items-start gap-[var(--space-sm)]">
+                          <Label className="min-w-[120px] font-medium">{filter?.label}:</Label>
+                          <span className="text-body-md">{displayValue}</span>
+                          <span className="text-body-sm text-[var(--color-text-tertiary)] ml-auto">
+                            ({filter?.type === 'select' ? 'single-select' : 'multi-select'})
+                          </span>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    )
+  },
+}
+
+/**
+ * Demonstrates the difference between grouped and ungrouped filter options.
+ * Ungrouped filters use a flat `options` array, while grouped filters use the `groups` array with section headers.
+ */
+export const GroupedVsUngroupedFilters: Story = {
+  render: () => {
+    const [pinnedFilters, setPinnedFilters] = useState<string[]>(['priority', 'status', 'team', 'country', 'department', 'cargo'])
+    const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({})
+
+    const filters: FilterDefinition[] = [
+      // ============================================================================
+      // UNGROUPED FILTERS (using flat options array)
+      // ============================================================================
+      {
+        id: 'priority',
+        label: 'Priority',
+        icon: (props) => <Icon name="alert-circle" {...props} />,
+        type: 'select',
+        showSearch: false,
+        options: [
+          { value: 'low', label: 'Low' },
+          { value: 'medium', label: 'Medium' },
+          { value: 'high', label: 'High' },
+          { value: 'urgent', label: 'Urgent' },
+        ],
+      },
+      {
+        id: 'status',
+        label: 'Status',
+        icon: (props) => <Icon name="circle-check" {...props} />,
+        type: 'multiselect',
+        showSearch: false,
+        options: [
+          { value: 'open', label: 'Open' },
+          { value: 'in-progress', label: 'In Progress' },
+          { value: 'completed', label: 'Completed' },
+          { value: 'cancelled', label: 'Cancelled' },
+        ],
+      },
+      {
+        id: 'team',
+        label: 'Team',
+        icon: (props) => <Icon name="users" {...props} />,
+        type: 'select',
+        showSearch: false,
+        options: [
+          { value: 'alpha', label: 'Team Alpha' },
+          { value: 'beta', label: 'Team Beta' },
+          { value: 'gamma', label: 'Team Gamma' },
+          { value: 'delta', label: 'Team Delta' },
+          { value: 'omega', label: 'Team Omega' },
+        ],
+      },
+
+      // ============================================================================
+      // GROUPED FILTERS (using groups array with section headers)
+      // ============================================================================
+      {
+        id: 'country',
+        label: 'Country',
+        icon: (props) => <Icon name="map-pin" {...props} />,
+        type: 'select',
+        groups: [
+          {
+            label: 'Europe',
+            options: [
+              { value: 'uk', label: 'United Kingdom' },
+              { value: 'de', label: 'Germany' },
+              { value: 'fr', label: 'France' },
+              { value: 'nl', label: 'Netherlands' },
+            ],
+          },
+          {
+            label: 'Asia',
+            options: [
+              { value: 'jp', label: 'Japan' },
+              { value: 'cn', label: 'China' },
+              { value: 'in', label: 'India' },
+              { value: 'sg', label: 'Singapore' },
+            ],
+          },
+          {
+            label: 'Americas',
+            options: [
+              { value: 'us', label: 'United States' },
+              { value: 'ca', label: 'Canada' },
+              { value: 'br', label: 'Brazil' },
+              { value: 'mx', label: 'Mexico' },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'department',
+        label: 'Department',
+        icon: (props) => <Icon name="briefcase" {...props} />,
+        type: 'multiselect',
+        groups: [
+          {
+            label: 'Engineering',
+            options: [
+              { value: 'frontend', label: 'Frontend' },
+              { value: 'backend', label: 'Backend' },
+              { value: 'devops', label: 'DevOps' },
+              { value: 'qa', label: 'QA' },
+            ],
+          },
+          {
+            label: 'Business',
+            options: [
+              { value: 'sales', label: 'Sales' },
+              { value: 'marketing', label: 'Marketing' },
+              { value: 'product', label: 'Product' },
+            ],
+          },
+          {
+            label: 'Operations',
+            options: [
+              { value: 'hr', label: 'Human Resources' },
+              { value: 'finance', label: 'Finance' },
+              { value: 'legal', label: 'Legal' },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'cargo',
+        label: 'Cargo Type',
+        icon: (props) => <Icon name="package" {...props} />,
+        type: 'multiselect',
+        groups: [
+          {
+            label: 'Major Bulk Commodities',
+            options: [
+              { value: 'iron-ore', label: 'Iron Ore' },
+              { value: 'coal', label: 'Coal' },
+              {
+                value: 'grain',
+                label: 'Grain',
+                children: [
+                  { value: 'wheat', label: 'Wheat' },
+                  { value: 'corn', label: 'Corn (Maize)' },
+                  { value: 'barley', label: 'Barley' },
+                  { value: 'soybean', label: 'Soybean' },
+                ],
+              },
+            ],
+          },
+          {
+            label: 'Minor Bulk Commodities',
+            options: [
+              { value: 'steel', label: 'Steel Products' },
+              { value: 'cement', label: 'Cement' },
+              { value: 'fertilizer', label: 'Fertilizer' },
+            ],
+          },
+          {
+            label: 'Liquid Bulk',
+            options: [
+              { value: 'crude-oil', label: 'Crude Oil' },
+              { value: 'lng', label: 'LNG' },
+              { value: 'chemicals', label: 'Chemicals' },
+            ],
+          },
+        ],
+      },
+    ]
+
+    const handleFilterChange = (filterId: string, value: FilterValue) => {
+      setActiveFilters(prev => ({ ...prev, [filterId]: value }))
+    }
+
+    const handleFilterClear = (filterId: string) => {
+      setActiveFilters(prev => {
+        const newFilters = { ...prev }
+        delete newFilters[filterId]
+        return newFilters
+      })
+    }
+
+    const handleFilterReset = () => {
+      setActiveFilters({})
+    }
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Grouped vs Ungrouped Filters</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+              This example demonstrates the difference between ungrouped filters (simple flat lists) and grouped filters (categorized with section headers).
+            </p>
+
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)] mb-[var(--space-md)]">
+              <div className="flex flex-col gap-[var(--space-sm)]">
+                <div className="text-body-sm font-medium text-[var(--color-text-accent)] mb-[var(--space-xsm)]">Ungrouped Filters (using options array):</div>
+                <div className="flex items-start gap-[var(--space-sm)]">
+                  <Icon name="list" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
+                  <div>
+                    <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Priority, Status, Team:</span>
+                    <span className="text-body-sm text-[var(--color-text-accent)]"> Simple flat lists without section headers. Best for 3-10 uncategorized options.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)] mb-[var(--space-lg)]">
+              <div className="flex flex-col gap-[var(--space-sm)]">
+                <div className="text-body-sm font-medium text-[var(--color-text-accent)] mb-[var(--space-xsm)]">Grouped Filters (using groups array):</div>
+                <div className="flex items-start gap-[var(--space-sm)]">
+                  <Icon name="layers" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
+                  <div>
+                    <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Country:</span>
+                    <span className="text-body-sm text-[var(--color-text-accent)]"> Grouped by continent (Europe, Asia, Americas). Best for 10+ options with logical categories.</span>
+                  </div>
+                </div>
+                <div className="flex items-start gap-[var(--space-sm)]">
+                  <Icon name="layers" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
+                  <div>
+                    <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Department:</span>
+                    <span className="text-body-sm text-[var(--color-text-accent)]"> Grouped by division (Engineering, Business, Operations). Each group has a Reset button.</span>
+                  </div>
+                </div>
+                <div className="flex items-start gap-[var(--space-sm)]">
+                  <Icon name="git-branch" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
+                  <div>
+                    <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Cargo Type:</span>
+                    <span className="text-body-sm text-[var(--color-text-accent)]"> Grouped with nested children (Grain → Wheat, Corn, Barley). Shows hierarchical data structure.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <Filters
+            filters={filters}
+            pinnedFilters={pinnedFilters}
+            activeFilters={activeFilters}
+            onPinnedFiltersChange={setPinnedFilters}
+            onFilterChange={handleFilterChange}
+            onFilterClear={handleFilterClear}
+            onFilterReset={handleFilterReset}
+          />
+
+          {/* Display active filters */}
+          <div className="mt-[var(--space-lg)]">
+            <Card>
+              <CardHeader>
+                <CardTitle>Active Filters</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {Object.keys(activeFilters).length === 0 ? (
+                  <p className="text-body-md text-[var(--color-text-secondary)]">No filters applied</p>
+                ) : (
+                  <div className="flex flex-col gap-[var(--space-sm)]">
+                    {Object.entries(activeFilters).map(([filterId, value]) => {
+                      const filter = filters.find(f => f.id === filterId)
+                      const displayValue = Array.isArray(value)
+                        ? value.join(', ')
+                        : String(value)
+
+                      return (
+                        <div key={filterId} className="flex items-start gap-[var(--space-sm)]">
+                          <Label className="min-w-[120px] font-medium">{filter?.label}:</Label>
+                          <span className="text-body-md">{displayValue}</span>
+                          <span className="text-body-sm text-[var(--color-text-tertiary)] ml-auto">
+                            ({filter?.groups ? 'grouped' : 'ungrouped'})
+                          </span>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     )
