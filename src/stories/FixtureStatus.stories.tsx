@@ -50,7 +50,7 @@ const meta: Meta<typeof FixtureStatus> = {
     },
     size: {
       control: { type: 'select' },
-      options: ['sm', 'md', 'lg'],
+      options: ['xsm', 'sm', 'md', 'lg'],
     },
     showObject: {
       control: { type: 'boolean' },
@@ -142,6 +142,10 @@ export const AllStatuses: Story = {
 export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '24px' }}>
+      <div>
+        <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Extra Small</h3>
+        <FixtureStatus value="negotiation-firm-offer" size="xsm" />
+      </div>
       <div>
         <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Small</h3>
         <FixtureStatus value="negotiation-firm-offer" size="sm" />
@@ -269,6 +273,16 @@ export const IconOnly: Story = {
 export const IconOnlySizes: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '24px' }}>
+      <div>
+        <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Extra Small</h3>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+          <FixtureStatus value="negotiation-firm-offer" size="xsm" iconOnly />
+          <FixtureStatus value="negotiation-firm" size="xsm" iconOnly />
+          <FixtureStatus value="negotiation-fixed" size="xsm" iconOnly />
+          <FixtureStatus value="contract-final" size="xsm" iconOnly />
+        </div>
+      </div>
+
       <div>
         <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Small</h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>

@@ -90,12 +90,14 @@ const statusConfig: Record<StatusValue, StatusConfig> = {
 
 // Size configuration
 const textSizeClasses = {
+  xsm: "text-body-medium-xsm",
   sm: "text-body-medium-sm",
   md: "text-body-medium-md",
   lg: "text-body-medium-lg",
 } as const;
 
 const iconSizeMapping = {
+  xsm: "sm",
   sm: "sm",
   md: "md",
   lg: "lg",
@@ -103,6 +105,7 @@ const iconSizeMapping = {
 
 // Size-specific vertical alignment adjustments
 const iconTranslateClasses = {
+  xsm: "translate-y-[1px]",
   sm: "",
   md: "translate-y-[0.5px]",
   lg: "translate-y-[1px]",
@@ -110,6 +113,7 @@ const iconTranslateClasses = {
 
 // Size-specific gap between icon and label
 const gapClasses = {
+  xsm: "gap-[var(--space-xsm)]",
   sm: "gap-[var(--space-xsm)]",
   md: "gap-[var(--space-sm)]",
   lg: "gap-[var(--space-sm)]",
@@ -169,18 +173,17 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
         <div
           ref={ref}
           className={cn(
-            "inline-flex items-center leading-none p-0.5",
+            "inline-flex items-center p-0.5",
             gapClasses[size],
             textSizeClasses[size],
             className,
           )}
           {...props}
         >
-          <span className={iconTranslateClasses[size]}>
+          <span className={cn("flex-shrink-0", iconTranslateClasses[size])}>
             <Icon name="circle-help" size={iconSizeMapping[size]} color="secondary" />
           </span>
           <span className={cn(
-            "leading-normal",
             coloredLabel ? textColorClasses.secondary : textColorClasses.primary
           )}>
             Unknown status
@@ -225,18 +228,17 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
       <div
         ref={ref}
         className={cn(
-          "inline-flex items-center leading-none p-0.5",
+          "inline-flex items-center p-0.5",
           gapClasses[size],
           textSizeClasses[size],
           className,
         )}
         {...props}
       >
-        <span className={iconTranslateClasses[size]}>
+        <span className={cn("flex-shrink-0", iconTranslateClasses[size])}>
           <Icon name={config.icon} size={iconSizeMapping[size]} color={config.color} />
         </span>
         <span className={cn(
-          "leading-normal",
           coloredLabel ? textColorClasses[config.color] : textColorClasses.primary
         )}>
           {labelText}
