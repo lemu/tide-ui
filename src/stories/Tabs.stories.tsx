@@ -4,21 +4,73 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../co
 import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
+import { Icon } from '../components/ui/icon'
 
 const meta: Meta<typeof Tabs> = {
   title: 'NPM • Fundamental/Tabs',
   component: Tabs,
   parameters: {
     layout: 'centered',
+    docs: {
+      description: {
+        component: `
+A tabs component built on Radix UI for organizing content into separate views.
+
+## Variants
+
+**Pill Tabs (default)**: Background-based selection with rounded corners. Best for primary navigation within a contained area.
+
+**Line Tabs**: Underline-based selection. Best for secondary navigation or when you need a lighter visual treatment.
+
+## Sizing
+
+- **Small (sm)**: Compact tabs for dense UIs
+- **Medium (md)**: Default size, works for most use cases
+- **Large (lg)**: Prominent tabs for main navigation
+
+## Accessibility
+
+- Full keyboard navigation support (Arrow keys, Home, End)
+- ARIA attributes for screen readers
+- Focus visible indicators
+- Disabled state support
+        `,
+      },
+    },
   },
   tags: ['autodocs'],
   argTypes: {
     defaultValue: {
       control: { type: 'text' },
+      description: 'The default active tab value',
     },
     orientation: {
       control: { type: 'select' },
       options: ['horizontal', 'vertical'],
+      description: 'The orientation of the tabs',
+    },
+    variant: {
+      control: { type: 'radio' },
+      options: ['pill', 'line'],
+      description: 'Visual style variant (applies to TabsList and TabsTrigger)',
+      table: {
+        defaultValue: { summary: 'pill' },
+      },
+    },
+    size: {
+      control: { type: 'radio' },
+      options: ['sm', 'md', 'lg'],
+      description: 'Size of the tabs (applies to TabsList and TabsTrigger)',
+      table: {
+        defaultValue: { summary: 'md' },
+      },
+    },
+    fullWidth: {
+      control: { type: 'boolean' },
+      description: 'Whether tabs should distribute evenly across full width',
+      table: {
+        defaultValue: { summary: 'false' },
+      },
     },
   },
 } satisfies Meta<typeof Tabs>
@@ -255,6 +307,106 @@ export const LineTabs: Story = {
   ),
 }
 
+export const PillTabsSizes: Story = {
+  render: () => (
+    <div className="space-y-8 w-[600px]">
+      <div>
+        <h3 className="text-heading-sm mb-4">Small Size</h3>
+        <Tabs defaultValue="tab1">
+          <TabsList size="sm">
+            <TabsTrigger size="sm" value="tab1">Tab 1</TabsTrigger>
+            <TabsTrigger size="sm" value="tab2">Tab 2</TabsTrigger>
+            <TabsTrigger size="sm" value="tab3">Tab 3</TabsTrigger>
+          </TabsList>
+          <TabsContent value="tab1" className="mt-4">
+            <p className="text-body-sm">Small size content</p>
+          </TabsContent>
+          <TabsContent value="tab2" className="mt-4">
+            <p className="text-body-sm">Small size content</p>
+          </TabsContent>
+          <TabsContent value="tab3" className="mt-4">
+            <p className="text-body-sm">Small size content</p>
+          </TabsContent>
+        </Tabs>
+      </div>
+      <div>
+        <h3 className="text-heading-sm mb-4">Medium Size (Default)</h3>
+        <Tabs defaultValue="tab1">
+          <TabsList size="md">
+            <TabsTrigger size="md" value="tab1">Tab 1</TabsTrigger>
+            <TabsTrigger size="md" value="tab2">Tab 2</TabsTrigger>
+            <TabsTrigger size="md" value="tab3">Tab 3</TabsTrigger>
+          </TabsList>
+          <TabsContent value="tab1" className="mt-4">
+            <p className="text-body-md">Medium size content</p>
+          </TabsContent>
+          <TabsContent value="tab2" className="mt-4">
+            <p className="text-body-md">Medium size content</p>
+          </TabsContent>
+          <TabsContent value="tab3" className="mt-4">
+            <p className="text-body-md">Medium size content</p>
+          </TabsContent>
+        </Tabs>
+      </div>
+      <div>
+        <h3 className="text-heading-sm mb-4">Large Size</h3>
+        <Tabs defaultValue="tab1">
+          <TabsList size="lg">
+            <TabsTrigger size="lg" value="tab1">Tab 1</TabsTrigger>
+            <TabsTrigger size="lg" value="tab2">Tab 2</TabsTrigger>
+            <TabsTrigger size="lg" value="tab3">Tab 3</TabsTrigger>
+          </TabsList>
+          <TabsContent value="tab1" className="mt-4">
+            <p className="text-body-lg">Large size content</p>
+          </TabsContent>
+          <TabsContent value="tab2" className="mt-4">
+            <p className="text-body-lg">Large size content</p>
+          </TabsContent>
+          <TabsContent value="tab3" className="mt-4">
+            <p className="text-body-lg">Large size content</p>
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  ),
+}
+
+export const PillTabsWithIcons: Story = {
+  render: () => (
+    <Tabs defaultValue="home" className="w-[600px]">
+      <TabsList>
+        <TabsTrigger
+          value="home"
+          icon={<Icon name="home" size="sm" />}
+        >
+          Home
+        </TabsTrigger>
+        <TabsTrigger
+          value="notifications"
+          icon={<Icon name="bell" size="sm" />}
+        >
+          Notifications
+        </TabsTrigger>
+        <TabsTrigger
+          value="settings"
+          icon={<Icon name="settings" size="sm" />}
+        >
+          Settings
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value="home" className="mt-4">
+        <p className="text-body-md">Home dashboard with overview and quick actions.</p>
+      </TabsContent>
+      <TabsContent value="notifications" className="mt-4">
+        <p className="text-body-md">Your recent notifications and alerts.</p>
+      </TabsContent>
+      <TabsContent value="settings" className="mt-4">
+        <p className="text-body-md">Application settings and preferences.</p>
+      </TabsContent>
+    </Tabs>
+  ),
+}
+
 export const LineTabsSizes: Story = {
   render: () => (
     <div className="space-y-8 w-[600px]">
@@ -441,6 +593,51 @@ export const LineTabsAllStates: Story = {
       </div>
     </div>
   ),
+}
+
+export const Playground: Story = {
+  args: {
+    defaultValue: 'tab1',
+    orientation: 'horizontal',
+    variant: 'pill',
+    size: 'md',
+    fullWidth: false,
+  },
+  render: (args) => {
+    // Extract the controls from args
+    const { variant, size, fullWidth, defaultValue, orientation } = args as any
+
+    return (
+      <Tabs defaultValue={defaultValue} orientation={orientation} className="w-[600px]">
+        <TabsList variant={variant} size={size} fullWidth={fullWidth}>
+          <TabsTrigger variant={variant} size={size} fullWidth={fullWidth} value="tab1">
+            Overview
+          </TabsTrigger>
+          <TabsTrigger variant={variant} size={size} fullWidth={fullWidth} value="tab2">
+            Analytics
+          </TabsTrigger>
+          <TabsTrigger variant={variant} size={size} fullWidth={fullWidth} value="tab3">
+            Settings
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="tab1" className="mt-4">
+          <p className="text-body-md">
+            Overview content. Use the controls to experiment with different variants, sizes, and options.
+          </p>
+        </TabsContent>
+        <TabsContent value="tab2" className="mt-4">
+          <p className="text-body-md">
+            Analytics content with detailed metrics and insights.
+          </p>
+        </TabsContent>
+        <TabsContent value="tab3" className="mt-4">
+          <p className="text-body-md">
+            Settings content for configuring your preferences.
+          </p>
+        </TabsContent>
+      </Tabs>
+    )
+  },
 }
 
 export const FullWidth: Story = {
