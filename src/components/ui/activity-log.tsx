@@ -181,7 +181,7 @@ const ActivityLogHeader = React.forwardRef<HTMLDivElement, ActivityLogHeaderProp
       <div
         ref={!asCollapsibleTrigger ? ref : undefined}
         className={cn(
-          "flex flex-wrap gap-[var(--space-sm)] items-center w-full",
+          "flex gap-[var(--space-sm)] items-start w-full [&>*:first-child]:translate-y-[1px]",
           asCollapsibleTrigger && "cursor-pointer",
           className
         )}

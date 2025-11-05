@@ -42,8 +42,8 @@ export const Default: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>created the project</span>
+              <ActivityLogTime>Jul 4, 2025 at 12:37</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 4, 2025 at 12:37</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -55,8 +55,8 @@ export const Default: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>uploaded 5 files</span>
+              <ActivityLogTime>Jul 4, 2025 at 12:43</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 4, 2025 at 12:43</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -68,8 +68,8 @@ export const Default: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Ivy Chu</span>
               <span>left a comment</span>
+              <ActivityLogTime>Jul 4, 2025 at 14:22</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 4, 2025 at 14:22</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
       </ActivityLog>
@@ -90,8 +90,8 @@ export const TimeBasedSeparators: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>created the project</span>
+              <ActivityLogTime>Jul 4, 2025 at 12:37</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 4, 2025 at 12:37</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -103,8 +103,8 @@ export const TimeBasedSeparators: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>uploaded files</span>
+              <ActivityLogTime>Jul 4, 2025 at 12:43</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 4, 2025 at 12:43</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -117,8 +117,8 @@ export const TimeBasedSeparators: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Ivy Chu</span>
               <span>sent a message</span>
+              <ActivityLogTime>Jul 6, 2025 at 13:36</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 6, 2025 at 13:36</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -130,8 +130,8 @@ export const TimeBasedSeparators: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>replied to message</span>
+              <ActivityLogTime>Jul 6, 2025 at 15:52</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 6, 2025 at 15:52</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -141,8 +141,8 @@ export const TimeBasedSeparators: Story = {
             <Icon name="shield-check" size="md" color="primary" />
             <ActivityLogDescription>
               <span>Compliance check completed successfully</span>
+              <ActivityLogTime>Jul 10, 2025 at 14:28</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 10, 2025 at 14:28</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
       </ActivityLog>
@@ -164,8 +164,8 @@ export const CollapsibleItems: Story = {
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>created</span>
               <FixtureStatus value="order-draft" />
+              <ActivityLogTime>Jul 4, 2025 at 12:37</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 4, 2025 at 12:37</ActivityLogTime>
             <ActivityLogChevron />
           </ActivityLogHeader>
           <ActivityLogContent>
@@ -199,8 +199,8 @@ export const CollapsibleItems: Story = {
               <span className="text-body-medium-sm">Ivy Chu</span>
               <span>sent</span>
               <FixtureStatus value="negotiation-indicative-bid" />
+              <ActivityLogTime>Jul 6, 2025 at 13:36</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 6, 2025 at 13:36</ActivityLogTime>
             <ActivityLogChevron />
           </ActivityLogHeader>
           <ActivityLogContent>
@@ -234,8 +234,8 @@ export const CollapsibleItems: Story = {
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>answered with</span>
               <FixtureStatus value="negotiation-indicative-offer" />
+              <ActivityLogTime>Jul 6, 2025 at 15:52</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 6, 2025 at 15:52</ActivityLogTime>
             <ActivityLogChevron />
           </ActivityLogHeader>
           <ActivityLogContent>
@@ -274,8 +274,8 @@ export const RichContent: Story = {
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>created</span>
               <FixtureStatus value="order-draft" />
+              <ActivityLogTime>Jul 4, 2025 at 12:37</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 4, 2025 at 12:37</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -287,8 +287,8 @@ export const RichContent: Story = {
             <ActivityLogDescription>
               <FixtureStatus value="order-distributed" />
               <span>the order to the market.</span>
+              <ActivityLogTime>Jul 4, 2025 at 12:43</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 4, 2025 at 12:43</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -307,17 +307,17 @@ export const RichContent: Story = {
               <span className="text-body-medium-sm">Ivy Chu</span>
               <span>sent</span>
               <FixtureStatus value="negotiation-indicative-bid" />
+              <ActivityLogTime>Jul 6, 2025 at 13:36</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 6, 2025 at 13:36</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
         <ActivityLogItem timestamp={new Date('2025-07-06T15:52:00')}>
           <ActivityLogHeader>
-            <div className="flex items-center gap-[2px]">
-              <Avatar size="xxs">
-                <AvatarFallback size="xxs">RL</AvatarFallback>
-              </Avatar>
+            <Avatar size="xxs">
+              <AvatarFallback size="xxs">RL</AvatarFallback>
+            </Avatar>
+            <ActivityLogDescription>
               <Icon name="arrow-right" size="sm" color="tertiary" />
               <AvatarGroup size="xxs">
                 <Avatar size="xxs">
@@ -327,13 +327,11 @@ export const RichContent: Story = {
                   <AvatarFallback size="xxs" type="organization" variant="violet">AC</AvatarFallback>
                 </Avatar>
               </AvatarGroup>
-            </div>
-            <ActivityLogDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>answered with</span>
               <FixtureStatus value="negotiation-indicative-offer" />
+              <ActivityLogTime>Jul 6, 2025 at 15:52</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 6, 2025 at 15:52</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -351,18 +349,18 @@ export const RichContent: Story = {
               <span className="text-body-medium-sm">Ivy Chu</span>
               <span>sent</span>
               <FixtureStatus value="negotiation-firm-bid" />
+              <ActivityLogTime>Jul 6, 2025 at 16:14</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 6, 2025 at 16:14</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
         {/* Auto separator (1 day gap) */}
         <ActivityLogItem timestamp={new Date('2025-07-07T07:53:00')}>
           <ActivityLogHeader>
-            <div className="flex items-center gap-[2px]">
-              <Avatar size="xxs">
-                <AvatarFallback size="xxs">RL</AvatarFallback>
-              </Avatar>
+            <Avatar size="xxs">
+              <AvatarFallback size="xxs">RL</AvatarFallback>
+            </Avatar>
+            <ActivityLogDescription>
               <Icon name="arrow-left-right" size="sm" color="tertiary" />
               <AvatarGroup size="xxs">
                 <Avatar size="xxs">
@@ -372,22 +370,20 @@ export const RichContent: Story = {
                   <AvatarFallback size="xxs" type="organization" variant="violet">AC</AvatarFallback>
                 </Avatar>
               </AvatarGroup>
-            </div>
-            <ActivityLogDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>accepted firm bid. Offer is now</span>
               <FixtureStatus value="negotiation-firm" />
+              <ActivityLogTime>Jul 7, 2025 at 7:53</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 7, 2025 at 7:53</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
         <ActivityLogItem timestamp={new Date('2025-07-07T07:55:00')}>
           <ActivityLogHeader>
-            <div className="flex items-center gap-[2px]">
-              <Avatar size="xxs">
-                <AvatarFallback size="xxs">RL</AvatarFallback>
-              </Avatar>
+            <Avatar size="xxs">
+              <AvatarFallback size="xxs">RL</AvatarFallback>
+            </Avatar>
+            <ActivityLogDescription>
               <Icon name="arrow-left-right" size="sm" color="tertiary" />
               <AvatarGroup size="xxs">
                 <Avatar size="xxs">
@@ -397,13 +393,11 @@ export const RichContent: Story = {
                   <AvatarFallback size="xxs" type="organization" variant="violet">AC</AvatarFallback>
                 </Avatar>
               </AvatarGroup>
-            </div>
-            <ActivityLogDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>went</span>
               <FixtureStatus value="negotiation-on-subs" />
+              <ActivityLogTime>Jul 7, 2025 at 7:55</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 7, 2025 at 7:55</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -414,18 +408,18 @@ export const RichContent: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Compliance check has finished with the result</span>
               <Badge intent="success" size="sm">Compliant</Badge>
+              <ActivityLogTime>Jul 10, 2025 at 14:28</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 10, 2025 at 14:28</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
         {/* Auto separator (2 days gap) */}
         <ActivityLogItem timestamp={new Date('2025-07-12T07:02:00')}>
           <ActivityLogHeader>
-            <div className="flex items-center gap-[2px]">
-              <Avatar size="xxs">
-                <AvatarFallback size="xxs">RL</AvatarFallback>
-              </Avatar>
+            <Avatar size="xxs">
+              <AvatarFallback size="xxs">RL</AvatarFallback>
+            </Avatar>
+            <ActivityLogDescription>
               <Icon name="arrow-left-right" size="sm" color="tertiary" />
               <AvatarGroup size="xxs">
                 <Avatar size="xxs">
@@ -435,13 +429,11 @@ export const RichContent: Story = {
                   <AvatarFallback size="xxs" type="organization" variant="violet">AC</AvatarFallback>
                 </Avatar>
               </AvatarGroup>
-            </div>
-            <ActivityLogDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>set negotiation as</span>
               <FixtureStatus value="negotiation-fixed" />
+              <ActivityLogTime>Jul 12, 2025 at 7:02</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 12, 2025 at 7:02</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
       </ActivityLog>
@@ -462,8 +454,8 @@ export const ManualSeparators: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>started the project</span>
+              <ActivityLogTime>Jul 4, 2025 at 12:37</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 4, 2025 at 12:37</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -475,8 +467,8 @@ export const ManualSeparators: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>added initial files</span>
+              <ActivityLogTime>Jul 4, 2025 at 12:43</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 4, 2025 at 12:43</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -490,8 +482,8 @@ export const ManualSeparators: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Ivy Chu</span>
               <span>joined the project</span>
+              <ActivityLogTime>Jul 6, 2025 at 13:36</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 6, 2025 at 13:36</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -503,8 +495,8 @@ export const ManualSeparators: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Ivy Chu</span>
               <span>made first contribution</span>
+              <ActivityLogTime>Jul 6, 2025 at 15:52</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 6, 2025 at 15:52</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -515,8 +507,8 @@ export const ManualSeparators: Story = {
             <Icon name="check-circle" size="md" color="primary" />
             <ActivityLogDescription>
               <span>Project completed successfully</span>
+              <ActivityLogTime>Jul 12, 2025 at 7:02</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 12, 2025 at 7:02</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
       </ActivityLog>
@@ -537,8 +529,8 @@ export const CustomContent: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>deployed new version</span>
+              <ActivityLogTime>Jul 4, 2025 at 12:37</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 4, 2025 at 12:37</ActivityLogTime>
             <ActivityLogChevron />
           </ActivityLogHeader>
           <ActivityLogContent>
@@ -580,8 +572,8 @@ export const CustomContent: Story = {
             <Icon name="alert-circle" size="md" color="primary" />
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Build warning detected</span>
+              <ActivityLogTime>Jul 4, 2025 at 12:45</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 4, 2025 at 12:45</ActivityLogTime>
             <ActivityLogChevron />
           </ActivityLogHeader>
           <ActivityLogContent>
@@ -609,8 +601,8 @@ export const CustomContent: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Ivy Chu</span>
               <span>fixed the warnings</span>
+              <ActivityLogTime>Jul 4, 2025 at 14:22</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 4, 2025 at 14:22</ActivityLogTime>
             <ActivityLogChevron />
           </ActivityLogHeader>
           <ActivityLogContent>
@@ -652,8 +644,8 @@ export const MixedItems: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>created the repository</span>
+              <ActivityLogTime>Jul 4, 2025 at 12:37</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 4, 2025 at 12:37</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -665,8 +657,8 @@ export const MixedItems: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Rafał Lemieszewski</span>
               <span>pushed 5 commits</span>
+              <ActivityLogTime>Jul 4, 2025 at 12:43</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 4, 2025 at 12:43</ActivityLogTime>
             <ActivityLogChevron />
           </ActivityLogHeader>
           <ActivityLogContent>
@@ -686,8 +678,8 @@ export const MixedItems: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Ivy Chu</span>
               <span>was added as a collaborator</span>
+              <ActivityLogTime>Jul 6, 2025 at 13:36</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 6, 2025 at 13:36</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -699,8 +691,8 @@ export const MixedItems: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Ivy Chu</span>
               <span>opened pull request #1</span>
+              <ActivityLogTime>Jul 6, 2025 at 15:52</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 6, 2025 at 15:52</ActivityLogTime>
             <ActivityLogChevron />
           </ActivityLogHeader>
           <ActivityLogContent>
@@ -735,8 +727,8 @@ export const ValueChanges: Story = {
               <ActivityLogValue>Acme Ltd</ActivityLogValue>
               <span>to</span>
               <ActivityLogValue>ShipCo Ltd</ActivityLogValue>
+              <ActivityLogTime>Jul 4, 2025 at 12:37</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 4, 2025 at 12:37</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -751,8 +743,8 @@ export const ValueChanges: Story = {
               <ActivityLogValue>24.50 $/mt</ActivityLogValue>
               <span>to</span>
               <ActivityLogValue>25.12 $/mt</ActivityLogValue>
+              <ActivityLogTime>Jul 4, 2025 at 14:22</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 4, 2025 at 14:22</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -767,8 +759,8 @@ export const ValueChanges: Story = {
               <ActivityLogValue>Maersk Boston</ActivityLogValue>
               <span>to</span>
               <ActivityLogValue>Ever Given</ActivityLogValue>
+              <ActivityLogTime>Jul 6, 2025 at 9:15</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 6, 2025 at 9:15</ActivityLogTime>
           </ActivityLogHeader>
         </ActivityLogItem>
 
@@ -780,8 +772,8 @@ export const ValueChanges: Story = {
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Ivy Chu</span>
               <span>updated multiple fields</span>
+              <ActivityLogTime>Jul 6, 2025 at 11:42</ActivityLogTime>
             </ActivityLogDescription>
-            <ActivityLogTime>Jul 6, 2025 at 11:42</ActivityLogTime>
             <ActivityLogChevron />
           </ActivityLogHeader>
           <ActivityLogContent>
