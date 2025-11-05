@@ -23,6 +23,11 @@ export interface AttributesListProps extends React.HTMLAttributes<HTMLDivElement
    * Default visibility state for hidden items
    */
   defaultShowHidden?: boolean;
+  /**
+   * Optional fixed width for the label column (e.g., "200px", "150px")
+   * If not provided, labels auto-size to fit the widest label
+   */
+  labelWidth?: string | number;
 }
 
 const AttributesList = React.forwardRef<HTMLDivElement, AttributesListProps>(
@@ -33,6 +38,7 @@ const AttributesList = React.forwardRef<HTMLDivElement, AttributesListProps>(
       showHiddenLabel = "More details",
       hideLabel = "Less details",
       defaultShowHidden = false,
+      labelWidth,
       ...props
     },
     ref
@@ -72,10 +78,18 @@ const AttributesList = React.forwardRef<HTMLDivElement, AttributesListProps>(
       });
     }, [children, showHidden]);
 
+    // Format labelWidth for CSS variable
+    const labelWidthValue = typeof labelWidth === 'number' ? `${labelWidth}px` : labelWidth;
+
     return (
       <div
         ref={ref}
-        className={cn("flex flex-col gap-[8px]", className)}
+        className={cn("grid gap-y-[8px]", className)}
+        style={{
+          gridTemplateColumns: `${labelWidthValue || 'auto'} 1fr`,
+          columnGap: 'var(--space-md)',
+          ...(props.style || {}),
+        }}
         {...props}
       >
         {processedChildren}
@@ -83,6 +97,7 @@ const AttributesList = React.forwardRef<HTMLDivElement, AttributesListProps>(
           <button
             onClick={() => setShowHidden(!showHidden)}
             className="flex items-center gap-[var(--space-xsm)] [&]:text-body-medium-xsm text-[var(--color-text-brand)] hover:text-[var(--color-text-brand-hovered)] cursor-pointer mt-[var(--space-sm)] bg-transparent border-none p-0"
+            style={{ gridColumn: '1 / -1' }}
           >
             {showHidden ? hideLabel : showHiddenLabel}
             <Icon
@@ -113,6 +128,7 @@ const AttributesSeparator = React.forwardRef<
     <div
       ref={ref}
       className={cn("h-px bg-[var(--color-border-primary-subtle)] my-[var(--space-sm)]", className)}
+      style={{ gridColumn: '1 / -1' }}
       {...props}
     />
   );
@@ -199,11 +215,18 @@ const AttributesGroup = React.forwardRef<HTMLDivElement, AttributesGroupProps>(
     return (
       <div
         ref={ref}
-        className={cn("flex flex-col gap-[8px]", className)}
+        className={cn("grid gap-y-[8px]", className)}
+        style={{
+          gridColumn: '1 / -1',
+          gridTemplateColumns: 'subgrid',
+        }}
         {...props}
       >
         {label && (
-          <h3 className="[&]:text-body-medium-xsm text-[var(--color-text-tertiary)] mb-[4px]">
+          <h3
+            className="[&]:text-body-medium-xsm text-[var(--color-text-tertiary)] mb-[4px]"
+            style={{ gridColumn: '1 / -1' }}
+          >
             {label}
           </h3>
         )}
@@ -212,6 +235,7 @@ const AttributesGroup = React.forwardRef<HTMLDivElement, AttributesGroupProps>(
           <button
             onClick={() => setShowHidden(!showHidden)}
             className="flex items-center gap-[var(--space-xsm)] [&]:text-body-medium-xsm text-[var(--color-text-brand)] hover:text-[var(--color-text-brand-hovered)] cursor-pointer mt-[var(--space-sm)] bg-transparent border-none p-0"
+            style={{ gridColumn: '1 / -1' }}
           >
             {showHidden ? hideLabel : showHiddenLabel}
             <Icon
@@ -264,6 +288,7 @@ const AttributesItem = React.forwardRef<HTMLDivElement, AttributesItemProps>(
       open,
       onOpenChange,
       hidden,
+      style,
       ...props
     },
     ref
@@ -275,7 +300,12 @@ const AttributesItem = React.forwardRef<HTMLDivElement, AttributesItemProps>(
           defaultOpen={defaultOpen}
           open={open}
           onOpenChange={onOpenChange}
-          className={cn("w-full group", className)}
+          className={cn("w-full group grid", className)}
+          style={{
+            gridColumn: '1 / -1',
+            gridTemplateColumns: 'subgrid',
+            ...style,
+          }}
           data-hidden={hidden}
           {...props}
         >
@@ -285,7 +315,13 @@ const AttributesItem = React.forwardRef<HTMLDivElement, AttributesItemProps>(
     }
 
     return (
-      <div ref={ref} className={cn("w-full", className)} data-hidden={hidden} {...props}>
+      <div
+        ref={ref}
+        className={cn(className)}
+        style={{ display: 'contents', ...style }}
+        data-hidden={hidden}
+        {...props}
+      >
         {children}
       </div>
     );
@@ -311,29 +347,55 @@ export interface AttributesRowProps
 }
 
 const AttributesRow = React.forwardRef<HTMLDivElement, AttributesRowProps>(
-  ({ className, children, asCollapsibleTrigger, externalLink, ...props }, ref) => {
+  ({ className, children, asCollapsibleTrigger, externalLink, style, ...props }, ref) => {
+    // Process children to wrap value + external link in a flex container
+    const processedChildren = React.useMemo(() => {
+      if (!externalLink) return children;
+
+      const childArray = React.Children.toArray(children);
+      // Assume structure: [Label, Value, ...rest]
+      if (childArray.length >= 2) {
+        const label = childArray[0];
+        const value = childArray[1];
+        const rest = childArray.slice(2);
+
+        return [
+          label,
+          <div key="value-with-link" className="flex items-center justify-between gap-[var(--space-md)]" style={{ gridColumn: '2' }}>
+            {value}
+            <a
+              href={externalLink.href}
+              className="[&]:text-body-xsm text-[var(--color-text-brand)] hover:text-[var(--color-text-brand-hovered)] inline-flex items-center gap-[var(--space-xsm)] no-underline shrink-0"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {externalLink.label}
+              <Icon name="external-link" size="sm" />
+            </a>
+          </div>,
+          ...rest,
+        ];
+      }
+
+      return children;
+    }, [children, externalLink]);
+
     const content = (
       <div
         ref={!asCollapsibleTrigger ? ref : undefined}
         className={cn(
-          externalLink ? "grid grid-cols-[1fr_2fr_auto] gap-[var(--space-md)] items-center" : "grid grid-cols-[1fr_2fr] gap-[var(--space-md)] items-center",
+          "grid items-center",
           asCollapsibleTrigger && "cursor-pointer hover:bg-[var(--color-surface-secondary)] transition-colors rounded-sm px-[var(--space-sm)] py-[var(--space-xsm)] -mx-[var(--space-sm)]",
           className
         )}
+        style={{
+          gridColumn: '1 / -1',
+          gridTemplateColumns: 'subgrid',
+          ...style,
+        }}
         {...props}
       >
-        {children}
-        {externalLink && (
-          <a
-            href={externalLink.href}
-            className="[&]:text-body-xsm text-[var(--color-text-brand)] hover:text-[var(--color-text-brand-hovered)] inline-flex items-center gap-[var(--space-xsm)] no-underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {externalLink.label}
-            <Icon name="external-link" size="sm" />
-          </a>
-        )}
+        {processedChildren}
       </div>
     );
 
@@ -401,7 +463,7 @@ export interface AttributesContentProps
 const AttributesContent = React.forwardRef<
   React.ElementRef<typeof CollapsibleContent>,
   AttributesContentProps
->(({ className, children, ...props }, ref) => {
+>(({ className, children, style, ...props }, ref) => {
   return (
     <CollapsibleContent
       ref={ref}
@@ -409,6 +471,7 @@ const AttributesContent = React.forwardRef<
         "pt-[var(--space-sm)] pb-[var(--space-sm)]",
         className
       )}
+      style={{ gridColumn: '1 / -1', ...style }}
       {...props}
     >
       {children}
