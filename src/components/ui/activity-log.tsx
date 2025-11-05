@@ -181,7 +181,7 @@ const ActivityLogHeader = React.forwardRef<HTMLDivElement, ActivityLogHeaderProp
       <div
         ref={!asCollapsibleTrigger ? ref : undefined}
         className={cn(
-          "flex gap-[var(--space-sm)] items-center w-full",
+          "flex flex-wrap gap-[var(--space-sm)] items-center w-full",
           asCollapsibleTrigger && "cursor-pointer",
           className
         )}
@@ -239,7 +239,7 @@ const ActivityLogDescription = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "flex gap-[var(--space-xsm)] items-center shrink [&]:text-body-sm text-[var(--color-text-primary)]",
+        "flex flex-wrap gap-[var(--space-xsm)] items-center flex-1 min-w-0 [&]:text-body-sm text-[var(--color-text-primary)]",
         className
       )}
       {...props}
@@ -302,7 +302,7 @@ const ActivityLogValue = React.forwardRef<HTMLDivElement, ActivityLogValueProps>
       <div
         ref={ref}
         className={cn(
-          "inline-flex items-center gap-[var(--space-xsm)] px-[4px] py-[2px] bg-[var(--color-background-neutral-subtle)] border border-[var(--color-border-primary-bold)] rounded-xsm shrink-0",
+          "inline-flex items-center gap-[var(--space-xsm)] px-[4px] py-[2px] bg-[var(--color-background-neutral-subtle)] border border-[var(--color-border-primary-bold)] rounded-xsm shrink",
           className
         )}
         {...props}
