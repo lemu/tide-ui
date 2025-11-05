@@ -5,23 +5,27 @@ import { cn } from "../../lib/utils";
 import { Icon } from "./icon";
 
 const selectTriggerVariants = cva(
-  "flex w-full items-center justify-between rounded-md border bg-[var(--color-surface-primary)] text-[var(--color-text-primary)] transition-colors placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:shadow-[0px_0px_0px_2px_rgba(0,95,133,0.2),0px_3px_4px_0px_rgba(0,14,20,0.03)] disabled:cursor-not-allowed disabled:opacity-100 disabled:bg-[var(--color-background-disabled)] disabled:text-[var(--color-text-disabled)]",
+  "flex w-full items-center justify-between gap-[var(--space-xsm)] rounded-sm border bg-[var(--color-surface-primary)] text-[var(--color-text-primary)] transition-all duration-150 ease-in-out placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-100 disabled:bg-[var(--color-background-disabled)] disabled:text-[var(--color-text-disabled)]",
   {
     variants: {
       variant: {
         default: [
           "border-[var(--color-border-input)]",
-          "hover:border-[var(--color-border-input-hovered)]",
+          "enabled:hover:bg-[var(--color-background-neutral-subtle-hovered)]",
+          "enabled:hover:border-[var(--color-border-input-hovered)]",
+          "enabled:hover:shadow-sm",
           "focus-visible:border-[#005f85]",
         ],
         error: [
           "border-[var(--color-border-error)]",
-          "hover:border-[var(--color-border-error)]",
+          "enabled:hover:bg-[var(--color-background-neutral-subtle-hovered)]",
+          "enabled:hover:border-[var(--color-border-error)]",
+          "enabled:hover:shadow-sm",
           "focus-visible:border-[var(--color-border-error)]",
         ],
       },
       size: {
-        sm: "h-[var(--size-sm)] px-[var(--space-sm)] py-[var(--space-xsm)] text-body-sm",
+        sm: "h-[var(--size-sm)] px-[var(--space-md)] py-[var(--space-xsm)] text-body-sm",
         md: "h-[var(--size-md)] px-[var(--space-md)] py-[var(--space-sm)] text-body-md",
         lg: "h-[var(--size-lg)] px-[var(--space-lg)] py-[var(--space-md)] text-body-lg",
       },
@@ -66,18 +70,23 @@ export interface SelectTriggerProps
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   SelectTriggerProps
->(({ className, variant, size, children, ...props }, ref) => (
-  <SelectPrimitive.Trigger
-    ref={ref}
-    className={cn(selectTriggerVariants({ variant, size }), className)}
-    {...props}
-  >
-    {children}
-    <SelectPrimitive.Icon asChild>
-      <Icon name="chevron-down" size="sm" className="opacity-50" />
-    </SelectPrimitive.Icon>
-  </SelectPrimitive.Trigger>
-));
+>(({ className, variant, size, children, ...props }, ref) => {
+  // Icon size matches trigger size directly (same as Button pattern)
+  const iconSize = size || "md";
+
+  return (
+    <SelectPrimitive.Trigger
+      ref={ref}
+      className={cn(selectTriggerVariants({ variant, size }), className)}
+      {...props}
+    >
+      {children}
+      <SelectPrimitive.Icon asChild>
+        <Icon name="chevron-down" size={iconSize} />
+      </SelectPrimitive.Icon>
+    </SelectPrimitive.Trigger>
+  );
+});
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
 export interface SelectContentProps
