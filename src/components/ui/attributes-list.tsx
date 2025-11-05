@@ -7,8 +7,17 @@ import {
 } from "./collapsible";
 import { Icon } from "./icon";
 
+// Size context to share size state across all sub-components
+type AttributesListSize = 'sm' | 'xsm';
+const AttributesListSizeContext = React.createContext<AttributesListSize>('sm');
+
 // AttributesList root component with optional hidden items management
 export interface AttributesListProps extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * Size variant for the entire attributes list
+   * @default "sm"
+   */
+  size?: AttributesListSize;
   /**
    * Label for the "View all" button that shows hidden items
    * @default "More details"
@@ -35,6 +44,7 @@ const AttributesList = React.forwardRef<HTMLDivElement, AttributesListProps>(
     {
       className,
       children,
+      size = 'sm',
       showHiddenLabel = "More details",
       hideLabel = "Less details",
       defaultShowHidden = false,
@@ -82,35 +92,45 @@ const AttributesList = React.forwardRef<HTMLDivElement, AttributesListProps>(
     const labelWidthValue = typeof labelWidth === 'number' ? `${labelWidth}px` : labelWidth;
 
     return (
-      <div
-        ref={ref}
-        className={cn("grid gap-y-[8px]", className)}
-        style={{
-          gridTemplateColumns: `${labelWidthValue || 'auto'} 1fr`,
-          columnGap: 'var(--space-md)',
-          ...(props.style || {}),
-        }}
-        {...props}
-      >
-        {processedChildren}
-        {hasDirectHiddenItems && (
-          <button
-            onClick={() => setShowHidden(!showHidden)}
-            className="flex items-center gap-[var(--space-xsm)] [&]:text-body-medium-xsm text-[var(--color-text-brand)] hover:text-[var(--color-text-brand-hovered)] cursor-pointer mt-[var(--space-sm)] bg-transparent border-none p-0"
-            style={{ gridColumn: '1 / -1' }}
-          >
-            {showHidden ? hideLabel : showHiddenLabel}
-            <Icon
-              name="chevron-down"
-              size="sm"
+      <AttributesListSizeContext.Provider value={size}>
+        <div
+          ref={ref}
+          className={cn(
+            "grid",
+            size === 'sm' ? 'gap-y-[12px]' : 'gap-y-[8px]',
+            className
+          )}
+          style={{
+            gridTemplateColumns: `${labelWidthValue || 'auto'} 1fr`,
+            columnGap: 'var(--space-md)',
+            ...(props.style || {}),
+          }}
+          {...props}
+        >
+          {processedChildren}
+          {hasDirectHiddenItems && (
+            <button
+              onClick={() => setShowHidden(!showHidden)}
               className={cn(
-                "transition-transform",
-                showHidden && "rotate-180"
+                "flex items-center text-[var(--color-text-brand)] hover:text-[var(--color-text-brand-hovered)] cursor-pointer mt-[var(--space-sm)] bg-transparent border-none p-0",
+                size === 'sm' ? 'gap-[var(--space-sm)]' : 'gap-[var(--space-xsm)]',
+                size === 'sm' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm'
               )}
-            />
-          </button>
-        )}
-      </div>
+              style={{ gridColumn: '1 / -1' }}
+            >
+              {showHidden ? hideLabel : showHiddenLabel}
+              <Icon
+                name="chevron-down"
+                size="sm"
+                className={cn(
+                  "transition-transform",
+                  showHidden && "rotate-180"
+                )}
+              />
+            </button>
+          )}
+        </div>
+      </AttributesListSizeContext.Provider>
     );
   }
 );
@@ -167,6 +187,7 @@ const AttributesGroup = React.forwardRef<HTMLDivElement, AttributesGroupProps>(
     defaultShowHidden = false,
     ...props
   }, ref) => {
+    const size = React.useContext(AttributesListSizeContext);
     const [showHidden, setShowHidden] = React.useState(defaultShowHidden);
 
     // Check if any children have the hidden prop
@@ -215,7 +236,11 @@ const AttributesGroup = React.forwardRef<HTMLDivElement, AttributesGroupProps>(
     return (
       <div
         ref={ref}
-        className={cn("grid gap-y-[8px]", className)}
+        className={cn(
+          "grid",
+          size === 'sm' ? 'gap-y-[12px]' : 'gap-y-[8px]',
+          className
+        )}
         style={{
           gridColumn: '1 / -1',
           gridTemplateColumns: 'subgrid',
@@ -224,7 +249,11 @@ const AttributesGroup = React.forwardRef<HTMLDivElement, AttributesGroupProps>(
       >
         {label && (
           <h3
-            className="[&]:text-body-medium-xsm text-[var(--color-text-tertiary)] mb-[4px]"
+            className={cn(
+              "text-[var(--color-text-tertiary)]",
+              size === 'sm' ? 'mb-[6px]' : 'mb-[4px]',
+              size === 'sm' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm'
+            )}
             style={{ gridColumn: '1 / -1' }}
           >
             {label}
@@ -234,7 +263,11 @@ const AttributesGroup = React.forwardRef<HTMLDivElement, AttributesGroupProps>(
         {hasHiddenItems && (
           <button
             onClick={() => setShowHidden(!showHidden)}
-            className="flex items-center gap-[var(--space-xsm)] [&]:text-body-medium-xsm text-[var(--color-text-brand)] hover:text-[var(--color-text-brand-hovered)] cursor-pointer mt-[var(--space-sm)] bg-transparent border-none p-0"
+            className={cn(
+              "flex items-center text-[var(--color-text-brand)] hover:text-[var(--color-text-brand-hovered)] cursor-pointer mt-[var(--space-sm)] bg-transparent border-none p-0",
+              size === 'sm' ? 'gap-[var(--space-sm)]' : 'gap-[var(--space-xsm)]',
+              size === 'sm' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm'
+            )}
             style={{ gridColumn: '1 / -1' }}
           >
             {showHidden ? hideLabel : showHiddenLabel}
@@ -348,6 +381,8 @@ export interface AttributesRowProps
 
 const AttributesRow = React.forwardRef<HTMLDivElement, AttributesRowProps>(
   ({ className, children, asCollapsibleTrigger, externalLink, style, ...props }, ref) => {
+    const size = React.useContext(AttributesListSizeContext);
+
     // Process children to wrap value + external link in a flex container
     const processedChildren = React.useMemo(() => {
       if (!externalLink) return children;
@@ -365,7 +400,11 @@ const AttributesRow = React.forwardRef<HTMLDivElement, AttributesRowProps>(
             {value}
             <a
               href={externalLink.href}
-              className="[&]:text-body-xsm text-[var(--color-text-brand)] hover:text-[var(--color-text-brand-hovered)] inline-flex items-center gap-[var(--space-xsm)] no-underline shrink-0"
+              className={cn(
+                "text-[var(--color-text-brand)] hover:text-[var(--color-text-brand-hovered)] inline-flex items-center no-underline shrink-0",
+                size === 'sm' ? 'gap-[var(--space-sm)]' : 'gap-[var(--space-xsm)]',
+                size === 'sm' ? '[&]:text-body-sm' : '[&]:text-body-xsm'
+              )}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -378,7 +417,7 @@ const AttributesRow = React.forwardRef<HTMLDivElement, AttributesRowProps>(
       }
 
       return children;
-    }, [children, externalLink]);
+    }, [children, externalLink, size]);
 
     const content = (
       <div
@@ -418,11 +457,14 @@ export interface AttributesLabelProps
 
 const AttributesLabel = React.forwardRef<HTMLDivElement, AttributesLabelProps>(
   ({ className, children, ...props }, ref) => {
+    const size = React.useContext(AttributesListSizeContext);
+
     return (
       <div
         ref={ref}
         className={cn(
-          "[&]:text-body-medium-xsm text-[var(--color-text-secondary)] [[data-hidden='true']_&]:text-[var(--color-text-tertiary)] shrink-0",
+          "text-[var(--color-text-secondary)] [[data-hidden='true']_&]:text-[var(--color-text-tertiary)] shrink-0",
+          size === 'sm' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm',
           className
         )}
         {...props}
@@ -440,11 +482,15 @@ export interface AttributesValueProps
 
 const AttributesValue = React.forwardRef<HTMLDivElement, AttributesValueProps>(
   ({ className, children, ...props }, ref) => {
+    const size = React.useContext(AttributesListSizeContext);
+
     return (
       <div
         ref={ref}
         className={cn(
-          "[&]:text-body-xsm text-[var(--color-text-primary)] [[data-hidden='true']_&]:text-[var(--color-text-tertiary)] flex items-center gap-[var(--space-xsm)]",
+          "text-[var(--color-text-primary)] [[data-hidden='true']_&]:text-[var(--color-text-tertiary)] flex items-center",
+          size === 'sm' ? 'gap-[var(--space-sm)]' : 'gap-[var(--space-xsm)]',
+          size === 'sm' ? '[&]:text-body-sm' : '[&]:text-body-xsm',
           className
         )}
         {...props}
@@ -487,7 +533,7 @@ export interface AttributesChevronProps
 const AttributesChevron = React.forwardRef<HTMLDivElement, AttributesChevronProps>(
   ({ className, ...props }, ref) => {
     return (
-      <div ref={ref} className={cn("shrink-0", className)} {...props}>
+      <div ref={ref} className={cn("shrink-0 -ml-[4px]", className)} {...props}>
         <Icon
           name="chevron-down"
           size="sm"

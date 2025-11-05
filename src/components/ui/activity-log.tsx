@@ -239,7 +239,7 @@ const ActivityLogDescription = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "flex flex-wrap gap-[var(--space-xsm)] items-center flex-1 min-w-0 [&]:text-body-sm text-[var(--color-text-primary)]",
+        "flex flex-wrap gap-[var(--space-xsm)] items-center min-w-0 [&]:text-body-sm text-[var(--color-text-primary)]",
         className
       )}
       {...props}

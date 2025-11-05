@@ -20,12 +20,99 @@ const meta: Meta<typeof AttributesList> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  argTypes: {
+    size: {
+      control: 'radio',
+      options: ['sm', 'xsm'],
+      description: 'Size variant for typography and spacing',
+      table: {
+        defaultValue: { summary: 'sm' },
+      },
+    },
+  },
 } satisfies Meta<typeof AttributesList>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-// Story 1: Flat List - Simple key-value pairs without grouping
+// Story 1: Size Variants - Demonstrates both size options
+export const SizeVariants: Story = {
+  render: () => (
+    <div className="flex gap-[var(--space-xlg)] items-start">
+      <div className="space-y-[var(--space-md)]">
+        <h3 className="text-heading-sm text-[var(--color-text-primary)]">Size: sm (default)</h3>
+        <div className="w-full max-w-md">
+          <AttributesList size="sm">
+            <AttributesItem>
+              <AttributesRow>
+                <AttributesLabel>Charterer</AttributesLabel>
+                <AttributesValue>ShipCo Ltd</AttributesValue>
+              </AttributesRow>
+            </AttributesItem>
+
+            <AttributesItem>
+              <AttributesRow>
+                <AttributesLabel>Broker</AttributesLabel>
+                <AttributesValue>Clarksons</AttributesValue>
+              </AttributesRow>
+            </AttributesItem>
+
+            <AttributesItem>
+              <AttributesRow>
+                <AttributesLabel>Vessel name</AttributesLabel>
+                <AttributesValue>Ever Given</AttributesValue>
+              </AttributesRow>
+            </AttributesItem>
+
+            <AttributesItem>
+              <AttributesRow>
+                <AttributesLabel>IMO Number</AttributesLabel>
+                <AttributesValue>9811000</AttributesValue>
+              </AttributesRow>
+            </AttributesItem>
+          </AttributesList>
+        </div>
+      </div>
+
+      <div className="space-y-[var(--space-md)]">
+        <h3 className="text-heading-sm text-[var(--color-text-primary)]">Size: xsm (compact)</h3>
+        <div className="w-full max-w-md">
+          <AttributesList size="xsm">
+            <AttributesItem>
+              <AttributesRow>
+                <AttributesLabel>Charterer</AttributesLabel>
+                <AttributesValue>ShipCo Ltd</AttributesValue>
+              </AttributesRow>
+            </AttributesItem>
+
+            <AttributesItem>
+              <AttributesRow>
+                <AttributesLabel>Broker</AttributesLabel>
+                <AttributesValue>Clarksons</AttributesValue>
+              </AttributesRow>
+            </AttributesItem>
+
+            <AttributesItem>
+              <AttributesRow>
+                <AttributesLabel>Vessel name</AttributesLabel>
+                <AttributesValue>Ever Given</AttributesValue>
+              </AttributesRow>
+            </AttributesItem>
+
+            <AttributesItem>
+              <AttributesRow>
+                <AttributesLabel>IMO Number</AttributesLabel>
+                <AttributesValue>9811000</AttributesValue>
+              </AttributesRow>
+            </AttributesItem>
+          </AttributesList>
+        </div>
+      </div>
+    </div>
+  ),
+}
+
+// Story 2: Flat List - Simple key-value pairs without grouping
 export const FlatList: Story = {
   render: () => (
     <div className="w-full max-w-md">
@@ -69,7 +156,7 @@ export const FlatList: Story = {
   ),
 }
 
-// Story 2: Grouped Sections - Key-value pairs organized by section
+// Story 3: Grouped Sections - Key-value pairs organized by section
 export const GroupedSections: Story = {
   render: () => (
     <div className="w-full max-w-md">
@@ -227,6 +314,62 @@ export const CollapsibleItems: Story = {
                   <div className="flex justify-between">
                     <span className="text-[var(--color-text-secondary)]">Draft:</span>
                     <span className="text-body-medium-xsm">14.5 m</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </AttributesContent>
+        </AttributesItem>
+
+        <AttributesItem collapsible defaultOpen={false}>
+          <AttributesRow asCollapsibleTrigger>
+            <AttributesLabel>Owner</AttributesLabel>
+            <AttributesValue>
+              International Maritime Transport & Logistics Corporation Limited
+              <AttributesChevron />
+            </AttributesValue>
+          </AttributesRow>
+          <AttributesContent>
+            <Card>
+              <CardContent className="p-[var(--space-md)]">
+                <div className="space-y-2 text-body-xsm">
+                  <div className="flex justify-between">
+                    <span className="text-[var(--color-text-secondary)]">Registration:</span>
+                    <span className="text-body-medium-xsm">Tokyo, Japan</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[var(--color-text-secondary)]">Founded:</span>
+                    <span className="text-body-medium-xsm">1995</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[var(--color-text-secondary)]">Fleet Size:</span>
+                    <span className="text-body-medium-xsm">42 vessels</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </AttributesContent>
+        </AttributesItem>
+
+        <AttributesItem collapsible defaultOpen={false}>
+          <AttributesRow asCollapsibleTrigger>
+            <AttributesLabel>Operator</AttributesLabel>
+            <AttributesValue>
+              International Maritime Transport & Logistics
+              <AttributesChevron />
+            </AttributesValue>
+          </AttributesRow>
+          <AttributesContent>
+            <Card>
+              <CardContent className="p-[var(--space-md)]">
+                <div className="space-y-2 text-body-xsm">
+                  <div className="flex justify-between">
+                    <span className="text-[var(--color-text-secondary)]">Type:</span>
+                    <span className="text-body-medium-xsm">Ship Management</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[var(--color-text-secondary)]">Contact:</span>
+                    <span className="text-body-medium-xsm">+81 3 1234 5678</span>
                   </div>
                 </div>
               </CardContent>
