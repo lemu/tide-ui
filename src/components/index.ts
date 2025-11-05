@@ -237,6 +237,17 @@ export {
   useSidebar,
 } from './ui/sidebar'
 
+// AppFrame component
+export { AppFrame } from './ui/app-frame'
+export type {
+  AppFrameProps,
+  AppFrameNavItem,
+  AppFrameBoard,
+  AppFrameUser,
+  AppFrameTeam,
+  AppFrameNavigationData,
+} from './ui/app-frame'
+
 // Drawer components  
 export {
   Drawer,
