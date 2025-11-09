@@ -44,6 +44,7 @@ import { CSS } from "@dnd-kit/utilities"
 import { cn } from "../../lib/utils"
 import { Button } from "./button"
 import { Input } from "./input"
+import { AutocompleteSearch } from "./autocomplete-search"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./table"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select"
 import { Checkbox } from "./checkbox"
@@ -505,6 +506,9 @@ interface DataTableToolbarProps<_TData = any> {
   enableGlobalFaceting?: boolean
   enableGrouping?: boolean
   showSettingsMenu?: boolean
+  enableAutocomplete?: boolean
+  autocompleteSuggestions?: string[]
+  autocompleteMinCharacters?: number
 }
 
 function DataTableToolbar<TData>({
@@ -518,6 +522,9 @@ function DataTableToolbar<TData>({
   enableGlobalFaceting = false,
   enableGrouping = false,
   showSettingsMenu = false,
+  enableAutocomplete = false,
+  autocompleteSuggestions = [],
+  autocompleteMinCharacters = 2,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0 || (enableGlobalSearch && globalFilter.length > 0)
 
@@ -525,12 +532,26 @@ function DataTableToolbar<TData>({
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         {enableGlobalSearch && onGlobalFilterChange && (
-          <Input
-            placeholder={globalSearchPlaceholder}
-            value={globalFilter}
-            onChange={(event) => onGlobalFilterChange(event.target.value)}
-            className="h-8 w-[150px] lg:w-[250px]"
-          />
+          <>
+            {enableAutocomplete && autocompleteSuggestions.length > 0 ? (
+              <AutocompleteSearch
+                value={globalFilter}
+                onValueChange={onGlobalFilterChange}
+                suggestions={autocompleteSuggestions}
+                placeholder={globalSearchPlaceholder}
+                minCharacters={autocompleteMinCharacters}
+                className="h-8 w-[150px] lg:w-[250px]"
+                onSelect={onGlobalFilterChange}
+              />
+            ) : (
+              <Input
+                placeholder={globalSearchPlaceholder}
+                value={globalFilter}
+                onChange={(event) => onGlobalFilterChange(event.target.value)}
+                className="h-8 w-[150px] lg:w-[250px]"
+              />
+            )}
+          </>
         )}
 
         {searchKey && !enableGlobalSearch && (
@@ -1267,6 +1288,23 @@ export interface DataTableProps<TData, TValue> {
   borderStyle?: BorderStyle
   // Global search
   enableGlobalSearch?: boolean
+  globalSearchPlaceholder?: string
+  /**
+   * Enable autocomplete for global search.
+   * When enabled, shows suggestions as user types.
+   */
+  enableAutocomplete?: boolean
+  /**
+   * Column keys to extract autocomplete suggestions from.
+   * If not provided, suggestions will be extracted from all columns.
+   * @example ['name', 'email', 'company']
+   */
+  globalSearchColumns?: string[]
+  /**
+   * Minimum characters required before showing autocomplete suggestions.
+   * @default 2
+   */
+  autocompleteMinCharacters?: number
   // Global faceting
   enableGlobalFaceting?: boolean
   // Column resizing
@@ -1274,7 +1312,6 @@ export interface DataTableProps<TData, TValue> {
   columnResizeMode?: ColumnResizeMode
   enableColumnResizePersistence?: boolean
   storageKey?: string
-  globalSearchPlaceholder?: string
   // Expanding/nested rows
   enableExpanding?: boolean
   getSubRows?: (row: TData) => TData[] | undefined
@@ -1465,6 +1502,9 @@ export function DataTable<TData, TValue>({
   borderStyle = "both",
   enableGlobalSearch = false,
   globalSearchPlaceholder = "Search all columns...",
+  enableAutocomplete = false,
+  globalSearchColumns,
+  autocompleteMinCharacters = 2,
   enableGlobalFaceting = false,
   enableColumnResizing = false,
   columnResizeMode = "onChange",
@@ -1556,6 +1596,35 @@ export function DataTable<TData, TValue>({
   // Debounce global filter for performance
   const debouncedGlobalFilter = useDebounce(globalFilter, 300)
 
+  // Extract unique values from specified columns for autocomplete suggestions
+  const autocompleteSuggestions = React.useMemo(() => {
+    if (!enableAutocomplete || !enableGlobalSearch) {
+      return []
+    }
+
+    const uniqueValues = new Set<string>()
+
+    data.forEach((row: any) => {
+      // If specific columns are specified, only extract from those
+      if (globalSearchColumns && globalSearchColumns.length > 0) {
+        globalSearchColumns.forEach((columnKey) => {
+          const value = row[columnKey]
+          if (value != null && String(value).trim() !== '') {
+            uniqueValues.add(String(value))
+          }
+        })
+      } else {
+        // Extract from all columns
+        Object.values(row).forEach((value) => {
+          if (value != null && String(value).trim() !== '') {
+            uniqueValues.add(String(value))
+          }
+        })
+      }
+    })
+
+    return Array.from(uniqueValues).sort()
+  }, [data, globalSearchColumns, enableAutocomplete, enableGlobalSearch])
 
   // Create group-preserving filter function with access to grouping state
   const createGroupPreservingFilter = React.useCallback((searchTerm: string, groupingCols: string[], data: TData[]) => {
@@ -2350,6 +2419,9 @@ export function DataTable<TData, TValue>({
             onGlobalFilterChange={setGlobalFilter}
             enableGlobalFaceting={enableGlobalFaceting}
             enableGrouping={enableGrouping}
+            enableAutocomplete={enableAutocomplete}
+            autocompleteSuggestions={autocompleteSuggestions}
+            autocompleteMinCharacters={autocompleteMinCharacters}
           />
         </div>
       )}

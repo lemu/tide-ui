@@ -1,9 +1,11 @@
 import * as React from "react";
 import { type DialogProps } from "@radix-ui/react-dialog";
 import { Command as CommandPrimitive } from "cmdk";
-import { Search } from "lucide-react";
+import { type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog";
+import { Icon } from "@/components/ui/icon";
+import { inputVariants } from "@/components/ui/input";
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
@@ -36,25 +38,103 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
   );
 };
 
+interface CommandInputProps
+  extends Omit<React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>, "size">,
+    Pick<VariantProps<typeof inputVariants>, "size"> {
+  /**
+   * Whether to show a clear button when value exists
+   */
+  clearable?: boolean;
+  /**
+   * Callback when clear button is clicked
+   */
+  onClear?: () => void;
+}
+
 const CommandInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
->(({ className, ...props }, ref) => (
-  <div className="relative" cmdk-input-wrapper="">
-    <div className="flex items-center px-[var(--space-md)]">
-      <Search className="mr-2 h-4 w-4 shrink-0 text-[var(--color-text-tertiary)]" />
+  CommandInputProps
+>(({ className, size = "md", clearable = false, onClear, value, ...props }, ref) => {
+  const showClearButton = clearable && value && String(value).length > 0;
+
+  // Calculate icon sizes based on input size
+  const iconSize = size === "sm" ? "sm" : "md";
+
+  // Calculate left padding: icon_position + icon_width + spacing
+  // For sm: 12px + 12px + 8px = 32px
+  // For md/lg: 12px + 16px + 8px = 36px
+  const leftPadding = size === "sm"
+    ? "pl-[calc(var(--space-md)+var(--size-3xsm)+var(--space-sm))]"
+    : "pl-[calc(var(--space-md)+var(--size-2xsm)+var(--space-sm))]";
+
+  // Calculate right padding for clear button if visible
+  // For sm: 12px + 12px + 8px = 32px
+  // For md/lg: 12px + 16px + 8px = 36px
+  const rightPadding = showClearButton
+    ? size === "sm"
+      ? "pr-[calc(var(--space-md)+var(--size-3xsm)+var(--space-sm))]"
+      : "pr-[calc(var(--space-md)+var(--size-2xsm)+var(--space-sm))]"
+    : "";
+
+  return (
+    <div className="relative" cmdk-input-wrapper="">
+      <Icon
+        name="search"
+        size={iconSize}
+        color="tertiary"
+        className="absolute left-[var(--space-md)] top-1/2 -translate-y-1/2 pointer-events-none"
+      />
       <CommandPrimitive.Input
         ref={ref}
+        value={value}
         className={cn(
-          "flex h-11 w-full rounded-md bg-transparent py-[var(--space-md)] text-body-md outline-none placeholder:text-[var(--color-text-tertiary)] disabled:cursor-not-allowed disabled:opacity-50",
+          inputVariants({ size, variant: "default" }),
+          leftPadding,
+          rightPadding,
+          // Force typography to override cmdk defaults
+          size === "sm" && "[&]:text-body-sm",
+          size === "md" && "[&]:text-body-md",
+          size === "lg" && "[&]:text-body-md",
+          // Force focus styles to override cmdk defaults - includes outer blue ring
+          "[&]:focus-visible:outline-none",
+          "[&]:focus-visible:border-[#005f85]",
+          "[&]:focus-visible:!shadow-[0px_0px_0px_2px_rgba(0,95,133,0.2),0px_3px_4px_0px_rgba(0,14,20,0.03)]",
+          "[&]:focus:outline-none",
+          "[&]:focus:!shadow-[0px_0px_0px_2px_rgba(0,95,133,0.2),0px_3px_4px_0px_rgba(0,14,20,0.03)]",
           className
         )}
         {...props}
       />
+      {showClearButton && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onClear?.();
+          }}
+          className="absolute right-[var(--space-sm)] top-1/2 -translate-y-1/2 flex items-center justify-center w-[16px] h-[16px] rounded-full bg-[var(--color-background-neutral-subtle)] hover:bg-[var(--color-background-neutral-subtle-hovered)] transition-colors"
+          aria-label="Clear search"
+        >
+          <svg
+            width="10"
+            height="10"
+            viewBox="0 0 10 10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1 1L9 9M9 1L1 9"
+              stroke="var(--color-text-secondary)"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+          </svg>
+        </button>
+      )}
     </div>
-    <div className="absolute bottom-0 left-0 right-0 h-px bg-[var(--color-border-primary-subtle)]" />
-  </div>
-));
+  );
+});
 
 CommandInput.displayName = CommandPrimitive.Input.displayName;
 

@@ -292,6 +292,155 @@ const sampleUsers: User[] = [
   }
 ]
 
+// Shipment data for autocomplete demonstration
+interface ShipmentData {
+  id: string
+  vesselName: string
+  portOfLoading: string
+  portOfDischarge: string
+  cargoType: string
+  operator: string
+  charterer: string
+}
+
+const sampleShipments: ShipmentData[] = [
+  {
+    id: '1',
+    vesselName: 'Pacific Star',
+    portOfLoading: 'Singapore',
+    portOfDischarge: 'Rotterdam',
+    cargoType: 'Containers',
+    operator: 'Pacific Shipping Lines',
+    charterer: 'Star Logistics'
+  },
+  {
+    id: '2',
+    vesselName: 'Atlantic Ocean',
+    portOfLoading: 'Port Atlantic',
+    portOfDischarge: 'Singapore',
+    cargoType: 'Bulk Cargo',
+    operator: 'Ocean Marine Services',
+    charterer: 'Atlantic Trading Co.'
+  },
+  {
+    id: '3',
+    vesselName: 'Star Carrier',
+    portOfLoading: 'Shanghai',
+    portOfDischarge: 'Los Angeles',
+    cargoType: 'Containers',
+    operator: 'Star Marine Corp.',
+    charterer: 'Pacific Logistics'
+  },
+  {
+    id: '4',
+    vesselName: 'Ocean Explorer',
+    portOfLoading: 'Dubai',
+    portOfDischarge: 'Singapore Port',
+    cargoType: 'General Cargo',
+    operator: 'Global Ocean Lines',
+    charterer: 'Ocean Freight Ltd.'
+  },
+  {
+    id: '5',
+    vesselName: 'Pacific Voyager',
+    portOfLoading: 'Hong Kong',
+    portOfDischarge: 'Hamburg',
+    cargoType: 'Containers',
+    operator: 'Pacific Marine Group',
+    charterer: 'Star International'
+  },
+  {
+    id: '6',
+    vesselName: 'Star Navigator',
+    portOfLoading: 'Rotterdam',
+    portOfDischarge: 'Shanghai Port',
+    cargoType: 'Bulk Cargo',
+    operator: 'Star Shipping Co.',
+    charterer: 'Pacific Traders'
+  },
+  {
+    id: '7',
+    vesselName: 'Atlantic Pioneer',
+    portOfLoading: 'Port of Santos',
+    portOfDischarge: 'Port Atlantic',
+    cargoType: 'Containers',
+    operator: 'Atlantic Marine Lines',
+    charterer: 'Ocean Trading Group'
+  },
+  {
+    id: '8',
+    vesselName: 'Marine Express',
+    portOfLoading: 'Singapore Port',
+    portOfDischarge: 'Tokyo',
+    cargoType: 'General Cargo',
+    operator: 'Pacific Ocean Services',
+    charterer: 'Marine Logistics Inc.'
+  },
+  {
+    id: '9',
+    vesselName: 'Global Star',
+    portOfLoading: 'Busan',
+    portOfDischarge: 'Singapore',
+    cargoType: 'Containers',
+    operator: 'Star Global Shipping',
+    charterer: 'Atlantic Freight'
+  },
+  {
+    id: '10',
+    vesselName: 'Pacific Guardian',
+    portOfLoading: 'Port of Singapore',
+    portOfDischarge: 'Sydney',
+    cargoType: 'Bulk Cargo',
+    operator: 'Pacific Star Lines',
+    charterer: 'Ocean Carriers Ltd.'
+  }
+]
+
+const shipmentColumns: ColumnDef<ShipmentData>[] = [
+  {
+    accessorKey: 'vesselName',
+    header: 'Vessel Name',
+    cell: ({ row }) => (
+      <div className="font-medium">{row.getValue('vesselName')}</div>
+    ),
+  },
+  {
+    accessorKey: 'portOfLoading',
+    header: 'Port of Loading',
+    cell: ({ row }) => (
+      <div className="text-body-sm">{row.getValue('portOfLoading')}</div>
+    ),
+  },
+  {
+    accessorKey: 'portOfDischarge',
+    header: 'Port of Discharge',
+    cell: ({ row }) => (
+      <div className="text-body-sm">{row.getValue('portOfDischarge')}</div>
+    ),
+  },
+  {
+    accessorKey: 'cargoType',
+    header: 'Cargo Type',
+    cell: ({ row }) => (
+      <Badge>{row.getValue('cargoType')}</Badge>
+    ),
+  },
+  {
+    accessorKey: 'operator',
+    header: 'Operator',
+    cell: ({ row }) => (
+      <div className="text-body-sm">{row.getValue('operator')}</div>
+    ),
+  },
+  {
+    accessorKey: 'charterer',
+    header: 'Charterer',
+    cell: ({ row }) => (
+      <div className="text-body-sm text-[var(--color-text-secondary)]">{row.getValue('charterer')}</div>
+    ),
+  },
+]
+
 const userColumns: ColumnDef<User>[] = [
   {
     accessorKey: 'name',
@@ -1693,6 +1842,54 @@ export const GlobalSearch: Story = {
             columns={tradeColumns}
             enableGlobalSearch={true}
             title="Searchable Trading Data"
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const GlobalSearchWithAutocomplete: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates global search with autocomplete suggestions. As you type, the search field shows relevant suggestions extracted from specific columns. Matched text is highlighted in yellow and bolded. Notice how shared keywords like "Pacific", "Star", "Ocean", and "Singapore" appear across different columns, demonstrating the power of autocomplete for finding related data. Supports fuzzy matching and requires a minimum of 2 characters.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => sampleShipments)
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Global Search with Autocomplete</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              Type at least 2 characters to see autocomplete suggestions. The autocomplete shows results from
+              vessel names, ports, operators, and charterers. Notice how shared keywords appear across multiple
+              columns, making it easy to find related shipments.
+            </p>
+            <ul className="list-disc list-inside text-body-md text-[var(--color-text-secondary)] space-y-1">
+              <li>Try typing <strong>"pacific"</strong> - appears in vessel names, operators, and charterers</li>
+              <li>Try typing <strong>"star"</strong> - appears in multiple vessels, operators, and charterers</li>
+              <li>Try typing <strong>"singapore"</strong> - appears in multiple port names</li>
+              <li>Try typing <strong>"ocean"</strong> - appears in vessels, operators, and charterers</li>
+              <li>Matched portions are <span className="bg-[#ffeb10] font-bold">highlighted in yellow and bolded</span></li>
+              <li>Use <strong>arrow keys</strong> to navigate suggestions, <strong>Enter</strong> to select</li>
+              <li>Selecting a suggestion immediately filters the table</li>
+            </ul>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={shipmentColumns}
+            enableGlobalSearch={true}
+            enableAutocomplete={true}
+            globalSearchColumns={['vesselName', 'portOfLoading', 'portOfDischarge', 'operator', 'charterer']}
+            autocompleteMinCharacters={2}
+            title="Shipments with Autocomplete Search"
           />
         </div>
       </div>

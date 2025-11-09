@@ -175,7 +175,7 @@ function BookmarkNameDialog({
           </div>
         </DialogBody>
         <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
+          <Button variant="default" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
           <Button

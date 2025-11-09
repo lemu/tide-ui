@@ -197,6 +197,10 @@ export type {
   MultiComboboxTriggerProps,
 } from './ui/combobox'
 
+// AutocompleteSearch component
+export { AutocompleteSearch } from './ui/autocomplete-search'
+export type { AutocompleteSearchProps } from './ui/autocomplete-search'
+
 // Breadcrumb components
 export {
   Breadcrumb,
