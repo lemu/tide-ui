@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { AutocompleteSearch } from '../components/ui/autocomplete-search'
+import { AutocompleteSearch, AutocompleteSuggestion } from '../components/ui/autocomplete-search'
+import { Icon } from '../components/ui/icon'
 import { useState } from 'react'
 
 const meta = {
@@ -268,6 +269,52 @@ export const LargeSuggestionList: Story = {
         />
         <div className="mt-4 text-body-sm text-[var(--color-text-secondary)]">
           Limited to 50 suggestions for performance. Use keyboard navigation to scroll through results.
+        </div>
+      </div>
+    )
+  },
+}
+
+export const EnrichedWithFilterContext: Story = {
+  render: () => {
+    const [value, setValue] = useState('')
+
+    // Enriched suggestions with filter context
+    const enrichedSuggestions: AutocompleteSuggestion[] = [
+      // Companies
+      { label: 'Apple Inc.', value: 'Apple Inc.', filterLabel: 'Company', filterIcon: ({ className }: { className?: string }) => <Icon name="building" className={className} /> },
+      { label: 'Microsoft Corporation', value: 'Microsoft Corporation', filterLabel: 'Company', filterIcon: ({ className }: { className?: string }) => <Icon name="building" className={className} /> },
+      { label: 'Amazon.com Inc.', value: 'Amazon.com Inc.', filterLabel: 'Company', filterIcon: ({ className }: { className?: string }) => <Icon name="building" className={className} /> },
+      // People
+      { label: 'John Smith', value: 'John Smith', filterLabel: 'Contact', filterIcon: ({ className }: { className?: string }) => <Icon name="user" className={className} /> },
+      { label: 'Jane Doe', value: 'Jane Doe', filterLabel: 'Contact', filterIcon: ({ className }: { className?: string }) => <Icon name="user" className={className} /> },
+      { label: 'Michael Johnson', value: 'Michael Johnson', filterLabel: 'Contact', filterIcon: ({ className }: { className?: string }) => <Icon name="user" className={className} /> },
+      // Emails
+      { label: 'john.smith@example.com', value: 'john.smith@example.com', filterLabel: 'Email', filterIcon: ({ className }: { className?: string }) => <Icon name="mail" className={className} /> },
+      { label: 'jane.doe@company.com', value: 'jane.doe@company.com', filterLabel: 'Email', filterIcon: ({ className }: { className?: string }) => <Icon name="mail" className={className} /> },
+      // Locations
+      { label: 'New York, NY', value: 'New York, NY', filterLabel: 'Location', filterIcon: ({ className }: { className?: string }) => <Icon name="map-pin" className={className} /> },
+      { label: 'San Francisco, CA', value: 'San Francisco, CA', filterLabel: 'Location', filterIcon: ({ className }: { className?: string }) => <Icon name="map-pin" className={className} /> },
+      { label: 'London, UK', value: 'London, UK', filterLabel: 'Location', filterIcon: ({ className }: { className?: string }) => <Icon name="map-pin" className={className} /> },
+    ]
+
+    return (
+      <div className="w-[400px] space-y-4">
+        <AutocompleteSearch
+          value={value}
+          onValueChange={setValue}
+          suggestions={enrichedSuggestions}
+          placeholder="Search companies, contacts, emails, locations..."
+          minCharacters={2}
+        />
+        <div className="text-body-sm text-[var(--color-text-secondary)]">
+          <p className="font-medium mb-2">Enriched suggestions with filter context:</p>
+          <ul className="list-disc list-inside space-y-1">
+            <li>Each suggestion shows its filter type (Company, Contact, Email, Location)</li>
+            <li>Filter icon appears on the right side</li>
+            <li>Useful for multi-category search across different data types</li>
+            <li>Try typing "john" or "new" to see suggestions from multiple categories</li>
+          </ul>
         </div>
       </div>
     )

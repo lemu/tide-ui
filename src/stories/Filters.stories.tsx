@@ -56,6 +56,28 @@ Filters support two formats for defining options:
 \`\`\`
 
 Both formats support search filtering and work identically. The Status filter in the examples uses flat options, while Load/Discharge ports use grouped options.
+
+## Global Search with Autocomplete
+
+Enable autocomplete for the global search input to provide suggestions as users type:
+
+\`\`\`tsx
+<Filters
+  enableGlobalSearch={true}
+  enableAutocomplete={true}
+  autocompleteMinCharacters={2}
+  // ... other props
+/>
+\`\`\`
+
+Autocomplete extracts suggestions from all filter option labels, providing:
+- **Fuzzy matching** for flexible search
+- **Yellow highlighted** and **medium weight** matched text
+- **Filter source display** - Each suggestion shows the filter icon and label on the right (e.g., "Rotterdam (NL)" → [ship icon] "Load port")
+- **Duplicate handling** - Same value from different filters shows as separate entries (e.g., "Rotterdam" appears twice if in both Load port and Discharge port)
+- **Keyboard navigation** (Arrow keys, Enter, Escape)
+- **One Enter press** adds token and closes dropdown
+- **No duplicates** - prevents adding the same term twice
         `,
       },
     },
@@ -706,6 +728,54 @@ export const WithGlobalSearchAndFilters: Story = {
           }}
           onFilterReset={() => setActiveFilters({})}
           enableGlobalSearch={true}
+          globalSearchTerms={globalSearchTerms}
+          onGlobalSearchChange={setGlobalSearchTerms}
+        />
+      </div>
+    )
+  },
+}
+
+// Global Search with Autocomplete
+export const WithGlobalSearchAutocomplete: Story = {
+  render: () => {
+    const [pinnedFilters, setPinnedFilters] = useState<string[]>(['date', 'status', 'cargoType', 'loadPort'])
+    const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({
+      date: ['today'],
+      status: ['open', 'in-progress'],
+    })
+    const [globalSearchTerms, setGlobalSearchTerms] = useState<string[]>([])
+
+    return (
+      <div className="p-4 space-y-2">
+        <div className="text-caption-sm text-[var(--color-text-secondary)]">
+          Type at least 2 characters to see autocomplete suggestions from filter options.
+          Matched text is <strong className="bg-[#ffeb10]">highlighted in yellow</strong> with medium weight.
+          Each suggestion shows its filter source (icon + label) on the right.
+          Use arrow keys to navigate, Enter to select. Try typing "sing", "rott", or "iron".
+        </div>
+        <Filters
+          filters={sampleFilters}
+          pinnedFilters={pinnedFilters}
+          activeFilters={activeFilters}
+          onPinnedFiltersChange={setPinnedFilters}
+          onFilterChange={(filterId, value) => {
+            setActiveFilters(prev => ({ ...prev, [filterId]: value }))
+          }}
+          onFilterClear={(filterId) => {
+            setActiveFilters(prev => {
+              const next = { ...prev }
+              delete next[filterId]
+              return next
+            })
+          }}
+          onFilterReset={() => {
+            setActiveFilters({})
+            setGlobalSearchTerms([])
+          }}
+          enableGlobalSearch={true}
+          enableAutocomplete={true}
+          autocompleteMinCharacters={2}
           globalSearchTerms={globalSearchTerms}
           onGlobalSearchChange={setGlobalSearchTerms}
         />

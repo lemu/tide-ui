@@ -423,6 +423,30 @@ const shippingFilterDefinitions: FilterDefinition[] = [
     ],
   },
   {
+    id: 'vesselName',
+    label: 'Vessel',
+    icon: ({ className }: { className?: string }) => <Icon name="ship" className={className} />,
+    type: 'multiselect',
+    searchPlaceholder: 'Search for vessel...',
+    groups: [
+      {
+        label: 'Vessels',
+        options: [
+          { value: 'Atlantic Explorer', label: 'Atlantic Explorer' },
+          { value: 'Pacific Voyager', label: 'Pacific Voyager' },
+          { value: 'Mediterranean Pride', label: 'Mediterranean Pride' },
+          { value: 'Arctic Challenger', label: 'Arctic Challenger' },
+          { value: 'Indian Ocean Star', label: 'Indian Ocean Star' },
+          { value: 'Baltic Runner', label: 'Baltic Runner' },
+          { value: 'Caribbean Breeze', label: 'Caribbean Breeze' },
+          { value: 'North Sea Pioneer', label: 'North Sea Pioneer' },
+          { value: 'Red Sea Navigator', label: 'Red Sea Navigator' },
+          { value: 'South Pacific Queen', label: 'South Pacific Queen' },
+        ],
+      },
+    ],
+  },
+  {
     id: 'chartererType',
     label: 'Charter type',
     icon: ({ className }: { className?: string }) => <Icon name="file-text" className={className} />,
@@ -708,6 +732,157 @@ export const WithExternalFiltersAndGlobalSearch: Story = {
           onFilterClear={handleFilterClear}
           onFilterReset={handleFilterReset}
           enableGlobalSearch={true}
+          globalSearchTerms={globalSearchTerms}
+          onGlobalSearchChange={setGlobalSearchTerms}
+          globalSearchPlaceholder="Search for keyword..."
+        />
+
+        {/* Data Summary */}
+        <div className="text-body-sm text-[var(--color-text-secondary)]">
+          Showing <strong>{filteredData.length}</strong> of <strong>{allFixtures.length}</strong> fixtures
+        </div>
+
+        {/* Data Table */}
+        <DataTable
+          data={filteredData}
+          columns={shippingFixtureColumns}
+          enableGlobalSearch={false}
+          enableColumnVisibility={false}
+          stickyHeader
+        />
+      </div>
+    )
+  },
+}
+
+export const WithExternalFiltersAndGlobalSearchAutocomplete: Story = {
+  render: () => {
+    const [pinnedFilters, setPinnedFilters] = useState<string[]>(['loadPort', 'dischargePort', 'status'])
+    const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({})
+    const [globalSearchTerms, setGlobalSearchTerms] = useState<string[]>([])
+    const allFixtures = useMemo(() => generateFixtures(), [])
+
+    // Helper function to get display label for a filter value
+    const getFilterLabel = (filterId: string, value: string): string => {
+      const filter = shippingFilterDefinitions.find(f => f.id === filterId)
+      if (!filter) return value
+
+      // Search in groups
+      if (filter.groups) {
+        for (const group of filter.groups) {
+          const option = group.options.find(o => o.value === value)
+          if (option) return option.label
+        }
+      }
+      // Search in flat options
+      if (filter.options) {
+        const option = filter.options.find(o => o.value === value)
+        if (option) return option.label
+      }
+      return value
+    }
+
+    // Filter the data based on active filters AND global search terms
+    const filteredData = useMemo(() => {
+      return allFixtures.filter((fixture) => {
+        // Check regular filters
+        for (const [filterId, filterValue] of Object.entries(activeFilters)) {
+          if (!filterValue) continue
+
+          const values = Array.isArray(filterValue) ? filterValue : [filterValue]
+          if (values.length === 0) continue
+
+          // Check if fixture matches any of the selected values
+          const fixtureValue = fixture[filterId as keyof ShippingFixture]
+          if (!values.includes(String(fixtureValue))) {
+            return false
+          }
+        }
+
+        // Check global search terms
+        if (globalSearchTerms.length > 0) {
+          // Get display labels for filter values
+          const loadPortLabel = getFilterLabel('loadPort', fixture.loadPort)
+          const dischargePortLabel = getFilterLabel('dischargePort', fixture.dischargePort)
+          const cargoLabel = getFilterLabel('cargo', fixture.cargo)
+          const statusLabel = getFilterLabel('status', fixture.status)
+          const chartererTypeLabel = getFilterLabel('chartererType', fixture.chartererType)
+
+          // Combine all searchable fields (both values and labels) into one string
+          const searchableText = [
+            fixture.vesselName,
+            fixture.loadPort,
+            loadPortLabel,
+            fixture.dischargePort,
+            dischargePortLabel,
+            fixture.cargo,
+            cargoLabel,
+            fixture.status,
+            statusLabel,
+            fixture.chartererType,
+            chartererTypeLabel,
+            String(fixture.quantity),
+            String(fixture.freightRate),
+          ].join(' ').toLowerCase()
+
+          // Check if ALL search terms are found in the searchable text
+          // Decode terms first (format: "value|filterLabel" → "value")
+          const allTermsMatch = globalSearchTerms.every(encodedTerm => {
+            const term = encodedTerm.includes('|') ? encodedTerm.split('|')[0] : encodedTerm
+            return searchableText.includes(term.toLowerCase())
+          })
+
+          if (!allTermsMatch) {
+            return false
+          }
+        }
+
+        return true
+      })
+    }, [allFixtures, activeFilters, globalSearchTerms])
+
+    const handleFilterChange = (filterId: string, value: FilterValue) => {
+      setActiveFilters((prev) => ({
+        ...prev,
+        [filterId]: value,
+      }))
+    }
+
+    const handleFilterClear = (filterId: string) => {
+      setActiveFilters((prev) => {
+        const newFilters = { ...prev }
+        delete newFilters[filterId]
+        return newFilters
+      })
+    }
+
+    const handleFilterReset = () => {
+      setActiveFilters({})
+    }
+
+    return (
+      <div className="flex flex-col gap-[var(--space-lg)] w-full">
+        {/* Info Banner */}
+        <div className="text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral)] p-[var(--space-lg)] rounded-md">
+          <strong>Global Search with Autocomplete:</strong> Type at least 2 characters to see autocomplete suggestions from all filter options.
+          Matched text is <strong className="bg-[#ffeb10]">highlighted in yellow</strong> with medium weight.
+          Each suggestion displays its source filter (icon + label) on the right side.
+          Use arrow keys to navigate, Enter to select. Try typing "sing", "rott", or "iron" to see suggestions.
+          Search terms that match filter options will automatically show the corresponding filter icon.
+        </div>
+
+        {/* Filters with Global Search and Autocomplete */}
+        <Filters
+          filters={shippingFilterDefinitions}
+          pinnedFilters={pinnedFilters}
+          activeFilters={activeFilters}
+          onPinnedFiltersChange={setPinnedFilters}
+          onFilterChange={handleFilterChange}
+          onFilterClear={handleFilterClear}
+          onFilterReset={handleFilterReset}
+          enableGlobalSearch={true}
+          enableAutocomplete={true}
+          autocompleteMinCharacters={2}
           globalSearchTerms={globalSearchTerms}
           onGlobalSearchChange={setGlobalSearchTerms}
           globalSearchPlaceholder="Search for keyword..."

@@ -2,6 +2,7 @@ import * as React from "react"
 import { cn } from "../../lib/utils"
 import { Button } from "./button"
 import { Input } from "./input"
+import { AutocompleteSearch, AutocompleteSuggestion } from "./autocomplete-search"
 import { Icon } from "./icon"
 import { Checkbox } from "./checkbox"
 import { RadioGroup, RadioGroupItem } from "./radio-group"
@@ -61,6 +62,16 @@ export interface FiltersProps {
   globalSearchTerms?: string[]
   onGlobalSearchChange?: (terms: string[]) => void
   globalSearchPlaceholder?: string
+  /**
+   * Enable autocomplete for global search
+   * @default false
+   */
+  enableAutocomplete?: boolean
+  /**
+   * Minimum characters required before showing autocomplete suggestions
+   * @default 2
+   */
+  autocompleteMinCharacters?: number
   // Hide reset button (useful when integrating with bookmarks)
   hideReset?: boolean
   // Action buttons (optional, for bookmark integration)
@@ -493,6 +504,44 @@ function GlobalSearchInput({ placeholder = "Search for keyword...", onAddSearchT
 }
 
 // ============================================================================
+// GlobalAutocompleteSearchInput - Autocomplete search for global filtering
+// ============================================================================
+
+interface GlobalAutocompleteSearchInputProps {
+  placeholder?: string
+  onAddSearchTerm: (term: string, filterLabel?: string) => void
+  suggestions: AutocompleteSuggestion[]
+  minCharacters: number
+}
+
+function GlobalAutocompleteSearchInput({
+  placeholder = "Search for keyword...",
+  onAddSearchTerm,
+  suggestions,
+  minCharacters
+}: GlobalAutocompleteSearchInputProps) {
+  const [inputValue, setInputValue] = React.useState("")
+
+  const handleSelect = (value: string, filterLabel?: string) => {
+    onAddSearchTerm(value, filterLabel)
+    setInputValue("")
+  }
+
+  return (
+    <div className="min-w-[200px] w-[280px]">
+      <AutocompleteSearch
+        value={inputValue}
+        onValueChange={setInputValue}
+        onSelect={handleSelect}
+        suggestions={suggestions}
+        placeholder={placeholder}
+        minCharacters={minCharacters}
+      />
+    </div>
+  )
+}
+
+// ============================================================================
 // FilterDropdownMenu - Full dropdown with sidebar navigation
 // ============================================================================
 
@@ -638,6 +687,8 @@ export function Filters({
   globalSearchTerms = [],
   onGlobalSearchChange,
   globalSearchPlaceholder,
+  enableAutocomplete = false,
+  autocompleteMinCharacters = 2,
   hideReset = false,
   actionButtons,
 }: FiltersProps) {
@@ -717,10 +768,25 @@ export function Filters({
     // Filter out any invalid values (undefined, null, non-strings)
     const validTerms = globalSearchTerms.filter(term => term && typeof term === 'string')
 
-    return validTerms.map(term => {
-      const matchedFilter = findMatchingFilter(term, filters)
+    return validTerms.map(encodedTerm => {
+      // Check if term is encoded with filter context: "value|filterLabel"
+      if (encodedTerm.includes('|')) {
+        const [value, filterLabel] = encodedTerm.split('|')
+        // Find filter by label
+        const filter = filters.find(f => f.label === filterLabel)
+        return {
+          value: encodedTerm, // Keep encoded term for removal
+          matchedFilter: filter ? {
+            filterId: filter.id,
+            icon: filter.icon
+          } : undefined
+        }
+      }
+
+      // Plain term (from manual entry) - try to find matching filter
+      const matchedFilter = findMatchingFilter(encodedTerm, filters)
       return {
-        value: term,
+        value: encodedTerm,
         matchedFilter: matchedFilter ? {
           filterId: matchedFilter.filterId,
           icon: matchedFilter.icon
@@ -729,12 +795,93 @@ export function Filters({
     })
   }, [globalSearchTerms, filters])
 
+  // Extract all option labels from filters with their source information for autocomplete suggestions
+  const autocompleteSuggestions = React.useMemo(() => {
+    if (!enableAutocomplete || !enableGlobalSearch) {
+      return []
+    }
+
+    const suggestions: AutocompleteSuggestion[] = []
+
+    filters.forEach(filter => {
+      // Extract from groups if available
+      if (filter.groups) {
+        filter.groups.forEach(group => {
+          group.options.forEach(option => {
+            // Only add options with valid label and value
+            if (option.label && option.value) {
+              suggestions.push({
+                label: option.label,
+                value: option.value,
+                filterLabel: filter.label,
+                filterIcon: filter.icon,
+              })
+            }
+            // Also add child options if they exist
+            if (option.children) {
+              option.children.forEach(child => {
+                if (child.label && child.value) {
+                  suggestions.push({
+                    label: child.label,
+                    value: child.value,
+                    filterLabel: filter.label,
+                    filterIcon: filter.icon,
+                  })
+                }
+              })
+            }
+          })
+        })
+      }
+      // Extract from flat options if available
+      else if (filter.options) {
+        filter.options.forEach(option => {
+          // Only add options with valid label and value
+          if (option.label && option.value) {
+            suggestions.push({
+              label: option.label,
+              value: option.value,
+              filterLabel: filter.label,
+              filterIcon: filter.icon,
+            })
+          }
+          // Also add child options if they exist
+          if (option.children) {
+            option.children.forEach(child => {
+              if (child.label && child.value) {
+                suggestions.push({
+                  label: child.label,
+                  value: child.value,
+                  filterLabel: filter.label,
+                  filterIcon: filter.icon,
+                })
+              }
+            })
+          }
+        })
+      }
+    })
+
+    // Sort by label first, then by filter label for consistent ordering
+    return suggestions.sort((a, b) => {
+      const labelCompare = a.label.localeCompare(b.label)
+      if (labelCompare !== 0) return labelCompare
+      return a.filterLabel.localeCompare(b.filterLabel)
+    })
+  }, [filters, enableAutocomplete, enableGlobalSearch])
+
   // Handler for adding a new search term
-  const handleAddSearchTerm = (term: string) => {
+  const handleAddSearchTerm = (term: string, filterLabel?: string) => {
     if (!onGlobalSearchChange) return
-    // Prevent duplicates
-    if (globalSearchTerms.includes(term)) return
-    onGlobalSearchChange([...globalSearchTerms, term])
+
+    // Encode term with filter context if provided (from autocomplete)
+    // Format: "value|filterLabel" e.g., "singapore|Load port"
+    // Plain terms (from manual entry) remain as-is
+    const encodedTerm = filterLabel ? `${term}|${filterLabel}` : term
+
+    // Prevent duplicates - check the encoded term
+    if (globalSearchTerms.includes(encodedTerm)) return
+    onGlobalSearchChange([...globalSearchTerms, encodedTerm])
   }
 
   // Handler for removing a search term
@@ -886,16 +1033,31 @@ export function Filters({
       )}
 
       {/* Global Search Input */}
-      {enableGlobalSearch && (
+      {enableGlobalSearch && !enableAutocomplete && (
         <GlobalSearchInput
           placeholder={globalSearchPlaceholder}
           onAddSearchTerm={handleAddSearchTerm}
         />
       )}
 
+      {/* Autocomplete Search Input */}
+      {enableGlobalSearch && enableAutocomplete && (
+        <GlobalAutocompleteSearchInput
+          placeholder={globalSearchPlaceholder}
+          onAddSearchTerm={handleAddSearchTerm}
+          suggestions={autocompleteSuggestions}
+          minCharacters={autocompleteMinCharacters}
+        />
+      )}
+
       {/* Search Term Tags */}
       {enrichedSearchTerms.map((searchTerm) => {
         const IconComponent = searchTerm.matchedFilter?.icon
+
+        // Decode the display value: extract just the value part if encoded
+        const displayValue = searchTerm.value.includes('|')
+          ? searchTerm.value.split('|')[0]
+          : searchTerm.value
 
         return (
           <div
@@ -909,7 +1071,7 @@ export function Filters({
 
             {/* Search Term Text */}
             <span className="whitespace-nowrap [&]:text-label-md text-[var(--color-text-primary)]">
-              {searchTerm.value}
+              {displayValue}
             </span>
 
             {/* Remove Button */}

@@ -3,6 +3,26 @@ import { Command as CommandPrimitive } from "cmdk"
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "./command"
 import { Popover, PopoverAnchor, PopoverContent } from "./popover"
 import { Input } from "./input"
+import { Icon } from "./icon"
+
+export interface AutocompleteSuggestion {
+  /**
+   * Display label for the suggestion
+   */
+  label: string
+  /**
+   * Value to use when suggestion is selected
+   */
+  value: string
+  /**
+   * Label of the filter this option belongs to
+   */
+  filterLabel: string
+  /**
+   * Icon component for the filter
+   */
+  filterIcon: React.ComponentType<{ className?: string }>
+}
 
 export interface AutocompleteSearchProps {
   /**
@@ -15,8 +35,9 @@ export interface AutocompleteSearchProps {
   onValueChange: (value: string) => void
   /**
    * Available suggestions to show in dropdown
+   * Can be simple strings or enriched objects with filter context
    */
-  suggestions: string[]
+  suggestions: (string | AutocompleteSuggestion)[]
   /**
    * Placeholder text for the input
    */
@@ -37,14 +58,21 @@ export interface AutocompleteSearchProps {
   className?: string
   /**
    * Callback when a suggestion is selected
+   * @param label - Display label of the selected suggestion (with proper capitalization)
+   * @param filterLabel - Optional filter context label
    */
-  onSelect?: (value: string) => void
+  onSelect?: (label: string, filterLabel?: string) => void
 }
 
 /**
  * Performs fuzzy matching between a search term and a text value
  */
 function fuzzyMatch(search: string, text: string): boolean {
+  // Safety check for undefined/null values
+  if (!search || !text) {
+    return false
+  }
+
   const searchLower = search.toLowerCase()
   const textLower = text.toLowerCase()
 
@@ -63,6 +91,11 @@ function fuzzyMatch(search: string, text: string): boolean {
  * Returns { before, match, after } or null if no match
  */
 function findMatchedPortion(search: string, text: string): { before: string; match: string; after: string } | null {
+  // Safety check for undefined/null values
+  if (!search || !text) {
+    return null
+  }
+
   const searchLower = search.toLowerCase()
   const textLower = text.toLowerCase()
 
@@ -128,32 +161,49 @@ export function AutocompleteSearch({
 }: AutocompleteSearchProps) {
   const [open, setOpen] = React.useState(false)
 
+  // Normalize suggestions - convert strings to AutocompleteSuggestion objects
+  const normalizedSuggestions = React.useMemo((): AutocompleteSuggestion[] => {
+    return suggestions.map(suggestion => {
+      if (typeof suggestion === 'string') {
+        // Convert string to AutocompleteSuggestion
+        return {
+          label: suggestion,
+          value: suggestion,
+          filterLabel: '',
+          filterIcon: () => null,
+        }
+      }
+      return suggestion
+    })
+  }, [suggestions])
+
   // Filter suggestions based on fuzzy matching
   const filteredSuggestions = React.useMemo(() => {
     if (!value || value.length < minCharacters) {
       return []
     }
 
-    return suggestions
-      .filter(suggestion => fuzzyMatch(value, suggestion))
+    return normalizedSuggestions
+      .filter(suggestion => suggestion && suggestion.label) // Filter out invalid suggestions
+      .filter(suggestion => fuzzyMatch(value, suggestion.label))
       .slice(0, 50) // Limit to 50 suggestions for performance
-  }, [value, suggestions, minCharacters])
+  }, [value, normalizedSuggestions, minCharacters])
 
   // Show dropdown when there are filtered suggestions
   // Close dropdown if value exactly matches a suggestion (indicating selection)
   React.useEffect(() => {
-    const isExactMatch = suggestions.some(s => s === value)
+    const isExactMatch = normalizedSuggestions.some(s => s.value === value)
     if (isExactMatch) {
       setOpen(false)
     } else {
       setOpen(filteredSuggestions.length > 0 && value.length >= minCharacters)
     }
-  }, [filteredSuggestions.length, value.length, minCharacters, suggestions, value])
+  }, [filteredSuggestions.length, value.length, minCharacters, normalizedSuggestions, value])
 
-  const handleSelect = (selectedValue: string) => {
-    onValueChange(selectedValue)
+  const handleSelect = (suggestion: AutocompleteSuggestion) => {
+    onValueChange(suggestion.value)
     setOpen(false)
-    onSelect?.(selectedValue)
+    onSelect?.(suggestion.label, suggestion.filterLabel)
   }
 
   const onInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -176,7 +226,13 @@ export function AutocompleteSearch({
               asChild
               value={value}
               onValueChange={onValueChange}
-              onKeyDown={(e) => setOpen(e.key !== "Escape")}
+              onKeyDown={(e) => {
+                // Close dropdown on Escape
+                if (e.key === "Escape") {
+                  setOpen(false)
+                }
+                // Don't force open on other keys - let useEffect handle it based on suggestions
+              }}
               onBlur={onInputBlur}
             >
               <Input
@@ -202,17 +258,27 @@ export function AutocompleteSearch({
             <CommandList>
               {filteredSuggestions.length > 0 ? (
                 <CommandGroup className="[&]:p-0">
-                  {filteredSuggestions.map((suggestion, index) => (
-                    <CommandItem
-                      key={`${suggestion}-${index}`}
-                      value={suggestion}
-                      onMouseDown={(e) => e.preventDefault()}
-                      onSelect={() => handleSelect(suggestion)}
-                      className="text-body-md h-[var(--size-md)] py-0 hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]"
-                    >
-                      <HighlightedText text={suggestion} search={value} />
-                    </CommandItem>
-                  ))}
+                  {filteredSuggestions.map((suggestion, index) => {
+                    const FilterIcon = suggestion.filterIcon
+                    const hasFilterContext = suggestion.filterLabel && suggestion.filterLabel.length > 0
+                    return (
+                      <CommandItem
+                        key={`${suggestion.value}-${suggestion.filterLabel}-${index}`}
+                        value={`${suggestion.value}|${suggestion.filterLabel}`}
+                        onMouseDown={(e) => e.preventDefault()}
+                        onSelect={() => handleSelect(suggestion)}
+                        className="text-body-md h-[var(--size-md)] py-0 gap-[var(--space-md)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]"
+                      >
+                        <HighlightedText text={suggestion.label} search={value} />
+                        {hasFilterContext && (
+                          <span className="ml-auto flex items-center gap-[var(--space-xsm)] text-caption-sm text-[var(--color-text-tertiary)]">
+                            <FilterIcon className="w-[12px] h-[12px]" />
+                            {suggestion.filterLabel}
+                          </span>
+                        )}
+                      </CommandItem>
+                    )
+                  })}
                 </CommandGroup>
               ) : null}
               {filteredSuggestions.length === 0 && value.length >= minCharacters ? (
