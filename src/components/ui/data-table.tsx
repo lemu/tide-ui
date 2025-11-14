@@ -175,6 +175,7 @@ export interface ColumnMeta {
   renderInGroupedRows?: boolean
   aggregation?: AggregationType
   align?: 'left' | 'right'
+  verticalAlign?: 'top' | 'middle' | 'bottom'
   truncate?: boolean // Enable text truncation with tooltip (default: true)
 }
 
@@ -190,6 +191,7 @@ declare module '@tanstack/react-table' {
     renderInGroupedRows?: boolean
     aggregation?: AggregationType
     align?: 'left' | 'right'
+    verticalAlign?: 'top' | 'middle' | 'bottom'
     truncate?: boolean
   }
 
@@ -1286,6 +1288,9 @@ export interface DataTableProps<TData, TValue> {
   loadingRowCount?: number
   // Border styling
   borderStyle?: BorderStyle
+  // Vertical alignment
+  /** Global default vertical alignment for all table cells. Can be overridden per column via column meta. */
+  defaultVerticalAlign?: 'top' | 'middle' | 'bottom'
   // Global search
   enableGlobalSearch?: boolean
   globalSearchPlaceholder?: string
@@ -1500,6 +1505,7 @@ export function DataTable<TData, TValue>({
   isLoading = false,
   loadingRowCount = 5,
   borderStyle = "both",
+  defaultVerticalAlign = 'middle',
   enableGlobalSearch = false,
   globalSearchPlaceholder = "Search all columns...",
   enableAutocomplete = false,
@@ -2768,6 +2774,7 @@ export function DataTable<TData, TValue>({
                             key={cell.id}
                             showBorder={borderSettings.showCellBorder}
                             showRowBorder={borderSettings.showRowBorder}
+                            verticalAlign={cell.column.columnDef.meta?.verticalAlign || defaultVerticalAlign}
                             colSpan={isSectionHeader ? row.getVisibleCells().length : undefined}
                             data-section-header={isSectionHeader ? true : undefined}
                             className={cn(
@@ -3094,6 +3101,7 @@ export function DataTable<TData, TValue>({
                           key={cell.id}
                           showBorder={borderSettings.showCellBorder}
                           showRowBorder={borderSettings.showRowBorder}
+                          verticalAlign={cell.column.columnDef.meta?.verticalAlign || defaultVerticalAlign}
                           colSpan={isSectionHeader ? row.getVisibleCells().length : undefined}
                           className={cn(
                             // Sticky columns need higher z-index and explicit backgrounds
@@ -3291,6 +3299,7 @@ export function DataTable<TData, TValue>({
                   className="h-24 text-center"
                   showBorder={borderSettings.showCellBorder}
                   showRowBorder={borderSettings.showRowBorder}
+                  verticalAlign={defaultVerticalAlign}
                 >
                   No results.
                 </TableCell>

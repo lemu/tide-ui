@@ -40,7 +40,7 @@ const tableRowVariants = cva(
 );
 
 const tableCellVariants = cva(
-  "align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+  "[&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
   {
     variants: {
       size: {
@@ -52,6 +52,11 @@ const tableCellVariants = cva(
         left: "text-left",
         center: "text-center",
         right: "text-right",
+      },
+      verticalAlign: {
+        top: "align-top",
+        middle: "align-middle",
+        bottom: "align-bottom",
       },
       numeric: {
         true: "text-right tabular-nums",
@@ -69,6 +74,7 @@ const tableCellVariants = cva(
     defaultVariants: {
       size: "md",
       align: "left",
+      verticalAlign: "middle",
       numeric: false,
       showBorder: true,
       showRowBorder: false,
@@ -221,10 +227,10 @@ interface TableCellProps
 }
 
 const TableCell = React.forwardRef<HTMLTableCellElement, TableCellProps>(
-  ({ className, size, align, numeric, showBorder = true, showRowBorder = false, ...props }, ref) => (
+  ({ className, size, align, verticalAlign, numeric, showBorder = true, showRowBorder = false, ...props }, ref) => (
     <td
       ref={ref}
-      className={cn(tableCellVariants({ size, align, numeric, showBorder, showRowBorder }), className)}
+      className={cn(tableCellVariants({ size, align, verticalAlign, numeric, showBorder, showRowBorder }), className)}
       {...props}
     />
   )

@@ -6079,6 +6079,177 @@ you can use \`footerLabel\` to inform users about what they're viewing.
   },
 }
 
+export const VerticalAlignment: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: `Demonstrates vertical alignment options for table cells. Cells can be aligned to top, middle (center), or bottom.
+
+## Configuration Levels
+
+- **Column-level**: Set \`verticalAlign\` in column metadata to control alignment per column
+- **Global default**: Use \`defaultVerticalAlign\` prop to set default alignment for all cells
+- **Default**: If not specified, cells default to \`middle\` alignment
+
+## Use Cases
+
+- **Top alignment**: Ideal for cells with variable-height content or multi-line text
+- **Middle alignment**: Default option that works well for most content types
+- **Bottom alignment**: Useful for aligning content to baselines or creating specific layouts`,
+      },
+    },
+  },
+  render: () => {
+    interface Product {
+      id: string
+      name: string
+      description: string
+      price: number
+      status: string
+      tags: string[]
+    }
+
+    const productsData: Product[] = [
+      {
+        id: '1',
+        name: 'Laptop Pro',
+        description: 'High-performance laptop with 16GB RAM, 512GB SSD, and dedicated graphics card. Perfect for developers and designers.',
+        price: 1299,
+        status: 'In Stock',
+        tags: ['Electronics', 'Computers', 'Featured']
+      },
+      {
+        id: '2',
+        name: 'Mouse',
+        description: 'Wireless mouse',
+        price: 29,
+        status: 'Low Stock',
+        tags: ['Accessories']
+      },
+      {
+        id: '3',
+        name: 'Monitor 4K',
+        description: '27-inch 4K UHD display with HDR support, 144Hz refresh rate, and adjustable stand. Includes HDMI and DisplayPort cables.',
+        price: 599,
+        status: 'In Stock',
+        tags: ['Electronics', 'Displays', 'Premium']
+      },
+      {
+        id: '4',
+        name: 'Keyboard',
+        description: 'Mechanical keyboard with RGB backlighting',
+        price: 89,
+        status: 'In Stock',
+        tags: ['Accessories', 'Gaming']
+      },
+    ]
+
+    const productsColumns: ColumnDef<Product>[] = [
+      {
+        accessorKey: 'id',
+        header: 'ID',
+        meta: { verticalAlign: 'top' },
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('id')}</div>
+        ),
+      },
+      {
+        accessorKey: 'name',
+        header: 'Product',
+        meta: { verticalAlign: 'top' },
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('name')}</div>
+        ),
+      },
+      {
+        accessorKey: 'description',
+        header: 'Description',
+        meta: { verticalAlign: 'middle' },
+        cell: ({ row }) => (
+          <div className="max-w-md text-[var(--color-text-secondary)]">
+            {row.getValue('description')}
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'price',
+        header: 'Price',
+        meta: { align: 'right', verticalAlign: 'middle' },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums font-medium">
+            {formatCurrency(row.getValue('price'))}
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        meta: { verticalAlign: 'bottom' },
+        cell: ({ row }) => {
+          const status = row.getValue('status') as string
+          return (
+            <Badge variant={status === 'In Stock' ? 'success' : 'warning'}>
+              {status}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'tags',
+        header: 'Tags',
+        meta: { verticalAlign: 'bottom' },
+        cell: ({ row }) => {
+          const tags = row.getValue('tags') as string[]
+          return (
+            <div className="flex flex-wrap gap-1">
+              {tags.map((tag) => (
+                <Badge key={tag} variant="outline" className="text-xs">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          )
+        },
+      },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Vertical Alignment Options</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+              This example demonstrates how different vertical alignment options affect cell content
+              layout. Notice how cells with varying content heights align differently based on their
+              column configuration.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)] space-y-[var(--space-sm)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm font-medium text-[var(--color-text-accent)]">
+                  Column Alignment Configuration
+                </span>
+              </div>
+              <ul className="text-body-sm text-[var(--color-text-accent)] space-y-1 ml-6">
+                <li><strong>ID & Product:</strong> Top-aligned (verticalAlign: 'top')</li>
+                <li><strong>Description & Price:</strong> Middle-aligned (verticalAlign: 'middle')</li>
+                <li><strong>Status & Tags:</strong> Bottom-aligned (verticalAlign: 'bottom')</li>
+              </ul>
+            </div>
+          </div>
+
+          <DataTable
+            data={productsData}
+            columns={productsColumns}
+            title="Product Catalog - Vertical Alignment Demo"
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
 // ============================================================================
 // Filters Integration
 // ============================================================================
