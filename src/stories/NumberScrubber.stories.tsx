@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { NumberScrubber } from '../components/fundamental/number-scrubber'
+import { NumberScrubber } from '../components/in-progress/number-scrubber'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 import { Label } from '../components/fundamental/label'
 import { Badge } from '../components/fundamental/badge'

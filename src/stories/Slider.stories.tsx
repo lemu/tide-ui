@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Slider } from '../components/fundamental/slider'
+import { Slider } from '../components/in-progress/slider'
 import { Button } from '../components/fundamental/button'
 import { Icon } from '../components/fundamental/icon'
 import { Badge } from '../components/fundamental/badge'
