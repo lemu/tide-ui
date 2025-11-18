@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Alert, AlertDescription, AlertTitle } from '../components/ui/alert'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
-import { Badge } from '../components/ui/badge'
-import { Card, CardContent } from '../components/ui/card'
+import { Alert, AlertDescription, AlertTitle } from '../components/fundamental/alert'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
+import { Badge } from '../components/fundamental/badge'
+import { Card, CardContent } from '../components/fundamental/card'
 
 const meta: Meta<typeof Alert> = {
   title: 'NPM • Fundamental/Alert',

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Separator } from '../components/ui/separator'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
+import { Separator } from '../components/fundamental/separator'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
 
 const meta: Meta<typeof Separator> = {
   title: 'NPM • Fundamental/Separator',

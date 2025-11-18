@@ -1,8 +1,8 @@
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "../../lib/utils"
-import { Button } from "./button"
-import { Icon } from "./icon"
+import { Button } from "../fundamental/button"
+import { Icon } from "../fundamental/icon"
 
 const tagVariants = cva(
   "inline-flex items-center gap-1 rounded-sm px-[var(--space-sm)] py-[var(--space-xsm)] text-caption-medium-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-1",

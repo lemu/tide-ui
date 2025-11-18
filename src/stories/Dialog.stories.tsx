@@ -9,22 +9,22 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
-} from "../components/ui/dialog";
-import { Button } from "../components/ui/button";
-import { Icon } from "../components/ui/icon";
-import { Badge } from "../components/ui/badge";
+} from "../components/fundamental/dialog";
+import { Button } from "../components/fundamental/button";
+import { Icon } from "../components/fundamental/icon";
+import { Badge } from "../components/fundamental/badge";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../components/ui/card";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
-import { Textarea } from "../components/ui/textarea";
-import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
-import { Checkbox } from "../components/ui/checkbox";
-import { Alert, AlertDescription } from "../components/ui/alert";
+} from "../components/fundamental/card";
+import { Input } from "../components/fundamental/input";
+import { Label } from "../components/fundamental/label";
+import { Textarea } from "../components/fundamental/textarea";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/fundamental/avatar";
+import { Checkbox } from "../components/fundamental/checkbox";
+import { Alert, AlertDescription } from "../components/fundamental/alert";
 
 const meta: Meta<typeof Dialog> = {
   title: "NPM • Fundamental/Dialog",

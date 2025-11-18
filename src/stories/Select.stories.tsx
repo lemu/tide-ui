@@ -9,11 +9,11 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from '../components/ui/select'
-import { Label } from '../components/ui/label'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
+} from '../components/fundamental/select'
+import { Label } from '../components/fundamental/label'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 
 const meta: Meta<typeof Select> = {
   title: 'NPM • Fundamental/Select',

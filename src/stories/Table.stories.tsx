@@ -11,12 +11,12 @@ import {
   TableRow,
   TableSortHeader,
   TableGroupHeader,
-} from '../components/ui/table'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
-import { Badge } from '../components/ui/badge'
-import { Checkbox } from '../components/ui/checkbox'
-import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar'
+} from '../components/fundamental/table'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
+import { Badge } from '../components/fundamental/badge'
+import { Checkbox } from '../components/fundamental/checkbox'
+import { Avatar, AvatarFallback, AvatarImage } from '../components/fundamental/avatar'
 import { formatNumber, formatCurrency, formatDecimal } from '../lib/utils'
 
 const meta: Meta<typeof Table> = {

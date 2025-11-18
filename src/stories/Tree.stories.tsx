@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Tree, TreeDataItem } from '../components/ui/tree'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
-import { Badge } from '../components/ui/badge'
+import { Tree, TreeDataItem } from '../components/in-progress/tree'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
+import { Badge } from '../components/fundamental/badge'
 
 const meta: Meta<typeof Tree> = {
   title: 'In Progress/Tree',

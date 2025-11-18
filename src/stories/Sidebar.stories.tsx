@@ -27,12 +27,12 @@ import {
   SidebarSearchTrigger,
   SidebarTrigger,
   useSidebar,
-} from '../components/ui/sidebar'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
-import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar'
-import { Separator } from '../components/ui/separator'
-import { Kbd } from '../components/ui/kbd'
+} from '../components/fundamental/sidebar'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
+import { Avatar, AvatarFallback, AvatarImage } from '../components/fundamental/avatar'
+import { Separator } from '../components/fundamental/separator'
+import { Kbd } from '../components/fundamental/kbd'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -40,13 +40,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '../components/ui/dropdown-menu'
+} from '../components/fundamental/dropdown-menu'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '../components/ui/tooltip'
+} from '../components/fundamental/tooltip'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -54,7 +54,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '../components/ui/breadcrumb'
+} from '../components/fundamental/breadcrumb'
 
 const meta: Meta<typeof Sidebar> = {
   title: 'NPM • Fundamental/Sidebar',

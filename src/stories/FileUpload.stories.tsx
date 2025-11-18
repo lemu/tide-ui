@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { FileUpload, FileUploadFile } from '../components/ui/file-upload'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
-import { Badge } from '../components/ui/badge'
+import { FileUpload, FileUploadFile } from '../components/in-progress/file-upload'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
+import { Badge } from '../components/fundamental/badge'
 
 const meta: Meta<typeof FileUpload.Root> = {
   title: 'In Progress/FileUpload',

@@ -3,11 +3,11 @@ import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from '../components/ui/hover-card'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
-import { Badge } from '../components/ui/badge'
-import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar'
+} from '../components/in-progress/hover-card'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
+import { Badge } from '../components/fundamental/badge'
+import { Avatar, AvatarFallback, AvatarImage } from '../components/fundamental/avatar'
 
 const meta: Meta<typeof HoverCard> = {
   title: 'In Progress/HoverCard',

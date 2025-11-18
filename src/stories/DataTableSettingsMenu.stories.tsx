@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import { DataTableSettingsMenu } from "../components/ui/data-table-settings-menu";
+import { DataTableSettingsMenu } from "../components/product/data-table-settings-menu";
 
 const meta: Meta<typeof DataTableSettingsMenu> = {
   title: "NPM • Product Components/DataTableSettingsMenu",

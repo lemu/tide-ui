@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Button } from '../components/ui/button'
+import { Button } from '../components/fundamental/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '../components/ui/dropdown-menu'
-import { Icon } from '../components/ui/icon'
+} from '../components/fundamental/dropdown-menu'
+import { Icon } from '../components/fundamental/icon'
 
 const meta: Meta<typeof Button> = {
   title: 'NPM • Fundamental/Button',

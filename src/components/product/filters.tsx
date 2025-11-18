@@ -1,14 +1,14 @@
 import * as React from "react"
 import { cn } from "../../lib/utils"
-import { Button } from "./button"
-import { Input } from "./input"
-import { AutocompleteSearch, AutocompleteSuggestion } from "./autocomplete-search"
-import { Icon } from "./icon"
-import { Checkbox } from "./checkbox"
-import { RadioGroup, RadioGroupItem } from "./radio-group"
-import { Popover, PopoverContent, PopoverTrigger } from "./popover"
-import { Separator } from "./separator"
-import { Badge } from "./badge"
+import { Button } from "../fundamental/button"
+import { Input } from "../fundamental/input"
+import { AutocompleteSearch, AutocompleteSuggestion } from "../fundamental/autocomplete-search"
+import { Icon } from "../fundamental/icon"
+import { Checkbox } from "../fundamental/checkbox"
+import { RadioGroup, RadioGroupItem } from "../fundamental/radio-group"
+import { Popover, PopoverContent, PopoverTrigger } from "../fundamental/popover"
+import { Separator } from "../fundamental/separator"
+import { Badge } from "../fundamental/badge"
 
 // ============================================================================
 // Type Definitions

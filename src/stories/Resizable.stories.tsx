@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '../components/ui/resizable'
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '../components/fundamental/resizable'
 
 const meta: Meta<typeof ResizablePanelGroup> = {
   title: 'NPM • Fundamental/Resizable',

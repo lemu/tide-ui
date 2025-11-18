@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Filters, FilterPanelContent, FilterDropdownMenu, FilterDefinition, FilterValue } from '../components/ui/filters'
-import { Icon } from '../components/ui/icon'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { Label } from '../components/ui/label'
+import { Filters, FilterPanelContent, FilterDropdownMenu, FilterDefinition, FilterValue } from '../components/product/filters'
+import { Icon } from '../components/fundamental/icon'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
+import { Label } from '../components/fundamental/label'
 
 const meta: Meta<typeof Filters> = {
   title: 'NPM • Product Components/Filters',

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState, useMemo } from 'react'
-import { DataTable } from '../components/ui/data-table'
-import { Icon } from '../components/ui/icon'
-import { Filters, FilterDefinition, FilterValue } from '../components/ui/filters'
+import { DataTable } from '../components/product/data-table'
+import { Icon } from '../components/fundamental/icon'
+import { Filters, FilterDefinition, FilterValue } from '../components/product/filters'
 import { ColumnDef } from '@tanstack/react-table'
 import { formatDecimal } from '../lib/utils'
 

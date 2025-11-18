@@ -1,10 +1,10 @@
 import * as React from "react";
 import { cn } from "../../lib/utils";
 import { cva } from "class-variance-authority";
-import { Button } from "./button";
-import { Progress } from "./progress";
-import { Icon } from "./icon";
-import { Badge } from "./badge";
+import { Button } from "../fundamental/button";
+import { Progress } from "../fundamental/progress";
+import { Icon } from "../fundamental/icon";
+import { Badge } from "../fundamental/badge";
 
 // File upload context
 interface FileUploadContextValue {

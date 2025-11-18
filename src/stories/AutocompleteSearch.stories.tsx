@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { AutocompleteSearch, AutocompleteSuggestion } from '../components/ui/autocomplete-search'
-import { Icon } from '../components/ui/icon'
+import { AutocompleteSearch, AutocompleteSuggestion } from '../components/fundamental/autocomplete-search'
+import { Icon } from '../components/fundamental/icon'
 import { useState } from 'react'
 
 const meta = {

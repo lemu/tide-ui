@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import { Pagination } from "../components/ui/pagination";
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
-import { Badge } from "../components/ui/badge";
+import { Pagination } from "../components/fundamental/pagination";
+import { Card, CardContent, CardHeader, CardTitle } from "../components/fundamental/card";
+import { Badge } from "../components/fundamental/badge";
 
 const meta: Meta<typeof Pagination> = {
   title: "NPM • Fundamental/Pagination",

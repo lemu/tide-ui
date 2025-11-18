@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Bookmarks, Bookmark } from '../components/ui/bookmarks'
+import { Bookmarks, Bookmark } from '../components/product/bookmarks'
 
 const meta: Meta<typeof Bookmarks> = {
   title: 'NPM • Product Components/Bookmarks',

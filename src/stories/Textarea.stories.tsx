@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Textarea } from '../components/ui/textarea'
-import { Label } from '../components/ui/label'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
+import { Textarea } from '../components/fundamental/textarea'
+import { Label } from '../components/fundamental/label'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
 
 const meta: Meta<typeof Textarea> = {
   title: 'NPM • Fundamental/Textarea',

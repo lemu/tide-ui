@@ -1,7 +1,7 @@
 import * as React from "react"
 import { ChevronRightIcon, FileIcon, FolderIcon } from "lucide-react"
 import { cn } from "../../lib/utils"
-import { Button } from "./button"
+import { Button } from "../fundamental/button"
 
 export interface TreeDataItem {
   id: string

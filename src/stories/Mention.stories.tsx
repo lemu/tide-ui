@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Mention, MentionText, type MentionSuggestion } from '../components/ui/mention'
+import { Mention, MentionText, type MentionSuggestion } from '../components/in-progress/mention'
 
 const meta: Meta<typeof Mention> = {
   title: 'In Progress/Mention',

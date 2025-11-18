@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from "react";
-import { Chart, ChartProps, ChartDataPoint, ChartConfig } from "./chart";
+import { Chart, ChartProps, ChartDataPoint, ChartConfig } from "../fundamental/chart";
 import { 
   Table, 
   TableBody, 
@@ -7,11 +7,11 @@ import {
   TableHead, 
   TableHeader, 
   TableRow 
-} from "./table";
-import { Card, CardContent, CardHeader, CardTitle } from "./card";
-import { Button } from "./button";
-import { Icon } from "./icon";
-import { Badge } from "./badge";
+} from "../fundamental/table";
+import { Card, CardContent, CardHeader, CardTitle } from "../fundamental/card";
+import { Button } from "../fundamental/button";
+import { Icon } from "../fundamental/icon";
+import { Badge } from "../fundamental/badge";
 import { cn } from "@/lib/utils";
 
 export interface LinkedChartColumn {

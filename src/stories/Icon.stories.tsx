@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Icon, IconColor, IconSize } from '../components/ui/icon'
+import { Icon, IconColor, IconSize } from '../components/fundamental/icon'
 
 const meta: Meta<typeof Icon> = {
   title: 'NPM • Fundamental/Icon',

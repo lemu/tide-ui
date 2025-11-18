@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { ScrollArea } from '../components/ui/scroll-area'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { Badge } from '../components/ui/badge'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
+import { ScrollArea } from '../components/fundamental/scroll-area'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
+import { Badge } from '../components/fundamental/badge'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
 
 const meta: Meta<typeof ScrollArea> = {
   title: 'NPM • Fundamental/ScrollArea',

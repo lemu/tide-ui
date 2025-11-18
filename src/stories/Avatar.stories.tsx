@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Avatar, AvatarImage, AvatarFallback } from '../components/ui/avatar'
-import { AvatarGroup } from '../components/ui/avatar-group'
-import { Icon } from '../components/ui/icon'
-import { Badge } from '../components/ui/badge'
-import { Separator } from '../components/ui/separator'
+import { Avatar, AvatarImage, AvatarFallback } from '../components/fundamental/avatar'
+import { AvatarGroup } from '../components/fundamental/avatar-group'
+import { Icon } from '../components/fundamental/icon'
+import { Badge } from '../components/fundamental/badge'
+import { Separator } from '../components/fundamental/separator'
 
 const meta: Meta<typeof Avatar> = {
   title: 'NPM • Fundamental/Avatar',

@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Slider } from '../components/ui/slider'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
-import { Badge } from '../components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { Label } from '../components/ui/label'
+import { Slider } from '../components/fundamental/slider'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
+import { Badge } from '../components/fundamental/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
+import { Label } from '../components/fundamental/label'
 
 const meta: Meta<typeof Slider> = {
   title: 'In Progress/Slider',

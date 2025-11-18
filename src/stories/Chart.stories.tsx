@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Chart, generateChartColors, createChartConfig, formatNumber } from '../components/ui/chart'
+import { Chart, generateChartColors, createChartConfig, formatNumber } from '../components/fundamental/chart'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 
 const meta: Meta<typeof Chart> = {

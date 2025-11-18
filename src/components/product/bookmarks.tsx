@@ -1,9 +1,9 @@
 import * as React from "react";
 import { cn } from "../../lib/utils";
-import { Button } from "./button";
-import { ButtonGroup } from "./button-group";
-import { Icon } from "./icon";
-import { Separator } from "./separator";
+import { Button } from "../fundamental/button";
+import { ButtonGroup } from "../fundamental/button-group";
+import { Icon } from "../fundamental/icon";
+import { Separator } from "../fundamental/separator";
 import {
   Select,
   SelectContent,
@@ -12,15 +12,15 @@ import {
   SelectLabel,
   SelectSeparator,
   SelectTrigger,
-} from "./select";
+} from "../fundamental/select";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./dropdown-menu";
-import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+} from "../fundamental/dropdown-menu";
+import { Popover, PopoverContent, PopoverTrigger } from "../fundamental/popover";
 import {
   Dialog,
   DialogContent,
@@ -28,10 +28,10 @@ import {
   DialogBody,
   DialogTitle,
   DialogFooter,
-} from "./dialog";
-import { Input } from "./input";
-import { Label } from "./label";
-import { Badge } from "./badge";
+} from "../fundamental/dialog";
+import { Input } from "../fundamental/input";
+import { Label } from "../fundamental/label";
+import { Badge } from "../fundamental/badge";
 
 // Import types from other components
 import type { FilterValue } from "./filters";

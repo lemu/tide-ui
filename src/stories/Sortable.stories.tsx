@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Sortable } from '../components/ui/sortable'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { Button } from '../components/ui/button'
-import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar'
-import { Badge } from '../components/ui/badge'
-import { Icon } from '../components/ui/icon'
+import { Sortable } from '../components/in-progress/sortable'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
+import { Button } from '../components/fundamental/button'
+import { Avatar, AvatarFallback, AvatarImage } from '../components/fundamental/avatar'
+import { Badge } from '../components/fundamental/badge'
+import { Icon } from '../components/fundamental/icon'
 
 const meta: Meta<typeof Sortable.Root> = {
   title: 'In Progress/Sortable',

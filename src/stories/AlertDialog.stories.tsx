@@ -9,8 +9,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '../components/ui/alert-dialog'
-import { Button } from '../components/ui/button'
+} from '../components/fundamental/alert-dialog'
+import { Button } from '../components/fundamental/button'
 
 const meta: Meta<typeof AlertDialog> = {
   title: 'NPM • Fundamental/AlertDialog',

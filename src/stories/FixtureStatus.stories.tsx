@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { FixtureStatus } from '../components/ui/fixture-status'
-import type { StatusValue } from '../components/ui/fixture-status'
+import { FixtureStatus } from '../components/product/fixture-status'
+import type { StatusValue } from '../components/product/fixture-status'
 
 const meta: Meta<typeof FixtureStatus> = {
   title: 'NPM • Product Components/FixtureStatus',

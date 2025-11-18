@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Spinner, LoadingOverlay, Skeleton, Pulse, ProgressDots } from '../components/ui/spinner'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { Button } from '../components/ui/button'
-import { Switch } from '../components/ui/switch'
-import { Label } from '../components/ui/label'
-import { Badge } from '../components/ui/badge'
-import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar'
-import { Icon } from '../components/ui/icon'
+import { Spinner, LoadingOverlay, Skeleton, Pulse, ProgressDots } from '../components/in-progress/spinner'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
+import { Button } from '../components/fundamental/button'
+import { Switch } from '../components/fundamental/switch'
+import { Label } from '../components/fundamental/label'
+import { Badge } from '../components/fundamental/badge'
+import { Avatar, AvatarFallback, AvatarImage } from '../components/fundamental/avatar'
+import { Icon } from '../components/fundamental/icon'
 
 const meta: Meta<typeof Spinner> = {
   title: 'In Progress/Spinner',

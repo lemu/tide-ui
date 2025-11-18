@@ -4,11 +4,11 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from '../components/ui/collapsible'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
-import { Badge } from '../components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
+} from '../components/fundamental/collapsible'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
+import { Badge } from '../components/fundamental/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 
 const meta: Meta<typeof Collapsible> = {
   title: 'NPM • Fundamental/Collapsible',
@@ -66,8 +66,8 @@ export const CodeSnippet: Story = {
               <CollapsibleContent className="mt-4">
                 <div className="rounded-md bg-[var(--color-surface-secondary)] p-4 font-mono text-sm">
                   <pre className="text-[var(--color-text-primary)]">
-{`import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+{`import { Button } from '@/components/fundamental/button'
+import { Card } from '@/components/fundamental/card'
 
 export function Example() {
   return (

@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { DatePicker, DateRangePicker } from '../components/ui/date-picker'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { Button } from '../components/ui/button'
-import { Label } from '../components/ui/label'
-import { Badge } from '../components/ui/badge'
+import { DatePicker, DateRangePicker } from '../components/in-progress/date-picker'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
+import { Button } from '../components/fundamental/button'
+import { Label } from '../components/fundamental/label'
+import { Badge } from '../components/fundamental/badge'
 
 const meta: Meta<typeof DatePicker> = {
   title: 'In Progress/DatePicker',

@@ -15,9 +15,9 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '../components/ui/dropdown-menu'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
+} from '../components/fundamental/dropdown-menu'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
 
 const meta: Meta<typeof DropdownMenu> = {
   title: 'NPM • Fundamental/DropdownMenu',

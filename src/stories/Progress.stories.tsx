@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Progress } from '../components/ui/progress'
-import { Button } from '../components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { Badge } from '../components/ui/badge'
-import { Icon } from '../components/ui/icon'
+import { Progress } from '../components/fundamental/progress'
+import { Button } from '../components/fundamental/button'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
+import { Badge } from '../components/fundamental/badge'
+import { Icon } from '../components/fundamental/icon'
 
 const meta: Meta<typeof Progress> = {
   title: 'NPM • Fundamental/Progress',

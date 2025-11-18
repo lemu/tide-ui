@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { toast, Toaster } from '../components/ui/toast'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
-import { Input } from '../components/ui/input'
+import { toast, Toaster } from '../components/fundamental/toast'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
+import { Input } from '../components/fundamental/input'
 import { useState } from 'react'
 
 const meta: Meta<typeof Toaster> = {

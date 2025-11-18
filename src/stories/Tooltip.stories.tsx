@@ -4,11 +4,11 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '../components/ui/tooltip'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
-import { TextLink } from '../components/ui/text-link'
-import { Kbd } from '../components/ui/kbd'
+} from '../components/fundamental/tooltip'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
+import { TextLink } from '../components/fundamental/text-link'
+import { Kbd } from '../components/fundamental/kbd'
 
 const meta: Meta<typeof Tooltip> = {
   title: 'NPM • Fundamental/Tooltip',

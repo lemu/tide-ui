@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { ToggleGroup, ToggleGroupItem } from '../components/ui/toggle-group'
-import { Icon } from '../components/ui/icon'
-import { Badge } from '../components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { Label } from '../components/ui/label'
+import { ToggleGroup, ToggleGroupItem } from '../components/fundamental/toggle-group'
+import { Icon } from '../components/fundamental/icon'
+import { Badge } from '../components/fundamental/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
+import { Label } from '../components/fundamental/label'
 
 const meta: Meta<typeof ToggleGroup> = {
   title: 'NPM • Fundamental/ToggleGroup',

@@ -1,24 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import React, { useState, useMemo } from 'react'
-import { DataTable, NestedHeaderConfig } from '../components/ui/data-table'
-import { DataTableSettingsMenu } from '../components/ui/data-table-settings-menu'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { Button } from '../components/ui/button'
-import { Badge } from '../components/ui/badge'
-import { Icon } from '../components/ui/icon'
-import { TextLink } from '../components/ui/text-link'
-import { Input } from '../components/ui/input'
-import { Checkbox } from '../components/ui/checkbox'
-import { Separator } from '../components/ui/separator'
-import { Filters, FilterDefinition, FilterValue, GlobalSearchTerm } from '../components/ui/filters'
-import { Bookmarks, Bookmark, FiltersState, TableState, useBookmarksActions } from '../components/ui/bookmarks'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../components/ui/dropdown-menu'
-import { Dialog, DialogContent, DialogHeader, DialogBody, DialogTitle, DialogFooter } from '../components/ui/dialog'
-import { Label } from '../components/ui/label'
+import { DataTable, NestedHeaderConfig } from '../components/product/data-table'
+import { DataTableSettingsMenu } from '../components/product/data-table-settings-menu'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
+import { Button } from '../components/fundamental/button'
+import { Badge } from '../components/fundamental/badge'
+import { Icon } from '../components/fundamental/icon'
+import { TextLink } from '../components/fundamental/text-link'
+import { Input } from '../components/fundamental/input'
+import { Checkbox } from '../components/fundamental/checkbox'
+import { Separator } from '../components/fundamental/separator'
+import { Filters, FilterDefinition, FilterValue, GlobalSearchTerm } from '../components/product/filters'
+import { Bookmarks, Bookmark, FiltersState, TableState, useBookmarksActions } from '../components/product/bookmarks'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../components/fundamental/dropdown-menu'
+import { Dialog, DialogContent, DialogHeader, DialogBody, DialogTitle, DialogFooter } from '../components/fundamental/dialog'
+import { Label } from '../components/fundamental/label'
 import { ColumnDef, SortingState, VisibilityState, GroupingState, ColumnOrderState } from '@tanstack/react-table'
 import { formatNumber, formatCurrency, formatDecimal, cn } from '../lib/utils'
-import { SkeletonTable, Skeleton } from '../components/ui/skeleton'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table'
+import { SkeletonTable, Skeleton } from '../components/fundamental/skeleton'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/fundamental/table'
 
 
 const meta: Meta<typeof DataTable> = {
@@ -2704,6 +2704,373 @@ export const ExpandingRowsMultiLevelOrderTable: Story = {
             initialState={{
               expanded: initialExpanded
             }}
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+// Request data type for expanded cards story
+type RequestCardDetails = {
+  sanctionScreening: {
+    status: string
+    date: string
+    comments: number
+  }
+  vesselVetting: {
+    status: string
+    date: string
+    comments: number
+  }
+  creditCheck: {
+    status: string
+    date: string
+    assignedTo: string
+    comments: number
+  }
+}
+
+type RequestData = {
+  id: string
+  cpStatus: string
+  charteringPC: string
+  requestDate: string
+  vessel: string
+  decision: string
+  attachments: number
+  comments: number
+  details: RequestCardDetails
+  children?: RequestData[]
+}
+
+// Generate sample request data with card details
+function generateRequestData(): RequestData[] {
+  return [
+    {
+      id: 'REQ-001',
+      cpStatus: 'Pending',
+      charteringPC: 'John Smith',
+      requestDate: '19 Aug 2025',
+      vessel: 'MV Ocean Star',
+      decision: 'Pending review',
+      attachments: 3,
+      comments: 5,
+      details: {
+        sanctionScreening: {
+          status: 'Cleared',
+          date: '19 Aug 2025 - 13:45',
+          comments: 2,
+        },
+        vesselVetting: {
+          status: 'Cleared',
+          date: '19 Aug 2025 - 13:45',
+          comments: 1,
+        },
+        creditCheck: {
+          status: 'Cleared',
+          date: '19 Aug 2025 - 12:41',
+          assignedTo: 'Sarah Lee',
+          comments: 2
+        }
+      },
+      children: [{}] as RequestData[]
+    },
+    {
+      id: 'REQ-002',
+      cpStatus: 'Approved',
+      charteringPC: 'Emma Wilson',
+      requestDate: '18 Aug 2025',
+      vessel: 'MV Pacific Trader',
+      decision: 'Approved',
+      attachments: 2,
+      comments: 3,
+      details: {
+        sanctionScreening: {
+          status: 'Cleared',
+          date: '18 Aug 2025 - 15:20',
+          comments: 1,
+        },
+        vesselVetting: {
+          status: 'Cleared',
+          date: '18 Aug 2025 - 15:30',
+          comments: 0,
+        },
+        creditCheck: {
+          status: 'Cleared',
+          date: '18 Aug 2025 - 14:10',
+          assignedTo: 'Michael Chen',
+          comments: 2
+        }
+      },
+      children: [{}] as RequestData[]
+    },
+    {
+      id: 'REQ-003',
+      cpStatus: 'In Review',
+      charteringPC: 'David Brown',
+      requestDate: '17 Aug 2025',
+      vessel: 'MV Atlantic Voyager',
+      decision: 'Under review',
+      attachments: 4,
+      comments: 8,
+      details: {
+        sanctionScreening: {
+          status: 'Cleared',
+          date: '17 Aug 2025 - 10:15',
+          comments: 3,
+        },
+        vesselVetting: {
+          status: 'Cleared',
+          date: '17 Aug 2025 - 11:00',
+          comments: 2,
+        },
+        creditCheck: {
+          status: 'Cleared',
+          date: '17 Aug 2025 - 09:30',
+          assignedTo: 'Jennifer White',
+          comments: 3
+        }
+      },
+      children: [{}] as RequestData[]
+    }
+  ]
+}
+
+// Render a single check card
+const CheckCard = ({
+  title,
+  status,
+  date,
+  assignedTo,
+  comments,
+}: {
+  title: string
+  status: string
+  date: string
+  assignedTo?: string
+  comments: number
+}) => (
+  <Card className="flex-1">
+    <CardHeader>
+      <CardTitle className="text-heading-sm">{title}</CardTitle>
+    </CardHeader>
+    <CardContent className="space-y-[var(--space-md)]">
+      <div className="flex items-center gap-[var(--space-sm)]">
+        <Badge variant="success" className="text-caption-sm">
+          {status}
+        </Badge>
+      </div>
+      <div className="space-y-[var(--space-sm)]">
+        <div className="flex items-center gap-[var(--space-sm)] text-body-sm text-[var(--color-text-secondary)]">
+          <Icon name="clock" className="h-4 w-4" />
+          <span>{date}</span>
+        </div>
+        {assignedTo && (
+          <div className="flex items-center gap-[var(--space-sm)] text-body-sm text-[var(--color-text-secondary)]">
+            <Icon name="user" className="h-4 w-4" />
+            <span>{assignedTo}</span>
+          </div>
+        )}
+        <div className="flex items-center gap-[var(--space-sm)] text-body-sm text-[var(--color-text-secondary)]">
+          <Icon name="message-square" className="h-4 w-4" />
+          <span>{comments} {comments === 1 ? 'comment' : 'comments'}</span>
+        </div>
+      </div>
+    </CardContent>
+  </Card>
+)
+
+// Columns for request list table
+const requestColumns: ColumnDef<RequestData>[] = [
+  {
+    accessorKey: 'id',
+    header: 'ID',
+    cell: ({ row }) => <span className="text-body-sm">{row.getValue('id')}</span>,
+  },
+  {
+    accessorKey: 'cpStatus',
+    header: 'CP Status',
+    cell: ({ row }) => {
+      const status = row.getValue('cpStatus') as string
+      const variant = status === 'Approved' ? 'success' : status === 'Pending' ? 'default' : 'default'
+      return <Badge variant={variant} className="text-caption-sm">{status}</Badge>
+    },
+  },
+  {
+    accessorKey: 'charteringPC',
+    header: 'Chartering P/C',
+    cell: ({ row }) => <span className="text-body-sm">{row.getValue('charteringPC')}</span>,
+  },
+  {
+    accessorKey: 'requestDate',
+    header: 'Request Date',
+    cell: ({ row }) => <span className="text-body-sm">{row.getValue('requestDate')}</span>,
+  },
+  {
+    accessorKey: 'vessel',
+    header: 'Vessel',
+    cell: ({ row }) => <span className="text-body-sm">{row.getValue('vessel')}</span>,
+  },
+  {
+    accessorKey: 'decision',
+    header: 'Decision',
+    cell: ({ row }) => <span className="text-body-sm">{row.getValue('decision')}</span>,
+  },
+  {
+    accessorKey: 'attachments',
+    header: 'Attachments',
+    cell: ({ row }) => {
+      const count = row.getValue('attachments') as number
+      return (
+        <div className="flex items-center gap-[var(--space-sm)] text-body-sm">
+          <Icon name="paperclip" className="h-4 w-4" />
+          <span>{count}</span>
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: 'comments',
+    header: 'Comments',
+    cell: ({ row }) => {
+      const count = row.getValue('comments') as number
+      return (
+        <div className="flex items-center gap-[var(--space-sm)] text-body-sm">
+          <Icon name="message-square" className="h-4 w-4" />
+          <span>{count}</span>
+        </div>
+      )
+    },
+  },
+]
+
+/**
+ * IMPLEMENTATION GUIDE: Expanding Rows with Custom Content
+ *
+ * This pattern allows you to display custom full-width content when rows are expanded,
+ * with automatic background coloring for visual hierarchy.
+ *
+ * Key Props Required:
+ *
+ * 1. enableExpanding={true}
+ *    - Enables expand/collapse functionality on the table
+ *
+ * 2. Data Structure with children property
+ *    - Add a minimal `children` property to your data: `children: [{}]`
+ *    - This enables automatic background coloring (blue-50 when expanded)
+ *    - The dummy child won't be visible (renderSubComponent overrides it)
+ *
+ * 3. getSubRows={(row) => row.children}
+ *    - Tells TanStack Table where to find child data
+ *    - Enables the automatic depth-based coloring logic
+ *
+ * 4. getRowCanExpand={(row) => row.depth === 0}
+ *    - Controls which rows show expand chevrons
+ *    - Use `row.depth === 0` to only allow top-level rows to expand
+ *    - Or `() => true` to make all rows expandable
+ *
+ * 5. renderSubComponent={(row) => <YourContent />}
+ *    - Renders custom content when a row is expanded
+ *    - Receives the TanStack Table row object
+ *    - Access row data via row.original (e.g., row.original.name)
+ *    - Content spans the full table width automatically
+ *
+ * Example:
+ * ```tsx
+ * type MyData = {
+ *   name: string
+ *   details: { info: string }
+ *   children?: MyData[]  // Add children property
+ * }
+ *
+ * const data: MyData[] = [
+ *   {
+ *     name: "Item 1",
+ *     details: { info: "Details..." },
+ *     children: [{}]  // Minimal child for coloring
+ *   }
+ * ]
+ *
+ * <DataTable
+ *   data={data}
+ *   columns={columns}
+ *   enableExpanding={true}
+ *   getSubRows={(row) => row.children}
+ *   getRowCanExpand={(row) => row.depth === 0}
+ *   renderSubComponent={(row) => (
+ *     <div className="p-4">
+ *       <Card>
+ *         <CardContent>
+ *           Details for: {row.original.name}
+ *         </CardContent>
+ *       </Card>
+ *     </div>
+ *   )}
+ * />
+ * ```
+ */
+export const ExpandingRowsWithCards: Story = {
+  name: 'Expanding Rows - With Cards',
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates expanded rows containing card layouts. When a request row is expanded, it reveals three horizontal cards showing detailed check information (Sanction screening, Vessel vetting, Credit check). This pattern is useful for displaying structured details that don\'t fit the table column format.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateRequestData())
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Request List</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              Expand any row to see detailed check information displayed as cards. Each expanded row shows three check cards with status, timestamps, comments, and actions.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Click the chevron icon on any row to reveal check cards with detailed information
+                </span>
+              </div>
+            </div>
+          </div>
+          <DataTable
+            data={data}
+            columns={requestColumns}
+            enableExpanding={true}
+            getSubRows={(row) => row.children}
+            getRowCanExpand={(row) => row.depth === 0}
+            renderSubComponent={(row) => (
+              <div className="flex gap-[var(--space-md)] p-[var(--space-md)] bg-[var(--blue-25)]">
+                <CheckCard
+                  title="Sanction screening"
+                  status={row.original.details.sanctionScreening.status}
+                  date={row.original.details.sanctionScreening.date}
+                  comments={row.original.details.sanctionScreening.comments}
+                />
+                <CheckCard
+                  title="Vessel vetting"
+                  status={row.original.details.vesselVetting.status}
+                  date={row.original.details.vesselVetting.date}
+                  comments={row.original.details.vesselVetting.comments}
+                />
+                <CheckCard
+                  title="Credit check"
+                  status={row.original.details.creditCheck.status}
+                  date={row.original.details.creditCheck.date}
+                  assignedTo={row.original.details.creditCheck.assignedTo}
+                  comments={row.original.details.creditCheck.comments}
+                />
+              </div>
+            )}
+            title="Requests"
+            borderStyle="horizontal"
           />
         </div>
       </div>

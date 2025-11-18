@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { TextLink } from '../components/ui/text-link'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
+import { TextLink } from '../components/fundamental/text-link'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 
 const meta: Meta<typeof TextLink> = {
   title: 'NPM • Fundamental/TextLink',

@@ -1,8 +1,8 @@
 import * as React from "react"
 import { cn } from "../../lib/utils"
 import { cva, type VariantProps } from "class-variance-authority"
-import { Button } from "./button"
-import { Icon } from "./icon"
+import { Button } from "../fundamental/button"
+import { Icon } from "../fundamental/icon"
 
 const emptyStateVariants = cva(
   "flex flex-col items-center justify-center text-center",

@@ -2,54 +2,54 @@
 
 // Core UI Components
 // Alert components
-export { Alert, AlertDescription, AlertTitle } from './ui/alert'
-export type { AlertProps } from './ui/alert'
+export { Alert, AlertDescription, AlertTitle } from './fundamental/alert'
+export type { AlertProps } from './fundamental/alert'
 
 // Chart components
-export { Chart, generateChartColors, createChartConfig, chartColorSchemes } from './ui/chart'
-export type { ChartProps, ChartConfig, ChartDataPoint, ChartType, ChartColorScheme } from './ui/chart'
-export { Avatar, AvatarImage, AvatarFallback, avatarVariants, avatarFallbackVariants } from './ui/avatar'
-export type { AvatarProps, AvatarFallbackProps } from './ui/avatar'
-export { AvatarGroup } from './ui/avatar-group'
-export type { AvatarGroupProps, AvatarGroupSize } from './ui/avatar-group'
+export { Chart, generateChartColors, createChartConfig, chartColorSchemes } from './fundamental/chart'
+export type { ChartProps, ChartConfig, ChartDataPoint, ChartType, ChartColorScheme } from './fundamental/chart'
+export { Avatar, AvatarImage, AvatarFallback, avatarVariants, avatarFallbackVariants } from './fundamental/avatar'
+export type { AvatarProps, AvatarFallbackProps } from './fundamental/avatar'
+export { AvatarGroup } from './fundamental/avatar-group'
+export type { AvatarGroupProps, AvatarGroupSize } from './fundamental/avatar-group'
 
-export { Badge } from './ui/badge'
-export type { BadgeProps } from './ui/badge'
+export { Badge } from './fundamental/badge'
+export type { BadgeProps } from './fundamental/badge'
 
-export { Collapsible, CollapsibleTrigger, CollapsibleContent } from './ui/collapsible'
+export { Collapsible, CollapsibleTrigger, CollapsibleContent } from './fundamental/collapsible'
 
-export { Button } from './ui/button'
-export type { ButtonProps } from './ui/button'
+export { Button } from './fundamental/button'
+export type { ButtonProps } from './fundamental/button'
 
-export { ButtonGroup } from './ui/button-group'
-export type { ButtonGroupProps } from './ui/button-group'
+export { ButtonGroup } from './fundamental/button-group'
+export type { ButtonGroupProps } from './fundamental/button-group'
 
-export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'
+export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './fundamental/card'
 
-export { Checkbox, checkboxVariants } from './ui/checkbox'
+export { Checkbox, checkboxVariants } from './fundamental/checkbox'
 
-export { RadioGroup, RadioGroupItem, radioGroupVariants, radioGroupItemVariants } from './ui/radio-group'
-export type { RadioGroupProps, RadioGroupItemProps } from './ui/radio-group'
+export { RadioGroup, RadioGroupItem, radioGroupVariants, radioGroupItemVariants } from './fundamental/radio-group'
+export type { RadioGroupProps, RadioGroupItemProps } from './fundamental/radio-group'
 
-export { Input } from './ui/input'
-export type { InputProps } from './ui/input'
+export { Input } from './fundamental/input'
+export type { InputProps } from './fundamental/input'
 
-export { Label } from './ui/label'
-export type { LabelProps } from './ui/label'
+export { Label } from './fundamental/label'
+export type { LabelProps } from './fundamental/label'
 
-export { ScrollArea, ScrollBar } from './ui/scroll-area'
+export { ScrollArea, ScrollBar } from './fundamental/scroll-area'
 
-export { Separator } from './ui/separator'
+export { Separator } from './fundamental/separator'
 
-export { Skeleton, SkeletonAvatar, SkeletonButton, SkeletonCard, SkeletonTable, skeletonVariants } from './ui/skeleton'
+export { Skeleton, SkeletonAvatar, SkeletonButton, SkeletonCard, SkeletonTable, skeletonVariants } from './fundamental/skeleton'
 
-export { FixtureStatus, statusConfig } from './ui/fixture-status'
-export type { FixtureStatusProps, StatusValue, StatusConfig } from './ui/fixture-status'
+export { FixtureStatus, statusConfig } from './product/fixture-status'
+export type { FixtureStatusProps, StatusValue, StatusConfig } from './product/fixture-status'
 
-export { Switch } from './ui/switch'
+export { Switch } from './fundamental/switch'
 
-export { Textarea } from './ui/textarea'
-export type { TextareaProps } from './ui/textarea'
+export { Textarea } from './fundamental/textarea'
+export type { TextareaProps } from './fundamental/textarea'
 
 // ActivityLog components
 export {
@@ -62,7 +62,7 @@ export {
   ActivityLogTime,
   ActivityLogChevron,
   ActivityLogValue,
-} from './ui/activity-log'
+} from './product/activity-log'
 export type {
   ActivityLogProps,
   ActivityLogItemProps,
@@ -73,7 +73,7 @@ export type {
   ActivityLogTimeProps,
   ActivityLogChevronProps,
   ActivityLogValueProps,
-} from './ui/activity-log'
+} from './product/activity-log'
 
 // AttributesList components
 export {
@@ -86,7 +86,7 @@ export {
   AttributesValue,
   AttributesContent,
   AttributesChevron,
-} from './ui/attributes-list'
+} from './product/attributes-list'
 export type {
   AttributesListProps,
   AttributesSeparatorProps,
@@ -97,23 +97,23 @@ export type {
   AttributesValueProps,
   AttributesContentProps,
   AttributesChevronProps,
-} from './ui/attributes-list'
+} from './product/attributes-list'
 
 // Editable components
-export { Editable, EditablePreview, EditableInput, EditableDisplay, EditableField } from './ui/editable'
-export type { EditableProps, EditablePreviewProps, EditableInputProps } from './ui/editable'
+export { Editable, EditablePreview, EditableInput, EditableDisplay, EditableField } from './fundamental/editable'
+export type { EditableProps, EditablePreviewProps, EditableInputProps } from './fundamental/editable'
 
 // Form Field components
-export { FormField, FormLabel, FormControl, FormHelperText, FormErrorMessage } from './ui/form-field'
-export type { FormFieldProps, FormLabelProps, FormControlProps, FormHelperTextProps, FormErrorMessageProps } from './ui/form-field'
+export { FormField, FormLabel, FormControl, FormHelperText, FormErrorMessage } from './fundamental/form-field'
+export type { FormFieldProps, FormLabelProps, FormControlProps, FormHelperTextProps, FormErrorMessageProps } from './fundamental/form-field'
 
-export { Tabs, TabsList, TabsTrigger, TabsContent, TabsGroupLabel } from './ui/tabs'
-export type { TabsProps, TabsListProps, TabsTriggerProps, TabsGroupLabelProps } from './ui/tabs'
+export { Tabs, TabsList, TabsTrigger, TabsContent, TabsGroupLabel } from './fundamental/tabs'
+export type { TabsProps, TabsListProps, TabsTriggerProps, TabsGroupLabelProps } from './fundamental/tabs'
 
-export { Toggle } from './ui/toggle'
-export type { ToggleProps } from './ui/toggle'
+export { Toggle } from './fundamental/toggle'
+export type { ToggleProps } from './fundamental/toggle'
 
-export { ToggleGroup, ToggleGroupItem } from './ui/toggle-group'
+export { ToggleGroup, ToggleGroupItem } from './fundamental/toggle-group'
 
 // Select components
 export {
@@ -128,12 +128,12 @@ export {
   selectTriggerVariants,
   selectContentVariants,
   selectItemVariants,
-} from './ui/select'
-export type { SelectTriggerProps, SelectContentProps, SelectItemProps } from './ui/select'
+} from './fundamental/select'
+export type { SelectTriggerProps, SelectContentProps, SelectItemProps } from './fundamental/select'
 
 // TextLink component
-export { TextLink } from './ui/text-link'
-export type { TextLinkProps } from './ui/text-link'
+export { TextLink } from './fundamental/text-link'
+export type { TextLinkProps } from './fundamental/text-link'
 
 // Accordion components
 export {
@@ -141,7 +141,7 @@ export {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from './ui/accordion'
+} from './fundamental/accordion'
 
 // Dialog components
 export {
@@ -155,7 +155,7 @@ export {
   DialogBody,
   DialogFooter,
   DialogTitle,
-} from './ui/dialog'
+} from './fundamental/dialog'
 
 // AlertDialog components
 export {
@@ -168,14 +168,14 @@ export {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from './ui/alert-dialog'
+} from './fundamental/alert-dialog'
 
 // Icon component
-export { Icon } from './ui/icon'
-export type { IconColor, IconSize, CustomIconName } from './ui/icon'
+export { Icon } from './fundamental/icon'
+export type { IconColor, IconSize, CustomIconName } from './fundamental/icon'
 
 // Kbd component
-export { Kbd } from './ui/kbd'
+export { Kbd } from './fundamental/kbd'
 
 // Command components
 export {
@@ -185,21 +185,21 @@ export {
   CommandInput,
   CommandItem,
   CommandList,
-} from './ui/command'
+} from './fundamental/command'
 
 // Combobox components
-export { Combobox, MultiCombobox } from './ui/combobox'
+export { Combobox, MultiCombobox } from './fundamental/combobox'
 export type {
   ComboboxProps,
   ComboboxOption,
   ComboboxTriggerProps,
   MultiComboboxProps,
   MultiComboboxTriggerProps,
-} from './ui/combobox'
+} from './fundamental/combobox'
 
 // AutocompleteSearch component
-export { AutocompleteSearch } from './ui/autocomplete-search'
-export type { AutocompleteSearchProps } from './ui/autocomplete-search'
+export { AutocompleteSearch } from './fundamental/autocomplete-search'
+export type { AutocompleteSearchProps } from './fundamental/autocomplete-search'
 
 // Breadcrumb components
 export {
@@ -209,7 +209,7 @@ export {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from './ui/breadcrumb'
+} from './fundamental/breadcrumb'
 
 // Sidebar components
 export {
@@ -239,10 +239,10 @@ export {
   SidebarProvider,
   SidebarTrigger,
   useSidebar,
-} from './ui/sidebar'
+} from './fundamental/sidebar'
 
 // AppFrame component
-export { AppFrame } from './ui/app-frame'
+export { AppFrame } from './product/app-frame'
 export type {
   AppFrameProps,
   AppFrameNavItem,
@@ -250,7 +250,7 @@ export type {
   AppFrameUser,
   AppFrameTeam,
   AppFrameNavigationData,
-} from './ui/app-frame'
+} from './product/app-frame'
 
 // Drawer components  
 export {
@@ -264,7 +264,7 @@ export {
   DrawerFooter,
   DrawerTitle,
   DrawerDescription,
-} from './ui/drawer'
+} from './fundamental/drawer'
 
 // Sheet components
 export {
@@ -278,8 +278,8 @@ export {
   SheetFooter,
   SheetTitle,
   SheetDescription,
-} from './ui/sheet'
-export type { SheetContentProps } from './ui/sheet'
+} from './fundamental/sheet'
+export type { SheetContentProps } from './fundamental/sheet'
 
 // DropdownMenu components
 export {
@@ -290,7 +290,7 @@ export {
   DropdownMenuTrigger,
   DropdownMenuLabel,
   DropdownMenuGroup,
-} from './ui/dropdown-menu'
+} from './fundamental/dropdown-menu'
 
 // Tooltip components
 export {
@@ -298,21 +298,21 @@ export {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from './ui/tooltip'
+} from './fundamental/tooltip'
 
 // Toast components
-export { Toaster, toast } from './ui/toast'
+export { Toaster, toast } from './fundamental/toast'
 
 // Pagination component
-export { Pagination } from './ui/pagination'
-export type { PaginationProps } from './ui/pagination'
+export { Pagination } from './fundamental/pagination'
+export type { PaginationProps } from './fundamental/pagination'
 
 // Progress component
-export { Progress } from './ui/progress'
-export type { ProgressProps } from './ui/progress'
+export { Progress } from './fundamental/progress'
+export type { ProgressProps } from './fundamental/progress'
 
 // Popover components
-export { Popover, PopoverTrigger, PopoverContent } from './ui/popover'
+export { Popover, PopoverTrigger, PopoverContent } from './fundamental/popover'
 
 // Table components
 export {
@@ -330,24 +330,24 @@ export {
   tableRowVariants,
   tableCellVariants,
   tableHeaderVariants,
-} from './ui/table'
+} from './fundamental/table'
 export type {
   TableProps,
   TableRowProps,
   TableHeadProps,
   TableCellProps,
   TableSortHeaderProps,
-} from './ui/table'
+} from './fundamental/table'
 
 // DataTable component
-export { DataTable } from './ui/data-table'
+export { DataTable } from './product/data-table'
 
 // DataTableSettingsMenu component
-export { DataTableSettingsMenu } from './ui/data-table-settings-menu'
-export type { DataTableSettingsMenuProps, ColumnOption } from './ui/data-table-settings-menu'
+export { DataTableSettingsMenu } from './product/data-table-settings-menu'
+export type { DataTableSettingsMenuProps, ColumnOption } from './product/data-table-settings-menu'
 
 // Filters components
-export { Filters, FilterPanelContent, FilterDropdownMenu } from './ui/filters'
+export { Filters, FilterPanelContent, FilterDropdownMenu } from './product/filters'
 export type {
   FiltersProps,
   FilterDefinition,
@@ -355,7 +355,7 @@ export type {
   FilterOptionGroup,
   FilterValue,
   GlobalSearchTerm,
-} from './ui/filters'
+} from './product/filters'
 
 // Bookmarks components
 export {
@@ -370,20 +370,20 @@ export {
   BookmarksResetButton,
   BookmarksSaveDropdown,
   useBookmarksActions,
-} from './ui/bookmarks'
+} from './product/bookmarks'
 export type {
   Bookmark,
   BookmarksProps,
   FiltersState,
   TableState,
-} from './ui/bookmarks'
+} from './product/bookmarks'
 
 // LinkedChart component
-export { LinkedChart, createLinkedChartColumns } from './ui/linked-chart'
-export type { LinkedChartProps, LinkedChartColumn } from './ui/linked-chart'
+export { LinkedChart, createLinkedChartColumns } from './product/linked-chart'
+export type { LinkedChartProps, LinkedChartColumn } from './product/linked-chart'
 
 // Resizable components
-export { ResizablePanelGroup, ResizablePanel, ResizableHandle } from './ui/resizable'
+export { ResizablePanelGroup, ResizablePanel, ResizableHandle } from './fundamental/resizable'
 
 // Utility exports
 export { cn } from '../lib/utils'

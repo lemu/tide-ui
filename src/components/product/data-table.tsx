@@ -42,20 +42,20 @@ import {
 import { CSS } from "@dnd-kit/utilities"
 // import { useVirtualizer } from "@tanstack/react-virtual"
 import { cn } from "../../lib/utils"
-import { Button } from "./button"
-import { Input } from "./input"
-import { AutocompleteSearch } from "./autocomplete-search"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./table"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select"
-import { Checkbox } from "./checkbox"
-import { Icon } from "./icon"
-import { Badge } from "./badge"
-import { Popover, PopoverContent, PopoverTrigger } from "./popover"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "./command"
-import { Pagination } from "./pagination"
-import { Skeleton } from "./skeleton"
+import { Button } from "../fundamental/button"
+import { Input } from "../fundamental/input"
+import { AutocompleteSearch } from "../fundamental/autocomplete-search"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../fundamental/table"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../fundamental/select"
+import { Checkbox } from "../fundamental/checkbox"
+import { Icon } from "../fundamental/icon"
+import { Badge } from "../fundamental/badge"
+import { Popover, PopoverContent, PopoverTrigger } from "../fundamental/popover"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../fundamental/command"
+import { Pagination } from "../fundamental/pagination"
+import { Skeleton } from "../fundamental/skeleton"
 import { DataTableSettingsMenu } from "./data-table-settings-menu"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../fundamental/tooltip"
 
 // Debounced value hook for performance
 function useDebounce<T>(value: T, delay: number): T {
@@ -1427,6 +1427,33 @@ export interface DataTableProps<TData, TValue> {
   onColumnSizingChange?: (updaterOrValue: Record<string, number> | ((old: Record<string, number>) => Record<string, number>)) => void
   // Section header rows
   renderSectionHeaderRow?: (row: any) => React.ReactNode | null
+  /**
+   * Custom renderer for expanded row content.
+   * When provided and a row is expanded, renders this content as a full-width row
+   * below the parent row. Receives the React Table row object.
+   *
+   * @example
+   * renderSubComponent={(row) => (
+   *   <Card>
+   *     <CardContent>Details for {row.original.name}</CardContent>
+   *   </Card>
+   * )}
+   */
+  renderSubComponent?: (row: any) => React.ReactNode
+  /**
+   * Custom function to determine if a row can be expanded.
+   * Overrides the default TanStack Table logic which checks for sub-rows.
+   * Useful when using renderSubComponent without hierarchical data.
+   *
+   * @example
+   * // Make all rows expandable
+   * getRowCanExpand={() => true}
+   *
+   * @example
+   * // Make rows expandable based on a property
+   * getRowCanExpand={(row) => row.original.hasDetails}
+   */
+  getRowCanExpand?: (row: any) => boolean
   // Auto-expand children when parent is expanded
   autoExpandChildren?: boolean
   // Row click handling
@@ -1552,6 +1579,8 @@ export function DataTable<TData, TValue>({
   columnSizing: controlledColumnSizing,
   onColumnSizingChange: onControlledColumnSizingChange,
   renderSectionHeaderRow,
+  renderSubComponent,
+  getRowCanExpand,
   autoExpandChildren = false,
   // Row click props
   onRowClick,
@@ -1903,6 +1932,7 @@ export function DataTable<TData, TValue>({
     columnResizeMode: columnResizeMode,
     enableExpanding: enableExpanding,
     getSubRows: getSubRows,
+    getRowCanExpand: getRowCanExpand,
     paginateExpandedRows: false, // Only paginate top-level rows, not expanded children
     enableGrouping: enableGrouping,
     groupedColumnMode: groupedColumnMode,
@@ -2653,9 +2683,10 @@ export function DataTable<TData, TValue>({
                 if (!enableRowPinning || !keepPinnedRows) {
                   // Standard rendering when cross-page pinning is disabled
                   return table.getRowModel().rows
+                    .filter(row => !renderSubComponent || row.depth === 0)
                     .map((row) => (
+                    <React.Fragment key={row.id}>
                     <TableRow
-                      key={row.id}
                       data-state={row.getIsSelected() && "selected"}
                       showBorder={borderSettings.showRowBorder}
                       className={cn(
@@ -2961,6 +2992,22 @@ export function DataTable<TData, TValue>({
                         )
                       })}
                     </TableRow>
+                    {/* Expanded row custom content */}
+                    {renderSubComponent && row.getIsExpanded() && row.depth === 0 && (
+                      <TableRow showBorder={borderSettings.showRowBorder}>
+                        <TableCell
+                          colSpan={row.getVisibleCells().length}
+                          showBorder={borderSettings.showCellBorder}
+                          showRowBorder={borderSettings.showRowBorder}
+                          verticalAlign={defaultVerticalAlign}
+                          className="p-0"
+                          data-section-header
+                        >
+                          {renderSubComponent(row)}
+                        </TableCell>
+                      </TableRow>
+                    )}
+                    </React.Fragment>
                   ))
                 }
 
@@ -2983,9 +3030,10 @@ export function DataTable<TData, TValue>({
                 ]
 
                 return organizedRows
+                  .filter(row => !renderSubComponent || row.depth === 0)
                   .map((row) => (
+                  <React.Fragment key={row.id}>
                   <TableRow
-                    key={row.id}
                     data-state={row.getIsSelected() && "selected"}
                     showBorder={borderSettings.showRowBorder}
                     className={cn(
@@ -3290,6 +3338,22 @@ export function DataTable<TData, TValue>({
                       )
                     })}
                   </TableRow>
+                  {/* Expanded row custom content */}
+                  {renderSubComponent && row.getIsExpanded() && row.depth === 0 && (
+                    <TableRow showBorder={borderSettings.showRowBorder}>
+                      <TableCell
+                        colSpan={row.getVisibleCells().length}
+                        showBorder={borderSettings.showCellBorder}
+                        showRowBorder={borderSettings.showRowBorder}
+                        verticalAlign={defaultVerticalAlign}
+                        className="p-0"
+                        data-section-header
+                      >
+                        {renderSubComponent(row)}
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  </React.Fragment>
                 ))
               })()
             ) : (

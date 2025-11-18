@@ -19,13 +19,13 @@ import {
   SidebarRail,
   SidebarTrigger,
   useSidebar,
-} from './sidebar'
-import { Button } from './button'
-import { Icon } from './icon'
-import { Avatar, AvatarFallback, AvatarImage } from './avatar'
-import { Separator } from './separator'
-import { Kbd } from './kbd'
-import { Input } from './input'
+} from '../fundamental/sidebar'
+import { Button } from '../fundamental/button'
+import { Icon } from '../fundamental/icon'
+import { Avatar, AvatarFallback, AvatarImage } from '../fundamental/avatar'
+import { Separator } from '../fundamental/separator'
+import { Kbd } from '../fundamental/kbd'
+import { Input } from '../fundamental/input'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,8 +33,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from './dropdown-menu'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip'
+} from '../fundamental/dropdown-menu'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../fundamental/tooltip'
 import {
   CommandDialog,
   CommandEmpty,
@@ -42,8 +42,8 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from './command'
-import { Dialog, DialogContent, DialogHeader, DialogBody, DialogFooter, DialogTitle } from './dialog'
+} from '../fundamental/command'
+import { Dialog, DialogContent, DialogHeader, DialogBody, DialogFooter, DialogTitle } from '../fundamental/dialog'
 
 // ============================================================================
 // TypeScript Interfaces

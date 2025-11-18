@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/ui/tabs'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
-import { Button } from '../components/ui/button'
-import { Input } from '../components/ui/input'
-import { Label } from '../components/ui/label'
-import { Icon } from '../components/ui/icon'
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/fundamental/tabs'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/fundamental/card'
+import { Button } from '../components/fundamental/button'
+import { Input } from '../components/fundamental/input'
+import { Label } from '../components/fundamental/label'
+import { Icon } from '../components/fundamental/icon'
 
 const meta: Meta<typeof Tabs> = {
   title: 'NPM • Fundamental/Tabs',

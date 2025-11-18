@@ -4,8 +4,8 @@ import {
   Collapsible,
   CollapsibleTrigger,
   CollapsibleContent,
-} from "./collapsible";
-import { Icon } from "./icon";
+} from "../fundamental/collapsible";
+import { Icon } from "../fundamental/icon";
 
 // ActivityLog root component with optional automatic separator insertion
 export interface ActivityLogProps extends React.HTMLAttributes<HTMLDivElement> {

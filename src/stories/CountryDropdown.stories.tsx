@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { CountryDropdown } from '../components/ui/country-dropdown'
+import { CountryDropdown } from '../components/in-progress/country-dropdown'
 
 const meta: Meta<typeof CountryDropdown> = {
   title: 'In Progress/CountryDropdown',

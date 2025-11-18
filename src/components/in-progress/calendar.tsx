@@ -1,6 +1,6 @@
 import { DayPicker, type DayPickerProps } from "react-day-picker";
 import { cn } from "../../lib/utils";
-import { Icon } from "./icon";
+import { Icon } from "../fundamental/icon";
 
 export type CalendarProps = DayPickerProps;
 

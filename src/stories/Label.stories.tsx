@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Label } from '../components/ui/label'
-import { Input } from '../components/ui/input'
-import { Checkbox } from '../components/ui/checkbox'
-import { RadioGroup, RadioGroupItem } from '../components/ui/radio-group'
-import { Switch } from '../components/ui/switch'
-import { Textarea } from '../components/ui/textarea'
+import { Label } from '../components/fundamental/label'
+import { Input } from '../components/fundamental/input'
+import { Checkbox } from '../components/fundamental/checkbox'
+import { RadioGroup, RadioGroupItem } from '../components/fundamental/radio-group'
+import { Switch } from '../components/fundamental/switch'
+import { Textarea } from '../components/fundamental/textarea'
 
 const meta: Meta<typeof Label> = {
   title: 'NPM • Fundamental/Label',

@@ -1,7 +1,7 @@
 import React from "react";
-import { Icon, IconColor } from "./icon";
+import { Icon, IconColor } from "../fundamental/icon";
 import { cn } from "@/lib/utils";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../fundamental/tooltip";
 
 // Status configuration with combined object-status keys
 type StatusConfig = {

@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { LinkedChart, createLinkedChartColumns } from '../components/ui/linked-chart'
-import { ChartDataPoint, ChartConfig } from '../components/ui/chart'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
-import { Badge } from '../components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
+import { LinkedChart, createLinkedChartColumns } from '../components/product/linked-chart'
+import { ChartDataPoint, ChartConfig } from '../components/fundamental/chart'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
+import { Badge } from '../components/fundamental/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 
 const meta: Meta<typeof LinkedChart> = {
   title: 'NPM • Product Components/LinkedChart',

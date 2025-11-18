@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import * as React from 'react'
-import { AppFrame } from '../components/ui/app-frame'
-import type { AppFrameNavigationData } from '../components/ui/app-frame'
+import { AppFrame } from '../components/product/app-frame'
+import type { AppFrameNavigationData } from '../components/product/app-frame'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,7 +9,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '../components/ui/breadcrumb'
+} from '../components/fundamental/breadcrumb'
 
 const meta: Meta<typeof AppFrame> = {
   title: 'NPM • Product Components/AppFrame',

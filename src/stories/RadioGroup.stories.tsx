@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { RadioGroup, RadioGroupItem } from '../components/ui/radio-group'
-import { Label } from '../components/ui/label'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
+import { RadioGroup, RadioGroupItem } from '../components/fundamental/radio-group'
+import { Label } from '../components/fundamental/label'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/fundamental/card'
 
 const meta: Meta<typeof RadioGroup> = {
   title: 'NPM • Fundamental/RadioGroup',

@@ -9,13 +9,13 @@ import {
   ActivityLogTime,
   ActivityLogChevron,
   ActivityLogValue,
-} from '../components/ui/activity-log'
-import { Avatar, AvatarImage, AvatarFallback } from '../components/ui/avatar'
-import { AvatarGroup } from '../components/ui/avatar-group'
-import { Icon } from '../components/ui/icon'
-import { FixtureStatus } from '../components/ui/fixture-status'
-import { Card, CardContent } from '../components/ui/card'
-import { Badge } from '../components/ui/badge'
+} from '../components/product/activity-log'
+import { Avatar, AvatarImage, AvatarFallback } from '../components/fundamental/avatar'
+import { AvatarGroup } from '../components/fundamental/avatar-group'
+import { Icon } from '../components/fundamental/icon'
+import { FixtureStatus } from '../components/product/fixture-status'
+import { Card, CardContent } from '../components/fundamental/card'
+import { Badge } from '../components/fundamental/badge'
 
 const meta: Meta<typeof ActivityLog> = {
   title: 'NPM • Product Components/ActivityLog',

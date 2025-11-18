@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { NumberScrubber } from '../components/ui/number-scrubber'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { Label } from '../components/ui/label'
-import { Badge } from '../components/ui/badge'
-import { Button } from '../components/ui/button'
+import { NumberScrubber } from '../components/fundamental/number-scrubber'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
+import { Label } from '../components/fundamental/label'
+import { Badge } from '../components/fundamental/badge'
+import { Button } from '../components/fundamental/button'
 
 const meta: Meta<typeof NumberScrubber> = {
   title: 'In Progress/NumberScrubber',

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Skeleton, SkeletonAvatar, SkeletonButton, SkeletonCard, SkeletonTable } from '../components/ui/skeleton'
+import { Skeleton, SkeletonAvatar, SkeletonButton, SkeletonCard, SkeletonTable } from '../components/fundamental/skeleton'
 
 const meta: Meta<typeof Skeleton> = {
   title: 'NPM • Fundamental/Skeleton',

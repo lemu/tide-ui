@@ -10,11 +10,11 @@ import {
   CommandItem,
   CommandShortcut,
   CommandSeparator,
-} from '../components/ui/command'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
-import { Badge } from '../components/ui/badge'
-import { Avatar, AvatarFallback } from '../components/ui/avatar'
+} from '../components/fundamental/command'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
+import { Badge } from '../components/fundamental/badge'
+import { Avatar, AvatarFallback } from '../components/fundamental/avatar'
 
 const meta: Meta<typeof Command> = {
   title: 'NPM • Fundamental/Command',

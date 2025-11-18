@@ -7,9 +7,9 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '../components/ui/breadcrumb'
-import { Icon } from '../components/ui/icon'
-import { TextLink } from '../components/ui/text-link'
+} from '../components/fundamental/breadcrumb'
+import { Icon } from '../components/fundamental/icon'
+import { TextLink } from '../components/fundamental/text-link'
 
 const meta: Meta<typeof Breadcrumb> = {
   title: 'NPM • Fundamental/Breadcrumb',

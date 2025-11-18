@@ -6,19 +6,19 @@ import {
   FormControl,
   FormHelperText,
   FormErrorMessage,
-} from '../components/ui/form-field'
-import { Input } from '../components/ui/input'
-import { Textarea } from '../components/ui/textarea'
-import { Checkbox } from '../components/ui/checkbox'
-import { Switch } from '../components/ui/switch'
-import { Button } from '../components/ui/button'
-import { RadioGroup, RadioGroupItem } from '../components/ui/radio-group'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select'
-import { Combobox } from '../components/ui/combobox'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { Icon } from '../components/ui/icon'
-import { Badge } from '../components/ui/badge'
-import { Label } from '../components/ui/label'
+} from '../components/fundamental/form-field'
+import { Input } from '../components/fundamental/input'
+import { Textarea } from '../components/fundamental/textarea'
+import { Checkbox } from '../components/fundamental/checkbox'
+import { Switch } from '../components/fundamental/switch'
+import { Button } from '../components/fundamental/button'
+import { RadioGroup, RadioGroupItem } from '../components/fundamental/radio-group'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/fundamental/select'
+import { Combobox } from '../components/fundamental/combobox'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
+import { Icon } from '../components/fundamental/icon'
+import { Badge } from '../components/fundamental/badge'
+import { Label } from '../components/fundamental/label'
 
 const meta: Meta<typeof FormField> = {
   title: 'NPM • Fundamental/FormField',

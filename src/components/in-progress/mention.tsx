@@ -1,9 +1,9 @@
 import * as React from "react"
 import { cn } from "../../lib/utils"
-import { Popover, PopoverContent, PopoverTrigger } from "./popover"
-import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "./command"
-import { Avatar, AvatarFallback, AvatarImage } from "./avatar"
-import { Badge } from "./badge"
+import { Popover, PopoverContent, PopoverTrigger } from "../fundamental/popover"
+import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "../fundamental/command"
+import { Avatar, AvatarFallback, AvatarImage } from "../fundamental/avatar"
+import { Badge } from "../fundamental/badge"
 
 // Mention context
 interface MentionContextValue {

@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Kbd } from '../components/ui/kbd'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
+import { Kbd } from '../components/fundamental/kbd'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '../components/ui/tooltip'
+} from '../components/fundamental/tooltip'
 
 const meta: Meta<typeof Kbd> = {
   title: 'NPM • Fundamental/Kbd',

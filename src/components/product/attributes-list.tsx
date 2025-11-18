@@ -4,8 +4,8 @@ import {
   Collapsible,
   CollapsibleTrigger,
   CollapsibleContent,
-} from "./collapsible";
-import { Icon } from "./icon";
+} from "../fundamental/collapsible";
+import { Icon } from "../fundamental/icon";
 
 // Size context to share size state across all sub-components
 type AttributesListSize = 'sm' | 'xsm';

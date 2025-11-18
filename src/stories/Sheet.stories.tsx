@@ -9,15 +9,15 @@ import {
   SheetTitle,
   SheetTrigger,
   SheetClose,
-} from '../components/ui/sheet'
-import { Button } from '../components/ui/button'
-import { Icon } from '../components/ui/icon'
-import { Badge } from '../components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { Input } from '../components/ui/input'
-import { Label } from '../components/ui/label'
-import { Textarea } from '../components/ui/textarea'
-import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar'
+} from '../components/fundamental/sheet'
+import { Button } from '../components/fundamental/button'
+import { Icon } from '../components/fundamental/icon'
+import { Badge } from '../components/fundamental/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
+import { Input } from '../components/fundamental/input'
+import { Label } from '../components/fundamental/label'
+import { Textarea } from '../components/fundamental/textarea'
+import { Avatar, AvatarFallback, AvatarImage } from '../components/fundamental/avatar'
 
 const meta: Meta<typeof Sheet> = {
   title: 'NPM • Fundamental/Sheet',

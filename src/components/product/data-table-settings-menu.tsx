@@ -1,18 +1,18 @@
-import { Button } from "./button";
+import { Button } from "../fundamental/button";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuSeparator,
-} from "./dropdown-menu";
+} from "../fundamental/dropdown-menu";
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "./select";
-import { Toggle } from "./toggle";
+} from "../fundamental/select";
+import { Toggle } from "../fundamental/toggle";
 
 interface ColumnOption {
   id: string;

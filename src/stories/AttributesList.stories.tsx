@@ -9,9 +9,9 @@ import {
   AttributesValue,
   AttributesContent,
   AttributesChevron,
-} from '../components/ui/attributes-list'
-import { Card, CardContent } from '../components/ui/card'
-import { Badge } from '../components/ui/badge'
+} from '../components/product/attributes-list'
+import { Card, CardContent } from '../components/fundamental/card'
+import { Badge } from '../components/fundamental/badge'
 
 const meta: Meta<typeof AttributesList> = {
   title: 'NPM • Product Components/AttributesList',

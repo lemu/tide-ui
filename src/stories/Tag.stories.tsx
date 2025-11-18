@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Tag, TagGroup } from '../components/ui/tag'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { Button } from '../components/ui/button'
-import { Input } from '../components/ui/input'
-import { Badge } from '../components/ui/badge'
-import { Icon } from '../components/ui/icon'
+import { Tag, TagGroup } from '../components/in-progress/tag'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
+import { Button } from '../components/fundamental/button'
+import { Input } from '../components/fundamental/input'
+import { Badge } from '../components/fundamental/badge'
+import { Icon } from '../components/fundamental/icon'
 
 const meta: Meta<typeof Tag> = {
   title: 'In Progress/Tag',

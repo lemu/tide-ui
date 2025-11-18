@@ -3,9 +3,9 @@ import { type DialogProps } from "@radix-ui/react-dialog";
 import { Command as CommandPrimitive } from "cmdk";
 import { type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
-import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog";
-import { Icon } from "@/components/ui/icon";
-import { inputVariants } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogOverlay } from "@/components/fundamental/dialog";
+import { Icon } from "@/components/fundamental/icon";
+import { inputVariants } from "@/components/fundamental/input";
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,

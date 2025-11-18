@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { ButtonGroup } from "../components/ui/button-group";
-import { Button } from "../components/ui/button";
-import { Icon } from "../components/ui/icon";
+import { ButtonGroup } from "../components/fundamental/button-group";
+import { Button } from "../components/fundamental/button";
+import { Icon } from "../components/fundamental/icon";
 
 const meta: Meta<typeof ButtonGroup> = {
   title: "NPM • Fundamental/ButtonGroup",
