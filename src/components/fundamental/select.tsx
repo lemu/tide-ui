@@ -14,7 +14,6 @@ const selectTriggerVariants = cva(
           "enabled:hover:bg-[var(--color-background-neutral-subtle-hovered)]",
           "enabled:hover:border-[var(--color-border-input-hovered)]",
           "enabled:hover:shadow-sm",
-          "focus-visible:border-[#005f85]",
         ],
         error: [
           "border-[var(--color-border-error)]",
@@ -95,7 +94,7 @@ export interface SelectContentProps
 const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
   SelectContentProps
->(({ className, children, position = "item-aligned", ...props }, ref) => (
+>(({ className, children, position = "popper", ...props }, ref) => (
   <SelectPrimitive.Portal>
     <SelectPrimitive.Content
       ref={ref}
@@ -111,7 +110,13 @@ const SelectContent = React.forwardRef<
       <SelectPrimitive.ScrollUpButton className="flex cursor-default items-center justify-center py-1">
         <Icon name="chevron-up" size="sm" />
       </SelectPrimitive.ScrollUpButton>
-      <SelectPrimitive.Viewport className="p-2">
+      <SelectPrimitive.Viewport
+        className={cn(
+          "p-2",
+          position === "popper" &&
+            "w-full min-w-[var(--radix-select-trigger-width)]",
+        )}
+      >
         <div className="flex flex-col gap-1">{children}</div>
       </SelectPrimitive.Viewport>
       <SelectPrimitive.ScrollDownButton className="flex cursor-default items-center justify-center py-1">
