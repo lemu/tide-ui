@@ -257,9 +257,9 @@ export const Mention = React.forwardRef<HTMLTextAreaElement, MentionProps>(
                           )}
                         >
                           {suggestion.avatar && (
-                            <Avatar className="h-6 w-6">
+                            <Avatar size="sm">
                               <AvatarImage src={suggestion.avatar} />
-                              <AvatarFallback className="text-xs">
+                              <AvatarFallback size="sm">
                                 {suggestion.label.charAt(0).toUpperCase()}
                               </AvatarFallback>
                             </Avatar>
