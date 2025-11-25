@@ -22,6 +22,24 @@ const meta: Meta<typeof Label> = {
       description: 'The ID of the form element this label is for',
       control: 'text',
     },
+    size: {
+      description: 'Label size',
+      control: 'select',
+      options: ['sm', 'md'],
+    },
+    color: {
+      description: 'Label color variant',
+      control: 'select',
+      options: ['primary', 'secondary'],
+    },
+    required: {
+      description: 'Show asterisk for required fields',
+      control: 'boolean',
+    },
+    info: {
+      description: 'Info tooltip text',
+      control: 'text',
+    },
   },
 } satisfies Meta<typeof Label>
 
@@ -36,10 +54,149 @@ export const Default: Story = {
   },
 }
 
+// Size variants
+export const Sizes: Story = {
+  render: () => (
+    <div className="space-y-[var(--space-sm)]">
+      <div>
+        <Label size="sm" htmlFor="small-input">
+          Small label
+        </Label>
+      </div>
+      <div>
+        <Label size="md" htmlFor="medium-input">
+          Medium label (default)
+        </Label>
+      </div>
+    </div>
+  ),
+}
+
+// Color variants
+export const Colors: Story = {
+  render: () => (
+    <div className="space-y-[var(--space-sm)]">
+      <div>
+        <Label color="primary" htmlFor="primary-input">
+          Primary label (default)
+        </Label>
+      </div>
+      <div>
+        <Label color="secondary" htmlFor="secondary-input">
+          Secondary label
+        </Label>
+      </div>
+    </div>
+  ),
+}
+
+// Required field with asterisk
+export const Required: Story = {
+  render: () => (
+    <div className="w-80 space-y-[var(--space-sm)]">
+      <Label htmlFor="required-email" required>
+        Email address
+      </Label>
+      <Input
+        id="required-email"
+        type="email"
+        placeholder="Enter your email"
+        required
+      />
+    </div>
+  ),
+}
+
+// Label with info tooltip
+export const WithInfoTooltip: Story = {
+  render: () => (
+    <div className="w-80 space-y-[var(--space-sm)]">
+      <Label
+        htmlFor="password"
+        info="Password must be at least 8 characters with uppercase, lowercase, and numbers"
+      >
+        Password
+      </Label>
+      <Input
+        id="password"
+        type="password"
+        placeholder="Enter your password"
+      />
+    </div>
+  ),
+}
+
+// Required field with info tooltip
+export const RequiredWithInfo: Story = {
+  render: () => (
+    <div className="w-80 space-y-[var(--space-sm)]">
+      <Label
+        htmlFor="username"
+        required
+        info="Your username must be unique and between 3-20 characters"
+      >
+        Username
+      </Label>
+      <Input
+        id="username"
+        placeholder="Choose a username"
+      />
+    </div>
+  ),
+}
+
+// All variants showcase
+export const AllVariants: Story = {
+  render: () => (
+    <div className="w-96 space-y-6">
+      <div className="space-y-[var(--space-sm)]">
+        <Label size="sm" color="primary" htmlFor="variant-1">
+          Small primary
+        </Label>
+        <Input id="variant-1" placeholder="Input" />
+      </div>
+      <div className="space-y-[var(--space-sm)]">
+        <Label size="sm" color="secondary" htmlFor="variant-2">
+          Small secondary
+        </Label>
+        <Input id="variant-2" placeholder="Input" />
+      </div>
+      <div className="space-y-[var(--space-sm)]">
+        <Label size="md" color="primary" htmlFor="variant-3" required>
+          Medium primary required
+        </Label>
+        <Input id="variant-3" placeholder="Input" />
+      </div>
+      <div className="space-y-[var(--space-sm)]">
+        <Label
+          size="md"
+          color="secondary"
+          htmlFor="variant-4"
+          info="This is helpful information"
+        >
+          Medium secondary with info
+        </Label>
+        <Input id="variant-4" placeholder="Input" />
+      </div>
+      <div className="space-y-[var(--space-sm)]">
+        <Label
+          size="sm"
+          htmlFor="variant-5"
+          required
+          info="Required field with tooltip"
+        >
+          Small with all features
+        </Label>
+        <Input id="variant-5" placeholder="Input" />
+      </div>
+    </div>
+  ),
+}
+
 // Label with input
 export const WithInput: Story = {
   render: () => (
-    <div className="w-80 space-y-2">
+    <div className="w-80 space-y-[var(--space-sm)]">
       <Label htmlFor="email-input">Email address</Label>
       <Input
         id="email-input"
@@ -53,7 +210,7 @@ export const WithInput: Story = {
 // Label with textarea
 export const WithTextarea: Story = {
   render: () => (
-    <div className="w-80 space-y-2">
+    <div className="w-80 space-y-[var(--space-sm)]">
       <Label htmlFor="message">Message</Label>
       <Textarea
         id="message"
@@ -94,7 +251,7 @@ export const WithRadioGroup: Story = {
   render: () => (
     <div className="space-y-3">
       <Label className="font-medium">Notification preferences</Label>
-      <RadioGroup defaultValue="email" className="space-y-2">
+      <RadioGroup defaultValue="email" className="space-y-[var(--space-sm)]">
         <div className="flex items-center space-x-2">
           <RadioGroupItem value="email" id="email-notifications" />
           <Label htmlFor="email-notifications" className="font-normal">
@@ -118,27 +275,11 @@ export const WithRadioGroup: Story = {
   ),
 }
 
-// Required field label
-export const RequiredField: Story = {
-  render: () => (
-    <div className="w-80 space-y-2">
-      <Label htmlFor="required-input">
-        Full name
-        <span className="text-[var(--color-text-error)] ml-1">*</span>
-      </Label>
-      <Input
-        id="required-input"
-        placeholder="Enter your full name"
-        required
-      />
-    </div>
-  ),
-}
 
 // Optional field label
 export const OptionalField: Story = {
   render: () => (
-    <div className="w-80 space-y-2">
+    <div className="w-80 space-y-[var(--space-sm)]">
       <Label htmlFor="optional-input" className="flex items-center gap-1">
         Phone number
         <span className="text-body-sm text-[var(--color-text-secondary)] font-normal">
@@ -157,7 +298,7 @@ export const OptionalField: Story = {
 // Disabled field label
 export const DisabledField: Story = {
   render: () => (
-    <div className="w-80 space-y-2">
+    <div className="w-80 space-y-[var(--space-sm)]">
       <Label htmlFor="disabled-input" className="text-[var(--color-text-disabled)]">
         Username (read-only)
       </Label>
@@ -174,7 +315,7 @@ export const DisabledField: Story = {
 // Long label text
 export const LongLabel: Story = {
   render: () => (
-    <div className="w-80 space-y-2">
+    <div className="w-80 space-y-[var(--space-sm)]">
       <Label htmlFor="long-label-input">
         Please provide a detailed description of your business requirements and specific needs
       </Label>
@@ -190,7 +331,7 @@ export const LongLabel: Story = {
 // Label with helper text pattern
 export const WithHelperText: Story = {
   render: () => (
-    <div className="w-80 space-y-2">
+    <div className="w-80 space-y-[var(--space-sm)]">
       <Label htmlFor="password-input">Password</Label>
       <Input
         id="password-input"
@@ -208,7 +349,7 @@ export const WithHelperText: Story = {
 export const MultipleFormControls: Story = {
   render: () => (
     <div className="w-96 space-y-6">
-      <div className="space-y-2">
+      <div className="space-y-[var(--space-sm)]">
         <Label htmlFor="text-input">Text Input</Label>
         <Input
           id="text-input"
@@ -216,7 +357,7 @@ export const MultipleFormControls: Story = {
         />
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-[var(--space-sm)]">
         <Label htmlFor="select-input">Select Option</Label>
         <select
           id="select-input"
@@ -250,18 +391,18 @@ export const FormSection: Story = {
     <div className="w-96 space-y-6">
       <div>
         <h3 className="text-heading-md font-semibold mb-4">Personal Information</h3>
-        <div className="space-y-4">
+        <div className="space-y-[var(--space-sm)]">
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
+            <div className="space-y-[var(--space-sm)]">
               <Label htmlFor="first-name">First name</Label>
               <Input id="first-name" placeholder="John" />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-[var(--space-sm)]">
               <Label htmlFor="last-name">Last name</Label>
               <Input id="last-name" placeholder="Doe" />
             </div>
           </div>
-          <div className="space-y-2">
+          <div className="space-y-[var(--space-sm)]">
             <Label htmlFor="email-section">Email address</Label>
             <Input id="email-section" type="email" placeholder="john@example.com" />
           </div>
