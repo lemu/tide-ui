@@ -148,7 +148,7 @@ export function CountryDropdown({
           </span>
         )}
         {value === country.alpha2 && (
-          <Check className="h-4 w-4 text-[var(--color-icon-brand)]" />
+          <Check className="h-4 w-4 text-[var(--color-icon-brand-bold)]" />
         )}
       </CommandItem>
     ),
@@ -202,7 +202,7 @@ export function CountryDropdown({
           aria-expanded={open}
           disabled={disabled}
           className={cn(
-            "justify-between border border-[var(--color-border-input)] bg-[var(--color-surface-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)]",
+            "justify-between border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
             variant === "slim" ? "w-auto px-[var(--space-sm)]" : "w-full",
             className
           )}

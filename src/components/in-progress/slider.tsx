@@ -14,10 +14,10 @@ const Slider = React.forwardRef<
     )}
     {...props}
   >
-    <SliderPrimitive.Track className="relative h-[var(--size-3xsm)] w-full grow overflow-hidden rounded-full bg-[var(--color-background-neutral-subtle)]">
-      <SliderPrimitive.Range className="absolute h-full bg-[var(--color-background-brand)]" />
+    <SliderPrimitive.Track className="relative h-[var(--size-3xsm)] w-full grow overflow-hidden rounded-full bg-[var(--color-background-neutral-subtlest)]">
+      <SliderPrimitive.Range className="absolute h-full bg-[var(--color-background-blue-bold)]" />
     </SliderPrimitive.Track>
-    <SliderPrimitive.Thumb className="block h-[var(--size-xsm)] w-[var(--size-xsm)] rounded-full border border-[var(--color-border-brand)] bg-[var(--color-surface-primary)] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface-primary)] disabled:pointer-events-none disabled:opacity-50 hover:bg-[var(--color-background-neutral-subtle-hovered)]" />
+    <SliderPrimitive.Thumb className="block h-[var(--size-xsm)] w-[var(--size-xsm)] rounded-full border border-[var(--color-border-brand-bold)] bg-[var(--color-surface-primary)] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface-primary)] disabled:pointer-events-none disabled:opacity-50 hover:bg-[var(--color-background-neutral-subtlest-hovered)]" />
   </SliderPrimitive.Root>
 ));
 Slider.displayName = SliderPrimitive.Root.displayName;

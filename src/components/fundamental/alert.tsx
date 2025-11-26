@@ -11,16 +11,16 @@ const alertVariants = cva(
           "bg-[var(--color-surface-primary)] text-[var(--color-text-primary)] border-[var(--color-border-primary-subtle)]",
         ],
         info: [
-          "bg-[var(--color-background-information)] text-[var(--color-text-primary)] border-[var(--color-border-brand)] [&>svg]:text-[var(--color-text-brand)]",
+          "bg-[var(--color-background-info-subtle)] text-[var(--color-text-primary)] border-[var(--color-border-brand-bold)] [&>svg]:text-[var(--color-text-brand-bold)]",
         ],
         success: [
-          "bg-[var(--color-background-success)] text-[var(--color-text-primary)] border-[var(--color-border-success)] [&>svg]:text-[var(--color-text-success)]",
+          "bg-[var(--color-background-success-subtle)] text-[var(--color-text-primary)] border-[var(--color-border-success-bold)] [&>svg]:text-[var(--color-text-success-bold)]",
         ],
         warning: [
-          "bg-[var(--color-background-warning)] text-[var(--color-text-primary)] border-[var(--color-border-warning)] [&>svg]:text-[var(--color-text-warning)]",
+          "bg-[var(--color-background-warning-subtle)] text-[var(--color-text-primary)] border-[var(--color-border-warning-bold)] [&>svg]:text-[var(--color-text-warning-bold)]",
         ],
         destructive: [
-          "bg-[var(--color-background-error)] text-[var(--color-text-primary)] border-[var(--color-border-error)] [&>svg]:text-[var(--color-text-error)]",
+          "bg-[var(--color-background-error-subtle)] text-[var(--color-text-primary)] border-[var(--color-border-error-bold)] [&>svg]:text-[var(--color-text-error-bold)]",
         ],
       },
     },

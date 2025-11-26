@@ -52,8 +52,8 @@ export const Default: Story = {
           onSubmit={setValue}
           placeholder="Enter text..."
         >
-          <EditablePreview className="cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] p-2 rounded-md transition-colors" />
-          <EditableInput className="border-2 border-[var(--color-border-brand)] p-2 rounded-md outline-none" />
+          <EditablePreview className="cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] p-2 rounded-md transition-colors" />
+          <EditableInput className="border-2 border-[var(--color-border-brand-bold)] p-2 rounded-md outline-none" />
         </Editable>
       </div>
     )
@@ -78,7 +78,7 @@ export const HeadingLarge: Story = {
           placeholder="Enter heading..."
         >
           <EditablePreview
-            className="text-heading-lg cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] rounded-md transition-colors"
+            className="text-heading-lg cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] rounded-md transition-colors"
             style={{
               ...sharedStyles,
               minHeight: '3rem',
@@ -87,7 +87,7 @@ export const HeadingLarge: Story = {
             }}
           />
           <EditableInput
-            className="text-heading-lg bg-transparent border-none outline-none focus:ring-2 focus:ring-[var(--color-border-brand)] rounded-md"
+            className="text-heading-lg bg-transparent border-none outline-none focus:ring-2 focus:ring-[var(--color-border-brand-bold)] rounded-md"
             style={sharedStyles}
             autoResize
             minWidth={200}
@@ -127,7 +127,7 @@ export const AutoResizing: Story = {
           placeholder="Start typing to see auto-resize..."
         >
           <EditablePreview
-            className="cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] rounded-md transition-colors"
+            className="cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] rounded-md transition-colors"
             style={{
               ...sharedStyles,
               minHeight: '2rem',
@@ -136,7 +136,7 @@ export const AutoResizing: Story = {
             }}
           />
           <EditableInput
-            className="bg-transparent border-none outline-none focus:ring-2 focus:ring-[var(--color-border-brand)] rounded-md"
+            className="bg-transparent border-none outline-none focus:ring-2 focus:ring-[var(--color-border-brand-bold)] rounded-md"
             style={sharedStyles}
             autoResize
             minWidth={150}
@@ -164,8 +164,8 @@ export const ControlledVsUncontrolled: Story = {
               onChange={(value) => console.log('Typing:', value)}
               placeholder="Type something..."
             >
-              <EditablePreview className="text-body-md cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] p-2 rounded-md transition-colors" />
-              <EditableInput className="text-body-md border-2 border-[var(--color-border-brand)] p-2 rounded-md outline-none" />
+              <EditablePreview className="text-body-md cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] p-2 rounded-md transition-colors" />
+              <EditableInput className="text-body-md border-2 border-[var(--color-border-brand-bold)] p-2 rounded-md outline-none" />
             </Editable>
             <p className="text-caption-sm text-[var(--color-text-secondary)] mt-2">
               Current value: "{controlledValue}"
@@ -181,8 +181,8 @@ export const ControlledVsUncontrolled: Story = {
               onSubmit={(value) => console.log('Submitted:', value)}
               placeholder="Enter text..."
             >
-              <EditablePreview className="text-body-md cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] p-2 rounded-md transition-colors" />
-              <EditableInput className="text-body-md border-2 border-[var(--color-border-brand)] p-2 rounded-md outline-none" />
+              <EditablePreview className="text-body-md cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] p-2 rounded-md transition-colors" />
+              <EditableInput className="text-body-md border-2 border-[var(--color-border-brand-bold)] p-2 rounded-md outline-none" />
             </Editable>
             <p className="text-caption-sm text-[var(--color-text-secondary)] mt-2">
               Check console for submitted values
@@ -222,8 +222,8 @@ export const Disabled: Story = {
               className="text-body-md p-2 rounded-md"
               style={{
                 color: 'var(--color-text-disabled)',
-                border: '2px solid var(--color-border-input-disabled)',
-                backgroundColor: 'var(--color-background-input-disabled)',
+                border: '2px solid var(--color-interaction-border-input-disabled)',
+                backgroundColor: 'var(--color-interaction-background-input-disabled)',
               }}
             />
           </Editable>
@@ -254,25 +254,25 @@ export const CustomStyling: Story = {
           <EditablePreview
             className="cursor-pointer rounded-lg transition-all duration-200 hover:shadow-sm"
             style={{
-              color: 'var(--color-text-brand)',
+              color: 'var(--color-text-brand-bold)',
               fontSize: 'var(--font-size-500)',
               lineHeight: 'var(--font-line-height-600)',
               fontWeight: 'var(--font-weight-semibold)',
               padding: 'var(--space-lg)',
-              backgroundColor: 'var(--color-background-brand-selected)',
-              border: `1px solid var(--color-border-brand)`,
+              backgroundColor: 'var(--color-background-blue-subtle-selected)',
+              border: `1px solid var(--color-border-brand-bold)`,
             }}
           />
           <EditableInput
             className="rounded-lg outline-none transition-all duration-200"
             style={{
-              color: 'var(--color-text-brand)',
+              color: 'var(--color-text-brand-bold)',
               fontSize: 'var(--font-size-500)',
               lineHeight: 'var(--font-line-height-600)',
               fontWeight: 'var(--font-weight-semibold)',
               padding: 'var(--space-lg)',
               backgroundColor: 'var(--color-surface-primary)',
-              border: `2px solid var(--color-border-brand)`,
+              border: `2px solid var(--color-border-brand-bold)`,
               boxShadow: 'var(--shadow-md)',
             }}
             autoResize
@@ -310,21 +310,21 @@ export const EnhancedFeatures: Story = {
           <div>
             <h3 className="text-heading-sm mb-2">✅ All Issues Fixed</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="border border-[var(--color-border-success)] rounded-lg p-4 bg-[var(--color-background-success)]">
-                <h4 className="text-body-strong-sm text-[var(--color-text-success)] mb-1">No Cursor Jumping</h4>
-                <p className="text-caption-sm text-[var(--color-text-success)]">
+              <div className="border border-[var(--color-border-success-bold)] rounded-lg p-4 bg-[var(--color-background-success-subtle)]">
+                <h4 className="text-body-strong-sm text-[var(--color-text-success-bold)] mb-1">No Cursor Jumping</h4>
+                <p className="text-caption-sm text-[var(--color-text-success-bold)]">
                   Cursor stays in correct position while typing
                 </p>
               </div>
-              <div className="border border-[var(--color-border-information)] rounded-lg p-4 bg-[var(--color-background-information)]">
-                <h4 className="text-body-strong-sm text-[var(--color-text-information)] mb-1">Font Consistency</h4>
-                <p className="text-caption-sm text-[var(--color-text-information)]">
+              <div className="border border-[var(--color-border-info-bold)] rounded-lg p-4 bg-[var(--color-background-info-subtle)]">
+                <h4 className="text-body-strong-sm text-[var(--color-text-info-bold)] mb-1">Font Consistency</h4>
+                <p className="text-caption-sm text-[var(--color-text-info-bold)]">
                   Preview and input have identical styling
                 </p>
               </div>
-              <div className="border border-[var(--color-border-brand)] rounded-lg p-4 bg-[var(--color-background-brand-selected)]">
-                <h4 className="text-body-strong-sm text-[var(--color-text-brand)] mb-1">Auto-resizing</h4>
-                <p className="text-caption-sm text-[var(--color-text-brand)]">
+              <div className="border border-[var(--color-border-brand-bold)] rounded-lg p-4 bg-[var(--color-background-blue-subtle-selected)]">
+                <h4 className="text-body-strong-sm text-[var(--color-text-brand-bold)] mb-1">Auto-resizing</h4>
+                <p className="text-caption-sm text-[var(--color-text-brand-bold)]">
                   Input grows and shrinks with content
                 </p>
               </div>
@@ -340,7 +340,7 @@ export const EnhancedFeatures: Story = {
                 placeholder="Enter title..."
               >
                 <EditablePreview
-                  className="text-heading-lg cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] rounded-md transition-colors"
+                  className="text-heading-lg cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] rounded-md transition-colors"
                   style={{
                     ...titleStyles,
                     minHeight: '3rem',
@@ -349,7 +349,7 @@ export const EnhancedFeatures: Story = {
                   }}
                 />
                 <EditableInput
-                  className="text-heading-lg bg-transparent border-none outline-none focus:ring-2 focus:ring-[var(--color-border-brand)] rounded-md"
+                  className="text-heading-lg bg-transparent border-none outline-none focus:ring-2 focus:ring-[var(--color-border-brand-bold)] rounded-md"
                   style={titleStyles}
                   autoResize
                   minWidth={200}
@@ -366,7 +366,7 @@ export const EnhancedFeatures: Story = {
                 placeholder="Enter description..."
               >
                 <EditablePreview
-                  className="cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] rounded-md transition-colors"
+                  className="cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] rounded-md transition-colors"
                   style={{
                     ...descStyles,
                     minHeight: '2rem',
@@ -375,7 +375,7 @@ export const EnhancedFeatures: Story = {
                   }}
                 />
                 <EditableInput
-                  className="bg-transparent border-none outline-none focus:ring-2 focus:ring-[var(--color-border-brand)] rounded-md"
+                  className="bg-transparent border-none outline-none focus:ring-2 focus:ring-[var(--color-border-brand-bold)] rounded-md"
                   style={descStyles}
                   autoResize
                   minWidth={250}

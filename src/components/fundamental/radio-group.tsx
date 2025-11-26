@@ -12,16 +12,16 @@ const radioGroupItemVariants = cva(
     variants: {
       variant: {
         default: [
-          "border-[var(--color-border-input)] bg-[var(--color-surface-primary)]",
-          "hover:border-[var(--color-border-input-hovered)]",
-          "data-[state=checked]:border-[var(--color-border-brand)] data-[state=checked]:bg-[var(--color-background-brand)] data-[state=checked]:text-[var(--color-text-on-action)]",
+          "border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)]",
+          "hover:border-[var(--color-interaction-border-input-hovered)]",
+          "data-[state=checked]:border-[var(--color-border-brand-bold)] data-[state=checked]:bg-[var(--color-background-blue-bold)] data-[state=checked]:text-[var(--color-text-on-action)]",
           "disabled:border-none disabled:bg-[var(--color-background-disabled)]",
           "disabled:data-[state=checked]:border-none disabled:data-[state=checked]:bg-[var(--color-background-disabled)] disabled:data-[state=checked]:text-[var(--color-text-disabled)]",
         ],
         error: [
-          "border-[var(--color-border-error)] bg-[var(--color-surface-primary)]",
-          "hover:border-[var(--color-border-error)]",
-          "data-[state=checked]:border-[var(--color-border-error)] data-[state=checked]:bg-[var(--color-background-error)] data-[state=checked]:text-[var(--color-text-on-error)]",
+          "border-[var(--color-border-error-bold)] bg-[var(--color-surface-primary)]",
+          "hover:border-[var(--color-border-error-bold)]",
+          "data-[state=checked]:border-[var(--color-border-error-bold)] data-[state=checked]:bg-[var(--color-background-error-subtle)] data-[state=checked]:text-[var(--color-text-on-error)]",
           "disabled:border-[var(--color-border-disabled)] disabled:bg-[var(--color-surface-primary)]",
           "disabled:data-[state=checked]:border-[var(--color-border-disabled)] disabled:data-[state=checked]:bg-[var(--color-background-disabled)] disabled:data-[state=checked]:text-[var(--color-text-disabled)]",
         ],

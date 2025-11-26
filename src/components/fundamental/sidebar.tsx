@@ -310,7 +310,7 @@ const SidebarInput = React.forwardRef<
       ref={ref}
       data-sidebar="input"
       className={cn(
-        "flex h-8 w-full rounded-lg border border-[var(--color-border-input)] bg-[var(--color-surface-primary)] px-[var(--space-md)] py-[var(--space-sm)] text-sm text-[var(--color-text-primary)] ring-offset-[var(--color-surface-primary)] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+        "flex h-8 w-full rounded-lg border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-[var(--space-md)] py-[var(--space-sm)] text-sm text-[var(--color-text-primary)] ring-offset-[var(--color-surface-primary)] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
         className
       )}
       {...props}
@@ -331,7 +331,7 @@ const SidebarSearchButton = React.forwardRef<
       ref={ref}
       data-sidebar="search-button"
       className={cn(
-        "text-body-md flex h-8 w-full cursor-pointer items-center rounded-md border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-3 py-1 pr-20 pl-8 text-left text-[var(--color-text-tertiary)] transition-colors hover:border-[var(--color-border-primary-bold)] hover:bg-[var(--color-background-neutral-subtle-hovered)] focus:border-[var(--color-border-brand)] focus:ring-2 focus:ring-[var(--color-border-brand)] focus:ring-offset-2 focus:outline-none active:border-[var(--color-border-primary-bold)] group-data-[collapsible=icon]:hidden",
+        "text-body-md flex h-8 w-full cursor-pointer items-center rounded-md border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-3 py-1 pr-20 pl-8 text-left text-[var(--color-text-tertiary)] transition-colors hover:border-[var(--color-border-primary-medium)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] focus:border-[var(--color-border-brand-bold)] focus:ring-2 focus:ring-[var(--color-border-brand-bold)] focus:ring-offset-2 focus:outline-none active:border-[var(--color-border-primary-medium)] group-data-[collapsible=icon]:hidden",
         className
       )}
       onClick={() => onOpenChange?.(true)}
@@ -362,7 +362,7 @@ const SidebarSearchTrigger = React.forwardRef<
       ref={ref}
       data-sidebar="search-trigger"
       className={cn(
-        "hidden h-8 w-8 cursor-pointer items-center justify-center rounded border border-[var(--color-border-primary-subtle)] bg-transparent transition-all duration-200 group-data-[collapsible=icon]:flex hover:border-[var(--color-border-primary-bold)] hover:bg-[var(--color-background-neutral-subtle-hovered)] focus:border-[var(--color-border-brand)] focus:ring-2 focus:ring-[var(--color-border-brand)] focus:ring-offset-2 focus:outline-none active:border-[var(--color-border-primary-bold)]",
+        "hidden h-8 w-8 cursor-pointer items-center justify-center rounded border border-[var(--color-border-primary-subtle)] bg-transparent transition-all duration-200 group-data-[collapsible=icon]:flex hover:border-[var(--color-border-primary-medium)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] focus:border-[var(--color-border-brand-bold)] focus:ring-2 focus:ring-[var(--color-border-brand-bold)] focus:ring-offset-2 focus:outline-none active:border-[var(--color-border-primary-medium)]",
         className
       )}
       onClick={() => onOpenChange?.(true)}
@@ -483,7 +483,7 @@ const SidebarGroupAction = React.forwardRef<
       ref={ref}
       data-sidebar="group-action"
       className={cn(
-        "absolute right-3 top-3.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-transform hover:bg-[var(--color-background-neutral-subtle)] focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+        "absolute right-3 top-3.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-transform hover:bg-[var(--color-background-neutral-subtlest)] focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
         "after:absolute after:-inset-2 after:md:hidden",
         "group-data-[collapsible=icon]:hidden",
         className
@@ -534,13 +534,13 @@ const SidebarMenuItem = React.forwardRef<
 SidebarMenuItem.displayName = "SidebarMenuItem"
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-2 py-1.5 text-left text-body-medium-md outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-[var(--color-background-brand-selected)] data-[active=true]:text-[var(--color-text-selected)] data-[state=open]:bg-[var(--color-surface-secondary)] group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 group-data-[collapsible=icon]:justify-center [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 data-[active=true]:[&>svg]:text-[var(--color-text-selected)] cursor-pointer",
+  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-2 py-1.5 text-left text-body-medium-md outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-[var(--color-background-blue-subtle-selected)] data-[active=true]:text-[var(--color-text-brand-bold-selected)] data-[state=open]:bg-[var(--color-surface-secondary)] group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 group-data-[collapsible=icon]:justify-center [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 data-[active=true]:[&>svg]:text-[var(--color-text-brand-bold-selected)] cursor-pointer",
   {
     variants: {
       variant: {
-        default: "hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] focus-visible:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)] data-[active=true]:hover:!bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:hover:!text-[var(--color-text-brand-hovered)] data-[active=true]:active:!bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:active:!text-[var(--color-text-brand-hovered)] data-[active=true]:hover:[&>svg]:!text-[var(--color-icon-brand-hover)] data-[active=true]:active:[&>svg]:!text-[var(--color-icon-brand-hover)] data-[state=open]:hover:bg-[var(--color-background-neutral-subtle-hovered)]",
+        default: "hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)] focus-visible:bg-[var(--color-background-neutral-subtlest-hovered)] active:bg-[var(--color-background-neutral-subtlest-hovered)] data-[active=true]:hover:!bg-[var(--color-background-blue-subtle-selected-hovered)] data-[active=true]:hover:!text-[var(--color-text-brand-bold-hovered)] data-[active=true]:active:!bg-[var(--color-background-blue-subtle-selected-hovered)] data-[active=true]:active:!text-[var(--color-text-brand-bold-hovered)] data-[active=true]:hover:[&>svg]:!text-[var(--color-icon-brand-bold-hovered)] data-[active=true]:active:[&>svg]:!text-[var(--color-icon-brand-bold-hovered)] data-[state=open]:hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
         outline:
-          "bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] focus-visible:bg-[var(--color-background-neutral-subtle-hovered)] active:bg-[var(--color-background-neutral-subtle-hovered)] data-[active=true]:hover:!bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:hover:!text-[var(--color-text-brand-hovered)] data-[active=true]:active:!bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:active:!text-[var(--color-text-brand-hovered)] data-[active=true]:hover:[&>svg]:!text-[var(--color-icon-brand-hover)] data-[active=true]:active:[&>svg]:!text-[var(--color-icon-brand-hover)]",
+          "bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)] focus-visible:bg-[var(--color-background-neutral-subtlest-hovered)] active:bg-[var(--color-background-neutral-subtlest-hovered)] data-[active=true]:hover:!bg-[var(--color-background-blue-subtle-selected-hovered)] data-[active=true]:hover:!text-[var(--color-text-brand-bold-hovered)] data-[active=true]:active:!bg-[var(--color-background-blue-subtle-selected-hovered)] data-[active=true]:active:!text-[var(--color-text-brand-bold-hovered)] data-[active=true]:hover:[&>svg]:!text-[var(--color-icon-brand-bold-hovered)] data-[active=true]:active:[&>svg]:!text-[var(--color-icon-brand-bold-hovered)]",
       },
       size: {
         default: "h-8",
@@ -648,34 +648,34 @@ const SidebarMenuButton = React.forwardRef<
         size === "lg" && "h-12 py-3 text-body-lg group-data-[collapsible=icon]:!size-8",
 
         // Enhanced hover behavior for non-active items
-        isHovered && !isFocused && !isActive && "bg-[var(--color-background-neutral-subtle-hovered)]",
+        isHovered && !isFocused && !isActive && "bg-[var(--color-background-neutral-subtlest-hovered)]",
 
         // Enhanced hover behavior for active items
         isHovered && !isFocused && isActive && [
-          "bg-[var(--color-background-brand-selected-hovered)]",
-          "[&>svg]:text-[var(--color-icon-brand-hover)]"
+          "bg-[var(--color-background-blue-subtle-selected-hovered)]",
+          "[&>svg]:text-[var(--color-icon-brand-bold-hovered)]"
         ],
 
         // Focus styles - clean focus for non-active items
-        isFocused && !isActive && "bg-transparent ring-2 ring-[var(--color-border-brand)] ring-offset-1",
+        isFocused && !isActive && "bg-transparent ring-2 ring-[var(--color-border-brand-bold)] ring-offset-1",
 
         // Active item focus - preserve brand background when focused
         isFocused && isActive && preserveActiveOnFocus && [
-          "bg-[var(--color-background-brand-selected)]",
-          "text-[var(--color-text-brand)]",
+          "bg-[var(--color-background-blue-subtle-selected)]",
+          "text-[var(--color-text-brand-bold)]",
           "[&]:text-body-medium-md [&]:font-normal",
-          "ring-2 ring-[var(--color-border-brand)] ring-offset-1",
-          "[&>svg]:text-[var(--color-text-brand)]"
+          "ring-2 ring-[var(--color-border-brand-bold)] ring-offset-1",
+          "[&>svg]:text-[var(--color-text-brand-bold)]"
         ],
 
         // Active item styles (non-focus state)
         isActive && !isFocused && [
-          "bg-[var(--color-background-brand-selected)]",
-          "text-[var(--color-text-brand)]",
+          "bg-[var(--color-background-blue-subtle-selected)]",
+          "text-[var(--color-text-brand-bold)]",
           "[&]:text-body-medium-md [&]:font-normal",
-          "[&>svg]:text-[var(--color-text-brand)]",
-          "hover:bg-[var(--color-background-brand-selected-hovered)]",
-          "hover:[&>svg]:text-[var(--color-icon-brand-hover)]"
+          "[&>svg]:text-[var(--color-text-brand-bold)]",
+          "hover:bg-[var(--color-background-blue-subtle-selected-hovered)]",
+          "hover:[&>svg]:text-[var(--color-icon-brand-bold-hovered)]"
         ],
 
 
@@ -745,7 +745,7 @@ const SidebarMenuAction = React.forwardRef<
         // Base positioning and styling - Fixed inconsistencies
         "absolute right-1 flex aspect-square items-center justify-center rounded-md p-0",
         "text-[var(--color-text-secondary)] outline-none transition-all duration-150 ease-in-out",
-        "hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]",
+        "hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]",
         "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)]",
         "peer-hover/menu-button:text-[var(--color-text-primary)]",
         "enabled:active:bg-[var(--grey-alpha-100)] enabled:active:translate-y-px",
@@ -792,7 +792,7 @@ const SidebarMenuBadge = React.forwardRef<
     data-sidebar="menu-badge"
     className={cn(
       "absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-xs font-medium tabular-nums text-[var(--color-text-on-action)] select-none pointer-events-none",
-      "peer-hover/menu-button:text-[var(--color-text-selected)] peer-data-[active=true]/menu-button:text-[var(--color-text-selected)]",
+      "peer-hover/menu-button:text-[var(--color-text-brand-bold-selected)] peer-data-[active=true]/menu-button:text-[var(--color-text-brand-bold-selected)]",
       "peer-data-[size=sm]/menu-button:top-1",
       "peer-data-[size=default]/menu-button:top-1.5",
       "peer-data-[size=lg]/menu-button:top-2.5",
@@ -941,35 +941,35 @@ const SidebarMenuSubButton = React.forwardRef<
       size === "md" && "text-body-md",
 
       // Enhanced hover behavior for non-active items
-      enhancedHover && isHovered && !isFocused && !isActive && "bg-[var(--color-background-neutral-subtle-hovered)]",
+      enhancedHover && isHovered && !isFocused && !isActive && "bg-[var(--color-background-neutral-subtlest-hovered)]",
 
       // Enhanced hover behavior for active items
-      enhancedHover && isHovered && !isFocused && isActive && "bg-[var(--color-background-brand-selected-hovered)]",
+      enhancedHover && isHovered && !isFocused && isActive && "bg-[var(--color-background-blue-subtle-selected-hovered)]",
 
       // Focus styles - clean focus for non-active items
-      enhancedHover && isFocused && !isActive && "bg-transparent ring-2 ring-[var(--color-border-brand)] ring-offset-1",
+      enhancedHover && isFocused && !isActive && "bg-transparent ring-2 ring-[var(--color-border-brand-bold)] ring-offset-1",
 
       // Active item focus - preserve brand background when focused
       enhancedHover && isFocused && isActive && preserveActiveOnFocus && [
-        "bg-[var(--color-background-brand-selected)]",
-        "text-[var(--color-text-brand)]",
+        "bg-[var(--color-background-blue-subtle-selected)]",
+        "text-[var(--color-text-brand-bold)]",
         "[&]:text-body-md [&]:font-normal",
-        "ring-2 ring-[var(--color-border-brand)] ring-offset-1"
+        "ring-2 ring-[var(--color-border-brand-bold)] ring-offset-1"
       ],
 
       // Active item styles (non-focus state)
       isActive && !isFocused && [
-        "bg-[var(--color-background-brand-selected)]",
-        "text-[var(--color-text-brand)]",
+        "bg-[var(--color-background-blue-subtle-selected)]",
+        "text-[var(--color-text-brand-bold)]",
         "[&]:text-body-md [&]:font-normal",
-        "hover:bg-[var(--color-background-brand-selected-hovered)]"
+        "hover:bg-[var(--color-background-blue-subtle-selected-hovered)]"
       ],
 
 
       // Fallback for non-enhanced behavior
       !enhancedHover && [
-        "hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] focus-visible:ring-2 active:bg-[var(--color-background-neutral-subtle-hovered)] active:text-[var(--color-text-primary)]",
-        "data-[active=true]:bg-[var(--color-background-brand-selected)] data-[active=true]:text-[var(--color-text-selected)] data-[active=true]:hover:!bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:hover:!text-[var(--color-text-brand-hovered)] data-[active=true]:active:!bg-[var(--color-background-brand-selected-hovered)] data-[active=true]:active:!text-[var(--color-text-brand-hovered)]"
+        "hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)] focus-visible:ring-2 active:bg-[var(--color-background-neutral-subtlest-hovered)] active:text-[var(--color-text-primary)]",
+        "data-[active=true]:bg-[var(--color-background-blue-subtle-selected)] data-[active=true]:text-[var(--color-text-brand-bold-selected)] data-[active=true]:hover:!bg-[var(--color-background-blue-subtle-selected-hovered)] data-[active=true]:hover:!text-[var(--color-text-brand-bold-hovered)] data-[active=true]:active:!bg-[var(--color-background-blue-subtle-selected-hovered)] data-[active=true]:active:!text-[var(--color-text-brand-bold-hovered)]"
       ]
     )
   }, [size, enhancedHover, isHovered, isFocused, isActive, preserveActiveOnFocus])

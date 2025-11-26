@@ -204,11 +204,11 @@ export const FormDialog: Story = {
                   setFormData((prev) => ({ ...prev, title: e.target.value }))
                 }
                 className={
-                  errors.title ? "border-[var(--color-border-error)]" : ""
+                  errors.title ? "border-[var(--color-border-error-bold)]" : ""
                 }
               />
               {errors.title && (
-                <p className="text-caption-sm text-[var(--color-text-error)]">
+                <p className="text-caption-sm text-[var(--color-text-error-bold)]">
                   {errors.title}
                 </p>
               )}
@@ -227,12 +227,12 @@ export const FormDialog: Story = {
                   }))
                 }
                 className={
-                  errors.description ? "border-[var(--color-border-error)]" : ""
+                  errors.description ? "border-[var(--color-border-error-bold)]" : ""
                 }
                 rows={3}
               />
               {errors.description && (
-                <p className="text-caption-sm text-[var(--color-text-error)]">
+                <p className="text-caption-sm text-[var(--color-text-error-bold)]">
                   {errors.description}
                 </p>
               )}
@@ -252,8 +252,8 @@ export const FormDialog: Story = {
                   }
                   className={`text-body-sm h-10 w-full rounded-md border bg-[var(--color-surface-primary)] px-3 ${
                     errors.priority
-                      ? "border-[var(--color-border-error)]"
-                      : "border-[var(--color-border-input)]"
+                      ? "border-[var(--color-border-error-bold)]"
+                      : "border-[var(--color-interaction-border-input)]"
                   }`}
                 >
                   <option value="">Select priority</option>
@@ -263,7 +263,7 @@ export const FormDialog: Story = {
                   <option value="critical">Critical</option>
                 </select>
                 {errors.priority && (
-                  <p className="text-caption-sm text-[var(--color-text-error)]">
+                  <p className="text-caption-sm text-[var(--color-text-error-bold)]">
                     {errors.priority}
                   </p>
                 )}
@@ -280,7 +280,7 @@ export const FormDialog: Story = {
                       assignee: e.target.value,
                     }))
                   }
-                  className="text-body-sm h-10 w-full rounded-md border border-[var(--color-border-input)] bg-[var(--color-surface-primary)] px-3"
+                  className="text-body-sm h-10 w-full rounded-md border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3"
                 >
                   <option value="">Unassigned</option>
                   <option value="john">John Doe</option>
@@ -310,7 +310,7 @@ export const AlertDialog: Story = {
   render: () => (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="text-[var(--color-text-warning)]">
+        <Button variant="ghost" className="text-[var(--color-text-warning-bold)]">
           <Icon name="alert-circle" size="sm" className="mr-2" />
           Show Alert
         </Button>
@@ -321,7 +321,7 @@ export const AlertDialog: Story = {
             <Icon
               name="alert-triangle"
               size="lg"
-              className="text-[var(--color-text-warning)]"
+              className="text-[var(--color-text-warning-bold)]"
             />
             <div>
               <DialogTitle>Storage Almost Full</DialogTitle>
@@ -334,13 +334,13 @@ export const AlertDialog: Story = {
             to continue using all features.
           </p>
           <div className="space-y-4">
-            <div className="rounded-md border border-[var(--color-border-warning)] bg-[var(--color-background-warning-subtle)] p-4">
+            <div className="rounded-md border border-[var(--color-border-warning-bold)] bg-[var(--color-background-warning-subtle)] p-4">
               <div className="mb-2 flex items-center justify-between">
                 <span className="text-body-sm font-medium">Storage Usage</span>
                 <span className="text-body-sm">4.75 GB / 5.00 GB</span>
               </div>
-              <div className="h-2 w-full rounded-full bg-[var(--color-background-neutral-subtle)]">
-                <div className="h-2 w-[95%] rounded-full bg-[var(--color-background-warning)]"></div>
+              <div className="h-2 w-full rounded-full bg-[var(--color-background-neutral-subtlest)]">
+                <div className="h-2 w-[95%] rounded-full bg-[var(--color-background-warning-subtle)]"></div>
               </div>
             </div>
 
@@ -446,7 +446,7 @@ export const ComplexContentDialog: Story = {
                   key={user.id}
                   className={`cursor-pointer transition-colors ${
                     selectedUser === user.id
-                      ? "bg-[var(--color-background-brand-selected)]"
+                      ? "bg-[var(--color-background-blue-subtle-selected)]"
                       : ""
                   }`}
                   onClick={() =>
@@ -570,7 +570,7 @@ export const MultipleDialogs: Story = {
               </p>
               <div className="space-y-2">
                 <Label>Theme</Label>
-                <select className="text-body-sm h-10 w-full rounded-md border border-[var(--color-border-input)] bg-[var(--color-surface-primary)] px-3">
+                <select className="text-body-sm h-10 w-full rounded-md border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3">
                   <option>Light</option>
                   <option>Dark</option>
                   <option>System</option>
@@ -578,7 +578,7 @@ export const MultipleDialogs: Story = {
               </div>
               <div className="space-y-2">
                 <Label>Language</Label>
-                <select className="text-body-sm h-10 w-full rounded-md border border-[var(--color-border-input)] bg-[var(--color-surface-primary)] px-3">
+                <select className="text-body-sm h-10 w-full rounded-md border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3">
                   <option>English</option>
                   <option>Spanish</option>
                   <option>French</option>

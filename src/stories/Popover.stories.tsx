@@ -124,7 +124,7 @@ export const UserProfile: Story = {
                 <Icon name="help-circle" size="sm" className="mr-2" />
                 Help & Support
               </Button>
-              <Button variant="ghost" className="w-full justify-start text-[var(--color-text-error)]">
+              <Button variant="ghost" className="w-full justify-start text-[var(--color-text-error-bold)]">
                 <Icon name="log-out" size="sm" className="mr-2" />
                 Sign Out
               </Button>
@@ -267,7 +267,7 @@ export const Notifications: Story = {
         time: '2 minutes ago',
         read: false,
         icon: 'message-circle',
-        iconColor: 'text-[var(--color-text-information)]'
+        iconColor: 'text-[var(--color-text-info-bold)]'
       },
       {
         id: 2,
@@ -276,7 +276,7 @@ export const Notifications: Story = {
         time: '1 hour ago',
         read: false,
         icon: 'check-circle',
-        iconColor: 'text-[var(--color-text-success)]'
+        iconColor: 'text-[var(--color-text-success-bold)]'
       },
       {
         id: 3,
@@ -285,7 +285,7 @@ export const Notifications: Story = {
         time: '3 hours ago',
         read: true,
         icon: 'alert-triangle',
-        iconColor: 'text-[var(--color-text-warning)]'
+        iconColor: 'text-[var(--color-text-warning-bold)]'
       },
       {
         id: 4,
@@ -294,7 +294,7 @@ export const Notifications: Story = {
         time: '1 day ago',
         read: true,
         icon: 'user-plus',
-        iconColor: 'text-[var(--color-text-brand)]'
+        iconColor: 'text-[var(--color-text-brand-bold)]'
       }
     ]
 
@@ -327,8 +327,8 @@ export const Notifications: Story = {
                   key={notification.id}
                   className={`flex gap-3 p-3 rounded-md transition-colors cursor-pointer ${
                     !notification.read 
-                      ? 'bg-[var(--color-background-brand-selected)] hover:bg-[var(--color-background-brand-selected-hovered)]' 
-                      : 'hover:bg-[var(--color-background-neutral-subtle-hovered)]'
+                      ? 'bg-[var(--color-background-blue-subtle-selected)] hover:bg-[var(--color-background-blue-subtle-selected-hovered)]' 
+                      : 'hover:bg-[var(--color-background-neutral-subtlest-hovered)]'
                   }`}
                 >
                   <div className={`mt-1 ${notification.iconColor}`}>
@@ -338,7 +338,7 @@ export const Notifications: Story = {
                     <div className="flex items-start justify-between">
                       <p className="text-body-sm font-medium">{notification.title}</p>
                       {!notification.read && (
-                        <div className="w-2 h-2 bg-[var(--color-background-brand)] rounded-full mt-1"></div>
+                        <div className="w-2 h-2 bg-[var(--color-background-blue-bold)] rounded-full mt-1"></div>
                       )}
                     </div>
                     <p className="text-caption-sm text-[var(--color-text-secondary)]">
@@ -433,7 +433,7 @@ export const SearchPopover: Story = {
                     searchResults.map((item, index) => (
                       <div
                         key={index}
-                        className="flex items-center gap-3 p-2 rounded-md hover:bg-[var(--color-background-neutral-subtle-hovered)] cursor-pointer"
+                        className="flex items-center gap-3 p-2 rounded-md hover:bg-[var(--color-background-neutral-subtlest-hovered)] cursor-pointer"
                       >
                         <Icon name={getItemIcon(item.type) as any} size="sm" className="text-[var(--color-text-secondary)]" />
                         <div className="flex-1">
@@ -523,7 +523,7 @@ export const SharePopover: Story = {
                 </Button>
               </div>
               {linkCopied && (
-                <p className="text-caption-sm text-[var(--color-text-success)]">
+                <p className="text-caption-sm text-[var(--color-text-success-bold)]">
                   Link copied to clipboard!
                 </p>
               )}
@@ -570,7 +570,7 @@ export const SharePopover: Story = {
                     </Avatar>
                     <span className="text-body-sm">Jane Smith</span>
                   </div>
-                  <select className="text-xs border border-[var(--color-border-input)] rounded px-2 py-1">
+                  <select className="text-xs border border-[var(--color-interaction-border-input)] rounded px-2 py-1">
                     <option>Editor</option>
                     <option>Viewer</option>
                     <option>Remove</option>

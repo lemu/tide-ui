@@ -250,7 +250,7 @@ export const RichContent: Story = {
     const showNotificationToast = () => {
       toast(
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-full bg-[var(--color-background-brand)] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full bg-[var(--color-background-blue-bold)] flex items-center justify-center">
             <Icon name="bell" size="sm" className="text-[var(--color-text-on-action)]" />
           </div>
           <div className="flex-1">
@@ -259,7 +259,7 @@ export const RichContent: Story = {
               You have 3 unread messages from your team.
             </p>
             <div className="flex gap-2 mt-2">
-              <button className="text-xs text-[var(--color-text-brand)] hover:underline">
+              <button className="text-xs text-[var(--color-text-brand-bold)] hover:underline">
                 View All
               </button>
               <button className="text-xs text-[var(--color-text-secondary)] hover:underline">
@@ -274,7 +274,7 @@ export const RichContent: Story = {
     const showUpdateToast = () => {
       toast(
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-lg bg-[var(--color-background-success)] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-lg bg-[var(--color-background-success-subtle)] flex items-center justify-center">
             <Icon name="download" size="sm" className="text-[var(--color-text-on-action)]" />
           </div>
           <div className="flex-1">
@@ -283,7 +283,7 @@ export const RichContent: Story = {
               Version 2.4.1 is ready to install with new features and bug fixes.
             </p>
             <div className="flex gap-2 mt-2">
-              <button className="text-xs bg-[var(--color-background-brand)] text-[var(--color-text-on-action)] px-2 py-1 rounded">
+              <button className="text-xs bg-[var(--color-background-blue-bold)] text-[var(--color-text-on-action)] px-2 py-1 rounded">
                 Update Now
               </button>
               <button className="text-xs text-[var(--color-text-secondary)] hover:underline">
@@ -306,9 +306,9 @@ export const RichContent: Story = {
             <p className="font-medium">Downloading file...</p>
             <span className="text-sm text-[var(--color-text-secondary)]">{progress}%</span>
           </div>
-          <div className="w-full bg-[var(--color-background-neutral-subtle)] rounded-full h-2">
+          <div className="w-full bg-[var(--color-background-neutral-subtlest)] rounded-full h-2">
             <div 
-              className="bg-[var(--color-background-brand)] h-2 rounded-full transition-all duration-300"
+              className="bg-[var(--color-background-blue-bold)] h-2 rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -329,9 +329,9 @@ export const RichContent: Story = {
                 </p>
                 <span className="text-sm text-[var(--color-text-secondary)]">{progress}%</span>
               </div>
-              <div className="w-full bg-[var(--color-background-neutral-subtle)] rounded-full h-2">
+              <div className="w-full bg-[var(--color-background-neutral-subtlest)] rounded-full h-2">
                 <div 
-                  className="bg-[var(--color-background-brand)] h-2 rounded-full transition-all duration-300"
+                  className="bg-[var(--color-background-blue-bold)] h-2 rounded-full transition-all duration-300"
                   style={{ width: `${progress}%` }}
                 />
               </div>
@@ -381,7 +381,7 @@ export const InteractiveToast: Story = {
             {[1, 2, 3, 4, 5].map((rating) => (
               <button
                 key={rating}
-                className="p-1 hover:bg-[var(--color-background-neutral-subtle)] rounded"
+                className="p-1 hover:bg-[var(--color-background-neutral-subtlest)] rounded"
                 onClick={() => {
                   toast.success(`Thank you for rating us ${rating} star${rating > 1 ? 's' : ''}!`)
                 }}

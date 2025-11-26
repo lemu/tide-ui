@@ -923,7 +923,7 @@ function DraggableColumnHeader({ header, enableColumnOrdering, children }: Dragg
       </div>
       {enableColumnOrdering && (
         <div
-          className="ml-2 p-1 !cursor-grab active:!cursor-grabbing hover:bg-[var(--color-background-neutral-subtle-hovered)] rounded-sm transition-colors"
+          className="ml-2 p-1 !cursor-grab active:!cursor-grabbing hover:bg-[var(--color-background-neutral-subtlest-hovered)] rounded-sm transition-colors"
           {...attributes}
           {...listeners}
         >
@@ -1197,7 +1197,7 @@ function renderGroupDisplayContent(
   const chevronButton = shouldHideExpander ? null : row.subRows.length > 1 ? (
     <button
       onClick={row.getToggleExpandedHandler()}
-      className="flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]"
+      className="flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
     >
       <Icon
         name={isExpanded ? "chevron-down" : "chevron-right"}
@@ -1327,7 +1327,7 @@ export interface DataTableProps<TData, TValue> {
    * @example
    * expandingRowColors={{
    *   expandedParent: 'var(--blue-50)',
-   *   collapsedParent: 'var(--color-background-neutral-subtle)',
+   *   collapsedParent: 'var(--color-background-neutral-subtlest)',
    *   children: 'var(--blue-25)'
    * }}
    */
@@ -2376,7 +2376,7 @@ export function DataTable<TData, TValue>({
           boxShadow: isHeader
             ? '2px 0 4px 0 rgba(0, 0, 0, 0.08)'
             : showRowBorder
-              ? 'inset 0 -1px 0 0 var(--color-border-primary-bold), 2px 0 4px 0 rgba(0, 0, 0, 0.08)'
+              ? 'inset 0 -1px 0 0 var(--color-border-primary-medium), 2px 0 4px 0 rgba(0, 0, 0, 0.08)'
               : '2px 0 4px 0 rgba(0, 0, 0, 0.08)',
         }
       }
@@ -2412,7 +2412,7 @@ export function DataTable<TData, TValue>({
           boxShadow: isHeader
             ? '-2px 0 4px 0 rgba(0, 0, 0, 0.08)'
             : showRowBorder
-              ? 'inset 0 -1px 0 0 var(--color-border-primary-bold), -2px 0 4px 0 rgba(0, 0, 0, 0.08)'
+              ? 'inset 0 -1px 0 0 var(--color-border-primary-medium), -2px 0 4px 0 rgba(0, 0, 0, 0.08)'
               : '-2px 0 4px 0 rgba(0, 0, 0, 0.08)',
         }
       }
@@ -2432,12 +2432,12 @@ export function DataTable<TData, TValue>({
         onDragEnd={handleDragEnd}
       >
       <div className={cn(
-        "border border-[var(--color-border-primary-bold)] bg-[var(--color-surface-primary)] overflow-hidden rounded-lg",
+        "border border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] overflow-hidden rounded-lg",
         className
       )}>
       {/* Header section with title and toolbar */}
       {showHeader && (
-        <div className="border-b border-[var(--color-border-primary-bold)] bg-[var(--color-surface-primary)] px-[var(--space-lg)] py-[var(--space-md)]">
+        <div className="border-b border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] px-[var(--space-lg)] py-[var(--space-md)]">
           {title && (
             <div className="flex justify-between items-center">
               <h3 className="text-heading-sm font-semibold text-[var(--color-text-primary)]">{title}</h3>
@@ -2465,7 +2465,7 @@ export function DataTable<TData, TValue>({
       {/* Table section with responsive wrapper and sticky features */}
       <div className={cn(
         "relative",
-        showPagination && "border-b border-[var(--color-border-primary-bold)]",
+        showPagination && "border-b border-[var(--color-border-primary-medium)]",
         enableResponsiveWrapper && [
           "overflow-x-auto",
           "scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[var(--color-border-primary-subtle)]",
@@ -2493,7 +2493,7 @@ export function DataTable<TData, TValue>({
           <TableHeader className={cn(
             stickyHeader && [
               "sticky top-0 z-20",
-              "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-[var(--color-border-primary-bold)]"
+              "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-[var(--color-border-primary-medium)]"
             ],
             // Remove bottom border from last header row when pagination is enabled to avoid double border
             showPagination && "[&_tr:last-child]:border-b-0"
@@ -2522,7 +2522,7 @@ export function DataTable<TData, TValue>({
                         colSpan={groupColumnCount}
                         showBorder={borderSettings.showCellBorder}
                         className={cn(
-                          "text-center bg-[var(--color-background-neutral-subtle)] font-medium border-b border-[var(--color-border-primary-bold)]",
+                          "text-center bg-[var(--color-background-neutral-subtlest)] font-medium border-b border-[var(--color-border-primary-medium)]",
                           stickyHeader && "z-20",
                           !showHeader && index === 0 && "rounded-tl-lg",
                           !showHeader && index === nestedHeaders.length - 1 && "rounded-tr-lg",
@@ -2585,8 +2585,8 @@ export function DataTable<TData, TValue>({
                               <div
                                 className={cn(
                                   "absolute right-1 top-0 h-full w-1",
-                                  "hover:bg-[var(--color-border-primary-bold)] active:bg-[var(--color-border-primary-bold)]",
-                                  header.column.getIsResizing() && "bg-[var(--color-border-primary-bold)]"
+                                  "hover:bg-[var(--color-border-primary-medium)] active:bg-[var(--color-border-primary-medium)]",
+                                  header.column.getIsResizing() && "bg-[var(--color-border-primary-medium)]"
                                 )}
                               />
                             </div>
@@ -2648,8 +2648,8 @@ export function DataTable<TData, TValue>({
                                 <div
                                   className={cn(
                                     "absolute right-1 top-0 h-full w-1",
-                                    "hover:bg-[var(--color-border-primary-bold)] active:bg-[var(--color-border-primary-bold)]",
-                                    header.column.getIsResizing() && "bg-[var(--color-border-primary-bold)]"
+                                    "hover:bg-[var(--color-border-primary-medium)] active:bg-[var(--color-border-primary-medium)]",
+                                    header.column.getIsResizing() && "bg-[var(--color-border-primary-medium)]"
                                   )}
                                 />
                               </div>
@@ -2694,11 +2694,11 @@ export function DataTable<TData, TValue>({
                         // Selected row styling
                         row.getIsSelected() && "bg-[var(--blue-25)]",
                         // Pinned row styling using existing CSS variables
-                        row.getIsPinned() === 'top' && "!bg-[var(--color-background-neutral-selected)] !border-b-2 !border-[var(--color-border-primary-bold)]",
-                        row.getIsPinned() === 'bottom' && "!bg-[var(--color-background-neutral-selected)] !border-t-2 !border-[var(--color-border-primary-bold)]",
+                        row.getIsPinned() === 'top' && "!bg-[var(--color-background-neutral-selected)] !border-b-2 !border-[var(--color-border-primary-medium)]",
+                        row.getIsPinned() === 'bottom' && "!bg-[var(--color-background-neutral-selected)] !border-t-2 !border-[var(--color-border-primary-medium)]",
                         // Grouped row styling - blue-50 when expanded, neutral otherwise
                         row.getIsGrouped?.() && row.getIsExpanded() && "bg-[var(--blue-50)] font-medium",
-                        row.getIsGrouped?.() && !row.getIsExpanded() && "bg-[var(--color-background-neutral-subtle)] font-medium",
+                        row.getIsGrouped?.() && !row.getIsExpanded() && "bg-[var(--color-background-neutral-subtlest)] font-medium",
                         // Second level (children of grouped rows) - blue-25
                         enableGrouping && row.depth === 1 && "bg-[var(--blue-25)]",
                         // Bottom-up alternating colors for expanding rows (only when expanded)
@@ -2816,7 +2816,7 @@ export function DataTable<TData, TValue>({
                                 // Grouped expanded rows
                                 row.getIsGrouped?.() && row.getIsExpanded() && "bg-[var(--blue-50)]",
                                 // Grouped collapsed rows
-                                row.getIsGrouped?.() && !row.getIsExpanded() && "bg-[var(--color-background-neutral-subtle)]",
+                                row.getIsGrouped?.() && !row.getIsExpanded() && "bg-[var(--color-background-neutral-subtlest)]",
                                 // Second level rows (children of grouped rows)
                                 enableGrouping && row.depth === 1 && "bg-[var(--blue-25)]",
                                 // Bottom-up alternating colors for expanding rows (only when expanded)
@@ -2925,7 +2925,7 @@ export function DataTable<TData, TValue>({
                                 {isFirstCell && canExpand && (
                                   <button
                                     onClick={row.getToggleExpandedHandler()}
-                                    className="flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]"
+                                    className="flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                   >
                                     <Icon
                                       name={isExpanded ? "chevron-down" : "chevron-right"}
@@ -2939,7 +2939,7 @@ export function DataTable<TData, TValue>({
                                     {row.getIsPinned() !== 'top' && (
                                       <button
                                         onClick={() => row.pin('top')}
-                                        className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]"
+                                        className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                         title="Pin to top"
                                       >
                                         <Icon name="arrow-up-to-line" className="h-3 w-3" />
@@ -2948,7 +2948,7 @@ export function DataTable<TData, TValue>({
                                     {row.getIsPinned() !== 'bottom' && (
                                       <button
                                         onClick={() => row.pin('bottom')}
-                                        className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]"
+                                        className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                         title="Pin to bottom"
                                       >
                                         <Icon name="arrow-down-to-line" className="h-3 w-3" />
@@ -2957,7 +2957,7 @@ export function DataTable<TData, TValue>({
                                     {row.getIsPinned() && (
                                       <button
                                         onClick={() => row.pin(false)}
-                                        className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]"
+                                        className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                         title="Unpin row"
                                       >
                                         <Icon name="x" className="h-3 w-3" />
@@ -3041,11 +3041,11 @@ export function DataTable<TData, TValue>({
                       // Selected row styling
                       row.getIsSelected() && "bg-[var(--blue-25)]",
                       // Pinned row styling using existing CSS variables
-                      row.getIsPinned() === 'top' && "!bg-[var(--color-background-neutral-selected)] !border-b-2 !border-[var(--color-border-primary-bold)]",
-                      row.getIsPinned() === 'bottom' && "!bg-[var(--color-background-neutral-selected)] !border-t-2 !border-[var(--color-border-primary-bold)]",
+                      row.getIsPinned() === 'top' && "!bg-[var(--color-background-neutral-selected)] !border-b-2 !border-[var(--color-border-primary-medium)]",
+                      row.getIsPinned() === 'bottom' && "!bg-[var(--color-background-neutral-selected)] !border-t-2 !border-[var(--color-border-primary-medium)]",
                       // Grouped row styling - blue-50 when expanded, neutral otherwise
                       row.getIsGrouped?.() && row.getIsExpanded() && "bg-[var(--blue-50)] font-medium",
-                      row.getIsGrouped?.() && !row.getIsExpanded() && "bg-[var(--color-background-neutral-subtle)] font-medium",
+                      row.getIsGrouped?.() && !row.getIsExpanded() && "bg-[var(--color-background-neutral-subtlest)] font-medium",
                       // Second level (children of grouped rows) - blue-25
                       enableGrouping && row.depth === 1 && "bg-[var(--blue-25)]",
                       // Bottom-up alternating colors for expanding rows (only when expanded)
@@ -3159,7 +3159,7 @@ export function DataTable<TData, TValue>({
                               // Grouped expanded rows
                               row.getIsGrouped?.() && row.getIsExpanded() && "bg-[var(--blue-50)]",
                               // Grouped collapsed rows
-                              row.getIsGrouped?.() && !row.getIsExpanded() && "bg-[var(--color-background-neutral-subtle)]",
+                              row.getIsGrouped?.() && !row.getIsExpanded() && "bg-[var(--color-background-neutral-subtlest)]",
                               // Second level rows (children of grouped rows)
                               enableGrouping && row.depth === 1 && "bg-[var(--blue-25)]",
                               // Bottom-up alternating colors for expanding rows (only when expanded)
@@ -3271,7 +3271,7 @@ export function DataTable<TData, TValue>({
                               {isFirstCell && canExpand && (
                                 <button
                                   onClick={row.getToggleExpandedHandler()}
-                                  className="flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]"
+                                  className="flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                 >
                                   <Icon
                                     name={isExpanded ? "chevron-down" : "chevron-right"}
@@ -3285,7 +3285,7 @@ export function DataTable<TData, TValue>({
                                   {row.getIsPinned() !== 'top' && (
                                     <button
                                       onClick={() => row.pin('top')}
-                                      className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]"
+                                      className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                       title="Pin to top"
                                     >
                                       <Icon name="arrow-up-to-line" className="h-3 w-3" />
@@ -3294,7 +3294,7 @@ export function DataTable<TData, TValue>({
                                   {row.getIsPinned() !== 'bottom' && (
                                     <button
                                       onClick={() => row.pin('bottom')}
-                                      className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]"
+                                      className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                       title="Pin to bottom"
                                     >
                                       <Icon name="arrow-down-to-line" className="h-3 w-3" />
@@ -3303,7 +3303,7 @@ export function DataTable<TData, TValue>({
                                   {row.getIsPinned() && (
                                     <button
                                       onClick={() => row.pin(false)}
-                                      className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]"
+                                      className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                       title="Unpin row"
                                     >
                                       <Icon name="x" className="h-3 w-3" />

@@ -302,7 +302,7 @@ const ActivityLogValue = React.forwardRef<HTMLDivElement, ActivityLogValueProps>
       <div
         ref={ref}
         className={cn(
-          "inline-flex items-center gap-[var(--space-xsm)] px-[4px] py-[2px] bg-[var(--color-background-neutral-subtle)] border border-[var(--color-border-primary-bold)] rounded-xsm shrink",
+          "inline-flex items-center gap-[var(--space-xsm)] px-[4px] py-[2px] bg-[var(--color-background-neutral-subtlest)] border border-[var(--color-border-primary-medium)] rounded-xsm shrink",
           className
         )}
         {...props}

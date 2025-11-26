@@ -708,10 +708,10 @@ const shippingFixtureColumns: ColumnDef<ShippingFixture>[] = [
           <div
             className={`inline-flex items-center rounded-sm px-2 py-1 text-xs font-medium ${
               status === 'fixed'
-                ? 'bg-[var(--color-background-success)] text-[var(--color-text-success)]'
+                ? 'bg-[var(--color-background-success-subtle)] text-[var(--color-text-success-bold)]'
                 : status === 'pending'
-                ? 'bg-[var(--color-background-warning)] text-[var(--color-text-warning)]'
-                : 'bg-[var(--color-background-error)] text-[var(--color-text-error)]'
+                ? 'bg-[var(--color-background-warning-subtle)] text-[var(--color-text-warning-bold)]'
+                : 'bg-[var(--color-background-error-subtle)] text-[var(--color-text-error-bold)]'
             }`}
           >
             {label}

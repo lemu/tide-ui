@@ -109,9 +109,9 @@ const dropzoneVariants = cva(
   {
     variants: {
       isDragActive: {
-        true: "border-[var(--color-border-brand)] bg-[var(--color-background-brand-subtle)]",
+        true: "border-[var(--color-border-brand-bold)] bg-[var(--color-background-brand-subtle)]",
         false:
-          "border-[var(--color-border-input)] hover:border-[var(--color-border-brand)]",
+          "border-[var(--color-interaction-border-input)] hover:border-[var(--color-border-brand-bold)]",
       },
       disabled: {
         true: "cursor-not-allowed opacity-50",
@@ -328,9 +328,9 @@ const FileUploadItem = React.forwardRef<HTMLDivElement, FileUploadItemProps>(
           "flex items-center gap-3 rounded-lg border p-3",
           "border-[var(--color-border-primary)]",
           file.status === "error" &&
-            "border-[var(--color-border-error)] bg-[var(--color-background-error-subtle)]",
+            "border-[var(--color-border-error-bold)] bg-[var(--color-background-error-subtle)]",
           file.status === "success" &&
-            "border-[var(--color-border-success)] bg-[var(--color-background-success-subtle)]",
+            "border-[var(--color-border-success-bold)] bg-[var(--color-background-success-subtle)]",
           className,
         )}
         {...props}
@@ -410,7 +410,7 @@ const FileUploadItemMetadata = React.forwardRef<
         {formatFileSize(file.file.size)}
       </p>
       {file.error && (
-        <p className="text-caption-sm text-[var(--color-text-error)]">
+        <p className="text-caption-sm text-[var(--color-text-error-bold)]">
           {file.error}
         </p>
       )}

@@ -3,7 +3,7 @@ import { cn } from "../../lib/utils"
 import { cva, type VariantProps } from "class-variance-authority"
 
 const numberScrubberVariants = cva(
-  "flex h-9 w-full rounded-md border border-[var(--color-border-input)] bg-[var(--color-surface-primary)] px-3 py-1 text-body-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-body-sm file:font-medium file:text-[var(--color-text-primary)] placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-border-brand)] disabled:cursor-not-allowed disabled:opacity-50",
+  "flex h-9 w-full rounded-md border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3 py-1 text-body-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-body-sm file:font-medium file:text-[var(--color-text-primary)] placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-border-brand-bold)] disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {

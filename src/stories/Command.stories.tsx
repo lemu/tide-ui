@@ -223,7 +223,7 @@ export const WithStatusIndicators: Story = {
             <Icon name="git-commit" className="mr-2 h-4 w-4" />
             <span>Commit Changes</span>
             <div className="ml-auto flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[var(--color-background-success)]" />
+              <div className="w-2 h-2 rounded-full bg-[var(--color-background-success-subtle)]" />
               <CommandShortcut>⌘↩</CommandShortcut>
             </div>
           </CommandItem>
@@ -243,7 +243,7 @@ export const WithStatusIndicators: Story = {
             <Icon name="play" className="mr-2 h-4 w-4" />
             <span>Start Development</span>
             <div className="ml-auto flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[var(--color-background-warning)]" />
+              <div className="w-2 h-2 rounded-full bg-[var(--color-background-warning-subtle)]" />
               <CommandShortcut>⌘R</CommandShortcut>
             </div>
           </CommandItem>
@@ -256,7 +256,7 @@ export const WithStatusIndicators: Story = {
             <Icon name="upload" className="mr-2 h-4 w-4" />
             <span>Deploy to Staging</span>
             <div className="ml-auto flex items-center gap-2">
-              <Badge appearance="outline" size="sm" className="text-[var(--color-text-information)]">
+              <Badge appearance="outline" size="sm" className="text-[var(--color-text-info-bold)]">
                 Ready
               </Badge>
             </div>
@@ -318,7 +318,7 @@ export const TeamSwitcher: Story = {
                   john@acme.com
                 </span>
               </div>
-              <div className="w-2 h-2 rounded-full bg-[var(--color-background-success)]" />
+              <div className="w-2 h-2 rounded-full bg-[var(--color-background-success-subtle)]" />
             </div>
           </CommandItem>
           <CommandItem>

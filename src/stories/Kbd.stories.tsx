@@ -217,7 +217,7 @@ export const InTooltips: Story = {
 export const InMenus: Story = {
   render: () => (
     <div className="w-64 space-y-[var(--space-sm)] border border-[var(--color-border-primary-subtle)] rounded-lg p-[var(--space-sm)] bg-[var(--color-surface-primary)]">
-      <div className="flex items-center justify-between rounded-md p-[var(--space-sm)] transition-colors hover:bg-[var(--color-background-neutral-subtle)]">
+      <div className="flex items-center justify-between rounded-md p-[var(--space-sm)] transition-colors hover:bg-[var(--color-background-neutral-subtlest)]">
         <div className="flex items-center gap-[var(--space-sm)]">
           <Icon name="plus" size="sm" />
           <span className="text-body-sm">New File</span>
@@ -228,7 +228,7 @@ export const InMenus: Story = {
         </div>
       </div>
 
-      <div className="flex items-center justify-between rounded-md p-[var(--space-sm)] transition-colors hover:bg-[var(--color-background-neutral-subtle)]">
+      <div className="flex items-center justify-between rounded-md p-[var(--space-sm)] transition-colors hover:bg-[var(--color-background-neutral-subtlest)]">
         <div className="flex items-center gap-[var(--space-sm)]">
           <Icon name="settings" size="sm" />
           <span className="text-body-sm">Settings</span>
@@ -239,7 +239,7 @@ export const InMenus: Story = {
         </div>
       </div>
 
-      <div className="flex items-center justify-between rounded-md p-[var(--space-sm)] transition-colors hover:bg-[var(--color-background-neutral-subtle)]">
+      <div className="flex items-center justify-between rounded-md p-[var(--space-sm)] transition-colors hover:bg-[var(--color-background-neutral-subtlest)]">
         <div className="flex items-center gap-[var(--space-sm)]">
           <Icon name="circle-help" size="sm" />
           <span className="text-body-sm">Help</span>

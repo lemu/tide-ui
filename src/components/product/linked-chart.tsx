@@ -273,8 +273,8 @@ export function LinkedChart({
                         variant={isSelected ? "selected" : "default"}
                         className={cn(
                           "cursor-pointer transition-colors",
-                          isHovered && "bg-[var(--color-background-neutral-subtle-hovered)]",
-                          enableRowSelection && "hover:bg-[var(--color-background-neutral-subtle-hovered)]"
+                          isHovered && "bg-[var(--color-background-neutral-subtlest-hovered)]",
+                          enableRowSelection && "hover:bg-[var(--color-background-neutral-subtlest-hovered)]"
                         )}
                       >
                         {columns.map((column) => (
@@ -294,7 +294,7 @@ export function LinkedChart({
 
       {/* Instructions */}
       {enableFiltering && (
-        <Card className="border-[var(--color-border-information)]">
+        <Card className="border-[var(--color-border-info-bold)]">
           <CardContent className="p-[var(--space-md)]">
             <div className="flex items-start gap-[var(--space-sm)]">
               <Icon name="info" size="sm" color="information" className="mt-1" />

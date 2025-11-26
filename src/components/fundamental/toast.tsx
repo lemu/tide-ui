@@ -14,25 +14,25 @@ const Toaster = ({ className, ...props }: ToasterProps) => {
           ),
           description: "group-[.toast]:text-[var(--color-text-secondary)]",
           actionButton: cn(
-            "group-[.toast]:bg-[var(--color-background-brand)] group-[.toast]:text-[var(--color-text-on-action)] group-[.toast]:hover:bg-[var(--color-background-brand-hovered)] group-[.toast]:focus:ring-2 group-[.toast]:focus:ring-[var(--color-border-focus)]"
+            "group-[.toast]:bg-[var(--color-background-blue-bold)] group-[.toast]:text-[var(--color-text-on-action)] group-[.toast]:hover:bg-[var(--color-background-blue-bold-hovered)] group-[.toast]:focus:ring-2 group-[.toast]:focus:ring-[var(--color-border-focused)]"
           ),
           cancelButton: cn(
-            "group-[.toast]:bg-[var(--color-background-neutral-subtle)] group-[.toast]:text-[var(--color-text-secondary)] group-[.toast]:hover:bg-[var(--color-background-neutral-subtle-hovered)] group-[.toast]:focus:ring-2 group-[.toast]:focus:ring-[var(--color-border-focus)]"
+            "group-[.toast]:bg-[var(--color-background-neutral-subtlest)] group-[.toast]:text-[var(--color-text-secondary)] group-[.toast]:hover:bg-[var(--color-background-neutral-subtlest-hovered)] group-[.toast]:focus:ring-2 group-[.toast]:focus:ring-[var(--color-border-focused)]"
           ),
           closeButton: cn(
-            "group-[.toast]:bg-[var(--color-background-neutral-subtle)] group-[.toast]:text-[var(--color-text-secondary)] group-[.toast]:hover:bg-[var(--color-background-neutral-subtle-hovered)] group-[.toast]:focus:ring-2 group-[.toast]:focus:ring-[var(--color-border-focus)]"
+            "group-[.toast]:bg-[var(--color-background-neutral-subtlest)] group-[.toast]:text-[var(--color-text-secondary)] group-[.toast]:hover:bg-[var(--color-background-neutral-subtlest-hovered)] group-[.toast]:focus:ring-2 group-[.toast]:focus:ring-[var(--color-border-focused)]"
           ),
           success: cn(
-            "group-[.toast]:bg-[var(--color-background-success)] group-[.toast]:text-[var(--color-text-success)] group-[.toast]:border-[var(--color-border-success)]"
+            "group-[.toast]:bg-[var(--color-background-success-subtle)] group-[.toast]:text-[var(--color-text-success-bold)] group-[.toast]:border-[var(--color-border-success-bold)]"
           ),
           error: cn(
-            "group-[.toast]:bg-[var(--color-background-error)] group-[.toast]:text-[var(--color-text-error)] group-[.toast]:border-[var(--color-border-error)]"
+            "group-[.toast]:bg-[var(--color-background-error-subtle)] group-[.toast]:text-[var(--color-text-error-bold)] group-[.toast]:border-[var(--color-border-error-bold)]"
           ),
           warning: cn(
-            "group-[.toast]:bg-[var(--color-background-warning)] group-[.toast]:text-[var(--color-text-warning)] group-[.toast]:border-[var(--color-border-warning)]"
+            "group-[.toast]:bg-[var(--color-background-warning-subtle)] group-[.toast]:text-[var(--color-text-warning-bold)] group-[.toast]:border-[var(--color-border-warning-bold)]"
           ),
           info: cn(
-            "group-[.toast]:bg-[var(--color-background-information)] group-[.toast]:text-[var(--color-text-information)] group-[.toast]:border-[var(--color-border-information)]"
+            "group-[.toast]:bg-[var(--color-background-info-subtle)] group-[.toast]:text-[var(--color-text-info-bold)] group-[.toast]:border-[var(--color-border-info-bold)]"
           ),
         },
       }}

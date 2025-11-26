@@ -351,7 +351,7 @@ export const StatusIndicators: Story = {
       <Tooltip>
         <TooltipTrigger asChild>
           <div className="flex cursor-help items-center space-x-[var(--space-sm)]">
-            <div className="h-[var(--size-sm)] w-[var(--size-sm)] rounded-full bg-[var(--color-background-success)]"></div>
+            <div className="h-[var(--size-sm)] w-[var(--size-sm)] rounded-full bg-[var(--color-background-success-subtle)]"></div>
             <span className="text-body-sm">Online</span>
           </div>
         </TooltipTrigger>
@@ -363,7 +363,7 @@ export const StatusIndicators: Story = {
       <Tooltip>
         <TooltipTrigger asChild>
           <div className="flex cursor-help items-center space-x-[var(--space-sm)]">
-            <div className="h-[var(--size-sm)] w-[var(--size-sm)] rounded-full bg-[var(--color-background-warning)]"></div>
+            <div className="h-[var(--size-sm)] w-[var(--size-sm)] rounded-full bg-[var(--color-background-warning-subtle)]"></div>
             <span className="text-body-sm">Warning</span>
           </div>
         </TooltipTrigger>
@@ -375,7 +375,7 @@ export const StatusIndicators: Story = {
       <Tooltip>
         <TooltipTrigger asChild>
           <div className="flex cursor-help items-center space-x-[var(--space-sm)]">
-            <div className="h-[var(--size-sm)] w-[var(--size-sm)] rounded-full bg-[var(--color-background-error)]"></div>
+            <div className="h-[var(--size-sm)] w-[var(--size-sm)] rounded-full bg-[var(--color-background-error-subtle)]"></div>
             <span className="text-body-sm">Offline</span>
           </div>
         </TooltipTrigger>
@@ -474,7 +474,7 @@ export const InteractiveElements: Story = {
       <div className="flex flex-wrap items-center gap-[var(--space-md)]">
         <Tooltip>
           <TooltipTrigger asChild>
-            <button className="cursor-help text-body-sm text-[var(--color-text-brand)] underline decoration-dotted">
+            <button className="cursor-help text-body-sm text-[var(--color-text-brand-bold)] underline decoration-dotted">
               Abbreviated Term
             </button>
           </TooltipTrigger>

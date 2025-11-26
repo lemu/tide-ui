@@ -158,7 +158,7 @@ export const ErrorState: Story = {
     <div className="w-80 space-y-2">
       <Label htmlFor="error-select">
         Payment method
-        <span className="text-[var(--color-text-error)] ml-1">*</span>
+        <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
       </Label>
       <Select name="error-select">
         <SelectTrigger id="error-select" variant="error">
@@ -172,7 +172,7 @@ export const ErrorState: Story = {
           <SelectItem value="google-pay">Google Pay</SelectItem>
         </SelectContent>
       </Select>
-      <div className="flex items-start gap-2 text-body-sm text-[var(--color-text-error)]">
+      <div className="flex items-start gap-2 text-body-sm text-[var(--color-text-error-bold)]">
         <Icon name="circle-alert" size="sm" className="mt-0.5 flex-shrink-0" />
         <span>Please select a payment method to continue.</span>
       </div>
@@ -293,7 +293,7 @@ export const ControlledSelect: Story = {
         </div>
         
         {value && (
-          <div className="p-3 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-information)] rounded-md">
+          <div className="p-3 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-md">
             <p className="text-body-sm">
               Selected: <strong>{value}</strong>
             </p>
@@ -358,7 +358,7 @@ export const InForm: Story = {
             <div className="space-y-2">
               <Label>
                 Category
-                <span className="text-[var(--color-text-error)] ml-1">*</span>
+                <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
               </Label>
               <Select
                 value={formData.category}
@@ -376,7 +376,7 @@ export const InForm: Story = {
                 </SelectContent>
               </Select>
               {errors.category && (
-                <div className="flex items-start gap-2 text-body-sm text-[var(--color-text-error)]">
+                <div className="flex items-start gap-2 text-body-sm text-[var(--color-text-error-bold)]">
                   <Icon name="circle-alert" size="sm" className="mt-0.5 flex-shrink-0" />
                   <span>{errors.category}</span>
                 </div>
@@ -386,7 +386,7 @@ export const InForm: Story = {
             <div className="space-y-2">
               <Label>
                 Priority
-                <span className="text-[var(--color-text-error)] ml-1">*</span>
+                <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
               </Label>
               <Select
                 value={formData.priority}
@@ -403,7 +403,7 @@ export const InForm: Story = {
                 </SelectContent>
               </Select>
               {errors.priority && (
-                <div className="flex items-start gap-2 text-body-sm text-[var(--color-text-error)]">
+                <div className="flex items-start gap-2 text-body-sm text-[var(--color-text-error-bold)]">
                   <Icon name="circle-alert" size="sm" className="mt-0.5 flex-shrink-0" />
                   <span>{errors.priority}</span>
                 </div>
@@ -413,7 +413,7 @@ export const InForm: Story = {
             <div className="space-y-2">
               <Label>
                 Assignee
-                <span className="text-[var(--color-text-error)] ml-1">*</span>
+                <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
               </Label>
               <Select
                 value={formData.assignee}
@@ -443,7 +443,7 @@ export const InForm: Story = {
                 </SelectContent>
               </Select>
               {errors.assignee && (
-                <div className="flex items-start gap-2 text-body-sm text-[var(--color-text-error)]">
+                <div className="flex items-start gap-2 text-body-sm text-[var(--color-text-error-bold)]">
                   <Icon name="circle-alert" size="sm" className="mt-0.5 flex-shrink-0" />
                   <span>{errors.assignee}</span>
                 </div>

@@ -113,7 +113,7 @@ const CommandInput = React.forwardRef<
             e.stopPropagation();
             onClear?.();
           }}
-          className="absolute right-[var(--space-sm)] top-1/2 -translate-y-1/2 flex items-center justify-center w-[16px] h-[16px] rounded-full bg-[var(--color-background-neutral-subtle)] hover:bg-[var(--color-background-neutral-subtle-hovered)] transition-colors"
+          className="absolute right-[var(--space-sm)] top-1/2 -translate-y-1/2 flex items-center justify-center w-[16px] h-[16px] rounded-full bg-[var(--color-background-neutral-subtlest)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors"
           aria-label="Clear search"
         >
           <svg
@@ -199,7 +199,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      "[&]:text-body-md relative flex cursor-pointer select-none items-center rounded-md px-[var(--space-md)] min-h-[var(--size-md)] py-[var(--space-sm)] outline-none transition-colors aria-selected:bg-[var(--color-background-neutral-subtle-hovered)] aria-selected:text-[var(--color-text-primary)] data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
+      "[&]:text-body-md relative flex cursor-pointer select-none items-center rounded-md px-[var(--space-md)] min-h-[var(--size-md)] py-[var(--space-sm)] outline-none transition-colors aria-selected:bg-[var(--color-background-neutral-subtlest-hovered)] aria-selected:text-[var(--color-text-primary)] data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
       className
     )}
     {...props}

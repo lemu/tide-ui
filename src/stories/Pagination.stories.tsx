@@ -144,7 +144,7 @@ export const Interactive: Story = {
                 return (
                   <div
                     key={itemNumber}
-                    className="flex items-center justify-between p-2 bg-[var(--color-background-neutral-subtle)] rounded"
+                    className="flex items-center justify-between p-2 bg-[var(--color-background-neutral-subtlest)] rounded"
                   >
                     <span className="font-medium">Item #{itemNumber}</span>
                     <Badge appearance="outline">Type {((itemNumber - 1) % 4) + 1}</Badge>
@@ -311,7 +311,7 @@ export const DataTableExample: Story = {
                   {currentUsers.map((user) => (
                     <tr
                       key={user.id}
-                      className="border-b border-[var(--color-border-primary-subtle)] hover:bg-[var(--color-background-neutral-subtle-hovered)]"
+                      className="border-b border-[var(--color-border-primary-subtle)] hover:bg-[var(--color-background-neutral-subtlest-hovered)]"
                     >
                       <td className="px-4 py-2 text-body-sm font-medium">{user.name}</td>
                       <td className="px-4 py-2 text-body-sm text-[var(--color-text-secondary)]">

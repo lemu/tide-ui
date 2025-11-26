@@ -89,7 +89,7 @@ export const Default: Story = {
           className="border rounded-lg p-4"
         />
         {selectedItem && (
-          <div className="p-3 bg-[var(--color-background-neutral-subtle)] rounded-lg">
+          <div className="p-3 bg-[var(--color-background-neutral-subtlest)] rounded-lg">
             <p className="text-body-sm">
               Selected: <strong>{selectedItem.name}</strong>
             </p>
@@ -379,7 +379,7 @@ export const NavigationTree: Story = {
             />
             {selectedItem && (
               <div className="mt-4 p-3 bg-[var(--color-background-brand-subtle)] rounded-lg">
-                <p className="text-body-sm text-[var(--color-text-brand)]">
+                <p className="text-body-sm text-[var(--color-text-brand-bold)]">
                   Active: {selectedItem.name}
                 </p>
               </div>

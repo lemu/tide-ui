@@ -14,7 +14,7 @@ const textLinkVariants = cva(
       },
       variant: {
         default:
-          "text-[var(--color-text-action)] hover:text-[var(--color-text-action-hovered)]",
+          "text-[var(--color-text-action-brand-bold)] hover:text-[var(--color-text-action-brand-bold-hovered)]",
         subtle:
           "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]",
       },

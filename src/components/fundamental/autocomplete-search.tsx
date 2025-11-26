@@ -267,7 +267,7 @@ export function AutocompleteSearch({
                         value={`${suggestion.value}|${suggestion.filterLabel}`}
                         onMouseDown={(e) => e.preventDefault()}
                         onSelect={() => handleSelect(suggestion)}
-                        className="text-body-md h-[var(--size-md)] py-0 gap-[var(--space-md)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]"
+                        className="text-body-md h-[var(--size-md)] py-0 gap-[var(--space-md)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                       >
                         <HighlightedText text={suggestion.label} search={value} />
                         {hasFilterContext && (

@@ -557,7 +557,7 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
               <div className="group-data-[collapsible=icon]:hidden">
                 <button
                   onClick={() => setCommandOpen(true)}
-                  className="text-body-md flex h-8 w-full cursor-pointer items-center rounded-md border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-3 py-1 pr-20 pl-8 text-left text-[var(--color-text-tertiary)] transition-colors hover:border-[var(--color-border-primary-bold)] hover:!bg-[var(--color-background-neutral-subtle-hovered)] focus:border-[var(--color-border-brand)] focus:ring-2 focus:ring-[var(--color-border-brand)]/20 focus:ring-offset-0 focus:outline-none active:border-[var(--color-border-primary-bold)]"
+                  className="text-body-md flex h-8 w-full cursor-pointer items-center rounded-md border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-3 py-1 pr-20 pl-8 text-left text-[var(--color-text-tertiary)] transition-colors hover:border-[var(--color-border-primary-medium)] hover:!bg-[var(--color-background-neutral-subtlest-hovered)] focus:border-[var(--color-border-brand-bold)] focus:ring-2 focus:ring-[var(--color-border-brand-bold)]/20 focus:ring-offset-0 focus:outline-none active:border-[var(--color-border-primary-medium)]"
                 >
                   Search
                 </button>
@@ -572,7 +572,7 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
                 <TooltipTrigger asChild>
                   <button
                     onClick={() => setCommandOpen(true)}
-                    className="hidden h-8 w-8 cursor-pointer items-center justify-center rounded border border-[var(--color-border-primary-subtle)] bg-transparent transition-all duration-200 group-data-[collapsible=icon]:flex hover:border-[var(--color-border-primary-bold)] hover:!bg-[var(--color-background-neutral-subtle-hovered)] focus:border-[var(--color-border-brand)] focus:ring-2 focus:ring-[var(--color-border-brand)]/20 focus:ring-offset-0 focus:outline-none active:border-[var(--color-border-primary-bold)]"
+                    className="hidden h-8 w-8 cursor-pointer items-center justify-center rounded border border-[var(--color-border-primary-subtle)] bg-transparent transition-all duration-200 group-data-[collapsible=icon]:flex hover:border-[var(--color-border-primary-medium)] hover:!bg-[var(--color-background-neutral-subtlest-hovered)] focus:border-[var(--color-border-brand-bold)] focus:ring-2 focus:ring-[var(--color-border-brand-bold)]/20 focus:ring-offset-0 focus:outline-none active:border-[var(--color-border-primary-medium)]"
                     aria-label="Search"
                   >
                     <Icon name="search" size="md" color="tertiary" />
@@ -693,7 +693,7 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
                                   key={subItem.title}
                                   className={
                                     subItem.isActive
-                                      ? 'bg-[var(--color-background-brand-selected)] text-[var(--color-text-brand)]'
+                                      ? 'bg-[var(--color-background-blue-subtle-selected)] text-[var(--color-text-brand-bold)]'
                                       : ''
                                   }
                                 >
@@ -767,7 +767,7 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
                 variant="ghost"
                 size="sm"
                 onClick={() => setNewBoardModalOpen(true)}
-                className="h-4 w-4 p-0 text-[var(--color-text-tertiary)] hover:!bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-secondary)]"
+                className="h-4 w-4 p-0 text-[var(--color-text-tertiary)] hover:!bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-secondary)]"
               >
                 <Icon name="plus" size="sm" className="text-[var(--color-text-tertiary)]" />
               </Button>
@@ -819,7 +819,7 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
                           <DropdownMenuSeparator />
                           <DropdownMenuItem
                             icon="trash"
-                            className="cursor-pointer text-[var(--color-text-destructive)] hover:bg-[var(--color-background-destructive-subtle)] hover:text-[var(--color-text-destructive)]"
+                            className="cursor-pointer text-[var(--color-text-error-bold)] hover:bg-[var(--color-background-error-subtle)] hover:text-[var(--color-text-error-bold)]"
                             onClick={() => handleDeleteBoard(item)}
                           >
                             Delete
@@ -983,7 +983,7 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
 
                 <DropdownMenuSeparator />
 
-                <DropdownMenuItem icon="log-out" className="cursor-pointer text-[var(--color-text-destructive)]">
+                <DropdownMenuItem icon="log-out" className="cursor-pointer text-[var(--color-text-error-bold)]">
                   Sign out
                 </DropdownMenuItem>
               </DropdownMenuContent>

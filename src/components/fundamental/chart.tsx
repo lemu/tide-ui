@@ -279,7 +279,7 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
 
   return (
     <div
-      className={`rounded-sm border border-[var(--color-border-primary-bold)] bg-[var(--color-surface-primary)] p-[var(--space-md)] shadow-md min-w-[120px] ${tooltipMaxWidth} z-[9999]`}
+      className={`rounded-sm border border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] p-[var(--space-md)] shadow-md min-w-[120px] ${tooltipMaxWidth} z-[9999]`}
       role="tooltip"
       aria-label="Chart data tooltip"
     >
@@ -830,7 +830,7 @@ export function Chart({
               cursor={{
                 stroke: "var(--color-border-primary)",
                 strokeWidth: 1,
-                fill: "var(--color-background-neutral)",
+                fill: "var(--color-background-neutral-default)",
                 fillOpacity: 1.0
               }}
               position={{ x: undefined, y: undefined }}
@@ -877,7 +877,7 @@ export function Chart({
               cursor={{
                 stroke: "var(--color-border-primary)",
                 strokeWidth: 1,
-                fill: "var(--color-background-neutral)",
+                fill: "var(--color-background-neutral-default)",
                 fillOpacity: 1.0
               }}
               position={{ x: undefined, y: undefined }}
@@ -953,7 +953,7 @@ export function Chart({
               cursor={{
                 stroke: "var(--color-border-primary)",
                 strokeWidth: 1,
-                fill: "var(--color-background-neutral)",
+                fill: "var(--color-background-neutral-default)",
                 fillOpacity: 1.0
               }}
               position={{ x: undefined, y: undefined }}
@@ -1028,7 +1028,7 @@ export function Chart({
               cursor={{
                 stroke: "var(--color-border-primary)",
                 strokeWidth: 1,
-                fill: "var(--color-background-neutral)",
+                fill: "var(--color-background-neutral-default)",
                 fillOpacity: 1.0
               }}
               position={{ x: undefined, y: undefined }}
@@ -1091,7 +1091,7 @@ export function Chart({
               cursor={{
                 stroke: "var(--color-border-primary)",
                 strokeWidth: 1,
-                fill: "var(--color-background-neutral)",
+                fill: "var(--color-background-neutral-default)",
                 fillOpacity: 1.0
               }}
               position={{ x: undefined, y: undefined }}

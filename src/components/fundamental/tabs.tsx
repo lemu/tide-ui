@@ -57,13 +57,13 @@ const tabsTriggerVariants = cva(
       variant: {
         pill: [
           "rounded-sm bg-transparent",
-          "data-[state=active]:bg-[var(--color-background-brand-selected)] data-[state=active]:text-[var(--color-text-brand)] data-[state=active]:[&_svg]:text-[var(--color-text-brand)]",
-          "hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]",
+          "data-[state=active]:bg-[var(--color-background-blue-subtle-selected)] data-[state=active]:text-[var(--color-text-brand-bold)] data-[state=active]:[&_svg]:text-[var(--color-text-brand-bold)]",
+          "hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]",
           "disabled:opacity-50",
         ],
         line: [
           "h-full border-0 border-b-2 border-transparent rounded-none",
-          "data-[state=active]:border-[var(--color-border-selected)] data-[state=active]:text-[var(--color-text-brand)] data-[state=active]:[&_svg]:text-[var(--color-text-brand)] data-[state=active]:shadow-none",
+          "data-[state=active]:border-[var(--color-border-selected)] data-[state=active]:text-[var(--color-text-brand-bold)] data-[state=active]:[&_svg]:text-[var(--color-text-brand-bold)] data-[state=active]:shadow-none",
           "hover:data-[state=inactive]:border-[var(--color-border-action-outline-hovered)] hover:data-[state=inactive]:text-[var(--color-text-primary)] hover:data-[state=inactive]:[&_svg]:text-[var(--color-text-primary)]",
           "focus-visible:data-[state=active]:bg-[var(--color-background-brand-subtle-selected)]",
           "focus-visible:data-[state=inactive]:bg-[var(--color-background-neutral-subtlest-hovered)] focus-visible:data-[state=inactive]:border-[var(--color-border-action-outline-hovered)] focus-visible:data-[state=inactive]:text-[var(--color-text-primary)]",

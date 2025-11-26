@@ -160,7 +160,7 @@ export const FromTop: Story = {
               <Card key={i}>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <Icon name="info" size="sm" className="text-[var(--color-text-information)]" />
+                    <Icon name="info" size="sm" className="text-[var(--color-text-info-bold)]" />
                     <span className="text-body-sm font-medium">System Update</span>
                   </div>
                   <p className="text-caption-sm text-[var(--color-text-secondary)]">
@@ -300,7 +300,7 @@ export const ShoppingCart: Story = {
                     <Button 
                       variant="ghost" 
                       size="sm" 
-                      className="h-8 w-8 p-0 text-[var(--color-text-error)]"
+                      className="h-8 w-8 p-0 text-[var(--color-text-error-bold)]"
                       onClick={() => updateQuantity(item.id, 0)}
                     >
                       <Icon name="trash-2" size="sm" />
@@ -396,7 +396,7 @@ export const FormSheet: Story = {
                 id="support-priority"
                 value={formData.priority}
                 onChange={(e) => setFormData(prev => ({ ...prev, priority: e.target.value }))}
-                className="w-full h-10 px-3 border border-[var(--color-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm"
+                className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm"
               >
                 <option value="low">Low - General inquiry</option>
                 <option value="medium">Medium - Need help</option>
@@ -416,9 +416,9 @@ export const FormSheet: Story = {
               />
             </div>
 
-            <div className="bg-[var(--color-background-information-subtle)] border border-[var(--color-border-information)] rounded-md p-4">
+            <div className="bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-md p-4">
               <div className="flex items-start gap-2">
-                <Icon name="info" size="sm" className="mt-0.5 text-[var(--color-text-information)]" />
+                <Icon name="info" size="sm" className="mt-0.5 text-[var(--color-text-info-bold)]" />
                 <div className="space-y-1">
                   <p className="text-body-sm font-medium">Response Time</p>
                   <ul className="text-caption-sm space-y-1">
@@ -522,7 +522,7 @@ export const FileBrowser: Story = {
                     <Icon name="download" size="sm" className="mr-2" />
                     Download
                   </Button>
-                  <Button size="sm" variant="ghost" className="text-[var(--color-text-error)]">
+                  <Button size="sm" variant="ghost" className="text-[var(--color-text-error-bold)]">
                     <Icon name="trash-2" size="sm" className="mr-2" />
                     Delete
                   </Button>
@@ -532,7 +532,7 @@ export const FileBrowser: Story = {
 
             {/* File list */}
             <div className="border border-[var(--color-border-primary-subtle)] rounded-md">
-              <div className="grid grid-cols-12 gap-4 p-3 border-b border-[var(--color-border-primary-subtle)] bg-[var(--color-background-neutral-subtle)] text-body-sm font-medium">
+              <div className="grid grid-cols-12 gap-4 p-3 border-b border-[var(--color-border-primary-subtle)] bg-[var(--color-background-neutral-subtlest)] text-body-sm font-medium">
                 <div className="col-span-1"></div>
                 <div className="col-span-6">Name</div>
                 <div className="col-span-2">Size</div>
@@ -543,8 +543,8 @@ export const FileBrowser: Story = {
                 {files.map((file) => (
                   <div 
                     key={file.name}
-                    className={`grid grid-cols-12 gap-4 p-3 border-b border-[var(--color-border-primary-subtle)] hover:bg-[var(--color-background-neutral-subtle-hovered)] cursor-pointer transition-colors ${
-                      selectedFiles.includes(file.name) ? 'bg-[var(--color-background-brand-selected)]' : ''
+                    className={`grid grid-cols-12 gap-4 p-3 border-b border-[var(--color-border-primary-subtle)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] cursor-pointer transition-colors ${
+                      selectedFiles.includes(file.name) ? 'bg-[var(--color-background-blue-subtle-selected)]' : ''
                     }`}
                     onClick={() => toggleFileSelection(file.name)}
                   >
@@ -670,7 +670,7 @@ export const SettingsPanel: Story = {
                   <select
                     value={settings.language}
                     onChange={(e) => setSettings(prev => ({ ...prev, language: e.target.value }))}
-                    className="w-full h-10 px-3 border border-[var(--color-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm"
+                    className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm"
                   >
                     <option value="en">English</option>
                     <option value="es">Spanish</option>
@@ -684,7 +684,7 @@ export const SettingsPanel: Story = {
                   <select
                     value={settings.timezone}
                     onChange={(e) => setSettings(prev => ({ ...prev, timezone: e.target.value }))}
-                    className="w-full h-10 px-3 border border-[var(--color-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm"
+                    className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm"
                   >
                     <option value="UTC-8">Pacific Time (UTC-8)</option>
                     <option value="UTC-5">Eastern Time (UTC-5)</option>
@@ -711,7 +711,7 @@ export const SettingsPanel: Story = {
                   <Icon name="credit-card" size="sm" className="mr-2" />
                   Billing & Subscription
                 </Button>
-                <Button variant="ghost" className="w-full justify-start text-[var(--color-text-error)]">
+                <Button variant="ghost" className="w-full justify-start text-[var(--color-text-error-bold)]">
                   <Icon name="log-out" size="sm" className="mr-2" />
                   Sign Out
                 </Button>

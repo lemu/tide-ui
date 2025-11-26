@@ -273,7 +273,7 @@ export const LinkPreview: Story = {
           <HoverCardContent className="w-96">
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="w-12 h-12 bg-[var(--color-background-information)] rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-[var(--color-background-info-subtle)] rounded-lg flex items-center justify-center">
                   <Icon name="book-open" size="md" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">
@@ -322,7 +322,7 @@ export const LinkPreview: Story = {
           <HoverCardContent className="w-96">
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="w-12 h-12 bg-[var(--color-background-success)] rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-[var(--color-background-success-subtle)] rounded-lg flex items-center justify-center">
                   <Icon name="zap" size="md" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">
@@ -371,7 +371,7 @@ export const LinkPreview: Story = {
           <HoverCardContent className="w-96">
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="w-12 h-12 bg-[var(--color-background-brand)] rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-[var(--color-background-blue-bold)] rounded-lg flex items-center justify-center">
                   <Icon name="palette" size="md" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">
@@ -475,7 +475,7 @@ export const ProductCard: Story = {
                   <span className="text-lg font-bold">$1,999</span>
                   <span className="text-body-sm text-[var(--color-text-secondary)] line-through ml-2">$2,199</span>
                 </div>
-                <Badge className="bg-[var(--color-background-success)]">9% off</Badge>
+                <Badge className="bg-[var(--color-background-success-subtle)]">9% off</Badge>
               </div>
               
               <div className="flex gap-2">
@@ -577,7 +577,7 @@ export const FileInfo: Story = {
           <HoverCardContent className="w-72">
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-[var(--color-background-information)] rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-[var(--color-background-info-subtle)] rounded-lg flex items-center justify-center">
                   <Icon name="file-text" size="sm" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">
@@ -607,7 +607,7 @@ export const FileInfo: Story = {
               
               <div className="border-t border-[var(--color-border-primary-subtle)] pt-3">
                 <p className="text-caption-sm text-[var(--color-text-secondary)] mb-2">Preview:</p>
-                <div className="bg-[var(--color-background-neutral-subtle)] p-3 rounded text-caption-sm font-mono">
+                <div className="bg-[var(--color-background-neutral-subtlest)] p-3 rounded text-caption-sm font-mono">
                   # Project Name<br/>
                   <br/>
                   A brief description of the project...<br/>
@@ -630,7 +630,7 @@ export const FileInfo: Story = {
           <HoverCardContent className="w-72">
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-[var(--color-background-success)] rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-[var(--color-background-success-subtle)] rounded-lg flex items-center justify-center">
                   <Icon name="package" size="sm" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">

@@ -4,11 +4,11 @@ import { cn } from "../../lib/utils"
 import { cva, type VariantProps } from "class-variance-authority"
 
 const progressVariants = cva(
-  "relative h-2 w-full rounded-full border border-[var(--color-border-primary-bold)] bg-white p-px",
+  "relative h-2 w-full rounded-full border border-[var(--color-border-primary-medium)] bg-white p-px",
   {
     variants: {
       variant: {
-        default: "bg-[var(--color-background-neutral-subtle)]",
+        default: "bg-[var(--color-background-neutral-subtlest)]",
         success: "bg-[var(--color-background-success-subtle)]",
         warning: "bg-[var(--color-background-warning-subtle)]",
         error: "bg-[var(--color-background-error-subtle)]",
@@ -31,7 +31,7 @@ const progressIndicatorVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-[var(--color-background-brand)]",
+        default: "bg-[var(--color-background-blue-bold)]",
         success: "bg-[var(--green-500)]",
         warning: "bg-[var(--orange-500)]",
         error: "bg-[var(--red-500)]",
@@ -61,7 +61,7 @@ const Progress = React.forwardRef<
       <div className={cn(progressVariants({ variant, size, className }))}>
         <ProgressPrimitive.Root
           ref={ref}
-          className="relative h-full w-full overflow-hidden rounded-full bg-[var(--color-background-neutral-subtle)]"
+          className="relative h-full w-full overflow-hidden rounded-full bg-[var(--color-background-neutral-subtlest)]"
           {...props}
         >
           <ProgressPrimitive.Indicator

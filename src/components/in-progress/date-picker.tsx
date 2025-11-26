@@ -38,7 +38,7 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
             ref={ref}
             variant="ghost"
             className={cn(
-              "w-full justify-start text-left font-normal border border-[var(--color-border-input)] bg-[var(--color-surface-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)]",
+              "w-full justify-start text-left font-normal border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
               !date && "text-[var(--color-text-tertiary)]",
               className
             )}
@@ -106,7 +106,7 @@ const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePickerProps
             ref={ref}
             variant="ghost"
             className={cn(
-              "w-full justify-start text-left font-normal border border-[var(--color-border-input)] bg-[var(--color-surface-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)]",
+              "w-full justify-start text-left font-normal border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
               !dateRange?.from && "text-[var(--color-text-tertiary)]",
               className
             )}

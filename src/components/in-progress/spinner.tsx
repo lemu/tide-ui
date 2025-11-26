@@ -17,13 +17,13 @@ const spinnerVariants = cva(
       },
       variant: {
         default: "text-[var(--color-text-primary)]",
-        primary: "text-[var(--color-text-brand)]",
+        primary: "text-[var(--color-text-brand-bold)]",
         secondary: "text-[var(--color-text-secondary)]",
         tertiary: "text-[var(--color-text-tertiary)]",
         inverse: "text-[var(--color-text-on-action)]",
-        success: "text-[var(--color-text-success)]",
-        warning: "text-[var(--color-text-warning)]",
-        error: "text-[var(--color-text-error)]",
+        success: "text-[var(--color-text-success-bold)]",
+        warning: "text-[var(--color-text-warning-bold)]",
+        error: "text-[var(--color-text-error-bold)]",
         disabled: "text-[var(--color-text-disabled)]",
       },
       speed: {
@@ -192,7 +192,7 @@ const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
       <div
         ref={ref}
         className={cn(
-          "bg-[var(--color-background-neutral-subtle)]",
+          "bg-[var(--color-background-neutral-subtlest)]",
           radiusClass,
           animate && "animate-pulse",
           className
@@ -229,11 +229,11 @@ const Pulse = React.forwardRef<HTMLDivElement, PulseProps>(
     ...props 
   }, ref) => {
     const variantClass = {
-      default: "bg-[var(--color-background-neutral)]",
-      primary: "bg-[var(--color-background-brand)]",
-      success: "bg-[var(--color-background-success)]",
-      warning: "bg-[var(--color-background-warning)]",
-      error: "bg-[var(--color-background-error)]",
+      default: "bg-[var(--color-background-neutral-default)]",
+      primary: "bg-[var(--color-background-blue-bold)]",
+      success: "bg-[var(--color-background-success-subtle)]",
+      warning: "bg-[var(--color-background-warning-subtle)]",
+      error: "bg-[var(--color-background-error-subtle)]",
     }[variant]
 
     const sizeClass = {
@@ -306,8 +306,8 @@ const ProgressDots = React.forwardRef<HTMLDivElement, ProgressDotsProps>(
               "rounded-full transition-colors duration-200",
               sizeClass,
               index === current
-                ? "bg-[var(--color-background-brand)]"
-                : "bg-[var(--color-background-neutral-subtle)]",
+                ? "bg-[var(--color-background-blue-bold)]"
+                : "bg-[var(--color-background-neutral-subtlest)]",
               animate && "transition-all duration-300"
             )}
           />

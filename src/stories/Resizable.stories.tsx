@@ -158,7 +158,7 @@ export const DashboardLayout: Story = {
           <div className="flex h-full flex-col gap-[var(--space-md)] p-[var(--space-lg)]">
             <h3 className="text-heading-sm text-[var(--color-text-primary)]">Navigation</h3>
             <div className="space-y-[var(--space-sm)]">
-              <div className="rounded-md bg-[var(--color-background-brand)] p-[var(--space-sm)] text-[var(--color-text-on-action)]">
+              <div className="rounded-md bg-[var(--color-background-blue-bold)] p-[var(--space-sm)] text-[var(--color-text-on-action)]">
                 <span className="text-body-sm">Dashboard</span>
               </div>
               <div className="rounded-md p-[var(--space-sm)] text-[var(--color-text-secondary)]">
@@ -176,7 +176,7 @@ export const DashboardLayout: Story = {
             <ResizablePanel defaultSize={60} minSize={30}>
               <div className="flex h-full flex-col gap-[var(--space-md)] p-[var(--space-lg)]">
                 <h3 className="text-heading-sm text-[var(--color-text-primary)]">Main Content</h3>
-                <div className="flex-1 rounded-lg bg-[var(--color-background-neutral-subtle)] p-[var(--space-lg)]">
+                <div className="flex-1 rounded-lg bg-[var(--color-background-neutral-subtlest)] p-[var(--space-lg)]">
                   <p className="text-body-md text-[var(--color-text-secondary)]">
                     Primary dashboard content goes here. This panel can be resized vertically
                     and horizontally to accommodate different amounts of content.
@@ -188,7 +188,7 @@ export const DashboardLayout: Story = {
             <ResizablePanel defaultSize={40} minSize={20}>
               <div className="flex h-full flex-col gap-[var(--space-md)] p-[var(--space-lg)]">
                 <h3 className="text-heading-sm text-[var(--color-text-primary)]">Details Panel</h3>
-                <div className="flex-1 rounded-lg bg-[var(--color-background-neutral-subtle)] p-[var(--space-lg)]">
+                <div className="flex-1 rounded-lg bg-[var(--color-background-neutral-subtlest)] p-[var(--space-lg)]">
                   <p className="text-body-sm text-[var(--color-text-secondary)]">
                     Secondary information, logs, or detail views can be displayed here.
                   </p>
@@ -216,7 +216,7 @@ export const CodeEditorLayout: Story = {
             <div className="space-y-1">
               <div className="text-body-sm text-[var(--color-text-secondary)]">📁 src/</div>
               <div className="pl-[var(--space-md)] text-body-sm text-[var(--color-text-secondary)]">📄 index.ts</div>
-              <div className="pl-[var(--space-md)] text-body-sm text-[var(--color-text-brand)]">📄 App.tsx</div>
+              <div className="pl-[var(--space-md)] text-body-sm text-[var(--color-text-brand-bold)]">📄 App.tsx</div>
               <div className="pl-[var(--space-md)] text-body-sm text-[var(--color-text-secondary)]">📄 styles.css</div>
               <div className="text-body-sm text-[var(--color-text-secondary)]">📁 components/</div>
               <div className="text-body-sm text-[var(--color-text-secondary)]">📄 package.json</div>
@@ -229,7 +229,7 @@ export const CodeEditorLayout: Story = {
             <ResizablePanel defaultSize={70} minSize={50}>
               <div className="h-full p-[var(--space-md)]">
                 <h4 className="text-heading-xsm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Editor</h4>
-                <div className="h-full rounded-md bg-[var(--color-background-neutral-subtle)] p-[var(--space-md)] font-mono text-body-sm">
+                <div className="h-full rounded-md bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] font-mono text-body-sm">
                   <div className="text-[var(--color-text-secondary)]">
                     <span className="text-blue-500">import</span> React <span className="text-blue-500">from</span> <span className="text-green-500">'react'</span>
                   </div>

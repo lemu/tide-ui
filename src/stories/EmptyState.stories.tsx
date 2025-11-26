@@ -285,7 +285,7 @@ export const DashboardNoData: Story = {
                 }
               />
             ) : (
-              <div className="h-32 bg-[var(--color-background-neutral-subtle)] rounded flex items-center justify-center">
+              <div className="h-32 bg-[var(--color-background-neutral-subtlest)] rounded flex items-center justify-center">
                 <span className="text-body-sm text-[var(--color-text-secondary)]">
                   Sales chart would appear here
                 </span>
@@ -451,7 +451,7 @@ export const ErrorStates: Story = {
             <CardTitle className="flex items-center gap-2">
               <Icon 
                 name={connectionStatus === 'error' ? 'wifi-off' : 'wifi'} 
-                className={connectionStatus === 'error' ? 'text-[var(--color-text-error)]' : 'text-[var(--color-text-success)]'}
+                className={connectionStatus === 'error' ? 'text-[var(--color-text-error-bold)]' : 'text-[var(--color-text-success-bold)]'}
               />
               Network Status
             </CardTitle>
@@ -473,8 +473,8 @@ export const ErrorStates: Story = {
               />
             ) : (
               <div className="text-center py-8">
-                <Icon name="check-circle" size="lg" className="mx-auto mb-2 text-[var(--color-text-success)]" />
-                <p className="text-body-sm text-[var(--color-text-success)]">
+                <Icon name="check-circle" size="lg" className="mx-auto mb-2 text-[var(--color-text-success-bold)]" />
+                <p className="text-body-sm text-[var(--color-text-success-bold)]">
                   Connected successfully
                 </p>
               </div>
@@ -487,7 +487,7 @@ export const ErrorStates: Story = {
             <CardTitle className="flex items-center gap-2">
               <Icon 
                 name={authStatus === 'unauthorized' ? 'lock' : 'unlock'} 
-                className={authStatus === 'unauthorized' ? 'text-[var(--color-text-error)]' : 'text-[var(--color-text-success)]'}
+                className={authStatus === 'unauthorized' ? 'text-[var(--color-text-error-bold)]' : 'text-[var(--color-text-success-bold)]'}
               />
               Access Status
             </CardTitle>
@@ -509,8 +509,8 @@ export const ErrorStates: Story = {
               />
             ) : (
               <div className="text-center py-8">
-                <Icon name="shield-check" size="lg" className="mx-auto mb-2 text-[var(--color-text-success)]" />
-                <p className="text-body-sm text-[var(--color-text-success)]">
+                <Icon name="shield-check" size="lg" className="mx-auto mb-2 text-[var(--color-text-success-bold)]" />
+                <p className="text-body-sm text-[var(--color-text-success-bold)]">
                   Access granted
                 </p>
               </div>
@@ -662,7 +662,7 @@ export const ComingSoonFeature: Story = {
                     Notify Me When Ready
                   </Button>
                 ) : (
-                  <div className="flex items-center gap-2 text-[var(--color-text-success)]">
+                  <div className="flex items-center gap-2 text-[var(--color-text-success-bold)]">
                     <Icon name="check" size="sm" />
                     <span className="text-body-sm">You'll be notified when this feature launches</span>
                   </div>

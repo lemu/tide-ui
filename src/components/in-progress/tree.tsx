@@ -118,8 +118,8 @@ const TreeItem = React.forwardRef<HTMLDivElement, TreeItemProps>(
         <div
           className={cn(
             "flex items-center gap-1 rounded-sm py-1 pr-1 text-body-sm cursor-pointer",
-            "hover:bg-[var(--color-background-neutral-subtle-hovered)]",
-            isSelected && "bg-[var(--color-background-neutral-subtle)] text-[var(--color-text-primary)]",
+            "hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
+            isSelected && "bg-[var(--color-background-neutral-subtlest)] text-[var(--color-text-primary)]",
             item.disabled && "opacity-50 cursor-not-allowed"
           )}
           style={{ paddingLeft: `${level * 16 + 8}px` }}

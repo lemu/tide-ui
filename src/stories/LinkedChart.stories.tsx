@@ -484,7 +484,7 @@ export const TrafficAnalytics: Story = {
           <select
             value={timeRange}
             onChange={(e) => setTimeRange(e.target.value)}
-            className="border border-[var(--color-border-input)] rounded px-3 py-2 text-body-sm"
+            className="border border-[var(--color-interaction-border-input)] rounded px-3 py-2 text-body-sm"
           >
             {timeRanges.map((range) => (
               <option key={range.value} value={range.value}>
@@ -546,7 +546,7 @@ export const TrafficAnalytics: Story = {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                <div className="flex items-start gap-2 p-3 bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success)] rounded-md">
+                <div className="flex items-start gap-2 p-3 bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] rounded-md">
                   <Icon name="check-circle" size="sm" color="success" />
                   <div>
                     <p className="text-body-sm font-medium">High Engagement</p>
@@ -556,7 +556,7 @@ export const TrafficAnalytics: Story = {
                   </div>
                 </div>
                 
-                <div className="flex items-start gap-2 p-3 bg-[var(--color-background-warning-subtle)] border border-[var(--color-border-warning)] rounded-md">
+                <div className="flex items-start gap-2 p-3 bg-[var(--color-background-warning-subtle)] border border-[var(--color-border-warning-bold)] rounded-md">
                   <Icon name="alert-triangle" size="sm" color="warning" />
                   <div>
                     <p className="text-body-sm font-medium">Higher Bounce Rate</p>
@@ -778,7 +778,7 @@ export const MultiChartDashboard: Story = {
         )}
 
         {/* Features Info */}
-        <Card className="border-[var(--color-border-success)]">
+        <Card className="border-[var(--color-border-success-bold)]">
           <CardContent className="p-4">
             <div className="flex items-start gap-3">
               <Icon name="lightbulb" size="sm" color="success" className="mt-1" />
@@ -927,7 +927,7 @@ export const ExpenseTracking: Story = {
               {expenseData
                 .filter(item => (item.spent / item.budget) > 0.95)
                 .map((item, index) => (
-                  <div key={index} className="flex items-start gap-2 p-3 bg-[var(--color-background-warning-subtle)] border border-[var(--color-border-warning)] rounded-md">
+                  <div key={index} className="flex items-start gap-2 p-3 bg-[var(--color-background-warning-subtle)] border border-[var(--color-border-warning-bold)] rounded-md">
                     <Icon name="alert-triangle" size="sm" color="warning" />
                     <div>
                       <p className="text-body-sm font-medium">{item.name} - Near Budget Limit</p>
@@ -941,7 +941,7 @@ export const ExpenseTracking: Story = {
               {expenseData
                 .filter(item => item.remaining === 0)
                 .map((item, index) => (
-                  <div key={index} className="flex items-start gap-2 p-3 bg-[var(--color-background-error-subtle)] border border-[var(--color-border-error)] rounded-md">
+                  <div key={index} className="flex items-start gap-2 p-3 bg-[var(--color-background-error-subtle)] border border-[var(--color-border-error-bold)] rounded-md">
                     <Icon name="alert-circle" size="sm" color="error" />
                     <div>
                       <p className="text-body-sm font-medium">{item.name} - Budget Exceeded</p>

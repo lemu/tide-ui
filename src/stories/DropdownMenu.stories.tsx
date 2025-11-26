@@ -227,7 +227,7 @@ export const TextLinkTrigger: Story = {
   render: () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-auto p-0 font-normal text-[var(--color-text-brand)] hover:text-[var(--color-text-brand-hovered)]">
+        <Button variant="ghost" className="h-auto p-0 font-normal text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)]">
           john.doe@example.com
           <Icon name="chevron-down" size="sm" className="ml-1" />
         </Button>
@@ -256,7 +256,7 @@ export const AvatarTrigger: Story = {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-[var(--size-md)] w-[var(--size-md)] rounded-full p-0">
-          <div className="h-[var(--size-md)] w-[var(--size-md)] rounded-full bg-[var(--color-background-brand)] flex items-center justify-center">
+          <div className="h-[var(--size-md)] w-[var(--size-md)] rounded-full bg-[var(--color-background-blue-bold)] flex items-center justify-center">
             <span className="text-xs font-medium text-[var(--color-text-on-action)]">
               JD
             </span>
@@ -333,7 +333,7 @@ export const TableRowActions: Story = {
 export const NavigationUserMenu: Story = {
   render: () => (
     <div className="flex items-center space-x-[var(--space-md)] p-[var(--space-md)] border border-[var(--color-border-primary-subtle)] rounded-md max-w-sm">
-      <div className="h-10 w-10 rounded-full bg-[var(--color-background-brand)] flex items-center justify-center">
+      <div className="h-10 w-10 rounded-full bg-[var(--color-background-blue-bold)] flex items-center justify-center">
         <span className="text-sm font-medium text-[var(--color-text-on-action)]">
           AB
         </span>
@@ -782,8 +782,8 @@ export const AutomaticIconIntegration: Story = {
         </div>
       </div>
 
-      <div className="mt-[var(--space-2xlg)] p-[var(--space-lg)] bg-[var(--color-background-brand)] bg-opacity-5 rounded-lg border border-[var(--color-border-brand)]">
-        <h3 className="text-heading-sm mb-[var(--space-md)] text-[var(--color-text-brand)]">Benefits of Automatic Icon Integration</h3>
+      <div className="mt-[var(--space-2xlg)] p-[var(--space-lg)] bg-[var(--color-background-blue-bold)] bg-opacity-5 rounded-lg border border-[var(--color-border-brand-bold)]">
+        <h3 className="text-heading-sm mb-[var(--space-md)] text-[var(--color-text-brand-bold)]">Benefits of Automatic Icon Integration</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-md)] text-body-sm">
           <div>
             <h4 className="font-medium mb-[var(--space-sm)]">Developer Experience</h4>

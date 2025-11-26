@@ -178,7 +178,7 @@ export const WithTitleAndNumericColumns: Story = {
         <div className="flex items-center space-x-2">
           <input
             placeholder="Search months..."
-            className="h-8 w-[150px] lg:w-[250px] rounded-md border border-[var(--color-border-input)] px-3 text-body-sm placeholder:text-[var(--color-text-placeholder)] focus:border-[var(--color-border-focus)] focus:outline-none focus:ring-2 focus:ring-[var(--color-ring)] focus:ring-offset-2"
+            className="h-8 w-[150px] lg:w-[250px] rounded-md border border-[var(--color-interaction-border-input)] px-3 text-body-sm placeholder:text-[var(--color-text-placeholder)] focus:border-[var(--color-border-focus)] focus:outline-none focus:ring-2 focus:ring-[var(--color-ring)] focus:ring-offset-2"
           />
         </div>
 
@@ -188,7 +188,7 @@ export const WithTitleAndNumericColumns: Story = {
           title="Summary by laycan date"
         />
 
-        <div className="mt-6 p-4 bg-[var(--color-background-neutral-subtle)] rounded-md">
+        <div className="mt-6 p-4 bg-[var(--color-background-neutral-subtlest)] rounded-md">
           <h4 className="text-body-md font-medium mb-3">New Features Demonstrated:</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-body-sm text-[var(--color-text-secondary)]">
             <div>
@@ -590,7 +590,7 @@ export const AdvancedFeatures: Story = {
         searchPlaceholder="Search users..."
       />
 
-      <div className="mt-6 p-4 bg-[var(--color-background-neutral-subtle)] rounded-md">
+      <div className="mt-6 p-4 bg-[var(--color-background-neutral-subtlest)] rounded-md">
         <h4 className="text-body-md font-medium mb-3">Advanced Features Demonstrated:</h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-body-sm text-[var(--color-text-secondary)]">
           <div>
@@ -718,11 +718,11 @@ const productColumns: ColumnDef<Product>[] = [
         if (stock === 0) {
           return <Badge intent="destructive" appearance="solid" className="ml-2">Out of Stock</Badge>
         } else if (stock <= 10) {
-          return <Badge className="ml-2 bg-[var(--color-background-warning-subtle)] text-[var(--color-text-warning)] border-[var(--color-border-warning)]">Low Stock</Badge>
+          return <Badge className="ml-2 bg-[var(--color-background-warning-subtle)] text-[var(--color-text-warning-bold)] border-[var(--color-border-warning-bold)]">Low Stock</Badge>
         } else if (stock <= 50) {
           return <Badge className="ml-2">In Stock</Badge>
         } else {
-          return <Badge className="ml-2 bg-[var(--color-background-success-subtle)] text-[var(--color-text-success)] border-[var(--color-border-success)]">High Stock</Badge>
+          return <Badge className="ml-2 bg-[var(--color-background-success-subtle)] text-[var(--color-text-success-bold)] border-[var(--color-border-success-bold)]">High Stock</Badge>
         }
       }
 
@@ -1030,8 +1030,8 @@ const analyticsColumns: ColumnDef<AnalyticsData>[] = [
       return (
         <div className="flex items-center gap-2">
           <span>{rate}%</span>
-          {rate > 40 && <Icon name="trending-up" size="sm" className="text-[var(--color-text-error)]" />}
-          {rate <= 20 && <Icon name="trending-down" size="sm" className="text-[var(--color-text-success)]" />}
+          {rate > 40 && <Icon name="trending-up" size="sm" className="text-[var(--color-text-error-bold)]" />}
+          {rate <= 20 && <Icon name="trending-down" size="sm" className="text-[var(--color-text-success-bold)]" />}
         </div>
       )
     },
@@ -3399,10 +3399,10 @@ This feature is useful for:
               </div>
             </div>
 
-            <div className="bg-[var(--color-background-neutral-subtle)] border border-[var(--color-border-primary-subtle)] rounded-md p-[var(--space-md)]">
+            <div className="bg-[var(--color-background-neutral-subtlest)] border border-[var(--color-border-primary-subtle)] rounded-md p-[var(--space-md)]">
               <h3 className="text-heading-sm mb-[var(--space-sm)]">Implementation: renderInGroupedRows</h3>
               <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-                By default, grouped rows show empty cells (or aggregated data if configured) for all columns except the first. To render custom content in grouped rows, add the <code className="bg-[var(--color-background-neutral-subtle)] px-[var(--space-xs)] py-[1px] rounded text-body-sm">renderInGroupedRows: true</code> flag to your column's meta:
+                By default, grouped rows show empty cells (or aggregated data if configured) for all columns except the first. To render custom content in grouped rows, add the <code className="bg-[var(--color-background-neutral-subtlest)] px-[var(--space-xs)] py-[1px] rounded text-body-sm">renderInGroupedRows: true</code> flag to your column's meta:
               </p>
               <pre className="bg-[var(--color-background-primary)] border border-[var(--color-border-primary-subtle)] rounded-md p-[var(--space-md)] overflow-x-auto">
                 <code className="text-caption-sm">{`{
@@ -3577,8 +3577,8 @@ Notice how the entire group stays visible and expands automatically, with matche
             </div>
             <div className="bg-[var(--color-background-warning-subtle)] border border-[var(--color-border-warning-subtle)] rounded-md p-[var(--space-md)]">
               <div className="flex items-center gap-[var(--space-sm)]">
-                <Icon name="lightbulb" className="h-4 w-4 text-[var(--color-text-warning)]" />
-                <span className="text-body-sm text-[var(--color-text-warning)]">
+                <Icon name="lightbulb" className="h-4 w-4 text-[var(--color-text-warning-bold)]" />
+                <span className="text-body-sm text-[var(--color-text-warning-bold)]">
                   <strong>Tip:</strong> Use the settings menu (gear icon) to try different grouping options
                   (Instrument, Counterparty, Trader, Status, Side) and see how the search preserves the group structure.
                 </span>
@@ -5247,7 +5247,7 @@ export const NestedHeaders: Story = {
               return (
                 <div className="flex items-center gap-[var(--space-sm)]">
                   <div className="h-6 w-6 rounded-full bg-[var(--color-background-brand-subtle)] flex items-center justify-center">
-                    <span className="text-caption-sm font-medium text-[var(--color-text-brand)]">
+                    <span className="text-caption-sm font-medium text-[var(--color-text-brand-bold)]">
                       {trader.charAt(0)}
                     </span>
                   </div>
@@ -5296,8 +5296,8 @@ export const NestedHeaders: Story = {
                 <div className={cn(
                   "text-right font-mono",
                   isPositive
-                    ? "text-[var(--color-text-success)]"
-                    : "text-[var(--color-text-destructive)]"
+                    ? "text-[var(--color-text-success-bold)]"
+                    : "text-[var(--color-text-error-bold)]"
                 )}>
                   {isPositive ? '+' : ''}${pnl.toFixed(0)}
                 </div>
@@ -5326,10 +5326,10 @@ export const NestedHeaders: Story = {
             cell: ({ row }) => {
               const status = row.getValue('status') as string
               const statusColors = {
-                'active': 'text-[var(--color-text-success)] bg-[var(--color-background-success-subtle)]',
-                'pending': 'text-[var(--color-text-warning)] bg-[var(--color-background-warning-subtle)]',
-                'settled': 'text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-subtle)]',
-                'cancelled': 'text-[var(--color-text-destructive)] bg-[var(--color-background-destructive-subtle)]',
+                'active': 'text-[var(--color-text-success-bold)] bg-[var(--color-background-success-subtle)]',
+                'pending': 'text-[var(--color-text-warning-bold)] bg-[var(--color-background-warning-subtle)]',
+                'settled': 'text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-subtlest)]',
+                'cancelled': 'text-[var(--color-text-error-bold)] bg-[var(--color-background-error-subtle)]',
               }
               return (
                 <Badge
@@ -6362,8 +6362,8 @@ Use \`isRowClickable\` to customize which rows can be clicked.
             </CardHeader>
             <CardContent className="space-y-[var(--space-md)]">
               <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-md)] rounded-md">
-                <strong>Accessibility:</strong> Press <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-bold)] rounded">Tab</kbd> to navigate between rows,
-                then press <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-bold)] rounded">Enter</kbd> or <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-bold)] rounded">Space</kbd> to activate.
+                <strong>Accessibility:</strong> Press <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-medium)] rounded">Tab</kbd> to navigate between rows,
+                then press <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-medium)] rounded">Enter</kbd> or <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-medium)] rounded">Space</kbd> to activate.
               </div>
               <DataTable
                 data={productData.slice(0, 5)}

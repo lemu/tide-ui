@@ -154,21 +154,21 @@ export const FAQ: Story = {
               <p>We take data security very seriously and implement multiple layers of protection:</p>
               <div className="grid gap-3">
                 <div className="flex items-start gap-3">
-                  <Icon name="shield-check" size="sm" className="mt-1 text-[var(--color-text-success)]" />
+                  <Icon name="shield-check" size="sm" className="mt-1 text-[var(--color-text-success-bold)]" />
                   <div>
                     <p className="font-medium">End-to-end encryption</p>
                     <p className="text-body-sm text-[var(--color-text-secondary)]">All data is encrypted in transit and at rest</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Icon name="server" size="sm" className="mt-1 text-[var(--color-text-information)]" />
+                  <Icon name="server" size="sm" className="mt-1 text-[var(--color-text-info-bold)]" />
                   <div>
                     <p className="font-medium">SOC 2 Type II compliant</p>
                     <p className="text-body-sm text-[var(--color-text-secondary)]">Independently audited security controls</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Icon name="users" size="sm" className="mt-1 text-[var(--color-text-warning)]" />
+                  <Icon name="users" size="sm" className="mt-1 text-[var(--color-text-warning-bold)]" />
                   <div>
                     <p className="font-medium">Role-based access control</p>
                     <p className="text-body-sm text-[var(--color-text-secondary)]">Granular permissions and user management</p>
@@ -265,9 +265,9 @@ export const FAQ: Story = {
           <AccordionContent>
             <div className="space-y-3">
               <p>Yes, you can cancel your subscription at any time with no questions asked.</p>
-              <div className="bg-[var(--color-background-information-subtle)] border border-[var(--color-border-information)] rounded-md p-4">
+              <div className="bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-md p-4">
                 <div className="flex items-start gap-3">
-                  <Icon name="info" size="sm" className="mt-0.5 text-[var(--color-text-information)]" />
+                  <Icon name="info" size="sm" className="mt-0.5 text-[var(--color-text-info-bold)]" />
                   <div className="space-y-1">
                     <p className="font-medium">What happens when you cancel:</p>
                     <ul className="text-body-sm space-y-1">
@@ -312,14 +312,14 @@ export const SettingsAccordion: Story = {
                 <div className="space-y-2">
                   <label className="text-body-sm font-medium">First Name</label>
                   <input 
-                    className="w-full h-8 px-2 border border-[var(--color-border-input)] rounded text-body-sm"
+                    className="w-full h-8 px-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm"
                     defaultValue="John"
                   />
                 </div>
                 <div className="space-y-2">
                   <label className="text-body-sm font-medium">Last Name</label>
                   <input 
-                    className="w-full h-8 px-2 border border-[var(--color-border-input)] rounded text-body-sm"
+                    className="w-full h-8 px-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm"
                     defaultValue="Doe"
                   />
                 </div>
@@ -327,7 +327,7 @@ export const SettingsAccordion: Story = {
               <div className="space-y-2">
                 <label className="text-body-sm font-medium">Email</label>
                 <input 
-                  className="w-full h-8 px-2 border border-[var(--color-border-input)] rounded text-body-sm"
+                  className="w-full h-8 px-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm"
                   defaultValue="john@example.com"
                   type="email"
                 />
@@ -396,9 +396,9 @@ export const SettingsAccordion: Story = {
               <div className="space-y-3">
                 <div>
                   <h4 className="text-body-sm font-medium mb-2">Two-Factor Authentication</h4>
-                  <div className="flex items-center justify-between p-3 border border-[var(--color-border-success)] bg-[var(--color-background-success-subtle)] rounded-md">
+                  <div className="flex items-center justify-between p-3 border border-[var(--color-border-success-bold)] bg-[var(--color-background-success-subtle)] rounded-md">
                     <div className="flex items-center gap-2">
-                      <Icon name="shield-check" size="sm" className="text-[var(--color-text-success)]" />
+                      <Icon name="shield-check" size="sm" className="text-[var(--color-text-success-bold)]" />
                       <span className="text-body-sm">Enabled</span>
                     </div>
                     <Button size="sm" variant="ghost">Manage</Button>
@@ -530,7 +530,7 @@ export const ProductShowcase: Story = {
         <AccordionItem value="performance">
           <AccordionTrigger>
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-[var(--color-background-success)] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-[var(--color-background-success-subtle)] flex items-center justify-center">
                 <Icon name="zap" size="sm" className="text-[var(--color-text-on-action)]" />
               </div>
               <span>Lightning Fast Performance</span>
@@ -542,20 +542,20 @@ export const ProductShowcase: Story = {
               
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div>
-                  <div className="text-2xl font-bold text-[var(--color-text-brand)]">99.9%</div>
+                  <div className="text-2xl font-bold text-[var(--color-text-brand-bold)]">99.9%</div>
                   <div className="text-caption-sm text-[var(--color-text-secondary)]">Uptime</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-[var(--color-text-brand)]">&lt;100ms</div>
+                  <div className="text-2xl font-bold text-[var(--color-text-brand-bold)]">&lt;100ms</div>
                   <div className="text-caption-sm text-[var(--color-text-secondary)]">Response Time</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-[var(--color-text-brand)]">10M+</div>
+                  <div className="text-2xl font-bold text-[var(--color-text-brand-bold)]">10M+</div>
                   <div className="text-caption-sm text-[var(--color-text-secondary)]">Requests/day</div>
                 </div>
               </div>
               
-              <div className="bg-[var(--color-background-neutral-subtle)] p-4 rounded-md">
+              <div className="bg-[var(--color-background-neutral-subtlest)] p-4 rounded-md">
                 <h4 className="font-medium mb-2">Performance Features:</h4>
                 <ul className="space-y-1 text-body-sm">
                   <li>• Global CDN with edge caching</li>
@@ -571,7 +571,7 @@ export const ProductShowcase: Story = {
         <AccordionItem value="security">
           <AccordionTrigger>
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-[var(--color-background-information)] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-[var(--color-background-info-subtle)] flex items-center justify-center">
                 <Icon name="shield" size="sm" className="text-[var(--color-text-on-action)]" />
               </div>
               <span>Enterprise-Grade Security</span>
@@ -582,22 +582,22 @@ export const ProductShowcase: Story = {
               <p>Your data security is our top priority. We implement industry-leading security measures.</p>
               
               <div className="grid gap-3">
-                <div className="flex items-start gap-3 p-3 border border-[var(--color-border-success)] bg-[var(--color-background-success-subtle)] rounded-md">
-                  <Icon name="check-circle" size="sm" className="mt-0.5 text-[var(--color-text-success)]" />
+                <div className="flex items-start gap-3 p-3 border border-[var(--color-border-success-bold)] bg-[var(--color-background-success-subtle)] rounded-md">
+                  <Icon name="check-circle" size="sm" className="mt-0.5 text-[var(--color-text-success-bold)]" />
                   <div>
                     <p className="font-medium">SOC 2 Type II Compliant</p>
                     <p className="text-body-sm text-[var(--color-text-secondary)]">Independently audited security controls</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 p-3 border border-[var(--color-border-success)] bg-[var(--color-background-success-subtle)] rounded-md">
-                  <Icon name="check-circle" size="sm" className="mt-0.5 text-[var(--color-text-success)]" />
+                <div className="flex items-start gap-3 p-3 border border-[var(--color-border-success-bold)] bg-[var(--color-background-success-subtle)] rounded-md">
+                  <Icon name="check-circle" size="sm" className="mt-0.5 text-[var(--color-text-success-bold)]" />
                   <div>
                     <p className="font-medium">ISO 27001 Certified</p>
                     <p className="text-body-sm text-[var(--color-text-secondary)]">International security management standard</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 p-3 border border-[var(--color-border-success)] bg-[var(--color-background-success-subtle)] rounded-md">
-                  <Icon name="check-circle" size="sm" className="mt-0.5 text-[var(--color-text-success)]" />
+                <div className="flex items-start gap-3 p-3 border border-[var(--color-border-success-bold)] bg-[var(--color-background-success-subtle)] rounded-md">
+                  <Icon name="check-circle" size="sm" className="mt-0.5 text-[var(--color-text-success-bold)]" />
                   <div>
                     <p className="font-medium">GDPR Compliant</p>
                     <p className="text-body-sm text-[var(--color-text-secondary)]">Full compliance with data protection regulations</p>
@@ -611,7 +611,7 @@ export const ProductShowcase: Story = {
         <AccordionItem value="scalability">
           <AccordionTrigger>
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-[var(--color-background-warning)] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-[var(--color-background-warning-subtle)] flex items-center justify-center">
                 <Icon name="trending-up" size="sm" className="text-[var(--color-text-on-action)]" />
               </div>
               <span>Infinite Scalability</span>
@@ -657,7 +657,7 @@ export const ProductShowcase: Story = {
         <AccordionItem value="support">
           <AccordionTrigger>
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-[var(--color-background-error)] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-[var(--color-background-error-subtle)] flex items-center justify-center">
                 <Icon name="heart" size="sm" className="text-[var(--color-text-on-action)]" />
               </div>
               <span>24/7 Expert Support</span>

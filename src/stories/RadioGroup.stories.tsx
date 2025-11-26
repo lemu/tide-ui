@@ -67,8 +67,8 @@ export const WithDescriptions: Story = {
           <RadioGroup value={selectedPlan} onValueChange={setSelectedPlan} className="space-y-4">
             <label htmlFor="free" className={`flex items-start space-x-3 p-4 rounded-lg transition-colors cursor-pointer ${
               selectedPlan === "free" 
-                ? "border-2 border-[var(--color-border-brand)] bg-[var(--color-background-brand-subtle)]"
-                : "border border-[var(--color-border-primary-subtle)] hover:border-[var(--color-border-primary-bold)]"
+                ? "border-2 border-[var(--color-border-brand-bold)] bg-[var(--color-background-brand-subtle)]"
+                : "border border-[var(--color-border-primary-subtle)] hover:border-[var(--color-border-primary-medium)]"
             }`}>
               <RadioGroupItem value="free" id="free" className="mt-1" />
               <div className="flex-1 space-y-1">
@@ -82,14 +82,14 @@ export const WithDescriptions: Story = {
             
             <label htmlFor="pro" className={`flex items-start space-x-3 p-4 rounded-lg cursor-pointer ${
               selectedPlan === "pro"
-                ? "border-2 border-[var(--color-border-brand)] bg-[var(--color-background-brand-subtle)]"
-                : "border border-[var(--color-border-primary-subtle)] hover:border-[var(--color-border-primary-bold)] transition-colors"
+                ? "border-2 border-[var(--color-border-brand-bold)] bg-[var(--color-background-brand-subtle)]"
+                : "border border-[var(--color-border-primary-subtle)] hover:border-[var(--color-border-primary-medium)] transition-colors"
             }`}>
               <RadioGroupItem value="pro" id="pro" className="mt-1" />
               <div className="flex-1 space-y-1">
                 <div className="flex items-center gap-2">
                   <span className="text-body-md font-medium">Pro</span>
-                  <span className="px-2 py-1 bg-[var(--color-background-brand)] text-[var(--color-text-on-action)] text-caption-sm font-medium rounded">
+                  <span className="px-2 py-1 bg-[var(--color-background-blue-bold)] text-[var(--color-text-on-action)] text-caption-sm font-medium rounded">
                     Popular
                   </span>
                 </div>
@@ -102,8 +102,8 @@ export const WithDescriptions: Story = {
             
             <label htmlFor="enterprise" className={`flex items-start space-x-3 p-4 rounded-lg transition-colors cursor-pointer ${
               selectedPlan === "enterprise"
-                ? "border-2 border-[var(--color-border-brand)] bg-[var(--color-background-brand-subtle)]"
-                : "border border-[var(--color-border-primary-subtle)] hover:border-[var(--color-border-primary-bold)]"
+                ? "border-2 border-[var(--color-border-brand-bold)] bg-[var(--color-background-brand-subtle)]"
+                : "border border-[var(--color-border-primary-subtle)] hover:border-[var(--color-border-primary-medium)]"
             }`}>
               <RadioGroupItem value="enterprise" id="enterprise" className="mt-1" />
               <div className="flex-1 space-y-1">
@@ -154,7 +154,7 @@ export const ErrorState: Story = {
     <div className="w-80 space-y-3">
       <Label className="text-body-md font-medium">
         Payment method
-        <span className="text-[var(--color-text-error)] ml-1">*</span>
+        <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
       </Label>
       <RadioGroup className="space-y-2">
         <div className="flex items-center space-x-2">
@@ -170,7 +170,7 @@ export const ErrorState: Story = {
           <Label htmlFor="bank-transfer">Bank Transfer</Label>
         </div>
       </RadioGroup>
-      <div className="flex items-start gap-2 text-body-sm text-[var(--color-text-error)]">
+      <div className="flex items-start gap-2 text-body-sm text-[var(--color-text-error-bold)]">
         <Icon name="circle-alert" size="sm" className="mt-0.5 flex-shrink-0" />
         <span>Please select a payment method to continue.</span>
       </div>
@@ -216,7 +216,7 @@ export const WithIcons: Story = {
     <div className="w-80 space-y-3">
       <Label className="text-body-md font-medium">Theme preference</Label>
       <RadioGroup defaultValue="light" className="space-y-3">
-        <label htmlFor="theme-light" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-bold)] transition-colors cursor-pointer">
+        <label htmlFor="theme-light" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-medium)] transition-colors cursor-pointer">
           <RadioGroupItem value="light" id="theme-light" />
           <Icon name="sun" size="sm" />
           <div>
@@ -227,7 +227,7 @@ export const WithIcons: Story = {
           </div>
         </label>
         
-        <label htmlFor="theme-dark" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-bold)] transition-colors cursor-pointer">
+        <label htmlFor="theme-dark" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-medium)] transition-colors cursor-pointer">
           <RadioGroupItem value="dark" id="theme-dark" />
           <Icon name="moon" size="sm" />
           <div>
@@ -238,7 +238,7 @@ export const WithIcons: Story = {
           </div>
         </label>
         
-        <label htmlFor="theme-system" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-bold)] transition-colors cursor-pointer">
+        <label htmlFor="theme-system" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-medium)] transition-colors cursor-pointer">
           <RadioGroupItem value="system" id="theme-system" />
           <Icon name="monitor" size="sm" />
           <div>
@@ -272,7 +272,7 @@ export const InForm: Story = {
         <div className="space-y-3">
           <Label className="text-body-md font-medium">
             Size
-            <span className="text-[var(--color-text-error)] ml-1">*</span>
+            <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
           </Label>
           <RadioGroup
             value={formData.size}
@@ -288,7 +288,7 @@ export const InForm: Story = {
                 />
                 <Label 
                   htmlFor={`size-${size.toLowerCase()}`}
-                  className="flex h-10 w-full items-center justify-center rounded-md border border-[var(--color-border-input)] bg-[var(--color-surface-primary)] px-3 py-2 text-body-sm font-medium cursor-pointer hover:border-[var(--color-border-input-hovered)] peer-data-[state=checked]:border-[var(--color-border-brand)] peer-data-[state=checked]:bg-[var(--color-background-brand-selected)] peer-data-[state=checked]:text-[var(--color-text-brand)]"
+                  className="flex h-10 w-full items-center justify-center rounded-md border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3 py-2 text-body-sm font-medium cursor-pointer hover:border-[var(--color-interaction-border-input-hovered)] peer-data-[state=checked]:border-[var(--color-border-brand-bold)] peer-data-[state=checked]:bg-[var(--color-background-blue-subtle-selected)] peer-data-[state=checked]:text-[var(--color-text-brand-bold)]"
                 >
                   {size}
                 </Label>
@@ -319,7 +319,7 @@ export const InForm: Story = {
                 />
                 <Label 
                   htmlFor={`color-${color.value}`}
-                  className={`w-8 h-8 rounded-full border-2 cursor-pointer ${color.color} peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-[var(--color-border-brand)] peer-data-[state=checked]:ring-offset-2`}
+                  className={`w-8 h-8 rounded-full border-2 cursor-pointer ${color.color} peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-[var(--color-border-brand-bold)] peer-data-[state=checked]:ring-offset-2`}
                   title={color.name}
                 />
                 <span className="text-caption-sm text-[var(--color-text-secondary)]">

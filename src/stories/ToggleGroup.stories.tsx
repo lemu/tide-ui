@@ -335,8 +335,8 @@ export const ViewModeSelector: Story = {
                 {viewMode === 'list' && (
                   <div className="space-y-2">
                     {Array.from({ length: 3 }, (_, i) => (
-                      <div key={i} className="flex items-center gap-3 p-2 bg-[var(--color-background-neutral-subtle)] rounded">
-                        <div className="w-6 h-6 bg-[var(--color-background-brand)] rounded"></div>
+                      <div key={i} className="flex items-center gap-3 p-2 bg-[var(--color-background-neutral-subtlest)] rounded">
+                        <div className="w-6 h-6 bg-[var(--color-background-blue-bold)] rounded"></div>
                         <span className="text-sm">List item {i + 1}</span>
                       </div>
                     ))}
@@ -346,7 +346,7 @@ export const ViewModeSelector: Story = {
                 {viewMode === 'grid' && (
                   <div className="grid grid-cols-3 gap-2">
                     {Array.from({ length: 6 }, (_, i) => (
-                      <div key={i} className="aspect-square bg-[var(--color-background-neutral-subtle)] rounded flex items-center justify-center">
+                      <div key={i} className="aspect-square bg-[var(--color-background-neutral-subtlest)] rounded flex items-center justify-center">
                         <span className="text-xs">Item {i + 1}</span>
                       </div>
                     ))}
@@ -356,8 +356,8 @@ export const ViewModeSelector: Story = {
                 {viewMode === 'card' && (
                   <div className="grid grid-cols-2 gap-3">
                     {Array.from({ length: 2 }, (_, i) => (
-                      <div key={i} className="p-3 bg-[var(--color-background-neutral-subtle)] rounded">
-                        <div className="w-full h-16 bg-[var(--color-background-brand)] rounded mb-2"></div>
+                      <div key={i} className="p-3 bg-[var(--color-background-neutral-subtlest)] rounded">
+                        <div className="w-full h-16 bg-[var(--color-background-blue-bold)] rounded mb-2"></div>
                         <span className="text-xs">Card {i + 1}</span>
                       </div>
                     ))}
@@ -521,7 +521,7 @@ export const ChartTypeSelector: Story = {
             {/* Chart preview placeholder */}
             <div className="border-t border-[var(--color-border-primary-subtle)] pt-4">
               <Label className="text-xs mb-2 block">Chart Preview</Label>
-              <div className="border border-[var(--color-border-primary-subtle)] rounded-md p-4 h-32 flex items-center justify-center bg-[var(--color-background-neutral-subtle)]">
+              <div className="border border-[var(--color-border-primary-subtle)] rounded-md p-4 h-32 flex items-center justify-center bg-[var(--color-background-neutral-subtlest)]">
                 <div className="text-center text-[var(--color-text-secondary)]">
                   <Icon name={
                     chartType === 'line' ? 'trending-up' :

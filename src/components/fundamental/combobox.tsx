@@ -97,7 +97,7 @@ export function Combobox({
                       value={option.value}
                       disabled={option.disabled}
                       onSelect={handleSelect}
-                      className="h-[var(--size-md)] px-[var(--space-md)] transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] aria-selected:bg-[var(--color-background-neutral-subtle-hovered)]"
+                      className="h-[var(--size-md)] px-[var(--space-md)] transition-colors hover:bg-[var(--color-background-neutral-subtlest-hovered)] aria-selected:bg-[var(--color-background-neutral-subtlest-hovered)]"
                     >
                       <Check
                         className={cn(
@@ -137,7 +137,7 @@ export function Combobox({
                       value={option.value}
                       disabled={option.disabled}
                       onSelect={handleSelect}
-                      className="h-[var(--size-lg)] px-[var(--space-md)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
+                      className="h-[var(--size-lg)] px-[var(--space-md)] active:bg-[var(--color-background-neutral-subtlest-hovered)]"
                     >
                       <Check
                         className={cn(
@@ -234,7 +234,7 @@ export function MultiCombobox({
                       value={option.value}
                       disabled={option.disabled}
                       onSelect={handleSelect}
-                      className="h-[var(--size-md)] px-[var(--space-md)] transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)] aria-selected:bg-[var(--color-background-neutral-subtle-hovered)]"
+                      className="h-[var(--size-md)] px-[var(--space-md)] transition-colors hover:bg-[var(--color-background-neutral-subtlest-hovered)] aria-selected:bg-[var(--color-background-neutral-subtlest-hovered)]"
                     >
                       <Check
                         className={cn(
@@ -274,7 +274,7 @@ export function MultiCombobox({
                       value={option.value}
                       disabled={option.disabled}
                       onSelect={handleSelect}
-                      className="h-[var(--size-lg)] px-[var(--space-md)] active:bg-[var(--color-background-neutral-subtle-hovered)]"
+                      className="h-[var(--size-lg)] px-[var(--space-md)] active:bg-[var(--color-background-neutral-subtlest-hovered)]"
                     >
                       <Check
                         className={cn(

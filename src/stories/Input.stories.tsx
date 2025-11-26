@@ -134,7 +134,7 @@ export const ErrorVariant: Story = {
           placeholder="john@example.com"
           defaultValue="invalid-email"
         />
-        <span className="text-caption-sm text-[var(--color-text-error)]">
+        <span className="text-caption-sm text-[var(--color-text-error-bold)]">
           Please enter a valid email address
         </span>
       </div>

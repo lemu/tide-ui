@@ -76,7 +76,7 @@ const avatarFallbackVariants = cva(
         organization: "",
       },
       variant: {
-        information: "bg-[var(--color-background-information-bold)]",
+        information: "bg-[var(--color-background-info-bold)]",
         success: "bg-[var(--color-background-success-bold)]",
         error: "bg-[var(--color-background-error-bold)]",
         warning: "bg-[var(--color-background-warning-bold)]",

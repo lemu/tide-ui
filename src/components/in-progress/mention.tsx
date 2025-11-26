@@ -226,9 +226,9 @@ export const Mention = React.forwardRef<HTMLTextAreaElement, MentionProps>(
                 placeholder={placeholder}
                 disabled={disabled}
                 className={cn(
-                  "flex min-h-[60px] w-full rounded-md border border-[var(--color-border-input)] bg-[var(--color-surface-primary)] px-3 py-2 text-body-sm shadow-sm transition-colors",
+                  "flex min-h-[60px] w-full rounded-md border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3 py-2 text-body-sm shadow-sm transition-colors",
                   "placeholder:text-[var(--color-text-tertiary)]",
-                  "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-border-brand)]",
+                  "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-border-brand-bold)]",
                   "disabled:cursor-not-allowed disabled:opacity-50",
                   "resize-none"
                 )}
@@ -253,7 +253,7 @@ export const Mention = React.forwardRef<HTMLTextAreaElement, MentionProps>(
                           onSelect={() => handleSelectSuggestion(suggestion)}
                           className={cn(
                             "flex items-center gap-2 px-3 py-2",
-                            index === selectedIndex && "bg-[var(--color-background-neutral-subtle)]"
+                            index === selectedIndex && "bg-[var(--color-background-neutral-subtlest)]"
                           )}
                         >
                           {suggestion.avatar && (
@@ -312,7 +312,7 @@ export const extractMentions = (text: string, trigger = "@") => {
 export const highlightMentions = (
   text: string, 
   trigger = "@",
-  className = "bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand)] px-1 rounded"
+  className = "bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand-bold)] px-1 rounded"
 ) => {
   const regex = new RegExp(`(\\${trigger}[a-zA-Z0-9_.-]+)`, "g")
   const parts = text.split(regex)

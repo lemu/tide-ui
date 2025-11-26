@@ -63,11 +63,11 @@ const tableCellVariants = cva(
         false: "",
       },
       showBorder: {
-        true: "border-r border-[var(--color-border-primary-bold)] last:border-r-0",
+        true: "border-r border-[var(--color-border-primary-medium)] last:border-r-0",
         false: "",
       },
       showRowBorder: {
-        true: "shadow-[inset_0_-1px_0_0_var(--color-border-primary-bold)]",
+        true: "shadow-[inset_0_-1px_0_0_var(--color-border-primary-medium)]",
         false: "",
       },
     },
@@ -101,7 +101,7 @@ const tableHeaderVariants = cva(
         false: "",
       },
       showBorder: {
-        true: "bg-[linear-gradient(to_right,var(--grey-25)_calc(100%-1px),var(--color-border-primary-bold)_calc(100%-1px),var(--color-border-primary-bold)_100%)] last:bg-[var(--grey-25)]",
+        true: "bg-[linear-gradient(to_right,var(--grey-25)_calc(100%-1px),var(--color-border-primary-medium)_calc(100%-1px),var(--color-border-primary-medium)_100%)] last:bg-[var(--grey-25)]",
         false: "",
       },
     },
@@ -138,7 +138,7 @@ const TableHeader = React.forwardRef<
   <thead
     ref={ref}
     className={cn(
-      "[&_tr]:border-b [&_tr]:border-[var(--color-border-primary-bold)]",
+      "[&_tr]:border-b [&_tr]:border-[var(--color-border-primary-medium)]",
       className
     )}
     {...props}
@@ -165,7 +165,7 @@ const TableFooter = React.forwardRef<
   <tfoot
     ref={ref}
     className={cn(
-      "border-t border-[var(--color-border-primary-bold)] bg-[var(--color-background-neutral-subtle)] font-medium [&>tr]:last:border-b-0",
+      "border-t border-[var(--color-border-primary-medium)] bg-[var(--color-background-neutral-subtlest)] font-medium [&>tr]:last:border-b-0",
       className
     )}
     {...props}
@@ -184,7 +184,7 @@ interface TableRowProps
 const TableRow = React.forwardRef<HTMLTableRowElement, TableRowProps>(
   ({ className, variant, zebra = false, zebraIndex = 0, showBorder = true, ...props }, ref) => {
     const zebraClass = zebra && zebraIndex % 2 === 1
-      ? "bg-[var(--color-background-neutral-subtle)]"
+      ? "bg-[var(--color-background-neutral-subtlest)]"
       : "";
 
     return (
@@ -300,7 +300,7 @@ const TableGroupHeader = React.forwardRef<
   <TableRow
     ref={ref}
     className={cn(
-      "bg-[var(--color-background-neutral-subtle)] hover:bg-[var(--color-background-neutral-subtle)]",
+      "bg-[var(--color-background-neutral-subtlest)] hover:bg-[var(--color-background-neutral-subtlest)]",
       className
     )}
     {...props}

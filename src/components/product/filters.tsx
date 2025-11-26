@@ -275,7 +275,7 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
             {onReset && filter.type === 'multiselect' && (
               <button
                 onClick={() => handleResetGroup(group)}
-                className="text-body-medium-sm text-[var(--color-text-brand)] hover:text-[var(--color-text-brand-hovered)] hover:underline"
+                className="text-body-medium-sm text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] hover:underline"
               >
                 Reset
               </button>
@@ -396,18 +396,18 @@ function FilterSidebarItem({ filter, isSelected, isPinned, valueCount, onSelect,
         "group/item box-border flex gap-[var(--space-md)] h-[var(--size-md)] items-center justify-start px-[var(--space-lg)] py-[var(--space-sm)] relative rounded-md shrink-0 w-full cursor-pointer transition-colors",
         "hover:bg-[var(--color-background-neutral-hovered)]",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)]",
-        isSelected && "bg-[var(--color-background-brand-selected)] hover:bg-[var(--color-background-brand-selected-hovered)]"
+        isSelected && "bg-[var(--color-background-blue-subtle-selected)] hover:bg-[var(--color-background-blue-subtle-selected-hovered)]"
       )}
       onClick={onSelect}
     >
       <div className="flex-1 flex gap-[var(--space-sm)] items-center justify-start min-w-0">
         <IconComponent className={cn(
           "h-[var(--size-2xsm)] w-[var(--size-2xsm)] shrink-0",
-          isSelected ? "text-[var(--color-text-brand)]" : "text-[var(--color-text-primary)]"
+          isSelected ? "text-[var(--color-text-brand-bold)]" : "text-[var(--color-text-primary)]"
         )} />
         <div className={cn(
           "truncate [&]:text-label-md",
-          isSelected ? "text-[var(--color-text-brand)]" : "text-[var(--color-text-primary)]"
+          isSelected ? "text-[var(--color-text-brand-bold)]" : "text-[var(--color-text-primary)]"
         )}>
           {filter.label}
         </div>
@@ -443,14 +443,14 @@ function FilterSidebarItem({ filter, isSelected, isPinned, valueCount, onSelect,
                 name="pin"
                 className={cn(
                   "h-[12px] w-[12px] group-hover/pin:hidden",
-                  isSelected ? "text-[var(--color-text-brand)]" : "text-[var(--color-text-primary)]"
+                  isSelected ? "text-[var(--color-text-brand-bold)]" : "text-[var(--color-text-primary)]"
                 )}
               />
               <Icon
                 name="pin-off"
                 className={cn(
                   "h-[12px] w-[12px] hidden group-hover/pin:block",
-                  isSelected ? "text-[var(--color-text-brand)]" : "text-[var(--color-text-primary)]"
+                  isSelected ? "text-[var(--color-text-brand-bold)]" : "text-[var(--color-text-primary)]"
                 )}
               />
             </>
@@ -459,7 +459,7 @@ function FilterSidebarItem({ filter, isSelected, isPinned, valueCount, onSelect,
               name="pin"
               className={cn(
                 "h-[12px] w-[12px]",
-                isSelected ? "text-[var(--color-text-brand)]" : "text-[var(--color-text-primary)]"
+                isSelected ? "text-[var(--color-text-brand-bold)]" : "text-[var(--color-text-primary)]"
               )}
             />
           )}
@@ -596,7 +596,7 @@ export function FilterDropdownMenu({
     <div className="bg-[var(--color-surface-primary)] relative rounded-md max-h-[480px] flex flex-col">
       <div className="flex items-stretch justify-start min-h-0 overflow-hidden rounded-md flex-1">
         {/* Left Sidebar */}
-        <div className="bg-[var(--color-background-neutral)] relative w-[240px] shrink-0 border-r border-[var(--color-border-primary-subtle)] flex flex-col">
+        <div className="bg-[var(--color-background-neutral-default)] relative w-[240px] shrink-0 border-r border-[var(--color-border-primary-subtle)] flex flex-col">
           <div className="box-border flex flex-col gap-[var(--space-sm)] p-[var(--space-sm)] overflow-y-auto">
             {/* Render ungrouped filters first */}
             {groupedFilters.ungrouped.map((filter) => {

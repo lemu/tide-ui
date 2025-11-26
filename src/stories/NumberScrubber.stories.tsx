@@ -458,7 +458,7 @@ export const AnimationTimeline: Story = {
             
             <div className="pt-4 border-t">
               <p className="text-body-sm text-[var(--color-text-secondary)]">
-                CSS: <code className="text-caption-sm font-mono bg-[var(--color-background-neutral-subtle)] px-1 rounded">
+                CSS: <code className="text-caption-sm font-mono bg-[var(--color-background-neutral-subtlest)] px-1 rounded">
                   animation: slide {duration / 1000}s ease-in-out {delay / 1000}s {iterations === 10 ? 'infinite' : iterations}
                 </code>
               </p>

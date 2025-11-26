@@ -52,7 +52,7 @@ const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
         <span className="inline-flex items-center gap-[var(--space-xsm)]">
           {children}
           {required && (
-            <span className="text-[var(--color-text-error)]" aria-label="required">
+            <span className="text-[var(--color-text-error-bold)]" aria-label="required">
               *
             </span>
           )}

@@ -230,7 +230,7 @@ function BookmarkSplitButton({
           if (bookmark) onSelect(bookmark);
         }}
       >
-        <SelectTrigger className="!text-label-md relative z-0 h-[var(--size-md)] w-auto gap-[var(--space-xsm)] rounded-l-md !rounded-r-none border !border-r-0 border-[var(--color-border-action-outline)] bg-[var(--color-background-neutral-subtle)] pr-[var(--space-md)] pl-[var(--space-sm)] text-[var(--color-text-primary)] hover:border-[var(--color-border-action-hovered)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:shadow-sm focus:border-[var(--color-border-action-outline)] focus:ring-0 focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 active:translate-y-px active:bg-[var(--grey-alpha-50)] active:shadow-xs data-[state=open]:ring-0">
+        <SelectTrigger className="!text-label-md relative z-0 h-[var(--size-md)] w-auto gap-[var(--space-xsm)] rounded-l-md !rounded-r-none border !border-r-0 border-[var(--color-border-action-outline)] bg-[var(--color-background-neutral-subtlest)] pr-[var(--space-md)] pl-[var(--space-sm)] text-[var(--color-text-primary)] hover:border-[var(--color-border-action-outline-hovered)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:shadow-sm focus:border-[var(--color-border-action-outline)] focus:ring-0 focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 active:translate-y-px active:bg-[var(--grey-alpha-50)] active:shadow-xs data-[state=open]:ring-0">
           <Icon name="bookmark" size="md" color="primary" />
           {activeBookmark?.name || "Bookmarks"}
         </SelectTrigger>
@@ -268,7 +268,7 @@ function BookmarkSplitButton({
                     {bookmark.isDefault && (
                       <Icon
                         name="star"
-                        className="h-[var(--size-2xsm)] w-[var(--size-2xsm)] flex-shrink-0 text-[var(--color-icon-warning)]"
+                        className="h-[var(--size-2xsm)] w-[var(--size-2xsm)] flex-shrink-0 text-[var(--color-icon-warning-bold)]"
                       />
                     )}
                   </div>
@@ -310,7 +310,7 @@ function BookmarkSplitButton({
               onDelete();
             }}
             disabled={isSystemBookmark}
-            className="text-[var(--color-text-destructive)]"
+            className="text-[var(--color-text-error-bold)]"
           >
             <Icon name="trash-2" className="mr-2 h-4 w-4" />
             Delete
@@ -324,7 +324,7 @@ function BookmarkSplitButton({
                   className={cn(
                     "mr-2 h-4 w-4",
                     activeBookmark?.isDefault &&
-                      "text-[var(--color-icon-warning)]",
+                      "text-[var(--color-icon-warning-bold)]",
                   )}
                 />
                 {activeBookmark?.isDefault
@@ -423,7 +423,7 @@ const BookmarkTab = React.forwardRef<HTMLDivElement, BookmarkTabProps>(
           "relative flex min-w-[160px] flex-shrink-0 cursor-pointer flex-col gap-[var(--space-xsm)] rounded-lg p-[var(--space-lg)] transition-colors",
           isActive
             ? "bg-[var(--blue-50)] hover:bg-[var(--blue-50)]"
-            : "bg-[var(--color-background-neutral)] hover:bg-[var(--color-background-neutral-hovered)]",
+            : "bg-[var(--color-background-neutral-default)] hover:bg-[var(--color-background-neutral-hovered)]",
           !isVisible && "pointer-events-none invisible absolute",
         )}
       >
@@ -477,7 +477,7 @@ const BookmarkTab = React.forwardRef<HTMLDivElement, BookmarkTabProps>(
                     e.stopPropagation();
                     onDelete();
                   }}
-                  className="text-[var(--color-text-destructive)]"
+                  className="text-[var(--color-text-error-bold)]"
                 >
                   <Icon name="trash-2" className="mr-2 h-4 w-4" />
                   Delete
@@ -664,9 +664,9 @@ function BookmarkTabs({
           <PopoverTrigger asChild>
             <button
               className={cn(
-                "flex flex-shrink-0 items-center justify-center rounded-lg border border-[var(--color-border-action-outline)] bg-transparent px-[var(--space-md)] transition-colors hover:bg-[var(--color-background-neutral-subtle-hovered)]",
+                "flex flex-shrink-0 items-center justify-center rounded-lg border border-[var(--color-border-action-outline)] bg-transparent px-[var(--space-md)] transition-colors hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
                 "min-h-[88px]", // Match the height of bookmark tabs (padding + content + padding)
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-brand)] focus-visible:ring-offset-2",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-brand-bold)] focus-visible:ring-offset-2",
               )}
             >
               <Icon
@@ -692,7 +692,7 @@ function BookmarkTabs({
                     }}
                     className={cn(
                       "text-body-md flex items-center gap-[var(--space-sm)] rounded-md px-[var(--space-md)] py-[var(--space-sm)] text-left transition-colors",
-                      "hover:bg-[var(--color-background-neutral-subtle-hovered)]",
+                      "hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
                     )}
                   >
                     {bookmark.type === "user" && (
@@ -715,7 +715,7 @@ function BookmarkTabs({
                     {bookmark.isDefault && (
                       <Icon
                         name="star"
-                        className="h-[var(--size-2xsm)] w-[var(--size-2xsm)] text-[var(--color-icon-warning)]"
+                        className="h-[var(--size-2xsm)] w-[var(--size-2xsm)] text-[var(--color-icon-warning-bold)]"
                       />
                     )}
                     {isActive && (

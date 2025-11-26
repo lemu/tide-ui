@@ -124,11 +124,11 @@ const textColorClasses: Partial<Record<IconColor, string>> = {
   primary: "text-[var(--color-text-primary)]",
   secondary: "text-[var(--color-text-secondary)]",
   tertiary: "text-[var(--color-text-tertiary)]",
-  brand: "text-[var(--color-text-brand)]",
-  information: "text-[var(--color-text-information)]",
-  success: "text-[var(--color-text-success)]",
-  warning: "text-[var(--color-text-warning)]",
-  error: "text-[var(--color-text-error)]",
+  brand: "text-[var(--color-text-brand-bold)]",
+  information: "text-[var(--color-text-info-bold)]",
+  success: "text-[var(--color-text-success-bold)]",
+  warning: "text-[var(--color-text-warning-bold)]",
+  error: "text-[var(--color-text-error-bold)]",
   violet: "text-[var(--violet-500)]",
 };
 

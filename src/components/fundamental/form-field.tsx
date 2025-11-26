@@ -124,7 +124,7 @@ const FormErrorMessage = React.forwardRef<
         <div
           ref={ref}
           className={cn(
-            "[&]:text-body-sm text-[var(--color-text-error)]",
+            "[&]:text-body-sm text-[var(--color-text-error-bold)]",
             className,
           )}
           {...props}
@@ -140,7 +140,7 @@ const FormErrorMessage = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "[&]:text-body-sm flex items-start gap-[var(--space-xsm)] text-[var(--color-text-error)]",
+        "[&]:text-body-sm flex items-start gap-[var(--space-xsm)] text-[var(--color-text-error-bold)]",
         className,
       )}
       {...props}

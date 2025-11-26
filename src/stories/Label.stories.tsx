@@ -361,7 +361,7 @@ export const MultipleFormControls: Story = {
         <Label htmlFor="select-input">Select Option</Label>
         <select
           id="select-input"
-          className="flex h-10 w-full rounded-md border border-[var(--color-border-input)] bg-[var(--color-surface-primary)] px-3 py-2 text-body-md ring-offset-[var(--color-surface-primary)] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-placeholder)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex h-10 w-full rounded-md border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3 py-2 text-body-md ring-offset-[var(--color-surface-primary)] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-placeholder)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <option value="">Choose option...</option>
           <option value="option1">Option 1</option>

@@ -112,7 +112,7 @@ export const SettingsSection: Story = {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <label className="text-body-sm font-medium">Theme</label>
-              <select className="w-full h-10 px-3 border border-[var(--color-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm">
+              <select className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm">
                 <option>Light</option>
                 <option>Dark</option>
                 <option>System</option>
@@ -121,7 +121,7 @@ export const SettingsSection: Story = {
 
             <div className="space-y-2">
               <label className="text-body-sm font-medium">Language</label>
-              <select className="w-full h-10 px-3 border border-[var(--color-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm">
+              <select className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm">
                 <option>English</option>
                 <option>Spanish</option>
                 <option>French</option>
@@ -139,7 +139,7 @@ export const SettingsSection: Story = {
                     <input 
                       type="number" 
                       defaultValue="256"
-                      className="w-full h-10 px-3 border border-[var(--color-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm"
+                      className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm"
                     />
                   </div>
                   <div className="space-y-2">
@@ -147,7 +147,7 @@ export const SettingsSection: Story = {
                     <input 
                       type="number" 
                       defaultValue="5000"
-                      className="w-full h-10 px-3 border border-[var(--color-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm"
+                      className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm"
                     />
                   </div>
                   <div className="flex items-center justify-between">
@@ -183,7 +183,7 @@ export const SettingsSection: Story = {
                     <input type="checkbox" className="rounded" />
                   </div>
                   <div className="pt-2 border-t border-[var(--color-border-primary-subtle)]">
-                    <Button size="sm" variant="ghost" className="text-[var(--color-text-error)]">
+                    <Button size="sm" variant="ghost" className="text-[var(--color-text-error-bold)]">
                       Clear All Debug Data
                     </Button>
                   </div>
@@ -240,7 +240,7 @@ export const NavigationSidebar: Story = {
                     <Button variant="ghost" className="w-full justify-start px-2 py-1 h-auto text-body-sm">
                       Overview
                     </Button>
-                    <Button variant="ghost" className="w-full justify-start px-2 py-1 h-auto text-body-sm bg-[var(--color-background-brand-selected)] text-[var(--color-text-brand)]">
+                    <Button variant="ghost" className="w-full justify-start px-2 py-1 h-auto text-body-sm bg-[var(--color-background-blue-subtle-selected)] text-[var(--color-text-brand-bold)]">
                       Analytics
                     </Button>
                     <Button variant="ghost" className="w-full justify-start px-2 py-1 h-auto text-body-sm">
@@ -424,10 +424,10 @@ export const FeatureList: Story = {
                 onOpenChange={() => toggleFeature(feature.id)}
               >
                 <CollapsibleTrigger asChild>
-                  <CardHeader className="cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] transition-colors">
+                  <CardHeader className="cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-[var(--color-background-brand)] flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-lg bg-[var(--color-background-blue-bold)] flex items-center justify-center">
                           <Icon name={feature.icon as any} size="sm" className="text-[var(--color-text-on-action)]" />
                         </div>
                         <div className="text-left">
@@ -453,7 +453,7 @@ export const FeatureList: Story = {
                       <ul className="space-y-2">
                         {feature.details.map((detail, index) => (
                           <li key={index} className="flex items-start gap-2 text-body-sm">
-                            <Icon name="check" size="sm" className="mt-0.5 text-[var(--color-text-success)] flex-shrink-0" />
+                            <Icon name="check" size="sm" className="mt-0.5 text-[var(--color-text-success-bold)] flex-shrink-0" />
                             <span>{detail}</span>
                           </li>
                         ))}
@@ -511,7 +511,7 @@ export const MultipleControlled: Story = {
         <Card>
           <Collapsible open={states.personal} onOpenChange={() => toggle('personal')}>
             <CollapsibleTrigger asChild>
-              <CardHeader className="cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] transition-colors">
+              <CardHeader className="cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Icon name="user" size="sm" />
@@ -529,11 +529,11 @@ export const MultipleControlled: Story = {
             <CollapsibleContent>
               <CardContent className="pt-0 space-y-3">
                 <div className="grid grid-cols-2 gap-3">
-                  <input placeholder="First name" className="px-3 py-2 border border-[var(--color-border-input)] rounded text-body-sm" />
-                  <input placeholder="Last name" className="px-3 py-2 border border-[var(--color-border-input)] rounded text-body-sm" />
+                  <input placeholder="First name" className="px-3 py-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm" />
+                  <input placeholder="Last name" className="px-3 py-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm" />
                 </div>
-                <input placeholder="Email address" className="w-full px-3 py-2 border border-[var(--color-border-input)] rounded text-body-sm" />
-                <input placeholder="Phone number" className="w-full px-3 py-2 border border-[var(--color-border-input)] rounded text-body-sm" />
+                <input placeholder="Email address" className="w-full px-3 py-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm" />
+                <input placeholder="Phone number" className="w-full px-3 py-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm" />
               </CardContent>
             </CollapsibleContent>
           </Collapsible>
@@ -542,7 +542,7 @@ export const MultipleControlled: Story = {
         <Card>
           <Collapsible open={states.work} onOpenChange={() => toggle('work')}>
             <CollapsibleTrigger asChild>
-              <CardHeader className="cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] transition-colors">
+              <CardHeader className="cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Icon name="briefcase" size="sm" />
@@ -559,10 +559,10 @@ export const MultipleControlled: Story = {
             </CollapsibleTrigger>
             <CollapsibleContent>
               <CardContent className="pt-0 space-y-3">
-                <input placeholder="Company name" className="w-full px-3 py-2 border border-[var(--color-border-input)] rounded text-body-sm" />
-                <input placeholder="Job title" className="w-full px-3 py-2 border border-[var(--color-border-input)] rounded text-body-sm" />
-                <input placeholder="Work email" className="w-full px-3 py-2 border border-[var(--color-border-input)] rounded text-body-sm" />
-                <input placeholder="Department" className="w-full px-3 py-2 border border-[var(--color-border-input)] rounded text-body-sm" />
+                <input placeholder="Company name" className="w-full px-3 py-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm" />
+                <input placeholder="Job title" className="w-full px-3 py-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm" />
+                <input placeholder="Work email" className="w-full px-3 py-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm" />
+                <input placeholder="Department" className="w-full px-3 py-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm" />
               </CardContent>
             </CollapsibleContent>
           </Collapsible>
@@ -571,7 +571,7 @@ export const MultipleControlled: Story = {
         <Card>
           <Collapsible open={states.social} onOpenChange={() => toggle('social')}>
             <CollapsibleTrigger asChild>
-              <CardHeader className="cursor-pointer hover:bg-[var(--color-background-neutral-subtle-hovered)] transition-colors">
+              <CardHeader className="cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Icon name="share-2" size="sm" />
@@ -590,15 +590,15 @@ export const MultipleControlled: Story = {
               <CardContent className="pt-0 space-y-3">
                 <div className="flex items-center gap-2">
                   <Icon name="twitter" size="sm" />
-                  <input placeholder="Twitter username" className="flex-1 px-3 py-2 border border-[var(--color-border-input)] rounded text-body-sm" />
+                  <input placeholder="Twitter username" className="flex-1 px-3 py-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm" />
                 </div>
                 <div className="flex items-center gap-2">
                   <Icon name="github" size="sm" />
-                  <input placeholder="GitHub username" className="flex-1 px-3 py-2 border border-[var(--color-border-input)] rounded text-body-sm" />
+                  <input placeholder="GitHub username" className="flex-1 px-3 py-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm" />
                 </div>
                 <div className="flex items-center gap-2">
                   <Icon name="linkedin" size="sm" />
-                  <input placeholder="LinkedIn profile" className="flex-1 px-3 py-2 border border-[var(--color-border-input)] rounded text-body-sm" />
+                  <input placeholder="LinkedIn profile" className="flex-1 px-3 py-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm" />
                 </div>
               </CardContent>
             </CollapsibleContent>

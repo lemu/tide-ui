@@ -10,19 +10,19 @@ const checkboxVariants = cva(
     variants: {
       variant: {
         default: [
-          "border-[var(--color-border-input)] bg-[var(--color-surface-primary)]",
-          "hover:border-[var(--color-border-input-hovered)]",
-          "data-[state=checked]:border-[var(--color-border-brand)] data-[state=checked]:bg-[var(--color-background-brand)] data-[state=checked]:text-[var(--color-text-on-action)]",
-          "data-[state=indeterminate]:border-[var(--color-border-brand)] data-[state=indeterminate]:bg-[var(--color-background-brand)] data-[state=indeterminate]:text-[var(--color-text-on-action)]",
+          "border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)]",
+          "hover:border-[var(--color-interaction-border-input-hovered)]",
+          "data-[state=checked]:border-[var(--color-border-brand-bold)] data-[state=checked]:bg-[var(--color-background-blue-bold)] data-[state=checked]:text-[var(--color-text-on-action)]",
+          "data-[state=indeterminate]:border-[var(--color-border-brand-bold)] data-[state=indeterminate]:bg-[var(--color-background-blue-bold)] data-[state=indeterminate]:text-[var(--color-text-on-action)]",
           "disabled:border-none disabled:bg-[var(--color-background-disabled)]",
           "disabled:data-[state=checked]:border-none disabled:data-[state=checked]:bg-[var(--color-background-disabled)] disabled:data-[state=checked]:text-[var(--color-icon-disabled)]",
           "disabled:data-[state=indeterminate]:border-none disabled:data-[state=indeterminate]:bg-[var(--color-background-disabled)] disabled:data-[state=indeterminate]:text-[var(--color-icon-disabled)]",
         ],
         error: [
-          "border-[var(--color-border-error)] bg-[var(--color-surface-primary)]",
-          "hover:border-[var(--color-border-error)]",
-          "data-[state=checked]:border-[var(--color-border-error)] data-[state=checked]:bg-[var(--color-background-error)] data-[state=checked]:text-[var(--color-text-on-error)]",
-          "data-[state=indeterminate]:border-[var(--color-border-error)] data-[state=indeterminate]:bg-[var(--color-background-error)] data-[state=indeterminate]:text-[var(--color-text-on-error)]",
+          "border-[var(--color-border-error-bold)] bg-[var(--color-surface-primary)]",
+          "hover:border-[var(--color-border-error-bold)]",
+          "data-[state=checked]:border-[var(--color-border-error-bold)] data-[state=checked]:bg-[var(--color-background-error-subtle)] data-[state=checked]:text-[var(--color-text-on-error)]",
+          "data-[state=indeterminate]:border-[var(--color-border-error-bold)] data-[state=indeterminate]:bg-[var(--color-background-error-subtle)] data-[state=indeterminate]:text-[var(--color-text-on-error)]",
           "disabled:border-none disabled:bg-[var(--color-background-disabled)]",
           "disabled:data-[state=checked]:border-none disabled:data-[state=checked]:bg-[var(--color-background-disabled)] disabled:data-[state=checked]:text-[var(--color-icon-disabled)]",
           "disabled:data-[state=indeterminate]:border-none disabled:data-[state=indeterminate]:bg-[var(--color-background-disabled)] disabled:data-[state=indeterminate]:text-[var(--color-icon-disabled)]",

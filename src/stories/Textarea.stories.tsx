@@ -132,7 +132,7 @@ export const ErrorState: Story = {
         rows={4}
         defaultValue="This message is too short"
       />
-      <div className="flex items-start gap-2 text-body-sm text-[var(--color-text-error)]">
+      <div className="flex items-start gap-2 text-body-sm text-[var(--color-text-error-bold)]">
         <Icon name="circle-alert" size="sm" className="mt-0.5 flex-shrink-0" />
         <span>Message must be at least 10 characters long.</span>
       </div>
@@ -183,9 +183,9 @@ export const WithCharacterCounter: Story = {
           </p>
           <span className={`text-body-sm ${
             isOverLimit 
-              ? 'text-[var(--color-text-error)]' 
+              ? 'text-[var(--color-text-error-bold)]' 
               : remaining <= 20 
-                ? 'text-[var(--color-text-warning)]' 
+                ? 'text-[var(--color-text-warning-bold)]' 
                 : 'text-[var(--color-text-secondary)]'
           }`}>
             {remaining}
@@ -235,7 +235,7 @@ export const RequiredField: Story = {
     <div className="w-80 space-y-2">
       <Label htmlFor="required-textarea">
         Additional comments
-        <span className="text-[var(--color-text-error)] ml-1">*</span>
+        <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
       </Label>
       <Textarea
         id="required-textarea"
@@ -271,7 +271,7 @@ export const InForm: Story = {
             placeholder="your@email.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="flex h-10 w-full rounded-md border border-[var(--color-border-input)] bg-[var(--color-surface-primary)] px-3 py-2 text-body-md ring-offset-[var(--color-surface-primary)] placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex h-10 w-full rounded-md border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3 py-2 text-body-md ring-offset-[var(--color-surface-primary)] placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             required
           />
         </div>
@@ -279,7 +279,7 @@ export const InForm: Story = {
         <div className="space-y-2">
           <Label htmlFor="contact-message">
             Message
-            <span className="text-[var(--color-text-error)] ml-1">*</span>
+            <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
           </Label>
           <Textarea
             id="contact-message"

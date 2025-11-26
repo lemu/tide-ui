@@ -30,11 +30,11 @@ const emptyStateIconVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-[var(--color-background-neutral-subtle)] text-[var(--color-text-tertiary)]",
-        primary: "bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand)]",
-        success: "bg-[var(--color-background-success-subtle)] text-[var(--color-text-success)]",
-        warning: "bg-[var(--color-background-warning-subtle)] text-[var(--color-text-warning)]",
-        error: "bg-[var(--color-background-error-subtle)] text-[var(--color-text-error)]",
+        default: "bg-[var(--color-background-neutral-subtlest)] text-[var(--color-text-tertiary)]",
+        primary: "bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand-bold)]",
+        success: "bg-[var(--color-background-success-subtle)] text-[var(--color-text-success-bold)]",
+        warning: "bg-[var(--color-background-warning-subtle)] text-[var(--color-text-warning-bold)]",
+        error: "bg-[var(--color-background-error-subtle)] text-[var(--color-text-error-bold)]",
       },
       size: {
         sm: "h-12 w-12",

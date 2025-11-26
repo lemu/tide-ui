@@ -148,7 +148,7 @@ export const EventScheduling: Story = {
                   modifiersStyles={{
                     hasEvent: {
                       backgroundColor: 'var(--color-background-information-subtle)',
-                      color: 'var(--color-text-information)',
+                      color: 'var(--color-text-info-bold)',
                       fontWeight: 'bold'
                     }
                   }}
@@ -171,7 +171,7 @@ export const EventScheduling: Story = {
                 {selectedDate ? (
                   <div className="space-y-4">
                     {getEventsForDate(selectedDate).length > 0 && (
-                      <div className="p-3 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-information)] rounded-md">
+                      <div className="p-3 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-md">
                         <h4 className="text-body-sm font-medium mb-2">Existing Events:</h4>
                         {getEventsForDate(selectedDate).map((event, index) => (
                           <div key={index} className="flex items-center gap-2 text-body-sm">
@@ -202,7 +202,7 @@ export const EventScheduling: Story = {
                     </div>
 
                     {selectedTime && (
-                      <div className="p-4 bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success)] rounded-md">
+                      <div className="p-4 bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] rounded-md">
                         <h4 className="text-body-sm font-medium mb-2">Selected Time Slot:</h4>
                         <p className="text-body-sm">
                           {selectedDate.toLocaleDateString()} at {selectedTime}
@@ -300,7 +300,7 @@ export const VacationBooking: Story = {
                   modifiersStyles={{
                     blocked: {
                       backgroundColor: 'var(--color-background-error-subtle)',
-                      color: 'var(--color-text-error)',
+                      color: 'var(--color-text-error-bold)',
                       textDecoration: 'line-through'
                     }
                   }}
@@ -314,7 +314,7 @@ export const VacationBooking: Story = {
                     <span>Blocked dates (company holidays)</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded bg-[var(--color-background-neutral-subtle)]"></div>
+                    <div className="w-3 h-3 rounded bg-[var(--color-background-neutral-subtlest)]"></div>
                     <span>Weekends (not counted)</span>
                   </div>
                 </div>
@@ -325,7 +325,7 @@ export const VacationBooking: Story = {
                 
                 {vacationDates?.from && vacationDates?.to ? (
                   <div className="space-y-4">
-                    <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-information)] rounded-md">
+                    <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-md">
                       <h4 className="text-body-sm font-medium mb-3">Request Details:</h4>
                       <div className="space-y-2 text-body-sm">
                         <div className="flex justify-between">
@@ -354,7 +354,7 @@ export const VacationBooking: Story = {
                     <div className="space-y-2">
                       <Label>Reason for Leave:</Label>
                       <textarea 
-                        className="w-full p-3 border border-[var(--color-border-input)] rounded-md resize-none"
+                        className="w-full p-3 border border-[var(--color-interaction-border-input)] rounded-md resize-none"
                         rows={3}
                         placeholder="Optional: Describe the reason for your vacation request"
                       />
@@ -364,7 +364,7 @@ export const VacationBooking: Story = {
                       <Label>Emergency Contact:</Label>
                       <input 
                         type="text"
-                        className="w-full p-2 border border-[var(--color-border-input)] rounded-md"
+                        className="w-full p-2 border border-[var(--color-interaction-border-input)] rounded-md"
                         placeholder="Name and phone number"
                       />
                     </div>
@@ -437,10 +437,10 @@ export const ProjectDeadlines: Story = {
 
     const getStatusColor = (status: string) => {
       switch (status) {
-        case 'in-progress': return 'var(--color-background-information)'
-        case 'planning': return 'var(--color-background-warning)'
-        case 'review': return 'var(--color-background-success)'
-        default: return 'var(--color-background-neutral-subtle)'
+        case 'in-progress': return 'var(--color-background-info-subtle)'
+        case 'planning': return 'var(--color-background-warning-subtle)'
+        case 'review': return 'var(--color-background-success-subtle)'
+        default: return 'var(--color-background-neutral-subtlest)'
       }
     }
 
@@ -467,7 +467,7 @@ export const ProjectDeadlines: Story = {
                   modifiersStyles={{
                     hasDeadline: {
                       backgroundColor: 'var(--color-background-error-subtle)',
-                      color: 'var(--color-text-error)',
+                      color: 'var(--color-text-error-bold)',
                       fontWeight: 'bold'
                     }
                   }}
@@ -514,7 +514,7 @@ export const ProjectDeadlines: Story = {
                             <span>Progress</span>
                             <span>{project.progress}%</span>
                           </div>
-                          <div className="w-full bg-[var(--color-background-neutral-subtle)] rounded-full h-2">
+                          <div className="w-full bg-[var(--color-background-neutral-subtlest)] rounded-full h-2">
                             <div 
                               className="h-2 rounded-full transition-all duration-300"
                               style={{ 
@@ -602,7 +602,7 @@ export const AvailabilityBooking: Story = {
                   modifiersStyles={{
                     available: {
                       backgroundColor: 'var(--color-background-success-subtle)',
-                      color: 'var(--color-text-success)',
+                      color: 'var(--color-text-success-bold)',
                       fontWeight: 'bold'
                     }
                   }}
@@ -642,7 +642,7 @@ export const AvailabilityBooking: Story = {
                           ))}
                         </div>
                         
-                        <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-information)] rounded-md">
+                        <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-md">
                           <h4 className="text-body-sm font-medium mb-2">Session Details:</h4>
                           <ul className="text-body-sm space-y-1">
                             <li>• Duration: 60 minutes</li>
@@ -726,17 +726,17 @@ export const CustomCalendar: Story = {
           modifiersStyles={{
             holiday: {
               backgroundColor: 'var(--color-background-error-subtle)',
-              color: 'var(--color-text-error)',
+              color: 'var(--color-text-error-bold)',
               fontWeight: 'bold'
             },
             birthday: {
               backgroundColor: 'var(--color-background-warning-subtle)',
-              color: 'var(--color-text-warning)',
+              color: 'var(--color-text-warning-bold)',
               fontWeight: 'bold'
             },
             meeting: {
               backgroundColor: 'var(--color-background-information-subtle)',
-              color: 'var(--color-text-information)',
+              color: 'var(--color-text-info-bold)',
               fontWeight: 'bold'
             }
           }}

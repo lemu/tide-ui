@@ -112,7 +112,7 @@ const AttributesList = React.forwardRef<HTMLDivElement, AttributesListProps>(
             <button
               onClick={() => setShowHidden(!showHidden)}
               className={cn(
-                "flex items-center text-[var(--color-text-brand)] hover:text-[var(--color-text-brand-hovered)] cursor-pointer mt-[var(--space-sm)] bg-transparent border-none p-0",
+                "flex items-center text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] cursor-pointer mt-[var(--space-sm)] bg-transparent border-none p-0",
                 size === 'sm' ? 'gap-[var(--space-sm)]' : 'gap-[var(--space-xsm)]',
                 size === 'sm' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm'
               )}
@@ -264,7 +264,7 @@ const AttributesGroup = React.forwardRef<HTMLDivElement, AttributesGroupProps>(
           <button
             onClick={() => setShowHidden(!showHidden)}
             className={cn(
-              "flex items-center text-[var(--color-text-brand)] hover:text-[var(--color-text-brand-hovered)] cursor-pointer mt-[var(--space-sm)] bg-transparent border-none p-0",
+              "flex items-center text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] cursor-pointer mt-[var(--space-sm)] bg-transparent border-none p-0",
               size === 'sm' ? 'gap-[var(--space-sm)]' : 'gap-[var(--space-xsm)]',
               size === 'sm' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm'
             )}
@@ -401,7 +401,7 @@ const AttributesRow = React.forwardRef<HTMLDivElement, AttributesRowProps>(
             <a
               href={externalLink.href}
               className={cn(
-                "text-[var(--color-text-brand)] hover:text-[var(--color-text-brand-hovered)] inline-flex items-center no-underline shrink-0",
+                "text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] inline-flex items-center no-underline shrink-0",
                 size === 'sm' ? 'gap-[var(--space-sm)]' : 'gap-[var(--space-xsm)]',
                 size === 'sm' ? '[&]:text-body-sm' : '[&]:text-body-xsm'
               )}

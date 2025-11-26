@@ -139,11 +139,11 @@ export const Variants: Story = {
         <div>
           <h3 className="text-heading-sm mb-4">On Different Backgrounds</h3>
           <div className="grid grid-cols-2 gap-4">
-            <div className="p-4 bg-[var(--color-background-neutral)] rounded-lg text-center">
+            <div className="p-4 bg-[var(--color-background-neutral-default)] rounded-lg text-center">
               <Spinner variant="inverse" size="lg" />
               <p className="mt-2 text-caption-sm text-white">Inverse variant</p>
             </div>
-            <div className="p-4 bg-[var(--color-background-brand)] rounded-lg text-center">
+            <div className="p-4 bg-[var(--color-background-blue-bold)] rounded-lg text-center">
               <Spinner variant="inverse" size="lg" />
               <p className="mt-2 text-caption-sm text-white">On brand background</p>
             </div>
@@ -467,7 +467,7 @@ export const ProgressDotsExample: Story = {
           <Card>
             <CardContent className="pt-6">
               <div className="text-center space-y-4">
-                <div className="p-8 bg-[var(--color-background-neutral-subtle)] rounded-lg">
+                <div className="p-8 bg-[var(--color-background-neutral-subtlest)] rounded-lg">
                   <p className="text-heading-md">Step {currentStep + 1}</p>
                   <p className="text-body-sm text-[var(--color-text-secondary)] mt-2">
                     {['Welcome', 'Profile Setup', 'Preferences', 'Payment', 'Complete'][currentStep]}
@@ -640,7 +640,7 @@ export const LoadingDashboard: Story = {
               </div>
             ) : (
               <div className="text-center">
-                <p className="text-heading-lg text-[var(--color-text-success)]">$24,580</p>
+                <p className="text-heading-lg text-[var(--color-text-success-bold)]">$24,580</p>
                 <p className="text-body-sm text-[var(--color-text-secondary)]">This month</p>
                 <Badge intent="success" className="mt-2">+12.5%</Badge>
               </div>
@@ -778,9 +778,9 @@ export const InteractiveLoadingStates: Story = {
                     <span>Progress</span>
                     <span>{progress}%</span>
                   </div>
-                  <div className="w-full bg-[var(--color-background-neutral-subtle)] rounded-full h-2">
+                  <div className="w-full bg-[var(--color-background-neutral-subtlest)] rounded-full h-2">
                     <div 
-                      className="bg-[var(--color-background-success)] h-2 rounded-full transition-all duration-200"
+                      className="bg-[var(--color-background-success-subtle)] h-2 rounded-full transition-all duration-200"
                       style={{ width: `${progress}%` }}
                     />
                   </div>

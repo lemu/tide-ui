@@ -48,13 +48,13 @@ const tagVariants = cva(
         intent: "brand",
         appearance: "solid",
         class:
-          "bg-[var(--color-background-brand)] text-[var(--color-text-inverse)]",
+          "bg-[var(--color-background-blue-bold)] text-[var(--color-text-inverse)]",
       },
       {
         intent: "brand",
         appearance: "subtle",
         class:
-          "bg-[var(--blue-50)] text-[var(--color-text-brand)]",
+          "bg-[var(--blue-50)] text-[var(--color-text-brand-bold)]",
       },
       // Success intent variants
       {
@@ -67,7 +67,7 @@ const tagVariants = cva(
         intent: "success",
         appearance: "subtle",
         class:
-          "bg-[var(--color-background-success)] text-[var(--color-text-success)]",
+          "bg-[var(--color-background-success-subtle)] text-[var(--color-text-success-bold)]",
       },
       // Warning intent variants
       {
@@ -80,7 +80,7 @@ const tagVariants = cva(
         intent: "warning",
         appearance: "subtle",
         class:
-          "bg-[var(--color-background-warning)] text-[var(--color-text-warning)]",
+          "bg-[var(--color-background-warning-subtle)] text-[var(--color-text-warning-bold)]",
       },
       // Destructive intent variants
       {
@@ -93,7 +93,7 @@ const tagVariants = cva(
         intent: "destructive",
         appearance: "subtle",
         class:
-          "bg-[var(--color-background-error)] text-[var(--color-text-error)]",
+          "bg-[var(--color-background-error-subtle)] text-[var(--color-text-error-bold)]",
       },
       // Closable padding adjustments
       {

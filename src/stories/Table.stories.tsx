@@ -84,7 +84,7 @@ export const NumericColumnsWithFormatting: Story = {
           </TableBody>
         </Table>
 
-        <div className="mt-4 p-4 bg-[var(--color-background-neutral-subtle)] rounded-md">
+        <div className="mt-4 p-4 bg-[var(--color-background-neutral-subtlest)] rounded-md">
           <h4 className="text-body-md font-medium mb-2">Features Demonstrated:</h4>
           <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-1">
             <li>• <strong>numeric prop</strong>: Right-aligns content and uses tabular numerals</li>
@@ -258,7 +258,7 @@ export const WithSelection: Story = {
     return (
       <div className="space-y-4">
         {selectedRows.size > 0 && (
-          <div className="flex items-center gap-2 p-2 bg-[var(--color-background-brand-selected)] rounded-md">
+          <div className="flex items-center gap-2 p-2 bg-[var(--color-background-blue-subtle-selected)] rounded-md">
             <span className="text-body-sm font-medium">
               {selectedRows.size} row{selectedRows.size > 1 ? 's' : ''} selected
             </span>

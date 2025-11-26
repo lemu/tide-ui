@@ -84,7 +84,7 @@ export const Default: Story = {
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
             <Avatar className="h-8 w-8 rounded-md">
-              <AvatarFallback className="bg-[var(--color-background-brand)] rounded-md">
+              <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-md">
                 <Icon name="sparkles" size="sm" color="inverse" />
               </AvatarFallback>
             </Avatar>
@@ -157,7 +157,7 @@ export const WithSubmenus: Story = {
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
             <Avatar className="h-8 w-8 rounded-md">
-              <AvatarFallback className="bg-[var(--color-background-brand)] rounded-md">
+              <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-md">
                 <Icon name="package" size="sm" color="inverse" />
               </AvatarFallback>
             </Avatar>
@@ -302,7 +302,7 @@ export const WithBadgesAndActions: Story = {
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
             <Avatar className="h-8 w-8 rounded-md">
-              <AvatarFallback className="bg-[var(--color-background-brand)] rounded-md">
+              <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-md">
                 <Icon name="mail" size="sm" color="inverse" />
               </AvatarFallback>
             </Avatar>
@@ -323,7 +323,7 @@ export const WithBadgesAndActions: Story = {
                   <SidebarMenuButton isActive>
                     <Icon name="inbox" />
                     <span>Inbox</span>
-                    <SidebarMenuBadge className="bg-[var(--color-background-brand)]">
+                    <SidebarMenuBadge className="bg-[var(--color-background-blue-bold)]">
                       12
                     </SidebarMenuBadge>
                   </SidebarMenuButton>
@@ -338,7 +338,7 @@ export const WithBadgesAndActions: Story = {
                   <SidebarMenuButton>
                     <Icon name="file" />
                     <span>Drafts</span>
-                    <SidebarMenuBadge className="bg-[var(--color-background-warning)]">
+                    <SidebarMenuBadge className="bg-[var(--color-background-warning-subtle)]">
                       3
                     </SidebarMenuBadge>
                   </SidebarMenuButton>
@@ -364,7 +364,7 @@ export const WithBadgesAndActions: Story = {
                   <SidebarMenuButton>
                     <div className="h-2 w-2 rounded-full bg-red-500" />
                     <span>Important</span>
-                    <SidebarMenuBadge className="bg-[var(--color-background-error)]">
+                    <SidebarMenuBadge className="bg-[var(--color-background-error-subtle)]">
                       5
                     </SidebarMenuBadge>
                   </SidebarMenuButton>
@@ -373,7 +373,7 @@ export const WithBadgesAndActions: Story = {
                   <SidebarMenuButton>
                     <div className="h-2 w-2 rounded-full bg-blue-500" />
                     <span>Work</span>
-                    <SidebarMenuBadge className="bg-[var(--color-background-information)]">
+                    <SidebarMenuBadge className="bg-[var(--color-background-info-subtle)]">
                       8
                     </SidebarMenuBadge>
                   </SidebarMenuButton>
@@ -424,7 +424,7 @@ export const WithSearch: Story = {
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
             <Avatar className="h-8 w-8 rounded-md">
-              <AvatarFallback className="bg-[var(--color-background-brand)] rounded-md">
+              <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-md">
                 <Icon name="file-text" size="sm" color="inverse" />
               </AvatarFallback>
             </Avatar>
@@ -538,7 +538,7 @@ export const FloatingVariant: Story = {
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
             <Avatar className="h-8 w-8 rounded-md">
-              <AvatarFallback className="bg-[var(--color-background-brand)] rounded-md">
+              <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-md">
                 <Icon name="zap" size="sm" color="inverse" />
               </AvatarFallback>
             </Avatar>
@@ -645,7 +645,7 @@ export const EnhancedHoverFocus: Story = {
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
             <Avatar className="h-8 w-8 rounded-md">
-              <AvatarFallback className="bg-[var(--color-background-brand)] rounded-md">
+              <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-md">
                 <Icon name="zap" size="sm" color="inverse" />
               </AvatarFallback>
             </Avatar>
@@ -769,7 +769,7 @@ export const ComplexSidebar: Story = {
                 <DropdownMenuTrigger asChild>
                   <SidebarMenuButton size="lg">
                     <Avatar className="size-8 rounded-md">
-                      <AvatarFallback className="bg-[var(--color-background-brand)] rounded-md">
+                      <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-md">
                         <Icon name="sparkles" size="sm" color="inverse" />
                       </AvatarFallback>
                     </Avatar>
@@ -882,7 +882,7 @@ export const ComplexSidebar: Story = {
                 <DropdownMenuTrigger asChild>
                   <SidebarMenuButton
                     size="lg"
-                    className="data-[state=open]:bg-[var(--color-background-neutral-subtle)] data-[state=open]:text-[var(--color-text-primary)]"
+                    className="data-[state=open]:bg-[var(--color-background-neutral-subtlest)] data-[state=open]:text-[var(--color-text-primary)]"
                   >
                     <Avatar className="size-8 rounded-lg">
                       <AvatarImage

@@ -31,7 +31,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
   <DropdownMenuPrimitive.SubTrigger
     ref={ref}
     className={cn(
-      "text-body-md flex [&]:cursor-pointer select-none items-center rounded-md px-[var(--space-md)] h-[var(--size-md)] outline-none focus:bg-[var(--color-background-neutral-subtle-hovered)] hover:bg-[var(--color-background-neutral-subtle-hovered)] data-[state=open]:bg-[var(--color-background-neutral-subtle-hovered)]",
+      "text-body-md flex [&]:cursor-pointer select-none items-center rounded-md px-[var(--space-md)] h-[var(--size-md)] outline-none focus:bg-[var(--color-background-neutral-subtlest-hovered)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] data-[state=open]:bg-[var(--color-background-neutral-subtlest-hovered)]",
       inset && "pl-8",
       className
     )}
@@ -89,8 +89,8 @@ const DropdownMenuDesktopItem = React.forwardRef<
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={cn(
-      "[&]:text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md px-[var(--space-md)] h-[var(--size-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtle-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] [&]:data-[disabled]:!cursor-not-allowed data-[disabled]:opacity-50 data-[disabled]:hover:bg-transparent data-[disabled]:focus:bg-transparent [&[data-disabled]_*]:!cursor-not-allowed",
-      destructive && "text-[var(--color-text-error)] hover:text-[var(--color-text-error)] focus:text-[var(--color-text-error)] hover:bg-[var(--color-background-error)] focus:bg-[var(--color-background-error)] [&>svg]:text-[var(--color-icon-error)]",
+      "[&]:text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md px-[var(--space-md)] h-[var(--size-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtlest-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)] [&]:data-[disabled]:!cursor-not-allowed data-[disabled]:opacity-50 data-[disabled]:hover:bg-transparent data-[disabled]:focus:bg-transparent [&[data-disabled]_*]:!cursor-not-allowed",
+      destructive && "text-[var(--color-text-error-bold)] hover:text-[var(--color-text-error-bold)] focus:text-[var(--color-text-error-bold)] hover:bg-[var(--color-background-error-subtle)] focus:bg-[var(--color-background-error-subtle)] [&>svg]:text-[var(--color-icon-error-bold)]",
       inset && "pl-8",
       className
     )}
@@ -109,16 +109,16 @@ const DropdownMenuDesktopCheckboxItem = React.forwardRef<
   <DropdownMenuPrimitive.CheckboxItem
     ref={ref}
     className={cn(
-      "text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md h-[var(--size-md)] pl-10 pr-[var(--space-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtle-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] [&]:data-[disabled]:!cursor-not-allowed data-[disabled]:opacity-50 data-[disabled]:hover:bg-transparent data-[disabled]:focus:bg-transparent [&[data-disabled]_*]:!cursor-not-allowed",
+      "text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md h-[var(--size-md)] pl-10 pr-[var(--space-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtlest-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)] [&]:data-[disabled]:!cursor-not-allowed data-[disabled]:opacity-50 data-[disabled]:hover:bg-transparent data-[disabled]:focus:bg-transparent [&[data-disabled]_*]:!cursor-not-allowed",
       className
     )}
     checked={checked}
     onSelect={(e) => e.preventDefault()}
     {...props}
   >
-    <span className="absolute left-[var(--space-md)] flex h-4 w-4 items-center justify-center rounded-sm border border-[var(--color-border-input)] bg-[var(--color-surface-primary)]">
+    <span className="absolute left-[var(--space-md)] flex h-4 w-4 items-center justify-center rounded-sm border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)]">
       <DropdownMenuPrimitive.ItemIndicator>
-        <div className="h-4 w-4 rounded-sm border border-[var(--color-background-brand)] bg-[var(--color-background-brand)] flex items-center justify-center">
+        <div className="h-4 w-4 rounded-sm border border-[var(--color-background-blue-bold)] bg-[var(--color-background-blue-bold)] flex items-center justify-center">
           <Check className="h-3 w-3 text-[var(--color-text-on-action)]" />
         </div>
       </DropdownMenuPrimitive.ItemIndicator>
@@ -136,13 +136,13 @@ const DropdownMenuDesktopRadioItem = React.forwardRef<
   <DropdownMenuPrimitive.RadioItem
     ref={ref}
     className={cn(
-      "text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md h-[var(--size-md)] pl-10 pr-[var(--space-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtle-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] [&]:data-[disabled]:!cursor-not-allowed data-[disabled]:opacity-50 data-[disabled]:hover:bg-transparent data-[disabled]:focus:bg-transparent [&[data-disabled]_*]:!cursor-not-allowed [&[data-state=checked]_span]:border-[var(--color-border-brand)] [&[data-state=checked]_span]:bg-[var(--color-background-brand)] [&[data-state=checked]_span]:text-[var(--color-text-on-action)]",
+      "text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md h-[var(--size-md)] pl-10 pr-[var(--space-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtlest-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)] [&]:data-[disabled]:!cursor-not-allowed data-[disabled]:opacity-50 data-[disabled]:hover:bg-transparent data-[disabled]:focus:bg-transparent [&[data-disabled]_*]:!cursor-not-allowed [&[data-state=checked]_span]:border-[var(--color-border-brand-bold)] [&[data-state=checked]_span]:bg-[var(--color-background-blue-bold)] [&[data-state=checked]_span]:text-[var(--color-text-on-action)]",
       className
     )}
     onSelect={(e) => e.preventDefault()}
     {...props}
   >
-    <span className="absolute left-[var(--space-md)] flex h-4 w-4 items-center justify-center rounded-full border-2 border-[var(--color-border-input)] bg-[var(--color-surface-primary)]">
+    <span className="absolute left-[var(--space-md)] flex h-4 w-4 items-center justify-center rounded-full border-2 border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)]">
       <DropdownMenuPrimitive.ItemIndicator className="flex h-full w-full items-center justify-center rounded-full text-current">
         <Circle className="h-[6px] w-[6px] fill-current" />
       </DropdownMenuPrimitive.ItemIndicator>
@@ -210,8 +210,8 @@ const MobileDropdownItem = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "[&]:text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md px-[var(--space-md)] h-[var(--size-lg)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtle-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] active:bg-[var(--color-background-neutral-subtle-hovered)]",
-        destructive && "text-[var(--color-text-error)] hover:text-[var(--color-text-error)] focus:text-[var(--color-text-error)] hover:bg-[var(--color-background-error)] focus:bg-[var(--color-background-error)] [&>svg]:text-[var(--color-icon-error)]",
+        "[&]:text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md px-[var(--space-md)] h-[var(--size-lg)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtlest-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)] active:bg-[var(--color-background-neutral-subtlest-hovered)]",
+        destructive && "text-[var(--color-text-error-bold)] hover:text-[var(--color-text-error-bold)] focus:text-[var(--color-text-error-bold)] hover:bg-[var(--color-background-error-subtle)] focus:bg-[var(--color-background-error-subtle)] [&>svg]:text-[var(--color-icon-error-bold)]",
         inset && "pl-8",
         className
       )}
@@ -249,7 +249,7 @@ const MobileDropdownCheckboxItem = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md h-[var(--size-lg)] pl-10 pr-[var(--space-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtle-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] active:bg-[var(--color-background-neutral-subtle-hovered)]",
+        "text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md h-[var(--size-lg)] pl-10 pr-[var(--space-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtlest-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)] active:bg-[var(--color-background-neutral-subtlest-hovered)]",
         className
       )}
       onClick={() => onCheckedChange?.(!checked)}
@@ -258,9 +258,9 @@ const MobileDropdownCheckboxItem = React.forwardRef<
       tabIndex={0}
       {...props}
     >
-      <span className="absolute left-[var(--space-md)] flex h-4 w-4 items-center justify-center rounded-sm border border-[var(--color-border-input)] bg-[var(--color-surface-primary)]">
+      <span className="absolute left-[var(--space-md)] flex h-4 w-4 items-center justify-center rounded-sm border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)]">
         {checked && (
-          <div className="h-4 w-4 rounded-sm border border-[var(--color-background-brand)] bg-[var(--color-background-brand)] flex items-center justify-center">
+          <div className="h-4 w-4 rounded-sm border border-[var(--color-background-blue-bold)] bg-[var(--color-background-blue-bold)] flex items-center justify-center">
             <Check className="h-3 w-3 text-[var(--color-text-on-action)]" />
           </div>
         )}
@@ -295,7 +295,7 @@ const MobileDropdownRadioItem = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md h-[var(--size-lg)] pl-10 pr-[var(--space-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtle-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] active:bg-[var(--color-background-neutral-subtle-hovered)]",
+        "text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md h-[var(--size-lg)] pl-10 pr-[var(--space-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtlest-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)] active:bg-[var(--color-background-neutral-subtlest-hovered)]",
         className
       )}
       onClick={() => onRadioSelect?.(value)}
@@ -305,8 +305,8 @@ const MobileDropdownRadioItem = React.forwardRef<
       {...props}
     >
       <span className={cn(
-        "absolute left-[var(--space-md)] flex h-4 w-4 items-center justify-center rounded-full border-2 border-[var(--color-border-input)] bg-[var(--color-surface-primary)]",
-        checked && "border-[var(--color-border-brand)] bg-[var(--color-background-brand)] text-[var(--color-text-on-action)]"
+        "absolute left-[var(--space-md)] flex h-4 w-4 items-center justify-center rounded-full border-2 border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)]",
+        checked && "border-[var(--color-border-brand-bold)] bg-[var(--color-background-blue-bold)] text-[var(--color-text-on-action)]"
       )}>
         {checked && <Circle className="h-[6px] w-[6px] fill-current" />}
       </span>
@@ -738,7 +738,7 @@ const ResponsiveDropdownMenuCheckboxItem = React.forwardRef<
       <DropdownMenuPrimitive.CheckboxItem
         ref={ref}
         className={cn(
-          "text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md h-[var(--size-md)] pl-10 pr-[var(--space-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtle-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] [&]:data-[disabled]:!cursor-not-allowed data-[disabled]:opacity-50 data-[disabled]:hover:bg-transparent data-[disabled]:focus:bg-transparent [&[data-disabled]_*]:!cursor-not-allowed",
+          "text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md h-[var(--size-md)] pl-10 pr-[var(--space-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtlest-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)] [&]:data-[disabled]:!cursor-not-allowed data-[disabled]:opacity-50 data-[disabled]:hover:bg-transparent data-[disabled]:focus:bg-transparent [&[data-disabled]_*]:!cursor-not-allowed",
           className
         )}
         checked={checked}
@@ -746,9 +746,9 @@ const ResponsiveDropdownMenuCheckboxItem = React.forwardRef<
         onSelect={(e) => e.preventDefault()}
         {...props}
       >
-        <span className="absolute left-[var(--space-md)] flex h-4 w-4 items-center justify-center rounded-sm border border-[var(--color-border-input)] bg-[var(--color-surface-primary)]">
+        <span className="absolute left-[var(--space-md)] flex h-4 w-4 items-center justify-center rounded-sm border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)]">
           <DropdownMenuPrimitive.ItemIndicator>
-            <div className="h-4 w-4 rounded-sm border border-[var(--color-background-brand)] bg-[var(--color-background-brand)] flex items-center justify-center">
+            <div className="h-4 w-4 rounded-sm border border-[var(--color-background-blue-bold)] bg-[var(--color-background-blue-bold)] flex items-center justify-center">
               <Check className="h-3 w-3 text-[var(--color-text-on-action)]" />
             </div>
           </DropdownMenuPrimitive.ItemIndicator>
@@ -789,14 +789,14 @@ const ResponsiveDropdownMenuRadioItem = React.forwardRef<
       <DropdownMenuPrimitive.RadioItem
         ref={ref}
         className={cn(
-          "text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md h-[var(--size-md)] pl-10 pr-[var(--space-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtle-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] [&]:data-[disabled]:!cursor-not-allowed data-[disabled]:opacity-50 data-[disabled]:hover:bg-transparent data-[disabled]:focus:bg-transparent [&[data-disabled]_*]:!cursor-not-allowed [&[data-state=checked]_span]:border-[var(--color-border-brand)] [&[data-state=checked]_span]:bg-[var(--color-background-brand)] [&[data-state=checked]_span]:text-[var(--color-text-on-action)]",
+          "text-body-md relative flex [&]:cursor-pointer select-none items-center rounded-md h-[var(--size-md)] pl-10 pr-[var(--space-md)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtlest-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)] [&]:data-[disabled]:!cursor-not-allowed data-[disabled]:opacity-50 data-[disabled]:hover:bg-transparent data-[disabled]:focus:bg-transparent [&[data-disabled]_*]:!cursor-not-allowed [&[data-state=checked]_span]:border-[var(--color-border-brand-bold)] [&[data-state=checked]_span]:bg-[var(--color-background-blue-bold)] [&[data-state=checked]_span]:text-[var(--color-text-on-action)]",
           className
         )}
         value={value}
         onSelect={(e) => e.preventDefault()}
         {...props}
       >
-        <span className="absolute left-[var(--space-md)] flex h-4 w-4 items-center justify-center rounded-full border-2 border-[var(--color-border-input)] bg-[var(--color-surface-primary)]">
+        <span className="absolute left-[var(--space-md)] flex h-4 w-4 items-center justify-center rounded-full border-2 border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)]">
           <DropdownMenuPrimitive.ItemIndicator className="flex h-full w-full items-center justify-center rounded-full text-current">
             <Circle className="h-[6px] w-[6px] fill-current" />
           </DropdownMenuPrimitive.ItemIndicator>
@@ -972,7 +972,7 @@ const ResponsiveDropdownMenuSubTrigger = React.forwardRef<
       <DropdownMenuPrimitive.SubTrigger
         ref={ref as any}
         className={cn(
-          "text-body-md flex [&]:cursor-pointer select-none items-center rounded-md px-[var(--space-md)] h-[var(--size-md)] outline-none focus:bg-[var(--color-background-neutral-subtle-hovered)] hover:bg-[var(--color-background-neutral-subtle-hovered)] data-[state=open]:bg-[var(--color-background-neutral-subtle-hovered)]",
+          "text-body-md flex [&]:cursor-pointer select-none items-center rounded-md px-[var(--space-md)] h-[var(--size-md)] outline-none focus:bg-[var(--color-background-neutral-subtlest-hovered)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] data-[state=open]:bg-[var(--color-background-neutral-subtlest-hovered)]",
           inset && "pl-8",
           className
         )}
@@ -992,7 +992,7 @@ const ResponsiveDropdownMenuSubTrigger = React.forwardRef<
     <button
       ref={ref}
       className={cn(
-        "text-body-md relative flex w-full cursor-pointer select-none items-center rounded-md px-[var(--space-md)] h-[var(--size-lg)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtle-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)] active:bg-[var(--color-background-neutral-subtle-hovered)]",
+        "text-body-md relative flex w-full cursor-pointer select-none items-center rounded-md px-[var(--space-md)] h-[var(--size-lg)] outline-none transition-colors focus:bg-[var(--color-background-neutral-subtlest-hovered)] focus:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)] active:bg-[var(--color-background-neutral-subtlest-hovered)]",
         inset && "pl-8",
         className
       )}

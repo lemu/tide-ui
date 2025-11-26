@@ -244,9 +244,9 @@ export const KeyboardNavigation: Story = {
           <p className="font-medium mb-2">Try keyboard navigation:</p>
           <ul className="list-disc list-inside space-y-1">
             <li>Type "a" to see suggestions</li>
-            <li>Use <kbd className="px-2 py-1 bg-[var(--color-background-neutral-subtle)] rounded text-body-xsm">↓</kbd> / <kbd className="px-2 py-1 bg-[var(--color-background-neutral-subtle)] rounded text-body-xsm">↑</kbd> to navigate</li>
-            <li>Press <kbd className="px-2 py-1 bg-[var(--color-background-neutral-subtle)] rounded text-body-xsm">Enter</kbd> to select</li>
-            <li>Press <kbd className="px-2 py-1 bg-[var(--color-background-neutral-subtle)] rounded text-body-xsm">Esc</kbd> to close</li>
+            <li>Use <kbd className="px-2 py-1 bg-[var(--color-background-neutral-subtlest)] rounded text-body-xsm">↓</kbd> / <kbd className="px-2 py-1 bg-[var(--color-background-neutral-subtlest)] rounded text-body-xsm">↑</kbd> to navigate</li>
+            <li>Press <kbd className="px-2 py-1 bg-[var(--color-background-neutral-subtlest)] rounded text-body-xsm">Enter</kbd> to select</li>
+            <li>Press <kbd className="px-2 py-1 bg-[var(--color-background-neutral-subtlest)] rounded text-body-xsm">Esc</kbd> to close</li>
           </ul>
         </div>
       </div>

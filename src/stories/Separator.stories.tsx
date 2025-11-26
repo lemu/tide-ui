@@ -87,7 +87,7 @@ export const Vertical: Story = {
 export const LayoutExplanation: Story = {
   render: () => (
     <div className="space-y-[var(--space-lg)] max-w-4xl">
-      <div className="bg-[var(--color-background-information-subtle)] border border-[var(--color-border-information)] rounded-lg p-[var(--space-lg)]">
+      <div className="bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-lg p-[var(--space-lg)]">
         <h3 className="text-heading-sm mb-[var(--space-md)]">Layout-Based API</h3>
         <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
           The layout prop describes the layout context, making it more intuitive than orientation.
@@ -147,11 +147,11 @@ export const Breadcrumb: Story = {
     <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-lg p-[var(--space-lg)]">
       <h4 className="text-heading-sm mb-[var(--space-md)]">Breadcrumb Navigation</h4>
       <div className="flex items-center space-x-[var(--space-sm)]">
-        <span className="text-body-sm text-[var(--color-text-brand)] hover:underline cursor-pointer">Home</span>
+        <span className="text-body-sm text-[var(--color-text-brand-bold)] hover:underline cursor-pointer">Home</span>
         <Separator layout="horizontal" />
-        <span className="text-body-sm text-[var(--color-text-brand)] hover:underline cursor-pointer">Products</span>
+        <span className="text-body-sm text-[var(--color-text-brand-bold)] hover:underline cursor-pointer">Products</span>
         <Separator layout="horizontal" />
-        <span className="text-body-sm text-[var(--color-text-brand)] hover:underline cursor-pointer">Electronics</span>
+        <span className="text-body-sm text-[var(--color-text-brand-bold)] hover:underline cursor-pointer">Electronics</span>
         <Separator layout="horizontal" />
         <span className="text-body-sm">Laptops</span>
       </div>
@@ -277,13 +277,13 @@ export const TagsExample: Story = {
     <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-lg p-[var(--space-lg)]">
       <h4 className="text-heading-sm mb-[var(--space-md)]">Tags</h4>
       <div className="flex items-center space-x-[var(--space-sm)] flex-wrap">
-        <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm">React</span>
+        <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand-bold)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm">React</span>
         <Separator type="dot" layout="horizontal" />
-        <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm">TypeScript</span>
+        <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand-bold)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm">TypeScript</span>
         <Separator type="dot" layout="horizontal" />
-        <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm">UI Components</span>
+        <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand-bold)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm">UI Components</span>
         <Separator type="dot" layout="horizontal" />
-        <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm">Design System</span>
+        <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand-bold)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm">Design System</span>
       </div>
     </div>
   ),
@@ -296,7 +296,7 @@ export const UserProfile: Story = {
       <h4 className="text-heading-sm mb-[var(--space-md)]">User Profile</h4>
       <div className="flex items-center space-x-[var(--space-sm)]">
         <div className="flex items-center space-x-[var(--space-sm)]">
-          <div className="w-[var(--size-md)] h-[var(--size-md)] bg-[var(--color-background-brand)] rounded-full flex items-center justify-center">
+          <div className="w-[var(--size-md)] h-[var(--size-md)] bg-[var(--color-background-blue-bold)] rounded-full flex items-center justify-center">
             <Icon name="user" size="sm" color="inverse" />
           </div>
           <span className="text-body-medium-md">John Doe</span>

@@ -53,7 +53,7 @@ export const Default: Story = {
               onItemsChange={setItems}
               orientation="vertical"
               renderItem={(item) => (
-                <div className="flex items-center gap-3 p-3 border rounded-lg bg-[var(--color-surface-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)]">
+                <div className="flex items-center gap-3 p-3 border rounded-lg bg-[var(--color-surface-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)]">
                   <Sortable.Handle />
                   <span className="text-body-sm">{item}</span>
                 </div>
@@ -106,7 +106,7 @@ export const TaskList: Story = {
                     </div>
                   </div>
                   {task.completed && (
-                    <Icon name="check" size="sm" className="text-[var(--color-text-success)]" />
+                    <Icon name="check" size="sm" className="text-[var(--color-text-success-bold)]" />
                   )}
                 </div>
               )}
@@ -189,7 +189,7 @@ export const HorizontalTabs: Story = {
               onItemsChange={setTabs}
               orientation="horizontal"
               renderItem={(tab) => (
-                <div className="flex items-center gap-2 px-4 py-2 border rounded-lg bg-[var(--color-surface-primary)] hover:bg-[var(--color-background-neutral-subtle-hovered)] whitespace-nowrap">
+                <div className="flex items-center gap-2 px-4 py-2 border rounded-lg bg-[var(--color-surface-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] whitespace-nowrap">
                   <Sortable.Handle className="opacity-50 hover:opacity-100">
                     <Icon name="grip-horizontal" size="sm" />
                   </Sortable.Handle>
@@ -277,7 +277,7 @@ export const KanbanBoard: Story = {
               orientation="horizontal"
               renderItem={(column) => (
                 <div className="flex-1 min-w-0 border rounded-lg bg-[var(--color-surface-primary)]">
-                  <div className="p-3 border-b bg-[var(--color-background-neutral-subtle)]">
+                  <div className="p-3 border-b bg-[var(--color-background-neutral-subtlest)]">
                     <div className="flex items-center gap-2">
                       <Sortable.Handle />
                       <h3 className="text-body-medium-sm font-medium">{column.title}</h3>
@@ -330,11 +330,11 @@ export const MusicPlaylist: Story = {
               onItemsChange={setSongs}
               getItemId={(song) => song.id}
               renderItem={(song, index) => (
-                <div className="flex items-center gap-3 p-2 rounded hover:bg-[var(--color-background-neutral-subtle-hovered)] group">
+                <div className="flex items-center gap-3 p-2 rounded hover:bg-[var(--color-background-neutral-subtlest-hovered)] group">
                   <Sortable.Handle className="opacity-0 group-hover:opacity-100 transition-opacity">
                     <Icon name="grip-vertical" size="sm" />
                   </Sortable.Handle>
-                  <div className="flex items-center justify-center w-8 h-8 bg-[var(--color-background-neutral-subtle)] rounded text-caption-sm">
+                  <div className="flex items-center justify-center w-8 h-8 bg-[var(--color-background-neutral-subtlest)] rounded text-caption-sm">
                     {index + 1}
                   </div>
                   <div className="flex-1 min-w-0">

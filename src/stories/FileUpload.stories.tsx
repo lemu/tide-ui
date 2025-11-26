@@ -244,7 +244,7 @@ export const AvatarUpload: Story = {
               {files.length === 0 ? (
                 <FileUpload.Dropzone className="aspect-square max-w-32 mx-auto">
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-[var(--color-background-neutral-subtle)] rounded-full mx-auto mb-2 flex items-center justify-center">
+                    <div className="w-16 h-16 bg-[var(--color-background-neutral-subtlest)] rounded-full mx-auto mb-2 flex items-center justify-center">
                       <Icon name="user" size="lg" className="text-[var(--color-text-tertiary)]" />
                     </div>
                     <p className="text-caption-sm font-medium mb-1">Upload avatar</p>
@@ -265,14 +265,14 @@ export const AvatarUpload: Story = {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <div className="w-full h-full bg-[var(--color-background-neutral-subtle)] flex items-center justify-center">
+                          <div className="w-full h-full bg-[var(--color-background-neutral-subtlest)] flex items-center justify-center">
                             <Icon name="user" size="lg" className="text-[var(--color-text-tertiary)]" />
                           </div>
                         )}
                       </div>
                       <FileUpload.ItemDelete 
                         file={file}
-                        className="absolute -top-2 -right-2 rounded-full bg-[var(--color-background-error)] hover:bg-[var(--color-background-error-hovered)]"
+                        className="absolute -top-2 -right-2 rounded-full bg-[var(--color-background-error-subtle)] hover:bg-[var(--color-background-error-subtle-hovered)]"
                       >
                         <Icon name="x" size="sm" className="text-white" />
                       </FileUpload.ItemDelete>
@@ -440,13 +440,13 @@ export const ErrorStates: Story = {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Icon name="alert-triangle" className="text-[var(--color-text-error)]" />
+              <Icon name="alert-triangle" className="text-[var(--color-text-error-bold)]" />
               Upload Errors
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="p-3 border border-[var(--color-border-error)] bg-[var(--color-background-error-subtle)] rounded-lg">
-              <p className="text-body-sm text-[var(--color-text-error)]">
+            <div className="p-3 border border-[var(--color-border-error-bold)] bg-[var(--color-background-error-subtle)] rounded-lg">
+              <p className="text-body-sm text-[var(--color-text-error-bold)]">
                 Some files could not be uploaded. Please check the errors below and try again.
               </p>
             </div>
@@ -512,7 +512,7 @@ export const DisabledState: Story = {
               </FileUpload.Dropzone>
             </FileUpload.Root>
             
-            <div className="p-3 bg-[var(--color-background-neutral-subtle)] rounded-lg">
+            <div className="p-3 bg-[var(--color-background-neutral-subtlest)] rounded-lg">
               <p className="text-caption-sm text-[var(--color-text-secondary)]">
                 Upload functionality is disabled in this state.
               </p>
@@ -561,7 +561,7 @@ export const CompactFileList: Story = {
               
               {files.length > 0 && (
                 <div className="border rounded-lg">
-                  <div className="p-3 border-b bg-[var(--color-background-neutral-subtle)]">
+                  <div className="p-3 border-b bg-[var(--color-background-neutral-subtlest)]">
                     <div className="flex items-center justify-between">
                       <span className="text-body-sm font-medium">
                         {files.length} file{files.length !== 1 ? 's' : ''}

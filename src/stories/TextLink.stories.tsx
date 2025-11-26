@@ -423,9 +423,9 @@ export const InDifferentContexts: Story = {
       </Card>
 
       {/* In alerts or notices */}
-      <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-information)] rounded-md">
+      <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-md">
         <div className="flex items-start gap-3">
-          <div className="text-[var(--color-text-information)]">ⓘ</div>
+          <div className="text-[var(--color-text-info-bold)]">ⓘ</div>
           <div className="flex-1">
             <p className="text-body-sm">
               Your subscription will expire in 7 days.{" "}

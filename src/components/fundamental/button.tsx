@@ -9,25 +9,25 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: [
-          "bg-[var(--color-background-neutral-subtle)] text-[var(--color-text-primary)]",
+          "bg-[var(--color-background-neutral-subtlest)] text-[var(--color-text-primary)]",
           "border border-[var(--color-border-action-outline)]",
-          "enabled:hover:bg-[var(--color-background-neutral-subtle-hovered)] enabled:hover:border-[var(--color-border-action-hovered)] enabled:hover:shadow-sm",
+          "enabled:hover:bg-[var(--color-background-neutral-subtlest-hovered)] enabled:hover:border-[var(--color-border-action-outline-hovered)] enabled:hover:shadow-sm",
           "focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
           "enabled:active:bg-[var(--grey-alpha-50)] enabled:active:translate-y-px enabled:active:shadow-xs",
           "disabled:bg-[var(--color-background-disabled)] disabled:[&]:text-[var(--color-text-disabled)] disabled:border-[var(--color-border-action-outline)]",
         ],
         secondary: [
-          "bg-[var(--color-background-neutral-subtle)] text-[var(--color-text-primary)]",
+          "bg-[var(--color-background-neutral-subtlest)] text-[var(--color-text-primary)]",
           "border border-[var(--color-border-action-outline)]",
-          "enabled:hover:bg-[var(--color-background-neutral-subtle-hovered)] enabled:hover:border-[var(--color-border-action-hovered)] enabled:hover:shadow-sm",
+          "enabled:hover:bg-[var(--color-background-neutral-subtlest-hovered)] enabled:hover:border-[var(--color-border-action-outline-hovered)] enabled:hover:shadow-sm",
           "focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
           "enabled:active:bg-[var(--grey-alpha-50)] enabled:active:translate-y-px enabled:active:shadow-xs",
           "disabled:bg-[var(--color-background-disabled)] disabled:[&]:text-[var(--color-text-disabled)] disabled:border-[var(--color-border-action-outline)]",
         ],
         primary: [
-          "bg-[var(--color-background-brand)] [&]:text-[var(--color-text-on-action)]",
+          "bg-[var(--color-background-blue-bold)] [&]:text-[var(--color-text-on-action)]",
           "border-none",
-          "enabled:hover:bg-[var(--color-background-brand-hovered)] enabled:hover:shadow-sm",
+          "enabled:hover:bg-[var(--color-background-blue-bold-hovered)] enabled:hover:shadow-sm",
           "focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
           "enabled:active:bg-[var(--blue-700)] enabled:active:translate-y-px enabled:active:shadow-xs",
           "disabled:bg-[var(--color-background-disabled)] disabled:[&]:text-[var(--color-text-disabled)]",
@@ -54,7 +54,7 @@ const buttonVariants = cva(
           "enabled:hover:bg-[var(--color-background-neutral-hovered)]",
           "focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
           "enabled:active:bg-[var(--grey-alpha-100)] enabled:active:translate-y-px",
-          "disabled:bg-[var(--color-background-neutral-subtle)] disabled:[&]:text-[var(--color-text-disabled)]",
+          "disabled:bg-[var(--color-background-neutral-subtlest)] disabled:[&]:text-[var(--color-text-disabled)]",
         ],
       },
       size: {

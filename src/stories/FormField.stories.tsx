@@ -115,7 +115,7 @@ export const CheckboxFieldWithError: Story = {
         <Checkbox id="required-terms" className="mt-0.5" />
         <FormLabel htmlFor="required-terms">
           I agree to the terms and conditions
-          <span className="text-[var(--color-text-error)] ml-1">*</span>
+          <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
         </FormLabel>
       </div>
       <FormErrorMessage>
@@ -131,7 +131,7 @@ export const RequiredField: Story = {
     <FormField className="w-80">
       <FormLabel htmlFor="full-name">
         Full name
-        <span className="text-[var(--color-text-error)] ml-1">*</span>
+        <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
       </FormLabel>
       <FormControl>
         <Input
@@ -258,7 +258,7 @@ export const InteractiveForm: Story = {
         <FormField>
           <FormLabel htmlFor="signup-email">
             Email address
-            <span className="text-[var(--color-text-error)] ml-1">*</span>
+            <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
           </FormLabel>
           <FormControl>
             <Input
@@ -282,7 +282,7 @@ export const InteractiveForm: Story = {
         <FormField>
           <FormLabel htmlFor="signup-password">
             Password
-            <span className="text-[var(--color-text-error)] ml-1">*</span>
+            <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
           </FormLabel>
           <FormControl>
             <Input
@@ -306,7 +306,7 @@ export const InteractiveForm: Story = {
         <FormField>
           <FormLabel htmlFor="confirm-password">
             Confirm password
-            <span className="text-[var(--color-text-error)] ml-1">*</span>
+            <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
           </FormLabel>
           <FormControl>
             <Input
@@ -333,7 +333,7 @@ export const InteractiveForm: Story = {
             />
             <FormLabel htmlFor="signup-terms">
               I agree to the terms and conditions
-              <span className="text-[var(--color-text-error)] ml-1">*</span>
+              <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
             </FormLabel>
           </div>
           {errors.terms && (
@@ -517,7 +517,7 @@ export const ContactForm: Story = {
             <FormField>
               <FormLabel htmlFor="contact-name">
                 Full Name
-                <span className="text-[var(--color-text-error)] ml-1">*</span>
+                <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
               </FormLabel>
               <FormControl>
                 <Input
@@ -533,7 +533,7 @@ export const ContactForm: Story = {
             <FormField>
               <FormLabel htmlFor="contact-email">
                 Email Address
-                <span className="text-[var(--color-text-error)] ml-1">*</span>
+                <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
               </FormLabel>
               <FormControl>
                 <Input
@@ -564,7 +564,7 @@ export const ContactForm: Story = {
               <FormField>
                 <FormLabel htmlFor="contact-subject">
                   Subject
-                  <span className="text-[var(--color-text-error)] ml-1">*</span>
+                  <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
                 </FormLabel>
                 <FormControl>
                   <Select
@@ -609,7 +609,7 @@ export const ContactForm: Story = {
             <FormField>
               <FormLabel htmlFor="contact-message">
                 Message
-                <span className="text-[var(--color-text-error)] ml-1">*</span>
+                <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
               </FormLabel>
               <FormControl>
                 <Textarea

@@ -9,15 +9,15 @@ const inputVariants = cva(
     variants: {
       variant: {
         default: [
-          "bg-[var(--color-background-input)] text-[var(--color-text-primary)]",
-          "border-[var(--color-border-input)]",
-          "hover:border-[var(--color-border-input-hovered)]",
+          "bg-[var(--color-interaction-background-input-neutral)] text-[var(--color-text-primary)]",
+          "border-[var(--color-interaction-border-input)]",
+          "hover:border-[var(--color-interaction-border-input-hovered)]",
           "focus-visible:border-[#005f85]",
         ],
         error: [
-          "bg-[var(--color-background-input)] text-[var(--color-text-primary)]",
-          "border-[var(--color-border-error)]",
-          "focus-visible:border-[var(--color-border-error)]",
+          "bg-[var(--color-interaction-background-input-neutral)] text-[var(--color-text-primary)]",
+          "border-[var(--color-border-error-bold)]",
+          "focus-visible:border-[var(--color-border-error-bold)]",
         ],
       },
       size: {

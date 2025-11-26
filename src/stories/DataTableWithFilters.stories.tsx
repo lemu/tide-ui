@@ -552,10 +552,10 @@ const shippingFixtureColumns: ColumnDef<ShippingFixture>[] = [
           <div
             className={`inline-flex items-center rounded-sm px-2 py-1 text-xs font-medium ${
               status === 'fixed'
-                ? 'bg-[var(--color-background-success)] text-[var(--color-text-success)]'
+                ? 'bg-[var(--color-background-success-subtle)] text-[var(--color-text-success-bold)]'
                 : status === 'pending'
-                ? 'bg-[var(--color-background-warning)] text-[var(--color-text-warning)]'
-                : 'bg-[var(--color-background-error)] text-[var(--color-text-error)]'
+                ? 'bg-[var(--color-background-warning-subtle)] text-[var(--color-text-warning-bold)]'
+                : 'bg-[var(--color-background-error-subtle)] text-[var(--color-text-error-bold)]'
             }`}
           >
             {label}
@@ -715,7 +715,7 @@ export const WithExternalFiltersAndGlobalSearch: Story = {
     return (
       <div className="flex flex-col gap-[var(--space-lg)] w-full">
         {/* Info Banner */}
-        <div className="text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral)] p-[var(--space-lg)] rounded-md">
+        <div className="text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-lg)] rounded-md">
           <strong>Global Search Feature:</strong> Type keywords and press Enter to add search terms.
           Search terms that match filter options (like "Rotterdam", "Singapore", "Coal") will automatically
           show the corresponding filter icon. The search looks across all fields including vessel names,
@@ -863,7 +863,7 @@ export const WithExternalFiltersAndGlobalSearchAutocomplete: Story = {
     return (
       <div className="flex flex-col gap-[var(--space-lg)] w-full">
         {/* Info Banner */}
-        <div className="text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral)] p-[var(--space-lg)] rounded-md">
+        <div className="text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-lg)] rounded-md">
           <strong>Global Search with Autocomplete:</strong> Type at least 2 characters to see autocomplete suggestions from all filter options.
           Matched text is <strong className="bg-[#ffeb10]">highlighted in yellow</strong> with medium weight.
           Each suggestion displays its source filter (icon + label) on the right side.
@@ -980,7 +980,7 @@ export const WithGlobalSearchOnly: Story = {
     return (
       <div className="flex flex-col gap-[var(--space-lg)] w-full">
         {/* Info Banner */}
-        <div className="text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral)] p-[var(--space-lg)] rounded-md">
+        <div className="text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-lg)] rounded-md">
           <strong>Global Search Only:</strong> This variant demonstrates global search without pinned filters.
           The layout shows Filter button → vertical separator → global search. Users can still access all filters
           through the Filter dropdown menu, but no filters are pinned for quick access in the toolbar.

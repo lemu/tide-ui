@@ -52,19 +52,19 @@ const badgeVariants = cva(
         intent: "brand",
         appearance: "solid",
         class:
-          "border-transparent bg-[var(--color-background-brand)] text-[var(--color-text-inverse)]",
+          "border-transparent bg-[var(--color-background-blue-bold)] text-[var(--color-text-inverse)]",
       },
       {
         intent: "brand",
         appearance: "subtle",
         class:
-          "border-transparent bg-[var(--blue-50)] text-[var(--color-text-brand)]",
+          "border-transparent bg-[var(--blue-50)] text-[var(--color-text-brand-bold)]",
       },
       {
         intent: "brand",
         appearance: "outline",
         class:
-          "border border-[var(--color-blue-300)] text-[var(--color-text-brand)]",
+          "border border-[var(--color-blue-300)] text-[var(--color-text-brand-bold)]",
       },
       // Success intent variants
       {
@@ -77,13 +77,13 @@ const badgeVariants = cva(
         intent: "success",
         appearance: "subtle",
         class:
-          "border-transparent bg-[var(--color-background-success)] text-[var(--color-text-success)]",
+          "border-transparent bg-[var(--color-background-success-subtle)] text-[var(--color-text-success-bold)]",
       },
       {
         intent: "success",
         appearance: "outline",
         class:
-          "border border-[var(--color-border-success)] text-[var(--color-text-success)]",
+          "border border-[var(--color-border-success-bold)] text-[var(--color-text-success-bold)]",
       },
       // Warning intent variants
       {
@@ -96,13 +96,13 @@ const badgeVariants = cva(
         intent: "warning",
         appearance: "subtle",
         class:
-          "border-transparent bg-[var(--color-background-warning)] text-[var(--color-text-warning)]",
+          "border-transparent bg-[var(--color-background-warning-subtle)] text-[var(--color-text-warning-bold)]",
       },
       {
         intent: "warning",
         appearance: "outline",
         class:
-          "border border-[var(--color-border-warning)] text-[var(--color-text-warning)]",
+          "border border-[var(--color-border-warning-bold)] text-[var(--color-text-warning-bold)]",
       },
       // Destructive intent variants
       {
@@ -115,32 +115,32 @@ const badgeVariants = cva(
         intent: "destructive",
         appearance: "subtle",
         class:
-          "border-transparent bg-[var(--color-background-error)] text-[var(--color-text-error)]",
+          "border-transparent bg-[var(--color-background-error-subtle)] text-[var(--color-text-error-bold)]",
       },
       {
         intent: "destructive",
         appearance: "outline",
         class:
-          "border border-[var(--color-border-error)] text-[var(--color-text-error)]",
+          "border border-[var(--color-border-error-bold)] text-[var(--color-text-error-bold)]",
       },
       // Information intent variants
       {
         intent: "information",
         appearance: "solid",
         class:
-          "border-transparent bg-[var(--color-background-information-bold)] text-[var(--color-text-inverse)]",
+          "border-transparent bg-[var(--color-background-info-bold)] text-[var(--color-text-inverse)]",
       },
       {
         intent: "information",
         appearance: "subtle",
         class:
-          "border-transparent bg-[var(--color-background-information)] text-[var(--color-text-information)]",
+          "border-transparent bg-[var(--color-background-info-subtle)] text-[var(--color-text-info-bold)]",
       },
       {
         intent: "information",
         appearance: "outline",
         class:
-          "border border-[var(--color-border-information)] text-[var(--color-text-information)]",
+          "border border-[var(--color-border-info-bold)] text-[var(--color-text-info-bold)]",
       },
       // Violet intent variants
       {

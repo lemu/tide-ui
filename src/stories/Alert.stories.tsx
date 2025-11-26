@@ -149,15 +149,15 @@ export const SystemStatus: Story = {
           <div className="grid grid-cols-3 gap-4 text-caption-sm">
             <div>
               <div className="font-medium">API</div>
-              <div className="text-[var(--color-text-success)]">✓ Operational</div>
+              <div className="text-[var(--color-text-success-bold)]">✓ Operational</div>
             </div>
             <div>
               <div className="font-medium">Database</div>
-              <div className="text-[var(--color-text-success)]">✓ Operational</div>
+              <div className="text-[var(--color-text-success-bold)]">✓ Operational</div>
             </div>
             <div>
               <div className="font-medium">CDN</div>
-              <div className="text-[var(--color-text-success)]">✓ Operational</div>
+              <div className="text-[var(--color-text-success-bold)]">✓ Operational</div>
             </div>
           </div>
         </AlertDescription>
@@ -302,7 +302,7 @@ export const FormValidation: Story = {
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                  className="w-full px-3 py-2 border border-[var(--color-border-input)] rounded-md"
+                  className="w-full px-3 py-2 border border-[var(--color-interaction-border-input)] rounded-md"
                   placeholder="Enter your email"
                 />
               </div>
@@ -313,7 +313,7 @@ export const FormValidation: Story = {
                   type="password"
                   value={formData.password}
                   onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
-                  className="w-full px-3 py-2 border border-[var(--color-border-input)] rounded-md"
+                  className="w-full px-3 py-2 border border-[var(--color-interaction-border-input)] rounded-md"
                   placeholder="Enter your password"
                 />
               </div>
@@ -324,7 +324,7 @@ export const FormValidation: Story = {
                   type="password"
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData(prev => ({ ...prev, confirmPassword: e.target.value }))}
-                  className="w-full px-3 py-2 border border-[var(--color-border-input)] rounded-md"
+                  className="w-full px-3 py-2 border border-[var(--color-interaction-border-input)] rounded-md"
                   placeholder="Confirm your password"
                 />
               </div>
@@ -391,15 +391,15 @@ export const FeatureAnnouncements: Story = {
           </p>
           <div className="grid grid-cols-3 gap-4 text-body-sm">
             <div className="text-center">
-              <div className="text-lg font-semibold text-[var(--color-text-success)]">40%</div>
+              <div className="text-lg font-semibold text-[var(--color-text-success-bold)]">40%</div>
               <div className="text-[var(--color-text-secondary)]">Faster Loading</div>
             </div>
             <div className="text-center">
-              <div className="text-lg font-semibold text-[var(--color-text-success)]">25%</div>
+              <div className="text-lg font-semibold text-[var(--color-text-success-bold)]">25%</div>
               <div className="text-[var(--color-text-secondary)]">Less Memory</div>
             </div>
             <div className="text-center">
-              <div className="text-lg font-semibold text-[var(--color-text-success)]">60%</div>
+              <div className="text-lg font-semibold text-[var(--color-text-success-bold)]">60%</div>
               <div className="text-[var(--color-text-secondary)]">Fewer Bugs</div>
             </div>
           </div>
@@ -446,9 +446,9 @@ export const ProgressAlerts: Story = {
                 <span>Progress</span>
                 <span>{uploadProgress}%</span>
               </div>
-              <div className="w-full bg-[var(--color-background-neutral-subtle)] rounded-full h-2">
+              <div className="w-full bg-[var(--color-background-neutral-subtlest)] rounded-full h-2">
                 <div 
-                  className="bg-[var(--color-background-brand)] h-2 rounded-full transition-all duration-300"
+                  className="bg-[var(--color-background-blue-bold)] h-2 rounded-full transition-all duration-300"
                   style={{ width: `${uploadProgress}%` }}
                 />
               </div>

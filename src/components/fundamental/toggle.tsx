@@ -10,19 +10,19 @@ const toggleVariants = cva(
       variant: {
         default: [
           "bg-transparent text-[var(--color-text-primary)]",
-          "hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]",
-          "data-[state=on]:bg-[var(--color-background-brand-selected)] data-[state=on]:text-[var(--color-text-brand)] data-[state=on]:[&_svg]:text-[var(--color-text-brand)]",
-          "data-[state=on]:hover:bg-[var(--color-background-brand-selected-hovered)]",
-          "aria-checked:bg-[var(--color-background-brand-selected)] aria-checked:text-[var(--color-text-brand)] aria-checked:[&_svg]:text-[var(--color-text-brand)]",
-          "aria-checked:hover:bg-[var(--color-background-brand-selected-hovered)]"
+          "hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]",
+          "data-[state=on]:bg-[var(--color-background-blue-subtle-selected)] data-[state=on]:text-[var(--color-text-brand-bold)] data-[state=on]:[&_svg]:text-[var(--color-text-brand-bold)]",
+          "data-[state=on]:hover:bg-[var(--color-background-blue-subtle-selected-hovered)]",
+          "aria-checked:bg-[var(--color-background-blue-subtle-selected)] aria-checked:text-[var(--color-text-brand-bold)] aria-checked:[&_svg]:text-[var(--color-text-brand-bold)]",
+          "aria-checked:hover:bg-[var(--color-background-blue-subtle-selected-hovered)]"
         ],
         outline: [
           "border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] text-[var(--color-text-primary)]",
-          "hover:bg-[var(--color-background-neutral-subtle-hovered)] hover:text-[var(--color-text-primary)]",
-          "data-[state=on]:bg-[var(--color-background-brand-selected)] data-[state=on]:text-[var(--color-text-brand)] data-[state=on]:border-transparent data-[state=on]:[&_svg]:text-[var(--color-text-brand)]",
-          "data-[state=on]:hover:bg-[var(--color-background-brand-selected-hovered)]",
-          "aria-checked:bg-[var(--color-background-brand-selected)] aria-checked:text-[var(--color-text-brand)] aria-checked:border-transparent aria-checked:[&_svg]:text-[var(--color-text-brand)]",
-          "aria-checked:hover:bg-[var(--color-background-brand-selected-hovered)]"
+          "hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]",
+          "data-[state=on]:bg-[var(--color-background-blue-subtle-selected)] data-[state=on]:text-[var(--color-text-brand-bold)] data-[state=on]:border-transparent data-[state=on]:[&_svg]:text-[var(--color-text-brand-bold)]",
+          "data-[state=on]:hover:bg-[var(--color-background-blue-subtle-selected-hovered)]",
+          "aria-checked:bg-[var(--color-background-blue-subtle-selected)] aria-checked:text-[var(--color-text-brand-bold)] aria-checked:border-transparent aria-checked:[&_svg]:text-[var(--color-text-brand-bold)]",
+          "aria-checked:hover:bg-[var(--color-background-blue-subtle-selected-hovered)]"
         ],
       },
       size: {

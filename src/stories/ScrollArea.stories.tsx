@@ -43,7 +43,7 @@ export const Horizontal: Story = {
           {Array.from({ length: 20 }, (_, i) => (
             <div
               key={i}
-              className="shrink-0 w-32 h-20 bg-[var(--color-background-neutral-subtle)] rounded flex items-center justify-center"
+              className="shrink-0 w-32 h-20 bg-[var(--color-background-neutral-subtlest)] rounded flex items-center justify-center"
             >
               <span className="text-body-sm">Item {i + 1}</span>
             </div>
@@ -82,7 +82,7 @@ export const ChatMessages: Story = {
                     <span className="text-body-sm font-medium">{msg.user}</span>
                     <span className="text-caption-sm text-[var(--color-text-secondary)]">{msg.time}</span>
                   </div>
-                  <p className="text-body-sm bg-[var(--color-background-neutral-subtle)] rounded-lg p-3">
+                  <p className="text-body-sm bg-[var(--color-background-neutral-subtlest)] rounded-lg p-3">
                     {msg.message}
                   </p>
                 </div>
@@ -108,7 +108,7 @@ export const CodePreview: Story = {
         </CardHeader>
         <CardContent className="p-0">
           <ScrollArea className="h-64">
-            <pre className="p-4 text-caption-sm bg-[var(--color-background-neutral)] text-[var(--color-text-primary)]">
+            <pre className="p-4 text-caption-sm bg-[var(--color-background-neutral-default)] text-[var(--color-text-primary)]">
 {`import React from 'react'
 import { ScrollArea } from './components/ui/scroll-area'
 
