@@ -21,8 +21,8 @@ export { Collapsible, CollapsibleTrigger, CollapsibleContent } from './fundament
 export { Button } from './fundamental/button'
 export type { ButtonProps } from './fundamental/button'
 
-export { ButtonGroup } from './fundamental/button-group'
-export type { ButtonGroupProps } from './fundamental/button-group'
+export { ButtonGroup, ButtonGroupText, ButtonGroupSeparator, buttonGroupVariants } from './fundamental/button-group'
+export type { ButtonGroupProps, ButtonGroupTextProps, ButtonGroupSeparatorProps } from './fundamental/button-group'
 
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './fundamental/card'
 
@@ -34,6 +34,26 @@ export type { RadioGroupProps, RadioGroupItemProps } from './fundamental/radio-g
 export { Input } from './fundamental/input'
 export type { InputProps } from './fundamental/input'
 
+// InputGroup components
+export {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupText,
+  InputGroupInput,
+  InputGroupTextarea,
+  inputGroupAddonVariants,
+  inputGroupButtonVariants,
+} from './fundamental/input-group'
+export type {
+  InputGroupProps,
+  InputGroupAddonProps,
+  InputGroupButtonProps,
+  InputGroupTextProps,
+  InputGroupInputProps,
+  InputGroupTextareaProps,
+} from './fundamental/input-group'
+
 export { Label } from './fundamental/label'
 export type { LabelProps } from './fundamental/label'
 
@@ -42,6 +62,10 @@ export { ScrollArea, ScrollBar } from './fundamental/scroll-area'
 export { Separator } from './fundamental/separator'
 
 export { Skeleton, SkeletonAvatar, SkeletonButton, SkeletonCard, SkeletonTable, skeletonVariants } from './fundamental/skeleton'
+
+// Spinner components
+export { Spinner, LoadingOverlay, Pulse, ProgressDots } from './fundamental/spinner'
+export type { SpinnerProps, LoadingOverlayProps } from './fundamental/spinner'
 
 export { FixtureStatus, statusConfig } from './product/fixture-status'
 export type { FixtureStatusProps, StatusValue, StatusConfig } from './product/fixture-status'
@@ -103,9 +127,37 @@ export type {
 export { Editable, EditablePreview, EditableInput, EditableDisplay, EditableField } from './fundamental/editable'
 export type { EditableProps, EditablePreviewProps, EditableInputProps } from './fundamental/editable'
 
-// Form Field components
+// Form Field components (original API - backward compatible)
 export { FormField, FormLabel, FormControl, FormHelperText, FormErrorMessage } from './fundamental/form-field'
 export type { FormFieldProps, FormLabelProps, FormControlProps, FormHelperTextProps, FormErrorMessageProps } from './fundamental/form-field'
+
+// Field components (new composable API - shadcn-inspired)
+export {
+  Field,
+  FieldSet,
+  FieldLegend,
+  FieldGroup,
+  FieldContent,
+  FieldLabel,
+  FieldTitle,
+  FieldDescription,
+  FieldSeparator,
+  FieldError,
+  fieldVariants,
+  fieldLegendVariants,
+} from './fundamental/form-field'
+export type {
+  FieldProps,
+  FieldSetProps,
+  FieldLegendProps,
+  FieldGroupProps,
+  FieldContentProps,
+  FieldLabelProps,
+  FieldTitleProps,
+  FieldDescriptionProps,
+  FieldSeparatorProps,
+  FieldErrorProps
+} from './fundamental/form-field'
 
 export { Tabs, TabsList, TabsTrigger, TabsContent, TabsGroupLabel } from './fundamental/tabs'
 export type { TabsProps, TabsListProps, TabsTriggerProps, TabsGroupLabelProps } from './fundamental/tabs'
@@ -170,12 +222,29 @@ export {
   AlertDialogTrigger,
 } from './fundamental/alert-dialog'
 
+// Empty components
+export {
+  Empty,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+  EmptyDescription,
+  EmptyContent,
+} from './fundamental/empty'
+export type {
+  EmptyProps,
+  EmptyMediaProps,
+  EmptyTitleProps,
+  EmptyDescriptionProps,
+} from './fundamental/empty'
+
 // Icon component
 export { Icon } from './fundamental/icon'
 export type { IconColor, IconSize, CustomIconName } from './fundamental/icon'
 
-// Kbd component
-export { Kbd } from './fundamental/kbd'
+// Kbd components
+export { Kbd, KbdGroup } from './fundamental/kbd'
+export type { KbdProps, KbdGroupProps } from './fundamental/kbd'
 
 // Command components
 export {
