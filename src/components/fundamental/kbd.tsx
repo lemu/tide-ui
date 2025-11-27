@@ -47,4 +47,20 @@ const Kbd = React.forwardRef<HTMLElement, KbdProps>(
 );
 Kbd.displayName = "Kbd";
 
-export { Kbd, kbdVariants };
+// KbdGroup component for grouping keyboard shortcuts
+export interface KbdGroupProps extends React.HTMLAttributes<HTMLSpanElement> {}
+
+const KbdGroup = React.forwardRef<HTMLSpanElement, KbdGroupProps>(
+  ({ className, ...props }, ref) => {
+    return (
+      <span
+        className={cn("inline-flex items-center gap-[var(--space-xsm)]", className)}
+        ref={ref}
+        {...props}
+      />
+    );
+  },
+);
+KbdGroup.displayName = "KbdGroup";
+
+export { Kbd, KbdGroup, kbdVariants };

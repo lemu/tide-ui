@@ -105,6 +105,7 @@ const SelectContent = React.forwardRef<
         className,
       )}
       position={position}
+      modal={false}
       {...props}
     >
       <SelectPrimitive.ScrollUpButton className="flex cursor-default items-center justify-center py-1">

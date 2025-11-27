@@ -67,7 +67,7 @@ export function DataTableSettingsMenu({
       <DropdownMenuTrigger asChild>
         <Button
           size="md"
-          icon="more-horizontal"
+          icon="settings"
           className={triggerClassName}
         />
       </DropdownMenuTrigger>

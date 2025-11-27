@@ -6,6 +6,17 @@ import {
   FormControl,
   FormHelperText,
   FormErrorMessage,
+  // New Field components
+  Field,
+  FieldSet,
+  FieldLegend,
+  FieldGroup,
+  FieldContent,
+  FieldLabel,
+  FieldTitle,
+  FieldDescription,
+  FieldSeparator,
+  FieldError,
 } from '../components/fundamental/form-field'
 import { Input } from '../components/fundamental/input'
 import { Textarea } from '../components/fundamental/textarea'
@@ -663,4 +674,285 @@ export const ContactForm: Story = {
       </Card>
     )
   },
+}
+
+// ===============================================
+// NEW FIELD COMPONENT EXAMPLES
+// ===============================================
+
+// Field with vertical orientation (default)
+export const FieldVertical: Story = {
+  render: () => (
+    <Field className="w-80">
+      <FieldLabel htmlFor="field-email">Email address</FieldLabel>
+      <Input
+        id="field-email"
+        type="email"
+        placeholder="Enter your email"
+      />
+      <FieldDescription>
+        We'll never share your email with anyone else.
+      </FieldDescription>
+    </Field>
+  ),
+}
+
+// Field with horizontal orientation
+export const FieldHorizontal: Story = {
+  render: () => (
+    <Field orientation="horizontal" className="w-full max-w-2xl">
+      <FieldContent className="w-48">
+        <FieldLabel htmlFor="field-name">Full name</FieldLabel>
+        <FieldDescription>Enter your legal name.</FieldDescription>
+      </FieldContent>
+      <Input
+        id="field-name"
+        placeholder="John Doe"
+        className="flex-1"
+      />
+    </Field>
+  ),
+}
+
+// Field with responsive orientation
+export const FieldResponsive: Story = {
+  render: () => (
+    <FieldGroup className="max-w-2xl">
+      <Field orientation="responsive">
+        <FieldContent className="@md/field-group:w-48">
+          <FieldLabel htmlFor="field-username">Username</FieldLabel>
+          <FieldDescription>Choose a unique username.</FieldDescription>
+        </FieldContent>
+        <Input
+          id="field-username"
+          placeholder="johndoe"
+          className="flex-1"
+        />
+      </Field>
+
+      <Field orientation="responsive">
+        <FieldContent className="@md/field-group:w-48">
+          <FieldLabel htmlFor="field-bio">Bio</FieldLabel>
+          <FieldDescription>Tell us about yourself.</FieldDescription>
+        </FieldContent>
+        <Textarea
+          id="field-bio"
+          placeholder="I'm a developer..."
+          rows={3}
+          className="flex-1"
+        />
+      </Field>
+    </FieldGroup>
+  ),
+}
+
+// Field with error state
+export const FieldWithError: Story = {
+  render: () => (
+    <Field invalid className="w-80">
+      <FieldLabel htmlFor="field-password">Password</FieldLabel>
+      <Input
+        id="field-password"
+        type="password"
+        placeholder="Enter your password"
+        variant="error"
+        aria-invalid="true"
+      />
+      <FieldError>Password must be at least 8 characters long.</FieldError>
+    </Field>
+  ),
+}
+
+// Field with multiple errors (error array)
+export const FieldWithErrorArray: Story = {
+  render: () => (
+    <Field invalid className="w-80">
+      <FieldLabel htmlFor="field-password-complex">Password</FieldLabel>
+      <Input
+        id="field-password-complex"
+        type="password"
+        placeholder="Enter your password"
+        variant="error"
+        aria-invalid="true"
+      />
+      <FieldError errors={[
+        'Password must be at least 8 characters long',
+        'Password must contain at least one uppercase letter',
+        'Password must contain at least one number',
+      ]} />
+    </Field>
+  ),
+}
+
+// FieldSet with grouped controls
+export const FieldSetExample: Story = {
+  render: () => (
+    <FieldSet className="w-96">
+      <FieldLegend variant="legend">Account Information</FieldLegend>
+
+      <Field>
+        <FieldLabel htmlFor="fieldset-email">Email</FieldLabel>
+        <Input id="fieldset-email" type="email" placeholder="email@example.com" />
+      </Field>
+
+      <Field>
+        <FieldLabel htmlFor="fieldset-password">Password</FieldLabel>
+        <Input id="fieldset-password" type="password" placeholder="••••••••" />
+        <FieldDescription>Must be at least 8 characters.</FieldDescription>
+      </Field>
+
+      <Field>
+        <FieldLabel htmlFor="fieldset-confirm">Confirm Password</FieldLabel>
+        <Input id="fieldset-confirm" type="password" placeholder="••••••••" />
+      </Field>
+    </FieldSet>
+  ),
+}
+
+// FieldSet with nested fieldsets
+export const NestedFieldSets: Story = {
+  render: () => (
+    <FieldSet className="w-96">
+      <FieldLegend variant="legend">Shipping Information</FieldLegend>
+
+      <Field>
+        <FieldLabel htmlFor="street">Street Address</FieldLabel>
+        <Input id="street" placeholder="123 Main St" />
+      </Field>
+
+      <FieldSeparator />
+
+      <FieldSet>
+        <FieldLegend variant="label">Location Details</FieldLegend>
+
+        <div className="grid grid-cols-2 gap-4">
+          <Field>
+            <FieldLabel htmlFor="city">City</FieldLabel>
+            <Input id="city" placeholder="San Francisco" />
+          </Field>
+
+          <Field>
+            <FieldLabel htmlFor="state">State</FieldLabel>
+            <Input id="state" placeholder="CA" />
+          </Field>
+        </div>
+
+        <Field>
+          <FieldLabel htmlFor="zip">ZIP Code</FieldLabel>
+          <Input id="zip" placeholder="94102" />
+        </Field>
+      </FieldSet>
+    </FieldSet>
+  ),
+}
+
+// FieldSeparator examples
+export const FieldSeparatorExamples: Story = {
+  render: () => (
+    <div className="w-96 space-y-6">
+      <Field>
+        <FieldLabel htmlFor="email-1">Work Email</FieldLabel>
+        <Input id="email-1" type="email" placeholder="work@example.com" />
+      </Field>
+
+      <FieldSeparator />
+
+      <Field>
+        <FieldLabel htmlFor="email-2">Personal Email</FieldLabel>
+        <Input id="email-2" type="email" placeholder="personal@example.com" />
+      </Field>
+
+      <FieldSeparator>Optional</FieldSeparator>
+
+      <Field>
+        <FieldLabel htmlFor="phone">Phone Number</FieldLabel>
+        <Input id="phone" type="tel" placeholder="(555) 123-4567" />
+        <FieldDescription>We'll only use this for account recovery.</FieldDescription>
+      </Field>
+    </div>
+  ),
+}
+
+// Complex form with mixed orientations
+export const ComplexForm: Story = {
+  render: () => {
+    const [errors, setErrors] = useState<Record<string, string | string[]>>({})
+
+    return (
+      <form className="w-full max-w-2xl space-y-6">
+        <FieldGroup>
+          <Field orientation="responsive">
+            <FieldContent className="@md/field-group:w-48">
+              <FieldTitle>Personal Info</FieldTitle>
+              <FieldDescription>Basic details about yourself.</FieldDescription>
+            </FieldContent>
+            <div className="flex-1 space-y-4">
+              <Field>
+                <FieldLabel htmlFor="complex-name">Full Name</FieldLabel>
+                <Input id="complex-name" placeholder="John Doe" />
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor="complex-email">Email</FieldLabel>
+                <Input id="complex-email" type="email" placeholder="john@example.com" />
+              </Field>
+            </div>
+          </Field>
+
+          <FieldSeparator />
+
+          <Field orientation="responsive">
+            <FieldContent className="@md/field-group:w-48">
+              <FieldTitle>Preferences</FieldTitle>
+              <FieldDescription>Customize your experience.</FieldDescription>
+            </FieldContent>
+            <div className="flex-1 space-y-4">
+              <div className="flex items-center space-x-2">
+                <Checkbox id="complex-newsletter" />
+                <FieldLabel htmlFor="complex-newsletter" className="mb-0">
+                  Receive newsletter
+                </FieldLabel>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Checkbox id="complex-updates" />
+                <FieldLabel htmlFor="complex-updates" className="mb-0">
+                  Product updates
+                </FieldLabel>
+              </div>
+            </div>
+          </Field>
+        </FieldGroup>
+
+        <div className="flex justify-end gap-2">
+          <Button variant="ghost">Cancel</Button>
+          <Button variant="primary">Save Changes</Button>
+        </div>
+      </form>
+    )
+  },
+}
+
+// FormErrorMessage with error array (backward compatibility)
+export const FormErrorMessageArray: Story = {
+  render: () => (
+    <FormField invalid className="w-80">
+      <FormLabel htmlFor="compat-password">Password</FormLabel>
+      <FormControl>
+        <Input
+          id="compat-password"
+          type="password"
+          placeholder="Enter your password"
+          variant="error"
+          aria-invalid="true"
+        />
+      </FormControl>
+      <FormErrorMessage errors={[
+        'Password must be at least 8 characters',
+        'Must include one uppercase letter',
+        'Must include one number',
+        'Must include one special character',
+      ]} />
+    </FormField>
+  ),
 }

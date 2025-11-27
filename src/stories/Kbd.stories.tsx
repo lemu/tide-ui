@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Kbd } from '../components/fundamental/kbd'
+import { Kbd, KbdGroup } from '../components/fundamental/kbd'
 import { Button } from '../components/fundamental/button'
 import { Icon } from '../components/fundamental/icon'
 import {
@@ -58,7 +58,7 @@ export const Sizes: Story = {
       <div className="space-y-[var(--space-sm)]">
         <h4 className="text-body-medium-md">Small (default)</h4>
         <div className="flex items-center gap-[var(--space-md)]">
-          <div className="flex items-center gap-[var(--space-xs)]">
+          <KbdGroup>
             <Kbd variant="light" size="sm">
               ⌘
             </Kbd>
@@ -66,7 +66,7 @@ export const Sizes: Story = {
             <Kbd variant="light" size="sm">
               K
             </Kbd>
-          </div>
+          </KbdGroup>
           <span className="text-body-sm text-[var(--color-text-secondary)]">
             Command palette
           </span>
@@ -76,7 +76,7 @@ export const Sizes: Story = {
       <div className="space-y-[var(--space-sm)]">
         <h4 className="text-body-medium-md">Medium</h4>
         <div className="flex items-center gap-[var(--space-md)]">
-          <div className="flex items-center gap-[var(--space-xs)]">
+          <KbdGroup>
             <Kbd variant="light" size="md">
               ⌘
             </Kbd>
@@ -84,7 +84,7 @@ export const Sizes: Story = {
             <Kbd variant="light" size="md">
               Enter
             </Kbd>
-          </div>
+          </KbdGroup>
           <span className="text-body-sm text-[var(--color-text-secondary)]">
             Submit form
           </span>
@@ -138,28 +138,28 @@ export const KeyCombinations: Story = {
       <div>
         <h3 className="text-heading-sm mb-[var(--space-sm)]">Common Combinations</h3>
         <div className="flex flex-wrap items-center gap-[var(--space-md)]">
-          <div className="flex items-center gap-[var(--space-xs)]">
+          <KbdGroup>
             <Kbd variant="light" size="sm">⌘</Kbd>
             <span className="text-caption-sm text-[var(--grey-500)]">+</span>
             <Kbd variant="light" size="sm">S</Kbd>
-          </div>
-          <div className="flex items-center gap-[var(--space-xs)]">
+          </KbdGroup>
+          <KbdGroup>
             <Kbd variant="light" size="sm">Ctrl</Kbd>
             <span className="text-caption-sm text-[var(--grey-500)]">+</span>
             <Kbd variant="light" size="sm">C</Kbd>
-          </div>
-          <div className="flex items-center gap-[var(--space-xs)]">
+          </KbdGroup>
+          <KbdGroup>
             <Kbd variant="light" size="sm">Shift</Kbd>
             <span className="text-caption-sm text-[var(--grey-500)]">+</span>
             <Kbd variant="light" size="sm">Tab</Kbd>
-          </div>
-          <div className="flex items-center gap-[var(--space-xs)]">
+          </KbdGroup>
+          <KbdGroup>
             <Kbd variant="light" size="sm">⌘</Kbd>
             <span className="text-caption-sm text-[var(--grey-500)]">+</span>
             <Kbd variant="light" size="sm">⇧</Kbd>
             <span className="text-caption-sm text-[var(--grey-500)]">+</span>
             <Kbd variant="light" size="sm">Z</Kbd>
-          </div>
+          </KbdGroup>
         </div>
       </div>
     </div>
@@ -222,10 +222,10 @@ export const InMenus: Story = {
           <Icon name="plus" size="sm" />
           <span className="text-body-sm">New File</span>
         </div>
-        <div className="flex items-center gap-[var(--space-xsm)]">
+        <KbdGroup>
           <Kbd variant="light" size="sm">⌘</Kbd>
           <Kbd variant="light" size="sm">N</Kbd>
-        </div>
+        </KbdGroup>
       </div>
 
       <div className="flex items-center justify-between rounded-md p-[var(--space-sm)] transition-colors hover:bg-[var(--color-background-neutral-subtlest)]">
@@ -233,10 +233,10 @@ export const InMenus: Story = {
           <Icon name="settings" size="sm" />
           <span className="text-body-sm">Settings</span>
         </div>
-        <div className="flex items-center gap-[var(--space-xsm)]">
+        <KbdGroup>
           <Kbd variant="light" size="sm">⌘</Kbd>
           <Kbd variant="light" size="sm">,</Kbd>
-        </div>
+        </KbdGroup>
       </div>
 
       <div className="flex items-center justify-between rounded-md p-[var(--space-sm)] transition-colors hover:bg-[var(--color-background-neutral-subtlest)]">
@@ -244,9 +244,7 @@ export const InMenus: Story = {
           <Icon name="circle-help" size="sm" />
           <span className="text-body-sm">Help</span>
         </div>
-        <div className="flex items-center gap-[var(--space-xs)]">
-          <Kbd variant="light" size="sm">?</Kbd>
-        </div>
+        <Kbd variant="light" size="sm">?</Kbd>
       </div>
     </div>
   ),
@@ -261,39 +259,39 @@ export const CommonShortcuts: Story = {
         <div className="space-y-[var(--space-md)]">
           <div className="flex items-center justify-between">
             <span className="text-body-sm">Save</span>
-            <div className="flex items-center gap-[var(--space-xsm)]">
+            <KbdGroup>
               <Kbd variant="light" size="sm">⌘</Kbd>
               <Kbd variant="light" size="sm">S</Kbd>
-            </div>
+            </KbdGroup>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-body-sm">Copy</span>
-            <div className="flex items-center gap-[var(--space-xsm)]">
+            <KbdGroup>
               <Kbd variant="light" size="sm">⌘</Kbd>
               <Kbd variant="light" size="sm">C</Kbd>
-            </div>
+            </KbdGroup>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-body-sm">Paste</span>
-            <div className="flex items-center gap-[var(--space-xsm)]">
+            <KbdGroup>
               <Kbd variant="light" size="sm">⌘</Kbd>
               <Kbd variant="light" size="sm">V</Kbd>
-            </div>
+            </KbdGroup>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-body-sm">Undo</span>
-            <div className="flex items-center gap-[var(--space-xsm)]">
+            <KbdGroup>
               <Kbd variant="light" size="sm">⌘</Kbd>
               <Kbd variant="light" size="sm">Z</Kbd>
-            </div>
+            </KbdGroup>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-body-sm">Redo</span>
-            <div className="flex items-center gap-[var(--space-xsm)]">
+            <KbdGroup>
               <Kbd variant="light" size="sm">⌘</Kbd>
               <Kbd variant="light" size="sm">⇧</Kbd>
               <Kbd variant="light" size="sm">Z</Kbd>
-            </div>
+            </KbdGroup>
           </div>
         </div>
       </div>
@@ -303,38 +301,38 @@ export const CommonShortcuts: Story = {
         <div className="space-y-[var(--space-md)]">
           <div className="flex items-center justify-between">
             <span className="text-body-sm">Command Palette</span>
-            <div className="flex items-center gap-[var(--space-xsm)]">
+            <KbdGroup>
               <Kbd variant="light" size="sm">⌘</Kbd>
               <Kbd variant="light" size="sm">K</Kbd>
-            </div>
+            </KbdGroup>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-body-sm">Quick Open</span>
-            <div className="flex items-center gap-[var(--space-xsm)]">
+            <KbdGroup>
               <Kbd variant="light" size="sm">⌘</Kbd>
               <Kbd variant="light" size="sm">P</Kbd>
-            </div>
+            </KbdGroup>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-body-sm">Go Back</span>
-            <div className="flex items-center gap-[var(--space-xsm)]">
+            <KbdGroup>
               <Kbd variant="light" size="sm">⌘</Kbd>
               <Kbd variant="light" size="sm">←</Kbd>
-            </div>
+            </KbdGroup>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-body-sm">Go Forward</span>
-            <div className="flex items-center gap-[var(--space-xsm)]">
+            <KbdGroup>
               <Kbd variant="light" size="sm">⌘</Kbd>
               <Kbd variant="light" size="sm">→</Kbd>
-            </div>
+            </KbdGroup>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-body-sm">Close Tab</span>
-            <div className="flex items-center gap-[var(--space-xsm)]">
+            <KbdGroup>
               <Kbd variant="light" size="sm">⌘</Kbd>
               <Kbd variant="light" size="sm">W</Kbd>
-            </div>
+            </KbdGroup>
           </div>
         </div>
       </div>
