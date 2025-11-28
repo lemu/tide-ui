@@ -18,7 +18,7 @@ A tabs component built on Radix UI for organizing content into separate views.
 
 ## Variants
 
-**Pill Tabs (default)**: Background-based selection with rounded corners. Best for primary navigation within a contained area.
+**Pilled Tabs (default)**: Background-based selection with rounded corners and white pill for active tab. Best for primary navigation within a contained area.
 
 **Line Tabs**: Underline-based selection. Best for secondary navigation or when you need a lighter visual treatment.
 
@@ -51,10 +51,10 @@ A tabs component built on Radix UI for organizing content into separate views.
     },
     variant: {
       control: { type: 'radio' },
-      options: ['pill', 'line'],
+      options: ['pilled', 'line'],
       description: 'Visual style variant (applies to TabsList and TabsTrigger)',
       table: {
-        defaultValue: { summary: 'pill' },
+        defaultValue: { summary: 'pilled' },
       },
     },
     size: {
@@ -307,16 +307,16 @@ export const LineTabs: Story = {
   ),
 }
 
-export const PillTabsSizes: Story = {
+export const PilledTabsSizes: Story = {
   render: () => (
     <div className="space-y-8 w-[600px]">
       <div>
         <h3 className="text-heading-sm mb-4">Small Size</h3>
         <Tabs defaultValue="tab1">
-          <TabsList size="sm">
-            <TabsTrigger size="sm" value="tab1">Tab 1</TabsTrigger>
-            <TabsTrigger size="sm" value="tab2">Tab 2</TabsTrigger>
-            <TabsTrigger size="sm" value="tab3">Tab 3</TabsTrigger>
+          <TabsList variant="pilled" size="sm">
+            <TabsTrigger variant="pilled" size="sm" value="tab1">Tab 1</TabsTrigger>
+            <TabsTrigger variant="pilled" size="sm" value="tab2">Tab 2</TabsTrigger>
+            <TabsTrigger variant="pilled" size="sm" value="tab3">Tab 3</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1" className="mt-4">
             <p className="text-body-sm">Small size content</p>
@@ -332,10 +332,10 @@ export const PillTabsSizes: Story = {
       <div>
         <h3 className="text-heading-sm mb-4">Medium Size (Default)</h3>
         <Tabs defaultValue="tab1">
-          <TabsList size="md">
-            <TabsTrigger size="md" value="tab1">Tab 1</TabsTrigger>
-            <TabsTrigger size="md" value="tab2">Tab 2</TabsTrigger>
-            <TabsTrigger size="md" value="tab3">Tab 3</TabsTrigger>
+          <TabsList variant="pilled" size="md">
+            <TabsTrigger variant="pilled" size="md" value="tab1">Tab 1</TabsTrigger>
+            <TabsTrigger variant="pilled" size="md" value="tab2">Tab 2</TabsTrigger>
+            <TabsTrigger variant="pilled" size="md" value="tab3">Tab 3</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1" className="mt-4">
             <p className="text-body-md">Medium size content</p>
@@ -351,10 +351,10 @@ export const PillTabsSizes: Story = {
       <div>
         <h3 className="text-heading-sm mb-4">Large Size</h3>
         <Tabs defaultValue="tab1">
-          <TabsList size="lg">
-            <TabsTrigger size="lg" value="tab1">Tab 1</TabsTrigger>
-            <TabsTrigger size="lg" value="tab2">Tab 2</TabsTrigger>
-            <TabsTrigger size="lg" value="tab3">Tab 3</TabsTrigger>
+          <TabsList variant="pilled" size="lg">
+            <TabsTrigger variant="pilled" size="lg" value="tab1">Tab 1</TabsTrigger>
+            <TabsTrigger variant="pilled" size="lg" value="tab2">Tab 2</TabsTrigger>
+            <TabsTrigger variant="pilled" size="lg" value="tab3">Tab 3</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1" className="mt-4">
             <p className="text-body-lg">Large size content</p>
@@ -371,23 +371,26 @@ export const PillTabsSizes: Story = {
   ),
 }
 
-export const PillTabsWithIcons: Story = {
+export const PilledTabsWithIcons: Story = {
   render: () => (
     <Tabs defaultValue="home" className="w-[600px]">
-      <TabsList>
+      <TabsList variant="pilled">
         <TabsTrigger
+          variant="pilled"
           value="home"
           icon={<Icon name="home" size="sm" />}
         >
           Home
         </TabsTrigger>
         <TabsTrigger
+          variant="pilled"
           value="notifications"
           icon={<Icon name="bell" size="sm" />}
         >
           Notifications
         </TabsTrigger>
         <TabsTrigger
+          variant="pilled"
           value="settings"
           icon={<Icon name="settings" size="sm" />}
         >
@@ -599,7 +602,7 @@ export const Playground: Story = {
   args: {
     defaultValue: 'tab1',
     orientation: 'horizontal',
-    variant: 'pill',
+    variant: 'pilled',
     size: 'md',
     fullWidth: false,
   },
@@ -644,12 +647,12 @@ export const FullWidth: Story = {
   render: () => (
     <div className="space-y-8 w-[1000px]">
       <div>
-        <h3 className="text-heading-sm mb-4">Pill Tabs - Full Width</h3>
+        <h3 className="text-heading-sm mb-4">Pilled Tabs - Full Width</h3>
         <Tabs defaultValue="tab1">
-          <TabsList fullWidth>
-            <TabsTrigger fullWidth value="tab1">Dashboard</TabsTrigger>
-            <TabsTrigger fullWidth value="tab2">Analytics</TabsTrigger>
-            <TabsTrigger fullWidth value="tab3">Reports</TabsTrigger>
+          <TabsList variant="pilled" fullWidth>
+            <TabsTrigger variant="pilled" fullWidth value="tab1">Dashboard</TabsTrigger>
+            <TabsTrigger variant="pilled" fullWidth value="tab2">Analytics</TabsTrigger>
+            <TabsTrigger variant="pilled" fullWidth value="tab3">Reports</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1" className="mt-4">
             <p className="text-body-md">Dashboard content - tabs stretch across full width with equal distribution.</p>

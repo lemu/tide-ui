@@ -8,7 +8,7 @@ const tabsListVariants = cva(
   {
     variants: {
       variant: {
-        pill: "bg-[var(--color-surface-secondary)] p-[var(--space-xsm)] rounded-md gap-[var(--space-sm)]",
+        pilled: "bg-[var(--color-surface-secondary)] p-[4px] rounded-[6px] gap-[var(--space-2xsm)]",
         line: "border-b border-[var(--grey-100)] gap-[var(--space-sm)] p-0",
       },
       size: {
@@ -23,23 +23,23 @@ const tabsListVariants = cva(
     },
     compoundVariants: [
       {
-        variant: "pill",
+        variant: "pilled",
         size: "sm",
-        className: "h-[var(--size-xsm)]",
+        className: "h-[32px]",
       },
       {
-        variant: "pill",
+        variant: "pilled",
         size: "md",
-        className: "h-[var(--size-sm)]",
+        className: "h-[40px]",
       },
       {
-        variant: "pill",
+        variant: "pilled",
         size: "lg",
-        className: "h-8",
+        className: "h-[48px]",
       },
     ],
     defaultVariants: {
-      variant: "pill",
+      variant: "pilled",
       size: "md",
       fullWidth: false,
     },
@@ -55,9 +55,9 @@ const tabsTriggerVariants = cva(
   {
     variants: {
       variant: {
-        pill: [
-          "rounded-sm bg-transparent",
-          "data-[state=active]:bg-[var(--color-background-blue-subtle-selected)] data-[state=active]:text-[var(--color-text-brand-bold)] data-[state=active]:[&_svg]:text-[var(--color-text-brand-bold)]",
+        pilled: [
+          "rounded-[var(--border-radius-sm)] bg-transparent",
+          "data-[state=active]:bg-[var(--color-surface-primary)] data-[state=active]:text-[var(--color-text-brand-bold-selected)] data-[state=active]:[&_svg]:text-[var(--color-text-brand-bold-selected)] data-[state=active]:shadow-[0px_3px_4px_0px_rgba(0,14,20,0.03)]",
           "hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]",
           "disabled:opacity-50",
         ],
@@ -71,8 +71,8 @@ const tabsTriggerVariants = cva(
         ],
       },
       size: {
-        sm: "text-label-sm px-[var(--space-sm)] py-[var(--space-xsm)]",
-        md: "text-label-sm px-[var(--space-md)] py-[var(--space-sm)]",
+        sm: "text-label-sm px-[var(--space-md)] py-[var(--space-xsm)]",
+        md: "text-label-md px-[var(--space-md)] py-[9px]",
         lg: "text-label-md px-[var(--space-lg)] py-[var(--space-md)]",
       },
       fullWidth: {
@@ -98,7 +98,7 @@ const tabsTriggerVariants = cva(
       },
     ],
     defaultVariants: {
-      variant: "pill",
+      variant: "pilled",
       size: "md",
       fullWidth: false,
     },
