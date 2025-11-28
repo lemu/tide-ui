@@ -1,9 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 import { CountryDropdown } from '../components/in-progress/country-dropdown'
+import { Flag } from '../components/ui/flag'
+import { Button } from '../components/fundamental/button'
+import { ChevronDown } from 'lucide-react'
 
 const meta: Meta<typeof CountryDropdown> = {
-  title: 'In Progress/CountryDropdown',
+  title: 'NPM • Fundamental/CountryDropdown',
   component: CountryDropdown,
   parameters: {
     layout: 'centered',
@@ -281,5 +284,51 @@ export const AllVariants: Story = {
         </div>
       </div>
     </div>
+  ),
+}
+
+// Custom Trigger Examples
+export const CustomTriggerPrimary: Story = {
+  render: () => (
+    <ControlledCountryDropdown
+      value="US"
+      trigger={(props) => (
+        <Button variant="primary" disabled={props.disabled}>
+          {props.selectedCountry?.name || props.placeholder}
+          <ChevronDown className="ml-2 h-4 w-4" />
+        </Button>
+      )}
+    />
+  ),
+}
+
+export const CustomTriggerDestructive: Story = {
+  render: () => (
+    <ControlledCountryDropdown
+      value="US"
+      trigger={(props) => (
+        <Button variant="destructive" disabled={props.disabled}>
+          {props.selectedCountry?.name || props.placeholder}
+          <ChevronDown className="ml-2 h-4 w-4" />
+        </Button>
+      )}
+    />
+  ),
+}
+
+export const CustomTriggerCompact: Story = {
+  render: () => (
+    <ControlledCountryDropdown
+      value="US"
+      trigger={(props) => (
+        <Button variant="default" size="sm" disabled={props.disabled} className="gap-[var(--space-sm)]">
+          {props.selectedCountry && (
+            <Flag country={props.selectedCountry.alpha2} size="sm" />
+          )}
+          <span>{props.selectedCountry?.alpha2 || 'Select'}</span>
+          <ChevronDown className="h-3 w-3" />
+        </Button>
+      )}
+    />
   ),
 }

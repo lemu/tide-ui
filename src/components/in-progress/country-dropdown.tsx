@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import { Check, ChevronDown } from "lucide-react";
 import { Button } from "@/components/fundamental/button";
 import {
@@ -14,33 +15,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/fundamental/popover";
+import { Flag, FlagSize } from "@/components/ui/flag";
 import { cn } from "@/lib/utils";
 import { countries } from "country-data-list";
 
-// Custom Flag component using square flags from kapowaz/square-flags
-interface FlagIconProps {
-  countryCode: string;
-  size?: number;
-  className?: string;
-}
-
-function FlagIcon({ countryCode, size = 16, className }: FlagIconProps) {
-  return (
-    <div
-      className={cn(
-        "inline-block rounded-[2px] shadow-[inset_0_0_0_1px_rgba(85,95,109,0.1)] bg-cover bg-center bg-no-repeat",
-        className
-      )}
-      style={{ 
-        width: size, 
-        height: size,
-        backgroundImage: `url(https://kapowaz.github.io/square-flags/flags/${countryCode.toLowerCase()}.svg)`
-      }}
-      role="img"
-      aria-label={`${countryCode} flag`}
-    />
-  );
-}
+// Helper function to map pixel size to Flag size variant
+const getFlagSizeVariant = (pixelSize: number): FlagSize => {
+  if (pixelSize <= 12) return "sm";
+  if (pixelSize <= 16) return "md";
+  if (pixelSize <= 20) return "lg";
+  return "xl";
+};
 
 // Type definitions
 export interface Country {
@@ -49,6 +34,13 @@ export interface Country {
   alpha3: string;
   numeric: string;
   emoji?: string;
+}
+
+export interface CountryDropdownTriggerProps {
+  open: boolean;
+  selectedCountry: Country | undefined;
+  placeholder: string;
+  disabled: boolean;
 }
 
 export interface CountryDropdownProps {
@@ -63,15 +55,20 @@ export interface CountryDropdownProps {
   showCode?: boolean;
   variant?: "default" | "slim";
   priorityCountries?: string[];
+  trigger?: (props: CountryDropdownTriggerProps) => React.ReactNode;
 }
+
+// Threshold for switching between virtualized and direct rendering
+const VIRTUALIZATION_THRESHOLD = 8;
 
 // Filter and format country data
 const getFilteredCountries = (): Country[] => {
   return countries.all
     .filter((country) => {
-      // Filter out deleted countries and specific regions
+      // Only keep officially assigned countries, exclude deleted/reserved codes
+      const validStatuses = ["assigned", "officially assigned"];
       return (
-        country.status !== "deleted" &&
+        validStatuses.includes(country.status) &&
         !["AQ", "BV", "HM", "GS"].includes(country.alpha2) // Antarctica and uninhabited territories
       );
     })
@@ -97,23 +94,54 @@ export function CountryDropdown({
   showCode = false,
   variant = "default",
   priorityCountries = ["US", "GB", "CA", "AU", "DE", "FR", "JP", "CN", "IN", "BR"],
+  trigger,
 }: CountryDropdownProps) {
   const [open, setOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [parentElement, setParentElement] = useState<HTMLDivElement | null>(null);
 
   const allCountries = useMemo(() => getFilteredCountries(), []);
 
-  // Separate priority countries from the rest
-  const { priorityList, regularCountries } = useMemo(() => {
+  // Convert pixel-based flagSize to Flag component size variant
+  const flagSizeVariant = useMemo(() => getFlagSizeVariant(flagSize), [flagSize]);
+
+  // Combine priority and regular countries into one list
+  const allDisplayCountries = useMemo(() => {
     const priority = priorityCountries
       .map((code) => allCountries.find((country) => country.alpha2 === code))
       .filter(Boolean) as Country[];
-    
+
     const regular = allCountries.filter(
       (country) => !priorityCountries.includes(country.alpha2)
     );
 
-    return { priorityList: priority, regularCountries: regular };
+    // Combine priority + regular
+    return [...priority, ...regular];
   }, [allCountries, priorityCountries]);
+
+  // Filter countries based on search value
+  const filteredCountries = useMemo(() => {
+    if (!searchValue) return allDisplayCountries;
+
+    const search = searchValue.toLowerCase();
+    return allDisplayCountries.filter((country) =>
+      country.name.toLowerCase().includes(search) ||
+      country.alpha2.toLowerCase().includes(search) ||
+      country.alpha3.toLowerCase().includes(search)
+    );
+  }, [allDisplayCountries, searchValue]);
+
+  // Determine if we should use virtualization based on item count
+  const shouldVirtualize = filteredCountries.length > VIRTUALIZATION_THRESHOLD;
+  const dynamicHeight = Math.min(filteredCountries.length * 40, 300);
+
+  // Setup virtualizer for the combined countries list (only when virtualizing)
+  const virtualizer = useVirtualizer({
+    count: shouldVirtualize ? filteredCountries.length : 0,
+    getScrollElement: () => parentElement,
+    estimateSize: () => 40, // Approximate height of each item
+    overscan: 5, // Render 5 extra items outside viewport for smooth scrolling
+  });
 
   const selectedCountry = useMemo(() => {
     return allCountries.find((country) => country.alpha2 === value);
@@ -128,17 +156,18 @@ export function CountryDropdown({
   );
 
   const renderCountryItem = useCallback(
-    (country: Country) => (
+    (country: Country, index?: number) => (
       <CommandItem
         key={country.alpha2}
         value={`${country.name} ${country.alpha2} ${country.alpha3}`}
         onSelect={() => handleSelect(country.alpha2)}
         className="flex items-center gap-[var(--space-sm)] cursor-pointer"
+        data-index={index}
       >
         {showFlag && (
-          <FlagIcon
-            countryCode={country.alpha2}
-            size={flagSize}
+          <Flag
+            country={country.alpha2}
+            size={flagSizeVariant}
           />
         )}
         <span className="flex-1">{country.name}</span>
@@ -152,7 +181,7 @@ export function CountryDropdown({
         )}
       </CommandItem>
     ),
-    [showFlag, flagSize, showCode, value, handleSelect]
+    [showFlag, flagSizeVariant, showCode, value, handleSelect]
   );
 
   const renderTriggerContent = () => {
@@ -160,9 +189,9 @@ export function CountryDropdown({
       return (
         <div className="flex items-center">
           {showFlag && (
-            <FlagIcon
-              countryCode={selectedCountry.alpha2}
-              size={flagSize}
+            <Flag
+              country={selectedCountry.alpha2}
+              size={flagSizeVariant}
             />
           )}
         </div>
@@ -173,9 +202,9 @@ export function CountryDropdown({
       return (
         <div className="flex items-center gap-[var(--space-sm)]">
           {showFlag && (
-            <FlagIcon
-              countryCode={selectedCountry.alpha2}
-              size={flagSize}
+            <Flag
+              country={selectedCountry.alpha2}
+              size={flagSizeVariant}
             />
           )}
           <span className="flex-1 truncate text-left">{selectedCountry.name}</span>
@@ -193,49 +222,93 @@ export function CountryDropdown({
     );
   };
 
+  const renderDefaultTrigger = () => (
+    <Button
+      variant="default"
+      role="combobox"
+      aria-expanded={open}
+      disabled={disabled}
+      className={cn(
+        "justify-between",
+        variant === "slim" ? "w-auto px-[var(--space-sm)]" : "w-full",
+        className
+      )}
+    >
+      {renderTriggerContent()}
+      {variant !== "slim" && (
+        <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+      )}
+    </Button>
+  );
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="ghost"
-          role="combobox"
-          aria-expanded={open}
-          disabled={disabled}
-          className={cn(
-            "justify-between border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
-            variant === "slim" ? "w-auto px-[var(--space-sm)]" : "w-full",
-            className
-          )}
-        >
-          {renderTriggerContent()}
-          {variant !== "slim" && (
-            <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          )}
-        </Button>
+        {trigger ? trigger({ open, selectedCountry, placeholder, disabled }) : renderDefaultTrigger()}
       </PopoverTrigger>
-      <PopoverContent 
-        className="w-[300px] p-0" 
+      <PopoverContent
+        className="w-[var(--radix-popover-trigger-width)] min-w-[300px] p-0"
         align={variant === "slim" ? "start" : "start"}
       >
-        <Command>
-          <CommandInput 
-            placeholder={searchPlaceholder} 
-            className="h-9"
-          />
+        <Command shouldFilter={false}>
+          <div className="px-[var(--space-sm)] pt-[var(--space-sm)] pb-[var(--space-sm)] border-b border-[var(--color-border-primary-subtle)]">
+            <CommandInput
+              placeholder={searchPlaceholder}
+              className="h-9"
+              value={searchValue}
+              onValueChange={setSearchValue}
+            />
+          </div>
           <CommandList className="max-h-[300px]">
             <CommandEmpty>No country found.</CommandEmpty>
-            
-            {priorityList.length > 0 && (
-              <>
-                <CommandGroup heading="Popular Countries">
-                  {priorityList.map(renderCountryItem)}
-                </CommandGroup>
-                <div className="border-t border-[var(--color-border-primary-subtle)] my-1" />
-              </>
-            )}
-            
-            <CommandGroup heading="All Countries">
-              {regularCountries.map(renderCountryItem)}
+            <CommandGroup>
+              {shouldVirtualize ? (
+                // Virtualized rendering for large lists
+                <div
+                  ref={setParentElement}
+                  className="h-[300px] overflow-y-auto overflow-x-hidden"
+                  style={{ contain: 'strict' }}
+                >
+                  <div
+                    style={{
+                      height: `${virtualizer.getTotalSize()}px`,
+                      width: '100%',
+                      position: 'relative',
+                    }}
+                  >
+                    {virtualizer.getVirtualItems().map((virtualItem) => {
+                      const country = filteredCountries[virtualItem.index];
+                      if (!country) return null;
+                      return (
+                        <div
+                          key={virtualItem.key}
+                          data-index={virtualItem.index}
+                          ref={virtualizer.measureElement}
+                          style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            transform: `translateY(${virtualItem.start}px)`,
+                          }}
+                        >
+                          {renderCountryItem(country, virtualItem.index)}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : (
+                // Direct rendering for small lists with dynamic height
+                <div
+                  style={{
+                    maxHeight: `${dynamicHeight}px`,
+                    overflowY: 'auto',
+                  }}
+                >
+                  {filteredCountries.map((country, index) => renderCountryItem(country, index))}
+                </div>
+              )}
             </CommandGroup>
           </CommandList>
         </Command>
