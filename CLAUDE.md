@@ -253,6 +253,27 @@ When adding new components to the library:
 5. **Use semantic design tokens** consistently throughout
 6. **Build and test** with `npm run build:lib` before committing
 
+### Component Export Requirements
+
+**CRITICAL: Components in "NPM • Fundamental" or "NPM • Product Components" Storybook sections MUST be exported from the library.**
+
+When a component is added to or moved to these Storybook sections, it signals that the component is production-ready and should be available to NPM consumers.
+
+**Export Pattern:**
+
+```typescript
+// ComponentName component
+export { ComponentName, relatedUtility } from './path/component-name'
+export type { ComponentNameProps, RelatedType } from './path/component-name'
+```
+
+**Rules:**
+
+1. **Storybook Title Indicates Export Status**: Components with titles starting with "NPM • Fundamental" or "NPM • Product Components" must be exported from `/src/components/index.ts`
+2. **In-Progress Components**: Components in `/src/components/in-progress/` are intentionally not exported until they are production-ready and moved to appropriate Storybook sections
+3. **Complete Exports**: Export both the component and all related types, utilities, and hooks that consumers need
+4. **Verification**: After adding exports, verify with `npm run build:lib` to ensure no TypeScript errors
+
 ### Component Best Practices
 
 - **Minimal overrides needed**: Base components should work well without extensive className overrides
