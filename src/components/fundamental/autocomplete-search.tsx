@@ -3,7 +3,6 @@ import { Command as CommandPrimitive } from "cmdk"
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "./command"
 import { Popover, PopoverAnchor, PopoverContent } from "./popover"
 import { Input } from "./input"
-import { Icon } from "./icon"
 
 export interface AutocompleteSuggestion {
   /**

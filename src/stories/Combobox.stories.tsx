@@ -22,7 +22,7 @@ type Story = StoryObj<typeof meta>
 // Helper function for standard Button trigger
 const createButtonTrigger = () => ({ selectedOption, placeholder, disabled }: any) => (
   <Button
-    variant="ghost"
+    variant="default"
     role="combobox"
     disabled={disabled}
     className="w-full justify-between"
@@ -44,7 +44,7 @@ const createMultiButtonTrigger = () => ({ selectedOptions, placeholder, disabled
 
   return (
     <Button
-      variant="ghost"
+      variant="default"
       role="combobox"
       disabled={disabled}
       className="w-full justify-between"

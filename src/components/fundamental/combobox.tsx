@@ -82,12 +82,14 @@ export function Combobox({
           </PopoverTrigger>
           <PopoverContent
             className={cn(
-              "w-[--radix-popover-trigger-width] min-w-[16rem] p-0",
+              "w-[var(--radix-popover-trigger-width)] min-w-[16rem] p-0",
               popoverClassName
             )}
           >
             <Command>
-              <CommandInput placeholder={searchPlaceholder} />
+              <div className="px-[var(--space-sm)] pt-[var(--space-sm)] pb-[var(--space-sm)] border-b border-[var(--color-border-primary-subtle)]">
+                <CommandInput placeholder={searchPlaceholder} />
+              </div>
               <CommandList>
                 <CommandEmpty>{emptyMessage}</CommandEmpty>
                 <CommandGroup>
@@ -127,7 +129,9 @@ export function Combobox({
         <DrawerContent className={cn("p-0", popoverClassName)}>
           <div className="space-y-[var(--space-xsm)] px-[var(--space-md)] pb-[var(--space-md)]">
             <Command>
-              <CommandInput placeholder={searchPlaceholder} />
+              <div className="px-[var(--space-sm)] pt-[var(--space-sm)] pb-[var(--space-sm)] border-b border-[var(--color-border-primary-subtle)]">
+                <CommandInput placeholder={searchPlaceholder} />
+              </div>
               <CommandList>
                 <CommandEmpty>{emptyMessage}</CommandEmpty>
                 <CommandGroup>
@@ -219,12 +223,14 @@ export function MultiCombobox({
           </PopoverTrigger>
           <PopoverContent
             className={cn(
-              "w-[--radix-popover-trigger-width] min-w-[16rem] p-0",
+              "w-[var(--radix-popover-trigger-width)] min-w-[16rem] p-0",
               popoverClassName
             )}
           >
             <Command>
-              <CommandInput placeholder={searchPlaceholder} />
+              <div className="px-[var(--space-sm)] pt-[var(--space-sm)] pb-[var(--space-sm)] border-b border-[var(--color-border-primary-subtle)]">
+                <CommandInput placeholder={searchPlaceholder} />
+              </div>
               <CommandList>
                 <CommandEmpty>{emptyMessage}</CommandEmpty>
                 <CommandGroup>
@@ -264,7 +270,9 @@ export function MultiCombobox({
         <DrawerContent className={cn("p-0", popoverClassName)}>
           <div className="space-y-[var(--space-xsm)] px-[var(--space-md)] pb-[var(--space-md)]">
             <Command>
-              <CommandInput placeholder={searchPlaceholder} />
+              <div className="px-[var(--space-sm)] pt-[var(--space-sm)] pb-[var(--space-sm)] border-b border-[var(--color-border-primary-subtle)]">
+                <CommandInput placeholder={searchPlaceholder} />
+              </div>
               <CommandList>
                 <CommandEmpty>{emptyMessage}</CommandEmpty>
                 <CommandGroup>

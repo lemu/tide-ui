@@ -89,12 +89,14 @@ const SelectTrigger = React.forwardRef<
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
 export interface SelectContentProps
-  extends React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content> {}
+  extends Omit<React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>, 'modal'> {
+  modal?: boolean;
+}
 
 const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
   SelectContentProps
->(({ className, children, position = "popper", ...props }, ref) => (
+>(({ className, children, position = "popper", modal = false, ...props }, ref) => (
   <SelectPrimitive.Portal>
     <SelectPrimitive.Content
       ref={ref}
@@ -105,7 +107,7 @@ const SelectContent = React.forwardRef<
         className,
       )}
       position={position}
-      modal={false}
+      modal={modal}
       {...props}
     >
       <SelectPrimitive.ScrollUpButton className="flex cursor-default items-center justify-center py-1">
