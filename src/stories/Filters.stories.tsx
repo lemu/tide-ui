@@ -824,6 +824,39 @@ export const ResponsiveTabletView: Story = {
   },
 }
 
+// Global Search with Autocomplete Only
+export const GlobalSearchWithAutocompleteOnly: Story = {
+  render: () => {
+    const [globalSearchTerms, setGlobalSearchTerms] = useState<string[]>([])
+
+    return (
+      <div className="p-4 space-y-2">
+        <div className="text-caption-sm text-[var(--color-text-secondary)]">
+          Minimal search interface with autocomplete suggestions from filter options.
+          Type at least 2 characters to see suggestions. Try "sing", "rott", or "iron".
+          No Filters button or pinned filter slots - just search with tags.
+        </div>
+        <Filters
+          filters={sampleFilters}
+          pinnedFilters={[]}
+          activeFilters={{}}
+          onPinnedFiltersChange={() => {}}
+          onFilterChange={() => {}}
+          onFilterClear={() => {}}
+          onFilterReset={() => setGlobalSearchTerms([])}
+          enableGlobalSearch={true}
+          enableAutocomplete={true}
+          autocompleteMinCharacters={2}
+          globalSearchTerms={globalSearchTerms}
+          onGlobalSearchChange={setGlobalSearchTerms}
+          hideReset={false}
+          hideFiltersButton={true}
+        />
+      </div>
+    )
+  },
+}
+
 /**
  * Demonstrates single-select filters using radio buttons vs multiselect filters using checkboxes.
  * Single-select filters use `type: 'select'` while multiselect use `type: 'multiselect'`.
