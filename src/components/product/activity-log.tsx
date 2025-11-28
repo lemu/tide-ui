@@ -24,7 +24,7 @@ const ActivityLog = React.forwardRef<HTMLDivElement, ActivityLogProps>(
       return (
         <div
           ref={ref}
-          className={cn("flex flex-col gap-[var(--space-lg)]", className)}
+          className={cn("flex flex-col gap-[var(--space-sm)]", className)}
           {...props}
         >
           {children}
@@ -128,7 +128,7 @@ const ActivityLogItem = React.forwardRef<HTMLDivElement, ActivityLogItemProps>(
           defaultOpen={defaultOpen}
           open={open}
           onOpenChange={onOpenChange}
-          className={cn("w-full group", className)}
+          className={cn("w-full group peer", className)}
           {...props}
         >
           {children}
@@ -156,10 +156,10 @@ const ActivityLogSeparator = React.forwardRef<
   return (
     <div
       ref={ref}
-      className={cn("flex items-center ml-[7.5px] -my-[var(--space-sm)]", className)}
+      className={cn("flex items-center ml-[7.5px] peer-data-[state=open]:hidden", className)}
       {...props}
     >
-      <div className="w-px h-[12px] bg-[var(--grey-alpha-100)]" />
+      <div className="w-px h-[var(--space-lg)] bg-[var(--grey-alpha-100)]" />
     </div>
   );
 });
@@ -177,6 +177,31 @@ export interface ActivityLogHeaderProps
 
 const ActivityLogHeader = React.forwardRef<HTMLDivElement, ActivityLogHeaderProps>(
   ({ className, children, asCollapsibleTrigger, ...props }, ref) => {
+    // Process children to group description with chevron
+    const childrenArray = React.Children.toArray(children);
+    let avatarOrIcon: React.ReactNode = null;
+    let description: React.ReactNode = null;
+    let chevron: React.ReactNode = null;
+    let otherChildren: React.ReactNode[] = [];
+
+    childrenArray.forEach((child) => {
+      if (React.isValidElement(child)) {
+        const displayName = (child.type as any)?.displayName;
+        if (displayName === "ActivityLogDescription") {
+          description = child;
+        } else if (displayName === "ActivityLogChevron") {
+          chevron = child;
+        } else if (!avatarOrIcon) {
+          // First non-description, non-chevron element is avatar/icon
+          avatarOrIcon = child;
+        } else {
+          otherChildren.push(child);
+        }
+      } else {
+        otherChildren.push(child);
+      }
+    });
+
     const content = (
       <div
         ref={!asCollapsibleTrigger ? ref : undefined}
@@ -187,7 +212,20 @@ const ActivityLogHeader = React.forwardRef<HTMLDivElement, ActivityLogHeaderProp
         )}
         {...props}
       >
-        {children}
+        {avatarOrIcon}
+        {description && chevron ? (
+          // Group description and chevron together
+          <div className="inline-flex gap-[var(--space-xsm)] items-center min-w-0 flex-1">
+            {description}
+            {chevron}
+          </div>
+        ) : (
+          <>
+            {description}
+            {chevron}
+          </>
+        )}
+        {otherChildren}
       </div>
     );
 
@@ -216,7 +254,7 @@ const ActivityLogContent = React.forwardRef<
     <CollapsibleContent
       ref={ref}
       className={cn(
-        "mt-[var(--space-sm)] pl-[var(--space-lg)] ml-[7.5px] border-l border-l-[var(--grey-alpha-100)] max-w-[320px]",
+        "mt-[var(--space-sm)] pl-[var(--space-sm)] ml-[7.5px] border-l border-l-[var(--grey-alpha-100)] max-w-[320px]",
         className
       )}
       {...props}
@@ -239,7 +277,7 @@ const ActivityLogDescription = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "flex flex-wrap gap-[var(--space-xsm)] items-center min-w-0 [&]:text-body-sm text-[var(--color-text-primary)]",
+        "inline-flex flex-wrap gap-x-[var(--space-xsm)] gap-y-0 items-center min-w-0 [&]:text-body-sm text-[var(--color-text-primary)]",
         className
       )}
       {...props}

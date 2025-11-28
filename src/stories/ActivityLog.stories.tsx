@@ -47,6 +47,8 @@ export const Default: Story = {
           </ActivityLogHeader>
         </ActivityLogItem>
 
+        <ActivityLogSeparator />
+
         <ActivityLogItem>
           <ActivityLogHeader>
             <Avatar size="xxs">
@@ -59,6 +61,8 @@ export const Default: Story = {
             </ActivityLogDescription>
           </ActivityLogHeader>
         </ActivityLogItem>
+
+        <ActivityLogSeparator />
 
         <ActivityLogItem>
           <ActivityLogHeader>
@@ -190,6 +194,8 @@ export const CollapsibleItems: Story = {
           </ActivityLogContent>
         </ActivityLogItem>
 
+        <ActivityLogSeparator />
+
         <ActivityLogItem collapsible defaultOpen={true}>
           <ActivityLogHeader asCollapsibleTrigger>
             <Avatar size="xxs">
@@ -224,6 +230,8 @@ export const CollapsibleItems: Story = {
             </Card>
           </ActivityLogContent>
         </ActivityLogItem>
+
+        <ActivityLogSeparator />
 
         <ActivityLogItem collapsible defaultOpen={false}>
           <ActivityLogHeader asCollapsibleTrigger>
@@ -264,8 +272,8 @@ export const CollapsibleItems: Story = {
 export const RichContent: Story = {
   render: () => (
     <div className="w-full max-w-2xl">
-      <ActivityLog separatorThreshold={86400000}> {/* 24 hours */}
-        <ActivityLogItem timestamp={new Date('2025-07-04T12:37:00')}>
+      <ActivityLog>
+        <ActivityLogItem>
           <ActivityLogHeader>
             <Avatar size="xxs">
               <AvatarFallback size="xxs">RL</AvatarFallback>
@@ -279,7 +287,9 @@ export const RichContent: Story = {
           </ActivityLogHeader>
         </ActivityLogItem>
 
-        <ActivityLogItem timestamp={new Date('2025-07-04T12:43:00')}>
+        <ActivityLogSeparator />
+
+        <ActivityLogItem>
           <ActivityLogHeader>
             <Avatar size="xxs">
               <AvatarFallback size="xxs">RL</AvatarFallback>
@@ -292,8 +302,9 @@ export const RichContent: Story = {
           </ActivityLogHeader>
         </ActivityLogItem>
 
-        {/* Auto separator (2 days gap) */}
-        <ActivityLogItem timestamp={new Date('2025-07-06T13:36:00')}>
+        <ActivityLogSeparator />
+
+        <ActivityLogItem>
           <ActivityLogHeader>
             <AvatarGroup size="xxs">
               <Avatar size="xxs">
@@ -312,7 +323,9 @@ export const RichContent: Story = {
           </ActivityLogHeader>
         </ActivityLogItem>
 
-        <ActivityLogItem timestamp={new Date('2025-07-06T15:52:00')}>
+        <ActivityLogSeparator />
+
+        <ActivityLogItem>
           <ActivityLogHeader>
             <Avatar size="xxs">
               <AvatarFallback size="xxs">RL</AvatarFallback>
@@ -335,7 +348,7 @@ export const RichContent: Story = {
           </ActivityLogHeader>
         </ActivityLogItem>
 
-        <ActivityLogItem timestamp={new Date('2025-07-06T16:14:00')}>
+        <ActivityLogItem>
           <ActivityLogHeader>
             <AvatarGroup size="xxs">
               <Avatar size="xxs">
@@ -354,8 +367,9 @@ export const RichContent: Story = {
           </ActivityLogHeader>
         </ActivityLogItem>
 
-        {/* Auto separator (1 day gap) */}
-        <ActivityLogItem timestamp={new Date('2025-07-07T07:53:00')}>
+        <ActivityLogSeparator />
+
+        <ActivityLogItem>
           <ActivityLogHeader>
             <Avatar size="xxs">
               <AvatarFallback size="xxs">RL</AvatarFallback>
@@ -378,7 +392,9 @@ export const RichContent: Story = {
           </ActivityLogHeader>
         </ActivityLogItem>
 
-        <ActivityLogItem timestamp={new Date('2025-07-07T07:55:00')}>
+        <ActivityLogSeparator />
+
+        <ActivityLogItem>
           <ActivityLogHeader>
             <Avatar size="xxs">
               <AvatarFallback size="xxs">RL</AvatarFallback>
@@ -401,8 +417,9 @@ export const RichContent: Story = {
           </ActivityLogHeader>
         </ActivityLogItem>
 
-        {/* Auto separator (3 days gap) */}
-        <ActivityLogItem timestamp={new Date('2025-07-10T14:28:00')}>
+        <ActivityLogSeparator />
+
+        <ActivityLogItem>
           <ActivityLogHeader>
             <Icon name="shield-check" size="md" color="primary" />
             <ActivityLogDescription>
@@ -413,8 +430,9 @@ export const RichContent: Story = {
           </ActivityLogHeader>
         </ActivityLogItem>
 
-        {/* Auto separator (2 days gap) */}
-        <ActivityLogItem timestamp={new Date('2025-07-12T07:02:00')}>
+        <ActivityLogSeparator />
+
+        <ActivityLogItem>
           <ActivityLogHeader>
             <Avatar size="xxs">
               <AvatarFallback size="xxs">RL</AvatarFallback>
@@ -567,6 +585,8 @@ export const CustomContent: Story = {
           </ActivityLogContent>
         </ActivityLogItem>
 
+        <ActivityLogSeparator />
+
         <ActivityLogItem collapsible>
           <ActivityLogHeader asCollapsibleTrigger>
             <Icon name="alert-circle" size="md" color="primary" />
@@ -592,6 +612,8 @@ export const CustomContent: Story = {
             </Card>
           </ActivityLogContent>
         </ActivityLogItem>
+
+        <ActivityLogSeparator />
 
         <ActivityLogItem collapsible>
           <ActivityLogHeader asCollapsibleTrigger>
@@ -649,6 +671,8 @@ export const MixedItems: Story = {
           </ActivityLogHeader>
         </ActivityLogItem>
 
+        <ActivityLogSeparator />
+
         <ActivityLogItem collapsible>
           <ActivityLogHeader asCollapsibleTrigger>
             <Avatar size="xxs">
@@ -672,6 +696,8 @@ export const MixedItems: Story = {
           </ActivityLogContent>
         </ActivityLogItem>
 
+        <ActivityLogSeparator />
+
         <ActivityLogItem>
           <ActivityLogHeader>
             <Icon name="users" size="md" color="primary" />
@@ -682,6 +708,8 @@ export const MixedItems: Story = {
             </ActivityLogDescription>
           </ActivityLogHeader>
         </ActivityLogItem>
+
+        <ActivityLogSeparator />
 
         <ActivityLogItem collapsible>
           <ActivityLogHeader asCollapsibleTrigger>
@@ -732,6 +760,8 @@ export const ValueChanges: Story = {
           </ActivityLogHeader>
         </ActivityLogItem>
 
+        <ActivityLogSeparator />
+
         <ActivityLogItem>
           <ActivityLogHeader>
             <Avatar size="xxs">
@@ -763,6 +793,8 @@ export const ValueChanges: Story = {
             </ActivityLogDescription>
           </ActivityLogHeader>
         </ActivityLogItem>
+
+        <ActivityLogSeparator />
 
         <ActivityLogItem collapsible>
           <ActivityLogHeader asCollapsibleTrigger>
