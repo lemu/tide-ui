@@ -15,7 +15,7 @@ const AlertDialogOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Overlay
     className={cn(
-      "fixed inset-0 z-50 bg-[var(--color-background-blanket)] backdrop-blur-[1px] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "fixed inset-0 z-50 bg-[var(--color-background-blanket)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       className
     )}
     {...props}
@@ -63,7 +63,7 @@ const AlertDialogFooter = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col-reverse rounded-br-lg rounded-bl-lg border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-base)] p-[var(--space-xlg)] py-[var(--space-lg)] sm:flex-row sm:justify-end sm:space-x-[var(--space-sm)]",
+      "flex flex-col-reverse rounded-lg border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-base)] p-[var(--space-xlg)] py-[var(--space-lg)] sm:flex-row sm:justify-end sm:space-x-[var(--space-sm)]",
       className
     )}
     {...props}
