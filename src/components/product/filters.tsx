@@ -74,6 +74,11 @@ export interface FiltersProps {
   autocompleteMinCharacters?: number
   // Hide reset button (useful when integrating with bookmarks)
   hideReset?: boolean
+  /**
+   * Hide the Filters button (useful for global-search-only interfaces)
+   * @default false
+   */
+  hideFiltersButton?: boolean
   // Action buttons (optional, for bookmark integration)
   actionButtons?: React.ReactNode
 }
@@ -690,10 +695,14 @@ export function Filters({
   enableAutocomplete = false,
   autocompleteMinCharacters = 2,
   hideReset = false,
+  hideFiltersButton = false,
   actionButtons,
 }: FiltersProps) {
   const [isFilterMenuOpen, setIsFilterMenuOpen] = React.useState(false)
   const [openSlotId, setOpenSlotId] = React.useState<string | null>(null)
+
+  // Determine if Filters button should be visible
+  const isFiltersButtonVisible = !hideFiltersButton && filters.length > 0
 
   // Check if any filters are active
   const hasActiveFilters = Object.keys(activeFilters).some(
@@ -901,40 +910,43 @@ export function Filters({
   return (
     <div className="flex gap-[3px] items-center">
       {/* Filter Button */}
-      <Popover open={isFilterMenuOpen} onOpenChange={setIsFilterMenuOpen}>
-        <PopoverTrigger asChild>
-          <Button className="h-[var(--size-md)] gap-[var(--space-xsm)]">
-            <Icon name="list-filter" className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]" />
-            <span className="text-label-md">Filters</span>
-            {activeFilterCount > 0 && (
-              <Badge size="sm" intent="neutral" appearance="subtle">
-                {activeFilterCount}
-              </Badge>
-            )}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent
-          className="w-[660px] p-0"
-          align="start"
-        >
-          <FilterDropdownMenu
-            filters={filters}
-            pinnedFilters={pinnedFilters}
-            activeFilters={activeFilters}
-            onPinnedFiltersChange={onPinnedFiltersChange}
-            onFilterChange={onFilterChange}
-          />
-        </PopoverContent>
-      </Popover>
+      {isFiltersButtonVisible && (
+        <Popover open={isFilterMenuOpen} onOpenChange={setIsFilterMenuOpen}>
+          <PopoverTrigger asChild>
+            <Button className="h-[var(--size-md)] gap-[var(--space-xsm)]">
+              <Icon name="list-filter" className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]" />
+              <span className="text-label-md">Filters</span>
+              {activeFilterCount > 0 && (
+                <Badge size="sm" intent="neutral" appearance="subtle">
+                  {activeFilterCount}
+                </Badge>
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            className="w-[660px] p-0"
+            align="start"
+          >
+            <FilterDropdownMenu
+              filters={filters}
+              pinnedFilters={pinnedFilters}
+              activeFilters={activeFilters}
+              onPinnedFiltersChange={onPinnedFiltersChange}
+              onFilterChange={onFilterChange}
+            />
+          </PopoverContent>
+        </Popover>
+      )}
 
       {/* Dot Separator (after Filter button) */}
-      {pinnedFilterObjects.length > 0 && (
+      {isFiltersButtonVisible && pinnedFilterObjects.length > 0 && (
         <Separator type="dot" layout="horizontal" />
       )}
 
       {/* Pinned Filter Slots */}
-      <div className="flex gap-[7px] overflow-x-auto scrollbar-hide p-1">
-        {pinnedFilterObjects.map((filter) => {
+      {pinnedFilterObjects.length > 0 && (
+        <div className="flex gap-[7px] overflow-x-auto scrollbar-hide p-1">
+          {pinnedFilterObjects.map((filter) => {
         const slotContent = getSlotContent(filter)
         const isActive = slotContent.type !== 'empty'
         const IconComponent = slotContent.icon
@@ -1025,10 +1037,11 @@ export function Filters({
           </Popover>
         )
       })}
-      </div>
+        </div>
+      )}
 
       {/* Vertical Line Separator (before global search) */}
-      {enableGlobalSearch && (
+      {enableGlobalSearch && (isFiltersButtonVisible || pinnedFilterObjects.length > 0) && (
         <Separator type="line" layout="horizontal" className="mx-[var(--space-sm)]" />
       )}
 
