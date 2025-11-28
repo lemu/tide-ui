@@ -55,11 +55,12 @@ const AvatarGroup = React.forwardRef<HTMLDivElement, AvatarGroupProps>(
                   avatarGroupOverlapClasses[size]
                 );
 
+          const childProps = child.props as Record<string, unknown>;
           return React.cloneElement(child, {
-            ...child.props,
-            className: cn(child.props.className, additionalClassName),
+            ...childProps,
+            className: cn(childProps.className as string | undefined, additionalClassName),
             style: {
-              ...child.props.style,
+              ...(childProps.style as React.CSSProperties | undefined),
               zIndex,
             },
             key: index,

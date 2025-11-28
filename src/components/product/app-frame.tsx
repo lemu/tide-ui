@@ -881,12 +881,12 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
                   {/* Expanded state */}
                   <div className="flex w-full items-center gap-3 group-data-[collapsible=icon]:hidden">
                     <div className="relative">
-                      <Avatar size="md" shape="rounded">
+                      <Avatar size="md" type="organization">
                         <AvatarImage src={activeTeam.avatarUrl} alt={activeTeam.name} />
                         <AvatarFallback>{getTeamInitials(activeTeam.name)}</AvatarFallback>
                       </Avatar>
                       <div className="absolute -right-1 -bottom-1 rounded-full border-2 border-white">
-                        <Avatar size="xs" shape="circle">
+                        <Avatar size="xs" type="user">
                           <AvatarImage src={user.avatarUrl} alt={user.name} />
                           <AvatarFallback>{getUserInitials(user.name)}</AvatarFallback>
                         </Avatar>
@@ -905,12 +905,12 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
 
                   {/* Collapsed state */}
                   <div className="relative hidden group-data-[collapsible=icon]:block">
-                    <Avatar size="sm" shape="rounded">
+                    <Avatar size="sm" type="organization">
                       <AvatarImage src={activeTeam.avatarUrl} alt={activeTeam.name} />
                       <AvatarFallback>{getTeamInitials(activeTeam.name)}</AvatarFallback>
                     </Avatar>
                     <div className="absolute -right-0.5 -bottom-0.5 rounded-full border border-white">
-                      <Avatar size="xs" shape="circle">
+                      <Avatar size="xs" type="user">
                         <AvatarImage src={user.avatarUrl} alt={user.name} />
                         <AvatarFallback>{getUserInitials(user.name)}</AvatarFallback>
                       </Avatar>
@@ -927,7 +927,7 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
                 {/* User Section */}
                 <DropdownMenuLabel className="p-0 font-normal">
                   <div className="flex items-center gap-3 px-2 py-2">
-                    <Avatar size="sm" shape="circle">
+                    <Avatar size="sm" type="user">
                       <AvatarImage src={user.avatarUrl} alt={user.name} />
                       <AvatarFallback>{getUserInitials(user.name)}</AvatarFallback>
                     </Avatar>
@@ -954,7 +954,7 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
                     onClick={() => setActiveTeam(team)}
                     className="mx-1 mb-1 h-10 cursor-pointer gap-2 px-1 pr-2 pl-1"
                   >
-                    <Avatar size="sm" shape="rounded">
+                    <Avatar size="sm" type="organization">
                       <AvatarImage src={team.avatarUrl} alt={team.name} />
                       <AvatarFallback>{getTeamInitials(team.name)}</AvatarFallback>
                     </Avatar>
@@ -1055,7 +1055,7 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
           <CommandGroup heading="Switch Team">
             {teams.map((team) => (
               <CommandItem key={team.name} onSelect={() => setCommandOpen(false)}>
-                <Avatar size="sm" className="mr-2" shape="rounded">
+                <Avatar size="sm" className="mr-2" type="organization">
                   <AvatarImage src={team.avatarUrl} alt={team.name} />
                   <AvatarFallback>{getTeamInitials(team.name)}</AvatarFallback>
                 </Avatar>

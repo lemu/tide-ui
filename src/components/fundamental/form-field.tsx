@@ -129,7 +129,7 @@ FieldContent.displayName = "FieldContent";
 
 // FieldLabel - Styled label for inputs with peer support
 export interface FieldLabelProps
-  extends React.LabelHTMLAttributes<HTMLLabelElement> {
+  extends Omit<React.LabelHTMLAttributes<HTMLLabelElement>, "color"> {
   asChild?: boolean;
 }
 

@@ -402,16 +402,19 @@ function calculateAggregation(
 
   // Custom aggregation function
   if (typeof columnDef?.meta?.aggregation === 'function') {
-    return columnDef.meta.aggregation(rows, columnDef.accessorKey)
+    const accessorKey = 'accessorKey' in columnDef ? columnDef.accessorKey : undefined
+    return columnDef.meta.aggregation(rows, accessorKey)
   }
 
   // Extract values from rows using accessor
-  const accessor = columnDef?.accessorKey || columnDef?.accessorFn
+  const accessorKey = 'accessorKey' in columnDef ? columnDef.accessorKey : undefined
+  const accessorFn = 'accessorFn' in columnDef ? columnDef.accessorFn : undefined
+  const accessor = accessorKey || accessorFn
   if (!accessor) return null
 
   const values = rows
     .map(row => {
-      const value = typeof accessor === 'function' ? accessor(row.original) : row.original?.[accessor]
+      const value = typeof accessor === 'function' ? accessor(row.original, row.index) : row.original?.[accessor as string]
       return value
     })
     .filter(v => v != null)
@@ -2109,7 +2112,14 @@ export function DataTable<TData, TValue>({
       // If it's a function component, we need to call it to get its output
       if (typeof element.type === 'function') {
         try {
-          const rendered = element.type(element.props)
+          // Check if it's a class component (has prototype with render method)
+          const isClassComponent = element.type.prototype?.isReactComponent
+          if (isClassComponent) {
+            // For class components, just extract from children
+            return extractTextFromNode(element.props.children)
+          }
+          // Call function component
+          const rendered = (element.type as Function)(element.props)
           return extractTextFromNode(rendered)
         } catch (e) {
           // If calling fails, try to extract from props.children
@@ -2163,7 +2173,15 @@ export function DataTable<TData, TValue>({
       // If it's a function component, call it to get its rendered output
       if (typeof element.type === 'function') {
         try {
-          const rendered = element.type(element.props)
+          // Check if it's a class component (has prototype with render method)
+          const isClassComponent = element.type.prototype?.isReactComponent
+          if (isClassComponent) {
+            // For class components, just process children
+            const children = element.props.children
+            return React.cloneElement(element, {}, applyHighlightToReactNode(children, searchTerm))
+          }
+          // Call function component
+          const rendered = (element.type as Function)(element.props)
           return applyHighlightToReactNode(rendered, searchTerm)
         } catch (e) {
           // If calling fails, try to process children
@@ -2708,7 +2726,7 @@ export function DataTable<TData, TValue>({
 
                           // Check if this row or any ancestor is expanded
                           const hasExpandedAncestor = () => {
-                            let currentRow = row
+                            let currentRow: typeof row | undefined = row
                             while (currentRow) {
                               if (currentRow.getIsExpanded()) return true
                               currentRow = currentRow.getParentRow?.()
@@ -2826,7 +2844,7 @@ export function DataTable<TData, TValue>({
 
                                   // Check if this row or any ancestor is expanded
                                   const hasExpandedAncestor = () => {
-                                    let currentRow = row
+                                    let currentRow: typeof row | undefined = row
                                     while (currentRow) {
                                       if (currentRow.getIsExpanded()) return true
                                       currentRow = currentRow.getParentRow?.()
@@ -3055,7 +3073,7 @@ export function DataTable<TData, TValue>({
 
                         // Check if this row or any ancestor is expanded
                         const hasExpandedAncestor = () => {
-                          let currentRow = row
+                          let currentRow: typeof row | undefined = row
                           while (currentRow) {
                             if (currentRow.getIsExpanded()) return true
                             currentRow = currentRow.getParentRow?.()
@@ -3169,7 +3187,7 @@ export function DataTable<TData, TValue>({
 
                                 // Check if this row or any ancestor is expanded
                                 const hasExpandedAncestor = () => {
-                                  let currentRow = row
+                                  let currentRow: typeof row | undefined = row
                                   while (currentRow) {
                                     if (currentRow.getIsExpanded()) return true
                                     currentRow = currentRow.getParentRow?.()

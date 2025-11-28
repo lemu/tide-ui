@@ -902,11 +902,11 @@ export function Bookmarks({
     React.Children.forEach(children, (child) => {
       if (React.isValidElement(child)) {
         if (child.type === BookmarksContent) {
-          content = child.props.children;
+          content = (child.props as { children?: React.ReactNode }).children;
         } else if (child.type === BookmarksActions) {
-          actions = child.props.children;
+          actions = (child.props as { children?: React.ReactNode }).children;
         } else if (child.type === BookmarksSettings) {
-          settings = child.props.children;
+          settings = (child.props as { children?: React.ReactNode }).children;
         } else {
           // For backwards compatibility: non-slot children go to content
           fallbackContent.push(child);

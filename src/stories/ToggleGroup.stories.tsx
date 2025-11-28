@@ -36,7 +36,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 // Basic toggle group
-export const Default: Story = {
+export const Default = {
   render: () => {
     const [value, setValue] = useState<string>('left')
 
@@ -66,7 +66,7 @@ export const Default: Story = {
 }
 
 // Multiple selection
-export const MultipleSelection: Story = {
+export const MultipleSelection = {
   render: () => {
     const [values, setValues] = useState<string[]>(['bold'])
 
@@ -98,7 +98,7 @@ export const MultipleSelection: Story = {
 }
 
 // Different sizes
-export const Sizes: Story = {
+export const Sizes = {
   render: () => {
     const [smallValue, setSmallValue] = useState<string>('option1')
     const [mediumValue, setMediumValue] = useState<string>('option2')
@@ -138,7 +138,7 @@ export const Sizes: Story = {
 }
 
 // Different variants
-export const Variants: Story = {
+export const Variants = {
   render: () => {
     const [defaultValue, setDefaultValue] = useState<string>('option1')
     const [outlineValue, setOutlineValue] = useState<string>('option2')
@@ -168,7 +168,7 @@ export const Variants: Story = {
 }
 
 // Text editor toolbar
-export const TextEditorToolbar: Story = {
+export const TextEditorToolbar = {
   render: () => {
     const [alignment, setAlignment] = useState<string>('left')
     const [formatting, setFormatting] = useState<string[]>(['bold'])
@@ -287,7 +287,7 @@ export const TextEditorToolbar: Story = {
 }
 
 // View mode selector
-export const ViewModeSelector: Story = {
+export const ViewModeSelector = {
   render: () => {
     const [viewMode, setViewMode] = useState<string>('grid')
 
@@ -373,7 +373,7 @@ export const ViewModeSelector: Story = {
 }
 
 // Filter options
-export const FilterOptions: Story = {
+export const FilterOptions = {
   render: () => {
     const [status, setStatus] = useState<string[]>(['active'])
     const [category, setCategory] = useState<string>('all')
@@ -459,7 +459,7 @@ export const FilterOptions: Story = {
 }
 
 // Chart type selector
-export const ChartTypeSelector: Story = {
+export const ChartTypeSelector = {
   render: () => {
     const [chartType, setChartType] = useState<string>('bar')
     const [timeRange, setTimeRange] = useState<string>('7d')
@@ -541,7 +541,7 @@ export const ChartTypeSelector: Story = {
 }
 
 // Column display toggles - matching Figma design
-export const ColumnDisplayToggles: Story = {
+export const ColumnDisplayToggles = {
   render: () => {
     const [selectedColumns, setSelectedColumns] = useState<string[]>([
       'laycan-year', 'laycan-month', 'fixture-count', 'cargo-count',
@@ -595,7 +595,7 @@ export const ColumnDisplayToggles: Story = {
 }
 
 // Disabled state
-export const DisabledState: Story = {
+export const DisabledState = {
   render: () => {
     const [isEnabled, setIsEnabled] = useState(false)
     const [value, setValue] = useState<string>('option1')

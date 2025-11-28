@@ -188,7 +188,7 @@ export const InteractiveTags: Story = {
 // Closable tags with management
 export const ClosableTags: Story = {
   render: () => {
-    const [tags, setTags] = useState([
+    const [tags, setTags] = useState<Array<{ id: string; label: string; intent: 'warning' | 'brand' | 'success' | 'destructive' | 'neutral' }>>([
       { id: '1', label: 'JavaScript', intent: 'warning' as const },
       { id: '2', label: 'React', intent: 'brand' as const },
       { id: '3', label: 'TypeScript', intent: 'brand' as const },
