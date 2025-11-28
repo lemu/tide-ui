@@ -238,6 +238,14 @@ export type {
   EmptyDescriptionProps,
 } from './fundamental/empty'
 
+// Flag component
+export { Flag } from './ui/flag'
+export type { FlagProps, FlagSize } from './ui/flag'
+
+// CountryDropdown component
+export { CountryDropdown, useCountryData } from './in-progress/country-dropdown'
+export type { Country, CountryDropdownProps, CountryDropdownTriggerProps } from './in-progress/country-dropdown'
+
 // Icon component
 export { Icon } from './fundamental/icon'
 export type { IconColor, IconSize, CustomIconName } from './fundamental/icon'
