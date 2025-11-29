@@ -472,19 +472,22 @@ interface DataTableSkeletonProps {
   rows: number
   showRowBorder?: boolean
   showCellBorder?: boolean
+  skipHeader?: boolean
 }
 
-function DataTableSkeleton({ columns, rows, showRowBorder = true, showCellBorder = true }: DataTableSkeletonProps) {
+function DataTableSkeleton({ columns, rows, showRowBorder = true, showCellBorder = true, skipHeader = false }: DataTableSkeletonProps) {
   return (
     <>
       {/* Header skeleton */}
-      <TableRow showBorder={showRowBorder}>
-        {Array.from({ length: columns }).map((_, index) => (
-          <TableHead key={index} showBorder={showCellBorder}>
-            <Skeleton className="h-4 w-[120px]" />
-          </TableHead>
-        ))}
-      </TableRow>
+      {!skipHeader && (
+        <TableRow showBorder={showRowBorder}>
+          {Array.from({ length: columns }).map((_, index) => (
+            <TableHead key={index} showBorder={showCellBorder}>
+              <Skeleton className="h-4 w-[120px]" />
+            </TableHead>
+          ))}
+        </TableRow>
+      )}
       {/* Body skeleton rows */}
       {Array.from({ length: rows }).map((_, rowIndex) => (
         <TableRow key={rowIndex} showBorder={showRowBorder}>
@@ -2689,6 +2692,7 @@ export function DataTable<TData, TValue>({
                 rows={loadingRowCount}
                 showRowBorder={borderSettings.showRowBorder}
                 showCellBorder={borderSettings.showCellBorder}
+                skipHeader={true}
               />
             ) :
             // DISABLED: Virtualization temporarily disabled to fix React hooks error
