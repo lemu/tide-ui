@@ -8,7 +8,7 @@ const tabsListVariants = cva(
   {
     variants: {
       variant: {
-        pilled: "bg-[var(--color-surface-secondary)] p-[4px] rounded-[6px] gap-[var(--space-2xsm)]",
+        pilled: "bg-[var(--color-surface-deepest)] p-[4px] rounded-md gap-[var(--space-2xsm)]",
         line: "border-b border-[var(--grey-100)] gap-[var(--space-sm)] p-0",
       },
       size: {
@@ -56,9 +56,9 @@ const tabsTriggerVariants = cva(
     variants: {
       variant: {
         pilled: [
-          "rounded-[var(--border-radius-sm)] bg-transparent",
-          "data-[state=active]:bg-[var(--color-surface-primary)] data-[state=active]:text-[var(--color-text-brand-bold-selected)] data-[state=active]:[&_svg]:text-[var(--color-text-brand-bold-selected)] data-[state=active]:shadow-[0px_3px_4px_0px_rgba(0,14,20,0.03)]",
-          "hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]",
+          "rounded-sm bg-transparent",
+          "data-[state=active]:bg-[var(--color-surface-primary)] data-[state=active]:text-[var(--color-text-brand-bold-selected)] data-[state=active]:[&_svg]:text-[var(--color-text-brand-bold-selected)] data-[state=active]:shadow-xs",
+          "hover:bg-[var(--grey-alpha-50)] hover:text-[var(--color-text-primary)]",
           "disabled:opacity-50",
         ],
         line: [
@@ -71,9 +71,9 @@ const tabsTriggerVariants = cva(
         ],
       },
       size: {
-        sm: "text-label-sm px-[var(--space-md)] py-[var(--space-xsm)]",
-        md: "text-label-md px-[var(--space-md)] py-[9px]",
-        lg: "text-label-md px-[var(--space-lg)] py-[var(--space-md)]",
+        sm: "text-label-sm px-[var(--space-md)] py-[var(--space-xsm)] [&_svg]:w-[var(--size-3xsm)] [&_svg]:h-[var(--size-3xsm)]",
+        md: "text-label-md px-[var(--space-md)] py-[6px] [&_svg]:w-[var(--size-2xsm)] [&_svg]:h-[var(--size-2xsm)]",
+        lg: "text-label-md px-[var(--space-lg)] py-[10px] [&_svg]:w-[var(--size-xsm)] [&_svg]:h-[var(--size-xsm)]",
       },
       fullWidth: {
         true: "flex-1",
