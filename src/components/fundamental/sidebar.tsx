@@ -934,7 +934,7 @@ const SidebarMenuSubButton = React.forwardRef<
   const enhancedClasses = React.useMemo(() => {
     return cn(
       // Base submenu button styles
-      "relative flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 cursor-pointer [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--color-text-secondary)]",
+      "relative flex w-full justify-start h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 cursor-pointer [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--color-text-secondary)]",
 
       // Size variants
       size === "sm" && "text-body-sm px-1.5 py-0.5",
@@ -947,14 +947,15 @@ const SidebarMenuSubButton = React.forwardRef<
       enhancedHover && isHovered && !isFocused && isActive && "bg-[var(--color-background-blue-subtle-selected-hovered)]",
 
       // Focus styles - clean focus for non-active items
-      enhancedHover && isFocused && !isActive && "bg-transparent ring-2 ring-[var(--color-border-brand-bold)]",
+      enhancedHover && isFocused && !isActive && "bg-transparent ring-2 ring-[var(--color-border-brand-bold)] z-10",
 
       // Active item focus - preserve brand background when focused
       enhancedHover && isFocused && isActive && preserveActiveOnFocus && [
         "bg-[var(--color-background-blue-subtle-selected)]",
         "text-[var(--color-text-brand-bold)]",
         "[&]:text-body-md [&]:font-normal",
-        "ring-2 ring-[var(--color-border-brand-bold)]"
+        "ring-2 ring-[var(--color-border-brand-bold)]",
+        "z-10"
       ],
 
       // Active item styles (non-focus state)
