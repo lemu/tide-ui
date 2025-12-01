@@ -947,7 +947,7 @@ const SidebarMenuSubButton = React.forwardRef<
       enhancedHover && isHovered && !isFocused && isActive && "bg-[var(--color-background-blue-subtle-selected-hovered)]",
 
       // Focus styles - clean focus for non-active items
-      enhancedHover && isFocused && !isActive && "bg-transparent ring-2 ring-[var(--color-border-brand-bold)] z-10",
+      enhancedHover && isFocused && !isActive && "bg-transparent ring-2 ring-[var(--color-border-brand-bold)] z-50",
 
       // Active item focus - preserve brand background when focused
       enhancedHover && isFocused && isActive && preserveActiveOnFocus && [
@@ -955,7 +955,7 @@ const SidebarMenuSubButton = React.forwardRef<
         "text-[var(--color-text-brand-bold)]",
         "[&]:text-body-md [&]:font-normal",
         "ring-2 ring-[var(--color-border-brand-bold)]",
-        "z-10"
+        "z-50"
       ],
 
       // Active item styles (non-focus state)
