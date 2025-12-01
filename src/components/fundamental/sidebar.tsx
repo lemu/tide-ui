@@ -657,7 +657,7 @@ const SidebarMenuButton = React.forwardRef<
         ],
 
         // Focus styles - clean focus for non-active items
-        isFocused && !isActive && "bg-transparent ring-2 ring-[var(--color-border-brand-bold)] ring-offset-1",
+        isFocused && !isActive && "bg-transparent ring-2 ring-[var(--color-border-brand-bold)]",
 
         // Active item focus - preserve brand background when focused
         isFocused && isActive && preserveActiveOnFocus && [
@@ -862,8 +862,8 @@ const SidebarMenuSubItem = React.forwardRef<
 SidebarMenuSubItem.displayName = "SidebarMenuSubItem"
 
 const SidebarMenuSubButton = React.forwardRef<
-  HTMLAnchorElement,
-  React.ComponentProps<"a"> & {
+  HTMLButtonElement,
+  React.ComponentProps<"button"> & {
     asChild?: boolean
     size?: "sm" | "md"
     isActive?: boolean
@@ -883,7 +883,7 @@ const SidebarMenuSubButton = React.forwardRef<
   onBlur,
   ...props
 }, ref) => {
-  const Comp = asChild ? "span" : "a"
+  const Comp = asChild ? "span" : "button"
 
   // Enhanced hover/focus state management
   const [isHovered, setIsHovered] = React.useState(false)
@@ -891,7 +891,7 @@ const SidebarMenuSubButton = React.forwardRef<
 
   // Event handlers for enhanced behavior
   const handleMouseEnter = React.useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (enhancedHover) {
         setIsHovered(true)
       }
@@ -901,7 +901,7 @@ const SidebarMenuSubButton = React.forwardRef<
   )
 
   const handleMouseLeave = React.useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (enhancedHover) {
         setIsHovered(false)
       }
@@ -911,7 +911,7 @@ const SidebarMenuSubButton = React.forwardRef<
   )
 
   const handleFocus = React.useCallback(
-    (e: React.FocusEvent<HTMLAnchorElement>) => {
+    (e: React.FocusEvent<HTMLButtonElement>) => {
       if (enhancedHover) {
         setIsFocused(true)
       }
@@ -921,7 +921,7 @@ const SidebarMenuSubButton = React.forwardRef<
   )
 
   const handleBlur = React.useCallback(
-    (e: React.FocusEvent<HTMLAnchorElement>) => {
+    (e: React.FocusEvent<HTMLButtonElement>) => {
       if (enhancedHover) {
         setIsFocused(false)
       }
@@ -947,7 +947,7 @@ const SidebarMenuSubButton = React.forwardRef<
       enhancedHover && isHovered && !isFocused && isActive && "bg-[var(--color-background-blue-subtle-selected-hovered)]",
 
       // Focus styles - clean focus for non-active items
-      enhancedHover && isFocused && !isActive && "bg-transparent ring-2 ring-[var(--color-border-brand-bold)] ring-offset-1",
+      enhancedHover && isFocused && !isActive && "bg-transparent ring-2 ring-[var(--color-border-brand-bold)]",
 
       // Active item focus - preserve brand background when focused
       enhancedHover && isFocused && isActive && preserveActiveOnFocus && [
@@ -981,6 +981,7 @@ const SidebarMenuSubButton = React.forwardRef<
       data-size={size}
       data-active={isActive}
       className={cn(enhancedClasses, className)}
+      type={asChild ? undefined : "button"}
       onMouseEnter={enhancedHover ? handleMouseEnter : onMouseEnter}
       onMouseLeave={enhancedHover ? handleMouseLeave : onMouseLeave}
       onFocus={enhancedHover ? handleFocus : onFocus}
