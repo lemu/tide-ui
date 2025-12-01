@@ -82,7 +82,7 @@ const CommandInput = React.forwardRef<
         name="search"
         size={iconSize}
         color="tertiary"
-        className="absolute left-0 top-1/2 -translate-y-1/2 pointer-events-none"
+        className="absolute left-[var(--space-sm)] top-1/2 -translate-y-1/2 pointer-events-none"
       />
       <CommandPrimitive.Input
         ref={ref}
@@ -113,7 +113,7 @@ const CommandInput = React.forwardRef<
             e.stopPropagation();
             onClear?.();
           }}
-          className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center justify-center w-[16px] h-[16px] rounded-full bg-[var(--color-background-neutral-subtlest)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors"
+          className="absolute right-[var(--space-sm)] top-1/2 -translate-y-1/2 flex items-center justify-center w-[16px] h-[16px] rounded-full bg-[var(--color-background-neutral-subtlest)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors"
           aria-label="Clear search"
         >
           <svg
