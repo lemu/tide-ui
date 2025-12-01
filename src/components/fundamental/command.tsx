@@ -171,7 +171,7 @@ const CommandGroup = React.forwardRef<
   <CommandPrimitive.Group
     ref={ref}
     className={cn(
-      "overflow-hidden p-[var(--space-xsm)] text-[var(--color-text-primary)] [&_[cmdk-group-heading]]:px-[var(--space-md)] [&_[cmdk-group-heading]]:py-[var(--space-sm)] [&_[cmdk-group-heading]]:[&]:text-body-medium-sm [&_[cmdk-group-heading]]:text-[var(--color-text-tertiary)]",
+      "overflow-hidden p-[var(--space-sm)] text-[var(--color-text-primary)] [&_[cmdk-group-heading]]:px-[var(--space-md)] [&_[cmdk-group-heading]]:py-[var(--space-sm)] [&_[cmdk-group-heading]]:[&]:text-body-medium-sm [&_[cmdk-group-heading]]:text-[var(--color-text-tertiary)]",
       className
     )}
     {...props}
