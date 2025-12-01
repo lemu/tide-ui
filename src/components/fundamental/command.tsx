@@ -77,7 +77,7 @@ const CommandInput = React.forwardRef<
     : "";
 
   return (
-    <div className="relative" cmdk-input-wrapper="">
+    <div className="relative p-[var(--space-sm)] border-b border-[var(--color-border-primary-subtle)]" cmdk-input-wrapper="">
       <Icon
         name="search"
         size={iconSize}
