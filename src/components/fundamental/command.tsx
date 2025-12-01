@@ -60,12 +60,12 @@ const CommandInput = React.forwardRef<
   // Calculate icon sizes based on input size
   const iconSize = size === "sm" ? "sm" : "md";
 
-  // Calculate left padding: wrapper_padding + icon_width + spacing
-  // For sm: 8px + 12px + 8px = 28px
-  // For md/lg: 8px + 16px + 8px = 32px
+  // Calculate left padding: icon_position + icon_width
+  // For sm: 18px + 12px = 30px
+  // For md/lg: 18px + 16px = 34px
   const leftPadding = size === "sm"
-    ? "pl-[calc(var(--size-3xsm)+var(--space-sm))]"
-    : "pl-[calc(var(--size-2xsm)+var(--space-sm))]";
+    ? "pl-[30px]"
+    : "pl-[34px]";
 
   // Calculate right padding for clear button if visible
   // For sm: 12px + 8px = 20px
@@ -82,7 +82,7 @@ const CommandInput = React.forwardRef<
         name="search"
         size={iconSize}
         color="tertiary"
-        className="absolute left-[var(--space-sm)] top-1/2 -translate-y-1/2 pointer-events-none"
+        className="absolute left-[18px] top-1/2 -translate-y-1/2 pointer-events-none"
       />
       <CommandPrimitive.Input
         ref={ref}
