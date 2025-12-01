@@ -640,7 +640,7 @@ const SidebarMenuButton = React.forwardRef<
 
       return cn(
         // Base button styles
-        "relative peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-2 py-1.5 text-left text-body-medium-md outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 cursor-pointer z-50",
+        "relative peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-2 py-1.5 text-left text-body-medium-md outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 cursor-pointer z-2",
 
         // Size variants
         size === "sm" && "h-7 text-body-sm py-1",
@@ -934,7 +934,7 @@ const SidebarMenuSubButton = React.forwardRef<
   const enhancedClasses = React.useMemo(() => {
     return cn(
       // Base submenu button styles
-      "relative flex w-full justify-start h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 cursor-pointer [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--color-text-secondary)] z-50",
+      "relative flex w-full justify-start h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 cursor-pointer [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--color-text-secondary)] z-2",
 
       // Size variants
       size === "sm" && "text-body-sm px-1.5 py-0.5",
