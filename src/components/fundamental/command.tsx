@@ -60,20 +60,20 @@ const CommandInput = React.forwardRef<
   // Calculate icon sizes based on input size
   const iconSize = size === "sm" ? "sm" : "md";
 
-  // Calculate left padding: icon_position + icon_width + spacing
-  // For sm: 12px + 12px + 8px = 32px
-  // For md/lg: 12px + 16px + 8px = 36px
+  // Calculate left padding: wrapper_padding + icon_width + spacing
+  // For sm: 8px + 12px + 8px = 28px
+  // For md/lg: 8px + 16px + 8px = 32px
   const leftPadding = size === "sm"
-    ? "pl-[calc(var(--space-md)+var(--size-3xsm)+var(--space-sm))]"
-    : "pl-[calc(var(--space-md)+var(--size-2xsm)+var(--space-sm))]";
+    ? "pl-[calc(var(--size-3xsm)+var(--space-sm))]"
+    : "pl-[calc(var(--size-2xsm)+var(--space-sm))]";
 
   // Calculate right padding for clear button if visible
-  // For sm: 12px + 12px + 8px = 32px
-  // For md/lg: 12px + 16px + 8px = 36px
+  // For sm: 12px + 8px = 20px
+  // For md/lg: 16px + 8px = 24px
   const rightPadding = showClearButton
     ? size === "sm"
-      ? "pr-[calc(var(--space-md)+var(--size-3xsm)+var(--space-sm))]"
-      : "pr-[calc(var(--space-md)+var(--size-2xsm)+var(--space-sm))]"
+      ? "pr-[calc(var(--size-3xsm)+var(--space-sm))]"
+      : "pr-[calc(var(--size-2xsm)+var(--space-sm))]"
     : "";
 
   return (
@@ -82,7 +82,7 @@ const CommandInput = React.forwardRef<
         name="search"
         size={iconSize}
         color="tertiary"
-        className="absolute left-[var(--space-md)] top-1/2 -translate-y-1/2 pointer-events-none"
+        className="absolute left-0 top-1/2 -translate-y-1/2 pointer-events-none"
       />
       <CommandPrimitive.Input
         ref={ref}
@@ -113,7 +113,7 @@ const CommandInput = React.forwardRef<
             e.stopPropagation();
             onClear?.();
           }}
-          className="absolute right-[var(--space-sm)] top-1/2 -translate-y-1/2 flex items-center justify-center w-[16px] h-[16px] rounded-full bg-[var(--color-background-neutral-subtlest)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors"
+          className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center justify-center w-[16px] h-[16px] rounded-full bg-[var(--color-background-neutral-subtlest)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors"
           aria-label="Clear search"
         >
           <svg
