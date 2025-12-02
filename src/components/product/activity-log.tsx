@@ -73,7 +73,7 @@ const ActivityLog = React.forwardRef<HTMLDivElement, ActivityLogProps>(
     return (
       <div
         ref={ref}
-        className={cn("flex flex-col gap-[var(--space-lg)]", className)}
+        className={cn("flex flex-col gap-[var(--space-sm)]", className)}
         {...props}
       >
         {processedChildren}
@@ -255,6 +255,7 @@ const ActivityLogContent = React.forwardRef<
       ref={ref}
       className={cn(
         "mt-[var(--space-sm)] pl-[var(--space-sm)] ml-[7.5px] border-l border-l-[var(--grey-alpha-100)] max-w-[320px]",
+        "[.group:last-child_&]:border-l-0",
         className
       )}
       {...props}
