@@ -56,6 +56,7 @@ export interface CountryDropdownProps {
   variant?: "default" | "slim";
   priorityCountries?: string[];
   trigger?: (props: CountryDropdownTriggerProps) => React.ReactNode;
+  clearable?: boolean;
 }
 
 // Threshold for switching between virtualized and direct rendering
@@ -95,6 +96,7 @@ export function CountryDropdown({
   variant = "default",
   priorityCountries = ["US", "GB", "CA", "AU", "DE", "FR", "JP", "CN", "IN", "BR"],
   trigger,
+  clearable,
 }: CountryDropdownProps) {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -251,16 +253,16 @@ export function CountryDropdown({
         align={variant === "slim" ? "start" : "start"}
       >
         <Command shouldFilter={false}>
-          <div className="px-[var(--space-sm)] pt-[var(--space-sm)] pb-[var(--space-sm)] border-b border-[var(--color-border-primary-subtle)]">
-            <CommandInput
-              placeholder={searchPlaceholder}
-              className="h-9"
-              value={searchValue}
-              onValueChange={setSearchValue}
-            />
-          </div>
+          <CommandInput
+            placeholder={searchPlaceholder}
+            className="h-9"
+            value={searchValue}
+            onValueChange={setSearchValue}
+            clearable={clearable}
+            onClear={() => setSearchValue("")}
+          />
           <CommandList className="max-h-[300px]">
-            <CommandEmpty>No country found.</CommandEmpty>
+            <CommandEmpty>No country found</CommandEmpty>
             <CommandGroup>
               {shouldVirtualize ? (
                 // Virtualized rendering for large lists

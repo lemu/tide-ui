@@ -5,6 +5,7 @@ import { type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 import { Dialog, DialogContent, DialogOverlay } from "@/components/fundamental/dialog";
 import { Icon } from "@/components/fundamental/icon";
+import { Button } from "@/components/fundamental/button";
 import { inputVariants } from "@/components/fundamental/input";
 
 const Command = React.forwardRef<
@@ -30,7 +31,7 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
     <Dialog {...props}>
       <DialogOverlay className="bg-black/25" />
       <DialogContent className="overflow-hidden p-0 shadow-lg max-w-[450px]">
-        <Command className="[&_[cmdk-group-heading]]:px-[var(--space-md)] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-[var(--color-text-tertiary)] [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-4 [&_[cmdk-input-wrapper]_svg]:w-4 [&_[cmdk-input]]:h-14 [&_[cmdk-item]]:px-[var(--space-md)] [&_[cmdk-item]]:min-h-[var(--size-md)] [&_[cmdk-item]]:py-[var(--space-sm)] [&_[cmdk-item]_svg]:h-4 [&_[cmdk-item]_svg]:w-4">
+        <Command className="[&_[cmdk-group-heading]]:px-[var(--space-md)] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-[var(--color-text-tertiary)] [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-4 [&_[cmdk-input-wrapper]_svg]:w-4 [&_[cmdk-item]]:px-[var(--space-md)] [&_[cmdk-item]]:min-h-[var(--size-md)] [&_[cmdk-item]]:py-[var(--space-sm)] [&_[cmdk-item]_svg]:h-4 [&_[cmdk-item]_svg]:w-4">
           {children}
         </Command>
       </DialogContent>
@@ -54,7 +55,7 @@ interface CommandInputProps
 const CommandInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   CommandInputProps
->(({ className, size = "md", clearable = false, onClear, value, ...props }, ref) => {
+>(({ className, size = "md", clearable = true, onClear, value, ...props }, ref) => {
   const showClearButton = clearable && value && String(value).length > 0;
 
   // Calculate icon sizes based on input size
@@ -68,12 +69,9 @@ const CommandInput = React.forwardRef<
     : "pl-[34px]";
 
   // Calculate right padding for clear button if visible
-  // For sm: 12px + 8px = 20px
-  // For md/lg: 16px + 8px = 24px
+  // Button width (--size-sm = 24px) + button position (--space-md = 12px) + spacing buffer (--space-sm = 8px)
   const rightPadding = showClearButton
-    ? size === "sm"
-      ? "pr-[calc(var(--size-3xsm)+var(--space-sm))]"
-      : "pr-[calc(var(--size-2xsm)+var(--space-sm))]"
+    ? "pr-[calc(var(--size-sm)+var(--space-md)+var(--space-sm))]"
     : "";
 
   return (
@@ -106,31 +104,20 @@ const CommandInput = React.forwardRef<
         {...props}
       />
       {showClearButton && (
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="sm"
+          icon="x"
+          iconPosition="only"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             onClear?.();
           }}
-          className="absolute right-[var(--space-sm)] top-1/2 -translate-y-1/2 flex items-center justify-center w-[16px] h-[16px] rounded-full bg-[var(--color-background-neutral-subtlest)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors"
+          className="absolute right-[var(--space-md)] top-1/2 -translate-y-1/2 active:!translate-y-[-50%]"
           aria-label="Clear search"
-        >
-          <svg
-            width="10"
-            height="10"
-            viewBox="0 0 10 10"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1 1L9 9M9 1L1 9"
-              stroke="var(--color-text-secondary)"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-          </svg>
-        </button>
+        />
       )}
     </div>
   );
@@ -157,7 +144,7 @@ const CommandEmpty = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Empty
     ref={ref}
-    className={cn("py-6 text-center text-body-sm text-[var(--color-text-secondary)]", className)}
+    className={cn("py-6 text-center [&]:text-body-md text-[var(--color-text-secondary)]", className)}
     {...props}
   />
 ));

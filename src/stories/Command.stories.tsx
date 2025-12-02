@@ -30,52 +30,63 @@ type Story = StoryObj<typeof meta>
 
 // Basic command palette
 export const Default: Story = {
-  render: () => (
-    <Command className="rounded-lg border border-[var(--color-border-primary-subtle)] shadow-md w-[450px]">
-      <CommandInput placeholder="Type a command or search..." />
-      <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
-        <CommandGroup heading="Suggestions">
-          <CommandItem>
-            <Icon name="calendar" className="mr-2 h-4 w-4" />
-            <span>Calendar</span>
-          </CommandItem>
-          <CommandItem>
-            <Icon name="smile" className="mr-2 h-4 w-4" />
-            <span>Search Emoji</span>
-          </CommandItem>
-          <CommandItem>
-            <Icon name="calculator" className="mr-2 h-4 w-4" />
-            <span>Calculator</span>
-          </CommandItem>
-        </CommandGroup>
-        <CommandSeparator />
-        <CommandGroup heading="Settings">
-          <CommandItem>
-            <Icon name="user" className="mr-2 h-4 w-4" />
-            <span>Profile</span>
-            <CommandShortcut>⌘P</CommandShortcut>
-          </CommandItem>
-          <CommandItem>
-            <Icon name="credit-card" className="mr-2 h-4 w-4" />
-            <span>Billing</span>
-            <CommandShortcut>⌘B</CommandShortcut>
-          </CommandItem>
-          <CommandItem>
-            <Icon name="settings" className="mr-2 h-4 w-4" />
-            <span>Settings</span>
-            <CommandShortcut>⌘S</CommandShortcut>
-          </CommandItem>
-        </CommandGroup>
-      </CommandList>
-    </Command>
-  ),
+  render: () => {
+    const [search, setSearch] = useState('')
+
+    return (
+      <Command className="rounded-lg border border-[var(--color-border-primary-subtle)] shadow-md w-[450px]">
+        <CommandInput
+          placeholder="Type a command or search..."
+          value={search}
+          onValueChange={setSearch}
+          clearable={true}
+          onClear={() => setSearch('')}
+        />
+        <CommandList>
+          <CommandEmpty>No results found</CommandEmpty>
+          <CommandGroup heading="Suggestions">
+            <CommandItem>
+              <Icon name="calendar" className="mr-2 h-4 w-4" />
+              <span>Calendar</span>
+            </CommandItem>
+            <CommandItem>
+              <Icon name="smile" className="mr-2 h-4 w-4" />
+              <span>Search Emoji</span>
+            </CommandItem>
+            <CommandItem>
+              <Icon name="calculator" className="mr-2 h-4 w-4" />
+              <span>Calculator</span>
+            </CommandItem>
+          </CommandGroup>
+          <CommandSeparator />
+          <CommandGroup heading="Settings">
+            <CommandItem>
+              <Icon name="user" className="mr-2 h-4 w-4" />
+              <span>Profile</span>
+              <CommandShortcut>⌘P</CommandShortcut>
+            </CommandItem>
+            <CommandItem>
+              <Icon name="credit-card" className="mr-2 h-4 w-4" />
+              <span>Billing</span>
+              <CommandShortcut>⌘B</CommandShortcut>
+            </CommandItem>
+            <CommandItem>
+              <Icon name="settings" className="mr-2 h-4 w-4" />
+              <span>Settings</span>
+              <CommandShortcut>⌘S</CommandShortcut>
+            </CommandItem>
+          </CommandGroup>
+        </CommandList>
+      </Command>
+    )
+  },
 }
 
 // Command dialog modal
 export const DialogExample: Story = {
   render: () => {
     const [open, setOpen] = useState(false)
+    const [search, setSearch] = useState('')
 
     return (
       <>
@@ -90,9 +101,15 @@ export const DialogExample: Story = {
           </kbd>
         </Button>
         <CommandDialog open={open} onOpenChange={setOpen}>
-          <CommandInput placeholder="Type a command or search..." />
+          <CommandInput
+            placeholder="Type a command or search..."
+            value={search}
+            onValueChange={setSearch}
+            clearable={true}
+            onClear={() => setSearch('')}
+          />
           <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandEmpty>No results found</CommandEmpty>
             <CommandGroup heading="Quick Actions">
               <CommandItem onSelect={() => setOpen(false)}>
                 <Icon name="plus" className="mr-2 h-4 w-4" />
@@ -145,7 +162,7 @@ export const FileSearch: Story = {
     <Command className="rounded-lg border border-[var(--color-border-primary-subtle)] shadow-md w-[500px]">
       <CommandInput placeholder="Search files and folders..." />
       <CommandList>
-        <CommandEmpty>No files found.</CommandEmpty>
+        <CommandEmpty>No files found</CommandEmpty>
         <CommandGroup heading="Recent Files">
           <CommandItem>
             <Icon name="file-text" className="mr-2 h-4 w-4" />
@@ -207,7 +224,7 @@ export const WithStatusIndicators: Story = {
     <Command className="rounded-lg border border-[var(--color-border-primary-subtle)] shadow-md w-[450px]">
       <CommandInput placeholder="Search commands..." />
       <CommandList>
-        <CommandEmpty>No commands found.</CommandEmpty>
+        <CommandEmpty>No commands found</CommandEmpty>
         <CommandGroup heading="Git Operations">
           <CommandItem>
             <Icon name="git-branch" className="mr-2 h-4 w-4" />
@@ -278,7 +295,7 @@ export const TeamSwitcher: Story = {
           <CommandItem>
             <div className="flex items-center gap-3 w-full">
               <Avatar size="xs" shape="rounded">
-                <AvatarFallback variant="information" shape="rounded" size="xs">A</AvatarFallback>
+                <AvatarFallback variant="information" shape="rounded" size="xs" type="organization">A</AvatarFallback>
               </Avatar>
               <div className="flex flex-col flex-1">
                 <span className="font-medium">Acme Corp</span>
@@ -294,7 +311,7 @@ export const TeamSwitcher: Story = {
           <CommandItem>
             <div className="flex items-center gap-3 w-full">
               <Avatar size="xs" shape="rounded">
-                <AvatarFallback variant="violet" shape="rounded" size="xs">B</AvatarFallback>
+                <AvatarFallback variant="violet" shape="rounded" size="xs" type="organization">B</AvatarFallback>
               </Avatar>
               <div className="flex flex-col flex-1">
                 <span className="font-medium">Beta Inc</span>
@@ -310,7 +327,7 @@ export const TeamSwitcher: Story = {
           <CommandItem>
             <div className="flex items-center gap-3 w-full">
               <Avatar size="xs">
-                <AvatarFallback variant="success" size="xs">JD</AvatarFallback>
+                <AvatarFallback variant="success" size="xs" type="user">JD</AvatarFallback>
               </Avatar>
               <div className="flex flex-col flex-1">
                 <span>John Doe</span>
@@ -324,7 +341,7 @@ export const TeamSwitcher: Story = {
           <CommandItem>
             <div className="flex items-center gap-3 w-full">
               <Avatar size="xs">
-                <AvatarFallback variant="warning" size="xs">AS</AvatarFallback>
+                <AvatarFallback variant="warning" size="xs" type="user">AS</AvatarFallback>
               </Avatar>
               <div className="flex flex-col flex-1">
                 <span>Alice Smith</span>

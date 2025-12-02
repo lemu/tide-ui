@@ -45,6 +45,7 @@ export interface ComboboxProps {
   className?: string;
   popoverClassName?: string;
   trigger: (props: ComboboxTriggerProps) => React.ReactNode;
+  clearable?: boolean;
 }
 
 export function Combobox({
@@ -53,13 +54,15 @@ export function Combobox({
   onValueChange,
   placeholder = "Select option...",
   searchPlaceholder = "Search options...",
-  emptyMessage = "No options found.",
+  emptyMessage = "No options found",
   disabled = false,
   className,
   popoverClassName,
   trigger,
+  clearable,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
+  const [search, setSearch] = React.useState("");
   const isDesktop = useIsDesktop();
 
   const selectedOption = options.find((option) => option.value === value);
@@ -87,9 +90,13 @@ export function Combobox({
             )}
           >
             <Command>
-              <div className="px-[var(--space-sm)] pt-[var(--space-sm)] pb-[var(--space-sm)] border-b border-[var(--color-border-primary-subtle)]">
-                <CommandInput placeholder={searchPlaceholder} />
-              </div>
+              <CommandInput
+                placeholder={searchPlaceholder}
+                value={search}
+                onValueChange={setSearch}
+                clearable={clearable}
+                onClear={() => setSearch("")}
+              />
               <CommandList>
                 <CommandEmpty>{emptyMessage}</CommandEmpty>
                 <CommandGroup>
@@ -129,9 +136,13 @@ export function Combobox({
         <DrawerContent className={cn("p-0", popoverClassName)}>
           <div className="space-y-[var(--space-xsm)] px-[var(--space-md)] pb-[var(--space-md)]">
             <Command>
-              <div className="px-[var(--space-sm)] pt-[var(--space-sm)] pb-[var(--space-sm)] border-b border-[var(--color-border-primary-subtle)]">
-                <CommandInput placeholder={searchPlaceholder} />
-              </div>
+              <CommandInput
+                placeholder={searchPlaceholder}
+                value={search}
+                onValueChange={setSearch}
+                clearable={clearable}
+                onClear={() => setSearch("")}
+              />
               <CommandList>
                 <CommandEmpty>{emptyMessage}</CommandEmpty>
                 <CommandGroup>
@@ -186,6 +197,7 @@ export interface MultiComboboxProps {
   popoverClassName?: string;
   trigger: (props: MultiComboboxTriggerProps) => React.ReactNode;
   maxDisplayedItems?: number;
+  clearable?: boolean;
 }
 
 export function MultiCombobox({
@@ -194,14 +206,16 @@ export function MultiCombobox({
   onValuesChange,
   placeholder = "Select options...",
   searchPlaceholder = "Search options...",
-  emptyMessage = "No options found.",
+  emptyMessage = "No options found",
   disabled = false,
   className,
   popoverClassName,
   trigger,
   maxDisplayedItems = 3,
+  clearable,
 }: MultiComboboxProps) {
   const [open, setOpen] = React.useState(false);
+  const [search, setSearch] = React.useState("");
   const isDesktop = useIsDesktop();
 
   const selectedOptions = options.filter((option) => values.includes(option.value));
@@ -228,9 +242,13 @@ export function MultiCombobox({
             )}
           >
             <Command>
-              <div className="px-[var(--space-sm)] pt-[var(--space-sm)] pb-[var(--space-sm)] border-b border-[var(--color-border-primary-subtle)]">
-                <CommandInput placeholder={searchPlaceholder} />
-              </div>
+              <CommandInput
+                placeholder={searchPlaceholder}
+                value={search}
+                onValueChange={setSearch}
+                clearable={clearable}
+                onClear={() => setSearch("")}
+              />
               <CommandList>
                 <CommandEmpty>{emptyMessage}</CommandEmpty>
                 <CommandGroup>
@@ -270,9 +288,13 @@ export function MultiCombobox({
         <DrawerContent className={cn("p-0", popoverClassName)}>
           <div className="space-y-[var(--space-xsm)] px-[var(--space-md)] pb-[var(--space-md)]">
             <Command>
-              <div className="px-[var(--space-sm)] pt-[var(--space-sm)] pb-[var(--space-sm)] border-b border-[var(--color-border-primary-subtle)]">
-                <CommandInput placeholder={searchPlaceholder} />
-              </div>
+              <CommandInput
+                placeholder={searchPlaceholder}
+                value={search}
+                onValueChange={setSearch}
+                clearable={clearable}
+                onClear={() => setSearch("")}
+              />
               <CommandList>
                 <CommandEmpty>{emptyMessage}</CommandEmpty>
                 <CommandGroup>

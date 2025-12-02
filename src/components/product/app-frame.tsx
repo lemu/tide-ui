@@ -422,6 +422,7 @@ interface AppSidebarProps {
 
 function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
   const [commandOpen, setCommandOpen] = React.useState(false)
+  const [commandSearch, setCommandSearch] = React.useState('')
   const [expandedItems, setExpandedItems] = React.useState<Record<string, boolean>>({
     Agreements: true, // Default expanded
   })
@@ -883,12 +884,12 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
                     <div className="relative">
                       <Avatar size="md" type="organization">
                         <AvatarImage src={activeTeam.avatarUrl} alt={activeTeam.name} />
-                        <AvatarFallback>{getTeamInitials(activeTeam.name)}</AvatarFallback>
+                        <AvatarFallback size="md" type="organization">{getTeamInitials(activeTeam.name)}</AvatarFallback>
                       </Avatar>
                       <div className="absolute -right-1 -bottom-1 rounded-full border-2 border-white">
                         <Avatar size="xs" type="user">
                           <AvatarImage src={user.avatarUrl} alt={user.name} />
-                          <AvatarFallback>{getUserInitials(user.name)}</AvatarFallback>
+                          <AvatarFallback size="xs" type="user">{getUserInitials(user.name)}</AvatarFallback>
                         </Avatar>
                       </div>
                     </div>
@@ -907,12 +908,12 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
                   <div className="relative hidden group-data-[collapsible=icon]:block">
                     <Avatar size="sm" type="organization">
                       <AvatarImage src={activeTeam.avatarUrl} alt={activeTeam.name} />
-                      <AvatarFallback>{getTeamInitials(activeTeam.name)}</AvatarFallback>
+                      <AvatarFallback size="sm" type="organization">{getTeamInitials(activeTeam.name)}</AvatarFallback>
                     </Avatar>
                     <div className="absolute -right-0.5 -bottom-0.5 rounded-full border border-white">
                       <Avatar size="xs" type="user">
                         <AvatarImage src={user.avatarUrl} alt={user.name} />
-                        <AvatarFallback>{getUserInitials(user.name)}</AvatarFallback>
+                        <AvatarFallback size="xs" type="user">{getUserInitials(user.name)}</AvatarFallback>
                       </Avatar>
                     </div>
                   </div>
@@ -929,7 +930,7 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
                   <div className="flex items-center gap-3 px-2 py-2">
                     <Avatar size="sm" type="user">
                       <AvatarImage src={user.avatarUrl} alt={user.name} />
-                      <AvatarFallback>{getUserInitials(user.name)}</AvatarFallback>
+                      <AvatarFallback size="sm" type="user">{getUserInitials(user.name)}</AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left">
                       <span className="text-body-medium-sm truncate font-semibold text-[var(--color-text-primary)]">
@@ -956,7 +957,7 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
                   >
                     <Avatar size="sm" type="organization">
                       <AvatarImage src={team.avatarUrl} alt={team.name} />
-                      <AvatarFallback>{getTeamInitials(team.name)}</AvatarFallback>
+                      <AvatarFallback size="sm" type="organization">{getTeamInitials(team.name)}</AvatarFallback>
                     </Avatar>
                     <div className="flex flex-1 flex-col text-left">
                       <span className="text-body-medium-sm truncate font-semibold text-[var(--color-text-primary)]">
@@ -995,7 +996,13 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
 
       {/* Command Palette Dialog */}
       <CommandDialog open={commandOpen} onOpenChange={setCommandOpen}>
-        <CommandInput placeholder="Type a command or search..." />
+        <CommandInput
+          placeholder="Type a command or search..."
+          value={commandSearch}
+          onValueChange={setCommandSearch}
+          clearable={true}
+          onClear={() => setCommandSearch('')}
+        />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
 
@@ -1057,7 +1064,7 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
               <CommandItem key={team.name} onSelect={() => setCommandOpen(false)}>
                 <Avatar size="sm" className="mr-2" type="organization">
                   <AvatarImage src={team.avatarUrl} alt={team.name} />
-                  <AvatarFallback>{getTeamInitials(team.name)}</AvatarFallback>
+                  <AvatarFallback size="sm" type="organization">{getTeamInitials(team.name)}</AvatarFallback>
                 </Avatar>
                 <span>{team.name}</span>
               </CommandItem>
