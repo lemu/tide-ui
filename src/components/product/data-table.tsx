@@ -473,9 +473,18 @@ interface DataTableSkeletonProps {
   showRowBorder?: boolean
   showCellBorder?: boolean
   skipHeader?: boolean
+  enableResponsiveWrapper?: boolean
 }
 
-function DataTableSkeleton({ columns, rows, showRowBorder = true, showCellBorder = true, skipHeader = false }: DataTableSkeletonProps) {
+function DataTableSkeleton({ columns, rows, showRowBorder = true, showCellBorder = true, skipHeader = false, enableResponsiveWrapper = true }: DataTableSkeletonProps) {
+  // Use flexible widths when responsive wrapper is enabled
+  const headerSkeletonClass = enableResponsiveWrapper
+    ? "h-4 w-full max-w-[120px]"
+    : "h-4 w-[120px]"
+  const cellSkeletonClass = enableResponsiveWrapper
+    ? "h-4 w-full max-w-[100px]"
+    : "h-4 w-[100px]"
+
   return (
     <>
       {/* Header skeleton */}
@@ -483,7 +492,7 @@ function DataTableSkeleton({ columns, rows, showRowBorder = true, showCellBorder
         <TableRow showBorder={showRowBorder}>
           {Array.from({ length: columns }).map((_, index) => (
             <TableHead key={index} showBorder={showCellBorder}>
-              <Skeleton className="h-4 w-[120px]" />
+              <Skeleton className={headerSkeletonClass} />
             </TableHead>
           ))}
         </TableRow>
@@ -493,7 +502,7 @@ function DataTableSkeleton({ columns, rows, showRowBorder = true, showCellBorder
         <TableRow key={rowIndex} showBorder={showRowBorder}>
           {Array.from({ length: columns }).map((_, colIndex) => (
             <TableCell key={colIndex} showBorder={showCellBorder}>
-              <Skeleton className="h-4 w-[100px]" />
+              <Skeleton className={cellSkeletonClass} />
             </TableCell>
           ))}
         </TableRow>
@@ -2525,6 +2534,7 @@ export function DataTable<TData, TValue>({
                 rows={enableNestedHeaders ? 2 : 1}
                 showRowBorder={borderSettings.showRowBorder}
                 showCellBorder={borderSettings.showCellBorder}
+                enableResponsiveWrapper={enableResponsiveWrapper}
               />
             ) : enableNestedHeaders && nestedHeaders && nestedHeaders.length > 0 ? (
               // Nested headers rendering
@@ -2693,6 +2703,7 @@ export function DataTable<TData, TValue>({
                 showRowBorder={borderSettings.showRowBorder}
                 showCellBorder={borderSettings.showCellBorder}
                 skipHeader={true}
+                enableResponsiveWrapper={enableResponsiveWrapper}
               />
             ) :
             // DISABLED: Virtualization temporarily disabled to fix React hooks error
