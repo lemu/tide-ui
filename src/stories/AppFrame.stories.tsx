@@ -10,6 +10,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '../components/fundamental/breadcrumb'
+import { Button } from '../components/fundamental/button'
 
 const meta: Meta<typeof AppFrame> = {
   title: 'NPM • Product Components/AppFrame',
@@ -45,6 +46,14 @@ export const Default: Story = {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+      }
+      headerActions={
+        <>
+          <Button variant="default">Export</Button>
+          <Button variant="primary" icon="plus" iconPosition="left">
+            New order
+          </Button>
+        </>
       }
     >
       <div className="p-6">

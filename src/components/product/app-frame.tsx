@@ -96,10 +96,26 @@ export interface AppFrameProps {
   teams?: AppFrameTeam[]
   /** Whether the sidebar should be open by default. Defaults to true. */
   defaultSidebarOpen?: boolean
-  /** Content for the header area (typically breadcrumbs and actions) */
+  /**
+   * Content for the header's main area (typically breadcrumbs).
+   * Rendered on the left side of the header.
+   */
   headerContent?: React.ReactNode
+  /**
+   * Actions to display in the header (buttons, menus, etc.).
+   * Rendered on the right side of the header with ml-auto.
+   * This provides a dedicated slot for page-specific actions.
+   */
+  headerActions?: React.ReactNode
   /** Main content to display in the application frame */
   children: React.ReactNode
+  /**
+   * Callback fired when navigation items are clicked.
+   * If provided, prevents default link behavior and calls this instead.
+   * Use this to integrate with client-side routers like React Router.
+   * @param url - The URL/path from the navigation item
+   */
+  onNavigate?: (url: string) => void
 }
 
 // ============================================================================
@@ -418,9 +434,10 @@ interface AppSidebarProps {
   navigationData: AppFrameNavigationData
   user: AppFrameUser
   teams: AppFrameTeam[]
+  onNavigate?: (url: string) => void
 }
 
-function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
+function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps) {
   const [commandOpen, setCommandOpen] = React.useState(false)
   const [commandSearch, setCommandSearch] = React.useState('')
   const [expandedItems, setExpandedItems] = React.useState<Record<string, boolean>>({
@@ -524,7 +541,7 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
     <TooltipProvider delayDuration={100}>
       <Sidebar variant="sidebar" collapsible="icon" className="flex h-full flex-col">
         {/* Header with Company Logo */}
-        <SidebarHeader className="h-12 border-b border-[var(--color-border-primary-subtle)] group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2 box-border">
+        <SidebarHeader className="sticky top-0 z-10 h-12 border-b border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2 box-border">
           <div className="flex h-[22px] w-7 items-center justify-center">
             <svg
               width="28"
@@ -603,7 +620,15 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
                   <SidebarMenuItem key={item.title}>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <SidebarMenuButton isActive={item.isActive}>
+                        <SidebarMenuButton
+                          isActive={item.isActive}
+                          onClick={(e) => {
+                            if (onNavigate) {
+                              e.preventDefault()
+                              onNavigate(item.url)
+                            }
+                          }}
+                        >
                           <Icon name={item.icon} size="sm" />
                           <span>{item.title}</span>
                         </SidebarMenuButton>
@@ -657,7 +682,15 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
                           <SidebarMenuSub>
                             {item.items.map((subItem) => (
                               <SidebarMenuSubItem key={subItem.title}>
-                                <SidebarMenuSubButton isActive={subItem.isActive}>
+                                <SidebarMenuSubButton
+                                  isActive={subItem.isActive}
+                                  onClick={(e) => {
+                                    if (onNavigate) {
+                                      e.preventDefault()
+                                      onNavigate(subItem.url)
+                                    }
+                                  }}
+                                >
                                   <span>{subItem.title}</span>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
@@ -696,6 +729,12 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
                                       ? 'bg-[var(--color-background-blue-subtle-selected)] text-[var(--color-text-brand-bold)]'
                                       : ''
                                   }
+                                  onClick={(e) => {
+                                    if (onNavigate) {
+                                      e.preventDefault()
+                                      onNavigate(subItem.url)
+                                    }
+                                  }}
                                 >
                                   {subItem.title}
                                 </DropdownMenuItem>
@@ -707,7 +746,15 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
                     ) : (
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <SidebarMenuButton isActive={item.isActive}>
+                          <SidebarMenuButton
+                            isActive={item.isActive}
+                            onClick={(e) => {
+                              if (onNavigate) {
+                                e.preventDefault()
+                                onNavigate(item.url)
+                              }
+                            }}
+                          >
                             <Icon name={item.icon} size="sm" />
                             <span>{item.title}</span>
                           </SidebarMenuButton>
@@ -739,7 +786,15 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
                   <SidebarMenuItem key={item.title}>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <SidebarMenuButton isActive={item.isActive}>
+                        <SidebarMenuButton
+                          isActive={item.isActive}
+                          onClick={(e) => {
+                            if (onNavigate) {
+                              e.preventDefault()
+                              onNavigate(item.url)
+                            }
+                          }}
+                        >
                           <Icon name={item.icon} size="sm" />
                           <span>{item.title}</span>
                         </SidebarMenuButton>
@@ -785,7 +840,15 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
                     <SidebarMenuItem key={item.title}>
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <SidebarMenuButton isActive={item.isActive}>
+                          <SidebarMenuButton
+                            isActive={item.isActive}
+                            onClick={(e) => {
+                              if (onNavigate) {
+                                e.preventDefault()
+                                onNavigate(item.url)
+                              }
+                            }}
+                          >
                             <Icon name="layout-dashboard" size="sm" />
                             <span>{item.title}</span>
                           </SidebarMenuButton>
@@ -846,15 +909,23 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
             </SidebarGroupContent>
           </SidebarGroup>
 
-          {/* Support Section - takes remaining space and aligns to bottom */}
-          <SidebarGroup className="pb-2 flex-1 flex flex-col justify-end p-[var(--space-sm)]">
+          {/* Support Section */}
+          <SidebarGroup className="pb-2 p-[var(--space-sm)]">
             <SidebarGroupContent>
               <SidebarMenu>
                 {navigationData.support.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <SidebarMenuButton isActive={item.isActive}>
+                        <SidebarMenuButton
+                          isActive={item.isActive}
+                          onClick={(e) => {
+                            if (onNavigate) {
+                              e.preventDefault()
+                              onNavigate(item.url)
+                            }
+                          }}
+                        >
                           <Icon name={item.icon} size="sm" />
                           <span>{item.title}</span>
                         </SidebarMenuButton>
@@ -871,7 +942,7 @@ function AppSidebar({ navigationData, user, teams }: AppSidebarProps) {
         </div>
 
         {/* Footer with User/Team Switcher */}
-        <SidebarFooter className="border-t border-[var(--color-border-primary-subtle)] group-data-[collapsible=icon]:px-2">
+        <SidebarFooter className="sticky bottom-0 z-10 border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] group-data-[collapsible=icon]:px-2">
           <div className="rounded-md border border-[var(--color-border-primary-subtle)] group-data-[collapsible=icon]:rounded-none group-data-[collapsible=icon]:border-none">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -1157,20 +1228,31 @@ export function AppFrame({
   teams = defaultTeams,
   defaultSidebarOpen = true,
   headerContent,
+  headerActions,
   children,
+  onNavigate,
 }: AppFrameProps) {
   return (
-    <div className="h-screen">
+    <div className="h-screen overflow-hidden">
       <SidebarProvider defaultOpen={defaultSidebarOpen}>
-        <AppSidebar navigationData={navigationData} user={user} teams={teams} />
+        <AppSidebar navigationData={navigationData} user={user} teams={teams} onNavigate={onNavigate} />
         <SidebarInset>
-          {headerContent && (
-            <header className="flex h-12 shrink-0 items-center gap-2 border-b border-[var(--color-border-primary-subtle)] transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 box-border">
-              <div className="flex items-center gap-2 px-[var(--space-md)]">
-                <SidebarToggleWithTooltip />
-                <Separator layout="horizontal" className="mr-2 h-4" />
+          {(headerContent || headerActions) && (
+            <header className="flex h-12 shrink-0 items-center gap-2 border-b border-[var(--color-border-primary-subtle)] transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 box-border px-[var(--space-md)]">
+              <SidebarToggleWithTooltip />
+              <Separator layout="horizontal" className="mr-2 h-4" />
+
+              {/* Left side: Breadcrumbs/content */}
+              <div className="flex-1 min-w-0">
                 {headerContent}
               </div>
+
+              {/* Right side: Actions */}
+              {headerActions && (
+                <div className="flex items-center gap-2 ml-auto">
+                  {headerActions}
+                </div>
+              )}
             </header>
           )}
           <div className="flex flex-1 flex-col overflow-auto min-h-0">{children}</div>
