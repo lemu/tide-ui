@@ -145,6 +145,8 @@ export interface FixtureStatusProps extends React.HTMLAttributes<HTMLDivElement>
   coloredLabel?: boolean;
   /** Whether to show only the icon with a tooltip (default: false) */
   iconOnly?: boolean;
+  /** Whether to display labels in lowercase (useful for mid-sentence usage) */
+  lowercase?: boolean;
 }
 
 const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
@@ -155,6 +157,7 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
       showObject = false,
       coloredLabel = true,
       iconOnly = false,
+      lowercase = false,
       className,
       ...props
     },
@@ -193,9 +196,11 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
     }
 
     // Build the label text
+    const objectLabel = lowercase ? config.objectLabel.toLowerCase() : config.objectLabel;
+    const statusLabel = lowercase ? config.statusLabel.toLowerCase() : config.statusLabel;
     const labelText = showObject
-      ? `${config.objectLabel} • ${config.statusLabel}`
-      : config.statusLabel;
+      ? `${objectLabel} • ${statusLabel}`
+      : statusLabel;
 
     // Icon-only mode with tooltip
     if (iconOnly) {
