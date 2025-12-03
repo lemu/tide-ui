@@ -67,7 +67,7 @@ const SheetContent = React.forwardRef<
       {showClose && (
         <SheetPrimitive.Close asChild>
           <Button
-            variant="ghost"
+            variant="default"
             size="md"
             icon="x"
             iconPosition="only"
