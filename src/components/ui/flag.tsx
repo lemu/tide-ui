@@ -56,6 +56,11 @@ export function Flag({
   "aria-label": ariaLabel,
   ...props
 }: FlagProps) {
+  // Guard against undefined/null country
+  if (!country) {
+    return null;
+  }
+
   const sizeClasses = flagSizes[size];
   const countryCode = country.toLowerCase();
 
