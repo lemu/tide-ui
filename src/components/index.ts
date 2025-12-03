@@ -423,6 +423,10 @@ export { DataTable } from './product/data-table'
 export { DataTableSettingsMenu } from './product/data-table-settings-menu'
 export type { DataTableSettingsMenuProps, ColumnOption } from './product/data-table-settings-menu'
 
+// ViewModeMenu component
+export { ViewModeMenu } from './product/view-mode-menu'
+export type { ViewModeMenuProps, ViewMode } from './product/view-mode-menu'
+
 // Filters components
 export { Filters, FilterPanelContent, FilterDropdownMenu } from './product/filters'
 export type {

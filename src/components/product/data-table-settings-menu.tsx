@@ -14,30 +14,23 @@ import {
 } from "../fundamental/select";
 import { Toggle } from "../fundamental/toggle";
 
-interface ColumnOption {
+export interface ColumnOption {
   id: string;
   label: string;
 }
 
-interface DataTableSettingsMenuProps {
-  // Sorting configuration
+export interface DataTableSettingsMenuProps {
   sortableColumns: ColumnOption[];
   selectedSortColumn?: string;
   sortDirection?: 'asc' | 'desc';
   onSortChange?: (columnId: string) => void;
   onSortDirectionChange?: (direction: 'asc' | 'desc') => void;
-
-  // Grouping configuration
   groupableColumns: ColumnOption[];
   selectedGroupColumn?: string;
   onGroupChange?: (columnId: string) => void;
-
-  // Column visibility configuration
   columns: ColumnOption[];
   visibleColumns: string[];
   onColumnVisibilityChange?: (columnId: string, visible: boolean) => void;
-
-  // Optional customization
   align?: "start" | "end";
   triggerClassName?: string;
 }
@@ -96,7 +89,6 @@ export function DataTableSettingsMenu({
                     </Select>
                     {selectedSortColumn && (
                       <Button
-                       
                         size="sm"
                         icon={sortDirection === 'asc' ? 'arrow-up' : 'arrow-down'}
                         onClick={() => onSortDirectionChange?.(sortDirection === 'asc' ? 'desc' : 'asc')}
@@ -168,5 +160,3 @@ export function DataTableSettingsMenu({
     </DropdownMenu>
   );
 }
-
-export type { DataTableSettingsMenuProps, ColumnOption };
