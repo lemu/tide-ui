@@ -230,7 +230,14 @@ function BookmarkSplitButton({
           if (bookmark) onSelect(bookmark);
         }}
       >
-        <SelectTrigger className="!text-label-md relative z-0 h-[var(--size-md)] w-auto gap-[var(--space-xsm)] rounded-l-md !rounded-r-none border !border-r-0 border-[var(--color-border-action-outline)] bg-[var(--color-background-neutral-subtlest)] pr-[var(--space-md)] pl-[var(--space-sm)] text-[var(--color-text-primary)] hover:border-[var(--color-border-action-outline-hovered)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:shadow-sm focus:border-[var(--color-border-action-outline)] focus:ring-0 focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 active:translate-y-px active:bg-[var(--grey-alpha-50)] active:shadow-xs data-[state=open]:ring-0">
+        <SelectTrigger
+          className={cn(
+            "!text-label-md relative z-0 h-[var(--size-md)] w-auto gap-[var(--space-xsm)] border border-[var(--color-border-action-outline)] bg-[var(--color-background-neutral-subtlest)] pr-[var(--space-md)] pl-[var(--space-sm)] text-[var(--color-text-primary)] hover:border-[var(--color-border-action-outline-hovered)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:shadow-sm focus:border-[var(--color-border-action-outline)] focus:ring-0 focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 active:translate-y-px active:bg-[var(--grey-alpha-50)] active:shadow-xs data-[state=open]:ring-0",
+            isSystemBookmark
+              ? "rounded-md"
+              : "rounded-l-md !rounded-r-none !border-r-0",
+          )}
+        >
           <Icon name="bookmark" size="md" color="primary" />
           {activeBookmark?.name || "Bookmarks"}
         </SelectTrigger>
@@ -280,11 +287,12 @@ function BookmarkSplitButton({
       </Select>
 
       {/* Bookmark Options Button */}
-      <DropdownMenu>
+      {!isSystemBookmark && (
+        <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
             icon="more-horizontal"
-            className="!rounded-l-none rounded-r-md focus:ring-0 data-[state=open]:ring-0"
+            className="!rounded-l-none rounded-r-md !border-l !border-l-[var(--color-border-action-outline)] focus:ring-0 data-[state=open]:ring-0"
           />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
@@ -335,6 +343,7 @@ function BookmarkSplitButton({
           )}
         </DropdownMenuContent>
       </DropdownMenu>
+      )}
     </ButtonGroup>
   );
 }
@@ -428,7 +437,7 @@ const BookmarkTab = React.forwardRef<HTMLDivElement, BookmarkTabProps>(
         )}
       >
         {/* Top row: icon, name, and three-dot menu */}
-        <div className="flex items-center justify-between gap-[var(--space-xsm)]">
+        <div className="flex min-h-[var(--size-sm)] items-center justify-between gap-[var(--space-xsm)]">
           <div className="flex items-center gap-[var(--space-xsm)]">
             {isUserBookmark && (
               <Icon
@@ -451,7 +460,7 @@ const BookmarkTab = React.forwardRef<HTMLDivElement, BookmarkTabProps>(
                   variant="ghost"
                   size="sm"
                   className={cn(
-                    "h-auto w-auto p-[var(--space-xsm)] transition-opacity",
+                    "p-[var(--space-xsm)] transition-opacity",
                     isHovered ? "opacity-100" : "opacity-0",
                   )}
                   onClick={(e) => e.stopPropagation()}
@@ -488,11 +497,9 @@ const BookmarkTab = React.forwardRef<HTMLDivElement, BookmarkTabProps>(
         </div>
 
         {/* Count metric */}
-        {bookmark.count !== undefined && (
-          <div className="text-heading-lg text-[var(--color-text-primary)]">
-            {bookmark.count}
-          </div>
-        )}
+        <div className="text-heading-lg text-[var(--color-text-primary)]">
+          {bookmark.count ?? '\u00A0'}
+        </div>
       </div>
     );
   },
