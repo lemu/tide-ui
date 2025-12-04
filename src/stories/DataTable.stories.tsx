@@ -1814,6 +1814,176 @@ export const BorderStyling: Story = {
   },
 }
 
+export const StickyColumnsCleanBorders: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Sticky columns use clean 2px solid borders (linear-gradient for headers, Tailwind border for cells) for crisp visual separation without shadow bleeding.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(15))
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto space-y-[var(--space-lg)]">
+          <div>
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Sticky Columns with Clean Borders</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)]">
+              Sticky columns now use crisp 2px solid borders instead of box-shadow. The borders create clear visual
+              separation without bleeding under adjacent cells. Scroll horizontally to see the border stay with the sticky column.
+            </p>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={tradeColumns}
+            stickyLeftColumns={1}
+            borderStyle="both"
+            enableResponsiveWrapper={true}
+            title="Left Sticky Column with 2px Border"
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const StickyColumnsBorderStyles: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Sticky column borders (2px) always show regardless of borderStyle, as they indicate a functional boundary.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(10))
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto space-y-[var(--space-xlg)]">
+          <div>
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Sticky Borders with Different Border Styles</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)]">
+              The 2px sticky column border remains visible across all border style options, providing consistent
+              visual separation between sticky and scrollable content.
+            </p>
+          </div>
+
+          <div className="space-y-[var(--space-lg)]">
+            <div>
+              <h3 className="text-heading-md mb-[var(--space-md)]">Border Style: both (default)</h3>
+              <DataTable
+                data={data}
+                columns={tradeColumns.slice(0, 8)}
+                stickyLeftColumns={1}
+                borderStyle="both"
+                enableResponsiveWrapper={true}
+              />
+            </div>
+
+            <div>
+              <h3 className="text-heading-md mb-[var(--space-md)]">Border Style: horizontal</h3>
+              <DataTable
+                data={data}
+                columns={tradeColumns.slice(0, 8)}
+                stickyLeftColumns={1}
+                borderStyle="horizontal"
+                enableResponsiveWrapper={true}
+              />
+            </div>
+
+            <div>
+              <h3 className="text-heading-md mb-[var(--space-md)]">Border Style: vertical</h3>
+              <DataTable
+                data={data}
+                columns={tradeColumns.slice(0, 8)}
+                stickyLeftColumns={1}
+                borderStyle="vertical"
+                enableResponsiveWrapper={true}
+              />
+            </div>
+
+            <div>
+              <h3 className="text-heading-md mb-[var(--space-md)]">Border Style: none</h3>
+              <DataTable
+                data={data}
+                columns={tradeColumns.slice(0, 8)}
+                stickyLeftColumns={1}
+                borderStyle="none"
+                enableResponsiveWrapper={true}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  },
+}
+
+export const StickyColumnsMultipleBorders: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Multiple sticky columns with 2px borders on the rightmost left-sticky and leftmost right-sticky columns.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(15))
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto space-y-[var(--space-xlg)]">
+          <div>
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Multiple Sticky Columns with Borders</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)]">
+              When multiple columns are sticky, the 2px border appears on the edge column that serves as the
+              boundary between sticky and scrollable content.
+            </p>
+          </div>
+
+          <div className="space-y-[var(--space-lg)]">
+            <div>
+              <h3 className="text-heading-md mb-[var(--space-md)]">Two Left Sticky Columns</h3>
+              <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+                Border appears on the second column (rightmost sticky)
+              </p>
+              <DataTable
+                data={data}
+                columns={tradeColumns}
+                stickyLeftColumns={2}
+                borderStyle="both"
+                enableResponsiveWrapper={true}
+              />
+            </div>
+
+            <div>
+              <h3 className="text-heading-md mb-[var(--space-md)]">Left + Right Sticky Columns</h3>
+              <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+                Borders appear on both edges (rightmost left-sticky and leftmost right-sticky)
+              </p>
+              <DataTable
+                data={data}
+                columns={tradeColumns}
+                stickyLeftColumns={2}
+                stickyRightColumns={1}
+                borderStyle="both"
+                enableResponsiveWrapper={true}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  },
+}
+
 export const GlobalSearch: Story = {
   parameters: {
     layout: 'fullscreen',
