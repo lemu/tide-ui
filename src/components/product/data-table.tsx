@@ -2399,15 +2399,13 @@ export function DataTable<TData, TValue>({
       }
 
       // Add visual separator for rightmost left-sticky column
-      if (isRightmostLeftSticky) {
+      if (isRightmostLeftSticky && isHeader) {
         return {
           ...baseStyles,
-          // For headers: only vertical drop shadow. For body cells: combine with horizontal border if showRowBorder
-          boxShadow: isHeader
-            ? '2px 0 4px 0 rgba(0, 0, 0, 0.08)'
-            : showRowBorder
-              ? 'inset 0 -1px 0 0 var(--color-border-primary-medium), 2px 0 4px 0 rgba(0, 0, 0, 0.08)'
-              : '2px 0 4px 0 rgba(0, 0, 0, 0.08)',
+          // 2px border on right edge using linear gradient
+          // Background goes from grey-25 to border color in last 2px
+          backgroundImage: 'linear-gradient(to right, var(--grey-25) calc(100% - 2px), var(--color-border-primary-medium) calc(100% - 2px), var(--color-border-primary-medium) 100%)',
+          backgroundColor: 'transparent', // Override to let gradient show
         }
       }
 
@@ -2435,15 +2433,12 @@ export function DataTable<TData, TValue>({
       }
 
       // Add visual separator for leftmost right-sticky column
-      if (isLeftmostRightSticky) {
+      if (isLeftmostRightSticky && isHeader) {
         return {
           ...baseStyles,
-          // For headers: only vertical drop shadow. For body cells: combine with horizontal border if showRowBorder
-          boxShadow: isHeader
-            ? '-2px 0 4px 0 rgba(0, 0, 0, 0.08)'
-            : showRowBorder
-              ? 'inset 0 -1px 0 0 var(--color-border-primary-medium), -2px 0 4px 0 rgba(0, 0, 0, 0.08)'
-              : '-2px 0 4px 0 rgba(0, 0, 0, 0.08)',
+          // 2px border on left edge using linear gradient
+          backgroundImage: 'linear-gradient(to right, var(--color-border-primary-medium) 0, var(--color-border-primary-medium) 2px, var(--grey-25) 2px)',
+          backgroundColor: 'transparent', // Override to let gradient show
         }
       }
 
@@ -2451,6 +2446,32 @@ export function DataTable<TData, TValue>({
     }
 
     return {}
+  }
+
+  // Helper function to get Tailwind border classes for sticky column edges (body cells only)
+  const getStickyBorderClasses = (column: any): string => {
+    if (!column || typeof column.getSize !== 'function') {
+      return ''
+    }
+
+    const allColumns = table.getVisibleFlatColumns()
+    const currentColumnIndex = allColumns.findIndex(col => col.id === column.id)
+
+    const isLeftSticky = currentColumnIndex < effectiveLeftSticky
+    const isRightSticky = currentColumnIndex >= allColumns.length - effectiveRightSticky
+
+    const isRightmostLeftSticky = isLeftSticky && currentColumnIndex === effectiveLeftSticky - 1
+    const isLeftmostRightSticky = isRightSticky && currentColumnIndex === allColumns.length - effectiveRightSticky
+
+    if (isRightmostLeftSticky) {
+      return 'border-r-2 border-[var(--color-border-primary-medium)]'
+    }
+
+    if (isLeftmostRightSticky) {
+      return 'border-l-2 border-[var(--color-border-primary-medium)]'
+    }
+
+    return ''
   }
 
   return (
@@ -2842,6 +2863,8 @@ export function DataTable<TData, TValue>({
                             colSpan={isSectionHeader ? row.getVisibleCells().length : undefined}
                             data-section-header={isSectionHeader ? true : undefined}
                             className={cn(
+                              // Add sticky border classes for body cells (skip for section headers)
+                              !isSectionHeader && getStickyBorderClasses(cell.column),
                               // Sticky columns need higher z-index and explicit backgrounds
                               Object.keys(pinningStyles).length > 0 && [
                                 "z-10",
