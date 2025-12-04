@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, forwardRef, useImperativeHandle, useEffect } from "react";
 import { Button } from "../fundamental/button";
 import {
   DropdownMenu,
@@ -17,317 +17,293 @@ import { Toggle } from "../fundamental/toggle";
 import { Tabs, TabsList, TabsTrigger } from "../fundamental/tabs";
 import { Switch } from "../fundamental/switch";
 import { Label } from "../fundamental/label";
-import { Icon } from "../fundamental/icon";
 import { Separator } from "../fundamental/separator";
 
 export type ViewMode = 'table' | 'folders' | 'columns';
 
-interface PersistedSettings {
-  table?: {
-    selectedSortColumn?: string;
-    sortDirection?: 'asc' | 'desc';
-    selectedGroupColumn?: string;
-    visibleColumns?: string[];
+export type ColumnDataType = 'text' | 'number' | 'date' | 'boolean';
+
+export interface ViewModeSettings {
+  viewMode: ViewMode;
+  table: {
+    sortColumn?: string;
+    sortDirection: 'asc' | 'desc';
+    groupColumn?: string;
+    visibleColumns: string[];
   };
-  columns?: {
-    selectedSortColumn?: string;
-    sortDirection?: 'asc' | 'desc';
-    selectedGroupColumn?: string;
+  columns: {
+    sortColumn?: string;
+    sortDirection: 'asc' | 'desc';
+    groupColumn?: string;
   };
-  folders?: {
-    selectedSortColumn?: string;
-    sortDirection?: 'asc' | 'desc';
-    showFoldersFirst?: boolean;
+  folders: {
+    sortColumn?: string;
+    sortDirection: 'asc' | 'desc';
+    showFoldersFirst: boolean;
   };
+}
+
+export interface ViewModeMenuHandle {
+  getSettings: () => ViewModeSettings;
+  reset: () => void;
 }
 
 export interface ColumnOption {
   id: string;
   label: string;
+  dataType?: ColumnDataType;
+  directionOptions?: {
+    asc: string;
+    desc: string;
+  };
 }
 
 export interface ViewModeMenuProps {
-  // View mode control
-  defaultViewMode?: ViewMode;
-  viewMode?: ViewMode;
-  onViewModeChange?: (mode: ViewMode) => void;
-
   // Persistence
   persistenceKey?: string;
+  defaultViewMode?: ViewMode;
 
   // Table tab configuration
   sortableColumns?: ColumnOption[];
-  selectedSortColumn?: string;
-  sortDirection?: 'asc' | 'desc';
-  onSortChange?: (columnId: string) => void;
-  onSortDirectionChange?: (direction: 'asc' | 'desc') => void;
   groupableColumns?: ColumnOption[];
-  selectedGroupColumn?: string;
-  onGroupChange?: (columnId: string) => void;
   columns?: ColumnOption[];
-  visibleColumns?: string[];
-  onColumnVisibilityChange?: (columnId: string, visible: boolean) => void;
 
   // Columns/Kanban tab configuration
-  /**
-   * Columns view is a Kanban board where grouping creates columns
-   */
   columnsSortableColumns?: ColumnOption[];
-  columnsSelectedSortColumn?: string;
-  columnsSortDirection?: 'asc' | 'desc';
-  onColumnsSortChange?: (columnId: string) => void;
-  onColumnsSortDirectionChange?: (direction: 'asc' | 'desc') => void;
-  /**
-   * Columns available for grouping in Kanban view.
-   * @required Must provide at least one column when using Columns/Kanban view
-   */
   columnsGroupableColumns?: ColumnOption[];
-  /**
-   * Selected column for Kanban grouping.
-   * @required Should be set when using Columns/Kanban view
-   */
-  columnsSelectedGroupColumn?: string;
-  onColumnsGroupChange?: (columnId: string) => void;
 
   // Folders tab configuration
-  /**
-   * Sortable columns for items within folders.
-   * Optional - if not provided, no sorting section will show.
-   */
   foldersSortableColumns?: ColumnOption[];
-  foldersSelectedSortColumn?: string;
-  foldersSortDirection?: 'asc' | 'desc';
-  onFoldersSortChange?: (columnId: string) => void;
-  onFoldersSortDirectionChange?: (direction: 'asc' | 'desc') => void;
-  /**
-   * Whether to show folders/catalogues before leaf items.
-   * Optional - if not provided, toggle will not show.
-   * @default false
-   */
-  foldersShowFoldersFirst?: boolean;
-  onFoldersShowFoldersFirstChange?: (enabled: boolean) => void;
 
   // UI customization
   align?: "start" | "end";
   triggerClassName?: string;
 }
 
-export function ViewModeMenu({
-  defaultViewMode = 'table',
-  viewMode,
-  onViewModeChange,
-  persistenceKey,
-  sortableColumns = [],
-  selectedSortColumn,
-  sortDirection = 'asc',
-  onSortChange,
-  onSortDirectionChange,
-  groupableColumns = [],
-  selectedGroupColumn,
-  onGroupChange,
-  columns = [],
-  visibleColumns = [],
-  onColumnVisibilityChange,
-  columnsSortableColumns,
-  columnsSelectedSortColumn,
-  columnsSortDirection = 'asc',
-  onColumnsSortChange,
-  onColumnsSortDirectionChange,
-  columnsGroupableColumns,
-  columnsSelectedGroupColumn,
-  onColumnsGroupChange,
-  foldersSortableColumns,
-  foldersSelectedSortColumn,
-  foldersSortDirection = 'asc',
-  onFoldersSortChange,
-  onFoldersSortDirectionChange,
-  foldersShowFoldersFirst,
-  onFoldersShowFoldersFirstChange,
-  align = "end",
-  triggerClassName,
-}: ViewModeMenuProps) {
-  // View mode state management
-  const [internalViewMode, setInternalViewMode] = useState<ViewMode>(
-    defaultViewMode
-  );
+/**
+ * Load persisted settings from localStorage
+ */
+function loadPersistedSettings(key?: string): ViewModeSettings | null {
+  if (!key) return null;
+  try {
+    const stored = localStorage.getItem(key);
+    return stored ? JSON.parse(stored) : null;
+  } catch {
+    return null;
+  }
+}
 
-  // Load persisted settings from localStorage
-  const [persistedSettings, setPersistedSettings] = useState<PersistedSettings>(() => {
-    if (!persistenceKey) return {};
-    try {
-      const stored = localStorage.getItem(persistenceKey);
-      return stored ? JSON.parse(stored) : {};
-    } catch {
-      return {};
+/**
+ * Save settings to localStorage
+ */
+function savePersistedSettings(key: string | undefined, settings: ViewModeSettings) {
+  if (!key) return;
+  try {
+    localStorage.setItem(key, JSON.stringify(settings));
+  } catch (error) {
+    console.warn('Failed to save settings to localStorage:', error);
+  }
+}
+
+/**
+ * Get default settings for a fresh component
+ */
+function getDefaultSettings(defaultViewMode: ViewMode = 'table'): ViewModeSettings {
+  return {
+    viewMode: defaultViewMode,
+    table: {
+      sortDirection: 'asc',
+      visibleColumns: [],
+    },
+    columns: {
+      sortDirection: 'asc',
+    },
+    folders: {
+      sortDirection: 'asc',
+      showFoldersFirst: false,
+    },
+  };
+}
+
+/**
+ * Gets the appropriate direction labels for a column based on its configuration.
+ * Priority: custom directionOptions > dataType-based > default
+ */
+function getDirectionLabels(column?: ColumnOption): {
+  asc: string;
+  desc: string;
+} {
+  // Priority 1: Custom direction options
+  if (column?.directionOptions) {
+    return column.directionOptions;
+  }
+
+  // Priority 2: Data type-based labels
+  if (column?.dataType) {
+    switch (column.dataType) {
+      case 'text':
+        return { asc: 'A to Z', desc: 'Z to A' };
+      case 'number':
+        return { asc: 'Ascending', desc: 'Descending' };
+      case 'date':
+        return { asc: 'Oldest first', desc: 'Newest first' };
+      case 'boolean':
+        return { asc: 'False first', desc: 'True first' };
     }
-  });
+  }
 
-  // Helper to update persisted settings
-  const updatePersistedSettings = (updates: PersistedSettings) => {
-    if (!persistenceKey) return;
+  // Priority 3: Default fallback
+  return { asc: 'Ascending', desc: 'Descending' };
+}
 
-    const newSettings = { ...persistedSettings, ...updates };
-    setPersistedSettings(newSettings);
+export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
+  function ViewModeMenu(
+    {
+      persistenceKey,
+      defaultViewMode = 'table',
+      sortableColumns = [],
+      groupableColumns = [],
+      columns = [],
+      columnsSortableColumns,
+      columnsGroupableColumns,
+      foldersSortableColumns,
+      align = "end",
+      triggerClassName,
+    },
+    ref
+  ) {
+    // Initialize settings from persistence or defaults
+    const [settings, setSettings] = useState<ViewModeSettings>(() => {
+      const persisted = loadPersistedSettings(persistenceKey);
+      if (persisted) return persisted;
+      return getDefaultSettings(defaultViewMode);
+    });
 
-    try {
-      localStorage.setItem(persistenceKey, JSON.stringify(newSettings));
-    } catch (error) {
-      console.warn('Failed to save settings to localStorage:', error);
-    }
-  };
+    // Expose imperative API
+    useImperativeHandle(ref, () => ({
+      getSettings: () => settings,
+      reset: () => {
+        setSettings(getDefaultSettings(defaultViewMode));
+      },
+    }));
 
-  // View mode management
-  const isControlled = viewMode !== undefined;
-  const currentViewMode = isControlled ? viewMode : internalViewMode;
+    // Auto-save to localStorage whenever settings change
+    useEffect(() => {
+      savePersistedSettings(persistenceKey, settings);
+    }, [settings, persistenceKey]);
 
-  const handleViewModeChange = (value: string) => {
-    const mode = value as ViewMode;
-    if (!isControlled) {
-      setInternalViewMode(mode);
-    }
-    onViewModeChange?.(mode);
-  };
+    // Auto-select first groupable column when switching to Kanban view
+    useEffect(() => {
+      if (
+        settings.viewMode === 'columns' &&
+        !settings.columns.groupColumn &&
+        columnsGroupableColumns &&
+        columnsGroupableColumns.length > 0
+      ) {
+        setSettings(prev => ({
+          ...prev,
+          columns: {
+            ...prev.columns,
+            groupColumn: columnsGroupableColumns[0].id,
+          },
+        }));
+      }
+    }, [settings.viewMode, settings.columns.groupColumn, columnsGroupableColumns]);
 
-  // Table tab section detection
-  const hasTableSorting = sortableColumns.length > 0;
-  const hasTableGrouping = groupableColumns.length > 0;
-  const hasColumnVisibility = columns.length > 0;
+    // Tab section detection
+    const hasTableSorting = sortableColumns.length > 0;
+    const hasTableGrouping = groupableColumns.length > 0;
+    const hasColumnVisibility = columns.length > 0;
+    const hasColumnsSorting = (columnsSortableColumns?.length ?? 0) > 0;
+    const hasColumnsGrouping = (columnsGroupableColumns?.length ?? 0) > 0;
+    const hasFoldersView = (foldersSortableColumns?.length ?? 0) > 0;
 
-  // Columns tab section detection
-  const hasColumnsSorting = (columnsSortableColumns?.length ?? 0) > 0;
-  const hasColumnsGrouping = (columnsGroupableColumns?.length ?? 0) > 0;
+    // Count available view modes (Table is always available)
+    const availableViewModes = 1 + (hasFoldersView ? 1 : 0) + (hasColumnsGrouping ? 1 : 0);
+    const showViewModeTabs = availableViewModes > 1;
 
-  // Merge controlled props with persisted settings for Table tab
-  const tableSettings = {
-    selectedSortColumn: selectedSortColumn ?? persistedSettings.table?.selectedSortColumn,
-    sortDirection: sortDirection ?? persistedSettings.table?.sortDirection ?? 'asc',
-    selectedGroupColumn: selectedGroupColumn ?? persistedSettings.table?.selectedGroupColumn,
-    visibleColumns: visibleColumns ?? persistedSettings.table?.visibleColumns ?? [],
-  };
+    // Handlers for view mode
+    const handleViewModeChange = (value: string) => {
+      setSettings(prev => ({ ...prev, viewMode: value as ViewMode }));
+    };
 
-  // Merge controlled props with persisted settings for Columns tab
-  const columnsSettings = {
-    selectedSortColumn: columnsSelectedSortColumn ?? persistedSettings.columns?.selectedSortColumn,
-    sortDirection: columnsSortDirection ?? persistedSettings.columns?.sortDirection ?? 'asc',
-    selectedGroupColumn: columnsSelectedGroupColumn ?? persistedSettings.columns?.selectedGroupColumn,
-  };
+    // Table tab handlers
+    const handleTableSortChange = (columnId: string) => {
+      setSettings(prev => ({
+        ...prev,
+        table: { ...prev.table, sortColumn: columnId },
+      }));
+    };
 
-  // Kanban view (Columns) requires grouping to be ready
-  const isKanbanReady = hasColumnsGrouping && columnsSettings.selectedGroupColumn;
+    const handleTableSortDirectionChange = (direction: 'asc' | 'desc') => {
+      setSettings(prev => ({
+        ...prev,
+        table: { ...prev.table, sortDirection: direction },
+      }));
+    };
 
-  // Folders view settings (merge controlled props with persisted settings)
-  const foldersSettings = {
-    selectedSortColumn: foldersSelectedSortColumn ?? persistedSettings.folders?.selectedSortColumn,
-    sortDirection: foldersSortDirection ?? persistedSettings.folders?.sortDirection ?? 'asc',
-    showFoldersFirst: foldersShowFoldersFirst ?? persistedSettings.folders?.showFoldersFirst ?? false,
-  };
+    const handleTableGroupChange = (columnId: string) => {
+      setSettings(prev => ({
+        ...prev,
+        table: { ...prev.table, groupColumn: columnId === 'none' ? undefined : columnId },
+      }));
+    };
 
-  // Table tab persistence handlers
-  const handleTableSortChange = (columnId: string) => {
-    onSortChange?.(columnId);
-    if (selectedSortColumn === undefined && persistenceKey) {
-      updatePersistedSettings({
-        ...persistedSettings,
-        table: { ...persistedSettings.table, selectedSortColumn: columnId },
-      });
-    }
-  };
+    const handleTableColumnVisibilityChange = (columnId: string, visible: boolean) => {
+      setSettings(prev => ({
+        ...prev,
+        table: {
+          ...prev.table,
+          visibleColumns: visible
+            ? [...prev.table.visibleColumns, columnId]
+            : prev.table.visibleColumns.filter(id => id !== columnId),
+        },
+      }));
+    };
 
-  const handleTableSortDirectionChange = (direction: 'asc' | 'desc') => {
-    onSortDirectionChange?.(direction);
-    if (sortDirection === undefined && persistenceKey) {
-      updatePersistedSettings({
-        ...persistedSettings,
-        table: { ...persistedSettings.table, sortDirection: direction },
-      });
-    }
-  };
+    // Columns tab handlers
+    const handleColumnsSortChange = (columnId: string) => {
+      setSettings(prev => ({
+        ...prev,
+        columns: { ...prev.columns, sortColumn: columnId },
+      }));
+    };
 
-  const handleTableGroupChange = (columnId: string) => {
-    onGroupChange?.(columnId);
-    if (selectedGroupColumn === undefined && persistenceKey) {
-      updatePersistedSettings({
-        ...persistedSettings,
-        table: { ...persistedSettings.table, selectedGroupColumn: columnId },
-      });
-    }
-  };
+    const handleColumnsSortDirectionChange = (direction: 'asc' | 'desc') => {
+      setSettings(prev => ({
+        ...prev,
+        columns: { ...prev.columns, sortDirection: direction },
+      }));
+    };
 
-  const handleTableColumnVisibilityChange = (columnId: string, visible: boolean) => {
-    onColumnVisibilityChange?.(columnId, visible);
-    if (visibleColumns === undefined && persistenceKey) {
-      const newVisibleColumns = visible
-        ? [...(persistedSettings.table?.visibleColumns ?? []), columnId]
-        : (persistedSettings.table?.visibleColumns ?? []).filter(id => id !== columnId);
+    const handleColumnsGroupChange = (columnId: string) => {
+      setSettings(prev => ({
+        ...prev,
+        columns: { ...prev.columns, groupColumn: columnId === 'none' ? undefined : columnId },
+      }));
+    };
 
-      updatePersistedSettings({
-        ...persistedSettings,
-        table: { ...persistedSettings.table, visibleColumns: newVisibleColumns },
-      });
-    }
-  };
+    // Folders tab handlers
+    const handleFoldersSortChange = (columnId: string) => {
+      setSettings(prev => ({
+        ...prev,
+        folders: { ...prev.folders, sortColumn: columnId },
+      }));
+    };
 
-  // Columns tab persistence handlers
-  const handleColumnsSortChange = (columnId: string) => {
-    onColumnsSortChange?.(columnId);
-    if (columnsSelectedSortColumn === undefined && persistenceKey) {
-      updatePersistedSettings({
-        ...persistedSettings,
-        columns: { ...persistedSettings.columns, selectedSortColumn: columnId },
-      });
-    }
-  };
+    const handleFoldersSortDirectionChange = (direction: 'asc' | 'desc') => {
+      setSettings(prev => ({
+        ...prev,
+        folders: { ...prev.folders, sortDirection: direction },
+      }));
+    };
 
-  const handleColumnsSortDirectionChange = (direction: 'asc' | 'desc') => {
-    onColumnsSortDirectionChange?.(direction);
-    if (columnsSortDirection === undefined && persistenceKey) {
-      updatePersistedSettings({
-        ...persistedSettings,
-        columns: { ...persistedSettings.columns, sortDirection: direction },
-      });
-    }
-  };
-
-  const handleColumnsGroupChange = (columnId: string) => {
-    onColumnsGroupChange?.(columnId);
-    if (columnsSelectedGroupColumn === undefined && persistenceKey) {
-      updatePersistedSettings({
-        ...persistedSettings,
-        columns: { ...persistedSettings.columns, selectedGroupColumn: columnId },
-      });
-    }
-  };
-
-  // Folders tab persistence handlers
-  const handleFoldersSortChange = (columnId: string) => {
-    onFoldersSortChange?.(columnId);
-    if (foldersSelectedSortColumn === undefined && persistenceKey) {
-      updatePersistedSettings({
-        ...persistedSettings,
-        folders: { ...persistedSettings.folders, selectedSortColumn: columnId },
-      });
-    }
-  };
-
-  const handleFoldersSortDirectionChange = (direction: 'asc' | 'desc') => {
-    onFoldersSortDirectionChange?.(direction);
-    if (foldersSortDirection === undefined && persistenceKey) {
-      updatePersistedSettings({
-        ...persistedSettings,
-        folders: { ...persistedSettings.folders, sortDirection: direction },
-      });
-    }
-  };
-
-  const handleFoldersShowFoldersFirstChange = (enabled: boolean) => {
-    onFoldersShowFoldersFirstChange?.(enabled);
-    if (foldersShowFoldersFirst === undefined && persistenceKey) {
-      updatePersistedSettings({
-        ...persistedSettings,
-        folders: { ...persistedSettings.folders, showFoldersFirst: enabled },
-      });
-    }
-  };
+    const handleFoldersShowFoldersFirstChange = (enabled: boolean) => {
+      setSettings(prev => ({
+        ...prev,
+        folders: { ...prev.folders, showFoldersFirst: enabled },
+      }));
+    };
 
   return (
     <DropdownMenu>
@@ -339,31 +315,39 @@ export function ViewModeMenu({
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent align={align} className="w-72 max-w-[90vw]">
-        {/* Header with tabs */}
-        <div className="px-3 pt-3 pb-2">
-          <h3 className="text-label-sm text-[var(--color-text-tertiary)] mb-2">
-            View settings
-          </h3>
-          <Tabs value={currentViewMode} onValueChange={handleViewModeChange}>
-            <TabsList variant="pilled" size="sm" fullWidth>
-              <TabsTrigger variant="pilled" size="sm" fullWidth value="table">
-                Table
-              </TabsTrigger>
-              <TabsTrigger variant="pilled" size="sm" fullWidth value="folders">
-                Folders
-              </TabsTrigger>
-              <TabsTrigger variant="pilled" size="sm" fullWidth value="columns">
-                Columns
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </div>
+        {/* Header with tabs - only show if multiple view modes available */}
+        {showViewModeTabs && (
+          <>
+            <div className="px-3 pt-3 pb-2">
+              <h3 className="text-label-sm text-[var(--color-text-tertiary)] mb-2">
+                View mode
+              </h3>
+              <Tabs value={settings.viewMode} onValueChange={handleViewModeChange}>
+                <TabsList variant="pilled" size="sm" fullWidth>
+                  <TabsTrigger variant="pilled" size="sm" fullWidth value="table">
+                    Table
+                  </TabsTrigger>
+                  {hasFoldersView && (
+                    <TabsTrigger variant="pilled" size="sm" fullWidth value="folders">
+                      Folders
+                    </TabsTrigger>
+                  )}
+                  {hasColumnsGrouping && (
+                    <TabsTrigger variant="pilled" size="sm" fullWidth value="columns">
+                      Columns
+                    </TabsTrigger>
+                  )}
+                </TabsList>
+              </Tabs>
+            </div>
 
-        <DropdownMenuSeparator />
+            <DropdownMenuSeparator />
+          </>
+        )}
 
         {/* Content based on active tab */}
         <div className="p-3">
-          {currentViewMode === 'table' && (
+          {settings.viewMode === 'table' && (
             <div className="space-y-4">
               {/* Sorting section */}
               {hasTableSorting && (
@@ -372,7 +356,7 @@ export function ViewModeMenu({
                     Sorting
                   </h4>
                   <div className="flex gap-2">
-                    <Select value={tableSettings.selectedSortColumn} onValueChange={handleTableSortChange}>
+                    <Select value={settings.table.sortColumn} onValueChange={handleTableSortChange}>
                       <SelectTrigger size="sm" className="flex-1">
                         <SelectValue placeholder="Select column to sort" />
                       </SelectTrigger>
@@ -384,14 +368,27 @@ export function ViewModeMenu({
                         ))}
                       </SelectContent>
                     </Select>
-                    {tableSettings.selectedSortColumn && (
-                      <Button
-                        size="sm"
-                        icon={tableSettings.sortDirection === 'asc' ? 'arrow-up' : 'arrow-down'}
-                        onClick={() => handleTableSortDirectionChange(tableSettings.sortDirection === 'asc' ? 'desc' : 'asc')}
-                        className="flex-shrink-0"
-                        title={tableSettings.sortDirection === 'asc' ? 'Sort descending' : 'Sort ascending'}
-                      />
+                    {settings.table.sortColumn && (
+                      <Select
+                        value={settings.table.sortDirection}
+                        onValueChange={(value) => handleTableSortDirectionChange(value as 'asc' | 'desc')}
+                      >
+                        <SelectTrigger size="sm" className="w-[140px]">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {(() => {
+                            const selectedColumn = sortableColumns.find(col => col.id === settings.table.sortColumn);
+                            const directionLabels = getDirectionLabels(selectedColumn);
+                            return (
+                              <>
+                                <SelectItem value="asc">{directionLabels.asc}</SelectItem>
+                                <SelectItem value="desc">{directionLabels.desc}</SelectItem>
+                              </>
+                            );
+                          })()}
+                        </SelectContent>
+                      </Select>
                     )}
                   </div>
                 </div>
@@ -403,7 +400,7 @@ export function ViewModeMenu({
                   <h4 className="text-label-sm text-[var(--color-text-tertiary)]">
                     Grouping
                   </h4>
-                  <Select value={tableSettings.selectedGroupColumn || 'none'} onValueChange={handleTableGroupChange}>
+                  <Select value={settings.table.groupColumn || 'none'} onValueChange={handleTableGroupChange}>
                     <SelectTrigger size="sm">
                       <SelectValue placeholder="Select column to group by" />
                     </SelectTrigger>
@@ -427,7 +424,7 @@ export function ViewModeMenu({
                   </h4>
                   <div className="flex flex-wrap items-start justify-start gap-1">
                     {columns.map((col) => {
-                      const isVisible = tableSettings.visibleColumns.includes(col.id);
+                      const isVisible = settings.table.visibleColumns.includes(col.id);
                       return (
                         <Toggle
                           key={col.id}
@@ -448,145 +445,147 @@ export function ViewModeMenu({
             </div>
           )}
 
-          {currentViewMode === 'folders' && (
-            <div className="space-y-4">
-              {/* Sorting Section (OPTIONAL) */}
-              {foldersSortableColumns && foldersSortableColumns.length > 0 && (
-                <>
-                  <div>
-                    <Label className="text-label-sm mb-[var(--space-sm)]">Sort by</Label>
-                    <div className="flex gap-[var(--space-sm)]">
-                      <Select
-                        value={foldersSettings.selectedSortColumn}
-                        onValueChange={handleFoldersSortChange}
-                      >
-                        <SelectTrigger className="flex-1" size="sm">
-                          <SelectValue placeholder="Select column" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {foldersSortableColumns.map((column) => (
-                            <SelectItem key={column.id} value={column.id}>
-                              {column.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <Toggle
-                        pressed={foldersSettings.sortDirection === 'desc'}
-                        onPressedChange={(pressed) => handleFoldersSortDirectionChange(pressed ? 'desc' : 'asc')}
-                        aria-label="Toggle sort direction"
-                        size="md"
-                      >
-                        <Icon
-                          name={foldersSettings.sortDirection === 'desc' ? 'arrow-down-wide-narrow' : 'arrow-up-wide-narrow'}
-                          size="sm"
-                        />
-                      </Toggle>
-                    </div>
-                  </div>
-                  {onFoldersShowFoldersFirstChange && <Separator />}
-                </>
-              )}
+          {settings.viewMode === 'folders' && foldersSortableColumns && foldersSortableColumns.length > 0 && (
+            <>
+              {/* Sorting Section */}
+              <div className="space-y-2">
+                <h4 className="text-label-sm text-[var(--color-text-tertiary)]">Sorting</h4>
+                <div className="flex gap-2">
+                  <Select
+                    value={settings.folders.sortColumn}
+                    onValueChange={handleFoldersSortChange}
+                  >
+                    <SelectTrigger className="flex-1" size="sm">
+                      <SelectValue placeholder="Select column" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {foldersSortableColumns.map((column) => (
+                        <SelectItem key={column.id} value={column.id}>
+                          {column.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {settings.folders.sortColumn && (
+                    <Select
+                      value={settings.folders.sortDirection}
+                      onValueChange={(value) => handleFoldersSortDirectionChange(value as 'asc' | 'desc')}
+                    >
+                      <SelectTrigger size="sm" className="w-[140px]">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {(() => {
+                          const selectedColumn = foldersSortableColumns.find(col => col.id === settings.folders.sortColumn);
+                          const directionLabels = getDirectionLabels(selectedColumn);
+                          return (
+                            <>
+                              <SelectItem value="asc">{directionLabels.asc}</SelectItem>
+                              <SelectItem value="desc">{directionLabels.desc}</SelectItem>
+                            </>
+                          );
+                        })()}
+                      </SelectContent>
+                    </Select>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
 
-              {/* Folders First Toggle (OPTIONAL) */}
-              {onFoldersShowFoldersFirstChange && (
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="folders-first" className="text-label-sm">
-                    Show folders first
-                  </Label>
-                  <Switch
-                    id="folders-first"
-                    checked={foldersSettings.showFoldersFirst ?? false}
-                    onCheckedChange={handleFoldersShowFoldersFirstChange}
-                  />
+          {settings.viewMode === 'columns' && (
+            <div className="space-y-4">
+              {/* Grouping section - REQUIRED for Kanban */}
+              {hasColumnsGrouping && (
+                <div className="space-y-2">
+                  <h4 className="text-label-sm text-[var(--color-text-tertiary)]">
+                    Grouping
+                  </h4>
+                  <Select value={settings.columns.groupColumn || 'none'} onValueChange={handleColumnsGroupChange}>
+                    <SelectTrigger size="sm">
+                      <SelectValue placeholder="Select column to group by" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="none">None</SelectItem>
+                      {columnsGroupableColumns?.map((col) => (
+                        <SelectItem key={col.id} value={col.id}>
+                          {col.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               )}
 
-              {/* Show message if no settings are configured */}
-              {(!foldersSortableColumns || foldersSortableColumns.length === 0) && !onFoldersShowFoldersFirstChange && (
-                <div className="text-center py-8">
-                  <p className="text-body-sm text-[var(--color-text-secondary)]">
-                    No settings configured for folders view
-                  </p>
+              {/* Sorting section - sorts items within columns */}
+              {hasColumnsSorting && (
+                <div className="space-y-2">
+                  <h4 className="text-label-sm text-[var(--color-text-tertiary)]">
+                    Sorting
+                  </h4>
+                  <div className="flex gap-2">
+                    <Select value={settings.columns.sortColumn} onValueChange={handleColumnsSortChange}>
+                      <SelectTrigger size="sm" className="flex-1">
+                        <SelectValue placeholder="Select column to sort" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {columnsSortableColumns?.map((col) => (
+                          <SelectItem key={col.id} value={col.id}>
+                            {col.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {settings.columns.sortColumn && (
+                      <Select
+                        value={settings.columns.sortDirection}
+                        onValueChange={(value) => handleColumnsSortDirectionChange(value as 'asc' | 'desc')}
+                      >
+                        <SelectTrigger size="sm" className="w-[140px]">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {(() => {
+                            const selectedColumn = columnsSortableColumns?.find(col => col.id === settings.columns.sortColumn);
+                            const directionLabels = getDirectionLabels(selectedColumn);
+                            return (
+                              <>
+                                <SelectItem value="asc">{directionLabels.asc}</SelectItem>
+                                <SelectItem value="desc">{directionLabels.desc}</SelectItem>
+                              </>
+                            );
+                          })()}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
           )}
-
-          {currentViewMode === 'columns' && (
-            <>
-              {!isKanbanReady ? (
-                <div className="text-center py-8">
-                  <p className="text-body-sm text-[var(--color-text-secondary)]">
-                    Kanban view requires grouping by a column
-                  </p>
-                  <p className="text-caption-sm text-[var(--color-text-tertiary)] mt-2">
-                    Select a column to group by to display items in Kanban columns
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {/* Grouping section - REQUIRED for Kanban */}
-                  {hasColumnsGrouping && (
-                    <div className="space-y-2">
-                      <h4 className="text-label-sm text-[var(--color-text-tertiary)]">
-                        Grouping
-                      </h4>
-                      <Select value={columnsSettings.selectedGroupColumn || 'none'} onValueChange={handleColumnsGroupChange}>
-                        <SelectTrigger size="sm">
-                          <SelectValue placeholder="Select column to group by" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="none">None</SelectItem>
-                          {columnsGroupableColumns?.map((col) => (
-                            <SelectItem key={col.id} value={col.id}>
-                              {col.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  )}
-
-                  {/* Sorting section - sorts items within columns */}
-                  {hasColumnsSorting && (
-                    <div className="space-y-2">
-                      <h4 className="text-label-sm text-[var(--color-text-tertiary)]">
-                        Sorting
-                      </h4>
-                      <div className="flex gap-2">
-                        <Select value={columnsSettings.selectedSortColumn} onValueChange={handleColumnsSortChange}>
-                          <SelectTrigger size="sm" className="flex-1">
-                            <SelectValue placeholder="Select column to sort" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {columnsSortableColumns?.map((col) => (
-                              <SelectItem key={col.id} value={col.id}>
-                                {col.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        {columnsSettings.selectedSortColumn && (
-                          <Button
-                            size="sm"
-                            icon={columnsSettings.sortDirection === 'asc' ? 'arrow-up' : 'arrow-down'}
-                            onClick={() => handleColumnsSortDirectionChange(
-                              columnsSettings.sortDirection === 'asc' ? 'desc' : 'asc'
-                            )}
-                            className="flex-shrink-0"
-                            title={columnsSettings.sortDirection === 'asc' ? 'Sort descending' : 'Sort ascending'}
-                          />
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-            </>
-          )}
         </div>
+
+        {/* Folders tab - Toggle section (outside padded container for full-width separator) */}
+        {settings.viewMode === 'folders' && (
+          <>
+            <DropdownMenuSeparator />
+            <div className="p-3">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="folders-first">
+                  Show folders first
+                </Label>
+                <Switch
+                  id="folders-first"
+                  checked={settings.folders.showFoldersFirst}
+                  onCheckedChange={handleFoldersShowFoldersFirstChange}
+                />
+              </div>
+            </div>
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+});
+
+ViewModeMenu.displayName = 'ViewModeMenu';

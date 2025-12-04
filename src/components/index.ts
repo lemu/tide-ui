@@ -425,7 +425,7 @@ export type { DataTableSettingsMenuProps, ColumnOption } from './product/data-ta
 
 // ViewModeMenu component
 export { ViewModeMenu } from './product/view-mode-menu'
-export type { ViewModeMenuProps, ViewMode } from './product/view-mode-menu'
+export type { ViewModeMenuProps, ViewMode, ViewModeMenuHandle, ViewModeSettings } from './product/view-mode-menu'
 
 // Filters components
 export { Filters, FilterPanelContent, FilterDropdownMenu } from './product/filters'
