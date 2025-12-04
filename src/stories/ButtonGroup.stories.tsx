@@ -394,14 +394,14 @@ export const VerticalOrientation: Story = {
 
       <div>
         <p className="text-body-sm font-medium mb-2">Vertical Icon-Only Group</p>
-        <ButtonGroup orientation="vertical">
-          <Button size="icon-md">
+        <ButtonGroup orientation="vertical" size="md">
+          <Button>
             <Icon name="bold" className="w-4 h-4" />
           </Button>
-          <Button size="icon-md">
+          <Button>
             <Icon name="italic" className="w-4 h-4" />
           </Button>
-          <Button size="icon-md">
+          <Button>
             <Icon name="underline" className="w-4 h-4" />
           </Button>
         </ButtonGroup>
@@ -428,12 +428,12 @@ export const WithSeparator: Story = {
     <div className="space-y-6">
       <div>
         <p className="text-body-sm font-medium mb-2">Split Button - Primary Action</p>
-        <ButtonGroup>
-          <Button variant="primary">Save</Button>
+        <ButtonGroup variant="primary" size="md">
+          <Button>Save</Button>
           <ButtonGroupSeparator />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="primary" size="icon-md">
+              <Button>
                 <Icon name="chevron-down" className="w-4 h-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -448,12 +448,12 @@ export const WithSeparator: Story = {
 
       <div>
         <p className="text-body-sm font-medium mb-2">Split Button - Default</p>
-        <ButtonGroup>
+        <ButtonGroup size="md">
           <Button>Export</Button>
           <ButtonGroupSeparator />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button size="icon-md">
+              <Button>
                 <Icon name="chevron-down" className="w-4 h-4" />
               </Button>
             </DropdownMenuTrigger>

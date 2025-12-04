@@ -24,35 +24,28 @@ const buttonGroupVariants = cva(
 export interface ButtonGroupProps
   extends React.ComponentProps<"div">,
     VariantProps<typeof buttonGroupVariants> {
-  size?: "sm" | "md" | "lg" | "icon-sm" | "icon-md" | "icon-lg";
+  size?: "sm" | "md" | "lg";
   variant?: "default" | "primary" | "destructive" | "success" | "ghost";
 }
 
 const ButtonGroup = React.forwardRef<HTMLDivElement, ButtonGroupProps>(
   ({ className, orientation, size, variant, children, ...props }, ref) => {
-    // Clone children and inject size/variant props into Button components
+    // Clone children and inject size/variant props
     const enhancedChildren = React.Children.map(children, (child) => {
       if (React.isValidElement(child)) {
         const childProps = child.props as any;
 
-        // Check if it's a Button component (has data-slot or is a button element)
-        const isButton =
-          child.type === 'button' ||
-          (typeof child.type === 'function' && child.type.name === 'Button') ||
-          (childProps && childProps['data-slot'] === 'button');
-
-        // Skip non-Button children (Separator, Text, DropdownMenu, etc.)
-        if (!isButton && childProps?.['data-slot']) {
+        // Skip non-Button children that have their own data-slot (Separator, etc.)
+        if (childProps?.['data-slot'] && childProps['data-slot'] !== 'button') {
           return child;
         }
 
-        // Only inject props if it looks like a Button
-        if (isButton || child.type === 'button') {
-          return React.cloneElement(child as React.ReactElement<any>, {
-            size: childProps.size || size,
-            variant: childProps.variant || variant,
-          });
-        }
+        // Pass size and variant to all other children
+        // Children that don't support these props will simply ignore them
+        return React.cloneElement(child as React.ReactElement<any>, {
+          size: childProps.size || size,
+          variant: childProps.variant || variant,
+        });
       }
       return child;
     });
