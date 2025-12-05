@@ -1603,6 +1603,12 @@ export function DataTable<TData, TValue>({
   clickableRowClassName,
   groupPreservingSearch = false,
 }: DataTableProps<TData, TValue>) {
+  // Auto-enable responsive wrapper when sticky columns are used
+  const computedEnableResponsiveWrapper =
+    enableResponsiveWrapper ||
+    (stickyLeftColumns && stickyLeftColumns > 0) ||
+    (stickyRightColumns && stickyRightColumns > 0)
+
   // Internal state for uncontrolled mode
   const [internalSorting, setInternalSorting] = React.useState<SortingState>([])
   const [internalColumnVisibility, setInternalColumnVisibility] = React.useState<VisibilityState>({})
@@ -1759,6 +1765,9 @@ export function DataTable<TData, TValue>({
         return { showRowBorder: true, showCellBorder: true }
     }
   }, [borderStyle])
+
+  // Track which column header is being hovered for resize handle display
+  const [hoveredColumnIndex, setHoveredColumnIndex] = React.useState<number | null>(null)
 
   // Row click handler with smart default filtering
   const handleRowClick = React.useCallback((row: any, event: React.MouseEvent<HTMLTableRowElement>) => {
@@ -2474,6 +2483,53 @@ export function DataTable<TData, TValue>({
     return ''
   }
 
+  // Helper to check if column has sticky border (for disabling regular border)
+  const hasStickyBorder = (column: any): boolean => {
+    if (!column || typeof column.getSize !== 'function') {
+      return false
+    }
+
+    const allColumns = table.getVisibleFlatColumns()
+    const currentColumnIndex = allColumns.findIndex(col => col.id === column.id)
+
+    const isLeftSticky = currentColumnIndex < effectiveLeftSticky
+    const isRightSticky = currentColumnIndex >= allColumns.length - effectiveRightSticky
+
+    const isRightmostLeftSticky = isLeftSticky && currentColumnIndex === effectiveLeftSticky - 1
+    const isLeftmostRightSticky = isRightSticky && currentColumnIndex === allColumns.length - effectiveRightSticky
+
+    return isRightmostLeftSticky || isLeftmostRightSticky
+  }
+
+  // Helper to get resize handle classes (visible when resizing enabled + no vertical borders)
+  const getResizeHandleClasses = (
+    column: any,
+    currentIndex: number,
+    isDirectHover: boolean,
+    isNextColumnHovered: boolean
+  ): string => {
+    if (!enableColumnResizing || !column.getCanResize()) {
+      return ''
+    }
+
+    const showHandle = !borderSettings.showCellBorder // horizontal or none border style
+
+    if (!showHandle) {
+      return ''
+    }
+
+    // Show handle if current column is hovered OR if next column is hovered
+    const shouldShowHandle = isDirectHover || isNextColumnHovered
+
+    return cn(
+      "after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2",
+      "after:w-[2px] after:h-[24px] after:rounded-[2px]",
+      "after:bg-[var(--color-border-primary-medium)]",
+      shouldShowHandle ? "after:opacity-100" : "after:opacity-0",
+      "after:transition-opacity after:pointer-events-none"
+    )
+  }
+
   return (
     <TooltipProvider>
       <DndContext
@@ -2517,7 +2573,7 @@ export function DataTable<TData, TValue>({
       <div className={cn(
         "relative",
         showPagination && "border-b border-[var(--color-border-primary-medium)]",
-        enableResponsiveWrapper && [
+        computedEnableResponsiveWrapper && [
           "overflow-x-auto",
           "scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[var(--color-border-primary-subtle)]",
           "hover:scrollbar-thumb-[var(--color-border-primary)]",
@@ -2536,7 +2592,7 @@ export function DataTable<TData, TValue>({
         <Table
           ref={tableRef}
           className={cn(
-            enableResponsiveWrapper && "min-w-[900px]", // Minimum width for readability
+            computedEnableResponsiveWrapper && "min-w-[900px]", // Minimum width for readability
             "border-separate border-spacing-0", // Required for sticky columns to work properly
             enableColumnResizing && "table-fixed" // Fixed layout for column resizing
           )}
@@ -2555,7 +2611,7 @@ export function DataTable<TData, TValue>({
                 rows={enableNestedHeaders ? 2 : 1}
                 showRowBorder={borderSettings.showRowBorder}
                 showCellBorder={borderSettings.showCellBorder}
-                enableResponsiveWrapper={enableResponsiveWrapper}
+                enableResponsiveWrapper={computedEnableResponsiveWrapper}
               />
             ) : enableNestedHeaders && nestedHeaders && nestedHeaders.length > 0 ? (
               // Nested headers rendering
@@ -2604,14 +2660,23 @@ export function DataTable<TData, TValue>({
                     const align = header.column.columnDef.meta?.align || 'left'
                     const isLastHeader = index === table.getHeaderGroups()[0].headers.length - 1
 
+                    const hasSticky = hasStickyBorder(header.column)
+
+                    // Calculate hover states for resize handle
+                    const isDirectHover = hoveredColumnIndex === index
+                    const isNextColumnHovered = hoveredColumnIndex === index + 1
+
                     return (
                       <TableHead
                         key={header.id}
-                        showBorder={isLastHeader ? false : borderSettings.showCellBorder}
+                        showBorder={isLastHeader ? false : (hasSticky ? false : borderSettings.showCellBorder)}
+                        onMouseEnter={() => setHoveredColumnIndex(index)}
+                        onMouseLeave={() => setHoveredColumnIndex(null)}
                         className={cn(
                           stickyHeader && "z-20",
                           (effectiveLeftSticky > 0 || effectiveRightSticky > 0) && "z-30",
-                          enableColumnResizing && "relative"
+                          enableColumnResizing && "relative",
+                          getResizeHandleClasses(header.column, index, isDirectHover, isNextColumnHovered)
                         )}
                         style={{
                           ...pinningStyles,
@@ -2662,18 +2727,26 @@ export function DataTable<TData, TValue>({
                     const pinningStyles = getPureCSSPinningStyles(header.column, true, borderSettings.showRowBorder)
                     const align = header.column.columnDef.meta?.align || 'left'
                     const isLastHeader = index === headerGroup.headers.length - 1
+                    const hasSticky = hasStickyBorder(header.column)
+
+                    // Calculate hover states for resize handle
+                    const isDirectHover = hoveredColumnIndex === index
+                    const isNextColumnHovered = hoveredColumnIndex === index + 1
 
                     return (
                       <TableHead
                         key={header.id}
-                        showBorder={isLastHeader ? false : borderSettings.showCellBorder}
+                        showBorder={isLastHeader ? false : (hasSticky ? false : borderSettings.showCellBorder)}
+                        onMouseEnter={() => setHoveredColumnIndex(index)}
+                        onMouseLeave={() => setHoveredColumnIndex(null)}
                         className={cn(
                           stickyHeader && "z-20",
                           (effectiveLeftSticky > 0 || effectiveRightSticky > 0) && "z-30",
                           enableColumnResizing && "relative",
                           enableColumnOrdering && "group",
                           !showHeader && index === 0 && "rounded-tl-lg",
-                          !showHeader && index === headerGroup.headers.length - 1 && "rounded-tr-lg"
+                          !showHeader && index === headerGroup.headers.length - 1 && "rounded-tr-lg",
+                          getResizeHandleClasses(header.column, index, isDirectHover, isNextColumnHovered)
                         )}
                         style={{
                           ...pinningStyles,
@@ -2724,7 +2797,7 @@ export function DataTable<TData, TValue>({
                 showRowBorder={borderSettings.showRowBorder}
                 showCellBorder={borderSettings.showCellBorder}
                 skipHeader={true}
-                enableResponsiveWrapper={enableResponsiveWrapper}
+                enableResponsiveWrapper={computedEnableResponsiveWrapper}
               />
             ) :
             // DISABLED: Virtualization temporarily disabled to fix React hooks error
@@ -3413,15 +3486,15 @@ export function DataTable<TData, TValue>({
                 ))
               })()
             ) : (
-              <TableRow showBorder={borderSettings.showRowBorder}>
+              <TableRow showBorder={borderSettings.showRowBorder} className="h-[400px]">
                 <TableCell
                   colSpan={memoizedColumns.length}
-                  className="h-24 text-center"
+                  className="text-center"
                   showBorder={borderSettings.showCellBorder}
                   showRowBorder={borderSettings.showRowBorder}
                   verticalAlign={defaultVerticalAlign}
                 >
-                  No results.
+                  No results
                 </TableCell>
               </TableRow>
             )}

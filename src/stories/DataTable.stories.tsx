@@ -87,125 +87,6 @@ These dedicated guides include complete implementation examples, database schema
 export default meta
 type Story = StoryObj<typeof meta>
 
-// Basic data table
-export const Default: Story = {
-  render: () => (
-    <div className="w-full max-w-4xl">
-      <DataTable
-        data={sampleUsers}
-        columns={userColumns}
-        title="Default DataTable"
-      />
-    </div>
-  ),
-}
-
-// New story showcasing title prop and numeric columns - inspired by Figma design
-export const WithTitleAndNumericColumns: Story = {
-  render: () => {
-    // Laycan data matching the Figma design
-    interface LaycanData {
-      month: string
-      fixtureCount: number
-      cargoQuantity: number
-      grossFreight: number
-      avgFreightRate: number
-      avgDemurrage: number
-    }
-
-    const laycanData: LaycanData[] = [
-      { month: 'Jan', fixtureCount: 45, cargoQuantity: 7785000, grossFreight: 133340750, avgFreightRate: 20.35, avgDemurrage: 22300 },
-      { month: 'Feb', fixtureCount: 127, cargoQuantity: 10510000, grossFreight: 118074400, avgFreightRate: 13.29, avgDemurrage: 21500 },
-      { month: 'Mar', fixtureCount: 118, cargoQuantity: 7785900, grossFreight: 145230750, avgFreightRate: 18.45, avgDemurrage: 26000 },
-      { month: 'Apr', fixtureCount: 102, cargoQuantity: 12345678, grossFreight: 162890500, avgFreightRate: 21.67, avgDemurrage: 23800 },
-      { month: 'May', fixtureCount: 89, cargoQuantity: 15678900, grossFreight: 189450300, avgFreightRate: 17.92, avgDemurrage: 25600 },
-      { month: 'Jun', fixtureCount: 5, cargoQuantity: 20123456, grossFreight: 220890500, avgFreightRate: 8.48, avgDemurrage: 23800 },
-    ]
-
-    const laycanColumns: ColumnDef<LaycanData>[] = [
-      {
-        accessorKey: 'month',
-        header: 'Laycan month',
-        cell: ({ row }) => (
-          <div className="font-medium">{row.getValue('month')}</div>
-        ),
-      },
-      {
-        accessorKey: 'fixtureCount',
-        header: 'Fixture count',
-        meta: { numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums">{formatNumber(row.getValue('fixtureCount'))}</div>
-        ),
-      },
-      {
-        accessorKey: 'cargoQuantity',
-        header: 'Cargo quantity',
-        meta: { numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums">{formatNumber(row.getValue('cargoQuantity'))}</div>
-        ),
-      },
-      {
-        accessorKey: 'grossFreight',
-        header: 'Gross freight',
-        meta: { numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums">{formatCurrency(row.getValue('grossFreight'))}</div>
-        ),
-      },
-      {
-        accessorKey: 'avgFreightRate',
-        header: 'Avg. freight rate ($...)',
-        meta: { numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums">{formatDecimal(row.getValue('avgFreightRate'))}</div>
-        ),
-      },
-      {
-        accessorKey: 'avgDemurrage',
-        header: 'Avg. demurrage ($...)',
-        meta: { numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums">{formatCurrency(row.getValue('avgDemurrage'))}</div>
-        ),
-      },
-    ]
-
-    return (
-      <div className="w-full max-w-6xl space-y-4">
-        {/* Search input outside the table */}
-        <div className="flex items-center space-x-2">
-          <input
-            placeholder="Search months..."
-            className="h-8 w-[150px] lg:w-[250px] rounded-md border border-[var(--color-interaction-border-input)] px-3 text-body-sm placeholder:text-[var(--color-text-placeholder)] focus:border-[var(--color-border-focus)] focus:outline-none focus:ring-2 focus:ring-[var(--color-ring)] focus:ring-offset-2"
-          />
-        </div>
-
-        <DataTable
-          data={laycanData}
-          columns={laycanColumns}
-          title="Summary by laycan date"
-        />
-
-        <div className="mt-6 p-4 bg-[var(--color-background-neutral-subtlest)] rounded-md">
-          <h4 className="text-body-md font-medium mb-3">New Features Demonstrated:</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-body-sm text-[var(--color-text-secondary)]">
-            <div>
-              <p><strong>title prop</strong>: Clean header with "Summary by laycan date"</p>
-              <p><strong>Right-aligned numerics</strong>: All numeric columns use proper alignment</p>
-            </div>
-            <div>
-              <p><strong>Tabular numerals</strong>: Consistent digit spacing for numbers</p>
-              <p><strong>Formatting utilities</strong>: Currency, numbers, and decimals</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  },
-}
-
 // Sample data for examples
 interface User {
   id: string
@@ -289,10 +170,201 @@ const sampleUsers: User[] = [
     status: 'active',
     lastLogin: '2024-03-15',
     joinDate: '2023-08-30'
+  },
+  {
+    id: '9',
+    name: 'George Taylor',
+    email: 'george.taylor@example.com',
+    role: 'Viewer',
+    status: 'active',
+    lastLogin: '2024-03-11',
+    joinDate: '2023-09-14'
+  },
+  {
+    id: '10',
+    name: 'Hannah White',
+    email: 'hannah.white@example.com',
+    role: 'Editor',
+    status: 'pending',
+    lastLogin: 'Never',
+    joinDate: '2024-03-12'
   }
 ]
 
-// Shipment data for autocomplete demonstration
+// Analytics dashboard table
+interface AnalyticsData {
+  page: string
+  views: number
+  uniqueVisitors: number
+  bounceRate: number
+  avgDuration: string
+  conversionRate: number
+}
+
+const analyticsData: AnalyticsData[] = [
+  {
+    page: '/home',
+    views: 15420,
+    uniqueVisitors: 12340,
+    bounceRate: 23.4,
+    avgDuration: '2:45',
+    conversionRate: 4.2
+  },
+  {
+    page: '/products',
+    views: 8930,
+    uniqueVisitors: 7120,
+    bounceRate: 45.6,
+    avgDuration: '1:32',
+    conversionRate: 2.8
+  },
+  {
+    page: '/about',
+    views: 3210,
+    uniqueVisitors: 2890,
+    bounceRate: 12.3,
+    avgDuration: '3:12',
+    conversionRate: 1.4
+  },
+  {
+    page: '/contact',
+    views: 1850,
+    uniqueVisitors: 1670,
+    bounceRate: 34.5,
+    avgDuration: '1:58',
+    conversionRate: 8.9
+  },
+  {
+    page: '/blog',
+    views: 5420,
+    uniqueVisitors: 4320,
+    bounceRate: 28.7,
+    avgDuration: '4:23',
+    conversionRate: 1.8
+  }
+]
+
+// Trade data for sticky columns and advanced features
+interface TradeData {
+  id: string
+  counterparty: string
+  instrument: string
+  side: 'buy' | 'sell'
+  quantity: number
+  price: number
+  notional: number
+  settlement: string
+  trader: string
+  status: 'pending' | 'confirmed' | 'settled' | 'cancelled'
+  timestamp: string
+}
+
+const generateTradeData = (count: number): TradeData[] => {
+  const counterparties = ['Goldman Sachs', 'JPMorgan', 'Morgan Stanley', 'Citigroup', 'Bank of America', 'Deutsche Bank', 'UBS', 'Credit Suisse', 'Barclays', 'Wells Fargo']
+  const instruments = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA', 'META', 'NVDA', 'NFLX', 'SPY', 'QQQ', 'UBER', 'COIN', 'ABNB', 'SNOW', 'PLTR']
+  const traders = ['John Smith', 'Sarah Johnson', 'Mike Chen', 'Lisa Rodriguez', 'David Kim', 'Anna Wilson', 'Tom Brown', 'Emma Davis', 'Alex Garcia', 'Rachel Taylor']
+  const statuses: TradeData['status'][] = ['pending', 'confirmed', 'settled', 'cancelled']
+
+  return Array.from({ length: count }, (_, i) => ({
+    id: `TRD-${(i + 1).toString().padStart(6, '0')}`,
+    counterparty: counterparties[Math.floor(Math.random() * counterparties.length)],
+    instrument: instruments[Math.floor(Math.random() * instruments.length)],
+    side: Math.random() > 0.5 ? 'buy' : 'sell',
+    quantity: Math.floor(Math.random() * 10000) + 100,
+    price: Math.random() * 500 + 50,
+    notional: 0, // Will be calculated
+    settlement: new Date(Date.now() + Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    trader: traders[Math.floor(Math.random() * traders.length)],
+    status: statuses[Math.floor(Math.random() * statuses.length)],
+    timestamp: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString(),
+  })).map(trade => ({
+    ...trade,
+    notional: trade.quantity * trade.price
+  }))
+}
+
+const tradeColumns: ColumnDef<TradeData>[] = [
+  {
+    accessorKey: 'id',
+    header: 'Trade ID',
+    cell: ({ row }) => (
+      <div className="font-mono text-body-sm text-[var(--color-text-primary)]">{row.getValue('id')}</div>
+    ),
+  },
+  {
+    accessorKey: 'counterparty',
+    header: 'Counterparty',
+    cell: ({ row }) => (
+      <div className="font-medium">{row.getValue('counterparty')}</div>
+    ),
+  },
+  {
+    accessorKey: 'instrument',
+    header: 'Instrument',
+    cell: ({ row }) => (
+      <Badge appearance="outline">{row.getValue('instrument')}</Badge>
+    ),
+  },
+  {
+    accessorKey: 'side',
+    header: 'Side',
+    cell: ({ row }) => {
+      const side = row.getValue('side') as string
+      if (!side) return null
+      return (
+        <Badge>
+          {side.toUpperCase()}
+        </Badge>
+      )
+    },
+  },
+  {
+    accessorKey: 'quantity',
+    header: 'Quantity',
+    meta: { align: 'right' },
+    cell: ({ row }) => (
+      <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
+    ),
+  },
+  {
+    accessorKey: 'price',
+    header: 'Price',
+    meta: { align: 'right' },
+    cell: ({ row }) => (
+      <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
+    ),
+  },
+  {
+    accessorKey: 'notional',
+    header: 'Notional',
+    meta: { align: 'right' },
+    cell: ({ row }) => (
+      <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
+    ),
+  },
+  {
+    accessorKey: 'trader',
+    header: 'Trader',
+    cell: ({ row }) => (
+      <div className="text-body-sm">{row.getValue('trader')}</div>
+    ),
+  },
+  {
+    accessorKey: 'status',
+    header: 'Status',
+    cell: ({ row }) => {
+      const status = row.getValue('status') as string
+      if (!status) return null
+      return (
+        <Badge>
+          {status.charAt(0).toUpperCase() + status.slice(1)}
+        </Badge>
+      )
+    },
+  },
+]
+
+// Shipment data for global search with autocomplete
 interface ShipmentData {
   id: string
   vesselName: string
@@ -496,607 +568,25 @@ const userColumns: ColumnDef<User>[] = [
   },
 ]
 
-// Enhanced columns for advanced features with filters
-const userColumnsAdvanced: ColumnDef<User>[] = [
-  {
-    accessorKey: 'name',
-    header: 'Name',
-    meta: {
-      filterVariant: 'text',
-      placeholder: 'Filter names...',
-    },
-    cell: ({ row }) => (
-      <div className="font-medium">{row.getValue('name')}</div>
-    ),
-  },
-  {
-    accessorKey: 'email',
-    header: 'Email',
-    meta: {
-      filterVariant: 'text',
-      placeholder: 'Filter emails...',
-    },
-    cell: ({ row }) => (
-      <div className="text-[var(--color-text-secondary)]">{row.getValue('email')}</div>
-    ),
-  },
-  {
-    accessorKey: 'role',
-    header: 'Role',
-    meta: {
-      filterVariant: 'multiselect',
-      label: 'Role',
-      filterOptions: [
-        { label: 'Admin', value: 'Admin' },
-        { label: 'Editor', value: 'Editor' },
-        { label: 'Viewer', value: 'Viewer' },
-      ],
-    },
-    cell: ({ row }) => {
-      const role = row.getValue('role') as string
-      return (
-        <Badge>
-          {role}
-        </Badge>
-      )
-    },
-  },
-  {
-    accessorKey: 'status',
-    header: 'Status',
-    meta: {
-      filterVariant: 'select',
-      label: 'Status',
-      filterOptions: [
-        { label: 'Active', value: 'active' },
-        { label: 'Pending', value: 'pending' },
-        { label: 'Inactive', value: 'inactive' },
-      ],
-    },
-    cell: ({ row }) => {
-      const status = row.getValue('status') as string
-      return (
-        <Badge>
-          {status}
-        </Badge>
-      )
-    },
-  },
-  {
-    accessorKey: 'lastLogin',
-    header: 'Last Login',
-    cell: ({ row }) => (
-      <div className="text-body-sm">{row.getValue('lastLogin')}</div>
-    ),
-  },
-  {
-    accessorKey: 'joinDate',
-    header: 'Join Date',
-    cell: ({ row }) => (
-      <div className="text-body-sm">{row.getValue('joinDate')}</div>
-    ),
-  },
-]
-
-// With advanced features - Search, filtering, sorting, and view options
-export const AdvancedFeatures: Story = {
+// Basic data table
+export const Default: Story = {
   render: () => (
-    <div className="w-full max-w-6xl">
+    <div className="w-full max-w-4xl">
       <DataTable
         data={sampleUsers}
-        columns={userColumnsAdvanced}
-        title="Advanced Features Demo"
-        searchKey="name"
-        searchPlaceholder="Search users..."
-      />
-
-      <div className="mt-6 p-4 bg-[var(--color-background-neutral-subtlest)] rounded-md">
-        <h4 className="text-body-md font-medium mb-3">Advanced Features Demonstrated:</h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-body-sm text-[var(--color-text-secondary)]">
-          <div>
-            <p><strong>Global Search</strong>: Search across all user names</p>
-            <p><strong>Column Filters</strong>: Text filters for Name and Email</p>
-            <p><strong>Multi-select Filter</strong>: Role column with multiple selection</p>
-          </div>
-          <div>
-            <p><strong>Single-select Filter</strong>: Status dropdown filter</p>
-            <p><strong>Column Sorting</strong>: Click headers to sort</p>
-            <p><strong>View Options</strong>: Show/hide columns via menu</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  ),
-}
-
-// Product inventory example
-interface Product {
-  id: string
-  name: string
-  category: string
-  price: number
-  stock: number
-  status: 'in-stock' | 'low-stock' | 'out-of-stock'
-  supplier: string
-}
-
-const productData: Product[] = [
-  {
-    id: 'P001',
-    name: 'Wireless Headphones',
-    category: 'Electronics',
-    price: 99.99,
-    stock: 150,
-    status: 'in-stock',
-    supplier: 'TechCorp'
-  },
-  {
-    id: 'P002',
-    name: 'Laptop Stand',
-    category: 'Accessories',
-    price: 45.00,
-    stock: 8,
-    status: 'low-stock',
-    supplier: 'OfficeSupply'
-  },
-  {
-    id: 'P003',
-    name: 'USB-C Cable',
-    category: 'Cables',
-    price: 19.99,
-    stock: 0,
-    status: 'out-of-stock',
-    supplier: 'CableCo'
-  },
-  {
-    id: 'P004',
-    name: 'Mechanical Keyboard',
-    category: 'Peripherals',
-    price: 129.99,
-    stock: 75,
-    status: 'in-stock',
-    supplier: 'KeyMaster'
-  },
-  {
-    id: 'P005',
-    name: 'Monitor Mount',
-    category: 'Accessories',
-    price: 89.99,
-    stock: 3,
-    status: 'low-stock',
-    supplier: 'MountTech'
-  },
-  {
-    id: 'P006',
-    name: 'Wireless Mouse',
-    category: 'Peripherals',
-    price: 39.99,
-    stock: 200,
-    status: 'in-stock',
-    supplier: 'MouseCorp'
-  }
-]
-
-const productColumns: ColumnDef<Product>[] = [
-  {
-    accessorKey: 'id',
-    header: 'Product ID',
-    cell: ({ row }) => (
-      <div className="font-mono text-body-sm">{row.getValue('id')}</div>
-    ),
-  },
-  {
-    accessorKey: 'name',
-    header: 'Product Name',
-    cell: ({ row }) => (
-      <div className="font-medium">{row.getValue('name')}</div>
-    ),
-  },
-  {
-    accessorKey: 'category',
-    header: 'Category',
-    cell: ({ row }) => (
-      <Badge>{row.getValue('category')}</Badge>
-    ),
-  },
-  {
-    accessorKey: 'price',
-    header: 'Price',
-    meta: { numeric: true },
-    cell: ({ row }) => {
-      const price = parseFloat(row.getValue('price'))
-      return <div className="text-right tabular-nums font-medium">{formatCurrency(price)}</div>
-    },
-  },
-  {
-    accessorKey: 'stock',
-    header: 'Stock',
-    meta: { numeric: true },
-    cell: ({ row }) => {
-      const stock = row.getValue('stock') as number
-      const getStockBadge = () => {
-        if (stock === 0) {
-          return <Badge intent="destructive" appearance="solid" className="ml-2">Out of Stock</Badge>
-        } else if (stock <= 10) {
-          return <Badge className="ml-2 bg-[var(--color-background-warning-subtle)] text-[var(--color-text-warning-bold)] border-[var(--color-border-warning-bold)]">Low Stock</Badge>
-        } else if (stock <= 50) {
-          return <Badge className="ml-2">In Stock</Badge>
-        } else {
-          return <Badge className="ml-2 bg-[var(--color-background-success-subtle)] text-[var(--color-text-success-bold)] border-[var(--color-border-success-bold)]">High Stock</Badge>
-        }
-      }
-
-      return (
-        <div className="flex items-center justify-end gap-2">
-          <span className="tabular-nums">{formatNumber(stock)}</span>
-          {getStockBadge()}
-        </div>
-      )
-    },
-  },
-  {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => {
-      const status = row.getValue('status') as string
-      return (
-        <Badge>
-          {status.replace('-', ' ')}
-        </Badge>
-      )
-    },
-  },
-  {
-    accessorKey: 'supplier',
-    header: 'Supplier',
-    cell: ({ row }) => (
-      <div className="text-body-sm">{row.getValue('supplier')}</div>
-    ),
-  },
-]
-
-export const ProductInventory: Story = {
-  render: () => (
-    <div className="w-full max-w-6xl">
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          <p className="text-body-sm text-[var(--color-text-secondary)]">
-            Manage your product catalog and inventory
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <Button size="sm" variant="ghost">
-            <Icon name="download" size="sm" className="mr-1" />
-            Export
-          </Button>
-          <Button size="sm">
-            <Icon name="plus" size="sm" className="mr-1" />
-            Add Product
-          </Button>
-        </div>
-      </div>
-
-      <DataTable
-        data={productData}
-        columns={productColumns}
-        title="Product Management"
-        searchKey="name"
-        searchPlaceholder="Search products..."
+        columns={userColumns}
+        title="Default DataTable"
       />
     </div>
   ),
 }
 
-// Simple table without pagination
-export const SimpleTable: Story = {
-  render: () => {
-    const simpleData = sampleUsers.slice(0, 4)
-    const simpleColumns: ColumnDef<User>[] = [
-      {
-        accessorKey: 'name',
-        header: 'Name',
-      },
-      {
-        accessorKey: 'email',
-        header: 'Email',
-      },
-      {
-        accessorKey: 'role',
-        header: 'Role',
-      },
-      {
-        accessorKey: 'status',
-        header: 'Status',
-        cell: ({ row }) => {
-          const status = row.getValue('status') as string
-          return (
-            <Badge>
-              {status}
-            </Badge>
-          )
-        },
-      },
-    ]
-
-    return (
-      <div className="w-full max-w-3xl">
-        <DataTable
-          data={simpleData}
-          columns={simpleColumns}
-          title="Simple Table"
-        />
-      </div>
-    )
-  },
-}
-
-export const Sorting: Story = {
-  render: () => {
-    const sortingData = sampleUsers.slice(0, 10)
-    const sortingColumns: ColumnDef<User>[] = [
-      {
-        accessorKey: 'name',
-        header: 'Name',
-        enableSorting: true,
-        meta: {
-          label: 'Name',
-        },
-      },
-      {
-        accessorKey: 'email',
-        header: 'Email',
-        enableSorting: true,
-        meta: {
-          label: 'Email',
-        },
-      },
-      {
-        accessorKey: 'role',
-        header: 'Role',
-        enableSorting: true,
-        meta: {
-          label: 'Role',
-        },
-      },
-      {
-        accessorKey: 'status',
-        header: 'Status',
-        enableSorting: true,
-        meta: {
-          label: 'Status',
-        },
-        cell: ({ row }) => {
-          const status = row.getValue('status') as string
-          return (
-            <Badge>
-              {status}
-            </Badge>
-          )
-        },
-      },
-      {
-        accessorKey: 'lastLogin',
-        header: 'Last Login',
-        enableSorting: true,
-        meta: {
-          label: 'Last Login',
-        },
-      },
-    ]
-
-    return (
-      <div className="w-full max-w-5xl space-y-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Table with Sorting</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-body-sm text-[var(--color-text-secondary)] mb-4">
-              Use the settings menu (three-dots icon) to select a column to sort by and choose ascending or descending order.
-              The sorting is controlled through the centralized settings menu, which also handles grouping and column visibility.
-            </p>
-            <DataTable
-              data={sortingData}
-              columns={sortingColumns}
-              title="Users Table"
-              showPagination={true}
-            />
-          </CardContent>
-        </Card>
-      </div>
-    )
-  },
-}
-
-// Custom actions column
-const userColumnsWithActions: ColumnDef<User>[] = [
-  ...userColumns,
-  {
-    id: 'actions',
-    header: 'Actions',
-    cell: ({ row }) => {
-      const user = row.original
-      return (
-        <div className="flex items-center gap-1">
-          <Button size="sm" variant="ghost">
-            <Icon name="edit" size="sm" />
-          </Button>
-          <Button size="sm" variant="ghost">
-            <Icon name="trash-2" size="sm" />
-          </Button>
-          <Button size="sm" variant="ghost">
-            <Icon name="more-horizontal" size="sm" />
-          </Button>
-        </div>
-      )
-    },
-  },
-]
-
-export const WithActions: Story = {
-  render: () => (
-    <div className="w-full max-w-5xl">
-      <DataTable
-        data={sampleUsers}
-        columns={userColumnsWithActions}
-        title="User Management with Actions"
-      />
-    </div>
-  ),
-}
-
-// Analytics dashboard table
-interface AnalyticsData {
-  page: string
-  views: number
-  uniqueVisitors: number
-  bounceRate: number
-  avgDuration: string
-  conversionRate: number
-}
-
-const analyticsData: AnalyticsData[] = [
-  {
-    page: '/home',
-    views: 15420,
-    uniqueVisitors: 12340,
-    bounceRate: 23.4,
-    avgDuration: '2:45',
-    conversionRate: 4.2
-  },
-  {
-    page: '/products',
-    views: 8930,
-    uniqueVisitors: 7120,
-    bounceRate: 45.6,
-    avgDuration: '1:32',
-    conversionRate: 2.8
-  },
-  {
-    page: '/about',
-    views: 3210,
-    uniqueVisitors: 2890,
-    bounceRate: 12.3,
-    avgDuration: '3:12',
-    conversionRate: 1.4
-  },
-  {
-    page: '/contact',
-    views: 1850,
-    uniqueVisitors: 1670,
-    bounceRate: 34.5,
-    avgDuration: '1:58',
-    conversionRate: 8.9
-  },
-  {
-    page: '/blog',
-    views: 5420,
-    uniqueVisitors: 4320,
-    bounceRate: 28.7,
-    avgDuration: '4:23',
-    conversionRate: 1.8
-  }
-]
-
-const analyticsColumns: ColumnDef<AnalyticsData>[] = [
-  {
-    accessorKey: 'page',
-    header: 'Page',
-    cell: ({ row }) => (
-      <div className="font-mono text-body-sm">{row.getValue('page')}</div>
-    ),
-  },
-  {
-    accessorKey: 'views',
-    header: 'Page Views',
-    cell: ({ row }) => {
-      const views = row.getValue('views') as number
-      return <div className="font-medium">{views.toLocaleString()}</div>
-    },
-  },
-  {
-    accessorKey: 'uniqueVisitors',
-    header: 'Unique Visitors',
-    cell: ({ row }) => {
-      const visitors = row.getValue('uniqueVisitors') as number
-      return <div>{visitors.toLocaleString()}</div>
-    },
-  },
-  {
-    accessorKey: 'bounceRate',
-    header: 'Bounce Rate',
-    cell: ({ row }) => {
-      const rate = row.getValue('bounceRate') as number
-      return (
-        <div className="flex items-center gap-2">
-          <span>{rate}%</span>
-          {rate > 40 && <Icon name="trending-up" size="sm" className="text-[var(--color-text-error-bold)]" />}
-          {rate <= 20 && <Icon name="trending-down" size="sm" className="text-[var(--color-text-success-bold)]" />}
-        </div>
-      )
-    },
-  },
-  {
-    accessorKey: 'avgDuration',
-    header: 'Avg. Duration',
-    cell: ({ row }) => (
-      <div className="font-mono text-body-sm">{row.getValue('avgDuration')}</div>
-    ),
-  },
-  {
-    accessorKey: 'conversionRate',
-    header: 'Conversion Rate',
-    cell: ({ row }) => {
-      const rate = row.getValue('conversionRate') as number
-      return (
-        <div className="flex items-center gap-2">
-          <span>{rate}%</span>
-          <Badge>
-            {rate > 5 ? 'High' : rate > 2 ? 'Medium' : 'Low'}
-          </Badge>
-        </div>
-      )
-    },
-  },
-]
-
-export const AnalyticsDashboard: Story = {
-  render: () => (
-    <div className="w-full max-w-6xl">
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          <p className="text-body-sm text-[var(--color-text-secondary)]">
-            Last 30 days performance metrics
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <Button size="sm" variant="ghost">
-            <Icon name="calendar" size="sm" className="mr-1" />
-            Date Range
-          </Button>
-          <Button size="sm" variant="ghost">
-            <Icon name="download" size="sm" className="mr-1" />
-            Export Report
-          </Button>
-        </div>
-      </div>
-
-      <DataTable
-        data={analyticsData}
-        columns={analyticsColumns}
-        title="Website Analytics"
-      />
-    </div>
-  ),
-}
-
-// Loading state
 export const LoadingState: Story = {
   render: () => {
     const [isLoading, setIsLoading] = useState(true)
 
     // Create skeleton data that matches the userColumns structure
-    const skeletonData = Array.from({ length: 5 }, (_, i) => ({
+    const skeletonData = Array.from({ length: 10 }, (_, i) => ({
       id: i + 1,
       name: '',
       email: '',
@@ -1149,7 +639,7 @@ export const LoadingState: Story = {
         </div>
 
         <DataTable
-          data={isLoading ? skeletonData : sampleUsers.slice(0, 5)}
+          data={isLoading ? skeletonData : sampleUsers.slice(0, 10)}
           columns={isLoading ? skeletonColumns : userColumns}
           title="Data Table with Loading State"
         />
@@ -1158,7 +648,6 @@ export const LoadingState: Story = {
   },
 }
 
-// Empty state
 export const EmptyState: Story = {
   render: () => (
     <div className="w-full max-w-4xl">
@@ -1171,546 +660,597 @@ export const EmptyState: Story = {
   ),
 }
 
-// Enhanced DataTable with all new features
-interface TradeData {
-  id: string
-  counterparty: string
-  instrument: string
-  side: 'buy' | 'sell'
-  quantity: number
-  price: number
-  notional: number
-  settlement: string
-  trader: string
-  status: 'pending' | 'confirmed' | 'settled' | 'cancelled'
-  timestamp: string
-}
-
-const generateTradeData = (count: number): TradeData[] => {
-  const counterparties = ['Goldman Sachs', 'JPMorgan', 'Morgan Stanley', 'Citigroup', 'Bank of America', 'Deutsche Bank', 'UBS', 'Credit Suisse', 'Barclays', 'Wells Fargo']
-  const instruments = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA', 'META', 'NVDA', 'NFLX', 'SPY', 'QQQ', 'UBER', 'COIN', 'ABNB', 'SNOW', 'PLTR']
-  const traders = ['John Smith', 'Sarah Johnson', 'Mike Chen', 'Lisa Rodriguez', 'David Kim', 'Anna Wilson', 'Tom Brown', 'Emma Davis', 'Alex Garcia', 'Rachel Taylor']
-  const statuses: TradeData['status'][] = ['pending', 'confirmed', 'settled', 'cancelled']
-
-  return Array.from({ length: count }, (_, i) => ({
-    id: `TRD-${(i + 1).toString().padStart(6, '0')}`,
-    counterparty: counterparties[Math.floor(Math.random() * counterparties.length)],
-    instrument: instruments[Math.floor(Math.random() * instruments.length)],
-    side: Math.random() > 0.5 ? 'buy' : 'sell',
-    quantity: Math.floor(Math.random() * 10000) + 100,
-    price: Math.random() * 500 + 50,
-    notional: 0, // Will be calculated
-    settlement: new Date(Date.now() + Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-    trader: traders[Math.floor(Math.random() * traders.length)],
-    status: statuses[Math.floor(Math.random() * statuses.length)],
-    timestamp: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString(),
-  })).map(trade => ({
-    ...trade,
-    notional: trade.quantity * trade.price
-  }))
-}
-
-const tradeColumns: ColumnDef<TradeData>[] = [
-  {
-    accessorKey: 'id',
-    header: 'Trade ID',
-    cell: ({ row }) => (
-      <div className="font-mono text-body-sm text-[var(--color-text-primary)]">{row.getValue('id')}</div>
-    ),
-  },
-  {
-    accessorKey: 'counterparty',
-    header: 'Counterparty',
-    cell: ({ row }) => (
-      <div className="font-medium">{row.getValue('counterparty')}</div>
-    ),
-  },
-  {
-    accessorKey: 'instrument',
-    header: 'Instrument',
-    cell: ({ row }) => (
-      <Badge appearance="outline">{row.getValue('instrument')}</Badge>
-    ),
-    aggregatedCell: ({ row }) => {
-      // Show unique instruments in grouped row
-      const subRows = row.subRows || []
-      const instruments = [...new Set(subRows.map((r: any) => r.original.instrument).filter(Boolean))]
-      if (instruments.length === 0) return null
-
-      // If 4+ instruments, show count instead of all badges
-      if (instruments.length >= 4) {
-        return (
-          <span className="text-[var(--color-text-secondary)] text-body-sm">
-            {instruments.length} instruments
-          </span>
-        )
-      }
-
-      // Show individual badges for 1-3 instruments
-      return (
-        <div className="flex gap-[var(--space-xs)] flex-wrap">
-          {instruments.map((instrument: string) => (
-            <Badge key={instrument} appearance="outline">
-              {instrument}
-            </Badge>
-          ))}
-        </div>
-      )
-    },
-  },
-  {
-    accessorKey: 'side',
-    header: 'Side',
-    cell: ({ row }) => {
-      const side = row.getValue('side') as string
-      if (!side) return null
-      return (
-        <Badge>
-          {side.toUpperCase()}
-        </Badge>
-      )
-    },
-  },
-  {
-    accessorKey: 'quantity',
-    header: 'Quantity',
-    meta: { align: 'right' },
-    cell: ({ row }) => (
-      <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
-    ),
-  },
-  {
-    accessorKey: 'price',
-    header: 'Price',
-    meta: { align: 'right' },
-    cell: ({ row }) => (
-      <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
-    ),
-    aggregatedCell: ({ row }) => {
-      const subRows = row.subRows || []
-      const prices = subRows.map((r: any) => r.original.price).filter((v): v is number => v != null)
-      if (prices.length === 0) return null
-      const min = Math.min(...prices)
-      const max = Math.max(...prices)
-      return (
-        <div className="text-right tabular-nums text-[var(--color-text-secondary)] text-body-sm">
-          ${min.toFixed(2)} - ${max.toFixed(2)}
-        </div>
-      )
-    },
-  },
-  {
-    accessorKey: 'notional',
-    header: 'Notional',
-    meta: { align: 'right' },
-    cell: ({ row }) => (
-      <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
-    ),
-    aggregatedCell: ({ row }) => {
-      const subRows = row.subRows || []
-      const notionals = subRows.map((r: any) => r.original.notional).filter((v): v is number => v != null)
-      if (notionals.length === 0) return null
-      const min = Math.min(...notionals)
-      const max = Math.max(...notionals)
-      return (
-        <div className="text-right tabular-nums font-medium text-[var(--color-text-secondary)] text-body-sm">
-          ${min.toFixed(2)} - ${max.toFixed(2)}
-        </div>
-      )
-    },
-  },
-  {
-    accessorKey: 'trader',
-    header: 'Trader',
-    cell: ({ row }) => (
-      <div className="text-body-sm">{row.getValue('trader')}</div>
-    ),
-  },
-  {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => {
-      const status = row.getValue('status') as string
-      if (!status) return null
-      const variants = {
-        pending: 'secondary',
-        confirmed: 'default',
-        settled: 'default',
-        cancelled: 'secondary'
-      }
-      return (
-        <Badge>
-          {status.charAt(0).toUpperCase() + status.slice(1)}
-        </Badge>
-      )
-    },
-    aggregatedCell: ({ row }) => {
-      // Show unique values with counts in grouped row
-      const subRows = row.subRows || []
-      const statusCounts = subRows.reduce((acc: Record<string, number>, r: any) => {
-        const status = r.original.status
-        if (status) acc[status] = (acc[status] || 0) + 1
-        return acc
-      }, {})
-      const statuses = Object.keys(statusCounts)
-      if (statuses.length === 0) return null
-      const variants = {
-        pending: 'secondary',
-        confirmed: 'default',
-        settled: 'default',
-        cancelled: 'secondary'
-      }
-      return (
-        <div className="flex gap-[var(--space-xs)] flex-wrap">
-          {statuses.map((status: string) => (
-            <Badge key={status}>
-              {status.charAt(0).toUpperCase() + status.slice(1)} ({statusCounts[status]})
-            </Badge>
-          ))}
-        </div>
-      )
-    },
-  },
-]
-
-// Simplified columns for group-preserving search (no custom renderers)
-// This allows highlighting to work directly on cell values
-const tradeColumnsSimple: ColumnDef<TradeData>[] = [
-  {
-    accessorKey: 'id',
-    header: 'Trade ID',
-    meta: { align: 'left' },
-  },
-  {
-    accessorKey: 'counterparty',
-    header: 'Counterparty',
-    meta: { align: 'left' },
-  },
-  {
-    accessorKey: 'instrument',
-    header: 'Instrument',
-    meta: { align: 'left' },
-  },
-  {
-    accessorKey: 'side',
-    header: 'Side',
-    meta: { align: 'left' },
-    cell: ({ row }) => {
-      const side = row.getValue('side') as string | undefined
-      return side ? side.toUpperCase() : ''
-    },
-  },
-  {
-    accessorKey: 'quantity',
-    header: 'Quantity',
-    meta: { align: 'right' },
-    cell: ({ row }) => formatNumber(row.getValue('quantity')),
-  },
-  {
-    accessorKey: 'price',
-    header: 'Price',
-    meta: { align: 'right' },
-    cell: ({ row }) => formatCurrency(row.getValue('price')),
-  },
-  {
-    accessorKey: 'notional',
-    header: 'Notional',
-    meta: { align: 'right' },
-    cell: ({ row }) => formatCurrency(row.getValue('notional')),
-  },
-  {
-    accessorKey: 'trader',
-    header: 'Trader',
-    meta: { align: 'left' },
-  },
-  {
-    accessorKey: 'status',
-    header: 'Status',
-    meta: { align: 'left' },
-    cell: ({ row }) => {
-      const status = row.getValue('status') as string | undefined
-      return status ? status.charAt(0).toUpperCase() + status.slice(1) : ''
-    },
-  },
-]
-
-export const EnhancedDataTable: Story = {
+// Formatting utilities story showcasing numeric formatting and alignment
+export const FormattingUtilities: Story = {
   render: () => {
-    const [isLoading, setIsLoading] = useState(false)
-    const [data] = useState(() => generateTradeData(50))
-
-    const handleRefresh = () => {
-      setIsLoading(true)
-      // Simulate loading
-      setTimeout(() => setIsLoading(false), 2000)
+    // Laycan data matching the Figma design
+    interface LaycanData {
+      month: string
+      fixtureCount: number
+      cargoQuantity: number
+      grossFreight: number
+      avgFreightRate: number
+      avgDemurrage: number
     }
 
-    return (
-      <div className="w-full space-y-4 p-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-heading-lg">Trading Desk - Enhanced DataTable</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mt-1">
-              Demonstrates core DataTable features: sticky headers/columns, responsive scrolling, loading states, and mobile optimization
-            </p>
-          </div>
-          <Button onClick={handleRefresh} disabled={isLoading}>
-            <Icon name="refresh-cw" className="h-4 w-4 mr-2" />
-            {isLoading ? 'Refreshing...' : 'Refresh Data'}
-          </Button>
-        </div>
+    const laycanData: LaycanData[] = [
+      { month: 'Jan', fixtureCount: 45, cargoQuantity: 7785000, grossFreight: 133340750, avgFreightRate: 20.35, avgDemurrage: 22300 },
+      { month: 'Feb', fixtureCount: 127, cargoQuantity: 10510000, grossFreight: 118074400, avgFreightRate: 13.29, avgDemurrage: 21500 },
+      { month: 'Mar', fixtureCount: 118, cargoQuantity: 7785900, grossFreight: 145230750, avgFreightRate: 18.45, avgDemurrage: 26000 },
+      { month: 'Apr', fixtureCount: 102, cargoQuantity: 12345678, grossFreight: 162890500, avgFreightRate: 21.67, avgDemurrage: 23800 },
+      { month: 'May', fixtureCount: 89, cargoQuantity: 15678900, grossFreight: 189450300, avgFreightRate: 17.92, avgDemurrage: 25600 },
+      { month: 'Jun', fixtureCount: 5, cargoQuantity: 20123456, grossFreight: 220890500, avgFreightRate: 8.48, avgDemurrage: 23800 },
+    ]
 
-        <div className="space-y-6">
-          {/* Sticky Header + First Column */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Sticky Header & First Column</CardTitle>
-              <p className="text-body-sm text-[var(--color-text-secondary)]">
-                Perfect for long tables - header stays visible when scrolling vertically, first column stays visible when scrolling horizontally
-              </p>
-            </CardHeader>
-            <CardContent>
-              <DataTable
-                data={data}
-                columns={tradeColumns}
-                title="Trade Blotter"
-                searchKey="counterparty"
-                searchPlaceholder="Search counterparties..."
-                stickyHeader={true}
-                stickyFirstColumn={true}
-                isLoading={isLoading}
-                loadingRowCount={8}
-              />
-            </CardContent>
-          </Card>
-
-          {/* Responsive Scrolling */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Responsive Horizontal Scrolling</CardTitle>
-              <p className="text-body-sm text-[var(--color-text-secondary)]">
-                Table scrolls horizontally on smaller screens with smooth touch-friendly behavior. All columns remain accessible.
-              </p>
-            </CardHeader>
-            <CardContent>
-              <DataTable
-                data={data.slice(0, 15)}
-                columns={tradeColumns}
-                title="Mobile-Optimized View"
-                searchKey="instrument"
-                searchPlaceholder="Search instruments..."
-                enableResponsiveWrapper={true}
-                isLoading={isLoading}
-              />
-            </CardContent>
-          </Card>
-
-          {/* Scroll Indicators */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Scroll Indicators</CardTitle>
-              <p className="text-body-sm text-[var(--color-text-secondary)]">
-                Visual indicators show when more content is available horizontally
-              </p>
-            </CardHeader>
-            <CardContent>
-              <DataTable
-                data={data.slice(0, 10)}
-                columns={tradeColumns}
-                title="Enhanced Scrolling"
-                showScrollIndicators={true}
-                enableResponsiveWrapper={true}
-              />
-            </CardContent>
-          </Card>
-
-          {/* Loading States */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Loading States</CardTitle>
-              <p className="text-body-sm text-[var(--color-text-secondary)]">
-                Built-in skeleton placeholders for better perceived performance
-              </p>
-            </CardHeader>
-            <CardContent>
-              <DataTable
-                data={data.slice(0, 8)}
-                columns={tradeColumns.slice(0, 5)}
-                title="Loading Demo"
-                isLoading={true}
-                loadingRowCount={6}
-              />
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    )
-  },
-}
-
-// Mobile Responsive Testing Story
-export const MobileResponsiveTesting: Story = {
-  parameters: {
-    viewport: {
-      defaultViewport: 'mobile',
-    },
-    layout: 'fullscreen',
-  },
-  render: () => {
-    const [data] = useState(() => generateTradeData(20))
+    const laycanColumns: ColumnDef<LaycanData>[] = [
+      {
+        accessorKey: 'month',
+        header: 'Laycan month',
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('month')}</div>
+        ),
+      },
+      {
+        accessorKey: 'fixtureCount',
+        header: () => <div className="text-right">Fixture count</div>,
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatNumber(row.getValue('fixtureCount'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'cargoQuantity',
+        header: () => <div className="text-right">Cargo quantity</div>,
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatNumber(row.getValue('cargoQuantity'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'grossFreight',
+        header: () => <div className="text-right">Gross freight</div>,
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatCurrency(row.getValue('grossFreight'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'avgFreightRate',
+        header: () => <div className="text-right">Avg. freight rate ($...)</div>,
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatDecimal(row.getValue('avgFreightRate'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'avgDemurrage',
+        header: () => <div className="text-right">Avg. demurrage ($...)</div>,
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatCurrency(row.getValue('avgDemurrage'))}</div>
+        ),
+      },
+    ]
 
     return (
-      <div className="w-full h-screen overflow-auto">
-        <div className="p-2 space-y-4">
-          <div className="space-y-2">
-            <h2 className="text-heading-md">Mobile Responsive DataTable</h2>
-            <p className="text-body-sm text-[var(--color-text-secondary)]">
-              Test responsive behavior: horizontal scrolling works smoothly with sticky features
+      <div className="w-full max-w-6xl space-y-4">
+        <Card>
+          <CardHeader>
+            <CardTitle>Formatting Utilities</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-4">
+              This example demonstrates proper formatting for numeric data: right-aligned headers and cells,
+              tabular numerals for consistent digit spacing, and specialized formatting utilities for currency,
+              numbers, and decimals.
             </p>
-            <div className="flex gap-2 text-caption-sm text-[var(--color-text-tertiary)]">
-              <span>• Sticky first column for easy reference</span>
-            </div>
-            <div className="flex gap-2 text-caption-sm text-[var(--color-text-tertiary)]">
-              <span>• Touch-friendly scrolling on mobile devices</span>
-            </div>
-          </div>
-
-          {/* Full width responsive table */}
-          <div className="w-full">
             <DataTable
-              data={data}
-              columns={tradeColumns}
-              title="Mobile Trade Blotter"
-              searchKey="instrument"
-              searchPlaceholder="Search..."
-              stickyHeader={true}
-              stickyFirstColumn={true}
-              enableResponsiveWrapper={true}
-              showScrollIndicators={true}
+              data={laycanData}
+              columns={laycanColumns}
+              title="Summary by laycan date"
             />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  },
+}
+
+export const VerticalAlignment: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: `Demonstrates vertical alignment options for table cells. Cells can be aligned to top, middle (center), or bottom.
+
+## Configuration Levels
+
+- **Column-level**: Set \`verticalAlign\` in column metadata to control alignment per column
+- **Global default**: Use \`defaultVerticalAlign\` prop to set default alignment for all cells
+- **Default**: If not specified, cells default to \`middle\` alignment
+
+## Use Cases
+
+- **Top alignment**: Ideal for cells with variable-height content or multi-line text
+- **Middle alignment**: Default option that works well for most content types
+- **Bottom alignment**: Useful for aligning content to baselines or creating specific layouts`,
+      },
+    },
+  },
+  render: () => {
+    interface Product {
+      id: string
+      name: string
+      description: string
+      price: number
+      status: string
+      tags: string[]
+    }
+
+    const productsData: Product[] = [
+      {
+        id: '1',
+        name: 'Laptop Pro',
+        description: 'High-performance laptop with 16GB RAM, 512GB SSD, and dedicated graphics card. Perfect for developers and designers.',
+        price: 1299,
+        status: 'In Stock',
+        tags: ['Electronics', 'Computers', 'Featured']
+      },
+      {
+        id: '2',
+        name: 'Mouse',
+        description: 'Wireless mouse',
+        price: 29,
+        status: 'Low Stock',
+        tags: ['Accessories']
+      },
+      {
+        id: '3',
+        name: 'Monitor 4K',
+        description: '27-inch 4K UHD display with HDR support, 144Hz refresh rate, and adjustable stand. Includes HDMI and DisplayPort cables.',
+        price: 599,
+        status: 'In Stock',
+        tags: ['Electronics', 'Displays', 'Premium']
+      },
+      {
+        id: '4',
+        name: 'Keyboard',
+        description: 'Mechanical keyboard with RGB backlighting',
+        price: 89,
+        status: 'In Stock',
+        tags: ['Accessories', 'Gaming']
+      },
+    ]
+
+    const productsColumns: ColumnDef<Product>[] = [
+      {
+        accessorKey: 'id',
+        header: 'ID',
+        meta: { verticalAlign: 'top' },
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('id')}</div>
+        ),
+      },
+      {
+        accessorKey: 'name',
+        header: 'Product',
+        meta: { verticalAlign: 'top' },
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('name')}</div>
+        ),
+      },
+      {
+        accessorKey: 'description',
+        header: 'Description',
+        meta: { verticalAlign: 'middle' },
+        cell: ({ row }) => (
+          <div className="max-w-md text-[var(--color-text-secondary)]">
+            {row.getValue('description')}
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'price',
+        header: 'Price',
+        meta: { align: 'right', verticalAlign: 'middle' },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums font-medium">
+            {formatCurrency(row.getValue('price'))}
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        meta: { verticalAlign: 'bottom' },
+        cell: ({ row }) => {
+          const status = row.getValue('status') as string
+          return (
+            <Badge variant={status === 'In Stock' ? 'success' : 'warning'}>
+              {status}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'tags',
+        header: 'Tags',
+        meta: { verticalAlign: 'bottom' },
+        cell: ({ row }) => {
+          const tags = row.getValue('tags') as string[]
+          return (
+            <div className="flex flex-wrap gap-1">
+              {tags.map((tag) => (
+                <Badge key={tag} variant="outline" className="text-xs">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          )
+        },
+      },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Vertical Alignment Options</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+              This example demonstrates how different vertical alignment options affect cell content
+              layout. Notice how cells with varying content heights align differently based on their
+              column configuration.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)] space-y-[var(--space-sm)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm font-medium text-[var(--color-text-accent)]">
+                  Column Alignment Configuration
+                </span>
+              </div>
+              <ul className="text-body-sm text-[var(--color-text-accent)] space-y-1 ml-6">
+                <li><strong>ID & Product:</strong> Top-aligned (verticalAlign: 'top')</li>
+                <li><strong>Description & Price:</strong> Middle-aligned (verticalAlign: 'middle')</li>
+                <li><strong>Status & Tags:</strong> Bottom-aligned (verticalAlign: 'bottom')</li>
+              </ul>
+            </div>
           </div>
 
-          {/* Demo of core features */}
-          <div className="space-y-4">
-            <h3 className="text-heading-sm">Core Features Demo</h3>
-
-            <div className="space-y-2">
-              <h4 className="text-body-medium-sm">Compact Table</h4>
-              <p className="text-body-sm text-[var(--color-text-secondary)]">
-                Smaller dataset with responsive scrolling
-              </p>
-              <DataTable
-                data={data.slice(0, 8)}
-                columns={tradeColumns}
-                searchKey="counterparty"
-                searchPlaceholder="Search counterparties..."
-                enableResponsiveWrapper={true}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <h4 className="text-body-medium-sm">Essential Columns Only</h4>
-              <p className="text-body-sm text-[var(--color-text-secondary)]">
-                Minimal column set for focused viewing
-              </p>
-              <DataTable
-                data={data.slice(0, 6)}
-                columns={[
-                  tradeColumns[0], // id
-                  tradeColumns[2], // instrument
-                  tradeColumns[6], // notional
-                  tradeColumns[8], // status
-                ]}
-                enableResponsiveWrapper={true}
-                stickyFirstColumn={true}
-              />
-            </div>
-          </div>
+          <DataTable
+            data={productsData}
+            columns={productsColumns}
+            title="Product Catalog - Vertical Alignment Demo"
+          />
         </div>
       </div>
     )
   },
 }
 
-// Multiple Sticky Columns Testing Story
-export const MultipleStickyColumns: Story = {
+export const CustomColumnWidth: Story = {
   parameters: {
     layout: 'fullscreen',
   },
   render: () => {
-    const [data] = useState(() => generateTradeData(15))
+    const [data] = useState(() => generateTradeData(10))
+
+    const columnsWithCustomWidths: ColumnDef<TradeData>[] = [
+      {
+        accessorKey: 'id',
+        header: 'Trade ID',
+        size: 120,
+        minSize: 100,
+        maxSize: 200,
+        cell: ({ row }) => (
+          <div className="font-mono text-body-sm">{row.getValue('id')}</div>
+        ),
+      },
+      {
+        accessorKey: 'counterparty',
+        header: 'Counterparty',
+        size: 200,
+        minSize: 150,
+        maxSize: 300,
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('counterparty')}</div>
+        ),
+      },
+      {
+        accessorKey: 'instrument',
+        header: 'Instrument',
+        size: 100,
+        minSize: 80,
+        maxSize: 150,
+        cell: ({ row }) => (
+          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
+        ),
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Quantity',
+        size: 120,
+        meta: { align: 'right' },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'price',
+        header: 'Price',
+        size: 120,
+        meta: { align: 'right' },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'notional',
+        header: 'Notional',
+        size: 140,
+        meta: { align: 'right' },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        size: 140,
+        cell: ({ row }) => {
+          const status = row.getValue('status') as string
+          if (!status) return null
+          return (
+            <Badge>
+              {status.charAt(0).toUpperCase() + status.slice(1)}
+            </Badge>
+          )
+        },
+      },
+    ]
 
     return (
-      <div className="w-full h-screen overflow-auto">
-        <div className="p-6 space-y-6">
-          <div className="space-y-2">
-            <h2 className="text-heading-md">Multiple Sticky Columns</h2>
-            <p className="text-body-sm text-[var(--color-text-secondary)]">
-              Test multiple sticky column configurations for complex data tables
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Custom Column Width</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              Set custom column widths using the <code>size</code>, <code>minSize</code>, and <code>maxSize</code> properties
+              in your column definitions. These properties control the initial and constrained widths of each column.
             </p>
-          </div>
-
-          <div className="space-y-8">
-            <div className="space-y-3">
-              <h4 className="text-body-medium-md">First 3 Columns Sticky</h4>
-              <p className="text-body-sm text-[var(--color-text-secondary)]">
-                ID, Counterparty, and Instrument remain visible during horizontal scroll
-              </p>
-              <DataTable
-                data={data}
-                columns={tradeColumns}
-                searchKey="counterparty"
-                searchPlaceholder="Search counterparties..."
-                enableResponsiveWrapper={true}
-                stickyHeader={true}
-                stickyLeftColumns={3}
-                title="Trade Records - Left Sticky"
-              />
-            </div>
-
-            <div className="space-y-3">
-              <h4 className="text-body-medium-md">First Column + Last Column Sticky</h4>
-              <p className="text-body-sm text-[var(--color-text-secondary)]">
-                ID stays on left, Status/Actions stay on right
-              </p>
-              <DataTable
-                data={data}
-                columns={tradeColumns}
-                searchKey="counterparty"
-                searchPlaceholder="Search counterparties..."
-                enableResponsiveWrapper={true}
-                stickyHeader={true}
-                stickyLeftColumns={1}
-                stickyRightColumns={1}
-                title="Trade Records - Left + Right Sticky"
-              />
-            </div>
-
-            <div className="space-y-3">
-              <h4 className="text-body-medium-md">First 2 + Last 2 Columns Sticky</h4>
-              <p className="text-body-sm text-[var(--color-text-secondary)]">
-                Maximum sticky configuration for complex data analysis
-              </p>
-              <DataTable
-                data={data}
-                columns={tradeColumns}
-                searchKey="counterparty"
-                searchPlaceholder="Search counterparties..."
-                enableResponsiveWrapper={true}
-                stickyHeader={true}
-                stickyLeftColumns={2}
-                stickyRightColumns={2}
-                title="Trade Records - Multiple Sticky"
-              />
+            <div className="bg-[var(--blue-25)] border border-[var(--blue-100)] rounded-md p-[var(--space-md)] mb-[var(--space-md)]">
+              <div className="flex items-start gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--blue-700)] mt-0.5" />
+                <div className="flex-1">
+                  <p className="text-body-sm text-[var(--blue-900)] font-medium mb-1">Column Width Properties:</p>
+                  <ul className="text-body-sm text-[var(--blue-800)] space-y-1 ml-4 list-disc">
+                    <li><strong>size</strong>: Sets the initial width of the column (in pixels)</li>
+                    <li><strong>minSize</strong>: Minimum width the column can be resized to</li>
+                    <li><strong>maxSize</strong>: Maximum width the column can be resized to</li>
+                    <li>These properties work with <code>enableColumnResizing={"{true}"}</code></li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
+
+          <DataTable
+            data={data}
+            columns={columnsWithCustomWidths}
+            enableColumnResizing={true}
+            title="Trading Data with Custom Column Widths"
+          />
         </div>
       </div>
     )
   },
 }
 
-// Border Styling Options Testing Story
+
+export const NestedColumnHeaders: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates nested column headers for hierarchical data organization. Column headers are grouped under parent categories, ideal for complex financial reports or dashboards.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(5))
+
+    // Define nested column structure for financial dashboard
+    const nestedHeaders: NestedHeaderConfig[] = [
+      {
+        id: 'trade-info',
+        header: 'Trade Information',
+        columns: [
+          {
+            accessorKey: 'id',
+            header: 'Trade ID',
+            cell: ({ row }) => (
+              <div className="font-mono text-body-sm">
+                {row.getValue('id')}
+              </div>
+            ),
+          },
+          {
+            accessorKey: 'trader',
+            header: 'Trader',
+            cell: ({ row }) => {
+              const trader = row.getValue('trader') as string
+              if (!trader) return null
+              return (
+                <div className="flex items-center gap-[var(--space-sm)]">
+                  <div className="h-6 w-6 rounded-full bg-[var(--color-background-brand-subtle)] flex items-center justify-center">
+                    <span className="text-caption-sm font-medium text-[var(--color-text-brand-bold)]">
+                      {trader.charAt(0)}
+                    </span>
+                  </div>
+                  <span className="text-body-sm">{trader}</span>
+                </div>
+              )
+            },
+          },
+          {
+            accessorKey: 'instrument',
+            header: 'Instrument',
+            cell: ({ row }) => (
+              <Badge className="font-mono">
+                {row.getValue('instrument')}
+              </Badge>
+            ),
+          },
+        ],
+      },
+      {
+        id: 'financial-metrics',
+        header: 'Financial Metrics',
+        className: 'bg-[var(--color-background-success-subtle)]',
+        columns: [
+          {
+            accessorKey: 'notional',
+            header: 'Notional',
+            cell: ({ row }) => {
+              const amount = parseFloat(row.getValue('notional'))
+              return (
+                <div className="text-right font-mono">
+                  <span className="text-body-sm">
+                    ${amount.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                  </span>
+                </div>
+              )
+            },
+          },
+          {
+            accessorKey: 'pnl',
+            header: 'P&L',
+            cell: ({ row }) => {
+              const pnl = parseFloat(row.getValue('pnl'))
+              const isPositive = pnl >= 0
+              return (
+                <div className={cn(
+                  "text-right font-mono",
+                  isPositive
+                    ? "text-[var(--color-text-success-bold)]"
+                    : "text-[var(--color-text-error-bold)]"
+                )}>
+                  {isPositive ? '+' : ''}${pnl.toFixed(0)}
+                </div>
+              )
+            },
+          },
+          {
+            accessorKey: 'price',
+            header: 'Price',
+            cell: ({ row }) => (
+              <div className="text-right font-mono text-body-sm">
+                ${parseFloat(row.getValue('price')).toFixed(2)}
+              </div>
+            ),
+          },
+        ],
+      },
+      {
+        id: 'status-info',
+        header: 'Status & Timing',
+        className: 'bg-[var(--color-background-accent-subtle)]',
+        columns: [
+          {
+            accessorKey: 'status',
+            header: 'Status',
+            cell: ({ row }) => {
+              const status = row.getValue('status') as string
+              const statusColors = {
+                'active': 'text-[var(--color-text-success-bold)] bg-[var(--color-background-success-subtle)]',
+                'pending': 'text-[var(--color-text-warning-bold)] bg-[var(--color-background-warning-subtle)]',
+                'settled': 'text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-subtlest)]',
+                'cancelled': 'text-[var(--color-text-error-bold)] bg-[var(--color-background-error-subtle)]',
+              }
+              return (
+                <Badge
+
+                  className={cn(
+                    "text-caption-strong-sm",
+                    statusColors[status.toLowerCase() as keyof typeof statusColors]
+                  )}
+                >
+                  {status}
+                </Badge>
+              )
+            },
+          },
+          {
+            accessorKey: 'timestamp',
+            header: 'Last Updated',
+            cell: ({ row }) => (
+              <div className="text-body-sm text-[var(--color-text-secondary)]">
+                {new Date(row.getValue('timestamp')).toLocaleString()}
+              </div>
+            ),
+          },
+        ],
+      },
+    ]
+
+    // Flatten columns for the table
+    const flatColumns = nestedHeaders.flatMap(group => group.columns)
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Nested Column Headers</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              This example demonstrates nested column headers that organize related columns under parent categories.
+              The header groups provide logical organization for complex datasets, commonly used in financial reports,
+              dashboards, and analytical interfaces.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Column groups can have custom styling and span multiple sub-columns. This creates a clear visual hierarchy for complex data structures.
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-[var(--space-md)] grid grid-cols-1 md:grid-cols-3 gap-4 text-body-sm">
+              <div className="bg-[var(--color-surface-secondary)] rounded-md p-[var(--space-md)]">
+                <div className="text-heading-sm font-semibold text-[var(--color-text-primary)]">
+                  {nestedHeaders.length}
+                </div>
+                <div className="text-[var(--color-text-secondary)]">Header Groups</div>
+              </div>
+              <div className="bg-[var(--color-surface-secondary)] rounded-md p-[var(--space-md)]">
+                <div className="text-heading-sm font-semibold text-[var(--color-text-primary)]">
+                  {flatColumns.length}
+                </div>
+                <div className="text-[var(--color-text-secondary)]">Total Columns</div>
+              </div>
+              <div className="bg-[var(--color-surface-secondary)] rounded-md p-[var(--space-md)]">
+                <div className="text-heading-sm font-semibold text-[var(--color-text-primary)]">
+                  2 Levels
+                </div>
+                <div className="text-[var(--color-text-secondary)]">Header Depth</div>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={flatColumns}
+            nestedHeaders={nestedHeaders}
+            enableNestedHeaders={true}
+            enableColumnResizing={true}
+            title="Financial Trading Dashboard"
+            stickyHeader={true}
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
 export const BorderStyling: Story = {
   parameters: {
     layout: 'fullscreen',
@@ -1814,252 +1354,136 @@ export const BorderStyling: Story = {
   },
 }
 
-export const StickyColumnsCleanBorders: Story = {
+export const ColumnVisibility: Story = {
   parameters: {
     layout: 'fullscreen',
     docs: {
       description: {
-        story: 'Sticky columns use clean 2px solid borders (linear-gradient for headers, Tailwind border for cells) for crisp visual separation without shadow bleeding.',
+        story: 'Demonstrates column visibility controls. Users can show/hide columns using the view options dropdown in the table header.',
       },
     },
   },
   render: () => {
-    const [data] = useState(() => generateTradeData(15))
+    const [data] = useState(() => generateTradeData(100))
 
-    return (
-      <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1200px] mx-auto space-y-[var(--space-lg)]">
-          <div>
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Sticky Columns with Clean Borders</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)]">
-              Sticky columns now use crisp 2px solid borders instead of box-shadow. The borders create clear visual
-              separation without bleeding under adjacent cells. Scroll horizontally to see the border stay with the sticky column.
-            </p>
-          </div>
-
-          <DataTable
-            data={data}
-            columns={tradeColumns}
-            stickyLeftColumns={1}
-            borderStyle="both"
-            enableResponsiveWrapper={true}
-            title="Left Sticky Column with 2px Border"
-          />
-        </div>
-      </div>
-    )
-  },
-}
-
-export const StickyColumnsBorderStyles: Story = {
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story: 'Sticky column borders (2px) always show regardless of borderStyle, as they indicate a functional boundary.',
+    const columns: ColumnDef<any>[] = [
+      {
+        accessorKey: 'id',
+        header: 'Trade ID',
+        meta: { label: 'Trade ID' },
+        cell: ({ row }) => (
+          <div className="font-mono text-body-sm">{row.getValue('id')}</div>
+        ),
       },
-    },
-  },
-  render: () => {
-    const [data] = useState(() => generateTradeData(10))
-
-    return (
-      <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1200px] mx-auto space-y-[var(--space-xlg)]">
-          <div>
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Sticky Borders with Different Border Styles</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)]">
-              The 2px sticky column border remains visible across all border style options, providing consistent
-              visual separation between sticky and scrollable content.
-            </p>
-          </div>
-
-          <div className="space-y-[var(--space-lg)]">
-            <div>
-              <h3 className="text-heading-md mb-[var(--space-md)]">Border Style: both (default)</h3>
-              <DataTable
-                data={data}
-                columns={tradeColumns.slice(0, 8)}
-                stickyLeftColumns={1}
-                borderStyle="both"
-                enableResponsiveWrapper={true}
-              />
-            </div>
-
-            <div>
-              <h3 className="text-heading-md mb-[var(--space-md)]">Border Style: horizontal</h3>
-              <DataTable
-                data={data}
-                columns={tradeColumns.slice(0, 8)}
-                stickyLeftColumns={1}
-                borderStyle="horizontal"
-                enableResponsiveWrapper={true}
-              />
-            </div>
-
-            <div>
-              <h3 className="text-heading-md mb-[var(--space-md)]">Border Style: vertical</h3>
-              <DataTable
-                data={data}
-                columns={tradeColumns.slice(0, 8)}
-                stickyLeftColumns={1}
-                borderStyle="vertical"
-                enableResponsiveWrapper={true}
-              />
-            </div>
-
-            <div>
-              <h3 className="text-heading-md mb-[var(--space-md)]">Border Style: none</h3>
-              <DataTable
-                data={data}
-                columns={tradeColumns.slice(0, 8)}
-                stickyLeftColumns={1}
-                borderStyle="none"
-                enableResponsiveWrapper={true}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  },
-}
-
-export const StickyColumnsMultipleBorders: Story = {
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story: 'Multiple sticky columns with 2px borders on the rightmost left-sticky and leftmost right-sticky columns.',
+      {
+        accessorKey: 'counterparty',
+        header: 'Counterparty',
+        meta: { label: 'Counterparty' },
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('counterparty')}</div>
+        ),
       },
-    },
-  },
-  render: () => {
-    const [data] = useState(() => generateTradeData(15))
-
-    return (
-      <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1200px] mx-auto space-y-[var(--space-xlg)]">
-          <div>
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Multiple Sticky Columns with Borders</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)]">
-              When multiple columns are sticky, the 2px border appears on the edge column that serves as the
-              boundary between sticky and scrollable content.
-            </p>
-          </div>
-
-          <div className="space-y-[var(--space-lg)]">
-            <div>
-              <h3 className="text-heading-md mb-[var(--space-md)]">Two Left Sticky Columns</h3>
-              <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
-                Border appears on the second column (rightmost sticky)
-              </p>
-              <DataTable
-                data={data}
-                columns={tradeColumns}
-                stickyLeftColumns={2}
-                borderStyle="both"
-                enableResponsiveWrapper={true}
-              />
-            </div>
-
-            <div>
-              <h3 className="text-heading-md mb-[var(--space-md)]">Left + Right Sticky Columns</h3>
-              <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
-                Borders appear on both edges (rightmost left-sticky and leftmost right-sticky)
-              </p>
-              <DataTable
-                data={data}
-                columns={tradeColumns}
-                stickyLeftColumns={2}
-                stickyRightColumns={1}
-                borderStyle="both"
-                enableResponsiveWrapper={true}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  },
-}
-
-export const GlobalSearch: Story = {
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story: 'Demonstrates global search functionality with fuzzy matching and debounced input for performance optimization.',
+      {
+        accessorKey: 'instrument',
+        header: 'Instrument',
+        meta: { label: 'Instrument' },
+        cell: ({ row }) => (
+          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
+        ),
       },
-    },
-  },
-  render: () => {
-    const [data] = useState(() => generateTradeData(50))
+      {
+        accessorKey: 'side',
+        header: 'Side',
+        meta: { label: 'Trade Side' },
+        cell: ({ row }) => {
+          const side = row.getValue('side') as string
+          if (!side) return null
+          return (
+            <Badge>
+              {side.toUpperCase()}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Quantity',
+        meta: { label: 'Quantity', numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'price',
+        header: 'Price',
+        meta: { label: 'Price', numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'notional',
+        header: 'Notional',
+        meta: { label: 'Notional Value', numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        meta: { label: 'Trade Status' },
+        cell: ({ row }) => {
+          const status = row.getValue('status') as string
+          const variants = {
+            pending: 'secondary',
+            confirmed: 'default',
+            settled: 'default',
+            cancelled: 'secondary'
+          }
+          return (
+            <Badge>
+              {status.charAt(0).toUpperCase() + status.slice(1)}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'trader',
+        header: 'Trader',
+        meta: { label: 'Trader Name' },
+        cell: ({ row }) => (
+          <div className="text-body-sm">{row.getValue('trader')}</div>
+        ),
+      },
+    ]
 
     return (
       <div className="p-[var(--space-lg)]">
         <div className="max-w-[1200px] mx-auto">
           <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Global Search</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)]">
-              Test the global search functionality with fuzzy matching. Try searching for symbols,
-              trader names, or any other data. The search is debounced for optimal performance.
-            </p>
-          </div>
-
-          <DataTable
-            data={data}
-            columns={tradeColumns}
-            enableGlobalSearch={true}
-            title="Searchable Trading Data"
-          />
-        </div>
-      </div>
-    )
-  },
-}
-
-export const GlobalSearchWithAutocomplete: Story = {
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story: 'Demonstrates global search with autocomplete suggestions. As you type, the search field shows relevant suggestions extracted from specific columns. Matched text is highlighted in yellow and bolded. Notice how shared keywords like "Pacific", "Star", "Ocean", and "Singapore" appear across different columns, demonstrating the power of autocomplete for finding related data. Supports fuzzy matching and requires a minimum of 2 characters.',
-      },
-    },
-  },
-  render: () => {
-    const [data] = useState(() => sampleShipments)
-
-    return (
-      <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Global Search with Autocomplete</h2>
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Column Visibility Controls</h2>
             <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-              Type at least 2 characters to see autocomplete suggestions. The autocomplete shows results from
-              vessel names, ports, operators, and charterers. Notice how shared keywords appear across multiple
-              columns, making it easy to find related shipments.
+              Users can show and hide columns using the view options dropdown. Click the three-dot menu in the
+              table header to access column visibility controls. Toggle any column on or off to customize the view.
             </p>
-            <ul className="list-disc list-inside text-body-md text-[var(--color-text-secondary)] space-y-1">
-              <li>Try typing <strong>"pacific"</strong> - appears in vessel names, operators, and charterers</li>
-              <li>Try typing <strong>"star"</strong> - appears in multiple vessels, operators, and charterers</li>
-              <li>Try typing <strong>"singapore"</strong> - appears in multiple port names</li>
-              <li>Try typing <strong>"ocean"</strong> - appears in vessels, operators, and charterers</li>
-              <li>Matched portions are <span className="bg-[#ffeb10] font-bold">highlighted in yellow and bolded</span></li>
-              <li>Use <strong>arrow keys</strong> to navigate suggestions, <strong>Enter</strong> to select</li>
-              <li>Selecting a suggestion immediately filters the table</li>
-            </ul>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="eye" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Try hiding some columns (like Trader, Status, or Notional) to see how the table adapts.
+                  Column visibility state is managed automatically.
+                </span>
+              </div>
+            </div>
           </div>
 
           <DataTable
             data={data}
-            columns={shipmentColumns}
+            columns={columns}
+            title="Trading Activity - Column Visibility Demo"
             enableGlobalSearch={true}
-            enableAutocomplete={true}
-            globalSearchColumns={['vesselName', 'portOfLoading', 'portOfDischarge', 'operator', 'charterer']}
-            autocompleteMinCharacters={2}
-            title="Shipments with Autocomplete Search"
+            enableColumnResizing={true}
           />
         </div>
       </div>
@@ -2177,12 +1601,6 @@ export const ColumnResizing: Story = {
         cell: ({ row }) => {
           const status = row.getValue('status') as string
           if (!status) return null
-          const variants = {
-            pending: 'secondary',
-            confirmed: 'default',
-            settled: 'default',
-            cancelled: 'secondary'
-          }
           return (
             <Badge>
               {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -2248,249 +1666,14 @@ export const ColumnResizing: Story = {
               }
             }}
           />
-        </div>
-      </div>
-    )
-  },
-}
 
-export const ColumnResizingWithTextTruncation: Story = {
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story: 'Demonstrates text truncation with tooltips when columns are resized to narrow widths. Text automatically truncates with ellipsis (...) and shows full content in a tooltip on hover. The truncate behavior can be controlled per column via the `truncate` metadata property.',
-      },
-    },
-  },
-  render: () => {
-    interface DataWithLongText {
-      id: string
-      shortName: string
-      longDescription: string
-      veryLongEmail: string
-      documentUrl: string
-      attachment: string
-      relatedLinks: Array<{ label: string; href: string }>
-      status: string
-      noTruncate: string
-    }
-
-    const dataWithLongText: DataWithLongText[] = [
-      {
-        id: 'TRD-2024-001',
-        shortName: 'Trade #1',
-        longDescription: 'This is a very long description that will definitely overflow when the column is resized to a smaller width',
-        veryLongEmail: 'very.long.email.address.that.will.overflow@example-company-domain.com',
-        documentUrl: 'https://documents.trading-platform.com/very-long-path/quarterly-reports/2024/Q4/detailed-analysis/trade-reconciliation-report-TRD-2024-001.pdf',
-        attachment: 'approval_document_trade_reconciliation_Q4_2024_final_version.pdf',
-        relatedLinks: [
-          { label: 'Compliance Documentation for Quarter 4 2024', href: '#' },
-        ],
-        status: 'Active - In Progress',
-        noTruncate: 'This column wraps instead of truncating',
-      },
-      {
-        id: 'TRD-2024-002',
-        shortName: 'Trade #2',
-        longDescription: 'Another lengthy description with lots of text content that needs to be truncated when space is limited',
-        veryLongEmail: 'another.extremely.long.email.address@very-long-company-name.com',
-        documentUrl: 'https://secure-storage.financial-services.com/documents/compliance/annual-audit-reports/2024/comprehensive-trading-activity-analysis-TRD-2024-002.pdf',
-        attachment: 'compliance_audit_report_comprehensive_analysis_2024_detailed.pdf',
-        relatedLinks: [
-          { label: 'Annual Audit Report 2024', href: '#' },
-          { label: 'Comprehensive Trading Activity Analysis', href: '#' },
-        ],
-        status: 'Pending Approval',
-        noTruncate: 'This text will wrap to multiple lines',
-      },
-      {
-        id: 'TRD-2024-003',
-        shortName: 'Trade #3',
-        longDescription: 'Complex algorithmic trading strategy execution with multiple counterparties and extensive settlement instructions',
-        veryLongEmail: 'complex.trading.operations.team@multinational-investment-bank.com',
-        documentUrl: 'https://data-repository.enterprise-trading-systems.com/archived-documents/historical-records/2024/algorithmic-strategies/execution-analysis-TRD-2024-003.pdf',
-        attachment: 'algorithmic_trading_strategy_execution_summary_with_counterparty_details.pdf',
-        relatedLinks: [
-          { label: 'Algorithmic Trading Strategy Overview Document', href: '#' },
-          { label: 'Counterparty Settlement Instructions', href: '#' },
-          { label: 'Execution Analysis and Performance Report', href: '#' },
-        ],
-        status: 'Completed Successfully',
-        noTruncate: 'Wrapping text example here',
-      },
-      {
-        id: 'TRD-2024-004',
-        shortName: 'Trade #4',
-        longDescription: 'High-frequency trading order with sophisticated risk management parameters and real-time market data integration',
-        veryLongEmail: 'automated.trading.systems.department@global-financial-services.com',
-        documentUrl: 'https://cloud-storage.high-frequency-trading-platform.com/reports/risk-management/detailed-analysis/market-data-integration-report-TRD-2024-004.pdf',
-        attachment: 'high_frequency_trading_risk_management_parameters_and_market_data_report.pdf',
-        relatedLinks: [
-          { label: 'Risk Management Parameters Configuration', href: '#' },
-          { label: 'Market Data Integration Documentation', href: '#' },
-        ],
-        status: 'Active - Monitoring',
-        noTruncate: 'Another wrapping example',
-      },
-      {
-        id: 'TRD-2024-005',
-        shortName: 'Trade #5',
-        longDescription: 'Cross-border securities transaction involving multiple regulatory jurisdictions and compliance requirements',
-        veryLongEmail: 'international.compliance.and.operations@worldwide-brokerage-firm.com',
-        documentUrl: 'https://regulatory-compliance-portal.international-securities.com/documentation/cross-border-transactions/jurisdictional-requirements-report-TRD-2024-005.pdf',
-        attachment: 'cross_border_securities_regulatory_jurisdictional_compliance_requirements.pdf',
-        relatedLinks: [
-          { label: 'Cross-Border Securities Regulatory Requirements', href: '#' },
-        ],
-        status: 'Awaiting Compliance Review',
-        noTruncate: 'This also wraps to multiple lines',
-      },
-    ]
-
-    const columnsWithLongText: ColumnDef<DataWithLongText>[] = [
-      {
-        accessorKey: 'id',
-        header: 'Trade ID',
-        size: 150,
-        meta: {
-          label: 'Trade ID',
-        },
-      },
-      {
-        accessorKey: 'longDescription',
-        header: 'Long Description (Truncates)',
-        size: 300,
-        meta: {
-          label: 'Description',
-          truncate: true, // Explicitly enable truncation (default)
-        },
-      },
-      {
-        accessorKey: 'veryLongEmail',
-        header: 'Email Address (Truncates)',
-        size: 250,
-        meta: {
-          label: 'Email',
-          truncate: true,
-        },
-      },
-      {
-        accessorKey: 'documentUrl',
-        header: 'Document Link (Truncates)',
-        size: 280,
-        meta: {
-          label: 'Document',
-          truncate: true,
-        },
-        cell: ({ row }) => (
-          <TextLink
-            href={row.getValue('documentUrl')}
-            target="_blank"
-            icon="external-link"
-            iconPosition="right"
-            size="sm"
-          >
-            {row.getValue('documentUrl')}
-          </TextLink>
-        ),
-      },
-      {
-        accessorKey: 'attachment',
-        header: 'Attachment (Icon Left)',
-        size: 280,
-        meta: {
-          label: 'Attachment',
-          truncate: true,
-        },
-        cell: ({ row }) => (
-          <TextLink
-            href="#"
-            icon="paperclip"
-            iconPosition="left"
-            size="sm"
-          >
-            {row.getValue('attachment')}
-          </TextLink>
-        ),
-      },
-      {
-        accessorKey: 'relatedLinks',
-        header: 'Related Links (Multiple)',
-        size: 300,
-        meta: {
-          label: 'Related Links',
-          truncate: true,
-        },
-        cell: ({ row }) => {
-          const links = row.getValue('relatedLinks') as Array<{ label: string; href: string }>
-          return (
-            <div className="flex flex-col gap-[var(--space-xsm)]">
-              {links.map((link, index) => (
-                <TextLink
-                  key={index}
-                  href={link.href}
-                  icon="link"
-                  iconPosition="left"
-                  size="sm"
-                >
-                  {link.label}
-                </TextLink>
-              ))}
-            </div>
-          )
-        },
-      },
-      {
-        accessorKey: 'status',
-        header: 'Status',
-        size: 120,
-        cell: ({ row }) => {
-          const status = row.getValue('status') as string
-          const getIntent = () => {
-            if (status.includes('Active')) return 'success'
-            if (status.includes('Pending') || status.includes('Awaiting')) return 'warning'
-            return 'neutral'
-          }
-          return (
-            <Badge intent={getIntent()}>
-              {status}
-            </Badge>
-          )
-        },
-      },
-      {
-        accessorKey: 'noTruncate',
-        header: 'No Truncate (Wraps)',
-        size: 200,
-        meta: {
-          label: 'Wrapping Column',
-          truncate: false, // Disable truncation for this column
-        },
-        cell: ({ row }) => (
-          <div className="whitespace-normal">{row.getValue('noTruncate')}</div>
-        ),
-      },
-    ]
-
-    return (
-      <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Column Resizing with Text Truncation</h2>
+          <div className="mt-[var(--space-2xlg)] mb-[var(--space-lg)]">
+            <h3 className="text-heading-md mb-[var(--space-sm)]">Text Truncation with TextLinks</h3>
             <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
               This example demonstrates how text automatically truncates with ellipsis (...) when columns are resized to narrow widths.
               Hover over truncated text to see the full content in a tooltip.
             </p>
             <div className="space-y-[var(--space-sm)] mb-[var(--space-md)]">
-              <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-                <div className="flex items-center gap-[var(--space-sm)]">
-                  <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
-                  <span className="text-body-sm text-[var(--color-text-accent)]">
-                    Try resizing columns to very narrow widths and hover over the truncated text to see tooltips!
-                  </span>
-                </div>
-              </div>
               <div className="bg-[var(--blue-25)] border border-[var(--blue-100)] rounded-md p-[var(--space-md)]">
                 <div className="flex items-start gap-[var(--space-sm)]">
                   <Icon name="lightbulb" className="h-4 w-4 text-[var(--blue-700)] mt-0.5" />
@@ -2511,8 +1694,231 @@ export const ColumnResizingWithTextTruncation: Story = {
           </div>
 
           <DataTable
-            data={dataWithLongText}
-            columns={columnsWithLongText}
+            data={(() => {
+              interface DataWithLongText {
+                id: string
+                shortName: string
+                longDescription: string
+                veryLongEmail: string
+                documentUrl: string
+                attachment: string
+                relatedLinks: Array<{ label: string; href: string }>
+                status: string
+                noTruncate: string
+              }
+
+              const dataWithLongText: DataWithLongText[] = [
+                {
+                  id: 'TRD-2024-001',
+                  shortName: 'Trade #1',
+                  longDescription: 'This is a very long description that will definitely overflow when the column is resized to a smaller width',
+                  veryLongEmail: 'very.long.email.address.that.will.overflow@example-company-domain.com',
+                  documentUrl: 'https://documents.trading-platform.com/very-long-path/quarterly-reports/2024/Q4/detailed-analysis/trade-reconciliation-report-TRD-2024-001.pdf',
+                  attachment: 'approval_document_trade_reconciliation_Q4_2024_final_version.pdf',
+                  relatedLinks: [
+                    { label: 'Compliance Documentation for Quarter 4 2024', href: '#' },
+                  ],
+                  status: 'Active - In Progress',
+                  noTruncate: 'This column wraps instead of truncating',
+                },
+                {
+                  id: 'TRD-2024-002',
+                  shortName: 'Trade #2',
+                  longDescription: 'Another lengthy description with lots of text content that needs to be truncated when space is limited',
+                  veryLongEmail: 'another.extremely.long.email.address@very-long-company-name.com',
+                  documentUrl: 'https://secure-storage.financial-services.com/documents/compliance/annual-audit-reports/2024/comprehensive-trading-activity-analysis-TRD-2024-002.pdf',
+                  attachment: 'compliance_audit_report_comprehensive_analysis_2024_detailed.pdf',
+                  relatedLinks: [
+                    { label: 'Annual Audit Report 2024', href: '#' },
+                    { label: 'Comprehensive Trading Activity Analysis', href: '#' },
+                  ],
+                  status: 'Pending Approval',
+                  noTruncate: 'This text will wrap to multiple lines',
+                },
+                {
+                  id: 'TRD-2024-003',
+                  shortName: 'Trade #3',
+                  longDescription: 'Complex algorithmic trading strategy execution with multiple counterparties and extensive settlement instructions',
+                  veryLongEmail: 'complex.trading.operations.team@multinational-investment-bank.com',
+                  documentUrl: 'https://data-repository.enterprise-trading-systems.com/archived-documents/historical-records/2024/algorithmic-strategies/execution-analysis-TRD-2024-003.pdf',
+                  attachment: 'algorithmic_trading_strategy_execution_summary_with_counterparty_details.pdf',
+                  relatedLinks: [
+                    { label: 'Algorithmic Trading Strategy Overview Document', href: '#' },
+                    { label: 'Counterparty Settlement Instructions', href: '#' },
+                    { label: 'Execution Analysis and Performance Report', href: '#' },
+                  ],
+                  status: 'Completed Successfully',
+                  noTruncate: 'Wrapping text example here',
+                },
+                {
+                  id: 'TRD-2024-004',
+                  shortName: 'Trade #4',
+                  longDescription: 'High-frequency trading order with sophisticated risk management parameters and real-time market data integration',
+                  veryLongEmail: 'automated.trading.systems.department@global-financial-services.com',
+                  documentUrl: 'https://cloud-storage.high-frequency-trading-platform.com/reports/risk-management/detailed-analysis/market-data-integration-report-TRD-2024-004.pdf',
+                  attachment: 'high_frequency_trading_risk_management_parameters_and_market_data_report.pdf',
+                  relatedLinks: [
+                    { label: 'Risk Management Parameters Configuration', href: '#' },
+                    { label: 'Market Data Integration Documentation', href: '#' },
+                  ],
+                  status: 'Active - Monitoring',
+                  noTruncate: 'Another wrapping example',
+                },
+                {
+                  id: 'TRD-2024-005',
+                  shortName: 'Trade #5',
+                  longDescription: 'Cross-border securities transaction involving multiple regulatory jurisdictions and compliance requirements',
+                  veryLongEmail: 'international.compliance.and.operations@worldwide-brokerage-firm.com',
+                  documentUrl: 'https://regulatory-compliance-portal.international-securities.com/documentation/cross-border-transactions/jurisdictional-requirements-report-TRD-2024-005.pdf',
+                  attachment: 'cross_border_securities_regulatory_jurisdictional_compliance_requirements.pdf',
+                  relatedLinks: [
+                    { label: 'Cross-Border Securities Regulatory Requirements', href: '#' },
+                  ],
+                  status: 'Awaiting Compliance Review',
+                  noTruncate: 'This also wraps to multiple lines',
+                },
+              ]
+              return dataWithLongText
+            })()}
+            columns={(() => {
+              interface DataWithLongText {
+                id: string
+                shortName: string
+                longDescription: string
+                veryLongEmail: string
+                documentUrl: string
+                attachment: string
+                relatedLinks: Array<{ label: string; href: string }>
+                status: string
+                noTruncate: string
+              }
+
+              const columnsWithLongText: ColumnDef<DataWithLongText>[] = [
+                {
+                  accessorKey: 'id',
+                  header: 'Trade ID',
+                  size: 150,
+                  meta: {
+                    label: 'Trade ID',
+                  },
+                },
+                {
+                  accessorKey: 'longDescription',
+                  header: 'Long Description (Truncates)',
+                  size: 300,
+                  meta: {
+                    label: 'Description',
+                    truncate: true,
+                  },
+                },
+                {
+                  accessorKey: 'veryLongEmail',
+                  header: 'Email Address (Truncates)',
+                  size: 250,
+                  meta: {
+                    label: 'Email',
+                    truncate: true,
+                  },
+                },
+                {
+                  accessorKey: 'documentUrl',
+                  header: 'Document Link (Truncates)',
+                  size: 280,
+                  meta: {
+                    label: 'Document',
+                    truncate: true,
+                  },
+                  cell: ({ row }) => (
+                    <TextLink
+                      href={row.getValue('documentUrl')}
+                      target="_blank"
+                      icon="external-link"
+                      iconPosition="right"
+                      size="sm"
+                    >
+                      {row.getValue('documentUrl')}
+                    </TextLink>
+                  ),
+                },
+                {
+                  accessorKey: 'attachment',
+                  header: 'Attachment (Icon Left)',
+                  size: 280,
+                  meta: {
+                    label: 'Attachment',
+                    truncate: true,
+                  },
+                  cell: ({ row }) => (
+                    <TextLink
+                      href="#"
+                      icon="paperclip"
+                      iconPosition="left"
+                      size="sm"
+                    >
+                      {row.getValue('attachment')}
+                    </TextLink>
+                  ),
+                },
+                {
+                  accessorKey: 'relatedLinks',
+                  header: 'Related Links (Multiple)',
+                  size: 300,
+                  meta: {
+                    label: 'Related Links',
+                    truncate: true,
+                  },
+                  cell: ({ row }) => {
+                    const links = row.getValue('relatedLinks') as Array<{ label: string; href: string }>
+                    return (
+                      <div className="flex flex-col gap-[var(--space-xsm)]">
+                        {links.map((link, index) => (
+                          <TextLink
+                            key={index}
+                            href={link.href}
+                            icon="link"
+                            iconPosition="left"
+                            size="sm"
+                          >
+                            {link.label}
+                          </TextLink>
+                        ))}
+                      </div>
+                    )
+                  },
+                },
+                {
+                  accessorKey: 'status',
+                  header: 'Status',
+                  size: 120,
+                  cell: ({ row }) => {
+                    const status = row.getValue('status') as string
+                    const getIntent = () => {
+                      if (status.includes('Active')) return 'success'
+                      if (status.includes('Pending') || status.includes('Awaiting')) return 'warning'
+                      return 'neutral'
+                    }
+                    return (
+                      <Badge intent={getIntent()}>
+                        {status}
+                      </Badge>
+                    )
+                  },
+                },
+                {
+                  accessorKey: 'noTruncate',
+                  header: 'No Truncate (Wraps)',
+                  size: 200,
+                  meta: {
+                    label: 'Wrapping Column',
+                    truncate: false,
+                  },
+                  cell: ({ row }) => (
+                    <div className="whitespace-normal">{row.getValue('noTruncate')}</div>
+                  ),
+                },
+              ]
+              return columnsWithLongText
+            })()}
             enableColumnResizing={true}
             columnResizeMode="onChange"
             title="Text Truncation Demo"
@@ -2528,6 +1934,1153 @@ export const ColumnResizingWithTextTruncation: Story = {
                 'noTruncate': 200,
               }
             }}
+          />
+        </div>
+      </div>
+    )
+  },
+}
+export const ColumnReordering: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates column reordering with drag-and-drop functionality. Users can drag column headers to reorder columns as needed.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(100))
+
+    const columns: ColumnDef<any>[] = [
+      {
+        accessorKey: 'id',
+        header: 'Trade ID',
+        cell: ({ row }) => (
+          <div className="font-mono text-body-sm">{row.getValue('id')}</div>
+        ),
+      },
+      {
+        accessorKey: 'counterparty',
+        header: 'Counterparty',
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('counterparty')}</div>
+        ),
+      },
+      {
+        accessorKey: 'instrument',
+        header: 'Instrument',
+        cell: ({ row }) => (
+          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
+        ),
+      },
+      {
+        accessorKey: 'side',
+        header: 'Side',
+        cell: ({ row }) => {
+          const side = row.getValue('side') as string
+          if (!side) return null
+          return (
+            <Badge>
+              {side.toUpperCase()}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Quantity',
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'price',
+        header: 'Price',
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        cell: ({ row }) => {
+          const status = row.getValue('status') as string
+          if (!status) return null
+          const variants = {
+            pending: 'secondary',
+            confirmed: 'default',
+            settled: 'default',
+            cancelled: 'secondary'
+          }
+          return (
+            <Badge>
+              {status.charAt(0).toUpperCase() + status.slice(1)}
+            </Badge>
+          )
+        },
+      },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Column Reordering</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              Drag and drop column headers to reorder columns. Hover over column headers to see the grab cursor,
+              then click and drag to move columns to your preferred position.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="move" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Try dragging the "Status" column to the beginning, or reorder numeric columns to group them together.
+                  The grip icon appears on hover.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={columns}
+            title="Trading Activity - Column Reordering Demo"
+            enableColumnOrdering={true}
+            enableGlobalSearch={true}
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const StickyColumns: Story = {
+  parameters: {
+    layout: 'fullscreen',
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(15))
+
+    return (
+      <div className="w-full h-screen overflow-auto">
+        <div className="p-6 space-y-6">
+          <div className="space-y-2">
+            <h2 className="text-heading-md">Sticky Columns</h2>
+            <p className="text-body-sm text-[var(--color-text-secondary)]">
+              Test multiple sticky column configurations for complex data tables
+            </p>
+          </div>
+
+          <div className="space-y-8">
+            <div className="space-y-3">
+              <h4 className="text-body-medium-md">First 3 Columns Sticky</h4>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                ID, Counterparty, and Instrument remain visible during horizontal scroll
+              </p>
+              <DataTable
+                data={data}
+                columns={tradeColumns}
+                searchKey="counterparty"
+                searchPlaceholder="Search counterparties..."
+                enableResponsiveWrapper={true}
+                stickyHeader={true}
+                stickyLeftColumns={3}
+                title="Trade Records - Left Sticky"
+              />
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="text-body-medium-md">First Column + Last Column Sticky</h4>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                ID stays on left, Status column stays on right
+              </p>
+              <DataTable
+                data={data}
+                columns={tradeColumns}
+                searchKey="counterparty"
+                searchPlaceholder="Search counterparties..."
+                enableResponsiveWrapper={true}
+                stickyHeader={true}
+                stickyLeftColumns={1}
+                stickyRightColumns={1}
+                title="Trade Records - Left + Right Sticky"
+              />
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="text-body-medium-md">First 2 + Last 2 Columns Sticky</h4>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                Maximum sticky configuration for complex data analysis
+              </p>
+              <DataTable
+                data={data}
+                columns={tradeColumns}
+                searchKey="counterparty"
+                searchPlaceholder="Search counterparties..."
+                enableResponsiveWrapper={true}
+                stickyHeader={true}
+                stickyLeftColumns={2}
+                stickyRightColumns={2}
+                title="Trade Records - Multiple Sticky"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  },
+}
+
+export const RowActions: Story = {
+  render: () => {
+    const analyticsColumnsWithActions: ColumnDef<AnalyticsData>[] = [
+      {
+        accessorKey: 'page',
+        header: 'Page',
+        cell: ({ row }) => (
+          <div className="font-mono text-body-sm">{row.getValue('page')}</div>
+        ),
+      },
+      {
+        accessorKey: 'views',
+        header: () => <div className="text-right">Page Views</div>,
+        meta: { numeric: true },
+        cell: ({ row }) => {
+          const views = row.getValue('views') as number
+          return <div className="text-right tabular-nums font-medium">{formatNumber(views)}</div>
+        },
+      },
+      {
+        accessorKey: 'uniqueVisitors',
+        header: () => <div className="text-right">Unique Visitors</div>,
+        meta: { numeric: true },
+        cell: ({ row }) => {
+          const visitors = row.getValue('uniqueVisitors') as number
+          return <div className="text-right tabular-nums">{formatNumber(visitors)}</div>
+        },
+      },
+      {
+        accessorKey: 'bounceRate',
+        header: () => <div className="text-right">Bounce Rate</div>,
+        meta: { numeric: true },
+        cell: ({ row }) => {
+          const rate = row.getValue('bounceRate') as number
+          return (
+            <div className="flex items-center justify-end gap-2">
+              <span className="tabular-nums">{rate}%</span>
+              {rate > 40 && <Icon name="trending-up" size="sm" className="text-[var(--color-text-error-bold)]" />}
+              {rate <= 20 && <Icon name="trending-down" size="sm" className="text-[var(--color-text-success-bold)]" />}
+            </div>
+          )
+        },
+      },
+      {
+        accessorKey: 'conversionRate',
+        header: () => <div className="text-right">Conversion Rate</div>,
+        meta: { numeric: true },
+        cell: ({ row }) => {
+          const rate = row.getValue('conversionRate') as number
+          return <div className="text-right tabular-nums">{rate}%</div>
+        },
+      },
+      {
+        id: 'actions',
+        header: '',
+        size: 120,
+        cell: ({ row }) => {
+          return (
+            <div className="flex items-center justify-end gap-1">
+              <Button size="sm" variant="ghost" icon="edit" />
+              <Button size="sm" variant="ghost" icon="trash-2" />
+              <Button size="sm" variant="ghost" icon="more-horizontal" />
+            </div>
+          )
+        },
+      },
+    ]
+
+    const analyticsColumnsWithStickyActions: ColumnDef<AnalyticsData>[] = [
+      {
+        accessorKey: 'page',
+        header: 'Page',
+        cell: ({ row }) => (
+          <div className="font-mono text-body-sm">{row.getValue('page')}</div>
+        ),
+      },
+      {
+        accessorKey: 'views',
+        header: () => <div className="text-right">Page Views</div>,
+        meta: { numeric: true },
+        cell: ({ row }) => {
+          const views = row.getValue('views') as number
+          return <div className="text-right tabular-nums font-medium">{formatNumber(views)}</div>
+        },
+      },
+      {
+        accessorKey: 'uniqueVisitors',
+        header: () => <div className="text-right">Unique Visitors</div>,
+        meta: { numeric: true },
+        cell: ({ row }) => {
+          const visitors = row.getValue('uniqueVisitors') as number
+          return <div className="text-right tabular-nums">{formatNumber(visitors)}</div>
+        },
+      },
+      {
+        accessorKey: 'bounceRate',
+        header: () => <div className="text-right">Bounce Rate</div>,
+        meta: { numeric: true },
+        cell: ({ row }) => {
+          const rate = row.getValue('bounceRate') as number
+          return (
+            <div className="flex items-center justify-end gap-2">
+              <span className="tabular-nums">{rate}%</span>
+              {rate > 40 && <Icon name="trending-up" size="sm" className="text-[var(--color-text-error-bold)]" />}
+              {rate <= 20 && <Icon name="trending-down" size="sm" className="text-[var(--color-text-success-bold)]" />}
+            </div>
+          )
+        },
+      },
+      {
+        accessorKey: 'conversionRate',
+        header: () => <div className="text-right">Conversion Rate</div>,
+        meta: { numeric: true },
+        cell: ({ row }) => {
+          const rate = row.getValue('conversionRate') as number
+          return <div className="text-right tabular-nums">{rate}%</div>
+        },
+      },
+      {
+        id: 'actions',
+        header: '',
+        size: 120,
+        meta: { sticky: 'right' },
+        cell: ({ row }) => {
+          return (
+            <div className="flex items-center justify-end gap-1">
+              <Button size="sm" variant="ghost" icon="edit" />
+              <Button size="sm" variant="ghost" icon="trash-2" />
+              <Button size="sm" variant="ghost" icon="more-horizontal" />
+            </div>
+          )
+        },
+      },
+    ]
+
+    return (
+      <div className="w-full max-w-5xl space-y-8">
+        <Card>
+          <CardHeader>
+            <CardTitle>Row Actions</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-4">
+              Add action buttons to each row using a custom actions column. This example shows edit, delete,
+              and more options with icon buttons that can trigger row-specific operations. Numeric columns are
+              properly right-aligned with tabular numerals.
+            </p>
+            <DataTable
+              data={analyticsData}
+              columns={analyticsColumnsWithActions}
+              title="Analytics Dashboard"
+              enableColumnResizing={true}
+            />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Row Actions with Sticky Column</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-4">
+              The actions column can be configured as sticky to the right side, keeping action buttons visible
+              when scrolling horizontally through wide tables.
+            </p>
+            <DataTable
+              data={analyticsData}
+              columns={analyticsColumnsWithStickyActions}
+              title="Analytics Dashboard (Sticky Actions)"
+              enableColumnResizing={true}
+              stickyRightColumns={1}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  },
+}
+
+export const RowSelection: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: `
+Demonstrates row click functionality with full accessibility support.
+
+**Features:**
+- Click any row to view details
+- Keyboard navigation (Tab to focus, Enter/Space to activate)
+- Smart default: only leaf rows and single-item groups are clickable
+- Interactive elements (buttons, links) don't trigger row clicks
+- Visual feedback with hover states and selected row highlighting
+
+**Smart Default Behavior:**
+By default, only "actual data rows" are clickable:
+- ✅ Leaf rows (non-grouped rows) are clickable
+- ✅ Single-item groups are clickable (when using hideChildrenForSingleItemGroups)
+- ❌ Multi-item parent groups are NOT clickable (prevents confusion)
+
+Use \`isRowClickable\` to customize which rows can be clicked.
+        `,
+      },
+    },
+  },
+  render: () => {
+    const [selectedRow, setSelectedRow] = useState<any>(null)
+    const [clickCount, setClickCount] = useState(0)
+
+    // Sample product data with categories for grouping
+    const productData = useMemo(() => [
+      { id: '1', name: 'MacBook Pro 16"', category: 'Laptops', price: 2499, stock: 15, sku: 'MBP16-001' },
+      { id: '2', name: 'MacBook Air M2', category: 'Laptops', price: 1199, stock: 28, sku: 'MBA-M2-001' },
+      { id: '3', name: 'iPad Pro 12.9"', category: 'Tablets', price: 1099, stock: 22, sku: 'IPD12-001' },
+      { id: '4', name: 'Magic Mouse', category: 'Accessories', price: 79, stock: 45, sku: 'MM-001' },
+      { id: '5', name: 'Magic Keyboard', category: 'Accessories', price: 149, stock: 32, sku: 'MK-001' },
+      { id: '6', name: 'AirPods Pro', category: 'Audio', price: 249, stock: 67, sku: 'APP-001' },
+      { id: '7', name: 'iPhone 15 Pro', category: 'Phones', price: 999, stock: 41, sku: 'IP15P-001' },
+    ], [])
+
+    const productColumns: ColumnDef<any>[] = useMemo(() => [
+      {
+        accessorKey: 'name',
+        header: 'Product Name',
+        meta: { label: 'Product Name' },
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('name')}</div>
+        ),
+      },
+      {
+        accessorKey: 'category',
+        header: 'Category',
+        meta: { label: 'Category' },
+      },
+      {
+        accessorKey: 'sku',
+        header: 'SKU',
+        meta: { label: 'SKU Code' },
+        cell: ({ row }) => (
+          <div className="font-mono text-body-sm text-[var(--color-text-secondary)]">
+            {row.getValue('sku')}
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'price',
+        header: 'Price',
+        meta: { label: 'Price', align: 'right' },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'stock',
+        header: 'Stock',
+        meta: { label: 'In Stock', align: 'right' },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{row.getValue('stock')}</div>
+        ),
+      },
+      {
+        id: 'actions',
+        header: 'Actions',
+        cell: ({ row }) => (
+          <div className="flex gap-[var(--space-sm)]">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={(e) => {
+                e.stopPropagation()
+                alert(`Edit ${row.original.name}`)
+              }}
+            >
+              Edit
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={(e) => {
+                e.stopPropagation()
+                alert(`Delete ${row.original.name}`)
+              }}
+            >
+              Delete
+            </Button>
+          </div>
+        ),
+      },
+    ], [])
+
+    return (
+      <div className="p-[var(--space-xlg)]">
+        <div className="max-w-6xl mx-auto space-y-[var(--space-lg)]">
+          {/* Header */}
+          <div>
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Row Click Example</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)]">
+              Click any row to view details. Notice that buttons within rows don't trigger the row click.
+            </p>
+          </div>
+
+          {/* Stats */}
+          <div className="flex gap-[var(--space-md)]">
+            <Card>
+              <CardContent className="p-[var(--space-lg)]">
+                <div className="text-caption-sm text-[var(--color-text-secondary)] mb-[var(--space-xsm)]">
+                  Total Clicks
+                </div>
+                <div className="text-heading-lg font-semibold">{clickCount}</div>
+              </CardContent>
+            </Card>
+            <Card className="flex-1">
+              <CardContent className="p-[var(--space-lg)]">
+                <div className="text-caption-sm text-[var(--color-text-secondary)] mb-[var(--space-xsm)]">
+                  Selected Row
+                </div>
+                <div className="text-body-md font-medium">
+                  {selectedRow ? selectedRow.name : 'None'}
+                </div>
+                {selectedRow && (
+                  <div className="mt-[var(--space-sm)] text-body-sm text-[var(--color-text-secondary)]">
+                    SKU: {selectedRow.sku} • Price: {formatCurrency(selectedRow.price)} • Stock: {selectedRow.stock}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Basic Example */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Basic Row Click</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <DataTable
+                data={productData}
+                columns={productColumns}
+                onRowClick={(row, event) => {
+                  console.log('Row clicked:', row.original)
+                  setSelectedRow(row.original)
+                  setClickCount(prev => prev + 1)
+                }}
+              />
+            </CardContent>
+          </Card>
+
+          {/* With Grouping Example */}
+          <Card>
+            <CardHeader>
+              <CardTitle>With Grouping (Smart Default)</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-[var(--space-md)]">
+              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-md)] rounded-md">
+                <strong>Try clicking:</strong> Notice that parent category rows with multiple items are NOT clickable (no cursor change),
+                but individual product rows are. This is the smart default behavior.
+              </div>
+              <DataTable
+                data={productData}
+                columns={productColumns}
+                enableGrouping
+                enableExpanding
+                initialState={{
+                  grouping: ['category'],
+                }}
+                hideChildrenForSingleItemGroups={{ category: true }}
+                onRowClick={(row, event) => {
+                  console.log('Row clicked:', row.original)
+                  setSelectedRow(row.original)
+                  setClickCount(prev => prev + 1)
+                }}
+              />
+            </CardContent>
+          </Card>
+
+          {/* Custom Filter Example */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Custom Clickable Filter</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-[var(--space-md)]">
+              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-md)] rounded-md">
+                <strong>Custom behavior:</strong> This example uses <code>isRowClickable</code> to allow ALL rows (including parent groups) to be clicked.
+              </div>
+              <DataTable
+                data={productData}
+                columns={productColumns}
+                enableGrouping
+                enableExpanding
+                initialState={{
+                  grouping: ['category'],
+                }}
+                hideChildrenForSingleItemGroups={{ category: true }}
+                onRowClick={(row, event) => {
+                  const data = row.getIsGrouped() && row.subRows?.length === 1
+                    ? row.subRows[0].original
+                    : row.original
+
+                  console.log('Row clicked:', data)
+                  setSelectedRow(data)
+                  setClickCount(prev => prev + 1)
+                }}
+                // Allow all rows to be clickable
+                isRowClickable={(row) => true}
+              />
+            </CardContent>
+          </Card>
+
+          {/* Keyboard Navigation Example */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Keyboard Navigation</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-[var(--space-md)]">
+              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-md)] rounded-md">
+                <strong>Accessibility:</strong> Press <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-medium)] rounded">Tab</kbd> to navigate between rows,
+                then press <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-medium)] rounded">Enter</kbd> or <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-medium)] rounded">Space</kbd> to activate.
+              </div>
+              <DataTable
+                data={productData.slice(0, 5)}
+                columns={productColumns.slice(0, 4)}
+                onRowClick={(row, event) => {
+                  console.log('Row clicked (keyboard):', row.original)
+                  setSelectedRow(row.original)
+                  setClickCount(prev => prev + 1)
+                }}
+              />
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    )
+  },
+}
+
+export const RowPinning: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates row pinning functionality where rows can be pinned to the top or bottom of the table. Hover over rows to see pin controls.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(170))
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Row Pinning</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              This example shows row pinning where individual rows can be pinned to the top or bottom of the table.
+              Hover over rows to see pin controls (up arrow for top, down arrow for bottom, X to unpin).
+              Test cross-page pinning by pinning rows on one page and navigating to other pages.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Pinned rows appear at the top/bottom of all pages and maintain their position during sorting and filtering. They have neutral background styling to distinguish them.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={tradeColumns}
+            enableRowPinning={true}
+            keepPinnedRows={true}
+            title="Trading Data with Row Pinning"
+            initialState={{
+              rowPinning: {
+                top: [data[0]?.id || ''],
+                bottom: [data[data.length - 1]?.id || '']
+              }
+            }}
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const Sorting: Story = {
+  render: () => {
+    const sortingData = sampleUsers.slice(0, 10)
+    const sortingColumns: ColumnDef<User>[] = [
+      {
+        accessorKey: 'name',
+        header: 'Name',
+        enableSorting: true,
+        meta: {
+          label: 'Name',
+        },
+      },
+      {
+        accessorKey: 'email',
+        header: 'Email',
+        enableSorting: true,
+        meta: {
+          label: 'Email',
+        },
+      },
+      {
+        accessorKey: 'role',
+        header: 'Role',
+        enableSorting: true,
+        meta: {
+          label: 'Role',
+        },
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        enableSorting: true,
+        meta: {
+          label: 'Status',
+        },
+        cell: ({ row }) => {
+          const status = row.getValue('status') as string
+          return (
+            <Badge>
+              {status}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'lastLogin',
+        header: 'Last Login',
+        enableSorting: true,
+        meta: {
+          label: 'Last Login',
+        },
+      },
+    ]
+
+    return (
+      <div className="w-full max-w-5xl space-y-4">
+        <Card>
+          <CardHeader>
+            <CardTitle>Table with Sorting</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-4">
+              Use the settings menu (three-dots icon) to select a column to sort by and choose ascending or descending order.
+              The sorting is controlled through the centralized settings menu, which also handles grouping and column visibility.
+            </p>
+            <DataTable
+              data={sortingData}
+              columns={sortingColumns}
+              title="Users Table"
+              showPagination={true}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  },
+}
+
+export const GlobalSearchWithAutocomplete: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates global search with autocomplete suggestions. As you type, the search field shows relevant suggestions extracted from specific columns. Matched text is highlighted in yellow and bolded. Notice how shared keywords like "Pacific", "Star", "Ocean", and "Singapore" appear across different columns, demonstrating the power of autocomplete for finding related data. Supports fuzzy matching and requires a minimum of 2 characters.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => sampleShipments)
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Global Search with Autocomplete</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              Type at least 2 characters to see autocomplete suggestions. The autocomplete shows results from
+              vessel names, ports, operators, and charterers. Notice how shared keywords appear across multiple
+              columns, making it easy to find related shipments.
+            </p>
+            <ul className="list-disc list-inside text-body-md text-[var(--color-text-secondary)] space-y-1">
+              <li>Try typing <strong>"pacific"</strong> - appears in vessel names, operators, and charterers</li>
+              <li>Try typing <strong>"star"</strong> - appears in multiple vessels, operators, and charterers</li>
+              <li>Try typing <strong>"singapore"</strong> - appears in multiple port names</li>
+              <li>Try typing <strong>"ocean"</strong> - appears in vessels, operators, and charterers</li>
+              <li>Matched portions are <span className="bg-[#ffeb10] font-bold">highlighted in yellow and bolded</span></li>
+              <li>Use <strong>arrow keys</strong> to navigate suggestions, <strong>Enter</strong> to select</li>
+              <li>Selecting a suggestion immediately filters the table</li>
+            </ul>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={shipmentColumns}
+            enableGlobalSearch={true}
+            enableAutocomplete={true}
+            globalSearchColumns={['vesselName', 'portOfLoading', 'portOfDischarge', 'operator', 'charterer']}
+            autocompleteMinCharacters={2}
+            title="Shipments with Autocomplete Search"
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const ColumnFaceting: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates enhanced column faceting with count badges. Filter options show the number of rows that match each filter value.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(30))
+
+    // Enhanced columns with faceting metadata
+    const facetedColumns: ColumnDef<any>[] = [
+      {
+        accessorKey: 'id',
+        header: 'Trade ID',
+        cell: ({ row }) => (
+          <div className="font-mono text-body-sm text-[var(--color-text-primary)]">{row.getValue('id')}</div>
+        ),
+      },
+      {
+        accessorKey: 'counterparty',
+        header: 'Counterparty',
+        meta: {
+          filterVariant: 'multiselect',
+          label: 'Counterparty',
+          filterOptions: [
+            { label: 'Goldman Sachs', value: 'Goldman Sachs' },
+            { label: 'JPMorgan', value: 'JPMorgan' },
+            { label: 'Morgan Stanley', value: 'Morgan Stanley' },
+            { label: 'Citigroup', value: 'Citigroup' },
+            { label: 'Bank of America', value: 'Bank of America' },
+            { label: 'Deutsche Bank', value: 'Deutsche Bank' },
+            { label: 'UBS', value: 'UBS' },
+            { label: 'Credit Suisse', value: 'Credit Suisse' },
+          ],
+        },
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('counterparty')}</div>
+        ),
+      },
+      {
+        accessorKey: 'side',
+        header: 'Side',
+        meta: {
+          filterVariant: 'select',
+          label: 'Side',
+          filterOptions: [
+            { label: 'Buy', value: 'buy' },
+            { label: 'Sell', value: 'sell' },
+          ],
+        },
+        cell: ({ row }) => {
+          const side = row.getValue('side') as string
+          if (!side) return null
+          return (
+            <Badge>
+              {side.toUpperCase()}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        meta: {
+          filterVariant: 'multiselect',
+          label: 'Status',
+          filterOptions: [
+            { label: 'Pending', value: 'pending' },
+            { label: 'Confirmed', value: 'confirmed' },
+            { label: 'Settled', value: 'settled' },
+            { label: 'Cancelled', value: 'cancelled' },
+          ],
+        },
+        cell: ({ row }) => {
+          const status = row.getValue('status') as string
+          const variants = {
+            pending: 'secondary',
+            confirmed: 'default',
+            settled: 'default',
+            cancelled: 'secondary'
+          }
+          return (
+            <Badge>
+              {status.charAt(0).toUpperCase() + status.slice(1)}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'instrument',
+        header: 'Instrument',
+        meta: {
+          filterVariant: 'multiselect',
+          label: 'Instrument',
+          filterOptions: [
+            { label: 'AAPL', value: 'AAPL' },
+            { label: 'GOOGL', value: 'GOOGL' },
+            { label: 'MSFT', value: 'MSFT' },
+            { label: 'AMZN', value: 'AMZN' },
+            { label: 'TSLA', value: 'TSLA' },
+            { label: 'META', value: 'META' },
+            { label: 'NVDA', value: 'NVDA' },
+            { label: 'NFLX', value: 'NFLX' },
+            { label: 'SPY', value: 'SPY' },
+            { label: 'QQQ', value: 'QQQ' },
+          ],
+        },
+        cell: ({ row }) => (
+          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
+        ),
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Quantity',
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'notional',
+        header: 'Notional',
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
+        ),
+      },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Column Faceting with Count Badges</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              This example demonstrates enhanced column faceting where filter options show count badges indicating
+              how many rows match each filter value. The counts update dynamically as you apply and remove filters.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Try filtering by Counterparty, Side, Status, or Instrument. Notice the count badges that show matching row counts for each option.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={facetedColumns}
+            title="Trading Data with Column Faceting"
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+export const GlobalFaceting: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Demonstrates global faceting across columns where you can filter multiple columns simultaneously with a single interface. Values from all faceted columns are aggregated and searchable.',
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateTradeData(40))
+
+    // Enhanced columns with faceting metadata for global faceting
+    const globalFacetedColumns: ColumnDef<any>[] = [
+      {
+        accessorKey: 'id',
+        header: 'Trade ID',
+        cell: ({ row }) => (
+          <div className="font-mono text-body-sm text-[var(--color-text-primary)]">{row.getValue('id')}</div>
+        ),
+      },
+      {
+        accessorKey: 'counterparty',
+        header: 'Counterparty',
+        meta: {
+          filterVariant: 'multiselect',
+          label: 'Counterparty',
+          filterOptions: [
+            { label: 'Goldman Sachs', value: 'Goldman Sachs' },
+            { label: 'JPMorgan', value: 'JPMorgan' },
+            { label: 'Morgan Stanley', value: 'Morgan Stanley' },
+            { label: 'Citigroup', value: 'Citigroup' },
+            { label: 'Bank of America', value: 'Bank of America' },
+            { label: 'Deutsche Bank', value: 'Deutsche Bank' },
+            { label: 'UBS', value: 'UBS' },
+            { label: 'Credit Suisse', value: 'Credit Suisse' },
+          ],
+        },
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('counterparty')}</div>
+        ),
+      },
+      {
+        accessorKey: 'side',
+        header: 'Side',
+        meta: {
+          filterVariant: 'select',
+          label: 'Side',
+          filterOptions: [
+            { label: 'Buy', value: 'buy' },
+            { label: 'Sell', value: 'sell' },
+          ],
+        },
+        cell: ({ row }) => {
+          const side = row.getValue('side') as string
+          if (!side) return null
+          return (
+            <Badge>
+              {side.toUpperCase()}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        meta: {
+          filterVariant: 'multiselect',
+          label: 'Status',
+          filterOptions: [
+            { label: 'Pending', value: 'pending' },
+            { label: 'Confirmed', value: 'confirmed' },
+            { label: 'Settled', value: 'settled' },
+            { label: 'Cancelled', value: 'cancelled' },
+          ],
+        },
+        cell: ({ row }) => {
+          const status = row.getValue('status') as string
+          const variants = {
+            pending: 'secondary',
+            confirmed: 'default',
+            settled: 'default',
+            cancelled: 'secondary'
+          }
+          return (
+            <Badge>
+              {status.charAt(0).toUpperCase() + status.slice(1)}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'trader',
+        header: 'Trader',
+        meta: {
+          filterVariant: 'multiselect',
+          label: 'Trader',
+          filterOptions: [
+            { label: 'John Smith', value: 'John Smith' },
+            { label: 'Sarah Johnson', value: 'Sarah Johnson' },
+            { label: 'Mike Chen', value: 'Mike Chen' },
+            { label: 'Lisa Rodriguez', value: 'Lisa Rodriguez' },
+            { label: 'David Kim', value: 'David Kim' },
+            { label: 'Anna Wilson', value: 'Anna Wilson' },
+          ],
+        },
+        cell: ({ row }) => (
+          <div className="text-body-sm">{row.getValue('trader')}</div>
+        ),
+      },
+      {
+        accessorKey: 'instrument',
+        header: 'Instrument',
+        meta: {
+          filterVariant: 'multiselect',
+          label: 'Instrument',
+          filterOptions: [
+            { label: 'AAPL', value: 'AAPL' },
+            { label: 'GOOGL', value: 'GOOGL' },
+            { label: 'MSFT', value: 'MSFT' },
+            { label: 'AMZN', value: 'AMZN' },
+            { label: 'TSLA', value: 'TSLA' },
+            { label: 'META', value: 'META' },
+            { label: 'NVDA', value: 'NVDA' },
+            { label: 'NFLX', value: 'NFLX' },
+          ],
+        },
+        cell: ({ row }) => (
+          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
+        ),
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Quantity',
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'notional',
+        header: 'Notional',
+        meta: { numeric: true },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
+        ),
+      },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Global Faceting Across Columns</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+              This example demonstrates global faceting where you can search and filter across all columns simultaneously.
+              The "Global Faceting" button aggregates values from all faceted columns (Counterparty, Side, Status, Trader, Instrument)
+              and allows you to filter multiple columns at once with a unified interface.
+            </p>
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-center gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <span className="text-body-sm text-[var(--color-text-accent)]">
+                  Click "Global Faceting" to see aggregated values from all columns. Search and select values that will be applied across matching columns automatically.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={globalFacetedColumns}
+            enableGlobalFaceting={true}
+            title="Trading Data with Global Faceting"
           />
         </div>
       </div>
@@ -3247,8 +3800,8 @@ export const ExpandingRowsWithCards: Story = {
     )
   },
 }
-
 export const GroupingRows: Story = {
+  name: 'Grouping Rows',
   parameters: {
     layout: 'fullscreen',
     docs: {
@@ -3317,6 +3870,7 @@ export const GroupingRows: Story = {
 }
 
 export const GroupingWithActions: Story = {
+  name: 'Grouping Rows - With Actions',
   parameters: {
     layout: 'fullscreen',
     docs: {
@@ -3683,6 +4237,7 @@ This feature is useful for:
 }
 
 export const GroupPreservingSearch: Story = {
+  name: 'Grouping Rows - Group Preserving Search',
   parameters: {
     layout: 'fullscreen',
     docs: {
@@ -3782,6 +4337,7 @@ Notice how the entire group stays visible and expands automatically, with matche
 }
 
 export const GroupingWithCustomDisplayAndFilters: Story = {
+  name: 'Grouping Rows - Custom Display and External Filters',
   parameters: {
     layout: 'fullscreen',
     docs: {
@@ -4616,1567 +5172,7 @@ Same fixture lifecycle scenarios as GroupingWithCustomDisplay:
   },
 }
 
-export const GroupingWithCustomDisplay: Story = {
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story: `Demonstrates the groupDisplayColumn feature and custom aggregatedCell functions for grouped rows with real-world fixture scenarios.
-
-## Fixture Hierarchy
-
-This example models the complete fixture lifecycle:
-- **Fixture** (grouping level) → **Order** → **Negotiation** → **Contract**
-
-## Implementation
-
-The \`groupDisplayColumn\` prop allows you to specify which column should render in parent rows:
-
-\`\`\`typescript
-<DataTable
-  data={data}
-  columns={columns}
-  grouping={["fixtureId"]}              // Group by Fixture ID
-  groupDisplayColumn="orderId"          // Display Order ID in parent rows
-  columnVisibility={{ fixtureId: false }} // Hide Fixture ID column
-/>
-\`\`\`
-
-## Real-World Scenarios Covered
-
-This demo includes all edge cases encountered in production:
-
-### f1: Simple Case (1 Order → 1 Negotiation → 1 Contract)
-- Order ID: 23vds38vo
-- Negotiation ID: 2352342342
-- Contract ID: asdr4233
-- **Displays**: Order ID with count, single negotiation ID, single contract ID
-
-### f2: No Deal Capture (No Order, No Negotiation, 1 Contract)
-- Order ID: —
-- Negotiation ID: —
-- Contract ID: dkdk024bf
-- **Displays**: "—" for missing Order and Negotiation IDs
-
-### f3: Open Negotiations (1 Order → Multiple Negotiations → No Contracts Yet)
-- Order ID: 93kdfgfnn
-- Negotiation IDs: 7476457657, 1661455454
-- Contract ID: —
-- **Displays**: Order ID, "2 negotiations", "—" for contracts
-
-### f4: Complex Case (1 Order → 3 Negotiations → 3 Contracts)
-- Order ID: 715aabgfkl
-- 3 Negotiation/Contract pairs
-- **Displays**: Order ID, "3 negotiations", "3 contracts"
-
-## Custom aggregatedCell Logic
-
-Each column demonstrates intelligent aggregation:
-
-1. **Order ID** (groupDisplayColumn): Shows order ID or "—"
-2. **Negotiation ID**: Shows single ID, count, or "—" if none
-3. **Contract ID**: Shows single ID, count, or "—" if none
-4. **Vessel**: Shows vessel name or count
-5. **Quantity**: Shows range (min-max) or single value if all the same
-6. **Status**: Shows status summary with badges
-
-Check the browser console to see the \`aggregatedCell\` functions being called!`,
-      },
-    },
-  },
-  render: () => {
-    // Generate fixture data matching real-world scenarios
-    const fixtureData = [
-      // f1: Simple case - 1 Order → 1 Negotiation → 1 Contract
-      {
-        fixtureId: 'f1',
-        orderId: '23vds38vo',
-        negotiationId: '2352342342',
-        contractId: 'asdr4233',
-        vessel: 'Oceanic Star',
-        quantity: 50000,
-        status: 'Active'
-      },
-
-      // f2: No deal capture - No Order, No Negotiation, but 1 Contract
-      {
-        fixtureId: 'f2',
-        orderId: undefined,
-        negotiationId: undefined,
-        contractId: 'dkdk024bf',
-        vessel: 'Pacific Dawn',
-        quantity: 75000,
-        status: 'Active'
-      },
-
-      // f3: Order with open negotiations - No contracts yet
-      {
-        fixtureId: 'f3',
-        orderId: '93kdfgfnn',
-        negotiationId: '7476457657',
-        contractId: undefined,
-        vessel: 'Atlantic Wave',
-        quantity: 45000,
-        status: 'Pending'
-      },
-      {
-        fixtureId: 'f3',
-        orderId: '93kdfgfnn',
-        negotiationId: '1661455454',
-        contractId: undefined,
-        vessel: 'Atlantic Horizon',
-        quantity: 55000,
-        status: 'Pending'
-      },
-
-      // f4: Complex case - 1 Order → 3 Negotiations → 3 Contracts
-      {
-        fixtureId: 'f4',
-        orderId: '715aabgfkl',
-        negotiationId: '352345345',
-        contractId: 'fsj312343',
-        vessel: 'Mediterranean Sun',
-        quantity: 80000,
-        status: 'Active'
-      },
-      {
-        fixtureId: 'f4',
-        orderId: '715aabgfkl',
-        negotiationId: '913345345',
-        contractId: 'k38djfk',
-        vessel: 'Mediterranean Star',
-        quantity: 90000,
-        status: 'Active'
-      },
-      {
-        fixtureId: 'f4',
-        orderId: '715aabgfkl',
-        negotiationId: '733262456',
-        contractId: 'asdr4233',
-        vessel: 'Mediterranean Dawn',
-        quantity: 85000,
-        status: 'Completed'
-      },
-    ]
-
-    const fixtureColumns: ColumnDef<typeof fixtureData[0]>[] = [
-      {
-        accessorKey: 'fixtureId',
-        header: 'Fixture ID',
-        enableGrouping: true,
-      },
-      {
-        accessorKey: 'orderId',
-        header: 'Order ID',
-        enableGrouping: false,
-        // Custom aggregatedCell for group rows
-        aggregatedCell: ({ row }) => {
-          console.log('✅ Order ID aggregatedCell called for row:', row.id)
-          const orderId = row.subRows[0]?.original?.orderId
-
-          // Handle case when there's no order (f2 scenario)
-          if (!orderId) {
-            return <span className="text-[var(--color-text-secondary)]">—</span>
-          }
-
-          return <span className="font-semibold text-[var(--color-text-primary)]">{orderId}</span>
-        },
-      },
-      {
-        accessorKey: 'negotiationId',
-        header: 'Negotiation ID',
-        // Custom aggregatedCell: show single negotiation ID or count
-        aggregatedCell: ({ row }) => {
-          console.log('✅ Negotiation ID aggregatedCell called for row:', row.id)
-          const negotiationIds = row.subRows.map(r => r.original?.negotiationId).filter(Boolean)
-          const uniqueNegotiationIds = Array.from(new Set(negotiationIds))
-
-          // Handle case when there's no negotiation (f2 scenario)
-          if (uniqueNegotiationIds.length === 0) {
-            return <span className="text-[var(--color-text-secondary)]">—</span>
-          }
-
-          if (uniqueNegotiationIds.length === 1) {
-            return <span className="text-[var(--color-text-primary)]">{uniqueNegotiationIds[0]}</span>
-          } else {
-            return (
-              <div className="flex items-center gap-[var(--space-xsm)]">
-                <span className="text-[var(--color-text-secondary)]">{uniqueNegotiationIds.length} negotiations</span>
-              </div>
-            )
-          }
-        },
-      },
-      {
-        accessorKey: 'contractId',
-        header: 'Contract ID',
-        // Custom aggregatedCell: show single contract, count, or "—"
-        aggregatedCell: ({ row }) => {
-          console.log('✅ Contract ID aggregatedCell called for row:', row.id)
-          const contractIds = row.subRows.map(r => r.original?.contractId).filter(Boolean)
-          const uniqueContractIds = Array.from(new Set(contractIds))
-
-          // Handle case when there are no contracts (f3 scenario - open negotiations)
-          if (uniqueContractIds.length === 0) {
-            return <span className="text-[var(--color-text-secondary)]">—</span>
-          }
-
-          if (uniqueContractIds.length === 1) {
-            return <span className="text-[var(--color-text-primary)]">{uniqueContractIds[0]}</span>
-          } else {
-            return (
-              <div className="flex items-center gap-[var(--space-xsm)]">
-                <span className="text-[var(--color-text-secondary)]">{uniqueContractIds.length} contracts</span>
-              </div>
-            )
-          }
-        },
-      },
-      {
-        accessorKey: 'vessel',
-        header: 'Vessel',
-        // Custom aggregatedCell: show single vessel or "Multiple"
-        aggregatedCell: ({ row }) => {
-          console.log('✅ Vessel aggregatedCell called for row:', row.id)
-          const vessels = row.subRows.map(r => r.original?.vessel).filter(Boolean)
-          const uniqueVessels = Array.from(new Set(vessels))
-
-          if (uniqueVessels.length === 1) {
-            return <span className="text-[var(--color-text-primary)]">{uniqueVessels[0]}</span>
-          } else {
-            return <span className="text-[var(--color-text-secondary)]">{uniqueVessels.length} vessels</span>
-          }
-        },
-      },
-      {
-        accessorKey: 'quantity',
-        header: 'Quantity (MT)',
-        meta: {
-          align: 'right',
-        },
-        cell: ({ getValue }) => {
-          return <span className="tabular-nums">{Number(getValue()).toLocaleString()}</span>
-        },
-        // Custom aggregatedCell: show range with formatting
-        aggregatedCell: ({ row }) => {
-          console.log('✅ Quantity aggregatedCell called for row:', row.id)
-          const quantities = row.subRows.map(r => r.original?.quantity).filter(Boolean) as number[]
-
-          if (quantities.length === 0) {
-            return (
-              <div className="text-right">
-                <span className="text-[var(--color-text-secondary)]">—</span>
-              </div>
-            )
-          }
-
-          const min = Math.min(...quantities)
-          const max = Math.max(...quantities)
-
-          // Show single value if min equals max
-          if (min === max) {
-            return (
-              <div className="text-right">
-                <span className="text-[var(--color-text-primary)] tabular-nums">{min.toLocaleString()}</span>
-              </div>
-            )
-          }
-
-          // Show range if different values
-          return (
-            <div className="text-right">
-              <span className="text-[var(--color-text-primary)] tabular-nums">
-                {min.toLocaleString()} - {max.toLocaleString()}
-              </span>
-            </div>
-          )
-        },
-      },
-      {
-        accessorKey: 'status',
-        header: 'Status',
-        cell: ({ getValue }) => {
-          const status = getValue() as string
-          return (
-            <Badge
-              appearance={
-                status === 'Active' ? 'success' :
-                status === 'Completed' ? 'default' :
-                'accent'
-              }
-              size="sm"
-            >
-              {status}
-            </Badge>
-          )
-        },
-        // Custom aggregatedCell: show status summary
-        aggregatedCell: ({ row }) => {
-          console.log('✅ Status aggregatedCell called for row:', row.id)
-          const statuses = row.subRows.map(r => r.original?.status).filter(Boolean)
-          const statusCounts = statuses.reduce((acc, status) => {
-            acc[status] = (acc[status] || 0) + 1
-            return acc
-          }, {} as Record<string, number>)
-
-          return (
-            <div className="flex items-center gap-[var(--space-xsm)]">
-              {Object.entries(statusCounts).map(([status, count]) => (
-                <Badge
-                  key={status}
-                  appearance={
-                    status === 'Active' ? 'success' :
-                    status === 'Completed' ? 'default' :
-                    'accent'
-                  }
-                  size="sm"
-                >
-                  {count} {status}
-                </Badge>
-              ))}
-            </div>
-          )
-        },
-      },
-    ]
-
-    return (
-      <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Fixture Lifecycle: Order → Negotiation → Contract</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-              This example models the complete fixture lifecycle with all real-world edge cases:
-              simple orders, missing deal capture, open negotiations, and complex multi-contract scenarios.
-              Each column uses custom aggregatedCell logic to intelligently display data.
-            </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
-                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
-                <span className="text-body-sm text-[var(--color-text-accent)]">
-                  Open your browser console to see aggregatedCell functions being called! The demo includes:
-                  f1 (simple), f2 (no deal capture), f3 (open negotiations), and f4 (complex multi-contract).
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <DataTable
-            data={fixtureData}
-            columns={fixtureColumns}
-            enableGrouping={true}
-            enableExpanding={true}
-            enableGlobalSearch={true}
-            groupPreservingSearch={true}
-            grouping={["fixtureId"]}
-            groupDisplayColumn="orderId"
-            hideChildrenForSingleItemGroups={true}
-            columnVisibility={{ fixtureId: false }}
-            title="Fixture Lifecycle Scenarios"
-            globalSearchPlaceholder="Search fixtures..."
-            initialState={{
-              expanded: {
-                // All groups collapsed by default
-              },
-            }}
-          />
-        </div>
-      </div>
-    )
-  },
-}
-
-export const RowPinning: Story = {
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story: 'Demonstrates row pinning functionality where rows can be pinned to the top or bottom of the table. Hover over rows to see pin controls.',
-      },
-    },
-  },
-  render: () => {
-    const [data] = useState(() => generateTradeData(170))
-
-    return (
-      <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Row Pinning</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-              This example shows row pinning where individual rows can be pinned to the top or bottom of the table.
-              Hover over rows to see pin controls (up arrow for top, down arrow for bottom, X to unpin).
-              Test cross-page pinning by pinning rows on one page and navigating to other pages.
-            </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
-                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
-                <span className="text-body-sm text-[var(--color-text-accent)]">
-                  Pinned rows appear at the top/bottom of all pages and maintain their position during sorting and filtering. They have neutral background styling to distinguish them.
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <DataTable
-            data={data}
-            columns={tradeColumns}
-            enableRowPinning={true}
-            keepPinnedRows={true}
-            title="Trading Data with Row Pinning"
-            initialState={{
-              rowPinning: {
-                top: [data[0]?.id || ''],
-                bottom: [data[data.length - 1]?.id || '']
-              }
-            }}
-          />
-        </div>
-      </div>
-    )
-  },
-}
-
-export const ColumnFaceting: Story = {
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story: 'Demonstrates enhanced column faceting with count badges. Filter options show the number of rows that match each filter value.',
-      },
-    },
-  },
-  render: () => {
-    const [data] = useState(() => generateTradeData(30))
-
-    // Enhanced columns with faceting metadata
-    const facetedColumns: ColumnDef<any>[] = [
-      {
-        accessorKey: 'id',
-        header: 'Trade ID',
-        cell: ({ row }) => (
-          <div className="font-mono text-body-sm text-[var(--color-text-primary)]">{row.getValue('id')}</div>
-        ),
-      },
-      {
-        accessorKey: 'counterparty',
-        header: 'Counterparty',
-        meta: {
-          filterVariant: 'multiselect',
-          label: 'Counterparty',
-          filterOptions: [
-            { label: 'Goldman Sachs', value: 'Goldman Sachs' },
-            { label: 'JPMorgan', value: 'JPMorgan' },
-            { label: 'Morgan Stanley', value: 'Morgan Stanley' },
-            { label: 'Citigroup', value: 'Citigroup' },
-            { label: 'Bank of America', value: 'Bank of America' },
-            { label: 'Deutsche Bank', value: 'Deutsche Bank' },
-            { label: 'UBS', value: 'UBS' },
-            { label: 'Credit Suisse', value: 'Credit Suisse' },
-          ],
-        },
-        cell: ({ row }) => (
-          <div className="font-medium">{row.getValue('counterparty')}</div>
-        ),
-      },
-      {
-        accessorKey: 'side',
-        header: 'Side',
-        meta: {
-          filterVariant: 'select',
-          label: 'Side',
-          filterOptions: [
-            { label: 'Buy', value: 'buy' },
-            { label: 'Sell', value: 'sell' },
-          ],
-        },
-        cell: ({ row }) => {
-          const side = row.getValue('side') as string
-          if (!side) return null
-          return (
-            <Badge>
-              {side.toUpperCase()}
-            </Badge>
-          )
-        },
-      },
-      {
-        accessorKey: 'status',
-        header: 'Status',
-        meta: {
-          filterVariant: 'multiselect',
-          label: 'Status',
-          filterOptions: [
-            { label: 'Pending', value: 'pending' },
-            { label: 'Confirmed', value: 'confirmed' },
-            { label: 'Settled', value: 'settled' },
-            { label: 'Cancelled', value: 'cancelled' },
-          ],
-        },
-        cell: ({ row }) => {
-          const status = row.getValue('status') as string
-          const variants = {
-            pending: 'secondary',
-            confirmed: 'default',
-            settled: 'default',
-            cancelled: 'secondary'
-          }
-          return (
-            <Badge>
-              {status.charAt(0).toUpperCase() + status.slice(1)}
-            </Badge>
-          )
-        },
-      },
-      {
-        accessorKey: 'instrument',
-        header: 'Instrument',
-        meta: {
-          filterVariant: 'multiselect',
-          label: 'Instrument',
-          filterOptions: [
-            { label: 'AAPL', value: 'AAPL' },
-            { label: 'GOOGL', value: 'GOOGL' },
-            { label: 'MSFT', value: 'MSFT' },
-            { label: 'AMZN', value: 'AMZN' },
-            { label: 'TSLA', value: 'TSLA' },
-            { label: 'META', value: 'META' },
-            { label: 'NVDA', value: 'NVDA' },
-            { label: 'NFLX', value: 'NFLX' },
-            { label: 'SPY', value: 'SPY' },
-            { label: 'QQQ', value: 'QQQ' },
-          ],
-        },
-        cell: ({ row }) => (
-          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
-        ),
-      },
-      {
-        accessorKey: 'quantity',
-        header: 'Quantity',
-        meta: { numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
-        ),
-      },
-      {
-        accessorKey: 'notional',
-        header: 'Notional',
-        meta: { numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
-        ),
-      },
-    ]
-
-    return (
-      <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Column Faceting with Count Badges</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-              This example demonstrates enhanced column faceting where filter options show count badges indicating
-              how many rows match each filter value. The counts update dynamically as you apply and remove filters.
-            </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
-                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
-                <span className="text-body-sm text-[var(--color-text-accent)]">
-                  Try filtering by Counterparty, Side, Status, or Instrument. Notice the count badges that show matching row counts for each option.
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <DataTable
-            data={data}
-            columns={facetedColumns}
-            title="Trading Data with Column Faceting"
-          />
-        </div>
-      </div>
-    )
-  },
-}
-
-export const GlobalFaceting: Story = {
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story: 'Demonstrates global faceting across columns where you can filter multiple columns simultaneously with a single interface. Values from all faceted columns are aggregated and searchable.',
-      },
-    },
-  },
-  render: () => {
-    const [data] = useState(() => generateTradeData(40))
-
-    // Enhanced columns with faceting metadata for global faceting
-    const globalFacetedColumns: ColumnDef<any>[] = [
-      {
-        accessorKey: 'id',
-        header: 'Trade ID',
-        cell: ({ row }) => (
-          <div className="font-mono text-body-sm text-[var(--color-text-primary)]">{row.getValue('id')}</div>
-        ),
-      },
-      {
-        accessorKey: 'counterparty',
-        header: 'Counterparty',
-        meta: {
-          filterVariant: 'multiselect',
-          label: 'Counterparty',
-          filterOptions: [
-            { label: 'Goldman Sachs', value: 'Goldman Sachs' },
-            { label: 'JPMorgan', value: 'JPMorgan' },
-            { label: 'Morgan Stanley', value: 'Morgan Stanley' },
-            { label: 'Citigroup', value: 'Citigroup' },
-            { label: 'Bank of America', value: 'Bank of America' },
-            { label: 'Deutsche Bank', value: 'Deutsche Bank' },
-            { label: 'UBS', value: 'UBS' },
-            { label: 'Credit Suisse', value: 'Credit Suisse' },
-          ],
-        },
-        cell: ({ row }) => (
-          <div className="font-medium">{row.getValue('counterparty')}</div>
-        ),
-      },
-      {
-        accessorKey: 'side',
-        header: 'Side',
-        meta: {
-          filterVariant: 'select',
-          label: 'Side',
-          filterOptions: [
-            { label: 'Buy', value: 'buy' },
-            { label: 'Sell', value: 'sell' },
-          ],
-        },
-        cell: ({ row }) => {
-          const side = row.getValue('side') as string
-          if (!side) return null
-          return (
-            <Badge>
-              {side.toUpperCase()}
-            </Badge>
-          )
-        },
-      },
-      {
-        accessorKey: 'status',
-        header: 'Status',
-        meta: {
-          filterVariant: 'multiselect',
-          label: 'Status',
-          filterOptions: [
-            { label: 'Pending', value: 'pending' },
-            { label: 'Confirmed', value: 'confirmed' },
-            { label: 'Settled', value: 'settled' },
-            { label: 'Cancelled', value: 'cancelled' },
-          ],
-        },
-        cell: ({ row }) => {
-          const status = row.getValue('status') as string
-          const variants = {
-            pending: 'secondary',
-            confirmed: 'default',
-            settled: 'default',
-            cancelled: 'secondary'
-          }
-          return (
-            <Badge>
-              {status.charAt(0).toUpperCase() + status.slice(1)}
-            </Badge>
-          )
-        },
-      },
-      {
-        accessorKey: 'trader',
-        header: 'Trader',
-        meta: {
-          filterVariant: 'multiselect',
-          label: 'Trader',
-          filterOptions: [
-            { label: 'John Smith', value: 'John Smith' },
-            { label: 'Sarah Johnson', value: 'Sarah Johnson' },
-            { label: 'Mike Chen', value: 'Mike Chen' },
-            { label: 'Lisa Rodriguez', value: 'Lisa Rodriguez' },
-            { label: 'David Kim', value: 'David Kim' },
-            { label: 'Anna Wilson', value: 'Anna Wilson' },
-          ],
-        },
-        cell: ({ row }) => (
-          <div className="text-body-sm">{row.getValue('trader')}</div>
-        ),
-      },
-      {
-        accessorKey: 'instrument',
-        header: 'Instrument',
-        meta: {
-          filterVariant: 'multiselect',
-          label: 'Instrument',
-          filterOptions: [
-            { label: 'AAPL', value: 'AAPL' },
-            { label: 'GOOGL', value: 'GOOGL' },
-            { label: 'MSFT', value: 'MSFT' },
-            { label: 'AMZN', value: 'AMZN' },
-            { label: 'TSLA', value: 'TSLA' },
-            { label: 'META', value: 'META' },
-            { label: 'NVDA', value: 'NVDA' },
-            { label: 'NFLX', value: 'NFLX' },
-          ],
-        },
-        cell: ({ row }) => (
-          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
-        ),
-      },
-      {
-        accessorKey: 'quantity',
-        header: 'Quantity',
-        meta: { numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
-        ),
-      },
-      {
-        accessorKey: 'notional',
-        header: 'Notional',
-        meta: { numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
-        ),
-      },
-    ]
-
-    return (
-      <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Global Faceting Across Columns</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-              This example demonstrates global faceting where you can search and filter across all columns simultaneously.
-              The "Global Faceting" button aggregates values from all faceted columns (Counterparty, Side, Status, Trader, Instrument)
-              and allows you to filter multiple columns at once with a unified interface.
-            </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
-                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
-                <span className="text-body-sm text-[var(--color-text-accent)]">
-                  Click "Global Faceting" to see aggregated values from all columns. Search and select values that will be applied across matching columns automatically.
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <DataTable
-            data={data}
-            columns={globalFacetedColumns}
-            enableGlobalFaceting={true}
-            title="Trading Data with Global Faceting"
-          />
-        </div>
-      </div>
-    )
-  },
-}
-
-
-export const NestedHeaders: Story = {
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story: 'Demonstrates nested column headers for hierarchical data organization. Column headers are grouped under parent categories, ideal for complex financial reports or dashboards.',
-      },
-    },
-  },
-  render: () => {
-    const [data] = useState(() => generateTradeData(5))
-
-    // Define nested column structure for financial dashboard
-    const nestedHeaders: NestedHeaderConfig[] = [
-      {
-        id: 'trade-info',
-        header: 'Trade Information',
-        columns: [
-          {
-            accessorKey: 'id',
-            header: 'Trade ID',
-            cell: ({ row }) => (
-              <div className="font-mono text-body-sm">
-                {row.getValue('id')}
-              </div>
-            ),
-          },
-          {
-            accessorKey: 'trader',
-            header: 'Trader',
-            cell: ({ row }) => {
-              const trader = row.getValue('trader') as string
-              if (!trader) return null
-              return (
-                <div className="flex items-center gap-[var(--space-sm)]">
-                  <div className="h-6 w-6 rounded-full bg-[var(--color-background-brand-subtle)] flex items-center justify-center">
-                    <span className="text-caption-sm font-medium text-[var(--color-text-brand-bold)]">
-                      {trader.charAt(0)}
-                    </span>
-                  </div>
-                  <span className="text-body-sm">{trader}</span>
-                </div>
-              )
-            },
-          },
-          {
-            accessorKey: 'instrument',
-            header: 'Instrument',
-            cell: ({ row }) => (
-              <Badge className="font-mono">
-                {row.getValue('instrument')}
-              </Badge>
-            ),
-          },
-        ],
-      },
-      {
-        id: 'financial-metrics',
-        header: 'Financial Metrics',
-        className: 'bg-[var(--color-background-success-subtle)]',
-        columns: [
-          {
-            accessorKey: 'notional',
-            header: 'Notional',
-            cell: ({ row }) => {
-              const amount = parseFloat(row.getValue('notional'))
-              return (
-                <div className="text-right font-mono">
-                  <span className="text-body-sm">
-                    ${amount.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
-                  </span>
-                </div>
-              )
-            },
-          },
-          {
-            accessorKey: 'pnl',
-            header: 'P&L',
-            cell: ({ row }) => {
-              const pnl = parseFloat(row.getValue('pnl'))
-              const isPositive = pnl >= 0
-              return (
-                <div className={cn(
-                  "text-right font-mono",
-                  isPositive
-                    ? "text-[var(--color-text-success-bold)]"
-                    : "text-[var(--color-text-error-bold)]"
-                )}>
-                  {isPositive ? '+' : ''}${pnl.toFixed(0)}
-                </div>
-              )
-            },
-          },
-          {
-            accessorKey: 'price',
-            header: 'Price',
-            cell: ({ row }) => (
-              <div className="text-right font-mono text-body-sm">
-                ${parseFloat(row.getValue('price')).toFixed(2)}
-              </div>
-            ),
-          },
-        ],
-      },
-      {
-        id: 'status-info',
-        header: 'Status & Timing',
-        className: 'bg-[var(--color-background-accent-subtle)]',
-        columns: [
-          {
-            accessorKey: 'status',
-            header: 'Status',
-            cell: ({ row }) => {
-              const status = row.getValue('status') as string
-              const statusColors = {
-                'active': 'text-[var(--color-text-success-bold)] bg-[var(--color-background-success-subtle)]',
-                'pending': 'text-[var(--color-text-warning-bold)] bg-[var(--color-background-warning-subtle)]',
-                'settled': 'text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-subtlest)]',
-                'cancelled': 'text-[var(--color-text-error-bold)] bg-[var(--color-background-error-subtle)]',
-              }
-              return (
-                <Badge
-                 
-                  className={cn(
-                    "text-caption-strong-sm",
-                    statusColors[status.toLowerCase() as keyof typeof statusColors]
-                  )}
-                >
-                  {status}
-                </Badge>
-              )
-            },
-          },
-          {
-            accessorKey: 'timestamp',
-            header: 'Last Updated',
-            cell: ({ row }) => (
-              <div className="text-body-sm text-[var(--color-text-secondary)]">
-                {new Date(row.getValue('timestamp')).toLocaleString()}
-              </div>
-            ),
-          },
-        ],
-      },
-    ]
-
-    // Flatten columns for the table
-    const flatColumns = nestedHeaders.flatMap(group => group.columns)
-
-    return (
-      <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Nested Column Headers</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-              This example demonstrates nested column headers that organize related columns under parent categories.
-              The header groups provide logical organization for complex datasets, commonly used in financial reports,
-              dashboards, and analytical interfaces.
-            </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
-                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
-                <span className="text-body-sm text-[var(--color-text-accent)]">
-                  Column groups can have custom styling and span multiple sub-columns. This creates a clear visual hierarchy for complex data structures.
-                </span>
-              </div>
-            </div>
-
-            <div className="mt-[var(--space-md)] grid grid-cols-1 md:grid-cols-3 gap-4 text-body-sm">
-              <div className="bg-[var(--color-surface-secondary)] rounded-md p-[var(--space-md)]">
-                <div className="text-heading-sm font-semibold text-[var(--color-text-primary)]">
-                  {nestedHeaders.length}
-                </div>
-                <div className="text-[var(--color-text-secondary)]">Header Groups</div>
-              </div>
-              <div className="bg-[var(--color-surface-secondary)] rounded-md p-[var(--space-md)]">
-                <div className="text-heading-sm font-semibold text-[var(--color-text-primary)]">
-                  {flatColumns.length}
-                </div>
-                <div className="text-[var(--color-text-secondary)]">Total Columns</div>
-              </div>
-              <div className="bg-[var(--color-surface-secondary)] rounded-md p-[var(--space-md)]">
-                <div className="text-heading-sm font-semibold text-[var(--color-text-primary)]">
-                  2 Levels
-                </div>
-                <div className="text-[var(--color-text-secondary)]">Header Depth</div>
-              </div>
-            </div>
-          </div>
-
-          <DataTable
-            data={data}
-            columns={flatColumns}
-            nestedHeaders={nestedHeaders}
-            enableNestedHeaders={true}
-            enableColumnResizing={true}
-            title="Financial Trading Dashboard"
-            stickyHeader={true}
-          />
-        </div>
-      </div>
-    )
-  },
-}
-
-export const ColumnVisibility: Story = {
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story: 'Demonstrates column visibility controls. Users can show/hide columns using the view options dropdown in the table header.',
-      },
-    },
-  },
-  render: () => {
-    const [data] = useState(() => generateTradeData(100))
-
-    const columns: ColumnDef<any>[] = [
-      {
-        accessorKey: 'id',
-        header: 'Trade ID',
-        meta: { label: 'Trade ID' },
-        cell: ({ row }) => (
-          <div className="font-mono text-body-sm">{row.getValue('id')}</div>
-        ),
-      },
-      {
-        accessorKey: 'counterparty',
-        header: 'Counterparty',
-        meta: { label: 'Counterparty' },
-        cell: ({ row }) => (
-          <div className="font-medium">{row.getValue('counterparty')}</div>
-        ),
-      },
-      {
-        accessorKey: 'instrument',
-        header: 'Instrument',
-        meta: { label: 'Instrument' },
-        cell: ({ row }) => (
-          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
-        ),
-      },
-      {
-        accessorKey: 'side',
-        header: 'Side',
-        meta: { label: 'Trade Side' },
-        cell: ({ row }) => {
-          const side = row.getValue('side') as string
-          if (!side) return null
-          return (
-            <Badge>
-              {side.toUpperCase()}
-            </Badge>
-          )
-        },
-      },
-      {
-        accessorKey: 'quantity',
-        header: 'Quantity',
-        meta: { label: 'Quantity', numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
-        ),
-      },
-      {
-        accessorKey: 'price',
-        header: 'Price',
-        meta: { label: 'Price', numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
-        ),
-      },
-      {
-        accessorKey: 'notional',
-        header: 'Notional',
-        meta: { label: 'Notional Value', numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
-        ),
-      },
-      {
-        accessorKey: 'status',
-        header: 'Status',
-        meta: { label: 'Trade Status' },
-        cell: ({ row }) => {
-          const status = row.getValue('status') as string
-          const variants = {
-            pending: 'secondary',
-            confirmed: 'default',
-            settled: 'default',
-            cancelled: 'secondary'
-          }
-          return (
-            <Badge>
-              {status.charAt(0).toUpperCase() + status.slice(1)}
-            </Badge>
-          )
-        },
-      },
-      {
-        accessorKey: 'trader',
-        header: 'Trader',
-        meta: { label: 'Trader Name' },
-        cell: ({ row }) => (
-          <div className="text-body-sm">{row.getValue('trader')}</div>
-        ),
-      },
-    ]
-
-    return (
-      <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Column Visibility Controls</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-              Users can show and hide columns using the view options dropdown. Click the three-dot menu in the
-              table header to access column visibility controls. Toggle any column on or off to customize the view.
-            </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
-                <Icon name="eye" className="h-4 w-4 text-[var(--color-text-accent)]" />
-                <span className="text-body-sm text-[var(--color-text-accent)]">
-                  Try hiding some columns (like Trader, Status, or Notional) to see how the table adapts.
-                  Column visibility state is managed automatically.
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <DataTable
-            data={data}
-            columns={columns}
-            title="Trading Activity - Column Visibility Demo"
-            enableGlobalSearch={true}
-            enableColumnResizing={true}
-          />
-        </div>
-      </div>
-    )
-  },
-}
-
-export const ColumnReordering: Story = {
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story: 'Demonstrates column reordering with drag-and-drop functionality. Users can drag column headers to reorder columns as needed.',
-      },
-    },
-  },
-  render: () => {
-    const [data] = useState(() => generateTradeData(100))
-
-    const columns: ColumnDef<any>[] = [
-      {
-        accessorKey: 'id',
-        header: 'Trade ID',
-        cell: ({ row }) => (
-          <div className="font-mono text-body-sm">{row.getValue('id')}</div>
-        ),
-      },
-      {
-        accessorKey: 'counterparty',
-        header: 'Counterparty',
-        cell: ({ row }) => (
-          <div className="font-medium">{row.getValue('counterparty')}</div>
-        ),
-      },
-      {
-        accessorKey: 'instrument',
-        header: 'Instrument',
-        cell: ({ row }) => (
-          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
-        ),
-      },
-      {
-        accessorKey: 'side',
-        header: 'Side',
-        cell: ({ row }) => {
-          const side = row.getValue('side') as string
-          if (!side) return null
-          return (
-            <Badge>
-              {side.toUpperCase()}
-            </Badge>
-          )
-        },
-      },
-      {
-        accessorKey: 'quantity',
-        header: 'Quantity',
-        meta: { numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
-        ),
-      },
-      {
-        accessorKey: 'price',
-        header: 'Price',
-        meta: { numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
-        ),
-      },
-      {
-        accessorKey: 'status',
-        header: 'Status',
-        cell: ({ row }) => {
-          const status = row.getValue('status') as string
-          if (!status) return null
-          const variants = {
-            pending: 'secondary',
-            confirmed: 'default',
-            settled: 'default',
-            cancelled: 'secondary'
-          }
-          return (
-            <Badge>
-              {status.charAt(0).toUpperCase() + status.slice(1)}
-            </Badge>
-          )
-        },
-      },
-    ]
-
-    return (
-      <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Column Reordering</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-              Drag and drop column headers to reorder columns. Hover over column headers to see the grab cursor,
-              then click and drag to move columns to your preferred position.
-            </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
-                <Icon name="move" className="h-4 w-4 text-[var(--color-text-accent)]" />
-                <span className="text-body-sm text-[var(--color-text-accent)]">
-                  Try dragging the "Status" column to the beginning, or reorder numeric columns to group them together.
-                  The grip icon appears on hover.
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <DataTable
-            data={data}
-            columns={columns}
-            title="Trading Activity - Column Reordering Demo"
-            enableColumnOrdering={true}
-            enableGlobalSearch={true}
-          />
-        </div>
-      </div>
-    )
-  },
-}
-
-export const RowSelection: Story = {
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story: 'Demonstrates row selection with checkboxes. Users can select individual rows or use the header checkbox to select all rows.',
-      },
-    },
-  },
-  render: () => {
-    const [data] = useState(() => generateTradeData(50))
-
-    const columns: ColumnDef<any>[] = [
-      {
-        accessorKey: 'id',
-        header: 'Trade ID',
-        cell: ({ row }) => (
-          <div className="font-mono text-body-sm">{row.getValue('id')}</div>
-        ),
-      },
-      {
-        accessorKey: 'counterparty',
-        header: 'Counterparty',
-        cell: ({ row }) => (
-          <div className="font-medium">{row.getValue('counterparty')}</div>
-        ),
-      },
-      {
-        accessorKey: 'instrument',
-        header: 'Instrument',
-        cell: ({ row }) => (
-          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
-        ),
-      },
-      {
-        accessorKey: 'side',
-        header: 'Side',
-        cell: ({ row }) => {
-          const side = row.getValue('side') as string
-          if (!side) return null
-          return (
-            <Badge>
-              {side.toUpperCase()}
-            </Badge>
-          )
-        },
-      },
-      {
-        accessorKey: 'quantity',
-        header: 'Quantity',
-        meta: { numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
-        ),
-      },
-      {
-        accessorKey: 'price',
-        header: 'Price',
-        meta: { numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
-        ),
-      },
-      {
-        accessorKey: 'notional',
-        header: 'Notional',
-        meta: { numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
-        ),
-      },
-      {
-        accessorKey: 'status',
-        header: 'Status',
-        cell: ({ row }) => {
-          const status = row.getValue('status') as string
-          if (!status) return null
-          const variants = {
-            pending: 'secondary',
-            confirmed: 'default',
-            settled: 'default',
-            cancelled: 'secondary'
-          }
-          return (
-            <Badge>
-              {status.charAt(0).toUpperCase() + status.slice(1)}
-            </Badge>
-          )
-        },
-      },
-    ]
-
-    return (
-      <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Row Selection</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-              Select individual rows using checkboxes, or use the header checkbox to select all rows at once.
-              The footer shows the current selection count and supports bulk operations.
-            </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
-                <Icon name="check-square" className="h-4 w-4 text-[var(--color-text-accent)]" />
-                <span className="text-body-sm text-[var(--color-text-accent)]">
-                  Try selecting a few rows, then use the header checkbox to select all. The pagination footer
-                  shows the selection count in real-time.
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <DataTable
-            data={data}
-            columns={columns}
-            title="Trading Activity - Row Selection Demo"
-            enableRowSelection={true}
-            enableGlobalSearch={true}
-          />
-        </div>
-      </div>
-    )
-  },
-}
-
-export const PaginationControls: Story = {
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story: 'Demonstrates pagination controls with page navigation and page size selection. Users can navigate through pages and adjust page size.',
-      },
-    },
-  },
-  render: () => {
-    const [data] = useState(() => generateTradeData(247)) // Odd number to show partial pages
-
-    const columns: ColumnDef<any>[] = [
-      {
-        accessorKey: 'id',
-        header: 'Trade ID',
-        cell: ({ row }) => (
-          <div className="font-mono text-body-sm">{row.getValue('id')}</div>
-        ),
-      },
-      {
-        accessorKey: 'counterparty',
-        header: 'Counterparty',
-        cell: ({ row }) => (
-          <div className="font-medium">{row.getValue('counterparty')}</div>
-        ),
-      },
-      {
-        accessorKey: 'instrument',
-        header: 'Instrument',
-        cell: ({ row }) => (
-          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
-        ),
-      },
-      {
-        accessorKey: 'side',
-        header: 'Side',
-        cell: ({ row }) => {
-          const side = row.getValue('side') as string
-          if (!side) return null
-          return (
-            <Badge>
-              {side.toUpperCase()}
-            </Badge>
-          )
-        },
-      },
-      {
-        accessorKey: 'quantity',
-        header: 'Quantity',
-        meta: { numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
-        ),
-      },
-      {
-        accessorKey: 'price',
-        header: 'Price',
-        meta: { numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
-        ),
-      },
-      {
-        accessorKey: 'notional',
-        header: 'Notional',
-        meta: { numeric: true },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
-        ),
-      },
-      {
-        accessorKey: 'status',
-        header: 'Status',
-        cell: ({ row }) => {
-          const status = row.getValue('status') as string
-          if (!status) return null
-          const variants = {
-            pending: 'secondary',
-            confirmed: 'default',
-            settled: 'default',
-            cancelled: 'secondary'
-          }
-          return (
-            <Badge>
-              {status.charAt(0).toUpperCase() + status.slice(1)}
-            </Badge>
-          )
-        },
-      },
-    ]
-
-    return (
-      <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Pagination Controls</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-              Navigate through large datasets with comprehensive pagination controls. Change page size,
-              jump to specific pages, and see the current selection status.
-            </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
-                <Icon name="chevrons-right" className="h-4 w-4 text-[var(--color-text-accent)]" />
-                <span className="text-body-sm text-[var(--color-text-accent)]">
-                  This dataset has 247 items. Try changing the page size (10, 25, 50, 100) and navigating
-                  between pages. Notice how the page numbers adapt.
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <DataTable
-            data={data}
-            columns={columns}
-            title="Trading Activity - Pagination Demo (247 total records)"
-            enableRowSelection={true}
-            enableGlobalSearch={true}
-          />
-        </div>
-      </div>
-    )
-  },
-}
-
-export const HeaderlessMode: Story = {
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story: 'DataTable without header section - perfect for custom layouts where you want to control filtering and actions externally. Notice the properly rounded top corners.',
-      },
-    },
-  },
-  render: () => {
-    const [data] = useState(() => generateTradeData(15))
-
-    return (
-      <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Headerless DataTable</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-              DataTable with no header section, maintaining clean rounded corners. Perfect for embedding
-              in custom layouts or when controls are handled externally.
-            </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
-                <Icon name="layout" className="h-4 w-4 text-[var(--color-text-accent)]" />
-                <span className="text-body-sm text-[var(--color-text-accent)]">
-                  No header section - clean table with proper rounded top corners for custom layouts.
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <DataTable
-            data={data}
-            columns={tradeColumns}
-            showHeader={false}
-            borderStyle="both"
-          />
-        </div>
-      </div>
-    )
-  },
-}
-
-export const TableOnlyMode: Story = {
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story: 'DataTable with no header or pagination - pure table with rounded corners on all sides.',
-      },
-    },
-  },
-  render: () => {
-    const [data] = useState(() => generateTradeData(8))
-
-    return (
-      <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Table Only Mode</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-              Pure table without header or pagination sections. Fully rounded corners for standalone use.
-            </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
-                <Icon name="table" className="h-4 w-4 text-[var(--color-text-accent)]" />
-                <span className="text-body-sm text-[var(--color-text-accent)]">
-                  Pure table component - no headers, no pagination, perfectly rounded corners.
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <DataTable
-            data={data}
-            columns={tradeColumns}
-            showHeader={false}
-            showPagination={false}
-            borderStyle="both"
-          />
-        </div>
-      </div>
-    )
-  },
-}
-
-export const ExternalControlExample: Story = {
+export const HeaderlessModeWithExternalControl: Story = {
   parameters: {
     layout: 'fullscreen',
     docs: {
@@ -6293,264 +5289,6 @@ export const ExternalControlExample: Story = {
     )
   },
 }
-// ============================================================================
-// Row Click
-// ============================================================================
-
-export const RowClick: Story = {
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story: `
-Demonstrates row click functionality with full accessibility support.
-
-**Features:**
-- Click any row to view details
-- Keyboard navigation (Tab to focus, Enter/Space to activate)
-- Smart default: only leaf rows and single-item groups are clickable
-- Interactive elements (buttons, links) don't trigger row clicks
-- Visual feedback with hover states and selected row highlighting
-
-**Smart Default Behavior:**
-By default, only "actual data rows" are clickable:
-- ✅ Leaf rows (non-grouped rows) are clickable
-- ✅ Single-item groups are clickable (when using hideChildrenForSingleItemGroups)
-- ❌ Multi-item parent groups are NOT clickable (prevents confusion)
-
-Use \`isRowClickable\` to customize which rows can be clicked.
-        `,
-      },
-    },
-  },
-  render: () => {
-    const [selectedRow, setSelectedRow] = useState<any>(null)
-    const [clickCount, setClickCount] = useState(0)
-
-    // Sample product data with categories for grouping
-    const productData = useMemo(() => [
-      { id: '1', name: 'MacBook Pro 16"', category: 'Laptops', price: 2499, stock: 15, sku: 'MBP16-001' },
-      { id: '2', name: 'MacBook Air M2', category: 'Laptops', price: 1199, stock: 28, sku: 'MBA-M2-001' },
-      { id: '3', name: 'iPad Pro 12.9"', category: 'Tablets', price: 1099, stock: 22, sku: 'IPD12-001' },
-      { id: '4', name: 'Magic Mouse', category: 'Accessories', price: 79, stock: 45, sku: 'MM-001' },
-      { id: '5', name: 'Magic Keyboard', category: 'Accessories', price: 149, stock: 32, sku: 'MK-001' },
-      { id: '6', name: 'AirPods Pro', category: 'Audio', price: 249, stock: 67, sku: 'APP-001' },
-      { id: '7', name: 'iPhone 15 Pro', category: 'Phones', price: 999, stock: 41, sku: 'IP15P-001' },
-    ], [])
-
-    const productColumns: ColumnDef<any>[] = useMemo(() => [
-      {
-        accessorKey: 'name',
-        header: 'Product Name',
-        meta: { label: 'Product Name' },
-        cell: ({ row }) => (
-          <div className="font-medium">{row.getValue('name')}</div>
-        ),
-      },
-      {
-        accessorKey: 'category',
-        header: 'Category',
-        meta: { label: 'Category' },
-      },
-      {
-        accessorKey: 'sku',
-        header: 'SKU',
-        meta: { label: 'SKU Code' },
-        cell: ({ row }) => (
-          <div className="font-mono text-body-sm text-[var(--color-text-secondary)]">
-            {row.getValue('sku')}
-          </div>
-        ),
-      },
-      {
-        accessorKey: 'price',
-        header: 'Price',
-        meta: { label: 'Price', align: 'right' },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
-        ),
-      },
-      {
-        accessorKey: 'stock',
-        header: 'Stock',
-        meta: { label: 'In Stock', align: 'right' },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums">{row.getValue('stock')}</div>
-        ),
-      },
-      {
-        id: 'actions',
-        header: 'Actions',
-        cell: ({ row }) => (
-          <div className="flex gap-[var(--space-sm)]">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={(e) => {
-                e.stopPropagation()
-                alert(`Edit ${row.original.name}`)
-              }}
-            >
-              Edit
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={(e) => {
-                e.stopPropagation()
-                alert(`Delete ${row.original.name}`)
-              }}
-            >
-              Delete
-            </Button>
-          </div>
-        ),
-      },
-    ], [])
-
-    return (
-      <div className="p-[var(--space-xlg)]">
-        <div className="max-w-6xl mx-auto space-y-[var(--space-lg)]">
-          {/* Header */}
-          <div>
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Row Click Example</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)]">
-              Click any row to view details. Notice that buttons within rows don't trigger the row click.
-            </p>
-          </div>
-
-          {/* Stats */}
-          <div className="flex gap-[var(--space-md)]">
-            <Card>
-              <CardContent className="p-[var(--space-lg)]">
-                <div className="text-caption-sm text-[var(--color-text-secondary)] mb-[var(--space-xsm)]">
-                  Total Clicks
-                </div>
-                <div className="text-heading-lg font-semibold">{clickCount}</div>
-              </CardContent>
-            </Card>
-            <Card className="flex-1">
-              <CardContent className="p-[var(--space-lg)]">
-                <div className="text-caption-sm text-[var(--color-text-secondary)] mb-[var(--space-xsm)]">
-                  Selected Row
-                </div>
-                <div className="text-body-md font-medium">
-                  {selectedRow ? selectedRow.name : 'None'}
-                </div>
-                {selectedRow && (
-                  <div className="mt-[var(--space-sm)] text-body-sm text-[var(--color-text-secondary)]">
-                    SKU: {selectedRow.sku} • Price: {formatCurrency(selectedRow.price)} • Stock: {selectedRow.stock}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Basic Example */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Basic Row Click</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <DataTable
-                data={productData}
-                columns={productColumns}
-                onRowClick={(row, event) => {
-                  console.log('Row clicked:', row.original)
-                  setSelectedRow(row.original)
-                  setClickCount(prev => prev + 1)
-                }}
-              />
-            </CardContent>
-          </Card>
-
-          {/* With Grouping Example */}
-          <Card>
-            <CardHeader>
-              <CardTitle>With Grouping (Smart Default)</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-[var(--space-md)]">
-              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-md)] rounded-md">
-                <strong>Try clicking:</strong> Notice that parent category rows with multiple items are NOT clickable (no cursor change),
-                but individual product rows are. This is the smart default behavior.
-              </div>
-              <DataTable
-                data={productData}
-                columns={productColumns}
-                enableGrouping
-                enableExpanding
-                initialState={{
-                  grouping: ['category'],
-                }}
-                hideChildrenForSingleItemGroups={{ category: true }}
-                onRowClick={(row, event) => {
-                  console.log('Row clicked:', row.original)
-                  setSelectedRow(row.original)
-                  setClickCount(prev => prev + 1)
-                }}
-              />
-            </CardContent>
-          </Card>
-
-          {/* Custom Filter Example */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Custom Clickable Filter</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-[var(--space-md)]">
-              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-md)] rounded-md">
-                <strong>Custom behavior:</strong> This example uses <code>isRowClickable</code> to allow ALL rows (including parent groups) to be clicked.
-              </div>
-              <DataTable
-                data={productData}
-                columns={productColumns}
-                enableGrouping
-                enableExpanding
-                initialState={{
-                  grouping: ['category'],
-                }}
-                hideChildrenForSingleItemGroups={{ category: true }}
-                onRowClick={(row, event) => {
-                  const data = row.getIsGrouped() && row.subRows?.length === 1
-                    ? row.subRows[0].original
-                    : row.original
-
-                  console.log('Row clicked:', data)
-                  setSelectedRow(data)
-                  setClickCount(prev => prev + 1)
-                }}
-                // Allow all rows to be clickable
-                isRowClickable={(row) => true}
-              />
-            </CardContent>
-          </Card>
-
-          {/* Keyboard Navigation Example */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Keyboard Navigation</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-[var(--space-md)]">
-              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-md)] rounded-md">
-                <strong>Accessibility:</strong> Press <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-medium)] rounded">Tab</kbd> to navigate between rows,
-                then press <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-medium)] rounded">Enter</kbd> or <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-medium)] rounded">Space</kbd> to activate.
-              </div>
-              <DataTable
-                data={productData.slice(0, 5)}
-                columns={productColumns.slice(0, 4)}
-                onRowClick={(row, event) => {
-                  console.log('Row clicked (keyboard):', row.original)
-                  setSelectedRow(row.original)
-                  setClickCount(prev => prev + 1)
-                }}
-              />
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    )
-  },
-}
 
 export const CustomFooterLabel: Story = {
   parameters: {
@@ -6615,180 +5353,3 @@ you can use \`footerLabel\` to inform users about what they're viewing.
     )
   },
 }
-
-export const VerticalAlignment: Story = {
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story: `Demonstrates vertical alignment options for table cells. Cells can be aligned to top, middle (center), or bottom.
-
-## Configuration Levels
-
-- **Column-level**: Set \`verticalAlign\` in column metadata to control alignment per column
-- **Global default**: Use \`defaultVerticalAlign\` prop to set default alignment for all cells
-- **Default**: If not specified, cells default to \`middle\` alignment
-
-## Use Cases
-
-- **Top alignment**: Ideal for cells with variable-height content or multi-line text
-- **Middle alignment**: Default option that works well for most content types
-- **Bottom alignment**: Useful for aligning content to baselines or creating specific layouts`,
-      },
-    },
-  },
-  render: () => {
-    interface Product {
-      id: string
-      name: string
-      description: string
-      price: number
-      status: string
-      tags: string[]
-    }
-
-    const productsData: Product[] = [
-      {
-        id: '1',
-        name: 'Laptop Pro',
-        description: 'High-performance laptop with 16GB RAM, 512GB SSD, and dedicated graphics card. Perfect for developers and designers.',
-        price: 1299,
-        status: 'In Stock',
-        tags: ['Electronics', 'Computers', 'Featured']
-      },
-      {
-        id: '2',
-        name: 'Mouse',
-        description: 'Wireless mouse',
-        price: 29,
-        status: 'Low Stock',
-        tags: ['Accessories']
-      },
-      {
-        id: '3',
-        name: 'Monitor 4K',
-        description: '27-inch 4K UHD display with HDR support, 144Hz refresh rate, and adjustable stand. Includes HDMI and DisplayPort cables.',
-        price: 599,
-        status: 'In Stock',
-        tags: ['Electronics', 'Displays', 'Premium']
-      },
-      {
-        id: '4',
-        name: 'Keyboard',
-        description: 'Mechanical keyboard with RGB backlighting',
-        price: 89,
-        status: 'In Stock',
-        tags: ['Accessories', 'Gaming']
-      },
-    ]
-
-    const productsColumns: ColumnDef<Product>[] = [
-      {
-        accessorKey: 'id',
-        header: 'ID',
-        meta: { verticalAlign: 'top' },
-        cell: ({ row }) => (
-          <div className="font-medium">{row.getValue('id')}</div>
-        ),
-      },
-      {
-        accessorKey: 'name',
-        header: 'Product',
-        meta: { verticalAlign: 'top' },
-        cell: ({ row }) => (
-          <div className="font-medium">{row.getValue('name')}</div>
-        ),
-      },
-      {
-        accessorKey: 'description',
-        header: 'Description',
-        meta: { verticalAlign: 'middle' },
-        cell: ({ row }) => (
-          <div className="max-w-md text-[var(--color-text-secondary)]">
-            {row.getValue('description')}
-          </div>
-        ),
-      },
-      {
-        accessorKey: 'price',
-        header: 'Price',
-        meta: { align: 'right', verticalAlign: 'middle' },
-        cell: ({ row }) => (
-          <div className="text-right tabular-nums font-medium">
-            {formatCurrency(row.getValue('price'))}
-          </div>
-        ),
-      },
-      {
-        accessorKey: 'status',
-        header: 'Status',
-        meta: { verticalAlign: 'bottom' },
-        cell: ({ row }) => {
-          const status = row.getValue('status') as string
-          return (
-            <Badge variant={status === 'In Stock' ? 'success' : 'warning'}>
-              {status}
-            </Badge>
-          )
-        },
-      },
-      {
-        accessorKey: 'tags',
-        header: 'Tags',
-        meta: { verticalAlign: 'bottom' },
-        cell: ({ row }) => {
-          const tags = row.getValue('tags') as string[]
-          return (
-            <div className="flex flex-wrap gap-1">
-              {tags.map((tag) => (
-                <Badge key={tag} variant="outline" className="text-xs">
-                  {tag}
-                </Badge>
-              ))}
-            </div>
-          )
-        },
-      },
-    ]
-
-    return (
-      <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Vertical Alignment Options</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-md)]">
-              This example demonstrates how different vertical alignment options affect cell content
-              layout. Notice how cells with varying content heights align differently based on their
-              column configuration.
-            </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)] space-y-[var(--space-sm)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
-                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
-                <span className="text-body-sm font-medium text-[var(--color-text-accent)]">
-                  Column Alignment Configuration
-                </span>
-              </div>
-              <ul className="text-body-sm text-[var(--color-text-accent)] space-y-1 ml-6">
-                <li><strong>ID & Product:</strong> Top-aligned (verticalAlign: 'top')</li>
-                <li><strong>Description & Price:</strong> Middle-aligned (verticalAlign: 'middle')</li>
-                <li><strong>Status & Tags:</strong> Bottom-aligned (verticalAlign: 'bottom')</li>
-              </ul>
-            </div>
-          </div>
-
-          <DataTable
-            data={productsData}
-            columns={productsColumns}
-            title="Product Catalog - Vertical Alignment Demo"
-          />
-        </div>
-      </div>
-    )
-  },
-}
-
-// ============================================================================
-// Filters Integration
-// ============================================================================
-
-// Sample shipping fixture data
