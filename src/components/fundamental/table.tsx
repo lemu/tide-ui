@@ -83,7 +83,7 @@ const tableCellVariants = cva(
 );
 
 const tableHeaderVariants = cva(
-  "align-middle font-semibold text-[var(--color-text-primary)] [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-[var(--grey-25)] border-b border-[var(--grey-50)]",
+  "align-middle font-semibold text-[var(--color-text-primary)] [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] bg-[var(--grey-25)] border-b border-[var(--color-border-primary-medium)]",
   {
     variants: {
       size: {
