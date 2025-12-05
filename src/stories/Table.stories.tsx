@@ -807,3 +807,173 @@ export const EmptyState: Story = {
     </div>
   ),
 }
+
+// Border control demonstration
+export const BorderControl: Story = {
+  render: () => {
+    const sampleData = [
+      { id: 1, product: 'Laptop', category: 'Electronics', price: 1299.99, stock: 45 },
+      { id: 2, product: 'Mouse', category: 'Accessories', price: 29.99, stock: 230 },
+      { id: 3, product: 'Keyboard', category: 'Accessories', price: 89.99, stock: 156 },
+      { id: 4, product: 'Monitor', category: 'Electronics', price: 449.99, stock: 78 },
+      { id: 5, product: 'Webcam', category: 'Electronics', price: 79.99, stock: 92 },
+    ]
+
+    return (
+      <div className="w-full space-y-12">
+        <div>
+          <h2 className="text-heading-lg font-semibold mb-2">Table Border Control</h2>
+          <p className="text-body-md text-[var(--color-text-secondary)]">
+            Control vertical and horizontal borders individually using <code className="text-body-sm bg-[var(--color-background-neutral-subtlest)] px-1 py-0.5 rounded">showBorder</code> and <code className="text-body-sm bg-[var(--color-background-neutral-subtlest)] px-1 py-0.5 rounded">showRowBorder</code> props on each cell.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Both borders (default) */}
+          <div className="space-y-3">
+            <div>
+              <h3 className="text-heading-md font-medium">Both Borders</h3>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                showBorder=true + showRowBorder=true
+              </p>
+            </div>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead showBorder={true}>Product</TableHead>
+                  <TableHead showBorder={true}>Category</TableHead>
+                  <TableHead showBorder={true} numeric>Price</TableHead>
+                  <TableHead showBorder={true} numeric>Stock</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {sampleData.map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell showBorder={true} showRowBorder={true} className="font-medium">{item.product}</TableCell>
+                    <TableCell showBorder={true} showRowBorder={true}>{item.category}</TableCell>
+                    <TableCell showBorder={true} showRowBorder={true} numeric>${item.price}</TableCell>
+                    <TableCell showBorder={true} showRowBorder={true} numeric>{item.stock}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+
+          {/* Horizontal only */}
+          <div className="space-y-3">
+            <div>
+              <h3 className="text-heading-md font-medium">Horizontal Only</h3>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                showBorder=false + showRowBorder=true
+              </p>
+            </div>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead showBorder={false}>Product</TableHead>
+                  <TableHead showBorder={false}>Category</TableHead>
+                  <TableHead showBorder={false} numeric>Price</TableHead>
+                  <TableHead showBorder={false} numeric>Stock</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {sampleData.map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell showBorder={false} showRowBorder={true} className="font-medium">{item.product}</TableCell>
+                    <TableCell showBorder={false} showRowBorder={true}>{item.category}</TableCell>
+                    <TableCell showBorder={false} showRowBorder={true} numeric>${item.price}</TableCell>
+                    <TableCell showBorder={false} showRowBorder={true} numeric>{item.stock}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+
+          {/* Vertical only */}
+          <div className="space-y-3">
+            <div>
+              <h3 className="text-heading-md font-medium">Vertical Only</h3>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                showBorder=true + showRowBorder=false
+              </p>
+            </div>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead showBorder={true}>Product</TableHead>
+                  <TableHead showBorder={true}>Category</TableHead>
+                  <TableHead showBorder={true} numeric>Price</TableHead>
+                  <TableHead showBorder={true} numeric>Stock</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {sampleData.map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell showBorder={true} showRowBorder={false} className="font-medium">{item.product}</TableCell>
+                    <TableCell showBorder={true} showRowBorder={false}>{item.category}</TableCell>
+                    <TableCell showBorder={true} showRowBorder={false} numeric>${item.price}</TableCell>
+                    <TableCell showBorder={true} showRowBorder={false} numeric>{item.stock}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+
+          {/* No borders */}
+          <div className="space-y-3">
+            <div>
+              <h3 className="text-heading-md font-medium">No Borders</h3>
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                showBorder=false + showRowBorder=false
+              </p>
+            </div>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead showBorder={false}>Product</TableHead>
+                  <TableHead showBorder={false}>Category</TableHead>
+                  <TableHead showBorder={false} numeric>Price</TableHead>
+                  <TableHead showBorder={false} numeric>Stock</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {sampleData.map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell showBorder={false} showRowBorder={false} className="font-medium">{item.product}</TableCell>
+                    <TableCell showBorder={false} showRowBorder={false}>{item.category}</TableCell>
+                    <TableCell showBorder={false} showRowBorder={false} numeric>${item.price}</TableCell>
+                    <TableCell showBorder={false} showRowBorder={false} numeric>{item.stock}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+
+        <div className="p-6 bg-[var(--color-background-neutral-subtlest)] rounded-lg space-y-4">
+          <h3 className="text-heading-md font-medium">Border Implementation Details</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-body-sm">
+            <div>
+              <h4 className="font-medium mb-2">Vertical Borders (showBorder)</h4>
+              <ul className="space-y-1 text-[var(--color-text-secondary)]">
+                <li>• Uses <code className="bg-[var(--color-surface-primary)] px-1 rounded">border-r</code> (native CSS border)</li>
+                <li>• Color: <code className="bg-[var(--color-surface-primary)] px-1 rounded">var(--color-border-primary-medium)</code></li>
+                <li>• Last cell automatically removes right border</li>
+                <li>• Headers use linear-gradient for border + background</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-medium mb-2">Horizontal Borders (showRowBorder)</h4>
+              <ul className="space-y-1 text-[var(--color-text-secondary)]">
+                <li>• Uses <code className="bg-[var(--color-surface-primary)] px-1 rounded">shadow-[inset...]</code> (inset box-shadow)</li>
+                <li>• Color: <code className="bg-[var(--color-surface-primary)] px-1 rounded">var(--color-border-primary-medium)</code></li>
+                <li>• Works better with sticky positioning</li>
+                <li>• Last row automatically removes bottom border</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  },
+}
