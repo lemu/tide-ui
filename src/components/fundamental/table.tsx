@@ -101,7 +101,7 @@ const tableHeaderVariants = cva(
         false: "",
       },
       showBorder: {
-        true: "bg-[linear-gradient(to_right,var(--grey-25)_calc(100%-1px),var(--color-border-primary-medium)_calc(100%-1px),var(--color-border-primary-medium)_100%)] last:bg-[var(--grey-25)]",
+        true: "border-r border-[var(--color-border-primary-medium)] last:border-r-0",
         false: "",
       },
     },
