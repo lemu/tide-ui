@@ -4270,7 +4270,7 @@ Notice how the entire group stays visible and expands automatically, with matche
     // Use simplified columns for highlighting to work properly
     // Memoize to ensure stable column references across renders
     const groupingColumns = useMemo(() => {
-      return tradeColumnsSimple.map(col => {
+      return tradeColumns.map(col => {
         if (col.accessorKey === 'instrument' || col.accessorKey === 'side' || col.accessorKey === 'counterparty' || col.accessorKey === 'trader' || col.accessorKey === 'status') {
           return {
             ...col,
@@ -5290,24 +5290,30 @@ export const HeaderlessModeWithExternalControl: Story = {
   },
 }
 
-export const CustomFooterLabel: Story = {
+export const FooterUtilities: Story = {
   parameters: {
     layout: 'fullscreen',
     docs: {
       description: {
-        story: `Demonstrates the optional footer label feature. This is useful for showing custom information
-when using external filtering or data states that the DataTable doesn't track internally.
+        story: `Demonstrates footer utility features including custom footer labels and pagination persistence.
 
-## Use Case
+## Features
 
-When you have external filtering or data processing that affects the number of visible items,
-you can use \`footerLabel\` to inform users about what they're viewing.
+### Custom Footer Label
+Display custom information in the table footer using the \`footerLabel\` prop. This is useful for showing:
+- External filtering status (e.g., "Showing 269 of 500 items")
+- Custom status messages or warnings
+- Additional context about the displayed data
 
-## Examples
+### Pagination Persistence
+When \`enablePaginationPersistence\` is enabled, the DataTable automatically saves the user's pagination
+preferences (page index and page size) to localStorage. This improves UX by maintaining pagination state
+across page refreshes or browser sessions.
 
-- "Showing 269 of 500 items" (external filtering)
-- "Displaying cached results"
-- Custom status messages or warnings`,
+**Props:**
+- \`footerLabel?: React.ReactNode\` - Custom content for the footer
+- \`enablePaginationPersistence?: boolean\` - Enable automatic pagination persistence
+- \`storageKey?: string\` - Unique key for localStorage (default: "data-table-columns")`,
       },
     },
   },
@@ -5318,18 +5324,18 @@ you can use \`footerLabel\` to inform users about what they're viewing.
       <div className="p-[var(--space-lg)]">
         <div className="max-w-[1200px] mx-auto">
           <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Custom Footer Label</h2>
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Footer Utilities</h2>
             <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-              This example shows how to use the optional <code>footerLabel</code> prop to display
-              custom information in the table footer. This is particularly useful when you have
-              external filtering or other data states that affect what's being displayed.
+              This example demonstrates two footer utility features: custom footer labels and
+              pagination persistence. Try changing the page or page size, then refresh the browser
+              to see your pagination preferences maintained.
             </p>
             <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
               <div className="flex items-center gap-[var(--space-sm)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
-                  The footer label can be a string or any React node, allowing for custom styling
-                  and dynamic content.
+                  Pagination state is saved to localStorage with the key "footer-utilities-demo-table-pagination".
+                  The footer label can be any React node for custom styling.
                 </span>
               </div>
             </div>
@@ -5338,7 +5344,9 @@ you can use \`footerLabel\` to inform users about what they're viewing.
           <DataTable
             data={data}
             columns={tradeColumns}
-            title="Trading Data with Footer Info"
+            title="Trading Data with Footer Utilities"
+            storageKey="footer-utilities-demo-table"
+            enablePaginationPersistence={true}
             footerLabel={
               <span className="text-body-sm text-[var(--color-text-secondary)]">
                 Showing <strong className="text-[var(--color-text-primary)]">{data.length}</strong> of{' '}

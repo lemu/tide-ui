@@ -1331,6 +1331,7 @@ export interface DataTableProps<TData, TValue> {
   enableColumnResizing?: boolean
   columnResizeMode?: ColumnResizeMode
   enableColumnResizePersistence?: boolean
+  enablePaginationPersistence?: boolean
   storageKey?: string
   // Expanding/nested rows
   enableExpanding?: boolean
@@ -1427,6 +1428,10 @@ export interface DataTableProps<TData, TValue> {
     rowPinning?: {
       top?: string[]
       bottom?: string[]
+    }
+    pagination?: {
+      pageIndex: number
+      pageSize: number
     }
   }
   // Controlled state
@@ -1557,6 +1562,7 @@ export function DataTable<TData, TValue>({
   enableColumnResizing = false,
   columnResizeMode = "onChange",
   enableColumnResizePersistence = false,
+  enablePaginationPersistence = false,
   storageKey = "data-table-columns",
   enableExpanding = false,
   getSubRows,
@@ -1618,6 +1624,30 @@ export function DataTable<TData, TValue>({
     return enableRowSelection ? ['select', ...baseColumns] : baseColumns
   })
   const [internalColumnSizing, setInternalColumnSizing] = React.useState(controlledColumnSizing || initialState?.columnSizing || {})
+
+  // Pagination state - initialized from localStorage or initialState
+  const [pagination, setPagination] = React.useState<{
+    pageIndex: number
+    pageSize: number
+  }>(() => {
+    // Try to load from localStorage first if persistence is enabled
+    if (enablePaginationPersistence && storageKey) {
+      const savedPagination = localStorage.getItem(`${storageKey}-pagination`)
+      if (savedPagination) {
+        try {
+          const parsed = JSON.parse(savedPagination)
+          // Validate structure
+          if (typeof parsed.pageIndex === 'number' && typeof parsed.pageSize === 'number') {
+            return parsed
+          }
+        } catch (e) {
+          console.warn('Failed to parse saved pagination:', e)
+        }
+      }
+    }
+    // Fall back to initialState or defaults
+    return initialState?.pagination || { pageIndex: 0, pageSize: 10 }
+  })
 
   // Always internal state (not exposed for control)
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -1748,6 +1778,30 @@ export function DataTable<TData, TValue>({
       localStorage.setItem(`${storageKey}-sizing`, JSON.stringify(columnSizing))
     }
   }, [columnSizing, enableColumnResizePersistence, storageKey])
+
+  // Load pagination from localStorage
+  React.useEffect(() => {
+    if (enablePaginationPersistence && storageKey) {
+      const savedPagination = localStorage.getItem(`${storageKey}-pagination`)
+      if (savedPagination) {
+        try {
+          const parsed = JSON.parse(savedPagination)
+          if (typeof parsed.pageIndex === 'number' && typeof parsed.pageSize === 'number') {
+            setPagination(parsed)
+          }
+        } catch (e) {
+          console.warn('Failed to parse saved pagination:', e)
+        }
+      }
+    }
+  }, [enablePaginationPersistence, storageKey])
+
+  // Save pagination to localStorage
+  React.useEffect(() => {
+    if (enablePaginationPersistence && storageKey) {
+      localStorage.setItem(`${storageKey}-pagination`, JSON.stringify(pagination))
+    }
+  }, [pagination, enablePaginationPersistence, storageKey])
 
   // Calculate border visibility based on borderStyle prop
   const borderSettings = React.useMemo(() => {
@@ -1947,6 +2001,7 @@ export function DataTable<TData, TValue>({
       grouping,
       rowPinning,
       columnOrder,
+      pagination,
     },
     enableRowSelection: enableRowSelection,
     enableColumnPinning: false, // Disable TanStack Table pinning - using CSS approach
@@ -1973,6 +2028,7 @@ export function DataTable<TData, TValue>({
     onGroupingChange: setGrouping,
     onRowPinningChange: setRowPinning,
     onColumnOrderChange: setColumnOrder,
+    onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: enableVirtualization ? undefined : getPaginationRowModel(),
