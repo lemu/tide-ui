@@ -2983,6 +2983,13 @@ export function DataTable<TData, TValue>({
                           return null
                         }
 
+                        // Detect if we should remove the bottom border from first column child rows
+                        const isChildRow = enableGrouping && row.depth > 0
+                        const isFirstColumn = index === 0
+                        const parentRow = row.getParentRow()
+                        const isLastChildInGroup = parentRow?.subRows?.[parentRow.subRows.length - 1]?.id === row.id
+                        const shouldRemoveBottomBorder = isChildRow && isFirstColumn && !isLastChildInGroup
+
                         return (
                           <TableCell
                             key={cell.id}
@@ -3054,7 +3061,9 @@ export function DataTable<TData, TValue>({
                                 !row.getIsGrouped?.() && !(enableGrouping && row.depth === 1) && !enableExpanding && "bg-[var(--color-surface-primary)]",
                               ],
                               // Section header background
-                              isSectionHeader && "bg-[var(--blue-50)]"
+                              isSectionHeader && "bg-[var(--blue-50)]",
+                              // Remove bottom border from first column child rows (except last)
+                              shouldRemoveBottomBorder && "!shadow-none"
                             )}
                             style={{
                               ...pinningStyles,
@@ -3329,6 +3338,13 @@ export function DataTable<TData, TValue>({
                         return null
                       }
 
+                      // Detect if we should remove the bottom border from first column child rows
+                      const isChildRow = enableGrouping && row.depth > 0
+                      const isFirstColumn = index === 0
+                      const parentRow = row.getParentRow()
+                      const isLastChildInGroup = parentRow?.subRows?.[parentRow.subRows.length - 1]?.id === row.id
+                      const shouldRemoveBottomBorder = isChildRow && isFirstColumn && !isLastChildInGroup
+
                       return (
                         <TableCell
                           key={cell.id}
@@ -3397,7 +3413,9 @@ export function DataTable<TData, TValue>({
                               !row.getIsGrouped?.() && !(enableGrouping && row.depth === 1) && !enableExpanding && "bg-[var(--color-surface-primary)]",
                             ],
                             // Section header background
-                            isSectionHeader && "bg-[var(--blue-50)]"
+                            isSectionHeader && "bg-[var(--blue-50)]",
+                            // Remove bottom border from first column child rows (except last)
+                            shouldRemoveBottomBorder && "!shadow-none"
                           )}
                           style={{
                             ...pinningStyles,

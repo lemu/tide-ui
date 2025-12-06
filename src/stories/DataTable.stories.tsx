@@ -5162,6 +5162,7 @@ Same fixture lifecycle scenarios as GroupingWithCustomDisplay:
             columnVisibility={{ fixtureId: false }}
             title="Fixture Lifecycle Scenarios"
             stickyHeader
+            borderStyle="horizontal"
             initialState={{
               expanded: {},
             }}
