@@ -119,7 +119,7 @@ export const SalesPerformance: Story = {
         {/* Interactive Chart and Table */}
         <LinkedChart
           title="Sales Team Performance Analysis"
-          description="Click chart data points to filter the table, select table rows and use 'Filter Selected' to focus on specific team members"
+          description="Click chart data points to filter the table, select table rows and use 'Filter selected' to focus on specific team members"
           data={salesData}
           config={chartConfig}
           columns={columns}
@@ -687,7 +687,7 @@ export const MultiChartDashboard: Story = {
         {/* Interactive Chart with Unified Data Table */}
         <LinkedChart
           title={getChartTitle()}
-          description="All charts are linked to the same comprehensive data table below. Select team members and use 'Filter Selected' to compare them directly."
+          description="All charts are linked to the same comprehensive data table below. Select team members and use 'Filter selected' to compare them directly."
           data={teamData}
           config={getCurrentConfig()}
           columns={allColumns}

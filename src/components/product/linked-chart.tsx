@@ -208,14 +208,14 @@ export function LinkedChart({
               onClick={() => setIsRowFilterActive(!isRowFilterActive)}
             >
               <Icon name="filter" size="sm" className="mr-[var(--space-xsm)]" />
-              Filter Selected
+              Filter selected
             </Button>
           )}
 
           {(selectedRows.size > 0 || filteredIndices.size > 0 || isRowFilterActive) && (
             <Button variant="ghost" size="sm" onClick={clearAll}>
               <Icon name="x" size="sm" className="mr-[var(--space-sm)]" />
-              Clear All
+              Clear all
             </Button>
           )}
         </div>

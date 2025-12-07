@@ -60,14 +60,14 @@ const statusConfig: Record<StatusValue, StatusConfig> = {
   "negotiation-firm-offer": { icon: "negotiation-firm-offer", color: "information", objectLabel: "Negotiation", statusLabel: "Firm offer" },
   "negotiation-firm-bid": { icon: "negotiation-firm-bid", color: "information", objectLabel: "Negotiation", statusLabel: "Firm bid" },
   "negotiation-firm": { icon: "negotiation-firm", color: "violet", objectLabel: "Negotiation", statusLabel: "Firm" },
-  "negotiation-on-subs": { icon: "on-subs", color: "warning", objectLabel: "Negotiation", statusLabel: "On Subs" },
+  "negotiation-on-subs": { icon: "on-subs", color: "warning", objectLabel: "Negotiation", statusLabel: "On subs" },
   "negotiation-fixed": { icon: "negotiation-fixed", color: "success", objectLabel: "Negotiation", statusLabel: "Fixed" },
   "negotiation-firm-offer-expired": { icon: "negotiation-expired", color: "error", objectLabel: "Negotiation", statusLabel: "(Firm offer) Expired" },
   "negotiation-withdrawn": { icon: "negotiation-withdrawn", color: "error", objectLabel: "Negotiation", statusLabel: "Withdrawn" },
   "negotiation-firm-amendment": { icon: "negotiation-on-subs-amendment", color: "violet", objectLabel: "Negotiation", statusLabel: "Firm (Amendment)" },
   "negotiation-subs-expired": { icon: "negotiation-expired", color: "error", objectLabel: "Negotiation", statusLabel: "Subs expired" },
   "negotiation-subs-failed": { icon: "negotiation-subs-failed", color: "error", objectLabel: "Negotiation", statusLabel: "Subs failed" },
-  "negotiation-on-subs-amendment": { icon: "negotiation-on-subs-amendment", color: "warning", objectLabel: "Negotiation", statusLabel: "On Subs (Amendment)" },
+  "negotiation-on-subs-amendment": { icon: "negotiation-on-subs-amendment", color: "warning", objectLabel: "Negotiation", statusLabel: "On subs (amendment)" },
 
   // Contract statuses
   "contract-draft": { icon: "contract-draft", color: "tertiary", objectLabel: "Contract", statusLabel: "Draft" },
@@ -82,8 +82,8 @@ const statusConfig: Record<StatusValue, StatusConfig> = {
 
   // Recap Manager statuses
   "recap-manager-draft": { icon: "contract-draft", color: "tertiary", objectLabel: "Recap manager", statusLabel: "Draft" },
-  "recap-manager-on-subs": { icon: "contract-on-subs", color: "warning", objectLabel: "Recap manager", statusLabel: "On Subs" },
-  "recap-manager-fully-fixed": { icon: "contract-final", color: "success", objectLabel: "Recap manager", statusLabel: "Fully Fixed" },
+  "recap-manager-on-subs": { icon: "contract-on-subs", color: "warning", objectLabel: "Recap manager", statusLabel: "On subs" },
+  "recap-manager-fully-fixed": { icon: "contract-final", color: "success", objectLabel: "Recap manager", statusLabel: "Fully fixed" },
   "recap-manager-canceled": { icon: "contract-canceled", color: "error", objectLabel: "Recap manager", statusLabel: "Canceled" },
   "recap-manager-failed": { icon: "contract-failed", color: "error", objectLabel: "Recap manager", statusLabel: "Failed" },
 };

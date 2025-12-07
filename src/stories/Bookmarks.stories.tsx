@@ -25,12 +25,12 @@ Supports two variants: list (dropdown selector + options menu) and tabs (horizon
 
 **When on System Bookmark (modified):**
 - Reset: Revert to system bookmark state
-- Create Bookmark: Save current state as new user bookmark
+- Create bookmark: Save current state as new user bookmark
 
 **When on User Bookmark (modified):**
-- Revert Changes: Restore to saved user bookmark state
-- Save → Update Bookmark: Overwrite current bookmark
-- Save → Create New Bookmark: Save as new bookmark
+- Revert changes: Restore to saved user bookmark state
+- Save → Update bookmark: Overwrite current bookmark
+- Save → Create new bookmark: Save as new bookmark
 
 ## Integration
 
@@ -264,7 +264,7 @@ export const ListVariantSystemBookmarkDirty: Story = {
     return (
       <div className="p-4">
         <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-lg)] rounded-md">
-          <strong>System Bookmark Dirty State:</strong> Shows "Reset" and "Create Bookmark" buttons (no Update option since system bookmarks are read-only).
+          <strong>System Bookmark Dirty State:</strong> Shows "Reset" and "Create bookmark" buttons (no Update option since system bookmarks are read-only).
         </div>
         <Bookmarks
           variant="list"

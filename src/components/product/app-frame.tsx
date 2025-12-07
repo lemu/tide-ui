@@ -299,12 +299,12 @@ function CreateBoardModal({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Create New Board</DialogTitle>
+          <DialogTitle>Create new board</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <DialogBody className="space-y-4">
             <div className="space-y-2">
-              <label className="text-body-md block text-[var(--color-text-primary)]">Board Title</label>
+              <label className="text-body-md block text-[var(--color-text-primary)]">Board title</label>
               <Input
                 type="text"
                 value={title}
@@ -320,7 +320,7 @@ function CreateBoardModal({
               Cancel
             </Button>
             <Button type="submit" variant="primary" disabled={!title.trim() || isCreating}>
-              {isCreating ? 'Creating...' : 'Create Board'}
+              {isCreating ? 'Creating...' : 'Create board'}
             </Button>
           </DialogFooter>
         </form>
@@ -356,12 +356,12 @@ function RenameBoardModal({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Rename Board</DialogTitle>
+          <DialogTitle>Rename board</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <DialogBody className="space-y-4">
             <div className="space-y-2">
-              <label className="text-body-md block text-[var(--color-text-primary)]">Board Title</label>
+              <label className="text-body-md block text-[var(--color-text-primary)]">Board title</label>
               <Input
                 type="text"
                 value={title}
@@ -377,7 +377,7 @@ function RenameBoardModal({
               Cancel
             </Button>
             <Button type="submit" variant="primary" disabled={!title.trim() || isRenaming}>
-              {isRenaming ? 'Renaming...' : 'Rename Board'}
+              {isRenaming ? 'Renaming...' : 'Rename board'}
             </Button>
           </DialogFooter>
         </form>
@@ -404,7 +404,7 @@ function DeleteBoardModal({ isOpen, onClose, onDelete, boardTitle, isDeleting }:
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Delete Board</DialogTitle>
+          <DialogTitle>Delete board</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <DialogBody>
@@ -417,7 +417,7 @@ function DeleteBoardModal({ isOpen, onClose, onDelete, boardTitle, isDeleting }:
               Cancel
             </Button>
             <Button type="submit" variant="destructive" disabled={isDeleting}>
-              {isDeleting ? 'Deleting...' : 'Delete Board'}
+              {isDeleting ? 'Deleting...' : 'Delete board'}
             </Button>
           </DialogFooter>
         </form>
@@ -1077,7 +1077,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
 
-          <CommandGroup heading="Quick Actions">
+          <CommandGroup heading="Quick actions">
             <CommandItem onSelect={() => console.log('Reload')}>
               <Icon name="rotate-ccw" size="sm" className="mr-2" />
               <span>Reload Page</span>
@@ -1130,7 +1130,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
             ))}
           </CommandGroup>
 
-          <CommandGroup heading="Switch Team">
+          <CommandGroup heading="Switch team">
             {teams.map((team) => (
               <CommandItem key={team.name} onSelect={() => setCommandOpen(false)}>
                 <Avatar size="sm" className="mr-2" type="organization">

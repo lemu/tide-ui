@@ -216,7 +216,7 @@ export function MyDataTablePage() {
                   Reset
                 </Button>
                 <Button variant="ghost" onClick={() => handleBookmarkSave('create')}>
-                  Create Bookmark
+                  Create bookmark
                 </Button>
               </>
             )}
@@ -737,13 +737,13 @@ function CustomBookmarkActions({ hasActiveFilters }: { hasActiveFilters: boolean
             Reset
           </Button>
           <Button variant="ghost" onClick={openCreateDialog}>
-            Create Bookmark
+            Create bookmark
           </Button>
         </>
       ) : (
         <>
           <Button variant="ghost" onClick={handleRevert}>
-            Revert Changes
+            Revert changes
           </Button>
           <Button variant="ghost" onClick={handleUpdate}>
             Save
@@ -1776,7 +1776,7 @@ export const WithBookmarksTabsVariant: Story = {
                       onClick={handleRevert}
                       className="h-[var(--size-md)] flex-shrink-0"
                     >
-                      Revert Changes
+                      Revert changes
                     </Button>
                     <Bookmarks.SaveDropdown />
                   </>

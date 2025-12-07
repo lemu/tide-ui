@@ -172,28 +172,28 @@ export const ColumnDisplayToggles: Story = {
       <div className="space-y-2">
         <h4 className="text-label-sm text-[var(--color-text-tertiary)]">Display columns</h4>
         <div className="flex flex-wrap gap-1 items-start justify-start">
-          <Toggle variant="outline" size="sm" pressed aria-label="Toggle Laycan year">
+          <Toggle variant="outline" size="sm" pressed aria-label="Toggle laycan year">
             Laycan year
           </Toggle>
-          <Toggle variant="outline" size="sm" pressed aria-label="Toggle Laycan month">
+          <Toggle variant="outline" size="sm" pressed aria-label="Toggle laycan month">
             Laycan month
           </Toggle>
-          <Toggle variant="outline" size="sm" pressed aria-label="Toggle Fixture count">
+          <Toggle variant="outline" size="sm" pressed aria-label="Toggle fixture count">
             Fixture count
           </Toggle>
-          <Toggle variant="outline" size="sm" pressed aria-label="Toggle Cargo count">
+          <Toggle variant="outline" size="sm" pressed aria-label="Toggle cargo count">
             Cargo count
           </Toggle>
-          <Toggle variant="outline" size="sm" pressed aria-label="Toggle Gross freight">
+          <Toggle variant="outline" size="sm" pressed aria-label="Toggle gross freight">
             Gross freight
           </Toggle>
-          <Toggle variant="outline" size="sm" pressed aria-label="Toggle Avg. freight rate">
+          <Toggle variant="outline" size="sm" pressed aria-label="Toggle avg. freight rate">
             Avg. freight rate
           </Toggle>
-          <Toggle variant="outline" size="sm" pressed aria-label="Toggle Avg. demurrage">
+          <Toggle variant="outline" size="sm" pressed aria-label="Toggle avg. demurrage">
             Avg. demurrage
           </Toggle>
-          <Toggle variant="outline" size="sm" aria-label="Toggle Hidden property">
+          <Toggle variant="outline" size="sm" aria-label="Toggle hidden property">
             Hidden property
           </Toggle>
         </div>

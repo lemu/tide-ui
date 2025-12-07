@@ -153,12 +153,12 @@ function BookmarkNameDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {mode === "create" ? "Create Bookmark" : "Rename Bookmark"}
+            {mode === "create" ? "Create bookmark" : "Rename bookmark"}
           </DialogTitle>
         </DialogHeader>
         <DialogBody>
           <div className="flex flex-col gap-[var(--space-sm)]">
-            <Label htmlFor="bookmark-name">Bookmark Name</Label>
+            <Label htmlFor="bookmark-name">Bookmark name</Label>
             <Input
               id="bookmark-name"
               value={name}
@@ -374,9 +374,9 @@ function SaveDropdown({ onUpdate, onCreate }: SaveDropdownProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={onUpdate}>Update Bookmark</DropdownMenuItem>
+        <DropdownMenuItem onClick={onUpdate}>Update bookmark</DropdownMenuItem>
         <DropdownMenuItem onClick={onCreate}>
-          Create New Bookmark
+          Create new bookmark
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -767,7 +767,7 @@ export function BookmarksRevertButton() {
 
   return (
     <Button variant="ghost" onClick={handleRevert} className="h-[var(--size-md)]">
-      Revert Changes
+      Revert changes
     </Button>
   );
 }
@@ -778,7 +778,7 @@ export function BookmarksCreateButton() {
 
   return (
     <Button variant="ghost" onClick={openCreateDialog} className="h-[var(--size-md)]">
-      Create Bookmark
+      Create bookmark
     </Button>
   );
 }
@@ -789,7 +789,7 @@ export function BookmarksSaveButton() {
 
   return (
     <Button variant="ghost" onClick={handleUpdate} className="h-[var(--size-md)]">
-      Update Bookmark
+      Update bookmark
     </Button>
   );
 }
