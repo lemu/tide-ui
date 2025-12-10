@@ -28,7 +28,7 @@ const createButtonTrigger = () => ({ selectedOption, placeholder, disabled }: an
     className="w-full justify-between"
   >
     {selectedOption ? selectedOption.label : placeholder}
-    <Icon name="chevrons-up-down" className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+    <Icon name="chevron-down" className="ml-2 h-4 w-4 shrink-0 opacity-50" />
   </Button>
 )
 
@@ -50,7 +50,7 @@ const createMultiButtonTrigger = () => ({ selectedOptions, placeholder, disabled
       className="w-full justify-between"
     >
       <span className="truncate">{getDisplayText()}</span>
-      <Icon name="chevrons-up-down" className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+      <Icon name="chevron-down" className="ml-2 h-4 w-4 shrink-0 opacity-50" />
     </Button>
   );
 }

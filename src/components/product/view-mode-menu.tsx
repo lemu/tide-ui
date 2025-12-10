@@ -18,6 +18,7 @@ import { Tabs, TabsList, TabsTrigger } from "../fundamental/tabs";
 import { Switch } from "../fundamental/switch";
 import { Label } from "../fundamental/label";
 import { Separator } from "../fundamental/separator";
+import { Icon } from "../fundamental/icon";
 
 export type ViewMode = 'table' | 'folders' | 'columns';
 
@@ -108,12 +109,12 @@ function savePersistedSettings(key: string | undefined, settings: ViewModeSettin
 /**
  * Get default settings for a fresh component
  */
-function getDefaultSettings(defaultViewMode: ViewMode = 'table'): ViewModeSettings {
+function getDefaultSettings(defaultViewMode: ViewMode = 'table', columns: ColumnOption[] = []): ViewModeSettings {
   return {
     viewMode: defaultViewMode,
     table: {
       sortDirection: 'asc',
-      visibleColumns: [],
+      visibleColumns: columns.map(col => col.id),  // Initialize with all columns visible
     },
     columns: {
       sortDirection: 'asc',
@@ -176,14 +177,14 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
     const [settings, setSettings] = useState<ViewModeSettings>(() => {
       const persisted = loadPersistedSettings(persistenceKey);
       if (persisted) return persisted;
-      return getDefaultSettings(defaultViewMode);
+      return getDefaultSettings(defaultViewMode, columns);
     });
 
     // Expose imperative API
     useImperativeHandle(ref, () => ({
       getSettings: () => settings,
       reset: () => {
-        setSettings(getDefaultSettings(defaultViewMode));
+        setSettings(getDefaultSettings(defaultViewMode, columns));
       },
     }));
 
@@ -382,8 +383,18 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                             const directionLabels = getDirectionLabels(selectedColumn);
                             return (
                               <>
-                                <SelectItem value="asc">{directionLabels.asc}</SelectItem>
-                                <SelectItem value="desc">{directionLabels.desc}</SelectItem>
+                                <SelectItem value="asc">
+                                  <div className="flex items-center gap-2">
+                                    <Icon name="arrow-down-narrow-wide" size="sm" />
+                                    <span>{directionLabels.asc}</span>
+                                  </div>
+                                </SelectItem>
+                                <SelectItem value="desc">
+                                  <div className="flex items-center gap-2">
+                                    <Icon name="arrow-down-wide-narrow" size="sm" />
+                                    <span>{directionLabels.desc}</span>
+                                  </div>
+                                </SelectItem>
                               </>
                             );
                           })()}
@@ -480,8 +491,18 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                           const directionLabels = getDirectionLabels(selectedColumn);
                           return (
                             <>
-                              <SelectItem value="asc">{directionLabels.asc}</SelectItem>
-                              <SelectItem value="desc">{directionLabels.desc}</SelectItem>
+                              <SelectItem value="asc">
+                                <div className="flex items-center gap-2">
+                                  <Icon name="arrow-down-narrow-wide" size="sm" />
+                                  <span>{directionLabels.asc}</span>
+                                </div>
+                              </SelectItem>
+                              <SelectItem value="desc">
+                                <div className="flex items-center gap-2">
+                                  <Icon name="arrow-down-wide-narrow" size="sm" />
+                                  <span>{directionLabels.desc}</span>
+                                </div>
+                              </SelectItem>
                             </>
                           );
                         })()}
@@ -550,8 +571,18 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                             const directionLabels = getDirectionLabels(selectedColumn);
                             return (
                               <>
-                                <SelectItem value="asc">{directionLabels.asc}</SelectItem>
-                                <SelectItem value="desc">{directionLabels.desc}</SelectItem>
+                                <SelectItem value="asc">
+                                  <div className="flex items-center gap-2">
+                                    <Icon name="arrow-down-narrow-wide" size="sm" />
+                                    <span>{directionLabels.asc}</span>
+                                  </div>
+                                </SelectItem>
+                                <SelectItem value="desc">
+                                  <div className="flex items-center gap-2">
+                                    <Icon name="arrow-down-wide-narrow" size="sm" />
+                                    <span>{directionLabels.desc}</span>
+                                  </div>
+                                </SelectItem>
                               </>
                             );
                           })()}

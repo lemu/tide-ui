@@ -1028,7 +1028,7 @@ export function Bookmarks({
         />
 
         {/* Content + Actions grouped (7px gap throughout) */}
-        <div className="flex items-center gap-[7px] flex-1 min-w-0">
+        <div className="flex items-center gap-[7px] flex-1 min-w-0 overflow-x-auto scrollbar-hide">
           {/* Content slot - let Filters expand naturally */}
           {contentSlot && (
             <div className="flex items-center gap-[7px]">

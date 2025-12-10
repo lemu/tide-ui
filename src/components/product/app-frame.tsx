@@ -1045,16 +1045,43 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                 <DropdownMenuSeparator />
 
                 {/* Action Items */}
-                <DropdownMenuItem icon="user" className="cursor-pointer">
+                <DropdownMenuItem
+                  icon="user"
+                  className="cursor-pointer"
+                  onClick={(e) => {
+                    if (onNavigate) {
+                      e.preventDefault()
+                      onNavigate('/user/profile')
+                    }
+                  }}
+                >
                   User profile
                 </DropdownMenuItem>
-                <DropdownMenuItem icon="settings" className="cursor-pointer">
+                <DropdownMenuItem
+                  icon="settings"
+                  className="cursor-pointer"
+                  onClick={(e) => {
+                    if (onNavigate) {
+                      e.preventDefault()
+                      onNavigate('/organization/settings')
+                    }
+                  }}
+                >
                   Organization settings
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator />
 
-                <DropdownMenuItem icon="log-out" className="cursor-pointer text-[var(--color-text-error-bold)]">
+                <DropdownMenuItem
+                  icon="log-out"
+                  className="cursor-pointer text-[var(--color-text-error-bold)]"
+                  onClick={(e) => {
+                    if (onNavigate) {
+                      e.preventDefault()
+                      onNavigate('/auth/sign-out')
+                    }
+                  }}
+                >
                   Sign out
                 </DropdownMenuItem>
               </DropdownMenuContent>

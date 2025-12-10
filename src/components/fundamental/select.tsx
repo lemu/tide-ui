@@ -145,7 +145,7 @@ const SelectItem = React.forwardRef<
 
     <span className="absolute right-2 flex h-4 w-4 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <Icon name="check" size="sm" />
+        <Icon name="check" size="sm" color="brand" />
       </SelectPrimitive.ItemIndicator>
     </span>
   </SelectPrimitive.Item>

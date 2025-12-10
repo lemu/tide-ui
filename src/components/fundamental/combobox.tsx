@@ -108,13 +108,13 @@ export function Combobox({
                       onSelect={handleSelect}
                       className="h-[var(--size-md)] px-[var(--space-md)] transition-colors hover:bg-[var(--color-background-neutral-subtlest-hovered)] aria-selected:bg-[var(--color-background-neutral-subtlest-hovered)]"
                     >
+                      {option.label}
                       <Check
                         className={cn(
-                          "mr-2 h-4 w-4",
+                          "ml-auto h-4 w-4 text-[var(--color-icon-brand-bold)]",
                           value === option.value ? "opacity-100" : "opacity-0"
                         )}
                       />
-                      {option.label}
                     </CommandItem>
                   ))}
                 </CommandGroup>
@@ -154,13 +154,13 @@ export function Combobox({
                       onSelect={handleSelect}
                       className="h-[var(--size-lg)] px-[var(--space-md)] active:bg-[var(--color-background-neutral-subtlest-hovered)]"
                     >
+                      {option.label}
                       <Check
                         className={cn(
-                          "mr-2 h-4 w-4",
+                          "ml-auto h-4 w-4 text-[var(--color-icon-brand-bold)]",
                           value === option.value ? "opacity-100" : "opacity-0"
                         )}
                       />
-                      {option.label}
                     </CommandItem>
                   ))}
                 </CommandGroup>
@@ -260,13 +260,13 @@ export function MultiCombobox({
                       onSelect={handleSelect}
                       className="h-[var(--size-md)] px-[var(--space-md)] transition-colors hover:bg-[var(--color-background-neutral-subtlest-hovered)] aria-selected:bg-[var(--color-background-neutral-subtlest-hovered)]"
                     >
+                      {option.label}
                       <Check
                         className={cn(
-                          "mr-2 h-4 w-4",
+                          "ml-auto h-4 w-4 text-[var(--color-icon-brand-bold)]",
                           values.includes(option.value) ? "opacity-100" : "opacity-0"
                         )}
                       />
-                      {option.label}
                     </CommandItem>
                   ))}
                 </CommandGroup>
@@ -306,13 +306,13 @@ export function MultiCombobox({
                       onSelect={handleSelect}
                       className="h-[var(--size-lg)] px-[var(--space-md)] active:bg-[var(--color-background-neutral-subtlest-hovered)]"
                     >
+                      {option.label}
                       <Check
                         className={cn(
-                          "mr-2 h-4 w-4",
+                          "ml-auto h-4 w-4 text-[var(--color-icon-brand-bold)]",
                           values.includes(option.value) ? "opacity-100" : "opacity-0"
                         )}
                       />
-                      {option.label}
                     </CommandItem>
                   ))}
                 </CommandGroup>

@@ -13,10 +13,18 @@ import {
   SelectItem,
 } from "../fundamental/select";
 import { Toggle } from "../fundamental/toggle";
+import { Icon } from "../fundamental/icon";
+
+export type ColumnDataType = 'text' | 'number' | 'date' | 'boolean';
 
 export interface ColumnOption {
   id: string;
   label: string;
+  dataType?: ColumnDataType;
+  directionOptions?: {
+    asc: string;
+    desc: string;
+  };
 }
 
 export interface DataTableSettingsMenuProps {
@@ -33,6 +41,37 @@ export interface DataTableSettingsMenuProps {
   onColumnVisibilityChange?: (columnId: string, visible: boolean) => void;
   align?: "start" | "end";
   triggerClassName?: string;
+}
+
+/**
+ * Gets the appropriate direction labels for a column based on its configuration.
+ * Priority: custom directionOptions > dataType-based > default
+ */
+function getDirectionLabels(column?: ColumnOption): {
+  asc: string;
+  desc: string;
+} {
+  // Priority 1: Custom direction options
+  if (column?.directionOptions) {
+    return column.directionOptions;
+  }
+
+  // Priority 2: Data type-based labels
+  if (column?.dataType) {
+    switch (column.dataType) {
+      case 'text':
+        return { asc: 'A to Z', desc: 'Z to A' };
+      case 'number':
+        return { asc: 'Ascending', desc: 'Descending' };
+      case 'date':
+        return { asc: 'Oldest first', desc: 'Newest first' };
+      case 'boolean':
+        return { asc: 'False first', desc: 'True first' };
+    }
+  }
+
+  // Priority 3: Default fallback
+  return { asc: 'Ascending', desc: 'Descending' };
 }
 
 export function DataTableSettingsMenu({
@@ -88,13 +127,36 @@ export function DataTableSettingsMenu({
                       </SelectContent>
                     </Select>
                     {selectedSortColumn && (
-                      <Button
-                        size="sm"
-                        icon={sortDirection === 'asc' ? 'arrow-up' : 'arrow-down'}
-                        onClick={() => onSortDirectionChange?.(sortDirection === 'asc' ? 'desc' : 'asc')}
-                        className="flex-shrink-0"
-                        title={sortDirection === 'asc' ? 'Sort descending' : 'Sort ascending'}
-                      />
+                      <Select
+                        value={sortDirection}
+                        onValueChange={(value) => onSortDirectionChange?.(value as 'asc' | 'desc')}
+                      >
+                        <SelectTrigger size="sm" className="w-[140px]">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {(() => {
+                            const selectedColumn = sortableColumns.find(col => col.id === selectedSortColumn);
+                            const directionLabels = getDirectionLabels(selectedColumn);
+                            return (
+                              <>
+                                <SelectItem value="asc">
+                                  <div className="flex items-center gap-2">
+                                    <Icon name="arrow-down-narrow-wide" size="sm" />
+                                    <span>{directionLabels.asc}</span>
+                                  </div>
+                                </SelectItem>
+                                <SelectItem value="desc">
+                                  <div className="flex items-center gap-2">
+                                    <Icon name="arrow-down-wide-narrow" size="sm" />
+                                    <span>{directionLabels.desc}</span>
+                                  </div>
+                                </SelectItem>
+                              </>
+                            );
+                          })()}
+                        </SelectContent>
+                      </Select>
                     )}
                   </div>
                 </div>

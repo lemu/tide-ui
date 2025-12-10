@@ -243,8 +243,8 @@ export { Flag } from './ui/flag'
 export type { FlagProps, FlagSize } from './ui/flag'
 
 // CountryDropdown component
-export { CountryDropdown, useCountryData } from './in-progress/country-dropdown'
-export type { Country, CountryDropdownProps, CountryDropdownTriggerProps } from './in-progress/country-dropdown'
+export { CountryDropdown, useCountryData } from './fundamental/country-dropdown'
+export type { Country, CountryDropdownProps, CountryDropdownTriggerProps } from './fundamental/country-dropdown'
 
 // Icon component
 export { Icon } from './fundamental/icon'

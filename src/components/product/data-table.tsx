@@ -1053,6 +1053,7 @@ function DataTableColumnHeader<TData, TValue>({
 }: DataTableColumnHeaderProps<TData, TValue>) {
   const align = column.columnDef.meta?.align || 'left'
   const shouldTruncate = column.columnDef.meta?.truncate !== false
+  const isSorted = column.getIsSorted()
 
   if (!column.getCanSort()) {
     return shouldTruncate ? (
@@ -1069,28 +1070,27 @@ function DataTableColumnHeader<TData, TValue>({
   }
 
   return (
-    <div className={cn("flex items-center space-x-2", align === 'right' && 'justify-end', className)}>
-      <Button
-        variant="ghost"
-        size="sm"
-        className="-ml-3 h-8 data-[state=open]:bg-accent"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        {shouldTruncate ? (
-          <TruncatedCell align={align}>
-            <span>{title}</span>
-          </TruncatedCell>
-        ) : (
+    <div
+      className={cn(
+        "flex items-center gap-1",
+        align === 'right' && 'justify-end',
+        isSorted && "!text-[var(--color-text-brand-bold)]",
+        className
+      )}
+    >
+      {isSorted && (
+        <Icon
+          name={isSorted === "desc" ? "arrow-down-wide-narrow" : "arrow-down-narrow-wide"}
+          className="h-4 w-4 !text-[var(--color-icon-brand-bold)]"
+        />
+      )}
+      {shouldTruncate ? (
+        <TruncatedCell align={align}>
           <span>{title}</span>
-        )}
-        {column.getIsSorted() === "desc" ? (
-          <Icon name="arrow-down" className="ml-2 h-4 w-4" />
-        ) : column.getIsSorted() === "asc" ? (
-          <Icon name="arrow-up" className="ml-2 h-4 w-4" />
-        ) : (
-          <Icon name="chevrons-up-down" className="ml-2 h-4 w-4" />
-        )}
-      </Button>
+        </TruncatedCell>
+      ) : (
+        <span>{title}</span>
+      )}
     </div>
   )
 }
@@ -1612,8 +1612,8 @@ export function DataTable<TData, TValue>({
   // Auto-enable responsive wrapper when sticky columns are used
   const computedEnableResponsiveWrapper =
     enableResponsiveWrapper ||
-    (stickyLeftColumns && stickyLeftColumns > 0) ||
-    (stickyRightColumns && stickyRightColumns > 0)
+    !!(stickyLeftColumns && stickyLeftColumns > 0) ||
+    !!(stickyRightColumns && stickyRightColumns > 0)
 
   // Internal state for uncontrolled mode
   const [internalSorting, setInternalSorting] = React.useState<SortingState>([])
@@ -2599,7 +2599,7 @@ export function DataTable<TData, TValue>({
         className
       )}>
       {/* Header section with title and toolbar */}
-      {showHeader && (
+      {showHeader && (title || enableGlobalSearch) && (
         <div className="border-b border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] px-[var(--space-lg)] py-[var(--space-md)]">
           {title && (
             <div className="flex justify-between items-center">
@@ -2611,7 +2611,7 @@ export function DataTable<TData, TValue>({
             table={table}
             searchKey={searchKey}
             searchPlaceholder={searchPlaceholder}
-            showSettingsMenu={!title}
+            showSettingsMenu={false}
             enableGlobalSearch={enableGlobalSearch}
             globalSearchPlaceholder={globalSearchPlaceholder}
             globalFilter={globalFilter}

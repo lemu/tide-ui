@@ -63,7 +63,7 @@ const AlertDialogFooter = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col-reverse rounded-lg border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-base)] p-[var(--space-xlg)] py-[var(--space-lg)] sm:flex-row sm:justify-end sm:space-x-[var(--space-sm)]",
+      "flex flex-col-reverse border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-base)] p-[var(--space-xlg)] py-[var(--space-lg)] sm:flex-row sm:justify-end sm:space-x-[var(--space-sm)]",
       className
     )}
     {...props}

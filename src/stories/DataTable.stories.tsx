@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import React, { useState, useMemo } from 'react'
-import { DataTable, NestedHeaderConfig } from '../components/product/data-table'
+import React, { useState, useMemo, useRef, useEffect } from 'react'
+import { DataTable, DataTableColumnHeader, NestedHeaderConfig } from '../components/product/data-table'
 import { DataTableSettingsMenu } from '../components/product/data-table-settings-menu'
+import { ViewModeMenu, ViewModeMenuHandle } from '../components/product/view-mode-menu'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 import { Button } from '../components/fundamental/button'
 import { Badge } from '../components/fundamental/badge'
@@ -2625,7 +2626,7 @@ export const Sorting: Story = {
     const sortingColumns: ColumnDef<User>[] = [
       {
         accessorKey: 'name',
-        header: 'Name',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
         enableSorting: true,
         meta: {
           label: 'Name',
@@ -2633,7 +2634,7 @@ export const Sorting: Story = {
       },
       {
         accessorKey: 'email',
-        header: 'Email',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Email" />,
         enableSorting: true,
         meta: {
           label: 'Email',
@@ -2641,7 +2642,7 @@ export const Sorting: Story = {
       },
       {
         accessorKey: 'role',
-        header: 'Role',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Role" />,
         enableSorting: true,
         meta: {
           label: 'Role',
@@ -2649,7 +2650,7 @@ export const Sorting: Story = {
       },
       {
         accessorKey: 'status',
-        header: 'Status',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
         enableSorting: true,
         meta: {
           label: 'Status',
@@ -2665,7 +2666,7 @@ export const Sorting: Story = {
       },
       {
         accessorKey: 'lastLogin',
-        header: 'Last Login',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Last Login" />,
         enableSorting: true,
         meta: {
           label: 'Last Login',
@@ -2681,8 +2682,9 @@ export const Sorting: Story = {
           </CardHeader>
           <CardContent>
             <p className="text-body-sm text-[var(--color-text-secondary)] mb-4">
-              Use the settings menu (three-dots icon) to select a column to sort by and choose ascending or descending order.
-              The sorting is controlled through the centralized settings menu, which also handles grouping and column visibility.
+              Use the settings menu (cog wheel icon) to select a column to sort by and choose sorting direction.
+              When a column is sorted, its header text and icon will display in brand color as a visual indicator.
+              The settings menu also handles grouping and column visibility.
             </p>
             <DataTable
               data={sortingData}
@@ -5178,114 +5180,311 @@ export const HeaderlessModeWithExternalControl: Story = {
     layout: 'fullscreen',
     docs: {
       description: {
-        story: 'Example of external control over DataTable functionality. The table exposes its instance for external manipulation of filters, sorting, and other features.',
+        story: 'Example of external control using Filters component and ViewModeMenu (table-only). Demonstrates filtering by Side (Buy/Sell) and Status, global search, sorting, and column visibility controls through the settings menu.',
       },
     },
   },
   render: () => {
-    const [data] = useState(() => generateTradeData(25))
+    const [data] = useState(() => generateTradeData(50))
     const [tableInstance, setTableInstance] = useState<any>(null)
-    const [globalFilter, setGlobalFilter] = useState("")
+    const [pinnedFilters, setPinnedFilters] = useState<string[]>(['side', 'status'])
+    const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({})
+    const [globalSearchTerms, setGlobalSearchTerms] = useState<string[]>([])
+    const viewModeMenuRef = useRef<ViewModeMenuHandle>(null)
+
+    // Icon components for filters
+    const ArrowRightIcon = ({ className }: { className?: string }) => <Icon name="arrow-right" className={className} />
+    const CircleCheckIcon = ({ className }: { className?: string }) => <Icon name="circle-check" className={className} />
+
+    // Apply ViewModeMenu settings to table
+    useEffect(() => {
+      if (!tableInstance || !viewModeMenuRef.current) return
+
+      const applySettings = () => {
+        const settings = viewModeMenuRef.current?.getSettings()
+        if (!settings) return
+
+        // Apply sorting
+        if (settings.table.sortColumn) {
+          tableInstance.setSorting([{
+            id: settings.table.sortColumn,
+            desc: settings.table.sortDirection === 'desc'
+          }])
+        } else {
+          tableInstance.setSorting([])
+        }
+
+        // Apply column visibility
+        const allColumns = tableInstance.getAllColumns()
+        allColumns.forEach((col: any) => {
+          if (typeof col.accessorFn !== "undefined" && col.getCanHide()) {
+            col.toggleVisibility(settings.table.visibleColumns.includes(col.id))
+          }
+        })
+      }
+
+      // Apply settings initially
+      applySettings()
+
+      // Listen to localStorage changes from ViewModeMenu
+      const handleStorageChange = (e: StorageEvent) => {
+        if (e.key === 'viewmode-external-control') {
+          applySettings()
+        }
+      }
+
+      window.addEventListener('storage', handleStorageChange)
+
+      // Also poll for changes (since storage event doesn't fire in same window)
+      const interval = setInterval(applySettings, 100)
+
+      return () => {
+        window.removeEventListener('storage', handleStorageChange)
+        clearInterval(interval)
+      }
+    }, [tableInstance])
+
+    // Extract unique values for filter options
+    const uniqueSides = Array.from(new Set(data.map(d => d.side)))
+    const uniqueStatuses = Array.from(new Set(data.map(d => d.status)))
+
+    // Define filters
+    const filterDefinitions: FilterDefinition[] = [
+      {
+        id: 'side',
+        label: 'Side',
+        icon: ArrowRightIcon,
+        type: 'multiselect',
+        options: uniqueSides.map(side => ({
+          value: side,
+          label: side.toUpperCase(),
+        })),
+      },
+      {
+        id: 'status',
+        label: 'Status',
+        icon: CircleCheckIcon,
+        type: 'multiselect',
+        options: uniqueStatuses.map(status => ({
+          value: status,
+          label: status.charAt(0).toUpperCase() + status.slice(1),
+        })),
+      },
+    ]
+
+    // Filter handlers
+    const handleFilterChange = (filterId: string, value: FilterValue) => {
+      setActiveFilters(prev => ({
+        ...prev,
+        [filterId]: value
+      }))
+    }
+
+    const handleFilterClear = (filterId: string) => {
+      setActiveFilters(prev => {
+        const newFilters = { ...prev }
+        delete newFilters[filterId]
+        return newFilters
+      })
+    }
+
+    const handleFilterReset = () => {
+      setActiveFilters({})
+      setGlobalSearchTerms([])
+    }
+
+    // Apply filters to data
+    const filteredData = useMemo(() => {
+      return data.filter(item => {
+        // Apply active filters
+        for (const [filterId, filterValue] of Object.entries(activeFilters)) {
+          if (Array.isArray(filterValue) && filterValue.length > 0) {
+            const itemValue = (item as any)[filterId]
+            if (!filterValue.includes(itemValue)) {
+              return false
+            }
+          }
+        }
+
+        // Apply global search
+        if (globalSearchTerms.length > 0) {
+          const searchableText = Object.values(item).join(' ').toLowerCase()
+          return globalSearchTerms.every(term => searchableText.includes(term.toLowerCase()))
+        }
+
+        return true
+      })
+    }, [data, activeFilters, globalSearchTerms])
+
+    // Define sortable columns for ViewModeMenu (static, not dependent on tableInstance)
+    const sortableColumns = useMemo(() => [
+      { id: 'id', label: 'Trade ID', dataType: 'text' as const },
+      { id: 'counterparty', label: 'Counterparty', dataType: 'text' as const },
+      { id: 'instrument', label: 'Instrument', dataType: 'text' as const },
+      { id: 'side', label: 'Side', dataType: 'text' as const },
+      { id: 'quantity', label: 'Quantity', dataType: 'text' as const },
+      { id: 'price', label: 'Price', dataType: 'text' as const },
+      { id: 'notional', label: 'Notional', dataType: 'text' as const },
+      { id: 'trader', label: 'Trader', dataType: 'text' as const },
+      { id: 'status', label: 'Status', dataType: 'text' as const },
+    ], [])
+
+    // Define visible columns for ViewModeMenu (static, not dependent on tableInstance)
+    const visibleColumns = useMemo(() => [
+      { id: 'id', label: 'Trade ID' },
+      { id: 'counterparty', label: 'Counterparty' },
+      { id: 'instrument', label: 'Instrument' },
+      { id: 'side', label: 'Side' },
+      { id: 'quantity', label: 'Quantity' },
+      { id: 'price', label: 'Price' },
+      { id: 'notional', label: 'Notional' },
+      { id: 'trader', label: 'Trader' },
+      { id: 'status', label: 'Status' },
+    ], [])
+
+    // Define columns with sorting support and labels
+    const columnsWithSorting: ColumnDef<TradeData>[] = useMemo(() => [
+      {
+        accessorKey: 'id',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Trade ID" />,
+        enableSorting: true,
+        meta: { label: 'Trade ID' },
+        cell: ({ row }) => (
+          <div className="font-mono text-body-sm text-[var(--color-text-primary)]">{row.getValue('id')}</div>
+        ),
+      },
+      {
+        accessorKey: 'counterparty',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Counterparty" />,
+        enableSorting: true,
+        meta: { label: 'Counterparty' },
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('counterparty')}</div>
+        ),
+      },
+      {
+        accessorKey: 'instrument',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Instrument" />,
+        enableSorting: true,
+        meta: { label: 'Instrument' },
+        cell: ({ row }) => (
+          <Badge appearance="outline">{row.getValue('instrument')}</Badge>
+        ),
+      },
+      {
+        accessorKey: 'side',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Side" />,
+        enableSorting: true,
+        meta: { label: 'Side' },
+        cell: ({ row }) => {
+          const side = row.getValue('side') as string
+          if (!side) return null
+          return (
+            <Badge>
+              {side.toUpperCase()}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'quantity',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Quantity" />,
+        enableSorting: true,
+        meta: { align: 'right', label: 'Quantity' },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatNumber(row.getValue('quantity'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'price',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Price" />,
+        enableSorting: true,
+        meta: { align: 'right', label: 'Price' },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'notional',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Notional" />,
+        enableSorting: true,
+        meta: { align: 'right', label: 'Notional' },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums font-medium">{formatCurrency(row.getValue('notional'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'trader',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Trader" />,
+        enableSorting: true,
+        meta: { label: 'Trader' },
+        cell: ({ row }) => (
+          <div className="text-body-sm">{row.getValue('trader')}</div>
+        ),
+      },
+      {
+        accessorKey: 'status',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
+        enableSorting: true,
+        meta: { label: 'Status' },
+        cell: ({ row }) => {
+          const status = row.getValue('status') as string
+          if (!status) return null
+          return (
+            <Badge>
+              {status.charAt(0).toUpperCase() + status.slice(1)}
+            </Badge>
+          )
+        },
+      },
+    ], [])
 
     return (
       <div className="p-[var(--space-lg)]">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">External Control Example</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-              Custom external controls for the DataTable. The table instance is exposed via onTableReady callback,
-              allowing full external control over filtering, sorting, column visibility, and pagination.
-            </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
-                <Icon name="settings" className="h-4 w-4 text-[var(--color-text-accent)]" />
-                <span className="text-body-sm text-[var(--color-text-accent)]">
-                  External controls: Global search, column visibility, and pagination controls above the table.
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* External Controls */}
-          <div className="mb-[var(--space-md)] p-[var(--space-lg)] border border-[var(--color-border-primary-subtle)] rounded-lg bg-[var(--color-surface-primary)]">
-            <div className="flex flex-wrap items-center gap-[var(--space-md)]">
-              <div className="flex-1 min-w-[200px]">
-                <Input
-                  placeholder="Search all columns..."
-                  value={globalFilter}
-                  onChange={(e) => {
-                    setGlobalFilter(e.target.value)
-                    tableInstance?.setGlobalFilter(e.target.value)
-                  }}
-                  className="h-8"
-                />
-              </div>
-              <div className="flex items-center gap-[var(--space-sm)]">
-                {tableInstance && (
-                  <>
-                    <DataTableSettingsMenu
-                      sortableColumns={tableInstance.getAllColumns()
-                        .filter((col: any) => col.getCanSort())
-                        .map((col: any) => ({
-                          id: col.id,
-                          label: col.columnDef.meta?.label || col.id
-                        }))}
-                      selectedSortColumn={tableInstance.getState().sorting[0]?.id}
-                      sortDirection={tableInstance.getState().sorting[0]?.desc ? 'desc' : 'asc'}
-                      onSortChange={(columnId) => {
-                        const currentSort = tableInstance.getState().sorting[0]
-                        tableInstance.setSorting([{ id: columnId, desc: currentSort?.desc || false }])
-                      }}
-                      onSortDirectionChange={(direction) => {
-                        const currentSort = tableInstance.getState().sorting[0]
-                        if (currentSort) {
-                          tableInstance.setSorting([{ id: currentSort.id, desc: direction === 'desc' }])
-                        }
-                      }}
-                      groupableColumns={[]}
-                      selectedGroupColumn=""
-                      onGroupChange={() => {}}
-                      columns={tableInstance.getAllColumns()
-                        .filter((col: any) => typeof col.accessorFn !== "undefined" && col.getCanHide())
-                        .map((col: any) => ({
-                          id: col.id,
-                          label: col.columnDef.meta?.label || col.id
-                        }))}
-                      visibleColumns={tableInstance.getAllColumns()
-                        .filter((col: any) => typeof col.accessorFn !== "undefined" && col.getCanHide() && col.getIsVisible())
-                        .map((col: any) => col.id)}
-                      onColumnVisibilityChange={(columnId, visible) => {
-                        tableInstance.getColumn(columnId)?.toggleVisibility(visible)
-                      }}
-                    />
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => {
-                        tableInstance.resetColumnFilters()
-                        tableInstance.resetGlobalFilter()
-                        setGlobalFilter("")
-                      }}
-                      className="h-8"
-                    >
-                      Reset All
-                    </Button>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <DataTable
-            data={data}
-            columns={tradeColumns}
-            showHeader={false}
-            onTableReady={setTableInstance}
-            enableGlobalSearch={true}
-            enableRowSelection={true}
-            borderStyle="both"
-          />
+        <div className="mb-[var(--space-lg)]">
+          <h2 className="text-heading-lg mb-[var(--space-sm)]">External Control Example</h2>
+          <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            Demonstrates external control using Filters component and ViewModeMenu (table-only variant).
+            Filter by Side (Buy/Sell) and Status, use global search, and control sorting and column visibility through the settings menu.
+          </p>
         </div>
+
+        <div className="mb-[var(--space-lg)]">
+          <Filters
+          filters={filterDefinitions}
+          pinnedFilters={pinnedFilters}
+          activeFilters={activeFilters}
+          onPinnedFiltersChange={setPinnedFilters}
+          onFilterChange={handleFilterChange}
+          onFilterClear={handleFilterClear}
+          onFilterReset={handleFilterReset}
+          enableGlobalSearch={true}
+          globalSearchTerms={globalSearchTerms}
+          onGlobalSearchChange={setGlobalSearchTerms}
+          globalSearchPlaceholder="Search trades..."
+          actionButtons={
+            <ViewModeMenu
+              ref={viewModeMenuRef}
+              persistenceKey="viewmode-external-control"
+              defaultViewMode="table"
+              sortableColumns={sortableColumns}
+              groupableColumns={[]}
+              columns={visibleColumns}
+            />
+          }
+        />
+        </div>
+
+        <DataTable
+          data={filteredData}
+          columns={columnsWithSorting}
+          showHeader={true}
+          showSettingsMenu={false}
+          onTableReady={setTableInstance}
+          enableGlobalSearch={false}
+          enableRowSelection={true}
+          borderStyle="both"
+        />
       </div>
     )
   },
@@ -5356,6 +5555,315 @@ across page refreshes or browser sessions.
                 <span className="text-[var(--color-text-tertiary)]">Filtered by external criteria</span>
               </span>
             }
+          />
+        </div>
+      </div>
+    )
+  },
+}
+
+// Multi-Row Cell Pattern
+// Helper component for rendering multi-row cells
+interface MultiRowCellProps {
+  values: [string, string, string]
+  rowIndex: number
+  columnId: string
+  isFirstColumn: boolean
+  onInnerRowClick?: (rowIndex: number, subRowIndex: number) => void
+}
+
+function MultiRowCell({ values, rowIndex, columnId, isFirstColumn, onInnerRowClick }: MultiRowCellProps) {
+  return (
+    <div className="flex flex-col -my-2" onClick={(e) => e.stopPropagation()}>
+      {values.map((value, subRowIndex) => (
+        <div
+          key={subRowIndex}
+          className={cn(
+            "flex items-center px-4 py-2 h-9 border-b border-[var(--color-border-primary-medium)] last:border-b-0",
+            isFirstColumn && "cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors"
+          )}
+          onClick={isFirstColumn && onInnerRowClick ? (e) => {
+            e.stopPropagation()
+            onInnerRowClick(rowIndex, subRowIndex)
+          } : undefined}
+          role={isFirstColumn ? "button" : undefined}
+          tabIndex={isFirstColumn ? 0 : undefined}
+          onKeyDown={isFirstColumn && onInnerRowClick ? (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault()
+              e.stopPropagation()
+              onInnerRowClick(rowIndex, subRowIndex)
+            }
+          } : undefined}
+        >
+          {value}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// Data type for multi-row example
+interface MultiRowData {
+  id: number
+  name: string
+  status: string
+  prices: [string, string, string]
+  volumes: [string, string, string]
+  changes: [string, string, string]
+  markets: [string, string, string]
+}
+
+// Sample data generator
+function generateMultiRowData(): MultiRowData[] {
+  const assets = ['Bitcoin', 'Ethereum', 'Cardano', 'Solana', 'Polkadot']
+  const statuses = ['active', 'inactive', 'pending']
+  const markets = ['NYSE', 'NASDAQ', 'LSE', 'TSE', 'HKEX']
+
+  return assets.map((asset, index) => ({
+    id: index + 1,
+    name: asset,
+    status: statuses[index % statuses.length],
+    prices: [
+      `$${(45000 + Math.random() * 5000).toFixed(2)}`,
+      `$${(45000 + Math.random() * 5000).toFixed(2)}`,
+      `$${(45000 + Math.random() * 5000).toFixed(2)}`,
+    ],
+    volumes: [
+      `${(Math.random() * 1000).toFixed(1)}M`,
+      `${(Math.random() * 1000).toFixed(1)}M`,
+      `${(Math.random() * 1000).toFixed(1)}M`,
+    ],
+    changes: [
+      `${(Math.random() * 10 - 5).toFixed(2)}%`,
+      `${(Math.random() * 10 - 5).toFixed(2)}%`,
+      `${(Math.random() * 10 - 5).toFixed(2)}%`,
+    ],
+    markets: [
+      markets[Math.floor(Math.random() * markets.length)],
+      markets[Math.floor(Math.random() * markets.length)],
+      markets[Math.floor(Math.random() * markets.length)],
+    ],
+  }))
+}
+
+export const MultiRowCellLayout: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: `
+## Multi-Row Cell Layout with Inner Row Clicks
+
+This example demonstrates a complex cell layout pattern where the last 4 columns display 3 sub-rows each within a single table row. Each sub-row is independently clickable while maintaining the main row click functionality for regular columns.
+
+### Features
+
+- **Stacked Sub-Rows**: Last 4 columns display 3 values stacked vertically
+- **Independent Click Handlers**: Each sub-row has its own click handler separate from main row click
+- **Hover Effects**: Each sub-row highlights on hover independently
+- **Keyboard Navigation**: Sub-rows are keyboard accessible with Enter/Space keys
+- **Click Propagation**: Properly managed to prevent conflicts between row and sub-row clicks
+
+### Use Cases
+
+- Financial data with multiple time periods (today, yesterday, last week)
+- Trading platforms with bid/ask/last prices
+- Analytics dashboards with current/previous/baseline metrics
+- Comparison tables showing multiple data points per row
+`,
+      },
+    },
+  },
+  render: () => {
+    const [data] = useState(() => generateMultiRowData())
+    const [selectedRow, setSelectedRow] = useState<MultiRowData | null>(null)
+    const [selectedSubRow, setSelectedSubRow] = useState<{row: number, subRow: number} | null>(null)
+    const [mainRowClicks, setMainRowClicks] = useState(0)
+    const [innerRowClicks, setInnerRowClicks] = useState(0)
+
+    const handleInnerRowClick = (rowIndex: number, subRowIndex: number) => {
+      const row = data[rowIndex]
+      setSelectedSubRow({ row: rowIndex, subRow: subRowIndex })
+      setInnerRowClicks(prev => prev + 1)
+      console.log('Inner row clicked:', {
+        mainRow: row,
+        subRowIndex,
+        price: row.prices[subRowIndex],
+        volume: row.volumes[subRowIndex],
+        change: row.changes[subRowIndex],
+        market: row.markets[subRowIndex],
+      })
+    }
+
+    const columns: ColumnDef<MultiRowData>[] = [
+      {
+        accessorKey: 'name',
+        header: 'Asset',
+        size: 150,
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        size: 100,
+        cell: ({ getValue }) => {
+          const status = getValue() as string
+          return (
+            <Badge variant={status === 'active' ? 'success' : status === 'inactive' ? 'default' : 'warning'}>
+              {status}
+            </Badge>
+          )
+        },
+      },
+      {
+        accessorKey: 'prices',
+        header: 'Price',
+        size: 150,
+        cell: ({ row, getValue }) => (
+          <MultiRowCell
+            values={getValue() as [string, string, string]}
+            rowIndex={row.index}
+            columnId="prices"
+            isFirstColumn={true}
+            onInnerRowClick={handleInnerRowClick}
+          />
+        ),
+        meta: {
+          verticalAlign: 'top',
+        },
+      },
+      {
+        accessorKey: 'volumes',
+        header: 'Volume',
+        size: 120,
+        cell: ({ row, getValue }) => (
+          <MultiRowCell
+            values={getValue() as [string, string, string]}
+            rowIndex={row.index}
+            columnId="volumes"
+            isFirstColumn={false}
+          />
+        ),
+        meta: {
+          verticalAlign: 'top',
+        },
+      },
+      {
+        accessorKey: 'changes',
+        header: 'Change',
+        size: 120,
+        cell: ({ row, getValue }) => (
+          <MultiRowCell
+            values={getValue() as [string, string, string]}
+            rowIndex={row.index}
+            columnId="changes"
+            isFirstColumn={false}
+          />
+        ),
+        meta: {
+          verticalAlign: 'top',
+        },
+      },
+      {
+        accessorKey: 'markets',
+        header: 'Market',
+        size: 120,
+        cell: ({ row, getValue }) => (
+          <MultiRowCell
+            values={getValue() as [string, string, string]}
+            rowIndex={row.index}
+            columnId="markets"
+            isFirstColumn={false}
+          />
+        ),
+        meta: {
+          verticalAlign: 'top',
+        },
+      },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="mb-[var(--space-lg)]">
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Multi-row cell layout</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+              This example demonstrates a complex cell layout where the last 4 columns display 3 sub-rows each.
+              Each sub-row in the "Price" column is independently clickable.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-md)] mb-[var(--space-lg)]">
+              <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info-subtle)] rounded-md p-[var(--space-md)]">
+                <div className="flex items-start gap-[var(--space-sm)]">
+                  <Icon name="mouse-pointer-click" className="h-5 w-5 text-[var(--color-text-info)] mt-[2px]" />
+                  <div>
+                    <div className="text-body-strong-sm text-[var(--color-text-info)] mb-[var(--space-xsm)]">
+                      Main row clicks
+                    </div>
+                    <div className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+                      Click on "Asset" or "Status" columns to trigger main row click
+                    </div>
+                    <div className="flex items-center gap-[var(--space-sm)]">
+                      <Badge>{mainRowClicks} clicks</Badge>
+                      {selectedRow && (
+                        <span className="text-body-sm text-[var(--color-text-primary)]">
+                          Last: <strong>{selectedRow.name}</strong>
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-subtle)] rounded-md p-[var(--space-md)]">
+                <div className="flex items-start gap-[var(--space-sm)]">
+                  <Icon name="hand-metal" className="h-5 w-5 text-[var(--color-text-success)] mt-[2px]" />
+                  <div>
+                    <div className="text-body-strong-sm text-[var(--color-text-success)] mb-[var(--space-xsm)]">
+                      Inner row clicks
+                    </div>
+                    <div className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+                      Click on any sub-row in the "Price" column
+                    </div>
+                    <div className="flex items-center gap-[var(--space-sm)]">
+                      <Badge>{innerRowClicks} clicks</Badge>
+                      {selectedSubRow && (
+                        <span className="text-body-sm text-[var(--color-text-primary)]">
+                          Last: <strong>Row {selectedSubRow.row + 1}, Sub-row {selectedSubRow.subRow + 1}</strong>
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+              <div className="flex items-start gap-[var(--space-sm)]">
+                <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)] mt-1" />
+                <div className="text-body-sm text-[var(--color-text-accent)]">
+                  <strong>Pattern notes:</strong>
+                  <ul className="list-disc ml-[var(--space-lg)] mt-[var(--space-xsm)] space-y-[var(--space-xsm)]">
+                    <li>Each multi-row cell contains 3 vertically stacked sub-rows</li>
+                    <li>First multi-row column ("Price") has clickable sub-rows with hover effects</li>
+                    <li>Other multi-row columns display data without click handlers</li>
+                    <li>Click propagation is managed with <code className="bg-[var(--color-surface-primary)] px-1 rounded">stopPropagation()</code></li>
+                    <li>Keyboard accessible with Enter/Space keys on clickable sub-rows</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={columns}
+            title="Crypto assets - Multi-row layout"
+            onRowClick={(row) => {
+              setSelectedRow(row.original)
+              setMainRowClicks(prev => prev + 1)
+              console.log('Main row clicked:', row.original)
+            }}
           />
         </div>
       </div>

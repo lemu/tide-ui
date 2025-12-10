@@ -8,6 +8,132 @@ const meta: Meta<typeof ViewModeMenu> = {
   component: ViewModeMenu,
   parameters: {
     layout: "centered",
+    docs: {
+      description: {
+        component: `
+A settings menu component for controlling view modes, sorting, grouping, and column visibility. Designed for integration with DataTable and Filters components.
+
+## Integration Guide
+
+### Basic Setup with DataTable
+
+ViewModeMenu uses localStorage persistence and an imperative API (via ref) to manage settings. To integrate with DataTable:
+
+\`\`\`tsx
+import { useRef, useEffect } from 'react'
+import { ViewModeMenu, ViewModeMenuHandle } from '@rafal.lemieszewski/tide-ui'
+import { DataTable } from '@rafal.lemieszewski/tide-ui'
+
+function MyComponent() {
+  const [tableInstance, setTableInstance] = useState(null)
+  const viewModeMenuRef = useRef<ViewModeMenuHandle>(null)
+
+  // Define columns for ViewModeMenu
+  const sortableColumns = [
+    { id: 'name', label: 'Name', dataType: 'text' },
+    { id: 'date', label: 'Date', dataType: 'date' },
+    { id: 'amount', label: 'Amount', dataType: 'number' },
+  ]
+
+  const visibleColumns = [
+    { id: 'name', label: 'Name' },
+    { id: 'email', label: 'Email' },
+    { id: 'date', label: 'Date' },
+    { id: 'amount', label: 'Amount' },
+  ]
+
+  // Apply ViewModeMenu settings to DataTable
+  useEffect(() => {
+    if (!tableInstance || !viewModeMenuRef.current) return
+
+    const applySettings = () => {
+      const settings = viewModeMenuRef.current?.getSettings()
+      if (!settings) return
+
+      // Apply sorting
+      if (settings.table.sortColumn) {
+        tableInstance.setSorting([{
+          id: settings.table.sortColumn,
+          desc: settings.table.sortDirection === 'desc'
+        }])
+      } else {
+        tableInstance.setSorting([])
+      }
+
+      // Apply column visibility
+      const allColumns = tableInstance.getAllColumns()
+      allColumns.forEach((col) => {
+        if (typeof col.accessorFn !== "undefined" && col.getCanHide()) {
+          col.toggleVisibility(settings.table.visibleColumns.includes(col.id))
+        }
+      })
+    }
+
+    // Apply initially
+    applySettings()
+
+    // Poll for changes (localStorage updates don't fire storage event in same window)
+    const interval = setInterval(applySettings, 100)
+    return () => clearInterval(interval)
+  }, [tableInstance])
+
+  return (
+    <>
+      <ViewModeMenu
+        ref={viewModeMenuRef}
+        persistenceKey="my-table-settings"
+        defaultViewMode="table"
+        sortableColumns={sortableColumns}
+        columns={visibleColumns}
+      />
+
+      <DataTable
+        data={data}
+        columns={columns}
+        onTableReady={setTableInstance}
+        showSettingsMenu={false}  // Disable built-in settings
+      />
+    </>
+  )
+}
+\`\`\`
+
+### Integration with Filters Component
+
+Place ViewModeMenu in the \`actionButtons\` prop of Filters. The Filters component automatically positions action buttons at the far right after the Reset button:
+
+\`\`\`tsx
+<Filters
+  filters={filterDefinitions}
+  pinnedFilters={pinnedFilters}
+  activeFilters={activeFilters}
+  onFilterChange={handleFilterChange}
+  enableGlobalSearch={true}
+  actionButtons={
+    <ViewModeMenu
+      ref={viewModeMenuRef}
+      persistenceKey="my-table-settings"
+      sortableColumns={sortableColumns}
+      columns={visibleColumns}
+    />
+  }
+/>
+\`\`\`
+
+## Key Features
+
+- **Persistence**: Settings automatically save to localStorage via \`persistenceKey\`
+- **Imperative API**: Access settings via ref with \`getSettings()\` and \`reset()\`
+- **Smart Labels**: Direction labels adapt based on column \`dataType\` (text, number, date)
+- **Default Visibility**: All columns are visible by default
+- **Table-Only Mode**: Omit \`columnsSortableColumns\` and \`foldersSortableColumns\` for single-tab UI
+
+## See Also
+
+- **[DataTable with External Control](/?path=/docs/npm-product-components-datatable--headerless-mode-with-external-control)** - Complete example with Filters and ViewModeMenu
+        `,
+      },
+    },
   },
   tags: ["autodocs"],
 };
@@ -101,12 +227,11 @@ export const WithImperativeAPI: Story = {
             <ViewModeMenu
               ref={menuRef}
               persistenceKey="storybook-imperative-demo"
+              defaultViewMode="table"
+              enableViewModeSwitch={false}
               sortableColumns={sampleColumns}
               groupableColumns={groupableColumns}
               columns={sampleColumns}
-              columnsSortableColumns={sampleColumns}
-              columnsGroupableColumns={groupableColumns}
-              foldersSortableColumns={sampleColumns}
             />
           </div>
           <div className="flex gap-2">

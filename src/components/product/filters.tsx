@@ -1100,9 +1100,6 @@ export function Filters({
         )
       })}
 
-      {/* Action Buttons (Revert/Save) - positioned after global search */}
-      {actionButtons}
-
       {/* Dot Separator (before Reset) */}
       {!hideReset && (hasActiveFilters || hasGlobalSearch) && (
         <Separator type="dot" layout="horizontal" />
@@ -1118,6 +1115,12 @@ export function Filters({
           <span className="text-label-md">Reset</span>
         </Button>
       )}
+
+      {/* Spacer to push action buttons to the right */}
+      {actionButtons && <div className="flex-1" />}
+
+      {/* Action Buttons (positioned at far right) */}
+      {actionButtons}
     </div>
   )
 }
