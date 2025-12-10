@@ -5568,40 +5568,48 @@ interface MultiRowCellProps {
   values: [string, string, string]
   rowIndex: number
   columnId: string
-  isFirstColumn: boolean
   onInnerRowClick?: (rowIndex: number, subRowIndex: number) => void
+  hoveredSubRow: {mainRow: number, subRow: number} | null
+  onHoverChange: (state: {mainRow: number, subRow: number} | null) => void
 }
 
-function MultiRowCell({ values, rowIndex, columnId, isFirstColumn, onInnerRowClick }: MultiRowCellProps) {
+const MultiRowCell = React.memo(function MultiRowCell({ values, rowIndex, columnId, onInnerRowClick, hoveredSubRow, onHoverChange }: MultiRowCellProps) {
+  const handleInnerClick = (subRowIndex: number) => {
+    onInnerRowClick?.(rowIndex, subRowIndex)
+  }
+
   return (
-    <div className="flex flex-col -my-2" onClick={(e) => e.stopPropagation()}>
+    <div className="flex flex-col -mx-4 -my-2 relative z-50">
       {values.map((value, subRowIndex) => (
-        <div
+        <button
           key={subRowIndex}
+          type="button"
           className={cn(
             "flex items-center px-4 py-2 h-9 border-b border-[var(--color-border-primary-medium)] last:border-b-0",
-            isFirstColumn && "cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors"
+            "cursor-pointer transition-colors text-left w-full",
+            hoveredSubRow?.mainRow === rowIndex && hoveredSubRow?.subRow === subRowIndex
+              ? "bg-[var(--color-background-neutral-subtlest-hovered)]"
+              : ""
           )}
-          onClick={isFirstColumn && onInnerRowClick ? (e) => {
+          onMouseDown={(e) => {
+            e.preventDefault()
             e.stopPropagation()
-            onInnerRowClick(rowIndex, subRowIndex)
-          } : undefined}
-          role={isFirstColumn ? "button" : undefined}
-          tabIndex={isFirstColumn ? 0 : undefined}
-          onKeyDown={isFirstColumn && onInnerRowClick ? (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault()
-              e.stopPropagation()
-              onInnerRowClick(rowIndex, subRowIndex)
-            }
-          } : undefined}
+            e.nativeEvent.stopImmediatePropagation()
+            handleInnerClick(subRowIndex)
+          }}
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+          }}
+          onMouseEnter={() => onHoverChange({ mainRow: rowIndex, subRow: subRowIndex })}
+          onMouseLeave={() => onHoverChange(null)}
         >
           {value}
-        </div>
+        </button>
       ))}
     </div>
   )
-}
+})
 
 // Data type for multi-row example
 interface MultiRowData {
@@ -5655,14 +5663,15 @@ export const MultiRowCellLayout: Story = {
         story: `
 ## Multi-Row Cell Layout with Inner Row Clicks
 
-This example demonstrates a complex cell layout pattern where the last 4 columns display 3 sub-rows each within a single table row. Each sub-row is independently clickable while maintaining the main row click functionality for regular columns.
+This example demonstrates a complex cell layout pattern where the last 4 columns display 3 sub-rows each within a single table row. All sub-rows are clickable across all columns, with a unified hover effect that highlights the entire inner row.
 
 ### Features
 
 - **Stacked Sub-Rows**: Last 4 columns display 3 values stacked vertically
-- **Independent Click Handlers**: Each sub-row has its own click handler separate from main row click
-- **Hover Effects**: Each sub-row highlights on hover independently
-- **Keyboard Navigation**: Sub-rows are keyboard accessible with Enter/Space keys
+- **Unified Hover Effect**: Hovering over any sub-row highlights all cells at that sub-row index across all columns
+- **All Columns Clickable**: Every multi-row column triggers the same inner row click handler
+- **Independent Click Handlers**: Inner row clicks are separate from main row clicks
+- **Keyboard Navigation**: All sub-rows are keyboard accessible with Enter/Space keys
 - **Click Propagation**: Properly managed to prevent conflicts between row and sub-row clicks
 
 ### Use Cases
@@ -5681,8 +5690,9 @@ This example demonstrates a complex cell layout pattern where the last 4 columns
     const [selectedSubRow, setSelectedSubRow] = useState<{row: number, subRow: number} | null>(null)
     const [mainRowClicks, setMainRowClicks] = useState(0)
     const [innerRowClicks, setInnerRowClicks] = useState(0)
+    const [hoveredSubRow, setHoveredSubRow] = useState<{mainRow: number, subRow: number} | null>(null)
 
-    const handleInnerRowClick = (rowIndex: number, subRowIndex: number) => {
+    const handleInnerRowClick = React.useCallback((rowIndex: number, subRowIndex: number) => {
       const row = data[rowIndex]
       setSelectedSubRow({ row: rowIndex, subRow: subRowIndex })
       setInnerRowClicks(prev => prev + 1)
@@ -5694,7 +5704,7 @@ This example demonstrates a complex cell layout pattern where the last 4 columns
         change: row.changes[subRowIndex],
         market: row.markets[subRowIndex],
       })
-    }
+    }, [data])
 
     const columns: ColumnDef<MultiRowData>[] = [
       {
@@ -5724,12 +5734,14 @@ This example demonstrates a complex cell layout pattern where the last 4 columns
             values={getValue() as [string, string, string]}
             rowIndex={row.index}
             columnId="prices"
-            isFirstColumn={true}
             onInnerRowClick={handleInnerRowClick}
+            hoveredSubRow={hoveredSubRow}
+            onHoverChange={setHoveredSubRow}
           />
         ),
         meta: {
           verticalAlign: 'top',
+          truncate: false,
         },
       },
       {
@@ -5741,11 +5753,14 @@ This example demonstrates a complex cell layout pattern where the last 4 columns
             values={getValue() as [string, string, string]}
             rowIndex={row.index}
             columnId="volumes"
-            isFirstColumn={false}
+            onInnerRowClick={handleInnerRowClick}
+            hoveredSubRow={hoveredSubRow}
+            onHoverChange={setHoveredSubRow}
           />
         ),
         meta: {
           verticalAlign: 'top',
+          truncate: false,
         },
       },
       {
@@ -5757,11 +5772,14 @@ This example demonstrates a complex cell layout pattern where the last 4 columns
             values={getValue() as [string, string, string]}
             rowIndex={row.index}
             columnId="changes"
-            isFirstColumn={false}
+            onInnerRowClick={handleInnerRowClick}
+            hoveredSubRow={hoveredSubRow}
+            onHoverChange={setHoveredSubRow}
           />
         ),
         meta: {
           verticalAlign: 'top',
+          truncate: false,
         },
       },
       {
@@ -5773,11 +5791,14 @@ This example demonstrates a complex cell layout pattern where the last 4 columns
             values={getValue() as [string, string, string]}
             rowIndex={row.index}
             columnId="markets"
-            isFirstColumn={false}
+            onInnerRowClick={handleInnerRowClick}
+            hoveredSubRow={hoveredSubRow}
+            onHoverChange={setHoveredSubRow}
           />
         ),
         meta: {
           verticalAlign: 'top',
+          truncate: false,
         },
       },
     ]
@@ -5789,7 +5810,7 @@ This example demonstrates a complex cell layout pattern where the last 4 columns
             <h2 className="text-heading-lg mb-[var(--space-sm)]">Multi-row cell layout</h2>
             <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-md)]">
               This example demonstrates a complex cell layout where the last 4 columns display 3 sub-rows each.
-              Each sub-row in the "Price" column is independently clickable.
+              All sub-rows are clickable and highlight together across all columns when hovered.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-md)] mb-[var(--space-lg)]">
@@ -5823,7 +5844,7 @@ This example demonstrates a complex cell layout pattern where the last 4 columns
                       Inner row clicks
                     </div>
                     <div className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
-                      Click on any sub-row in the "Price" column
+                      Click on any sub-row in any of the 4 multi-row columns
                     </div>
                     <div className="flex items-center gap-[var(--space-sm)]">
                       <Badge>{innerRowClicks} clicks</Badge>
@@ -5845,10 +5866,10 @@ This example demonstrates a complex cell layout pattern where the last 4 columns
                   <strong>Pattern notes:</strong>
                   <ul className="list-disc ml-[var(--space-lg)] mt-[var(--space-xsm)] space-y-[var(--space-xsm)]">
                     <li>Each multi-row cell contains 3 vertically stacked sub-rows</li>
-                    <li>First multi-row column ("Price") has clickable sub-rows with hover effects</li>
-                    <li>Other multi-row columns display data without click handlers</li>
+                    <li>All multi-row columns are clickable and trigger the same handler</li>
+                    <li>Unified hover effect: hovering over any sub-row highlights all cells at that sub-row index</li>
                     <li>Click propagation is managed with <code className="bg-[var(--color-surface-primary)] px-1 rounded">stopPropagation()</code></li>
-                    <li>Keyboard accessible with Enter/Space keys on clickable sub-rows</li>
+                    <li>Keyboard accessible with Enter/Space keys on all sub-rows</li>
                   </ul>
                 </div>
               </div>
