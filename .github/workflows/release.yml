@@ -48,7 +48,7 @@ jobs:
         run: npm install -g npm@latest
 
       - name: Publish to NPM with OIDC
-        run: npm publish --provenance --access public
+        run: NODE_AUTH_TOKEN="" npm publish --provenance --access public
 
       - name: Generate Release Notes
         id: release_notes
