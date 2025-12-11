@@ -5,6 +5,7 @@ import { DataTableSettingsMenu } from '../components/product/data-table-settings
 import { Button } from '../components/fundamental/button'
 import { Icon } from '../components/fundamental/icon'
 import { Separator } from '../components/fundamental/separator'
+import { Badge } from '../components/fundamental/badge'
 import { Filters, FilterDefinition, FilterValue } from '../components/product/filters'
 import { Bookmarks, Bookmark, FiltersState, TableState, useBookmarksActions } from '../components/product/bookmarks'
 import { ColumnDef, SortingState, VisibilityState, GroupingState, ColumnOrderState } from '@tanstack/react-table'
@@ -703,19 +704,12 @@ const shippingFixtureColumns: ColumnDef<ShippingFixture>[] = [
     cell: ({ row }) => {
       const status = row.getValue('status') as string
       const label = status.charAt(0).toUpperCase() + status.slice(1)
+      const intent = status === 'fixed' ? 'success' : status === 'pending' ? 'warning' : 'error'
       return (
         <div className="flex justify-start">
-          <div
-            className={`inline-flex items-center rounded-sm px-2 py-1 text-xs font-medium ${
-              status === 'fixed'
-                ? 'bg-[var(--color-background-success-subtle)] text-[var(--color-text-success-bold)]'
-                : status === 'pending'
-                ? 'bg-[var(--color-background-warning-subtle)] text-[var(--color-text-warning-bold)]'
-                : 'bg-[var(--color-background-error-subtle)] text-[var(--color-text-error-bold)]'
-            }`}
-          >
+          <Badge intent={intent} appearance="subtle" size="sm">
             {label}
-          </div>
+          </Badge>
         </div>
       )
     },
