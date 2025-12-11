@@ -323,7 +323,9 @@ No test framework is currently configured in this project.
 
 ## NPM Publishing
 
-### **CRITICAL: Automated Tag-Based Publishing Process**
+### **CRITICAL: Manual Publishing Process (Current Approach)**
+
+**Due to npm security changes in December 2025, automated publishing is currently not working. Use manual publishing with 2FA.**
 
 **Whenever the user mentions publishing to NPM, ALWAYS follow this exact process:**
 
@@ -335,29 +337,44 @@ No test framework is currently configured in this project.
 
 3. **Version Justification**: Explain why the proposed version is appropriate based on recent changes
 
-4. **Automated Publishing Process**:
+4. **Manual Publishing Process**:
 
    ```bash
-   # 1. User controls versioning (creates commit + tag)
+   # 1. Build the library
+   npm run build:lib
+
+   # 2. Create version tag
    npm version [patch|minor|major]
 
-   # 2. Push commits (triggers CI workflow - lint + build only)
-   git push
+   # 3. Push to GitHub (triggers CI workflow for quality assurance)
+   git push && git push --tags
 
-   # 3. Push tags (triggers Release workflow - build + publish to NPM + GitHub release)
-   git push --tags
+   # 4. Login to npm interactively (creates 2-hour session)
+   npm login
+
+   # 5. Publish with OTP from authenticator app
+   npm publish --access public --otp=YOUR_6_DIGIT_CODE
    ```
+
+   **Important**: OTP codes expire every 30 seconds, so have your authenticator app ready.
 
 5. **What the GitHub Workflows Do**:
    - **CI Workflow** (on push to main): Runs linting and library build for quality assurance
-   - **Release Workflow** (on tag push): Automatically builds library, publishes to NPM, and creates GitHub release
+   - **Release Workflow** (on tag push): Currently builds library and creates GitHub release (publishing step disabled)
    - **Storybook**: Automatically deployed to Vercel on every push (no GitHub Actions needed)
 
-6. **Verification**: After tag push, monitor:
-   - GitHub Actions: https://github.com/lemu/tide-ui/actions
+6. **Verification**: After publishing, verify:
    - NPM Package: https://www.npmjs.com/package/@rafal.lemieszewski/tide-ui
+   - GitHub Release: https://github.com/lemu/tide-ui/releases
 
 **Example Response Format:**
-"I recommend bumping to version **X.X.X** (patch/minor/major) because [reason]. This accounts for [list recent changes]. Should I proceed with version X.X.X and trigger the automated publishing workflow?"
+"I recommend bumping to version **X.X.X** (patch/minor/major) because [reason]. This accounts for [list recent changes]. Ready to create the version tag? You'll need to publish manually with `npm publish --access public --otp=YOUR_CODE` after running `npm login`."
 
-**IMPORTANT**: Never manually run `npm publish` - the GitHub workflow handles all publishing automatically using the NPM automation token.
+### Why Automated Publishing Doesn't Work
+
+As of December 2025, npm's security changes have made automated publishing unreliable:
+- **Granular tokens with bypass 2FA**: npm rejects them as "automation tokens" despite being configured correctly
+- **OIDC trusted publishing**: Returns 404 errors even with proper configuration
+- **Manual publishing with OTP**: ✅ Works reliably
+
+This is likely due to bugs or policy changes in npm's new authentication system. Manual publishing is the current recommended approach until npm resolves these issues.
