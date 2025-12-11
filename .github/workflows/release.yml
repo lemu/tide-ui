@@ -44,6 +44,9 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
+      - name: Upgrade npm for OIDC support
+        run: npm install -g npm@latest
+
       - name: Publish to NPM with OIDC
         run: npm publish --provenance --access public
 
