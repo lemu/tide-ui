@@ -1071,7 +1071,8 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
 
                 <DropdownMenuItem
                   icon="log-out"
-                  className="cursor-pointer text-[var(--color-text-error-bold)]"
+                  destructive
+                  className="cursor-pointer"
                   onSelect={() => {
                     if (onNavigate) {
                       onNavigate('/auth/sign-out')
