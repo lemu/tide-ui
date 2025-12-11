@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { useState, useMemo } from 'react'
 import { DataTable } from '../components/product/data-table'
 import { Icon } from '../components/fundamental/icon'
+import { Badge } from '../components/fundamental/badge'
 import { Filters, FilterDefinition, FilterValue } from '../components/product/filters'
 import { ColumnDef } from '@tanstack/react-table'
 import { formatDecimal } from '../lib/utils'
@@ -547,19 +548,10 @@ const shippingFixtureColumns: ColumnDef<ShippingFixture>[] = [
     cell: ({ row }) => {
       const status = row.getValue('status') as string
       const label = status.charAt(0).toUpperCase() + status.slice(1)
+      const intent = status === 'fixed' ? 'success' : status === 'pending' ? 'warning' : 'destructive'
       return (
         <div className="flex justify-start">
-          <div
-            className={`inline-flex items-center rounded-sm px-2 py-1 text-xs font-medium ${
-              status === 'fixed'
-                ? 'bg-[var(--color-background-success-subtle)] text-[var(--color-text-success-bold)]'
-                : status === 'pending'
-                ? 'bg-[var(--color-background-warning-subtle)] text-[var(--color-text-warning-bold)]'
-                : 'bg-[var(--color-background-error-subtle)] text-[var(--color-text-error-bold)]'
-            }`}
-          >
-            {label}
-          </div>
+          <Badge intent={intent} appearance="subtle">{label}</Badge>
         </div>
       )
     },
