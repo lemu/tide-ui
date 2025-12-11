@@ -729,9 +729,8 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                                       ? 'bg-[var(--color-background-blue-subtle-selected)] text-[var(--color-text-brand-bold)]'
                                       : ''
                                   }
-                                  onClick={(e) => {
+                                  onSelect={() => {
                                     if (onNavigate) {
-                                      e.preventDefault()
                                       onNavigate(subItem.url)
                                     }
                                   }}
@@ -875,7 +874,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                           <DropdownMenuItem
                             icon="edit"
                             className="cursor-pointer"
-                            onClick={() => handleRenameBoard(item)}
+                            onSelect={() => handleRenameBoard(item)}
                           >
                             Rename
                           </DropdownMenuItem>
@@ -883,7 +882,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                           <DropdownMenuItem
                             icon="trash"
                             className="cursor-pointer text-[var(--color-text-error-bold)] hover:bg-[var(--color-background-error-subtle)] hover:text-[var(--color-text-error-bold)]"
-                            onClick={() => handleDeleteBoard(item)}
+                            onSelect={() => handleDeleteBoard(item)}
                           >
                             Delete
                           </DropdownMenuItem>
@@ -943,12 +942,12 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
 
         {/* Footer with User/Team Switcher */}
         <SidebarFooter className="sticky bottom-0 z-10 border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] group-data-[collapsible=icon]:px-2">
-          <div className="rounded-md border border-[var(--color-border-primary-subtle)] group-data-[collapsible=icon]:rounded-none group-data-[collapsible=icon]:border-none">
+          <div className="group/user-menu rounded-md border border-[var(--color-border-primary-subtle)] transition-colors hover:border-[var(--color-border-primary-medium)] group-data-[collapsible=icon]:rounded-none group-data-[collapsible=icon]:border-none">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="h-auto min-h-[48px] w-full justify-start rounded-md p-2 group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:min-h-[32px] group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0"
+                  className="h-auto min-h-[48px] w-full justify-start rounded-md p-2 hover:!bg-[var(--color-background-neutral-subtlest-hovered)] group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:min-h-[32px] group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0"
                 >
                   {/* Expanded state */}
                   <div className="flex w-full items-center gap-3 group-data-[collapsible=icon]:hidden">
@@ -1023,7 +1022,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                 {teams.map((team) => (
                   <DropdownMenuItem
                     key={team.name}
-                    onClick={() => setActiveTeam(team)}
+                    onSelect={() => setActiveTeam(team)}
                     className="mx-1 mb-1 h-10 cursor-pointer gap-2 px-1 pr-2 pl-1"
                   >
                     <Avatar size="sm" type="organization">
@@ -1048,9 +1047,8 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                 <DropdownMenuItem
                   icon="user"
                   className="cursor-pointer"
-                  onClick={(e) => {
+                  onSelect={() => {
                     if (onNavigate) {
-                      e.preventDefault()
                       onNavigate('/user/profile')
                     }
                   }}
@@ -1060,9 +1058,8 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                 <DropdownMenuItem
                   icon="settings"
                   className="cursor-pointer"
-                  onClick={(e) => {
+                  onSelect={() => {
                     if (onNavigate) {
-                      e.preventDefault()
                       onNavigate('/organization/settings')
                     }
                   }}
@@ -1075,9 +1072,8 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                 <DropdownMenuItem
                   icon="log-out"
                   className="cursor-pointer text-[var(--color-text-error-bold)]"
-                  onClick={(e) => {
+                  onSelect={() => {
                     if (onNavigate) {
-                      e.preventDefault()
                       onNavigate('/auth/sign-out')
                     }
                   }}
@@ -1098,8 +1094,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
           placeholder="Type a command or search..."
           value={commandSearch}
           onValueChange={setCommandSearch}
-          clearable={true}
-          onClear={() => setCommandSearch('')}
+          clearable={false}
         />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
