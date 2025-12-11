@@ -323,9 +323,9 @@ No test framework is currently configured in this project.
 
 ## NPM Publishing
 
-### **CRITICAL: Manual Publishing Process (Current Approach)**
+### **CRITICAL: Automated OIDC Trusted Publishing**
 
-**Due to npm security changes in December 2025, automated publishing is currently not working. Use manual publishing with 2FA.**
+**This project uses OIDC trusted publishing for secure, automated NPM releases.**
 
 **Whenever the user mentions publishing to NPM, ALWAYS follow this exact process:**
 
@@ -337,44 +337,47 @@ No test framework is currently configured in this project.
 
 3. **Version Justification**: Explain why the proposed version is appropriate based on recent changes
 
-4. **Manual Publishing Process**:
+4. **Automated Publishing Process**:
 
    ```bash
-   # 1. Build the library
-   npm run build:lib
-
-   # 2. Create version tag
+   # 1. Create version tag (creates commit + tag)
    npm version [patch|minor|major]
 
-   # 3. Push to GitHub (triggers CI workflow for quality assurance)
-   git push && git push --tags
+   # 2. Push commits (triggers CI workflow - lint + build only)
+   git push
 
-   # 4. Login to npm interactively (creates 2-hour session)
-   npm login
-
-   # 5. Publish with OTP from authenticator app
-   npm publish --access public --otp=YOUR_6_DIGIT_CODE
+   # 3. Push tags (triggers Release workflow - build + publish to NPM + GitHub release)
+   git push --tags
    ```
-
-   **Important**: OTP codes expire every 30 seconds, so have your authenticator app ready.
 
 5. **What the GitHub Workflows Do**:
    - **CI Workflow** (on push to main): Runs linting and library build for quality assurance
-   - **Release Workflow** (on tag push): Currently builds library and creates GitHub release (publishing step disabled)
+   - **Release Workflow** (on tag push): Automatically builds library, publishes to NPM with provenance, and creates GitHub release
    - **Storybook**: Automatically deployed to Vercel on every push (no GitHub Actions needed)
 
-6. **Verification**: After publishing, verify:
-   - NPM Package: https://www.npmjs.com/package/@rafal.lemieszewski/tide-ui
+6. **Verification**: After tag push, monitor:
+   - GitHub Actions: https://github.com/lemu/tide-ui/actions
+   - NPM Package: https://www.npmjs.com/package/@rafal.lemieszewski/tide-ui (should show provenance badge)
    - GitHub Release: https://github.com/lemu/tide-ui/releases
 
 **Example Response Format:**
-"I recommend bumping to version **X.X.X** (patch/minor/major) because [reason]. This accounts for [list recent changes]. Ready to create the version tag? You'll need to publish manually with `npm publish --access public --otp=YOUR_CODE` after running `npm login`."
+"I recommend bumping to version **X.X.X** (patch/minor/major) because [reason]. This accounts for [list recent changes]. Should I proceed with version X.X.X and trigger the automated publishing workflow?"
 
-### Why Automated Publishing Doesn't Work
+### How OIDC Trusted Publishing Works
 
-As of December 2025, npm's security changes have made automated publishing unreliable:
-- **Granular tokens with bypass 2FA**: npm rejects them as "automation tokens" despite being configured correctly
-- **OIDC trusted publishing**: Returns 404 errors even with proper configuration
-- **Manual publishing with OTP**: ✅ Works reliably
+The release workflow uses OIDC (OpenID Connect) trusted publishing, which provides:
+- **No token management**: No NPM_TOKEN secrets to rotate or manage
+- **Automatic provenance**: Cryptographic attestations showing package build source
+- **Enhanced security**: Short-lived credentials generated per-publish
+- **Supply chain transparency**: Publicly verifiable build information
 
-This is likely due to bugs or policy changes in npm's new authentication system. Manual publishing is the current recommended approach until npm resolves these issues.
+**Critical Requirements:**
+1. **npm CLI 11.5.1+**: Required for OIDC support (workflow upgrades npm automatically)
+2. **Clear NODE_AUTH_TOKEN**: `actions/setup-node` sets a placeholder token that blocks OIDC - must be cleared with `NODE_AUTH_TOKEN=""`
+3. **Trusted Publisher Configuration**: Package must have GitHub Actions trusted publisher configured on npmjs.com
+4. **Workflow Permissions**: `id-token: write` permission enables OIDC token generation
+
+**Known Issues:**
+- `actions/setup-node` with `registry-url` automatically sets a placeholder `NODE_AUTH_TOKEN` that interferes with OIDC
+- Solution: Explicitly set `NODE_AUTH_TOKEN=""` when running `npm publish`
+- Reference: https://github.com/actions/setup-node/issues/1440
