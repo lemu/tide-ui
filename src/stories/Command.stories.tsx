@@ -442,6 +442,50 @@ export const IDECommands: Story = {
   ),
 }
 
+// Command with clear button (demonstrates clearable input)
+export const WithClearButton: Story = {
+  render: () => {
+    const [search, setSearch] = useState('example search query')
+
+    return (
+      <div className="flex flex-col gap-4 items-center">
+        <p className="text-body-sm text-[var(--color-text-secondary)]">
+          Type in the search box to see the clear button. Click X to clear.
+        </p>
+        <Command className="rounded-lg border border-[var(--color-border-primary-subtle)] shadow-md w-[450px]">
+          <CommandInput
+            placeholder="Type a command or search..."
+            value={search}
+            onValueChange={setSearch}
+            clearable={true}
+            onClear={() => setSearch('')}
+          />
+          <CommandList>
+            <CommandEmpty>No results found</CommandEmpty>
+            <CommandGroup heading="Quick Actions">
+              <CommandItem>
+                <Icon name="search" className="mr-2 h-4 w-4" />
+                <span>Search Everything</span>
+                <CommandShortcut>⌘K</CommandShortcut>
+              </CommandItem>
+              <CommandItem>
+                <Icon name="plus" className="mr-2 h-4 w-4" />
+                <span>Create New</span>
+                <CommandShortcut>⌘N</CommandShortcut>
+              </CommandItem>
+              <CommandItem>
+                <Icon name="settings" className="mr-2 h-4 w-4" />
+                <span>Settings</span>
+                <CommandShortcut>⌘,</CommandShortcut>
+              </CommandItem>
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </div>
+    )
+  },
+}
+
 // Help and documentation search
 export const HelpSearch: Story = {
   render: () => (
