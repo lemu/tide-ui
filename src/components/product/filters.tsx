@@ -420,7 +420,7 @@ function FilterSidebarItem({ filter, isSelected, isPinned, valueCount, onSelect,
           <Badge
             size="sm"
             intent={isSelected ? "brand" : "neutral"}
-            appearance={isSelected || isHovered ? "solid" : "subtle"}
+            appearance={isSelected || isHovered ? "bold" : "subtle"}
           >
             {valueCount}
           </Badge>
@@ -987,7 +987,7 @@ export function Filters({
                     <span className="whitespace-nowrap [&]:text-label-md text-[var(--color-text-primary)]">
                       {slotContent.label}
                     </span>
-                    <Badge size="sm" intent="neutral" appearance="solid">
+                    <Badge size="sm" intent="neutral" appearance="bold">
                       {slotContent.count}
                     </Badge>
                   </>

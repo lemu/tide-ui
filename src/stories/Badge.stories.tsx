@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Badge } from '../components/fundamental/badge'
+import { CircleHelp } from 'lucide-react'
 
 const meta: Meta<typeof Badge> = {
   title: 'NPM • Fundamental/Badge',
@@ -15,7 +16,7 @@ const meta: Meta<typeof Badge> = {
     },
     appearance: {
       control: { type: 'select' },
-      options: ['solid', 'subtle', 'outline'],
+      options: ['bold', 'subtle'],
     },
     size: {
       control: { type: 'select' },
@@ -33,81 +34,84 @@ export const Default: Story = {
   },
 }
 
-export const Brand: Story = {
-  args: {
-    intent: 'brand',
-    children: 'Brand',
+export const AllVariants: Story = {
+  parameters: {
+    layout: 'padded',
+  },
+  render: () => {
+    return (
+      <div className="flex flex-col gap-[var(--space-xlg)]">
+        {/* Subtle Variants */}
+        <div>
+          <h3 className="text-heading-sm mb-[var(--space-md)]">Subtle Appearance</h3>
+          <div className="flex flex-wrap gap-[var(--space-md)]">
+            <Badge intent="neutral" appearance="subtle">Neutral</Badge>
+            <Badge intent="brand" appearance="subtle">Brand</Badge>
+            <Badge intent="success" appearance="subtle">Success</Badge>
+            <Badge intent="warning" appearance="subtle">Warning</Badge>
+            <Badge intent="destructive" appearance="subtle">Destructive</Badge>
+            <Badge intent="information" appearance="subtle">Information</Badge>
+            <Badge intent="violet" appearance="subtle">Violet</Badge>
+            <Badge intent="magenta" appearance="subtle">Magenta</Badge>
+          </div>
+        </div>
+
+        {/* Bold Variants */}
+        <div>
+          <h3 className="text-heading-sm mb-[var(--space-md)]">Bold Appearance</h3>
+          <div className="flex flex-wrap gap-[var(--space-md)]">
+            <Badge intent="neutral" appearance="bold">Neutral</Badge>
+            <Badge intent="brand" appearance="bold">Brand</Badge>
+            <Badge intent="success" appearance="bold">Success</Badge>
+            <Badge intent="warning" appearance="bold">Warning</Badge>
+            <Badge intent="destructive" appearance="bold">Destructive</Badge>
+            <Badge intent="information" appearance="bold">Information</Badge>
+            <Badge intent="violet" appearance="bold">Violet</Badge>
+            <Badge intent="magenta" appearance="bold">Magenta</Badge>
+          </div>
+        </div>
+
+        {/* With Icons - Subtle */}
+        <div>
+          <h3 className="text-heading-sm mb-[var(--space-md)]">With Icons - Subtle</h3>
+          <div className="flex flex-wrap gap-[var(--space-md)]">
+            <Badge intent="neutral" appearance="subtle" icon={<CircleHelp />}>Neutral</Badge>
+            <Badge intent="brand" appearance="subtle" icon={<CircleHelp />}>Brand</Badge>
+            <Badge intent="success" appearance="subtle" icon={<CircleHelp />}>Success</Badge>
+            <Badge intent="warning" appearance="subtle" icon={<CircleHelp />}>Warning</Badge>
+            <Badge intent="destructive" appearance="subtle" icon={<CircleHelp />}>Destructive</Badge>
+            <Badge intent="information" appearance="subtle" icon={<CircleHelp />}>Information</Badge>
+            <Badge intent="violet" appearance="subtle" icon={<CircleHelp />}>Violet</Badge>
+            <Badge intent="magenta" appearance="subtle" icon={<CircleHelp />}>Magenta</Badge>
+          </div>
+        </div>
+
+        {/* With Icons - Bold */}
+        <div>
+          <h3 className="text-heading-sm mb-[var(--space-md)]">With Icons - Bold</h3>
+          <div className="flex flex-wrap gap-[var(--space-md)]">
+            <Badge intent="neutral" appearance="bold" icon={<CircleHelp />}>Neutral</Badge>
+            <Badge intent="brand" appearance="bold" icon={<CircleHelp />}>Brand</Badge>
+            <Badge intent="success" appearance="bold" icon={<CircleHelp />}>Success</Badge>
+            <Badge intent="warning" appearance="bold" icon={<CircleHelp />}>Warning</Badge>
+            <Badge intent="destructive" appearance="bold" icon={<CircleHelp />}>Destructive</Badge>
+            <Badge intent="information" appearance="bold" icon={<CircleHelp />}>Information</Badge>
+            <Badge intent="violet" appearance="bold" icon={<CircleHelp />}>Violet</Badge>
+            <Badge intent="magenta" appearance="bold" icon={<CircleHelp />}>Magenta</Badge>
+          </div>
+        </div>
+
+        {/* Sizes */}
+        <div>
+          <h3 className="text-heading-sm mb-[var(--space-md)]">Sizes</h3>
+          <div className="flex items-center gap-[var(--space-md)]">
+            <Badge size="sm">Small</Badge>
+            <Badge size="md">Medium</Badge>
+            <Badge size="lg">Large</Badge>
+          </div>
+        </div>
+      </div>
+    );
   },
 }
 
-export const Success: Story = {
-  args: {
-    intent: 'success',
-    children: 'Success',
-  },
-}
-
-export const Warning: Story = {
-  args: {
-    intent: 'warning',
-    children: 'Warning',
-  },
-}
-
-export const Destructive: Story = {
-  args: {
-    intent: 'destructive',
-    children: 'Error',
-  },
-}
-
-export const Subtle: Story = {
-  args: {
-    intent: 'brand',
-    appearance: 'subtle',
-    children: 'Subtle',
-  },
-}
-
-export const Outline: Story = {
-  args: {
-    intent: 'brand',
-    appearance: 'outline',
-    children: 'Outline',
-  },
-}
-
-export const Large: Story = {
-  args: {
-    size: 'lg',
-    children: 'Large Badge',
-  },
-}
-
-export const Small: Story = {
-  args: {
-    size: 'sm',
-    children: 'Small',
-  },
-}
-
-export const Information: Story = {
-  args: {
-    intent: 'information',
-    children: 'Information',
-  },
-}
-
-export const Violet: Story = {
-  args: {
-    intent: 'violet',
-    children: 'Violet',
-  },
-}
-
-export const Magenta: Story = {
-  args: {
-    intent: 'magenta',
-    children: 'Magenta',
-  },
-}

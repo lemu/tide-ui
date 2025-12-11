@@ -17,9 +17,8 @@ const badgeVariants = cva(
         magenta: "",
       },
       appearance: {
-        solid: "border-transparent",
-        subtle: "border-transparent",
-        outline: "bg-transparent",
+        bold: "border-transparent",
+        subtle: "",
       },
       size: {
         sm: "px-[var(--space-xsm)] h-5 [&]:text-body-medium-xsm min-w-[20px] justify-center",
@@ -31,7 +30,7 @@ const badgeVariants = cva(
       // Neutral intent variants
       {
         intent: "neutral",
-        appearance: "solid",
+        appearance: "bold",
         class:
           "border-transparent bg-[var(--grey-600)] text-[var(--color-text-inverse)]",
       },
@@ -39,18 +38,12 @@ const badgeVariants = cva(
         intent: "neutral",
         appearance: "subtle",
         class:
-          "border-transparent bg-[var(--grey-100)] text-[var(--color-text-primary)]",
-      },
-      {
-        intent: "neutral",
-        appearance: "outline",
-        class:
-          "border border-[var(--color-border-primary-strong)] text-[var(--color-text-primary)]",
+          "border border-[var(--color-border-neutral-subtle)] bg-[var(--grey-100)] text-[var(--color-text-primary)]",
       },
       // Brand intent variants
       {
         intent: "brand",
-        appearance: "solid",
+        appearance: "bold",
         class:
           "border-transparent bg-[var(--color-background-blue-bold)] text-[var(--color-text-inverse)]",
       },
@@ -58,18 +51,12 @@ const badgeVariants = cva(
         intent: "brand",
         appearance: "subtle",
         class:
-          "border-transparent bg-[var(--blue-50)] text-[var(--color-text-brand-bold)]",
-      },
-      {
-        intent: "brand",
-        appearance: "outline",
-        class:
-          "border border-[var(--color-blue-300)] text-[var(--color-text-brand-bold)]",
+          "border border-[var(--color-border-brand-subtle)] bg-[var(--blue-50)] text-[var(--color-text-brand-bold)]",
       },
       // Success intent variants
       {
         intent: "success",
-        appearance: "solid",
+        appearance: "bold",
         class:
           "border-transparent bg-[var(--color-background-success-bold)] text-[var(--color-text-inverse)]",
       },
@@ -77,18 +64,12 @@ const badgeVariants = cva(
         intent: "success",
         appearance: "subtle",
         class:
-          "border-transparent bg-[var(--color-background-success-subtle)] text-[var(--color-text-success-bold)]",
-      },
-      {
-        intent: "success",
-        appearance: "outline",
-        class:
-          "border border-[var(--color-border-success-bold)] text-[var(--color-text-success-bold)]",
+          "border border-[var(--color-border-success-subtle)] bg-[var(--color-background-success-subtle)] text-[var(--color-text-success-bold)]",
       },
       // Warning intent variants
       {
         intent: "warning",
-        appearance: "solid",
+        appearance: "bold",
         class:
           "border-transparent bg-[var(--color-background-warning-bold)] text-[var(--color-text-inverse)]",
       },
@@ -96,18 +77,12 @@ const badgeVariants = cva(
         intent: "warning",
         appearance: "subtle",
         class:
-          "border-transparent bg-[var(--color-background-warning-subtle)] text-[var(--color-text-warning-bold)]",
-      },
-      {
-        intent: "warning",
-        appearance: "outline",
-        class:
-          "border border-[var(--color-border-warning-bold)] text-[var(--color-text-warning-bold)]",
+          "border border-[var(--color-border-warning-subtle)] bg-[var(--color-background-warning-subtle)] text-[var(--color-text-warning-bold)]",
       },
       // Destructive intent variants
       {
         intent: "destructive",
-        appearance: "solid",
+        appearance: "bold",
         class:
           "border-transparent bg-[var(--color-background-error-bold)] text-[var(--color-text-inverse)]",
       },
@@ -115,18 +90,12 @@ const badgeVariants = cva(
         intent: "destructive",
         appearance: "subtle",
         class:
-          "border-transparent bg-[var(--color-background-error-subtle)] text-[var(--color-text-error-bold)]",
-      },
-      {
-        intent: "destructive",
-        appearance: "outline",
-        class:
-          "border border-[var(--color-border-error-bold)] text-[var(--color-text-error-bold)]",
+          "border border-[var(--color-border-error-subtle)] bg-[var(--color-background-error-subtle)] text-[var(--color-text-error-bold)]",
       },
       // Information intent variants
       {
         intent: "information",
-        appearance: "solid",
+        appearance: "bold",
         class:
           "border-transparent bg-[var(--color-background-info-bold)] text-[var(--color-text-inverse)]",
       },
@@ -134,18 +103,12 @@ const badgeVariants = cva(
         intent: "information",
         appearance: "subtle",
         class:
-          "border-transparent bg-[var(--color-background-info-subtle)] text-[var(--color-text-info-bold)]",
-      },
-      {
-        intent: "information",
-        appearance: "outline",
-        class:
-          "border border-[var(--color-border-info-bold)] text-[var(--color-text-info-bold)]",
+          "border border-[var(--color-border-info-subtle)] bg-[var(--color-background-info-subtle)] text-[var(--color-text-info-bold)]",
       },
       // Violet intent variants
       {
         intent: "violet",
-        appearance: "solid",
+        appearance: "bold",
         class:
           "border-transparent bg-[var(--violet-500)] text-[var(--color-text-inverse)]",
       },
@@ -153,17 +116,12 @@ const badgeVariants = cva(
         intent: "violet",
         appearance: "subtle",
         class:
-          "border-transparent bg-[var(--violet-50)] text-[var(--violet-600)]",
-      },
-      {
-        intent: "violet",
-        appearance: "outline",
-        class: "border border-[var(--violet-500)] text-[var(--violet-600)]",
+          "border border-[var(--color-border-violet-subtle)] bg-[var(--violet-50)] text-[var(--violet-600)]",
       },
       // Magenta intent variants
       {
         intent: "magenta",
-        appearance: "solid",
+        appearance: "bold",
         class:
           "border-transparent bg-[var(--magenta-500)] text-[var(--color-text-inverse)]",
       },
@@ -171,12 +129,7 @@ const badgeVariants = cva(
         intent: "magenta",
         appearance: "subtle",
         class:
-          "border-transparent bg-[var(--magenta-50)] text-[var(--magenta-600)]",
-      },
-      {
-        intent: "magenta",
-        appearance: "outline",
-        class: "border border-[var(--magenta-500)] text-[var(--magenta-600)]",
+          "border border-[var(--color-border-magenta-subtle)] bg-[var(--magenta-50)] text-[var(--magenta-600)]",
       },
     ],
     defaultVariants: {
@@ -189,19 +142,27 @@ const badgeVariants = cva(
 
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {}
+    VariantProps<typeof badgeVariants> {
+  icon?: React.ReactNode;
+}
 
 const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
-  ({ className, intent, appearance, size, children, ...props }, ref) => {
+  ({ className, intent, appearance, size, icon, children, ...props }, ref) => {
     return (
       <div
         ref={ref}
         className={cn(
           badgeVariants({ intent, appearance, size }),
+          icon && "gap-[var(--space-xsm)]",
           className,
         )}
         {...props}
       >
+        {icon && (
+          <span className="shrink-0 w-4 h-4 [&_svg]:w-full [&_svg]:h-full">
+            {icon}
+          </span>
+        )}
         <span className="min-w-0 truncate">
           {children}
         </span>

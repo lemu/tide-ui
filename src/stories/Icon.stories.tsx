@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import * as LucideIcons from 'lucide-react'
 import { Icon, IconColor, IconSize } from '../components/fundamental/icon'
 
 const meta: Meta<typeof Icon> = {
@@ -38,102 +39,6 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     name: 'star',
-  },
-}
-
-export const WithAriaLabel: Story = {
-  args: {
-    name: 'star',
-    'aria-label': 'Favorite item',
-  },
-}
-
-// Size variants
-export const Small: Story = {
-  args: {
-    name: 'star',
-    size: 'sm',
-  },
-}
-
-export const Medium: Story = {
-  args: {
-    name: 'star',
-    size: 'md',
-  },
-}
-
-export const Large: Story = {
-  args: {
-    name: 'star',
-    size: 'lg',
-  },
-}
-
-export const ExtraLarge: Story = {
-  args: {
-    name: 'star',
-    size: 'xl',
-  },
-}
-
-// Color variants
-export const Primary: Story = {
-  args: {
-    name: 'star',
-    color: 'primary',
-  },
-}
-
-export const Secondary: Story = {
-  args: {
-    name: 'star',
-    color: 'secondary',
-  },
-}
-
-export const Brand: Story = {
-  args: {
-    name: 'star',
-    color: 'brand',
-  },
-}
-
-export const Success: Story = {
-  args: {
-    name: 'check-circle',
-    color: 'success',
-  },
-}
-
-export const Error: Story = {
-  args: {
-    name: 'circle-alert',
-    color: 'error',
-  },
-}
-
-export const Warning: Story = {
-  args: {
-    name: 'triangle-alert',
-    color: 'warning',
-  },
-}
-
-// Custom icons
-export const CustomIcon: Story = {
-  args: {
-    name: 'dot',
-    color: 'brand',
-    size: 'lg',
-  },
-}
-
-export const ChartIcon: Story = {
-  args: {
-    name: 'chart-marker-bar',
-    color: 'primary',
-    size: 'lg',
   },
 }
 
@@ -181,44 +86,77 @@ export const AllColors: Story = {
   },
 }
 
-// Popular Lucide icons
-export const PopularLucideIcons: Story = {
+// Lucide Icons - ALL Lucide icons from the library
+export const AllLucideIcons: Story = {
   render: () => {
-    const sampleLucideIcons = [
-      'star', 'user', 'settings', 'search', 'plus', 'check', 'x', 'trash-2',
-      'arrow-right', 'arrow-left', 'arrow-up', 'arrow-down', 'chevron-down', 'chevron-left',
-      'bookmark', 'circle', 'info', 'send', 'share', 'package', 'ship', 'sparkles',
-      'layout-dashboard', 'navigation'
-    ];
+    // Get all Lucide icon names by converting PascalCase to kebab-case
+    const pascalToKebab = (str: string): string => {
+      return str
+        .replace(/([A-Z])/g, '-$1')
+        .toLowerCase()
+        .replace(/^-/, '');
+    };
+
+    // Get all icon names from lucide-react, excluding non-icon exports
+    const lucideIconNames = Object.keys(LucideIcons)
+      .filter((key) => {
+        // Filter out known non-icon exports and duplicates
+        if (key === 'createLucideIcon' ||
+            key === 'default' ||
+            key === 'icons' ||
+            key.endsWith('Icon') ||  // Filter out XxxIcon aliases (keep Xxx only)
+            key.startsWith('Lucide') ||
+            key.startsWith('_')) {
+          return false;
+        }
+
+        // Verify the value exists (components can be functions or objects in different build contexts)
+        const component = (LucideIcons as any)[key];
+        return component && (typeof component === 'function' || typeof component === 'object');
+      })
+      .map(pascalToKebab)
+      .sort();
 
     return (
-      <div className="grid grid-cols-8 gap-[var(--space-lg)]">
-        {sampleLucideIcons.map((iconName) => (
-          <div key={iconName} className="flex flex-col items-center gap-[var(--space-sm)]">
-            <div className="flex h-[var(--size-xlg)] w-[var(--size-xlg)] items-center justify-center rounded-sm bg-[var(--color-surface-secondary)]">
-              <Icon name={iconName} size="lg" />
+      <div className="space-y-[var(--space-md)]">
+        <div className="text-body-md text-[var(--color-text-secondary)]">
+          {lucideIconNames.length} Lucide icons available
+        </div>
+        <div className="grid grid-cols-12 gap-[var(--space-md)]">
+          {lucideIconNames.map((iconName) => (
+            <div key={iconName} className="flex flex-col items-center gap-[var(--space-xsm)]">
+              <div className="flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center rounded-sm bg-[var(--color-surface-secondary)]">
+                <Icon name={iconName} size="md" />
+              </div>
+              <span className="text-caption-xsm text-center text-[var(--color-text-tertiary)] break-all">
+                {iconName}
+              </span>
             </div>
-            <span className="text-caption-xsm text-center text-[var(--color-text-tertiary)]">
-              {iconName}
-            </span>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     );
   },
 }
 
-// Custom icons showcase
+// Custom Icons - All custom icons available in the library
 export const CustomIcons: Story = {
   render: () => {
     const customIcons = [
       'chart-marker-bar', 'chart-marker-line', 'chart-marker-dashline', 'chart-marker-dashline2',
       'chart-marker-dotline', 'chart-marker-dot', 'dot', 'bubble-size', 'broken-scale',
-      'ship-unload', 'ship-load'
+      'ship-unload', 'ship-load', 'star-full', 'user-created-by', 'user-owner', 'user-charterer',
+      'user-broker', 'order-distributed', 'order-withdrawn', 'order-draft', 'negotiation-indicative-bid',
+      'negotiation-indicative-offer', 'negotiation-firm-bid', 'negotiation-firm-offer', 'negotiation-expired',
+      'negotiation-withdrawn', 'negotiation-subs-failed', 'negotiation-firm', 'on-subs',
+      'negotiation-on-subs-amendment', 'negotiation-fixed', 'contract-draft', 'addenda-draft',
+      'contract-working-copy', 'addenda-working-copy', 'contract-final', 'contract-rejected',
+      'addenda-final', 'contract-on-subs', 'contract-canceled', 'contract-failed', 'approved',
+      'pending-approval', 'info-filled'
     ];
 
     return (
-      <div className="grid grid-cols-6 gap-[var(--space-lg)]">
+      <div className="grid grid-cols-8 gap-[var(--space-lg)]">
         {customIcons.map((iconName) => (
           <div key={iconName} className="flex flex-col items-center gap-[var(--space-sm)]">
             <div className="flex h-[var(--size-xlg)] w-[var(--size-xlg)] items-center justify-center rounded-sm bg-[var(--color-surface-secondary)]">
@@ -301,32 +239,3 @@ export const UsageExamples: Story = {
   ),
 }
 
-// Interactive states
-export const InteractiveStates: Story = {
-  render: () => (
-    <div className="space-y-[var(--space-md)]">
-      <div className="space-y-2">
-        <h4 className="text-sm font-medium">Normal vs Disabled</h4>
-        <div className="flex items-center space-x-4">
-          <Icon name="user" color="primary" />
-          <Icon name="user" color="disabled" />
-        </div>
-      </div>
-      <div className="space-y-2">
-        <h4 className="text-sm font-medium">Success, Warning, Error</h4>
-        <div className="flex items-center space-x-4">
-          <Icon name="check-circle" color="success" />
-          <Icon name="triangle-alert" color="warning" />
-          <Icon name="circle-alert" color="error" />
-        </div>
-      </div>
-      <div className="space-y-2">
-        <h4 className="text-sm font-medium">Brand Colors</h4>
-        <div className="flex items-center space-x-4">
-          <Icon name="star" color="brand" />
-          <Icon name="star" color="brand-hover" />
-        </div>
-      </div>
-    </div>
-  ),
-}

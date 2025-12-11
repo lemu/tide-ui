@@ -1226,7 +1226,7 @@ function renderGroupDisplayContent(
 
   // Only show count badge when there are 2 or more items
   const countBadge = row.subRows.length > 1 ? (
-    <Badge appearance="outline" size="sm">
+    <Badge appearance="subtle" size="sm">
       {row.subRows.length}
     </Badge>
   ) : null

@@ -309,35 +309,53 @@
   --color-border-primary-subtle: var(--grey-50);
   --color-border-selected: var(--blue-500);
 
+  /* border/neutral */
+  --color-border-neutral-bold: var(--grey-500);
+  --color-border-neutral-bold-hovered: var(--grey-600);
+  --color-border-neutral-subtle: var(--grey-200);
+  --color-border-neutral-subtle-hovered: var(--grey-300);
+
   /* border/brand */
   --color-border-brand-bold: var(--blue-500);
   --color-border-brand-bold-hovered: var(--blue-500);
-  --color-border-brand-subtle: var(--blue-100);
-  --color-border-brand-subtle-hovered: var(--blue-200);
+  --color-border-brand-subtle: var(--blue-200);
+  --color-border-brand-subtle-hovered: var(--blue-300);
 
   /* border/error */
   --color-border-error-bold: var(--red-500);
   --color-border-error-bold-hovered: var(--red-600);
-  --color-border-error-subtle: var(--red-100);
-  --color-border-error-subtle-hovered: var(--red-200);
+  --color-border-error-subtle: var(--red-200);
+  --color-border-error-subtle-hovered: var(--red-300);
 
   /* border/info */
   --color-border-info-bold: var(--cyan-500);
   --color-border-info-bold-hovered: var(--cyan-600);
-  --color-border-info-subtle: var(--cyan-100);
-  --color-border-info-subtle-hovered: var(--cyan-200);
+  --color-border-info-subtle: var(--cyan-200);
+  --color-border-info-subtle-hovered: var(--cyan-300);
 
   /* border/success */
   --color-border-success-bold: var(--green-500);
   --color-border-success-bold-hovered: var(--green-600);
-  --color-border-success-subtle: var(--green-100);
-  --color-border-success-subtle-hovered: var(--green-200);
+  --color-border-success-subtle: var(--green-200);
+  --color-border-success-subtle-hovered: var(--green-300);
 
   /* border/warning */
   --color-border-warning-bold: var(--orange-500);
   --color-border-warning-bold-hovered: var(--orange-600);
-  --color-border-warning-subtle: var(--orange-100);
-  --color-border-warning-subtle-hovered: var(--orange-200);
+  --color-border-warning-subtle: var(--orange-200);
+  --color-border-warning-subtle-hovered: var(--orange-300);
+
+  /* border/magenta */
+  --color-border-magenta-bold: var(--magenta-500);
+  --color-border-magenta-bold-hovered: var(--magenta-600);
+  --color-border-magenta-subtle: var(--magenta-200);
+  --color-border-magenta-subtle-hovered: var(--magenta-300);
+
+  /* border/violet */
+  --color-border-violet-bold: var(--violet-500);
+  --color-border-violet-bold-hovered: var(--violet-600);
+  --color-border-violet-subtle: var(--violet-200);
+  --color-border-violet-subtle-hovered: var(--violet-300);
 
   /* icon/ */
   --color-icon-disabled: var(--grey-300);
