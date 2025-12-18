@@ -418,6 +418,13 @@ export type {
 
 // DataTable component
 export { DataTable } from './product/data-table'
+export type {
+  RowState,
+  DepthColorConfig,
+  DepthColors,
+  DepthHeights,
+  NestedRowStyling
+} from './product/data-table'
 
 // DataTableSettingsMenu component
 export { DataTableSettingsMenu } from './product/data-table-settings-menu'

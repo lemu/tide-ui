@@ -5891,3 +5891,337 @@ This example demonstrates a complex cell layout pattern where the last 4 columns
     )
   },
 }
+
+/**
+ * Demonstrates granular background color customization by depth level
+ * with state-aware overrides (expanded/collapsed/leaf).
+ */
+export const NestedRowColorsCustomization: Story = {
+  render: () => {
+    const data = [
+      {
+        id: '1',
+        category: 'Electronics',
+        subcategory: 'Computers',
+        product: 'Laptop Pro 15',
+        price: 1299,
+        stock: 45
+      },
+      {
+        id: '2',
+        category: 'Electronics',
+        subcategory: 'Computers',
+        product: 'Desktop Tower',
+        price: 899,
+        stock: 23
+      },
+      {
+        id: '3',
+        category: 'Electronics',
+        subcategory: 'Accessories',
+        product: 'USB-C Hub',
+        price: 49,
+        stock: 120
+      },
+      {
+        id: '4',
+        category: 'Furniture',
+        subcategory: 'Desks',
+        product: 'Standing Desk',
+        price: 599,
+        stock: 12
+      },
+      {
+        id: '5',
+        category: 'Furniture',
+        subcategory: 'Chairs',
+        product: 'Ergonomic Chair',
+        price: 399,
+        stock: 8
+      }
+    ]
+
+    const columns: ColumnDef<typeof data[0]>[] = [
+      {
+        accessorKey: 'category',
+        header: 'Category',
+      },
+      {
+        accessorKey: 'subcategory',
+        header: 'Subcategory',
+      },
+      {
+        accessorKey: 'product',
+        header: 'Product',
+      },
+      {
+        accessorKey: 'price',
+        header: 'Price',
+        cell: ({ getValue }) => formatCurrency(getValue() as number)
+      },
+      {
+        accessorKey: 'stock',
+        header: 'Stock',
+      }
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <Card>
+          <CardHeader>
+            <CardTitle>Nested Row Colors - Depth-Based Customization</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <DataTable
+              data={data}
+              columns={columns}
+              enableGrouping
+              initialState={{
+                grouping: ['category', 'subcategory'],
+                expanded: true
+              }}
+              nestedRowStyling={{
+                colors: {
+                  // Depth 0: Top-level groups (Category)
+                  0: {
+                    default: 'var(--blue-100)',
+                    expanded: 'var(--blue-100)',
+                    collapsed: 'var(--color-background-neutral-subtlest)'
+                  },
+                  // Depth 1: Second-level groups (Subcategory)
+                  1: {
+                    default: 'var(--blue-50)',
+                    expanded: 'var(--blue-50)',
+                    collapsed: 'var(--blue-25)'
+                  },
+                  // Depth 2: Leaf rows (Products)
+                  2: 'var(--color-surface-primary)' // Simple string - default background
+                }
+              }}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+}
+
+/**
+ * Demonstrates row height customization by depth level.
+ */
+export const NestedRowHeightsCustomization: Story = {
+  render: () => {
+    const data = [
+      {
+        id: '1',
+        region: 'North America',
+        country: 'United States',
+        city: 'New York',
+        revenue: 1250000,
+        employees: 450
+      },
+      {
+        id: '2',
+        region: 'North America',
+        country: 'United States',
+        city: 'San Francisco',
+        revenue: 1800000,
+        employees: 320
+      },
+      {
+        id: '3',
+        region: 'North America',
+        country: 'Canada',
+        city: 'Toronto',
+        revenue: 890000,
+        employees: 180
+      },
+      {
+        id: '4',
+        region: 'Europe',
+        country: 'United Kingdom',
+        city: 'London',
+        revenue: 1650000,
+        employees: 280
+      },
+      {
+        id: '5',
+        region: 'Europe',
+        country: 'Germany',
+        city: 'Berlin',
+        revenue: 1420000,
+        employees: 210
+      }
+    ]
+
+    const columns: ColumnDef<typeof data[0]>[] = [
+      {
+        accessorKey: 'region',
+        header: 'Region',
+      },
+      {
+        accessorKey: 'country',
+        header: 'Country',
+      },
+      {
+        accessorKey: 'city',
+        header: 'City',
+      },
+      {
+        accessorKey: 'revenue',
+        header: 'Revenue',
+        cell: ({ getValue }) => formatCurrency(getValue() as number)
+      },
+      {
+        accessorKey: 'employees',
+        header: 'Employees',
+      }
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <Card>
+          <CardHeader>
+            <CardTitle>Nested Row Heights - Depth-Based Customization</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <DataTable
+              data={data}
+              columns={columns}
+              enableGrouping
+              initialState={{
+                grouping: ['region', 'country'],
+                expanded: true
+              }}
+              nestedRowStyling={{
+                colors: {
+                  0: 'var(--blue-100)',
+                  1: 'var(--blue-50)',
+                  2: 'var(--color-surface-primary)'
+                },
+                heights: {
+                  0: '56px',  // Region headers - tallest
+                  1: '48px',  // Country headers - medium
+                  2: '40px'   // City rows - compact
+                }
+              }}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+}
+
+/**
+ * Demonstrates combined color and height customization with expanding rows.
+ */
+export const ExpandingRowsStylingCustomization: Story = {
+  render: () => {
+    interface Department {
+      id: string
+      name: string
+      budget: number
+      manager: string
+      teams?: Department[]
+    }
+
+    const data: Department[] = [
+      {
+        id: '1',
+        name: 'Engineering',
+        budget: 5000000,
+        manager: 'Alice Johnson',
+        teams: [
+          {
+            id: '1-1',
+            name: 'Frontend',
+            budget: 1500000,
+            manager: 'Bob Smith',
+            teams: [
+              { id: '1-1-1', name: 'React Team', budget: 750000, manager: 'Carol Lee' },
+              { id: '1-1-2', name: 'Vue Team', budget: 750000, manager: 'David Chen' }
+            ]
+          },
+          {
+            id: '1-2',
+            name: 'Backend',
+            budget: 2000000,
+            manager: 'Eve Martinez',
+            teams: [
+              { id: '1-2-1', name: 'API Team', budget: 1000000, manager: 'Frank Wilson' },
+              { id: '1-2-2', name: 'Database Team', budget: 1000000, manager: 'Grace Taylor' }
+            ]
+          }
+        ]
+      },
+      {
+        id: '2',
+        name: 'Marketing',
+        budget: 2000000,
+        manager: 'Henry Brown',
+        teams: [
+          { id: '2-1', name: 'Digital Marketing', budget: 1200000, manager: 'Ivy Davis' },
+          { id: '2-2', name: 'Content', budget: 800000, manager: 'Jack Miller' }
+        ]
+      }
+    ]
+
+    const columns: ColumnDef<Department>[] = [
+      {
+        accessorKey: 'name',
+        header: 'Department/Team',
+      },
+      {
+        accessorKey: 'manager',
+        header: 'Manager',
+      },
+      {
+        accessorKey: 'budget',
+        header: 'Budget',
+        cell: ({ getValue }) => formatCurrency(getValue() as number)
+      }
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <Card>
+          <CardHeader>
+            <CardTitle>Expanding Rows - Combined Styling Customization</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <DataTable
+              data={data}
+              columns={columns}
+              enableExpanding
+              getSubRows={(row) => row.teams}
+              nestedRowStyling={{
+                colors: {
+                  0: {
+                    default: 'var(--blue-100)',
+                    expanded: 'var(--blue-100)',
+                    collapsed: 'var(--color-background-neutral-subtlest)',
+                    leaf: 'var(--color-surface-primary)'
+                  },
+                  1: {
+                    default: 'var(--blue-50)',
+                    expanded: 'var(--blue-50)',
+                    collapsed: 'var(--blue-25)'
+                  },
+                  2: 'var(--blue-25)',
+                  3: 'var(--color-surface-primary)'
+                },
+                heights: {
+                  0: '52px',
+                  1: '44px',
+                  2: '40px'
+                },
+                defaultHeight: '36px' // For depth 3 and beyond
+              }}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+}

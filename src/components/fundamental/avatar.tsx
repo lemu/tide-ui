@@ -144,14 +144,14 @@ const AvatarImage = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Image>,
   React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
 >(({ className, ...props }, ref) => (
-  <div className="relative rounded-[inherit]">
+  <>
     <AvatarPrimitive.Image
       ref={ref}
       className={cn("aspect-square h-full w-full object-cover rounded-[inherit]", className)}
       {...props}
     />
     <div className="absolute inset-0 rounded-[inherit] shadow-[inset_0_0_0_1px_rgba(85,95,109,0.1)] pointer-events-none" />
-  </div>
+  </>
 ));
 AvatarImage.displayName = AvatarPrimitive.Image.displayName;
 

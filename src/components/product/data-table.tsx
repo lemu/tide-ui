@@ -1169,6 +1169,196 @@ function DataTablePagination<TData>({
 // Border styling options
 export type BorderStyle = "vertical" | "horizontal" | "both" | "none"
 
+// Helper functions for nested row styling
+
+/**
+ * Recursively calculates the maximum nesting depth in a row hierarchy
+ *
+ * @param rows - Array of table rows
+ * @returns Maximum depth level found
+ */
+function calculateMaxDepth(rows: any[]): number {
+  let maxDepth = 0
+  const traverse = (rows: any[], currentDepth: number) => {
+    rows.forEach(row => {
+      if (row.depth > maxDepth) {
+        maxDepth = row.depth
+      }
+      if (row.subRows && row.subRows.length > 0) {
+        traverse(row.subRows, currentDepth + 1)
+      }
+    })
+  }
+  traverse(rows, 0)
+  return maxDepth
+}
+
+/**
+ * Resolves the background color for a row based on depth, state, and configuration hierarchy.
+ *
+ * Priority order:
+ * 1. nestedRowStyling.colors (depth + state specific)
+ * 2. expandingRowColors (legacy prop, fallback)
+ * 3. Default colors (blue-50 for expanded parents, blue-25 for children, etc.)
+ *
+ * @param row - TanStack Table row object
+ * @param options - Configuration options
+ * @returns CSS color value or empty string for default background
+ */
+function resolveRowBackgroundColor(
+  row: any,
+  options: {
+    enableGrouping?: boolean
+    enableExpanding?: boolean
+    nestedRowStyling?: NestedRowStyling
+    expandingRowColors?: {
+      expandedParent?: string
+      collapsedParent?: string
+      children?: string
+    }
+    maxDepth: number
+  }
+): string {
+  const { enableGrouping, enableExpanding, nestedRowStyling, expandingRowColors, maxDepth } = options
+  const depth = row.depth
+  const isGrouped = row.getIsGrouped?.()
+  const isExpanded = row.getIsExpanded()
+  const hasChildren = row.subRows && row.subRows.length > 0
+
+  // Determine row state
+  const rowState: RowState = !hasChildren ? 'leaf' : isExpanded ? 'expanded' : 'collapsed'
+
+  // Check if this row or any ancestor is expanded (for expanding rows logic)
+  const hasExpandedAncestor = (): boolean => {
+    let currentRow: typeof row | undefined = row
+    while (currentRow) {
+      if (currentRow.getIsExpanded()) return true
+      currentRow = currentRow.getParentRow?.()
+    }
+    return false
+  }
+
+  // --- Priority 1: nestedRowStyling.colors ---
+  if (nestedRowStyling?.colors && nestedRowStyling.colors[depth] !== undefined) {
+    const depthConfig = nestedRowStyling.colors[depth]
+
+    // Simple string configuration
+    if (typeof depthConfig === 'string') {
+      return depthConfig
+    }
+
+    // State-aware configuration
+    if (typeof depthConfig === 'object') {
+      // Try state-specific color first
+      if (rowState === 'expanded' && depthConfig.expanded) {
+        return depthConfig.expanded
+      }
+      if (rowState === 'collapsed' && depthConfig.collapsed) {
+        return depthConfig.collapsed
+      }
+      if (rowState === 'leaf' && depthConfig.leaf) {
+        return depthConfig.leaf
+      }
+      // Fall back to default for this depth
+      if (depthConfig.default) {
+        return depthConfig.default
+      }
+    }
+  }
+
+  // --- Priority 2: expandingRowColors (legacy) ---
+  // Only apply for expanding rows, not grouped rows
+  if (enableExpanding && !isGrouped && expandingRowColors) {
+    const distanceFromLeaf = maxDepth - depth
+
+    // Leaf rows (distance 0)
+    if (distanceFromLeaf === 0 && expandingRowColors.children) {
+      return expandingRowColors.children
+    }
+
+    // Parent rows
+    if (distanceFromLeaf > 0) {
+      if (isExpanded && expandingRowColors.expandedParent) {
+        return expandingRowColors.expandedParent
+      }
+      if (!isExpanded && expandingRowColors.collapsedParent) {
+        return expandingRowColors.collapsedParent
+      }
+    }
+  }
+
+  // --- Priority 3: Default colors ---
+  // Grouped rows
+  if (isGrouped) {
+    if (isExpanded) {
+      return 'var(--blue-50)' // Expanded group header
+    } else {
+      return 'var(--color-background-neutral-subtlest)' // Collapsed group header
+    }
+  }
+
+  // Second level children of grouped rows
+  if (enableGrouping && depth === 1) {
+    return 'var(--blue-25)'
+  }
+
+  // Expanding rows (bottom-up alternating colors)
+  if (enableExpanding && !isGrouped) {
+    // Don't apply colors if:
+    // 1. Top-level row without children (leaf at depth 0)
+    // 2. Top-level row that's collapsed (not expanded)
+    if (depth === 0 && (!hasChildren || !hasExpandedAncestor())) {
+      return '' // Default background
+    }
+
+    const distanceFromLeaf = maxDepth - depth
+
+    // Alternate colors based on distance from leaf
+    // Even distance (0, 2, 4...) = blue-25 (light) - leaf level
+    // Odd distance (1, 3, 5...) = blue-50 (darker) - parent levels
+    return distanceFromLeaf % 2 === 0
+      ? 'var(--blue-25)'
+      : 'var(--blue-50)'
+  }
+
+  // Default: no background color
+  return ''
+}
+
+/**
+ * Resolves the row height based on depth configuration.
+ *
+ * Priority order:
+ * 1. nestedRowStyling.heights[depth] (depth-specific height)
+ * 2. nestedRowStyling.defaultHeight (fallback for unspecified depths)
+ * 3. undefined (uses table size variant height)
+ *
+ * @param depth - Row depth level (0-indexed)
+ * @param nestedRowStyling - Configuration object
+ * @returns CSS height value or undefined
+ */
+function resolveRowHeight(
+  depth: number,
+  nestedRowStyling?: NestedRowStyling
+): string | undefined {
+  if (!nestedRowStyling) {
+    return undefined
+  }
+
+  // Priority 1: Depth-specific height
+  if (nestedRowStyling.heights && nestedRowStyling.heights[depth] !== undefined) {
+    return nestedRowStyling.heights[depth]
+  }
+
+  // Priority 2: Default height for unspecified depths
+  if (nestedRowStyling.defaultHeight) {
+    return nestedRowStyling.defaultHeight
+  }
+
+  // Priority 3: No custom height (uses table size)
+  return undefined
+}
+
 // Helper function to filter rows based on hideChildrenForSingleItemGroups settings
 function filterGroupedRows(
   rows: any[],
@@ -1283,6 +1473,94 @@ function renderGroupDisplayContent(
   )
 }
 
+// Nested row styling types
+/**
+ * Row state for color configuration
+ */
+export type RowState = 'expanded' | 'collapsed' | 'leaf'
+
+/**
+ * Color configuration for a specific depth level with state-aware overrides
+ */
+export interface DepthColorConfig {
+  /**
+   * Default color for this depth level (used when no state-specific color matches)
+   */
+  default: string
+  /**
+   * Optional state-specific color overrides
+   */
+  expanded?: string
+  collapsed?: string
+  leaf?: string
+}
+
+/**
+ * Granular color configuration by depth level
+ * Can be specified as:
+ * 1. Simple string (applies to all states at that depth)
+ * 2. DepthColorConfig object (state-aware colors for that depth)
+ */
+export type DepthColors = Record<number, string | DepthColorConfig>
+
+/**
+ * Height configuration by depth level
+ * Supports CSS height values: "40px", "48px", "2.5rem", etc.
+ */
+export type DepthHeights = Record<number, string>
+
+/**
+ * Comprehensive nested row styling configuration
+ */
+export interface NestedRowStyling {
+  /**
+   * Granular color configuration by depth level
+   *
+   * @example
+   * // Simple: same color for all states at each depth
+   * colors: {
+   *   0: 'var(--blue-50)',
+   *   1: 'var(--blue-25)',
+   *   2: 'var(--grey-25)'
+   * }
+   *
+   * @example
+   * // Advanced: state-specific colors per depth
+   * colors: {
+   *   0: {
+   *     default: 'var(--blue-50)',
+   *     expanded: 'var(--blue-100)',
+   *     collapsed: 'var(--blue-50)',
+   *     leaf: 'var(--grey-25)'
+   *   },
+   *   1: 'var(--blue-25)', // Simple string for depth 1
+   *   2: {
+   *     default: 'var(--grey-25)',
+   *     expanded: 'var(--grey-50)'
+   *   }
+   * }
+   */
+  colors?: DepthColors
+
+  /**
+   * Height configuration by depth level
+   *
+   * @example
+   * heights: {
+   *   0: '48px',  // Parent rows
+   *   1: '40px',  // First level children
+   *   2: '36px'   // Second level children
+   * }
+   */
+  heights?: DepthHeights
+
+  /**
+   * Default height for depths not explicitly specified
+   * Falls back to table size if not provided
+   */
+  defaultHeight?: string
+}
+
 // Main DataTable component
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -1337,9 +1615,14 @@ export interface DataTableProps<TData, TValue> {
   enableExpanding?: boolean
   getSubRows?: (row: TData) => TData[] | undefined
   /**
+   * DEPRECATED: Use nestedRowStyling.colors instead.
    * Custom color overrides for expanding rows at different depths and states.
    * If not provided, uses smart context-aware defaults that match grouping colors.
    *
+   * This prop is maintained for backward compatibility but will be overridden
+   * by nestedRowStyling.colors if both are provided.
+   *
+   * @deprecated Use nestedRowStyling for granular control
    * @example
    * expandingRowColors={{
    *   expandedParent: 'var(--blue-50)',
@@ -1352,6 +1635,27 @@ export interface DataTableProps<TData, TValue> {
     collapsedParent?: string
     children?: string
   }
+  /**
+   * Granular styling configuration for nested rows (expanding and grouped).
+   * Provides depth-specific colors and heights with state-aware overrides.
+   *
+   * Priority: nestedRowStyling > expandingRowColors > default colors
+   *
+   * @example
+   * nestedRowStyling={{
+   *   colors: {
+   *     0: { default: 'var(--blue-100)', expanded: 'var(--blue-150)' },
+   *     1: 'var(--blue-50)',
+   *     2: 'var(--blue-25)'
+   *   },
+   *   heights: {
+   *     0: '48px',
+   *     1: '40px'
+   *   },
+   *   defaultHeight: '36px'
+   * }}
+   */
+  nestedRowStyling?: NestedRowStyling
   // Grouping
   enableGrouping?: boolean
   groupedColumnMode?: 'reorder' | 'remove' | false
@@ -1520,22 +1824,6 @@ export interface DataTableProps<TData, TValue> {
   groupPreservingSearch?: boolean
 }
 
-/**
- * Calculate the maximum depth in a row tree.
- * Used for bottom-up alternating colors in expanding rows.
- */
-const calculateMaxDepth = (rows: any[]): number => {
-  let maxDepth = 0
-  rows.forEach((row) => {
-    if (row.depth > maxDepth) maxDepth = row.depth
-    if (row.subRows && row.subRows.length > 0) {
-      const childMaxDepth = calculateMaxDepth(row.subRows)
-      if (childMaxDepth > maxDepth) maxDepth = childMaxDepth
-    }
-  })
-  return maxDepth
-}
-
 export function DataTable<TData, TValue>({
   columns,
   data,
@@ -1567,6 +1855,7 @@ export function DataTable<TData, TValue>({
   enableExpanding = false,
   getSubRows,
   expandingRowColors,
+  nestedRowStyling,
   enableGrouping = false,
   groupedColumnMode = false,
   enableManualGrouping = false,
@@ -2039,6 +2328,12 @@ export function DataTable<TData, TValue>({
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
   })
+
+  // Memoize maxDepth calculation for performance
+  const maxDepth = React.useMemo(
+    () => calculateMaxDepth(table.getRowModel().rows),
+    [table.getRowModel().rows]
+  )
 
   // Override page count when grouping is enabled to count only top-level groups
   React.useEffect(() => {
@@ -2879,63 +3174,28 @@ export function DataTable<TData, TValue>({
                         // Pinned row styling using existing CSS variables
                         row.getIsPinned() === 'top' && "!bg-[var(--color-background-neutral-selected)] !border-b-2 !border-[var(--color-border-primary-medium)]",
                         row.getIsPinned() === 'bottom' && "!bg-[var(--color-background-neutral-selected)] !border-t-2 !border-[var(--color-border-primary-medium)]",
-                        // Grouped row styling - blue-50 when expanded, neutral otherwise
-                        row.getIsGrouped?.() && row.getIsExpanded() && "bg-[var(--blue-50)] font-medium",
-                        row.getIsGrouped?.() && !row.getIsExpanded() && "bg-[var(--color-background-neutral-subtlest)] font-medium",
-                        // Second level (children of grouped rows) - blue-25
-                        enableGrouping && row.depth === 1 && "bg-[var(--blue-25)]",
-                        // Bottom-up alternating colors for expanding rows (only when expanded)
-                        enableExpanding && !row.getIsGrouped?.() && (() => {
-                          // Check if this row has children
-                          const hasChildren = row.subRows && row.subRows.length > 0
+                        // Nested row background colors (grouped and expanding)
+                        (() => {
+                          // Font weight for grouped rows
+                          const isGrouped = row.getIsGrouped?.()
+                          const fontWeight = isGrouped ? 'font-medium' : ''
 
-                          // Check if this row or any ancestor is expanded
-                          const hasExpandedAncestor = () => {
-                            let currentRow: typeof row | undefined = row
-                            while (currentRow) {
-                              if (currentRow.getIsExpanded()) return true
-                              currentRow = currentRow.getParentRow?.()
-                            }
-                            return false
-                          }
+                          const bgColor = resolveRowBackgroundColor(row, {
+                            enableGrouping,
+                            enableExpanding,
+                            nestedRowStyling,
+                            expandingRowColors,
+                            maxDepth
+                          })
 
-                          // Don't apply colors if:
-                          // 1. Top-level row without children (leaf at depth 0)
-                          // 2. Top-level row that's collapsed (not expanded)
-                          if (row.depth === 0 && (!hasChildren || !hasExpandedAncestor())) {
-                            return "" // Default background
-                          }
-
-                          // Calculate max depth to determine distance from leaf
-                          const maxDepth = calculateMaxDepth(table.getRowModel().rows)
-                          const distanceFromLeaf = maxDepth - row.depth
-
-                          // Alternate colors based on distance from leaf
-                          // Even distance (0, 2, 4...) = blue-25 (light) - leaf level
-                          // Odd distance (1, 3, 5...) = blue-50 (darker) - parent levels
-                          const defaultColor = distanceFromLeaf % 2 === 0
-                            ? "bg-[var(--blue-25)]"
-                            : "bg-[var(--blue-50)]"
-
-                          // Allow custom color overrides
-                          if (expandingRowColors) {
-                            // For backward compatibility, check if custom colors are defined
-                            if (distanceFromLeaf === 0 && expandingRowColors.children) {
-                              return `bg-[${expandingRowColors.children}]`
-                            }
-                            if (distanceFromLeaf > 0 && row.getIsExpanded() && expandingRowColors.expandedParent) {
-                              return `bg-[${expandingRowColors.expandedParent}]`
-                            }
-                            if (distanceFromLeaf > 0 && !row.getIsExpanded() && expandingRowColors.collapsedParent) {
-                              return `bg-[${expandingRowColors.collapsedParent}]`
-                            }
-                          }
-
-                          return defaultColor
+                          return cn(bgColor ? `bg-[${bgColor}]` : '', fontWeight)
                         })(),
                         // Row click styling with smart hover
                         onRowClick && getRowClickableState(row) && (clickableRowClassName || "cursor-pointer hover:[background-image:linear-gradient(rgba(0,0,0,0.02),rgba(0,0,0,0.02))]")
                       )}
+                      style={{
+                        height: resolveRowHeight(row.depth, nestedRowStyling)
+                      }}
                       onClick={onRowClick && getRowClickableState(row) ? (e) => handleRowClick(row, e) : undefined}
                       onKeyDown={(e) => {
                         if (onRowClick && getRowClickableState(row) && (e.key === 'Enter' || e.key === ' ')) {
@@ -3005,60 +3265,16 @@ export function DataTable<TData, TValue>({
                               Object.keys(pinningStyles).length > 0 && [
                                 "z-10",
                                 // Match row backgrounds for sticky cells to prevent transparency
-                                // Grouped expanded rows
-                                row.getIsGrouped?.() && row.getIsExpanded() && "bg-[var(--blue-50)]",
-                                // Grouped collapsed rows
-                                row.getIsGrouped?.() && !row.getIsExpanded() && "bg-[var(--color-background-neutral-subtlest)]",
-                                // Second level rows (children of grouped rows)
-                                enableGrouping && row.depth === 1 && "bg-[var(--blue-25)]",
-                                // Bottom-up alternating colors for expanding rows (only when expanded)
-                                enableExpanding && !row.getIsGrouped?.() && (() => {
-                                  // Check if this row has children
-                                  const hasChildren = row.subRows && row.subRows.length > 0
-
-                                  // Check if this row or any ancestor is expanded
-                                  const hasExpandedAncestor = () => {
-                                    let currentRow: typeof row | undefined = row
-                                    while (currentRow) {
-                                      if (currentRow.getIsExpanded()) return true
-                                      currentRow = currentRow.getParentRow?.()
-                                    }
-                                    return false
-                                  }
-
-                                  // Don't apply colors if:
-                                  // 1. Top-level row without children (leaf at depth 0)
-                                  // 2. Top-level row that's collapsed (not expanded)
-                                  if (row.depth === 0 && (!hasChildren || !hasExpandedAncestor())) {
-                                    return "" // Default background
-                                  }
-
-                                  // Calculate max depth to determine distance from leaf
-                                  const maxDepth = calculateMaxDepth(table.getRowModel().rows)
-                                  const distanceFromLeaf = maxDepth - row.depth
-
-                                  // Alternate colors based on distance from leaf
-                                  const defaultColor = distanceFromLeaf % 2 === 0
-                                    ? "bg-[var(--blue-25)]"
-                                    : "bg-[var(--blue-50)]"
-
-                                  // Allow custom color overrides
-                                  if (expandingRowColors) {
-                                    if (distanceFromLeaf === 0 && expandingRowColors.children) {
-                                      return `bg-[${expandingRowColors.children}]`
-                                    }
-                                    if (distanceFromLeaf > 0 && row.getIsExpanded() && expandingRowColors.expandedParent) {
-                                      return `bg-[${expandingRowColors.expandedParent}]`
-                                    }
-                                    if (distanceFromLeaf > 0 && !row.getIsExpanded() && expandingRowColors.collapsedParent) {
-                                      return `bg-[${expandingRowColors.collapsedParent}]`
-                                    }
-                                  }
-
-                                  return defaultColor
+                                (() => {
+                                  const bgColor = resolveRowBackgroundColor(row, {
+                                    enableGrouping,
+                                    enableExpanding,
+                                    nestedRowStyling,
+                                    expandingRowColors,
+                                    maxDepth
+                                  })
+                                  return bgColor ? `bg-[${bgColor}]` : 'bg-[var(--color-surface-primary)]'
                                 })(),
-                                // Default rows (not grouped, not expanding)
-                                !row.getIsGrouped?.() && !(enableGrouping && row.depth === 1) && !enableExpanding && "bg-[var(--color-surface-primary)]",
                               ],
                               // Section header background
                               isSectionHeader && "bg-[var(--blue-50)]",

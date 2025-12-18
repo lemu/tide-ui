@@ -134,13 +134,13 @@ const defaultTeams: AppFrameTeam[] = [
     name: 'Acme Corp',
     role: 'Admin',
     plan: 'Enterprise',
-    avatarUrl: undefined,
+    avatarUrl: 'https://useful-toucan-91.convex.cloud/api/storage/5e36a31d-3f0a-4bb0-95db-f5b1c8e8af93',
   },
   {
     name: 'Startup Inc',
     role: 'Member',
     plan: 'Pro',
-    avatarUrl: undefined,
+    avatarUrl: 'https://useful-toucan-91.convex.cloud/api/storage/5e36a31d-3f0a-4bb0-95db-f5b1c8e8af93',
   },
 ]
 
@@ -269,164 +269,6 @@ const isMacOS = () => {
 }
 
 // ============================================================================
-// Modal Components
-// ============================================================================
-
-interface CreateBoardModalProps {
-  isOpen: boolean
-  onClose: () => void
-  onCreate: (title: string) => void
-  title: string
-  setTitle: (title: string) => void
-  isCreating: boolean
-}
-
-function CreateBoardModal({
-  isOpen,
-  onClose,
-  onCreate,
-  title,
-  setTitle,
-  isCreating,
-}: CreateBoardModalProps) {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!title.trim()) return
-    onCreate(title.trim())
-  }
-
-  return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Create new board</DialogTitle>
-        </DialogHeader>
-        <form onSubmit={handleSubmit}>
-          <DialogBody className="space-y-4">
-            <div className="space-y-2">
-              <label className="text-body-md block text-[var(--color-text-primary)]">Board title</label>
-              <Input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Enter board title..."
-                disabled={isCreating}
-                autoFocus
-              />
-            </div>
-          </DialogBody>
-          <DialogFooter>
-            <Button type="button" variant="ghost" onClick={onClose} disabled={isCreating}>
-              Cancel
-            </Button>
-            <Button type="submit" variant="primary" disabled={!title.trim() || isCreating}>
-              {isCreating ? 'Creating...' : 'Create board'}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-interface RenameBoardModalProps {
-  isOpen: boolean
-  onClose: () => void
-  onRename: (title: string) => void
-  title: string
-  setTitle: (title: string) => void
-  isRenaming: boolean
-}
-
-function RenameBoardModal({
-  isOpen,
-  onClose,
-  onRename,
-  title,
-  setTitle,
-  isRenaming,
-}: RenameBoardModalProps) {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!title.trim()) return
-    onRename(title.trim())
-  }
-
-  return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Rename board</DialogTitle>
-        </DialogHeader>
-        <form onSubmit={handleSubmit}>
-          <DialogBody className="space-y-4">
-            <div className="space-y-2">
-              <label className="text-body-md block text-[var(--color-text-primary)]">Board title</label>
-              <Input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Enter board title..."
-                disabled={isRenaming}
-                autoFocus
-              />
-            </div>
-          </DialogBody>
-          <DialogFooter>
-            <Button type="button" variant="ghost" onClick={onClose} disabled={isRenaming}>
-              Cancel
-            </Button>
-            <Button type="submit" variant="primary" disabled={!title.trim() || isRenaming}>
-              {isRenaming ? 'Renaming...' : 'Rename board'}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-interface DeleteBoardModalProps {
-  isOpen: boolean
-  onClose: () => void
-  onDelete: () => void
-  boardTitle: string
-  isDeleting: boolean
-}
-
-function DeleteBoardModal({ isOpen, onClose, onDelete, boardTitle, isDeleting }: DeleteBoardModalProps) {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    onDelete()
-  }
-
-  return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Delete board</DialogTitle>
-        </DialogHeader>
-        <form onSubmit={handleSubmit}>
-          <DialogBody>
-            <p className="text-body-md text-[var(--color-text-primary)]">
-              Are you sure you want to delete <strong>'{boardTitle}'</strong>? This action cannot be undone.
-            </p>
-          </DialogBody>
-          <DialogFooter>
-            <Button type="button" variant="ghost" onClick={onClose} disabled={isDeleting}>
-              Cancel
-            </Button>
-            <Button type="submit" variant="destructive" disabled={isDeleting}>
-              {isDeleting ? 'Deleting...' : 'Delete board'}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-// ============================================================================
 // Internal Components
 // ============================================================================
 
@@ -440,22 +282,7 @@ interface AppSidebarProps {
 function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps) {
   const [commandOpen, setCommandOpen] = React.useState(false)
   const [commandSearch, setCommandSearch] = React.useState('')
-  const [expandedItems, setExpandedItems] = React.useState<Record<string, boolean>>({
-    Agreements: true, // Default expanded
-  })
-
-  // Modal states
-  const [newBoardModalOpen, setNewBoardModalOpen] = React.useState(false)
-  const [newBoardTitle, setNewBoardTitle] = React.useState('')
-  const [isCreatingBoard, setIsCreatingBoard] = React.useState(false)
-
-  const [renameBoardModalOpen, setRenameBoardModalOpen] = React.useState(false)
-  const [selectedBoard, setSelectedBoard] = React.useState<AppFrameBoard | null>(null)
-  const [renameBoardTitle, setRenameBoardTitle] = React.useState('')
-  const [isRenamingBoard, setIsRenamingBoard] = React.useState(false)
-
-  const [deleteBoardModalOpen, setDeleteBoardModalOpen] = React.useState(false)
-  const [isDeletingBoard, setIsDeletingBoard] = React.useState(false)
+  const [expandedItems, setExpandedItems] = React.useState<Record<string, boolean>>({})
 
   const [activeTeam, setActiveTeam] = React.useState(teams[0])
 
@@ -478,49 +305,6 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
       }
     }
     return item.title
-  }
-
-  // Board action handlers (non-functional demos)
-  const handleCreateBoard = (title: string) => {
-    setIsCreatingBoard(true)
-    setTimeout(() => {
-      console.log('Creating board:', title)
-      setIsCreatingBoard(false)
-      setNewBoardModalOpen(false)
-      setNewBoardTitle('')
-    }, 1000)
-  }
-
-  const handleRenameBoard = (board: AppFrameBoard) => {
-    setSelectedBoard(board)
-    setRenameBoardTitle(board.title)
-    setRenameBoardModalOpen(true)
-  }
-
-  const handleRenameBoardSubmit = (title: string) => {
-    setIsRenamingBoard(true)
-    setTimeout(() => {
-      console.log('Renaming board:', selectedBoard?.title, 'to:', title)
-      setIsRenamingBoard(false)
-      setRenameBoardModalOpen(false)
-      setRenameBoardTitle('')
-      setSelectedBoard(null)
-    }, 1000)
-  }
-
-  const handleDeleteBoard = (board: AppFrameBoard) => {
-    setSelectedBoard(board)
-    setDeleteBoardModalOpen(true)
-  }
-
-  const handleDeleteBoardSubmit = () => {
-    setIsDeletingBoard(true)
-    setTimeout(() => {
-      console.log('Deleting board:', selectedBoard?.title)
-      setIsDeletingBoard(false)
-      setDeleteBoardModalOpen(false)
-      setSelectedBoard(null)
-    }, 1000)
   }
 
   // Keyboard shortcuts
@@ -639,6 +423,27 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                     </Tooltip>
                   </SidebarMenuItem>
                 ))}
+                {/* Boards menu item */}
+                <SidebarMenuItem>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <SidebarMenuButton
+                        onClick={(e) => {
+                          if (onNavigate) {
+                            e.preventDefault()
+                            onNavigate('/boards')
+                          }
+                        }}
+                      >
+                        <Icon name="layout-dashboard" size="sm" />
+                        <span>Boards</span>
+                      </SidebarMenuButton>
+                    </TooltipTrigger>
+                    <TooltipContent side="right" className="hidden group-data-[collapsible=icon]:block">
+                      Boards
+                    </TooltipContent>
+                  </Tooltip>
+                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
@@ -808,108 +613,8 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
             </SidebarGroupContent>
           </SidebarGroup>
 
-          {/* Separator between Intelligence and Boards in collapsed state */}
-          <div className="my-2 hidden justify-center px-2 group-data-[collapsible=icon]:flex">
-            <Separator layout="vertical" />
-          </div>
-
-          {/* Boards Section */}
-          <SidebarGroup className="mt-1 p-[var(--space-sm)]">
-            <SidebarGroupLabel className="flex items-center justify-between py-1 pb-1.5 group-data-[collapsible=icon]:hidden">
-              <span>Boards</span>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setNewBoardModalOpen(true)}
-                className="h-4 w-4 p-0 text-[var(--color-text-tertiary)] hover:!bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-secondary)]"
-              >
-                <Icon name="plus" size="sm" className="text-[var(--color-text-tertiary)]" />
-              </Button>
-            </SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {navigationData.boards.length === 0 ? (
-                  <SidebarMenuItem>
-                    <div className="text-caption-medium-sm px-2 py-1.5 text-[var(--color-text-secondary)] group-data-[collapsible=icon]:hidden">
-                      No pinned boards
-                    </div>
-                  </SidebarMenuItem>
-                ) : (
-                  navigationData.boards.map((item) => (
-                    <SidebarMenuItem key={item.title}>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <SidebarMenuButton
-                            isActive={item.isActive}
-                            onClick={(e) => {
-                              if (onNavigate) {
-                                e.preventDefault()
-                                onNavigate(item.url)
-                              }
-                            }}
-                          >
-                            <Icon name="layout-dashboard" size="sm" />
-                            <span>{item.title}</span>
-                          </SidebarMenuButton>
-                        </TooltipTrigger>
-                        <TooltipContent side="right" className="hidden group-data-[collapsible=icon]:block">
-                          {item.title}
-                        </TooltipContent>
-                      </Tooltip>
-
-                      {/* Board Actions Menu */}
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <SidebarMenuAction showOnHover className="group-data-[collapsible=icon]:hidden">
-                            <Icon name="more-horizontal" size="sm" />
-                          </SidebarMenuAction>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent side="right" align="start" className="w-48">
-                          <DropdownMenuItem icon="eye" className="cursor-pointer">
-                            View
-                          </DropdownMenuItem>
-                          <DropdownMenuItem icon="pin-off" className="cursor-pointer">
-                            Unpin
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            icon="edit"
-                            className="cursor-pointer"
-                            onSelect={() => handleRenameBoard(item)}
-                          >
-                            Rename
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem
-                            icon="trash"
-                            className="cursor-pointer text-[var(--color-text-error-bold)] hover:bg-[var(--color-background-error-subtle)] hover:text-[var(--color-text-error-bold)]"
-                            onSelect={() => handleDeleteBoard(item)}
-                          >
-                            Delete
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </SidebarMenuItem>
-                  ))
-                )}
-                <SidebarMenuItem>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <SidebarMenuButton>
-                        <Icon name="more-horizontal" size="sm" />
-                        <span>Show all</span>
-                      </SidebarMenuButton>
-                    </TooltipTrigger>
-                    <TooltipContent side="right" className="hidden group-data-[collapsible=icon]:block">
-                      Show all boards
-                    </TooltipContent>
-                  </Tooltip>
-                </SidebarMenuItem>
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-
           {/* Support Section */}
-          <SidebarGroup className="pb-2 p-[var(--space-sm)]">
+          <SidebarGroup className="pb-2 p-[var(--space-sm)] mt-auto">
             <SidebarGroupContent>
               <SidebarMenu>
                 {navigationData.support.map((item) => (
@@ -947,19 +652,19 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="h-auto min-h-[48px] w-full justify-start rounded-md p-2 hover:!bg-[var(--color-background-neutral-subtlest-hovered)] group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:min-h-[32px] group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0"
+                  className="h-auto min-h-[56px] w-full justify-start rounded-md px-3 py-2 hover:!bg-[var(--color-background-neutral-subtlest-hovered)] group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:h-auto group-data-[collapsible=icon]:min-h-[48px] group-data-[collapsible=icon]:w-auto group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:py-2"
                 >
                   {/* Expanded state */}
                   <div className="flex w-full items-center gap-3 group-data-[collapsible=icon]:hidden">
-                    <div className="relative">
-                      <Avatar size="md" type="organization">
-                        <AvatarImage src={activeTeam.avatarUrl} alt={activeTeam.name} />
-                        <AvatarFallback size="md" type="organization">{getTeamInitials(activeTeam.name)}</AvatarFallback>
+                    <div className="relative flex-shrink-0">
+                      <Avatar size="md" type="user">
+                        <AvatarImage src={user.avatarUrl} alt={user.name} />
+                        <AvatarFallback size="md" type="user">{getUserInitials(user.name)}</AvatarFallback>
                       </Avatar>
-                      <div className="absolute -right-1 -bottom-1 rounded-full border-2 border-white">
-                        <Avatar size="xs" type="user">
-                          <AvatarImage src={user.avatarUrl} alt={user.name} />
-                          <AvatarFallback size="xs" type="user">{getUserInitials(user.name)}</AvatarFallback>
+                      <div className="absolute -right-1 -bottom-1 rounded-[4px] border-2 border-white p-0">
+                        <Avatar size="xxs" type="organization">
+                          <AvatarImage src={activeTeam.avatarUrl} alt={activeTeam.name} />
+                          <AvatarFallback size="xxs" type="organization">{getTeamInitials(activeTeam.name)}</AvatarFallback>
                         </Avatar>
                       </div>
                     </div>
@@ -975,15 +680,15 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                   </div>
 
                   {/* Collapsed state */}
-                  <div className="relative hidden group-data-[collapsible=icon]:block">
-                    <Avatar size="sm" type="organization">
-                      <AvatarImage src={activeTeam.avatarUrl} alt={activeTeam.name} />
-                      <AvatarFallback size="sm" type="organization">{getTeamInitials(activeTeam.name)}</AvatarFallback>
+                  <div className="relative flex-shrink-0 hidden group-data-[collapsible=icon]:block">
+                    <Avatar size="sm" type="user">
+                      <AvatarImage src={user.avatarUrl} alt={user.name} />
+                      <AvatarFallback size="sm" type="user">{getUserInitials(user.name)}</AvatarFallback>
                     </Avatar>
-                    <div className="absolute -right-0.5 -bottom-0.5 rounded-full border border-white">
-                      <Avatar size="xs" type="user">
-                        <AvatarImage src={user.avatarUrl} alt={user.name} />
-                        <AvatarFallback size="xs" type="user">{getUserInitials(user.name)}</AvatarFallback>
+                    <div className="absolute -right-0.5 -bottom-0.5 rounded-[4px] border border-white p-0">
+                      <Avatar size="xxs" type="organization">
+                        <AvatarImage src={activeTeam.avatarUrl} alt={activeTeam.name} />
+                        <AvatarFallback size="xxs" type="organization">{getTeamInitials(activeTeam.name)}</AvatarFallback>
                       </Avatar>
                     </div>
                   </div>
@@ -1037,7 +742,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                         {team.role} • {team.plan} plan
                       </span>
                     </div>
-                    {activeTeam.name === team.name && <Icon name="check" size="md" />}
+                    {activeTeam.name === team.name && <Icon name="check" size="md" className="text-[var(--color-icon-brand-bold)]" />}
                   </DropdownMenuItem>
                 ))}
 
@@ -1166,43 +871,6 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
           </CommandGroup>
         </CommandList>
       </CommandDialog>
-
-      {/* Board Modals */}
-      <CreateBoardModal
-        isOpen={newBoardModalOpen}
-        onClose={() => {
-          setNewBoardModalOpen(false)
-          setNewBoardTitle('')
-        }}
-        onCreate={handleCreateBoard}
-        title={newBoardTitle}
-        setTitle={setNewBoardTitle}
-        isCreating={isCreatingBoard}
-      />
-
-      <RenameBoardModal
-        isOpen={renameBoardModalOpen}
-        onClose={() => {
-          setRenameBoardModalOpen(false)
-          setRenameBoardTitle('')
-          setSelectedBoard(null)
-        }}
-        onRename={handleRenameBoardSubmit}
-        title={renameBoardTitle}
-        setTitle={setRenameBoardTitle}
-        isRenaming={isRenamingBoard}
-      />
-
-      <DeleteBoardModal
-        isOpen={deleteBoardModalOpen}
-        onClose={() => {
-          setDeleteBoardModalOpen(false)
-          setSelectedBoard(null)
-        }}
-        onDelete={handleDeleteBoardSubmit}
-        boardTitle={selectedBoard?.title || ''}
-        isDeleting={isDeletingBoard}
-      />
     </TooltipProvider>
   )
 }

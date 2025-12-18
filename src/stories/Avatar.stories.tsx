@@ -194,6 +194,12 @@ export const FallbackVariants: Story = {
         </Avatar>
         <span className="text-caption-xsm text-[var(--color-text-tertiary)]">Magenta</span>
       </div>
+      <div className="flex flex-col items-center gap-2">
+        <Avatar>
+          <AvatarFallback className="bg-white shadow-[inset_0_0_0_1px_var(--color-border-primary-medium)] text-[var(--color-text-primary)]">MN</AvatarFallback>
+        </Avatar>
+        <span className="text-caption-xsm text-[var(--color-text-tertiary)]">White</span>
+      </div>
     </div>
   ),
 }
