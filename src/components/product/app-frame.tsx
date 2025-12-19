@@ -145,6 +145,12 @@ const defaultNavigationData: AppFrameNavigationData = {
       url: '/home',
       isActive: false,
     },
+    {
+      title: 'Boards',
+      icon: 'layout-dashboard',
+      url: '/boards',
+      isActive: false,
+    },
   ],
   operations: [
     {
@@ -411,28 +417,6 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                     </Tooltip>
                   </SidebarMenuItem>
                 ))}
-                {/* Boards menu item */}
-                <SidebarMenuItem>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <SidebarMenuButton
-                        isActive={currentPath === '/boards'}
-                        onClick={(e) => {
-                          if (onNavigate) {
-                            e.preventDefault()
-                            onNavigate('/boards')
-                          }
-                        }}
-                      >
-                        <Icon name="layout-dashboard" size="sm" />
-                        <span>Boards</span>
-                      </SidebarMenuButton>
-                    </TooltipTrigger>
-                    <TooltipContent side="right" className="hidden group-data-[collapsible=icon]:block">
-                      Boards
-                    </TooltipContent>
-                  </Tooltip>
-                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
