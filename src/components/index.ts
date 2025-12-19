@@ -323,7 +323,6 @@ export { AppFrame } from './product/app-frame'
 export type {
   AppFrameProps,
   AppFrameNavItem,
-  AppFrameBoard,
   AppFrameUser,
   AppFrameTeam,
   AppFrameNavigationData,
