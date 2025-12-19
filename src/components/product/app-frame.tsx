@@ -416,6 +416,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <SidebarMenuButton
+                        isActive={currentPath === '/boards'}
                         onClick={(e) => {
                           if (onNavigate) {
                             e.preventDefault()
