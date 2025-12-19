@@ -60,12 +60,6 @@ export interface AppFrameNavItem {
   }>
 }
 
-export interface AppFrameBoard {
-  title: string
-  url: string
-  isActive: boolean
-}
-
 export interface AppFrameUser {
   name: string
   email: string
@@ -83,7 +77,6 @@ export interface AppFrameNavigationData {
   main: AppFrameNavItem[]
   operations: AppFrameNavItem[]
   intelligence: AppFrameNavItem[]
-  boards: AppFrameBoard[]
   support: AppFrameNavItem[]
 }
 
@@ -218,11 +211,6 @@ const defaultNavigationData: AppFrameNavigationData = {
       url: '/fixtures',
       isActive: false,
     },
-  ],
-  boards: [
-    { title: 'Project Alpha', url: '/boards/1', isActive: false },
-    { title: 'Q4 Planning', url: '/boards/2', isActive: true },
-    { title: 'Design System', url: '/boards/3', isActive: false },
   ],
   support: [
     {
@@ -838,12 +826,6 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
             {navigationData.intelligence.map((item) => (
               <CommandItem key={item.title} onSelect={() => setCommandOpen(false)}>
                 <Icon name={item.icon} size="sm" className="mr-2" />
-                <span>{item.title}</span>
-              </CommandItem>
-            ))}
-            {navigationData.boards.map((item) => (
-              <CommandItem key={item.title} onSelect={() => setCommandOpen(false)}>
-                <Icon name="layout-dashboard" size="sm" className="mr-2" />
                 <span>{item.title}</span>
               </CommandItem>
             ))}
