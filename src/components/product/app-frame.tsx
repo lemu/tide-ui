@@ -316,6 +316,22 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [])
 
+  // Clear all tooltips when navigation data changes (indicating a route change)
+  React.useEffect(() => {
+    setOpenTooltips({})
+  }, [navigationData])
+
+  // Wrapper for onNavigate that clears tooltips
+  const handleNavigate = React.useCallback(
+    (url: string) => {
+      setOpenTooltips({})
+      if (onNavigate) {
+        onNavigate(url)
+      }
+    },
+    [onNavigate]
+  )
+
   return (
     <TooltipProvider delayDuration={100}>
       <Sidebar variant="sidebar" collapsible="icon" className="flex h-full flex-col">
@@ -404,7 +420,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                           onClick={(e) => {
                             if (onNavigate) {
                               e.preventDefault()
-                              onNavigate(item.url)
+                              handleNavigate(item.url)
                             }
                           }}
                         >
@@ -479,13 +495,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
 
                         {/* Collapsed state */}
                         <div className="hidden group-data-[collapsible=icon]:block">
-                          <DropdownMenu
-                            onOpenChange={(open) => {
-                              if (open) {
-                                setOpenTooltips((prev) => ({ ...prev, [item.title]: false }))
-                              }
-                            }}
-                          >
+                          <DropdownMenu>
                             <Tooltip
                               open={openTooltips[item.title]}
                               onOpenChange={(open) => {
@@ -520,9 +530,8 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                                       : ''
                                   }
                                   onSelect={() => {
-                                    setOpenTooltips((prev) => ({ ...prev, [item.title]: false }))
                                     if (onNavigate) {
-                                      onNavigate(subItem.url)
+                                      handleNavigate(subItem.url)
                                     }
                                   }}
                                 >
@@ -581,7 +590,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                           onClick={(e) => {
                             if (onNavigate) {
                               e.preventDefault()
-                              onNavigate(item.url)
+                              handleNavigate(item.url)
                             }
                           }}
                         >
@@ -612,7 +621,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                           onClick={(e) => {
                             if (onNavigate) {
                               e.preventDefault()
-                              onNavigate(item.url)
+                              handleNavigate(item.url)
                             }
                           }}
                         >
@@ -740,7 +749,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                   className="cursor-pointer"
                   onSelect={() => {
                     if (onNavigate) {
-                      onNavigate('/user/profile')
+                      handleNavigate('/user/profile')
                     }
                   }}
                 >
@@ -751,7 +760,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                   className="cursor-pointer"
                   onSelect={() => {
                     if (onNavigate) {
-                      onNavigate('/organization/settings')
+                      handleNavigate('/organization/settings')
                     }
                   }}
                 >
@@ -766,7 +775,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                   className="cursor-pointer"
                   onSelect={() => {
                     if (onNavigate) {
-                      onNavigate('/auth/sign-out')
+                      handleNavigate('/auth/sign-out')
                     }
                   }}
                 >
