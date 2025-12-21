@@ -277,6 +277,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
   const [commandOpen, setCommandOpen] = React.useState(false)
   const [commandSearch, setCommandSearch] = React.useState('')
   const [expandedItems, setExpandedItems] = React.useState<Record<string, boolean>>({})
+  const [openTooltips, setOpenTooltips] = React.useState<Record<string, boolean>>({})
 
   const [activeTeam, setActiveTeam] = React.useState(teams[0])
 
@@ -478,18 +479,29 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
 
                         {/* Collapsed state */}
                         <div className="hidden group-data-[collapsible=icon]:block">
-                          <DropdownMenu>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <DropdownMenuTrigger asChild>
+                          <DropdownMenu
+                            onOpenChange={(open) => {
+                              if (open) {
+                                setOpenTooltips((prev) => ({ ...prev, [item.title]: false }))
+                              }
+                            }}
+                          >
+                            <Tooltip
+                              open={openTooltips[item.title]}
+                              onOpenChange={(open) => {
+                                setOpenTooltips((prev) => ({ ...prev, [item.title]: open }))
+                              }}
+                            >
+                              <DropdownMenuTrigger asChild>
+                                <TooltipTrigger asChild>
                                   <SidebarMenuButton
                                     isActive={hasActiveChild(item)}
                                     className="w-full justify-center"
                                   >
                                     <Icon name={item.icon} size="sm" />
                                   </SidebarMenuButton>
-                                </DropdownMenuTrigger>
-                              </TooltipTrigger>
+                                </TooltipTrigger>
+                              </DropdownMenuTrigger>
                               <TooltipContent side="right" className="hidden group-data-[collapsible=icon]:block">
                                 {getTooltipText(item)}
                               </TooltipContent>
@@ -508,6 +520,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                                       : ''
                                   }
                                   onSelect={() => {
+                                    setOpenTooltips((prev) => ({ ...prev, [item.title]: false }))
                                     if (onNavigate) {
                                       onNavigate(subItem.url)
                                     }
@@ -619,13 +632,13 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
         </div>
 
         {/* Footer with User/Team Switcher */}
-        <SidebarFooter className="sticky bottom-0 z-10 border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] group-data-[collapsible=icon]:px-2">
+        <SidebarFooter className="sticky bottom-0 z-10 border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:py-2">
           <div className="group/user-menu rounded-md border border-[var(--color-border-primary-subtle)] transition-colors hover:border-[var(--color-border-primary-medium)] group-data-[collapsible=icon]:rounded-none group-data-[collapsible=icon]:border-none">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="h-auto min-h-[56px] w-full justify-start rounded-md px-3 py-2 hover:!bg-[var(--color-background-neutral-subtlest-hovered)] group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:h-auto group-data-[collapsible=icon]:min-h-[48px] group-data-[collapsible=icon]:w-auto group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:py-2"
+                  className="h-auto min-h-[56px] w-full justify-start rounded-md px-3 py-2 hover:!bg-[var(--color-background-neutral-subtlest-hovered)] group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:min-h-0 group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:p-0"
                 >
                   {/* Expanded state */}
                   <div className="flex w-full items-center gap-3 group-data-[collapsible=icon]:hidden">
@@ -653,12 +666,12 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                   </div>
 
                   {/* Collapsed state */}
-                  <div className="relative flex-shrink-0 hidden group-data-[collapsible=icon]:block">
+                  <div className="relative hidden group-data-[collapsible=icon]:block">
                     <Avatar size="sm" type="user">
                       <AvatarImage src={user.avatarUrl} alt={user.name} />
                       <AvatarFallback size="sm" type="user">{getUserInitials(user.name)}</AvatarFallback>
                     </Avatar>
-                    <div className="absolute -right-0.5 -bottom-0.5 rounded-[4px] border border-white p-0">
+                    <div className="absolute -right-1 -bottom-1 rounded-[2px] border-2 border-white bg-[var(--color-surface-primary)]">
                       <Avatar size="xxs" type="organization">
                         <AvatarImage src={activeTeam.avatarUrl} alt={activeTeam.name} />
                         <AvatarFallback size="xxs" type="organization">{getTeamInitials(activeTeam.name)}</AvatarFallback>
