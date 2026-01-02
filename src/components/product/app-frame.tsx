@@ -507,6 +507,9 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                                   <SidebarMenuButton
                                     isActive={hasActiveChild(item)}
                                     className="w-full justify-center"
+                                    onClick={() => {
+                                      setOpenTooltips((prev) => ({ ...prev, [item.title]: false }))
+                                    }}
                                   >
                                     <Icon name={item.icon} size="sm" />
                                   </SidebarMenuButton>
