@@ -262,6 +262,34 @@ const isMacOS = () => {
   return typeof navigator !== 'undefined' && /Mac|iPod|iPhone|iPad/.test(navigator.userAgent)
 }
 
+/**
+ * Initializes expandedItems state for navigation sections with active children
+ */
+function initializeExpandedItems(
+  navigationData: AppFrameNavigationData
+): Record<string, boolean> {
+  const expanded: Record<string, boolean> = {}
+
+  // Check all navigation sections
+  const allSections = [
+    ...(navigationData.main || []),
+    ...(navigationData.operations || []),
+    ...(navigationData.intelligence || []),
+    ...(navigationData.support || []),
+  ]
+
+  // For items with subitems, set expanded state
+  allSections.forEach((item) => {
+    if (item.items && item.items.length > 0) {
+      // Expand if any child is active
+      const hasActiveChild = item.items.some((subItem) => subItem.isActive)
+      expanded[item.title] = hasActiveChild
+    }
+  })
+
+  return expanded
+}
+
 // ============================================================================
 // Internal Components
 // ============================================================================
@@ -276,7 +304,9 @@ interface AppSidebarProps {
 function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps) {
   const [commandOpen, setCommandOpen] = React.useState(false)
   const [commandSearch, setCommandSearch] = React.useState('')
-  const [expandedItems, setExpandedItems] = React.useState<Record<string, boolean>>({})
+  const [expandedItems, setExpandedItems] = React.useState<Record<string, boolean>>(() =>
+    initializeExpandedItems(navigationData)
+  )
 
   const [activeTeam, setActiveTeam] = React.useState(teams[0])
 
@@ -314,6 +344,11 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [])
+
+  // Re-initialize expanded state when navigation data changes
+  React.useEffect(() => {
+    setExpandedItems(initializeExpandedItems(navigationData))
+  }, [navigationData])
 
   return (
     <TooltipProvider delayDuration={100}>
