@@ -515,7 +515,10 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                                       setDisabledTooltips((prev) => ({ ...prev, [item.title]: true }))
                                     }}
                                     onMouseLeave={() => {
-                                      setDisabledTooltips((prev) => ({ ...prev, [item.title]: false }))
+                                      // Re-enable tooltip after mouse leaves
+                                      setTimeout(() => {
+                                        setDisabledTooltips((prev) => ({ ...prev, [item.title]: false }))
+                                      }, 100)
                                     }}
                                   >
                                     <Icon name={item.icon} size="sm" />
