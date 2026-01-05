@@ -277,8 +277,6 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
   const [commandOpen, setCommandOpen] = React.useState(false)
   const [commandSearch, setCommandSearch] = React.useState('')
   const [expandedItems, setExpandedItems] = React.useState<Record<string, boolean>>({})
-  const [openTooltips, setOpenTooltips] = React.useState<Record<string, boolean>>({})
-  const [disabledTooltips, setDisabledTooltips] = React.useState<Record<string, boolean>>({})
 
   const [activeTeam, setActiveTeam] = React.useState(teams[0])
 
@@ -316,22 +314,6 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [])
-
-  // Clear all tooltips when navigation data changes (indicating a route change)
-  React.useEffect(() => {
-    setOpenTooltips({})
-  }, [navigationData])
-
-  // Wrapper for onNavigate that clears tooltips
-  const handleNavigate = React.useCallback(
-    (url: string) => {
-      setOpenTooltips({})
-      if (onNavigate) {
-        onNavigate(url)
-      }
-    },
-    [onNavigate]
-  )
 
   return (
     <TooltipProvider delayDuration={100}>
@@ -421,7 +403,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                           onClick={(e) => {
                             if (onNavigate) {
                               e.preventDefault()
-                              handleNavigate(item.url)
+                              onNavigate(item.url)
                             }
                           }}
                         >
@@ -497,29 +479,12 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                         {/* Collapsed state */}
                         <div className="hidden group-data-[collapsible=icon]:block">
                           <DropdownMenu>
-                            <Tooltip
-                              open={!disabledTooltips[item.title] && openTooltips[item.title]}
-                              onOpenChange={(open) => {
-                                if (!disabledTooltips[item.title]) {
-                                  setOpenTooltips((prev) => ({ ...prev, [item.title]: open }))
-                                }
-                              }}
-                            >
+                            <Tooltip>
                               <DropdownMenuTrigger asChild>
                                 <TooltipTrigger asChild>
                                   <SidebarMenuButton
                                     isActive={hasActiveChild(item)}
                                     className="w-full justify-center"
-                                    onClick={() => {
-                                      setOpenTooltips((prev) => ({ ...prev, [item.title]: false }))
-                                      setDisabledTooltips((prev) => ({ ...prev, [item.title]: true }))
-                                    }}
-                                    onMouseLeave={() => {
-                                      // Re-enable tooltip after mouse leaves
-                                      setTimeout(() => {
-                                        setDisabledTooltips((prev) => ({ ...prev, [item.title]: false }))
-                                      }, 100)
-                                    }}
                                   >
                                     <Icon name={item.icon} size="sm" />
                                   </SidebarMenuButton>
@@ -544,7 +509,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                                   }
                                   onSelect={() => {
                                     if (onNavigate) {
-                                      handleNavigate(subItem.url)
+                                      onNavigate(subItem.url)
                                     }
                                   }}
                                 >
@@ -603,7 +568,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                           onClick={(e) => {
                             if (onNavigate) {
                               e.preventDefault()
-                              handleNavigate(item.url)
+                              onNavigate(item.url)
                             }
                           }}
                         >
@@ -634,7 +599,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                           onClick={(e) => {
                             if (onNavigate) {
                               e.preventDefault()
-                              handleNavigate(item.url)
+                              onNavigate(item.url)
                             }
                           }}
                         >
@@ -762,7 +727,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                   className="cursor-pointer"
                   onSelect={() => {
                     if (onNavigate) {
-                      handleNavigate('/user/profile')
+                      onNavigate('/user/profile')
                     }
                   }}
                 >
@@ -773,7 +738,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                   className="cursor-pointer"
                   onSelect={() => {
                     if (onNavigate) {
-                      handleNavigate('/organization/settings')
+                      onNavigate('/organization/settings')
                     }
                   }}
                 >
@@ -788,7 +753,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                   className="cursor-pointer"
                   onSelect={() => {
                     if (onNavigate) {
-                      handleNavigate('/auth/sign-out')
+                      onNavigate('/auth/sign-out')
                     }
                   }}
                 >
