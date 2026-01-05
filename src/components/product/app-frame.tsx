@@ -278,6 +278,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
   const [commandSearch, setCommandSearch] = React.useState('')
   const [expandedItems, setExpandedItems] = React.useState<Record<string, boolean>>({})
   const [openTooltips, setOpenTooltips] = React.useState<Record<string, boolean>>({})
+  const [disabledTooltips, setDisabledTooltips] = React.useState<Record<string, boolean>>({})
 
   const [activeTeam, setActiveTeam] = React.useState(teams[0])
 
@@ -497,9 +498,11 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                         <div className="hidden group-data-[collapsible=icon]:block">
                           <DropdownMenu>
                             <Tooltip
-                              open={openTooltips[item.title]}
+                              open={!disabledTooltips[item.title] && openTooltips[item.title]}
                               onOpenChange={(open) => {
-                                setOpenTooltips((prev) => ({ ...prev, [item.title]: open }))
+                                if (!disabledTooltips[item.title]) {
+                                  setOpenTooltips((prev) => ({ ...prev, [item.title]: open }))
+                                }
                               }}
                             >
                               <DropdownMenuTrigger asChild>
@@ -509,6 +512,10 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
                                     className="w-full justify-center"
                                     onClick={() => {
                                       setOpenTooltips((prev) => ({ ...prev, [item.title]: false }))
+                                      setDisabledTooltips((prev) => ({ ...prev, [item.title]: true }))
+                                    }}
+                                    onMouseLeave={() => {
+                                      setDisabledTooltips((prev) => ({ ...prev, [item.title]: false }))
                                     }}
                                   >
                                     <Icon name={item.icon} size="sm" />
