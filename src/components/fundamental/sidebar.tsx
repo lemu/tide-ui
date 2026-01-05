@@ -175,20 +175,26 @@ const Sidebar = React.forwardRef<
     if (isMobile) {
       return (
         <DialogPrimitive.Root open={openMobile} onOpenChange={setOpenMobile} modal>
-          <DialogPrimitive.Content
-            ref={ref}
-            data-sidebar="sidebar"
-            data-mobile="true"
-            className="fixed inset-y-0 z-50 h-auto w-[var(--sidebar-width-mobile)] bg-[var(--color-surface-primary)] p-0 text-[var(--color-text-primary)] shadow-md transition ease-in-out data-[state=open]:duration-300 data-[state=closed]:duration-200 data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left"
-            style={
-              {
-                "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
-              } as React.CSSProperties
-            }
-            {...props}
-          >
-            <div className="flex h-full w-full flex-col">{children}</div>
-          </DialogPrimitive.Content>
+          <DialogPrimitive.Portal>
+            <DialogPrimitive.Overlay className="fixed inset-0 z-40 bg-black/80" />
+            <DialogPrimitive.Content
+              ref={ref}
+              data-sidebar="sidebar"
+              data-mobile="true"
+              className="fixed inset-y-0 z-50 h-auto w-[var(--sidebar-width-mobile)] bg-[var(--color-surface-primary)] p-0 text-[var(--color-text-primary)] shadow-md transition ease-in-out data-[state=open]:duration-300 data-[state=closed]:duration-200 data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left"
+              style={
+                {
+                  "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
+                } as React.CSSProperties
+              }
+              onOpenAutoFocus={(e) => {
+                e.preventDefault()
+              }}
+              {...props}
+            >
+              <div className="flex h-full w-full flex-col">{children}</div>
+            </DialogPrimitive.Content>
+          </DialogPrimitive.Portal>
         </DialogPrimitive.Root>
       )
     }
