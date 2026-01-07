@@ -192,7 +192,7 @@ const Sidebar = React.forwardRef<
               }}
               {...props}
             >
-              <div className="flex h-full w-full flex-col">{children}</div>
+              <div className="flex h-full w-full flex-col overflow-y-auto">{children}</div>
             </DialogPrimitive.Content>
           </DialogPrimitive.Portal>
         </DialogPrimitive.Root>
@@ -433,7 +433,7 @@ const SidebarContent = React.forwardRef<
       ref={ref}
       data-sidebar="content"
       className={cn(
-        "flex min-h-0 flex-1 flex-col overflow-y-auto group-data-[collapsible=icon]:overflow-hidden",
+        "flex min-h-0 flex-1 flex-col group-data-[collapsible=icon]:overflow-hidden",
         className
       )}
       {...props}
