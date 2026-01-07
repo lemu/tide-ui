@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {
   Sidebar,
-  SidebarContent,
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
@@ -373,7 +372,10 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
         </SidebarHeader>
 
         {/* Content - scrollable area */}
-        <SidebarContent>
+        <div
+          className="flex min-h-0 flex-1 flex-col overflow-y-auto group-data-[collapsible=icon]:overflow-hidden"
+          data-sidebar="content"
+        >
           {/* Search Section */}
           <div className="p-[var(--space-md)] pt-[var(--space-sm)] group-data-[collapsible=icon]:px-2">
             <div className="relative">
@@ -649,7 +651,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
-        </SidebarContent>
+        </div>
 
         {/* Footer with User/Team Switcher */}
         <SidebarFooter className="sticky bottom-0 z-10 border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:py-2">
