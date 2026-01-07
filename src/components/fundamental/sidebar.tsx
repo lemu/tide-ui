@@ -174,7 +174,7 @@ const Sidebar = React.forwardRef<
 
     if (isMobile) {
       return (
-        <DialogPrimitive.Root open={openMobile} onOpenChange={setOpenMobile} modal>
+        <DialogPrimitive.Root open={openMobile} onOpenChange={setOpenMobile} modal={false}>
           <DialogPrimitive.Portal>
             <DialogPrimitive.Overlay className="fixed inset-0 z-40 bg-black/80" />
             <DialogPrimitive.Content
