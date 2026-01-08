@@ -318,7 +318,7 @@ function BookmarkSplitButton({
               onDelete();
             }}
             disabled={isSystemBookmark}
-            className="text-[var(--color-text-error-bold)]"
+            destructive
           >
             <Icon name="trash-2" className="mr-2 h-4 w-4" />
             Delete
@@ -486,7 +486,7 @@ const BookmarkTab = React.forwardRef<HTMLDivElement, BookmarkTabProps>(
                     e.stopPropagation();
                     onDelete();
                   }}
-                  className="text-[var(--color-text-error-bold)]"
+                  destructive
                 >
                   <Icon name="trash-2" className="mr-2 h-4 w-4" />
                   Delete
