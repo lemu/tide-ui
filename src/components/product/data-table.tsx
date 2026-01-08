@@ -7,6 +7,7 @@ import {
   ExpandedState,
   GroupingState,
   ColumnOrderState,
+  PaginationState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -1749,6 +1750,8 @@ export interface DataTableProps<TData, TValue> {
   onColumnOrderChange?: (updaterOrValue: ColumnOrderState | ((old: ColumnOrderState) => ColumnOrderState)) => void
   columnSizing?: Record<string, number>
   onColumnSizingChange?: (updaterOrValue: Record<string, number> | ((old: Record<string, number>) => Record<string, number>)) => void
+  pagination?: PaginationState
+  onPaginationChange?: (updaterOrValue: PaginationState | ((old: PaginationState) => PaginationState)) => void
   // Section header rows
   renderSectionHeaderRow?: (row: any) => React.ReactNode | null
   /**
@@ -1888,6 +1891,8 @@ export function DataTable<TData, TValue>({
   onColumnOrderChange: onControlledColumnOrderChange,
   columnSizing: controlledColumnSizing,
   onColumnSizingChange: onControlledColumnSizingChange,
+  pagination: controlledPagination,
+  onPaginationChange: onControlledPaginationChange,
   renderSectionHeaderRow,
   renderSubComponent,
   getRowCanExpand,
@@ -1915,10 +1920,7 @@ export function DataTable<TData, TValue>({
   const [internalColumnSizing, setInternalColumnSizing] = React.useState(controlledColumnSizing || initialState?.columnSizing || {})
 
   // Pagination state - initialized from localStorage or initialState
-  const [pagination, setPagination] = React.useState<{
-    pageIndex: number
-    pageSize: number
-  }>(() => {
+  const [internalPagination, setInternalPagination] = React.useState<PaginationState>(() => {
     // Try to load from localStorage first if persistence is enabled
     if (enablePaginationPersistence && storageKey) {
       const savedPagination = localStorage.getItem(`${storageKey}-pagination`)
@@ -1951,6 +1953,7 @@ export function DataTable<TData, TValue>({
   const isGroupingControlled = controlledGrouping !== undefined
   const isColumnOrderControlled = controlledColumnOrder !== undefined
   const isColumnSizingControlled = controlledColumnSizing !== undefined
+  const isPaginationControlled = controlledPagination !== undefined
 
   // Use controlled values if provided, otherwise use internal state
   const sorting = isSortingControlled ? controlledSorting! : internalSorting
@@ -1958,6 +1961,7 @@ export function DataTable<TData, TValue>({
   const grouping = isGroupingControlled ? controlledGrouping! : internalGrouping
   const columnOrder = isColumnOrderControlled ? controlledColumnOrder! : internalColumnOrder
   const columnSizing = isColumnSizingControlled ? controlledColumnSizing! : internalColumnSizing
+  const pagination = isPaginationControlled ? controlledPagination! : internalPagination
 
   // Use controlled setters if provided, otherwise use internal setters
   const setSorting = isSortingControlled ? onControlledSortingChange! : setInternalSorting
@@ -1965,6 +1969,7 @@ export function DataTable<TData, TValue>({
   const setGrouping = isGroupingControlled ? onControlledGroupingChange! : setInternalGrouping
   const setColumnOrder = isColumnOrderControlled ? onControlledColumnOrderChange! : setInternalColumnOrder
   const setColumnSizing = isColumnSizingControlled ? onControlledColumnSizingChange! : setInternalColumnSizing
+  const setPagination = isPaginationControlled ? onControlledPaginationChange! : setInternalPagination
 
   // Column pinning state removed - using pure CSS approach instead
 

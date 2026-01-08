@@ -424,6 +424,7 @@ export type {
   DepthHeights,
   NestedRowStyling
 } from './product/data-table'
+export type { PaginationState } from '@tanstack/react-table'
 
 // DataTableSettingsMenu component
 export { DataTableSettingsMenu } from './product/data-table-settings-menu'
