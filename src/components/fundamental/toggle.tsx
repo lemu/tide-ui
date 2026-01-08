@@ -14,7 +14,7 @@ const toggleVariants = cva(
           "data-[state=on]:bg-[var(--color-background-blue-subtle-selected)] data-[state=on]:text-[var(--color-text-brand-bold)] data-[state=on]:[&_svg]:text-[var(--color-text-brand-bold)]",
           "data-[state=on]:hover:bg-[var(--color-background-blue-subtle-selected-hovered)]",
           "aria-checked:bg-[var(--color-background-blue-subtle-selected)] aria-checked:text-[var(--color-text-brand-bold)] aria-checked:[&_svg]:text-[var(--color-text-brand-bold)]",
-          "aria-checked:hover:bg-[var(--color-background-blue-subtle-selected-hovered)]"
+          "aria-checked:hover:bg-[var(--color-background-blue-subtle-selected-hovered)]",
         ],
         outline: [
           "border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] text-[var(--color-text-primary)]",
@@ -22,12 +22,12 @@ const toggleVariants = cva(
           "data-[state=on]:bg-[var(--color-background-blue-subtle-selected)] data-[state=on]:text-[var(--color-text-brand-bold)] data-[state=on]:border-transparent data-[state=on]:[&_svg]:text-[var(--color-text-brand-bold)]",
           "data-[state=on]:hover:bg-[var(--color-background-blue-subtle-selected-hovered)]",
           "aria-checked:bg-[var(--color-background-blue-subtle-selected)] aria-checked:text-[var(--color-text-brand-bold)] aria-checked:border-transparent aria-checked:[&_svg]:text-[var(--color-text-brand-bold)]",
-          "aria-checked:hover:bg-[var(--color-background-blue-subtle-selected-hovered)]"
+          "aria-checked:hover:bg-[var(--color-background-blue-subtle-selected-hovered)]",
         ],
       },
       size: {
         sm: "text-label-sm rounded-sm px-[var(--space-sm)] py-[var(--space-xsm)]",
-        md: "text-label-sm rounded-md px-[var(--space-md)] py-[var(--space-sm)]",
+        md: "text-label-md rounded-md px-[var(--space-md)] py-[var(--dimension-150)]",
         lg: "text-label-md rounded-md px-[var(--space-lg)] py-[var(--space-md)]",
       },
     },
@@ -35,7 +35,7 @@ const toggleVariants = cva(
       variant: "default",
       size: "sm",
     },
-  }
+  },
 );
 
 export interface ToggleProps
