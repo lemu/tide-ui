@@ -948,7 +948,7 @@ export function AppFrame({
               )}
             </header>
           )}
-          <div className="flex flex-1 flex-col overflow-auto min-h-0">{children}</div>
+          <div className="flex flex-1 flex-col overflow-auto min-h-0 min-w-0">{children}</div>
         </SidebarInset>
       </SidebarProvider>
     </div>
