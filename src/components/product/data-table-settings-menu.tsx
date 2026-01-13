@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "../fundamental/button";
 import {
   DropdownMenu,
@@ -14,6 +15,7 @@ import {
 } from "../fundamental/select";
 import { Toggle } from "../fundamental/toggle";
 import { Icon } from "../fundamental/icon";
+import { Input } from "../fundamental/input";
 
 export type ColumnDataType = 'text' | 'number' | 'date' | 'boolean';
 
@@ -89,10 +91,22 @@ export function DataTableSettingsMenu({
   align = "end",
   triggerClassName,
 }: DataTableSettingsMenuProps) {
+  const [columnSearch, setColumnSearch] = useState("");
+
   const hasSorting = sortableColumns.length > 0;
   const hasGrouping = groupableColumns.length > 0;
   const hasColumnVisibility = columns.length > 0;
   const hasTopSections = hasSorting || hasGrouping;
+
+  // Filter columns based on search query
+  const filteredColumns = columnSearch
+    ? columns.filter((col) =>
+        col.label.toLowerCase().includes(columnSearch.toLowerCase())
+      )
+    : columns;
+
+  // Show search when there are 20+ columns
+  const showSearch = columns.length >= 20;
 
   return (
     <DropdownMenu>
@@ -197,8 +211,17 @@ export function DataTableSettingsMenu({
               <h4 className="text-label-sm text-[var(--color-text-tertiary)]">
                 Display columns
               </h4>
-              <div className="flex flex-wrap items-start justify-start gap-1">
-                {columns.map((col) => {
+              {showSearch && (
+                <Input
+                  type="search"
+                  size="sm"
+                  placeholder="Search columns..."
+                  value={columnSearch}
+                  onChange={(e) => setColumnSearch(e.target.value)}
+                />
+              )}
+              <div className="flex flex-wrap items-start justify-start gap-1 max-h-[190px] overflow-y-auto">
+                {filteredColumns.map((col) => {
                   const isVisible = visibleColumns.includes(col.id);
                   return (
                     <Toggle

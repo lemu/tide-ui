@@ -257,3 +257,40 @@ export const WithImperativeAPI: Story = {
     );
   }
 };
+
+export const ManyColumns: Story = {
+  args: {
+    defaultViewMode: 'table',
+    sortableColumns: Array.from({ length: 100 }, (_, i) => ({
+      id: `column${i + 1}`,
+      label: `Column ${i + 1}`,
+      dataType: 'text' as const,
+    })),
+    groupableColumns: Array.from({ length: 10 }, (_, i) => ({
+      id: `column${i + 1}`,
+      label: `Column ${i + 1}`,
+      dataType: 'text' as const,
+    })),
+    columns: Array.from({ length: 100 }, (_, i) => ({
+      id: `column${i + 1}`,
+      label: `Column ${i + 1}`,
+      dataType: 'text' as const,
+    })),
+    columnsSortableColumns: Array.from({ length: 100 }, (_, i) => ({
+      id: `column${i + 1}`,
+      label: `Column ${i + 1}`,
+      dataType: 'text' as const,
+    })),
+    columnsGroupableColumns: Array.from({ length: 10 }, (_, i) => ({
+      id: `column${i + 1}`,
+      label: `Column ${i + 1}`,
+      dataType: 'text' as const,
+    })),
+    foldersSortableColumns: Array.from({ length: 100 }, (_, i) => ({
+      id: `column${i + 1}`,
+      label: `Column ${i + 1}`,
+      dataType: 'text' as const,
+    })),
+    align: "end",
+  },
+};

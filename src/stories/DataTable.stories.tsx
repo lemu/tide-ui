@@ -2314,7 +2314,7 @@ export const RowActions: Story = {
   },
 }
 
-export const RowSelection: Story = {
+export const RowClick: Story = {
   parameters: {
     layout: 'fullscreen',
     docs: {
@@ -2563,6 +2563,195 @@ Use \`isRowClickable\` to customize which rows can be clicked.
               />
             </CardContent>
           </Card>
+        </div>
+      </div>
+    )
+  },
+}
+
+export const RowSelection: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: `
+Demonstrates row selection with checkboxes for bulk actions.
+
+**Features:**
+- Select individual rows with checkboxes
+- Select/deselect all rows with header checkbox
+- Track selected rows count
+- Perform bulk actions on selected rows
+- Indeterminate state when some rows are selected
+- Accessible keyboard navigation for checkboxes
+
+Enable row selection by setting \`enableRowSelection={true}\`.
+        `,
+      },
+    },
+  },
+  render: () => {
+    const [tableInstance, setTableInstance] = useState<any>(null)
+    const [selectedCount, setSelectedCount] = useState(0)
+
+    // Update selected count when table state changes
+    useEffect(() => {
+      if (!tableInstance) return
+
+      const updateSelection = () => {
+        const selection = tableInstance.getState().rowSelection
+        const count = Object.keys(selection).filter(id => selection[id]).length
+        setSelectedCount(count)
+      }
+
+      // Initial update
+      updateSelection()
+
+      // Note: In a real app, you might want to subscribe to table state changes
+      // For this demo, we'll rely on React's render cycle to update the count
+      const interval = setInterval(updateSelection, 100)
+      return () => clearInterval(interval)
+    }, [tableInstance])
+
+    // Sample product data
+    const productData = useMemo(() => [
+      { id: '1', name: 'MacBook Pro 16"', category: 'Laptops', price: 2499, stock: 15, sku: 'MBP16-001' },
+      { id: '2', name: 'MacBook Air M2', category: 'Laptops', price: 1199, stock: 28, sku: 'MBA-M2-001' },
+      { id: '3', name: 'iPad Pro 12.9"', category: 'Tablets', price: 1099, stock: 22, sku: 'IPD12-001' },
+      { id: '4', name: 'iPad Air', category: 'Tablets', price: 599, stock: 34, sku: 'IPA-001' },
+      { id: '5', name: 'Magic Mouse', category: 'Accessories', price: 79, stock: 45, sku: 'MM-001' },
+      { id: '6', name: 'Magic Keyboard', category: 'Accessories', price: 149, stock: 32, sku: 'MK-001' },
+      { id: '7', name: 'AirPods Pro', category: 'Audio', price: 249, stock: 67, sku: 'APP-001' },
+      { id: '8', name: 'AirPods Max', category: 'Audio', price: 549, stock: 18, sku: 'APM-001' },
+      { id: '9', name: 'iPhone 15 Pro', category: 'Phones', price: 999, stock: 41, sku: 'IP15P-001' },
+      { id: '10', name: 'iPhone 15', category: 'Phones', price: 799, stock: 53, sku: 'IP15-001' },
+    ], [])
+
+    const productColumns: ColumnDef<any>[] = useMemo(() => [
+      {
+        accessorKey: 'name',
+        header: 'Product Name',
+        meta: { label: 'Product Name' },
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue('name')}</div>
+        ),
+      },
+      {
+        accessorKey: 'category',
+        header: 'Category',
+        meta: { label: 'Category' },
+      },
+      {
+        accessorKey: 'sku',
+        header: 'SKU',
+        meta: { label: 'SKU Code' },
+        cell: ({ row }) => (
+          <div className="font-mono text-body-sm text-[var(--color-text-secondary)]">
+            {row.getValue('sku')}
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'price',
+        header: 'Price',
+        meta: { label: 'Price', align: 'right' },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{formatCurrency(row.getValue('price'))}</div>
+        ),
+      },
+      {
+        accessorKey: 'stock',
+        header: 'Stock',
+        meta: { label: 'In Stock', align: 'right' },
+        cell: ({ row }) => (
+          <div className="text-right tabular-nums">{row.getValue('stock')}</div>
+        ),
+      },
+    ], [])
+
+    const handleBulkDelete = () => {
+      if (!tableInstance || selectedCount === 0) return
+      const selection = tableInstance.getState().rowSelection
+      const selectedIds = Object.keys(selection).filter(id => selection[id])
+      alert(`Delete ${selectedIds.length} item(s):\n${selectedIds.join(', ')}`)
+    }
+
+    const handleBulkExport = () => {
+      if (!tableInstance || selectedCount === 0) return
+      const selection = tableInstance.getState().rowSelection
+      const selectedIds = Object.keys(selection).filter(id => selection[id])
+      alert(`Export ${selectedIds.length} item(s) to CSV`)
+    }
+
+    return (
+      <div className="p-[var(--space-xlg)]">
+        <div className="max-w-6xl mx-auto space-y-[var(--space-lg)]">
+          {/* Header */}
+          <div>
+            <h2 className="text-heading-lg mb-[var(--space-sm)]">Row Selection Example</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)]">
+              Select rows using checkboxes to perform bulk actions. Use the header checkbox to select/deselect all.
+            </p>
+          </div>
+
+          {/* Selection Stats & Actions */}
+          <div className="flex items-center gap-[var(--space-md)]">
+            <Card className="flex-1">
+              <CardContent className="p-[var(--space-lg)]">
+                <div className="text-caption-sm text-[var(--color-text-secondary)] mb-[var(--space-xsm)]">
+                  Selected Rows
+                </div>
+                <div className="text-heading-lg font-semibold">
+                  {selectedCount} of {productData.length}
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="flex gap-[var(--space-sm)]">
+              <Button
+                variant="default"
+                disabled={selectedCount === 0}
+                onClick={handleBulkExport}
+              >
+                <Icon name="download" className="mr-[var(--space-sm)]" />
+                Export Selected
+              </Button>
+              <Button
+                variant="destructive"
+                disabled={selectedCount === 0}
+                onClick={handleBulkDelete}
+              >
+                <Icon name="trash" className="mr-[var(--space-sm)]" />
+                Delete Selected
+              </Button>
+            </div>
+          </div>
+
+          {/* Data Table with Row Selection */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Product Inventory</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <DataTable
+                data={productData}
+                columns={productColumns}
+                enableRowSelection={true}
+                onTableReady={setTableInstance}
+              />
+            </CardContent>
+          </Card>
+
+          {/* Info Box */}
+          <div className="bg-[var(--blue-25)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
+            <div className="flex items-start gap-[var(--space-sm)]">
+              <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)] mt-1" />
+              <div className="text-body-sm text-[var(--color-text-accent)]">
+                <strong>Tip:</strong> The header checkbox shows an indeterminate state when some (but not all) rows are selected.
+                Row selection state is managed by TanStack Table's built-in row selection feature.
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     )

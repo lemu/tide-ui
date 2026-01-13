@@ -203,40 +203,24 @@ export const FewColumns: Story = {
 
 export const ManyColumns: Story = {
   args: {
-    sortableColumns: [
-      ...sampleColumns,
-      { id: "cargo", label: "Cargo" },
-      { id: "charterer", label: "Charterer" },
-      { id: "loadPort", label: "Load Port" },
-      { id: "dischargePort", label: "Discharge Port" },
-      { id: "quantity", label: "Quantity" },
-      { id: "rate", label: "Rate" },
-    ],
+    sortableColumns: Array.from({ length: 100 }, (_, i) => ({
+      id: `column${i + 1}`,
+      label: `Column ${i + 1}`,
+      dataType: 'text' as const,
+    })),
     selectedSortColumn: undefined,
-    groupableColumns: groupableColumns,
+    groupableColumns: Array.from({ length: 10 }, (_, i) => ({
+      id: `column${i + 1}`,
+      label: `Column ${i + 1}`,
+      dataType: 'text' as const,
+    })),
     selectedGroupColumn: undefined,
-    columns: [
-      ...sampleColumns,
-      { id: "cargo", label: "Cargo" },
-      { id: "charterer", label: "Charterer" },
-      { id: "loadPort", label: "Load Port" },
-      { id: "dischargePort", label: "Discharge Port" },
-      { id: "quantity", label: "Quantity" },
-      { id: "rate", label: "Rate" },
-    ],
-    visibleColumns: [
-      "id",
-      "counterparty",
-      "type",
-      "stage",
-      "laycan",
-      "vessel",
-      "lastBid",
-      "lastOffer",
-      "tce",
-      "cargo",
-      "charterer",
-    ],
+    columns: Array.from({ length: 100 }, (_, i) => ({
+      id: `column${i + 1}`,
+      label: `Column ${i + 1}`,
+      dataType: 'text' as const,
+    })),
+    visibleColumns: Array.from({ length: 50 }, (_, i) => `column${i + 1}`),
     align: "end",
   },
 };

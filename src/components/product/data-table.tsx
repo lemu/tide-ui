@@ -1577,6 +1577,14 @@ export interface DataTableProps<TData, TValue> {
   stickyRightColumns?: number
   enableResponsiveWrapper?: boolean
   showScrollIndicators?: boolean
+  /**
+   * Minimum width for the table when responsive wrapper is enabled.
+   * This determines when horizontal scrolling triggers on smaller screens.
+   * @default "900px"
+   * @example "1200px" - For tables with many columns
+   * @example "100%" - To prevent horizontal scrolling
+   */
+  minTableWidth?: string
   // Loading state
   isLoading?: boolean
   loadingRowCount?: number
@@ -1840,6 +1848,7 @@ export function DataTable<TData, TValue>({
   stickyRightColumns = 0,
   enableResponsiveWrapper = true,
   showScrollIndicators = false,
+  minTableWidth = "900px",
   isLoading = false,
   loadingRowCount = 5,
   borderStyle = "both",
@@ -2948,10 +2957,12 @@ export function DataTable<TData, TValue>({
         <Table
           ref={tableRef}
           className={cn(
-            computedEnableResponsiveWrapper && "min-w-[900px]", // Minimum width for readability
             "border-separate border-spacing-0", // Required for sticky columns to work properly
             enableColumnResizing && "table-fixed" // Fixed layout for column resizing
           )}
+          style={{
+            ...(computedEnableResponsiveWrapper && { minWidth: minTableWidth })
+          }}
         >
           <TableHeader className={cn(
             stickyHeader && [

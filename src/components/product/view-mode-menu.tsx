@@ -19,6 +19,7 @@ import { Switch } from "../fundamental/switch";
 import { Label } from "../fundamental/label";
 import { Separator } from "../fundamental/separator";
 import { Icon } from "../fundamental/icon";
+import { Input } from "../fundamental/input";
 
 export type ViewMode = 'table' | 'folders' | 'columns';
 
@@ -180,6 +181,9 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
       return getDefaultSettings(defaultViewMode, columns);
     });
 
+    // Column search state
+    const [columnSearch, setColumnSearch] = useState("");
+
     // Expose imperative API
     useImperativeHandle(ref, () => ({
       getSettings: () => settings,
@@ -222,6 +226,16 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
     // Count available view modes (Table is always available)
     const availableViewModes = 1 + (hasFoldersView ? 1 : 0) + (hasColumnsGrouping ? 1 : 0);
     const showViewModeTabs = availableViewModes > 1;
+
+    // Filter columns based on search query
+    const filteredColumns = columnSearch
+      ? columns.filter((col) =>
+          col.label.toLowerCase().includes(columnSearch.toLowerCase())
+        )
+      : columns;
+
+    // Show search when there are 20+ columns
+    const showSearch = columns.length >= 20;
 
     // Handlers for view mode
     const handleViewModeChange = (value: string) => {
@@ -433,8 +447,17 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                   <h4 className="text-label-sm text-[var(--color-text-tertiary)]">
                     Display columns
                   </h4>
-                  <div className="flex flex-wrap items-start justify-start gap-1">
-                    {columns.map((col) => {
+                  {showSearch && (
+                    <Input
+                      type="search"
+                      size="sm"
+                      placeholder="Search columns..."
+                      value={columnSearch}
+                      onChange={(e) => setColumnSearch(e.target.value)}
+                    />
+                  )}
+                  <div className="flex flex-wrap items-start justify-start gap-1 max-h-[190px] overflow-y-auto">
+                    {filteredColumns.map((col) => {
                       const isVisible = settings.table.visibleColumns.includes(col.id);
                       return (
                         <Toggle
