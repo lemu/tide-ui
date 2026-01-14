@@ -11,6 +11,8 @@ import {
   BreadcrumbSeparator,
 } from '../components/fundamental/breadcrumb'
 import { Button } from '../components/fundamental/button'
+import { DataTable } from '../components/product/data-table'
+import { ColumnDef } from '@tanstack/react-table'
 
 const meta: Meta<typeof AppFrame> = {
   title: 'NPM • Product Components/AppFrame',
@@ -216,6 +218,117 @@ export const EmptyBoardsState: Story = {
         <p className="text-body-md text-[var(--color-text-secondary)] mt-2">
           This example shows the "No pinned boards" empty state message when there are no boards in the sidebar.
         </p>
+      </div>
+    </AppFrame>
+  ),
+}
+
+// Sample data for wide table
+interface WideTableData {
+  id: string
+  column1: string
+  column2: string
+  column3: string
+  column4: string
+  column5: string
+  column6: string
+  column7: string
+  column8: string
+  column9: string
+  column10: string
+  column11: string
+  column12: string
+  column13: string
+  column14: string
+  column15: string
+}
+
+const wideTableData: WideTableData[] = Array.from({ length: 50 }, (_, i) => ({
+  id: `${i + 1}`,
+  column1: `Row ${i + 1} - Data A`,
+  column2: `Row ${i + 1} - Data B`,
+  column3: `Row ${i + 1} - Data C`,
+  column4: `Row ${i + 1} - Data D`,
+  column5: `Row ${i + 1} - Data E`,
+  column6: `Row ${i + 1} - Data F`,
+  column7: `Row ${i + 1} - Data G`,
+  column8: `Row ${i + 1} - Data H`,
+  column9: `Row ${i + 1} - Data I`,
+  column10: `Row ${i + 1} - Data J`,
+  column11: `Row ${i + 1} - Data K`,
+  column12: `Row ${i + 1} - Data L`,
+  column13: `Row ${i + 1} - Data M`,
+  column14: `Row ${i + 1} - Data N`,
+  column15: `Row ${i + 1} - Data O`,
+}))
+
+const wideTableColumns: ColumnDef<WideTableData>[] = [
+  { accessorKey: 'id', header: 'ID', size: 80 },
+  { accessorKey: 'column1', header: 'Column 1', size: 180 },
+  { accessorKey: 'column2', header: 'Column 2', size: 180 },
+  { accessorKey: 'column3', header: 'Column 3', size: 180 },
+  { accessorKey: 'column4', header: 'Column 4', size: 180 },
+  { accessorKey: 'column5', header: 'Column 5', size: 180 },
+  { accessorKey: 'column6', header: 'Column 6', size: 180 },
+  { accessorKey: 'column7', header: 'Column 7', size: 180 },
+  { accessorKey: 'column8', header: 'Column 8', size: 180 },
+  { accessorKey: 'column9', header: 'Column 9', size: 180 },
+  { accessorKey: 'column10', header: 'Column 10', size: 180 },
+  { accessorKey: 'column11', header: 'Column 11', size: 180 },
+  { accessorKey: 'column12', header: 'Column 12', size: 180 },
+  { accessorKey: 'column13', header: 'Column 13', size: 180 },
+  { accessorKey: 'column14', header: 'Column 14', size: 180 },
+  { accessorKey: 'column15', header: 'Column 15', size: 180 },
+]
+
+// Story: AppFrame with wide DataTable to test horizontal scrolling
+export const WithWideDataTable: Story = {
+  render: () => (
+    <AppFrame
+      headerContent={
+        <Breadcrumb className="min-w-0 flex-1">
+          <BreadcrumbList className="flex-nowrap">
+            <BreadcrumbItem>
+              <BreadcrumbLink className="cursor-pointer">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink className="cursor-pointer">Data</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage className="max-w-[120px] truncate sm:max-w-[200px]">
+                Wide Table Test
+              </BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      }
+      headerActions={
+        <>
+          <Button variant="default">Export</Button>
+          <Button variant="primary" icon="plus" iconPosition="left">
+            Add Row
+          </Button>
+        </>
+      }
+    >
+      <div className="p-[var(--space-lg)]">
+        <div className="mb-[var(--space-lg)]">
+          <h1 className="text-heading-lg text-[var(--color-text-primary)]">Wide Table Layout Test</h1>
+          <p className="text-body-md text-[var(--color-text-secondary)] mt-[var(--space-sm)]">
+            This table has 15 columns to test horizontal scrolling and layout overflow behavior within AppFrame.
+          </p>
+        </div>
+
+        <DataTable
+          data={wideTableData}
+          columns={wideTableColumns}
+          enablePagination
+          enableColumnResizing
+          stickyHeader
+          minTableWidth={2500}
+        />
       </div>
     </AppFrame>
   ),
