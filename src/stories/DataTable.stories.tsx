@@ -646,6 +646,63 @@ export const LoadingStateWithPagination: Story = {
   },
 }
 
+export const LoadingStateWithManyColumns: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Tests skeleton rendering with 65+ columns where only 10 are visible via columnVisibility. Ensures skeleton matches visible column count.',
+      },
+    },
+  },
+  render: () => {
+    const [isLoading, setIsLoading] = useState(true)
+
+    // Generate 65 columns
+    const manyColumns: ColumnDef<any>[] = Array.from({ length: 65 }, (_, i) => ({
+      accessorKey: `col${i}`,
+      header: `Column ${i}`,
+      meta: { label: `Column ${i}` },
+      cell: ({ row }) => <div>{row.getValue(`col${i}`)}</div>,
+    }))
+
+    // Generate sample data with 65 columns
+    const sampleData = Array.from({ length: 20 }, (_, rowIndex) => {
+      const row: any = {}
+      for (let i = 0; i < 65; i++) {
+        row[`col${i}`] = `Row ${rowIndex + 1}, Col ${i}`
+      }
+      return row
+    })
+
+    // Hide 55 columns, show only 10
+    const columnVisibility = Object.fromEntries(
+      Array.from({ length: 65 }, (_, i) => [`col${i}`, i < 10])
+    )
+
+    return (
+      <div className="w-full space-y-4">
+        <div className="flex gap-2">
+          <Button onClick={() => setIsLoading(!isLoading)} size="sm">
+            {isLoading ? 'Show Data' : 'Show Loading'}
+          </Button>
+          <div className="text-body-sm text-[var(--color-text-secondary)]">
+            65 total columns, 10 visible (55 hidden via columnVisibility)
+          </div>
+        </div>
+
+        <DataTable
+          data={isLoading ? [] : sampleData}
+          columns={manyColumns}
+          isLoading={isLoading}
+          columnVisibility={columnVisibility}
+          enableResponsiveWrapper={true}
+          title="DataTable with 65 Columns (10 Visible)"
+        />
+      </div>
+    )
+  },
+}
+
 export const EmptyState: Story = {
   render: () => (
     <div className="w-full max-w-4xl">

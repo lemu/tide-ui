@@ -2984,7 +2984,7 @@ export function DataTable<TData, TValue>({
           )}>
             {isLoading ? (
               <DataTableSkeleton
-                columns={memoizedColumns.length}
+                columns={table.getVisibleLeafColumns().length}
                 rows={enableNestedHeaders ? 2 : 1}
                 showRowBorder={borderSettings.showRowBorder}
                 showCellBorder={borderSettings.showCellBorder}
@@ -3169,7 +3169,7 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {isLoading ? (
               <DataTableSkeleton
-                columns={memoizedColumns.length}
+                columns={table.getVisibleLeafColumns().length}
                 rows={computedLoadingRowCount}
                 showRowBorder={borderSettings.showRowBorder}
                 showCellBorder={borderSettings.showCellBorder}
