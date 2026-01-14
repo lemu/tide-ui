@@ -586,51 +586,6 @@ export const LoadingState: Story = {
   render: () => {
     const [isLoading, setIsLoading] = useState(true)
 
-    // Create skeleton data that matches the userColumns structure
-    const skeletonData = Array.from({ length: 10 }, (_, i) => ({
-      id: i + 1,
-      name: '',
-      email: '',
-      role: '',
-      status: '',
-      lastLogin: '',
-      joinDate: '',
-    }))
-
-    // Create skeleton columns that render Skeleton components with calculated widths for 707px table
-    const skeletonColumns: ColumnDef<typeof skeletonData[0]>[] = [
-      {
-        accessorKey: 'name',
-        header: 'Name',
-        cell: () => <Skeleton height={14} width="90px" />,
-      },
-      {
-        accessorKey: 'email',
-        header: 'Email',
-        cell: () => <Skeleton height={14} width="160px" />,
-      },
-      {
-        accessorKey: 'role',
-        header: 'Role',
-        cell: () => <Skeleton height={18} width="55px" className="rounded-full" />,
-      },
-      {
-        accessorKey: 'status',
-        header: 'Status',
-        cell: () => <Skeleton height={18} width="45px" className="rounded-full" />,
-      },
-      {
-        accessorKey: 'lastLogin',
-        header: 'Last Login',
-        cell: () => <Skeleton height={14} width="75px" />,
-      },
-      {
-        accessorKey: 'joinDate',
-        header: 'Join Date',
-        cell: () => <Skeleton height={14} width="75px" />,
-      },
-    ]
-
     return (
       <div className="w-full max-w-4xl space-y-4">
         <div className="flex gap-2">
@@ -640,9 +595,51 @@ export const LoadingState: Story = {
         </div>
 
         <DataTable
-          data={isLoading ? skeletonData : sampleUsers.slice(0, 10)}
-          columns={isLoading ? skeletonColumns : userColumns}
+          data={isLoading ? [] : sampleUsers.slice(0, 10)}
+          columns={userColumns}
+          isLoading={isLoading}
           title="Data Table with Loading State"
+        />
+      </div>
+    )
+  },
+}
+
+export const LoadingStateWithPagination: Story = {
+  render: () => {
+    const [isLoading, setIsLoading] = useState(false)
+
+    // Generate more sample data to demonstrate different page sizes
+    const largeSampleUsers = useMemo(() => {
+      const users = []
+      for (let i = 0; i < 150; i++) {
+        const baseUser = sampleUsers[i % sampleUsers.length]
+        users.push({
+          ...baseUser,
+          id: i + 1,
+          name: `${baseUser.name} ${i + 1}`,
+          email: `user${i + 1}@example.com`,
+        })
+      }
+      return users
+    }, [])
+
+    return (
+      <div className="w-full max-w-4xl space-y-4">
+        <div className="flex gap-2 items-center">
+          <Button onClick={() => setIsLoading(!isLoading)} size="sm">
+            {isLoading ? 'Hide Loading' : 'Show Loading'}
+          </Button>
+          <span className="text-body-sm text-[var(--color-text-secondary)]">
+            Try changing page size (10/25/50/100), then toggle loading - skeleton rows will match!
+          </span>
+        </div>
+
+        <DataTable
+          data={isLoading ? [] : largeSampleUsers}
+          columns={userColumns}
+          isLoading={isLoading}
+          title="Auto-Sync Skeleton Rows with Pagination"
         />
       </div>
     )

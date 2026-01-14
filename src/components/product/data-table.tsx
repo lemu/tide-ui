@@ -480,10 +480,10 @@ interface DataTableSkeletonProps {
 function DataTableSkeleton({ columns, rows, showRowBorder = true, showCellBorder = true, skipHeader = false, enableResponsiveWrapper = true }: DataTableSkeletonProps) {
   // Use flexible widths when responsive wrapper is enabled
   const headerSkeletonClass = enableResponsiveWrapper
-    ? "h-4 w-full max-w-[120px]"
+    ? "h-4 w-full min-w-[80px]"
     : "h-4 w-[120px]"
   const cellSkeletonClass = enableResponsiveWrapper
-    ? "h-4 w-full max-w-[100px]"
+    ? "h-4 w-full min-w-[60px]"
     : "h-4 w-[100px]"
 
   return (
@@ -1982,6 +1982,16 @@ export function DataTable<TData, TValue>({
 
   // Column pinning state removed - using pure CSS approach instead
 
+  // Auto-sync skeleton row count with pagination pageSize
+  const computedLoadingRowCount = React.useMemo(() => {
+    // If loadingRowCount is explicitly provided and not the default, respect it
+    if (loadingRowCount !== undefined && loadingRowCount !== 5) {
+      return loadingRowCount
+    }
+    // Otherwise, use current pageSize from pagination state
+    return pagination.pageSize
+  }, [loadingRowCount, pagination.pageSize])
+
   // Debounce global filter for performance
   const debouncedGlobalFilter = useDebounce(globalFilter, 300)
 
@@ -3160,7 +3170,7 @@ export function DataTable<TData, TValue>({
             {isLoading ? (
               <DataTableSkeleton
                 columns={memoizedColumns.length}
-                rows={loadingRowCount}
+                rows={computedLoadingRowCount}
                 showRowBorder={borderSettings.showRowBorder}
                 showCellBorder={borderSettings.showCellBorder}
                 skipHeader={true}
