@@ -535,7 +535,7 @@ const userColumns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const role = row.getValue('role') as string
       return (
-        <Badge>
+        <Badge size="sm">
           {role}
         </Badge>
       )
@@ -547,7 +547,7 @@ const userColumns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const status = row.getValue('status') as string
       return (
-        <Badge>
+        <Badge size="sm">
           {status}
         </Badge>
       )
@@ -713,6 +713,65 @@ export const EmptyState: Story = {
       />
     </div>
   ),
+}
+
+export const SkeletonWithEmptyData: Story = {
+  args: {
+    data: [],
+    columns: [
+      { accessorKey: "id", header: "ID" },
+      { accessorKey: "name", header: "Name" },
+      { accessorKey: "status", header: "Status" },
+      { accessorKey: "date", header: "Date" },
+      { accessorKey: "amount", header: "Amount" },
+    ],
+    isLoading: true,
+    enableResponsiveWrapper: true,
+    title: "Skeleton with Empty Data",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Tests skeleton rendering when data array is empty but isLoading is true. Should show 10 skeleton rows (new default).",
+      },
+    },
+  },
+}
+
+export const SkeletonWithEmptyDataAndColumnVisibility: Story = {
+  args: {
+    data: [],
+    columns: [
+      { accessorKey: "id", header: "ID" },
+      { accessorKey: "name", header: "Name" },
+      { accessorKey: "status", header: "Status" },
+      { accessorKey: "date", header: "Date" },
+      { accessorKey: "amount", header: "Amount" },
+      { accessorKey: "category", header: "Category" },
+      { accessorKey: "notes", header: "Notes" },
+      { accessorKey: "owner", header: "Owner" },
+      { accessorKey: "priority", header: "Priority" },
+      { accessorKey: "tags", header: "Tags" },
+    ],
+    columnVisibility: {
+      date: false,
+      amount: false,
+      category: false,
+      notes: false,
+      owner: false,
+      priority: false,
+    },
+    isLoading: true,
+    enableResponsiveWrapper: true,
+    title: "Skeleton with Empty Data & Column Visibility",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Tests skeleton with empty data and many hidden columns. Should show 10 skeleton rows (new default) with only 4 visible columns.",
+      },
+    },
+  },
 }
 
 // Formatting utilities story showcasing numeric formatting and alignment

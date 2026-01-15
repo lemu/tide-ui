@@ -370,9 +370,9 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                   <h4 className="text-label-sm text-[var(--color-text-tertiary)]">
                     Sorting
                   </h4>
-                  <div className="flex gap-2">
+                  <div className="flex flex-col gap-2">
                     <Select value={settings.table.sortColumn} onValueChange={handleTableSortChange}>
-                      <SelectTrigger size="sm" className="flex-1">
+                      <SelectTrigger size="sm">
                         <SelectValue placeholder="Select column to sort" />
                       </SelectTrigger>
                       <SelectContent>
@@ -388,7 +388,7 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                         value={settings.table.sortDirection}
                         onValueChange={(value) => handleTableSortDirectionChange(value as 'asc' | 'desc')}
                       >
-                        <SelectTrigger size="sm" className="w-[140px]">
+                        <SelectTrigger size="sm">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -484,12 +484,12 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
               {/* Sorting Section */}
               <div className="space-y-2">
                 <h4 className="text-label-sm text-[var(--color-text-tertiary)]">Sorting</h4>
-                <div className="flex gap-2">
+                <div className="flex flex-col gap-2">
                   <Select
                     value={settings.folders.sortColumn}
                     onValueChange={handleFoldersSortChange}
                   >
-                    <SelectTrigger className="flex-1" size="sm">
+                    <SelectTrigger size="sm">
                       <SelectValue placeholder="Select column" />
                     </SelectTrigger>
                     <SelectContent>
@@ -505,7 +505,7 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                       value={settings.folders.sortDirection}
                       onValueChange={(value) => handleFoldersSortDirectionChange(value as 'asc' | 'desc')}
                     >
-                      <SelectTrigger size="sm" className="w-[140px]">
+                      <SelectTrigger size="sm">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -567,9 +567,9 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                   <h4 className="text-label-sm text-[var(--color-text-tertiary)]">
                     Sorting
                   </h4>
-                  <div className="flex gap-2">
+                  <div className="flex flex-col gap-2">
                     <Select value={settings.columns.sortColumn} onValueChange={handleColumnsSortChange}>
-                      <SelectTrigger size="sm" className="flex-1">
+                      <SelectTrigger size="sm">
                         <SelectValue placeholder="Select column to sort" />
                       </SelectTrigger>
                       <SelectContent>
@@ -585,7 +585,7 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                         value={settings.columns.sortDirection}
                         onValueChange={(value) => handleColumnsSortDirectionChange(value as 'asc' | 'desc')}
                       >
-                        <SelectTrigger size="sm" className="w-[140px]">
+                        <SelectTrigger size="sm">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>

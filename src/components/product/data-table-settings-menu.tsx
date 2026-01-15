@@ -127,9 +127,9 @@ export function DataTableSettingsMenu({
                   <h4 className="text-label-sm text-[var(--color-text-tertiary)]">
                     Sorting
                   </h4>
-                  <div className="flex gap-2">
+                  <div className="flex flex-col gap-2">
                     <Select value={selectedSortColumn} onValueChange={onSortChange}>
-                      <SelectTrigger size="sm" className="flex-1">
+                      <SelectTrigger size="sm">
                         <SelectValue placeholder="Select column to sort" />
                       </SelectTrigger>
                       <SelectContent>
@@ -145,7 +145,7 @@ export function DataTableSettingsMenu({
                         value={sortDirection}
                         onValueChange={(value) => onSortDirectionChange?.(value as 'asc' | 'desc')}
                       >
-                        <SelectTrigger size="sm" className="w-[140px]">
+                        <SelectTrigger size="sm">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>

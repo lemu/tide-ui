@@ -502,7 +502,12 @@ function DataTableSkeleton({ columns, rows, showRowBorder = true, showCellBorder
       {Array.from({ length: rows }).map((_, rowIndex) => (
         <TableRow key={rowIndex} showBorder={showRowBorder}>
           {Array.from({ length: columns }).map((_, colIndex) => (
-            <TableCell key={colIndex} showBorder={showCellBorder}>
+            <TableCell
+              key={colIndex}
+              showBorder={showCellBorder}
+              showRowBorder={showRowBorder}
+              className="text-body-sm"
+            >
               <Skeleton className={cellSkeletonClass} />
             </TableCell>
           ))}
@@ -1850,7 +1855,7 @@ export function DataTable<TData, TValue>({
   showScrollIndicators = false,
   minTableWidth = "900px",
   isLoading = false,
-  loadingRowCount = 5,
+  loadingRowCount = 10,
   borderStyle = "both",
   defaultVerticalAlign = 'middle',
   enableGlobalSearch = false,
@@ -1985,7 +1990,7 @@ export function DataTable<TData, TValue>({
   // Auto-sync skeleton row count with pagination pageSize
   const computedLoadingRowCount = React.useMemo(() => {
     // If loadingRowCount is explicitly provided and not the default, respect it
-    if (loadingRowCount !== undefined && loadingRowCount !== 5) {
+    if (loadingRowCount !== undefined && loadingRowCount !== 10) {
       return loadingRowCount
     }
     // Otherwise, use current pageSize from pagination state
@@ -2985,7 +2990,7 @@ export function DataTable<TData, TValue>({
             {isLoading ? (
               <DataTableSkeleton
                 columns={table.getVisibleLeafColumns().length}
-                rows={enableNestedHeaders ? 2 : 1}
+                rows={0}
                 showRowBorder={borderSettings.showRowBorder}
                 showCellBorder={borderSettings.showCellBorder}
                 enableResponsiveWrapper={computedEnableResponsiveWrapper}
