@@ -254,6 +254,10 @@ export type { IconColor, IconSize, CustomIconName } from './fundamental/icon'
 export { Kbd, KbdGroup } from './fundamental/kbd'
 export type { KbdProps, KbdGroupProps } from './fundamental/kbd'
 
+// MonthPicker component
+export { MonthPicker } from './fundamental/month-picker'
+export type { MonthPickerProps } from './fundamental/month-picker'
+
 // Command components
 export {
   CommandDialog,
@@ -443,6 +447,9 @@ export type {
   FilterOptionGroup,
   FilterValue,
   GlobalSearchTerm,
+  DateRangePreset,
+  NumberRangeConfig,
+  DateRangeConfig,
 } from './product/filters'
 
 // Bookmarks components
