@@ -4,6 +4,7 @@ import { Filters, FilterPanelContent, FilterDropdownMenu, FilterDefinition, Filt
 import { Icon } from '../components/fundamental/icon'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 import { Label } from '../components/fundamental/label'
+import { formatDateRange } from '../lib/date-utils'
 
 const meta: Meta<typeof Filters> = {
   title: 'NPM • Product Components/Filters',
@@ -1328,6 +1329,342 @@ export const GroupedVsUngroupedFilters: Story = {
             </Card>
           </div>
         </div>
+      </div>
+    )
+  },
+}
+
+/**
+ * Number Range Filter
+ *
+ * Demonstrates number range filters with "At least" and "No more than" inputs.
+ * Supports optional prefix (e.g., "$") and suffix (e.g., "kg") for formatted display.
+ */
+export const WithNumberRangeFilter: Story = {
+  render: () => {
+    const [pinnedFilters, setPinnedFilters] = useState<string[]>(['price', 'weight'])
+    const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({})
+
+    const filters: FilterDefinition[] = [
+      {
+        id: 'price',
+        label: 'Price',
+        icon: ({ className }) => <Icon name="dollar-sign" className={className} />,
+        type: 'number',
+        rangeMode: true,
+        numberConfig: {
+          min: 0,
+          max: 1000000,
+          prefix: '$',
+        },
+        formatValue: (values: string[]) => {
+          const [min, max] = values.map(Number)
+          if (min === -Infinity && max !== Infinity) return `≤ $${max.toLocaleString()}`
+          if (min !== -Infinity && max === Infinity) return `≥ $${min.toLocaleString()}`
+          if (min !== -Infinity && max !== Infinity) return `$${min.toLocaleString()} - $${max.toLocaleString()}`
+          return ''
+        },
+      },
+      {
+        id: 'weight',
+        label: 'Weight',
+        icon: ({ className }) => <Icon name="container" className={className} />,
+        type: 'number',
+        rangeMode: true,
+        numberConfig: {
+          min: 0,
+          suffix: ' kg',
+        },
+        formatValue: (values: string[]) => {
+          const [min, max] = values.map(Number)
+          if (min === -Infinity && max !== Infinity) return `≤ ${max} kg`
+          if (min !== -Infinity && max === Infinity) return `≥ ${min} kg`
+          if (min !== -Infinity && max !== Infinity) return `${min} kg - ${max} kg`
+          return ''
+        },
+      },
+    ]
+
+    return (
+      <div className="p-4 space-y-4">
+        <div className="text-caption-sm text-[var(--color-text-secondary)]">
+          Number range filters allow users to specify min/max values with optional prefix/suffix formatting.
+        </div>
+        <Filters
+          filters={filters}
+          pinnedFilters={pinnedFilters}
+          activeFilters={activeFilters}
+          onPinnedFiltersChange={setPinnedFilters}
+          onFilterChange={(filterId, value) => {
+            setActiveFilters(prev => ({ ...prev, [filterId]: value }))
+          }}
+          onFilterClear={(filterId) => {
+            setActiveFilters(prev => {
+              const next = { ...prev }
+              delete next[filterId]
+              return next
+            })
+          }}
+          onFilterReset={() => setActiveFilters({})}
+        />
+
+        {/* Display active filters */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Active Number Ranges</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {Object.keys(activeFilters).length === 0 ? (
+              <p className="text-body-md text-[var(--color-text-secondary)]">No ranges applied</p>
+            ) : (
+              <div className="flex flex-col gap-[var(--space-sm)]">
+                {Object.entries(activeFilters).map(([filterId, value]) => {
+                  const filter = filters.find(f => f.id === filterId)
+                  if (!filter || !Array.isArray(value)) return null
+                  const [min, max] = value as [number, number]
+
+                  return (
+                    <div key={filterId} className="flex items-start gap-[var(--space-sm)]">
+                      <Label className="min-w-[120px] font-medium">{filter.label}:</Label>
+                      <span className="text-body-md">
+                        Min: {min === -Infinity ? 'N/A' : min}, Max: {max === Infinity ? 'N/A' : max}
+                      </span>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    )
+  },
+}
+
+/**
+ * Date Range Filter
+ *
+ * Demonstrates date range filters with:
+ * - Predefined ranges (This week, Last month, This quarter, etc.)
+ * - Custom month picker with two-year grid layout
+ * - Month-level granularity (first day of start month → last day of end month)
+ */
+export const WithDateRangeFilter: Story = {
+  render: () => {
+    const [pinnedFilters, setPinnedFilters] = useState<string[]>(['laycan', 'delivery'])
+    const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({})
+
+    const filters: FilterDefinition[] = [
+      {
+        id: 'laycan',
+        label: 'Laycan',
+        icon: ({ className }) => <Icon name="calendar" className={className} />,
+        type: 'date',
+        rangeMode: true,
+        formatValue: (values: string[]) => {
+          const [start, end] = values.map(v => new Date(v))
+          return formatDateRange(start, end)
+        },
+      },
+      {
+        id: 'delivery',
+        label: 'Delivery date',
+        icon: ({ className }) => <Icon name="calendar" className={className} />,
+        type: 'date',
+        rangeMode: true,
+        dateConfig: {
+          presets: ['custom', 'this-month', 'last-month', 'this-quarter', 'last-quarter'],
+        },
+        formatValue: (values: string[]) => {
+          const [start, end] = values.map(v => new Date(v))
+          return formatDateRange(start, end)
+        },
+      },
+    ]
+
+    return (
+      <div className="p-4 space-y-4">
+        <div className="text-caption-sm text-[var(--color-text-secondary)]">
+          Date range filters support predefined ranges and custom month-level selection.
+        </div>
+        <Filters
+          filters={filters}
+          pinnedFilters={pinnedFilters}
+          activeFilters={activeFilters}
+          onPinnedFiltersChange={setPinnedFilters}
+          onFilterChange={(filterId, value) => {
+            setActiveFilters(prev => ({ ...prev, [filterId]: value }))
+          }}
+          onFilterClear={(filterId) => {
+            setActiveFilters(prev => {
+              const next = { ...prev }
+              delete next[filterId]
+              return next
+            })
+          }}
+          onFilterReset={() => setActiveFilters({})}
+        />
+
+        {/* Display active filters */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Active Date Ranges</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {Object.keys(activeFilters).length === 0 ? (
+              <p className="text-body-md text-[var(--color-text-secondary)]">No date ranges applied</p>
+            ) : (
+              <div className="flex flex-col gap-[var(--space-sm)]">
+                {Object.entries(activeFilters).map(([filterId, value]) => {
+                  const filter = filters.find(f => f.id === filterId)
+                  if (!filter || !Array.isArray(value)) return null
+                  const [start, end] = value as [Date, Date]
+
+                  return (
+                    <div key={filterId} className="flex items-start gap-[var(--space-sm)]">
+                      <Label className="min-w-[120px] font-medium">{filter.label}:</Label>
+                      <span className="text-body-md">{formatDateRange(start, end)}</span>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    )
+  },
+}
+
+/**
+ * Mixed Filter Types
+ *
+ * Demonstrates all filter types working together:
+ * - Date range filters
+ * - Number range filters
+ * - Multiselect filters
+ * - Single select filters
+ */
+export const WithMixedFilterTypes: Story = {
+  render: () => {
+    const [pinnedFilters, setPinnedFilters] = useState<string[]>(['date', 'status', 'price'])
+    const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({})
+
+    const filters: FilterDefinition[] = [
+      {
+        id: 'date',
+        label: 'Laycan',
+        icon: ({ className }) => <Icon name="calendar" className={className} />,
+        type: 'date',
+        rangeMode: true,
+        formatValue: (values: string[]) => {
+          const [start, end] = values.map(v => new Date(v))
+          return formatDateRange(start, end)
+        },
+      },
+      {
+        id: 'status',
+        label: 'Status',
+        icon: ({ className }) => <Icon name="check-circle" className={className} />,
+        type: 'multiselect',
+        options: [
+          { value: 'open', label: 'Open' },
+          { value: 'in-progress', label: 'In Progress' },
+          { value: 'completed', label: 'Completed' },
+        ],
+      },
+      {
+        id: 'price',
+        label: 'Price',
+        icon: ({ className }) => <Icon name="dollar-sign" className={className} />,
+        type: 'number',
+        rangeMode: true,
+        numberConfig: { prefix: '$' },
+        formatValue: (values: string[]) => {
+          const [min, max] = values.map(Number)
+          if (min === -Infinity && max !== Infinity) return `≤ $${max.toLocaleString()}`
+          if (min !== -Infinity && max === Infinity) return `≥ $${min.toLocaleString()}`
+          if (min !== -Infinity && max !== Infinity) return `$${min.toLocaleString()} - $${max.toLocaleString()}`
+          return ''
+        },
+      },
+      {
+        id: 'vessel',
+        label: 'Vessel type',
+        icon: ({ className }) => <Icon name="ship" className={className} />,
+        type: 'select',
+        options: [
+          { value: 'bulk', label: 'Bulk Carrier' },
+          { value: 'container', label: 'Container Ship' },
+          { value: 'tanker', label: 'Tanker' },
+        ],
+      },
+    ]
+
+    return (
+      <div className="p-4 space-y-4">
+        <div className="text-caption-sm text-[var(--color-text-secondary)]">
+          All filter types working together: date range, number range, multiselect, and single select.
+        </div>
+        <Filters
+          filters={filters}
+          pinnedFilters={pinnedFilters}
+          activeFilters={activeFilters}
+          onPinnedFiltersChange={setPinnedFilters}
+          onFilterChange={(filterId, value) => {
+            setActiveFilters(prev => ({ ...prev, [filterId]: value }))
+          }}
+          onFilterClear={(filterId) => {
+            setActiveFilters(prev => {
+              const next = { ...prev }
+              delete next[filterId]
+              return next
+            })
+          }}
+          onFilterReset={() => setActiveFilters({})}
+        />
+
+        {/* Display active filters */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Active Filters (All Types)</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {Object.keys(activeFilters).length === 0 ? (
+              <p className="text-body-md text-[var(--color-text-secondary)]">No filters applied</p>
+            ) : (
+              <div className="flex flex-col gap-[var(--space-sm)]">
+                {Object.entries(activeFilters).map(([filterId, value]) => {
+                  const filter = filters.find(f => f.id === filterId)
+                  if (!filter) return null
+
+                  let displayValue: string
+                  if (filter.type === 'date' && Array.isArray(value)) {
+                    const [start, end] = value as [Date, Date]
+                    displayValue = formatDateRange(start, end)
+                  } else if (filter.type === 'number' && Array.isArray(value)) {
+                    const [min, max] = value as [number, number]
+                    displayValue = `Min: ${min === -Infinity ? 'N/A' : min}, Max: ${max === Infinity ? 'N/A' : max}`
+                  } else if (Array.isArray(value)) {
+                    displayValue = value.join(', ')
+                  } else {
+                    displayValue = String(value)
+                  }
+
+                  return (
+                    <div key={filterId} className="flex items-start gap-[var(--space-sm)]">
+                      <Label className="min-w-[120px] font-medium">{filter.label}:</Label>
+                      <span className="text-body-md">{displayValue}</span>
+                      <span className="text-body-sm text-[var(--color-text-tertiary)] ml-auto">
+                        ({filter.type}{filter.rangeMode ? ' range' : ''})
+                      </span>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </div>
     )
   },

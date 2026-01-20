@@ -6,9 +6,12 @@ import { AutocompleteSearch, AutocompleteSuggestion } from "../fundamental/autoc
 import { Icon } from "../fundamental/icon"
 import { Checkbox } from "../fundamental/checkbox"
 import { RadioGroup, RadioGroupItem } from "../fundamental/radio-group"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../fundamental/select"
+import { MonthPicker } from "../fundamental/month-picker"
 import { Popover, PopoverContent, PopoverTrigger } from "../fundamental/popover"
 import { Separator } from "../fundamental/separator"
 import { Badge } from "../fundamental/badge"
+import { calculatePresetRange, formatDateRange, getPresetLabel } from "../../lib/date-utils"
 
 // ============================================================================
 // Type Definitions
@@ -27,6 +30,37 @@ export interface FilterOptionGroup {
 
 export type FilterValue = string | string[] | number | [number, number] | Date | [Date, Date] | undefined
 
+export type DateRangePreset =
+  | 'custom'
+  | 'this-week'
+  | 'this-month'
+  | 'this-year'
+  | 'last-week'
+  | 'last-month'
+  | 'last-year'
+  | 'last-30-days'
+  | 'last-90-days'
+  | 'last-6-months'
+  | 'this-quarter'
+  | 'last-quarter'
+  | 'all-time'
+
+export interface NumberRangeConfig {
+  min?: number
+  max?: number
+  step?: number
+  prefix?: string
+  suffix?: string
+}
+
+export interface DateRangeConfig {
+  presets?: DateRangePreset[]
+  minYear?: number
+  maxYear?: number
+  minDate?: Date
+  maxDate?: Date
+}
+
 export interface FilterDefinition {
   id: string
   label: string
@@ -39,6 +73,9 @@ export interface FilterDefinition {
   showSearch?: boolean | 'auto' // Control search visibility: true (always), false (never), 'auto' (based on threshold)
   searchThreshold?: number // Minimum number of options to show search (default: 8, only applies when showSearch is 'auto')
   group?: string // Optional group name for organizing filters in the dropdown menu sidebar
+  rangeMode?: boolean // Enable range picker mode for number/date filters
+  numberConfig?: NumberRangeConfig // Configuration for number range filters
+  dateConfig?: DateRangeConfig // Configuration for date range filters
 }
 
 export interface GlobalSearchTerm {
@@ -173,11 +210,41 @@ interface FilterPanelContentProps {
 export function FilterPanelContent({ filter, value, onChange, onReset }: FilterPanelContentProps) {
   const [searchQuery, setSearchQuery] = React.useState("")
 
+  // Number range state
+  const [minInput, setMinInput] = React.useState<string>("")
+  const [maxInput, setMaxInput] = React.useState<string>("")
+  const [minError, setMinError] = React.useState<string | null>(null)
+  const [maxError, setMaxError] = React.useState<string | null>(null)
+
+  // Date range state
+  const [isCustomMode, setIsCustomMode] = React.useState(false)
+  const [currentYear, setCurrentYear] = React.useState<number>(new Date().getFullYear())
+
   // Get current selected values as array
   const selectedValues: string[] = React.useMemo(() => {
     if (!value) return []
     return Array.isArray(value) ? value.map(String) : [String(value)]
   }, [value])
+
+  // Sync number range inputs with external value
+  React.useEffect(() => {
+    if (filter.type === 'number' && filter.rangeMode) {
+      const currentValue = value as [number, number] | number | undefined
+      if (Array.isArray(currentValue)) {
+        const [min, max] = currentValue
+        setMinInput(min === -Infinity ? '' : min?.toString() || '')
+        setMaxInput(max === Infinity ? '' : max?.toString() || '')
+      } else if (typeof currentValue === 'number') {
+        setMinInput(currentValue.toString())
+        setMaxInput('')
+      } else {
+        setMinInput('')
+        setMaxInput('')
+      }
+      setMinError(null)
+      setMaxError(null)
+    }
+  }, [value, filter.type, filter.rangeMode])
 
   // Determine if search should be shown
   const shouldShowSearch = React.useMemo(() => {
@@ -248,6 +315,147 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
     onChange(newValues.length > 0 ? newValues : undefined)
   }
 
+  const handleSelectAllInGroup = (group: FilterOptionGroup) => {
+    if (filter.type !== 'multiselect') return
+
+    // Collect all values in the group (including nested children)
+    const groupValues = group.options.flatMap(opt =>
+      [opt.value, ...(opt.children?.map(c => c.value) || [])]
+    )
+
+    // Merge with existing selected values (avoid duplicates)
+    const newValues = Array.from(new Set([...selectedValues, ...groupValues]))
+
+    onChange(newValues.length > 0 ? newValues : undefined)
+  }
+
+  const handleInverseSelectionInGroup = (group: FilterOptionGroup) => {
+    if (filter.type !== 'multiselect') return
+
+    // Get currently visible options (respecting search filter)
+    const visibleOptions = group.options.filter((option) => {
+      const matchesSearch = !searchQuery ||
+        option.label.toLowerCase().includes(searchQuery.toLowerCase())
+      return matchesSearch
+    })
+
+    // Collect visible values (including visible children)
+    const visibleGroupValues = visibleOptions.flatMap(opt => {
+      const parentValue = opt.value
+      const childValues = opt.children
+        ?.filter(child =>
+          !searchQuery ||
+          child.label.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        .map(c => c.value) || []
+
+      return [parentValue, ...childValues]
+    })
+
+    // Invert: select if not selected, deselect if selected
+    const newValues = selectedValues.filter(v => !visibleGroupValues.includes(v)) // Remove currently selected visible items
+    const invertedVisibleValues = visibleGroupValues.filter(v => !selectedValues.includes(v)) // Get unselected visible items
+    const result = [...newValues, ...invertedVisibleValues]
+
+    onChange(result.length > 0 ? result : undefined)
+  }
+
+  // Handle number range blur event
+  const handleNumberBlur = () => {
+    const minStr = minInput.trim()
+    const maxStr = maxInput.trim()
+
+    // Clear errors first
+    setMinError(null)
+    setMaxError(null)
+
+    // If both empty, clear filter
+    if (minStr === '' && maxStr === '') {
+      onChange(undefined)
+      return
+    }
+
+    // Parse values
+    const min = minStr === '' ? -Infinity : parseFloat(minStr)
+    const max = maxStr === '' ? Infinity : parseFloat(maxStr)
+
+    // Validate numeric input
+    if (minStr !== '' && isNaN(min)) {
+      setMinError('Invalid minimum value')
+      return
+    }
+    if (maxStr !== '' && isNaN(max)) {
+      setMaxError('Invalid maximum value')
+      return
+    }
+
+    // Validate min < max
+    if (min !== -Infinity && max !== Infinity && min > max) {
+      setMinError('Minimum must be less than maximum')
+      setMaxError('Maximum must be more than minimum')
+      return
+    }
+
+    // Clear error and emit value
+    onChange([min, max])
+  }
+
+  // Date range preset helper functions
+  const getPresetList = (): DateRangePreset[] => {
+    return filter.dateConfig?.presets || [
+      'this-month',
+      'last-month',
+      'this-quarter',
+      'last-quarter',
+      'this-year',
+      'last-year',
+      'custom',
+    ]
+  }
+
+  const getSelectedPreset = (): string => {
+    // If user explicitly selected custom mode, show that
+    if (isCustomMode) {
+      return 'custom'
+    }
+
+    const currentValue = value as [Date, Date] | undefined
+
+    // If no value, check if "all-time" is in the preset list
+    if (!currentValue || !Array.isArray(currentValue)) {
+      return getPresetList().includes('all-time') ? 'all-time' : ''
+    }
+
+    // Check if current value matches any preset
+    for (const preset of getPresetList()) {
+      if (preset === 'custom') continue
+      const presetRange = calculatePresetRange(preset)
+      if (presetRange &&
+          presetRange[0].getTime() === currentValue[0].getTime() &&
+          presetRange[1].getTime() === currentValue[1].getTime()) {
+        return preset
+      }
+    }
+
+    return 'custom'
+  }
+
+  // Handle preset selection
+  const handlePresetSelect = (preset: string) => {
+    if (preset === 'custom') {
+      // Enter custom mode to show the picker
+      setIsCustomMode(true)
+      return
+    }
+
+    // Exit custom mode when a preset is selected
+    setIsCustomMode(false)
+
+    // Calculate date range for preset
+    const range = calculatePresetRange(preset)
+    onChange(range)
+  }
+
   return (
     <div className="flex flex-col gap-[var(--space-2xlg)]">
       {/* Search Input - conditionally rendered */}
@@ -269,21 +477,191 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
         </div>
       )}
 
+      {/* Number Range UI */}
+      {filter.type === 'number' && filter.rangeMode && (
+        <div className="flex flex-col gap-[var(--space-lg)]">
+          {/* Min Input */}
+          <div className="flex flex-col gap-[var(--space-sm)]">
+            <label className="text-label-md text-[var(--color-text-primary)]">
+              At least...
+            </label>
+            <div className="relative">
+              {filter.numberConfig?.prefix && (
+                <span className="absolute left-[var(--space-md)] top-1/2 -translate-y-1/2 text-body-md text-[var(--color-text-tertiary)] pointer-events-none">
+                  {filter.numberConfig.prefix}
+                </span>
+              )}
+              <Input
+                type="text"
+                inputMode="numeric"
+                size="lg"
+                variant={minError ? 'error' : 'default'}
+                value={minInput}
+                onChange={(e) => {
+                  setMinInput(e.target.value)
+                  setMinError(null)
+                }}
+                onBlur={handleNumberBlur}
+                placeholder={filter.numberConfig?.min?.toString() || '0.00'}
+                className={cn(
+                  filter.numberConfig?.prefix && 'pl-[calc(var(--space-lg)+var(--space-md))]',
+                  filter.numberConfig?.suffix && 'pr-[calc(var(--space-lg)+var(--space-md))]'
+                )}
+              />
+              {filter.numberConfig?.suffix && (
+                <span className="absolute right-[var(--space-md)] top-1/2 -translate-y-1/2 text-body-md text-[var(--color-text-tertiary)] pointer-events-none">
+                  {filter.numberConfig.suffix}
+                </span>
+              )}
+            </div>
+            {minError && (
+              <span className="text-caption-sm text-[var(--color-text-error-bold)]">
+                {minError}
+              </span>
+            )}
+          </div>
+
+          {/* Max Input */}
+          <div className="flex flex-col gap-[var(--space-sm)]">
+            <label className="text-label-md text-[var(--color-text-primary)]">
+              No more than...
+            </label>
+            <div className="relative">
+              {filter.numberConfig?.prefix && (
+                <span className="absolute left-[var(--space-md)] top-1/2 -translate-y-1/2 text-body-md text-[var(--color-text-tertiary)] pointer-events-none">
+                  {filter.numberConfig.prefix}
+                </span>
+              )}
+              <Input
+                type="text"
+                inputMode="numeric"
+                size="lg"
+                variant={maxError ? 'error' : 'default'}
+                value={maxInput}
+                onChange={(e) => {
+                  setMaxInput(e.target.value)
+                  setMaxError(null)
+                }}
+                onBlur={handleNumberBlur}
+                placeholder={filter.numberConfig?.max?.toString() || '0.00'}
+                className={cn(
+                  filter.numberConfig?.prefix && 'pl-[calc(var(--space-lg)+var(--space-md))]',
+                  filter.numberConfig?.suffix && 'pr-[calc(var(--space-lg)+var(--space-md))]'
+                )}
+              />
+              {filter.numberConfig?.suffix && (
+                <span className="absolute right-[var(--space-md)] top-1/2 -translate-y-1/2 text-body-md text-[var(--color-text-tertiary)] pointer-events-none">
+                  {filter.numberConfig.suffix}
+                </span>
+              )}
+            </div>
+            {maxError && (
+              <span className="text-caption-sm text-[var(--color-text-error-bold)]">
+                {maxError}
+              </span>
+            )}
+          </div>
+
+          {/* Reset Button */}
+          {onReset && (minInput !== '' || maxInput !== '') && (
+            <Button
+              variant="default"
+              onClick={() => {
+                setMinInput('')
+                setMaxInput('')
+                setMinError(null)
+                setMaxError(null)
+                onReset()
+              }}
+              className="self-start"
+            >
+              <span className="text-body-medium-sm">Reset</span>
+            </Button>
+          )}
+        </div>
+      )}
+
+      {/* Date Range UI */}
+      {filter.type === 'date' && filter.rangeMode && (
+        <div className="flex flex-col gap-[var(--space-lg)]">
+          {/* Select for preset selection (always visible) */}
+          <div className="flex flex-col gap-[var(--space-sm)]">
+            <label className="text-label-md text-[var(--color-text-primary)]">
+              Date range
+            </label>
+            <Select value={getSelectedPreset()} onValueChange={handlePresetSelect}>
+              <SelectTrigger size="lg">
+                <SelectValue placeholder="Select date range..." />
+              </SelectTrigger>
+              <SelectContent>
+                {getPresetList().map(preset => (
+                  <SelectItem key={preset} value={preset}>
+                    {getPresetLabel(preset)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Custom Month Picker (shown when "Custom" is selected) */}
+          {getSelectedPreset() === 'custom' && (
+            <>
+              {/* Instruction Text */}
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                Select start and end months for custom range
+              </p>
+
+              {/* MonthPicker Component */}
+              <MonthPicker
+                value={value as [Date, Date] | undefined}
+                onChange={(newValue) => {
+                  onChange(newValue)
+                  setIsCustomMode(false)  // Exit custom mode after selection
+                }}
+                mode="range"
+                yearCount={2}
+                size="small"
+                enableNavigation={true}
+                onYearNavigate={(year) => setCurrentYear(year)}
+                minDate={filter.dateConfig?.minDate}
+                maxDate={filter.dateConfig?.maxDate}
+              />
+            </>
+          )}
+        </div>
+      )}
+
       {/* Option Groups */}
       {filteredGroups.map((group) => (
         <div key={group.label} className="flex flex-col gap-[var(--space-sm)]">
           {/* Group Header */}
-          <div className="flex gap-[var(--space-sm)] items-start justify-start text-caption-sm w-full">
-            <div className="flex-1 text-[var(--color-text-primary)] tracking-[0.1px]">
+          <div className="flex gap-[var(--space-sm)] items-start justify-start w-full">
+            <div className="flex-1 text-body-medium-sm text-[var(--color-text-tertiary)]">
               {group.label}
             </div>
             {onReset && filter.type === 'multiselect' && (
-              <button
-                onClick={() => handleResetGroup(group)}
-                className="text-body-medium-sm text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] hover:underline"
-              >
-                Reset
-              </button>
+              <div className="flex gap-[var(--space-xsm)] items-center text-body-medium-sm text-[var(--color-text-brand-bold)]">
+                <button
+                  onClick={() => handleSelectAllInGroup(group)}
+                  className="hover:text-[var(--color-text-brand-bold-hovered)] hover:underline"
+                >
+                  All
+                </button>
+                <span className="text-[var(--color-text-tertiary)]">•</span>
+                <button
+                  onClick={() => handleInverseSelectionInGroup(group)}
+                  className="hover:text-[var(--color-text-brand-bold-hovered)] hover:underline"
+                >
+                  Inverse
+                </button>
+                <span className="text-[var(--color-text-tertiary)]">•</span>
+                <button
+                  onClick={() => handleResetGroup(group)}
+                  className="hover:text-[var(--color-text-brand-bold-hovered)] hover:underline"
+                >
+                  None
+                </button>
+              </div>
             )}
           </div>
 
@@ -737,6 +1115,20 @@ export function Filters({
     return value
   }
 
+  // Helper to format number range
+  const formatNumberRange = (min: number, max: number, config?: NumberRangeConfig): string => {
+    const prefix = config?.prefix || ''
+    const suffix = config?.suffix || ''
+
+    if (min === -Infinity) {
+      return `≤ ${prefix}${max}${suffix}`
+    }
+    if (max === Infinity) {
+      return `≥ ${prefix}${min}${suffix}`
+    }
+    return `${prefix}${min}${suffix} - ${prefix}${max}${suffix}`
+  }
+
   // Get filter slot content
   const getSlotContent = (filter: FilterDefinition) => {
     const value = activeFilters[filter.id]
@@ -744,6 +1136,30 @@ export function Filters({
     if (!value || (Array.isArray(value) && value.length === 0)) {
       // Empty state - icon + label
       return { type: 'empty' as const, icon: filter.icon, content: filter.label }
+    }
+
+    // Handle number range
+    if (filter.type === 'number' && filter.rangeMode) {
+      if (Array.isArray(value) && value.length === 2) {
+        const [min, max] = value as [number, number]
+        const displayValue = filter.formatValue?.(
+          [min.toString(), max.toString()],
+          2
+        ) ?? formatNumberRange(min, max, filter.numberConfig)
+        return { type: 'values' as const, icon: filter.icon, content: displayValue }
+      }
+    }
+
+    // Handle date range
+    if (filter.type === 'date' && filter.rangeMode) {
+      if (Array.isArray(value) && value.length === 2) {
+        const [start, end] = value as [Date, Date]
+        const displayValue = filter.formatValue?.(
+          [start.toISOString(), end.toISOString()],
+          2
+        ) ?? formatDateRange(start, end)
+        return { type: 'values' as const, icon: filter.icon, content: displayValue }
+      }
     }
 
     if (Array.isArray(value)) {

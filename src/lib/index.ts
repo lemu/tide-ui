@@ -7,3 +7,6 @@ export * from '../components/index'
 
 // Export utility hooks
 export * from './hooks'
+
+// Export date utilities
+export * from './date-utils'
