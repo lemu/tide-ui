@@ -1,4 +1,5 @@
 import React from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '../../lib/utils'
 import { Button } from './button'
 import { Icon } from './icon'
@@ -8,6 +9,7 @@ export interface MonthPickerProps {
   value?: Date | [Date, Date] | undefined
   onChange: (value: Date | [Date, Date] | undefined) => void
   mode: 'single' | 'range'
+  size?: 'default' | 'small'
   yearCount?: number
   startYear?: number
   minDate?: Date
@@ -19,6 +21,45 @@ export interface MonthPickerProps {
   enableNavigation?: boolean
   onYearNavigate?: (year: number) => void
 }
+
+// Size Variants Configuration
+const monthPickerVariants = cva('', {
+  variants: {
+    size: {
+      default: '',
+      small: '',
+    },
+  },
+  defaultVariants: {
+    size: 'default',
+  },
+})
+
+// Size-specific class configurations
+const sizeConfig = {
+  default: {
+    container: 'gap-[var(--space-md)]',
+    navButton: 'h-[var(--size-md)] w-[var(--size-md)]',
+    navIcon: 'h-[var(--size-xsm)] w-[var(--size-xsm)]',
+    yearGridGap: 'gap-[var(--space-md)]',
+    yearSectionGap: 'gap-[var(--space-sm)]',
+    yearHeader: 'text-label-sm',
+    monthGridGap: 'gap-[var(--space-xsm)]',
+    monthButton: 'px-[var(--space-xsm)] py-[var(--space-sm)] text-body-sm',
+    monthBorderRadius: 'rounded-md',
+  },
+  small: {
+    container: 'gap-[var(--space-sm)]',
+    navButton: 'h-[var(--size-sm)] w-[var(--size-sm)]',
+    navIcon: 'h-4 w-4',
+    yearGridGap: 'gap-[var(--space-sm)]',
+    yearSectionGap: 'gap-[var(--space-xsm)]',
+    yearHeader: '[&]:text-caption-medium-sm [&]:font-medium py-[var(--space-sm)]',
+    monthGridGap: 'gap-1',
+    monthButton: 'px-1 py-[var(--space-xsm)] [&]:text-caption-sm',
+    monthBorderRadius: 'rounded-sm',
+  },
+} as const
 
 // Helper Functions
 const normalizeToMonth = (date: Date): Date => {
@@ -98,6 +139,7 @@ export const MonthPicker = React.forwardRef<HTMLDivElement, MonthPickerProps>(
       value,
       onChange,
       mode,
+      size = 'default',
       yearCount,
       startYear,
       minDate,
@@ -117,6 +159,9 @@ export const MonthPicker = React.forwardRef<HTMLDivElement, MonthPickerProps>(
     const [currentStartYear, setCurrentStartYear] = React.useState<number>(
       startYear || new Date().getFullYear()
     )
+
+    // Get size-specific classes
+    const sizeClasses = sizeConfig[size]
 
     // Calculate years to display
     // Default to 1 year for single mode, 2 years for range mode
@@ -186,31 +231,31 @@ export const MonthPicker = React.forwardRef<HTMLDivElement, MonthPickerProps>(
 
     // Render
     return (
-      <div ref={ref} className={cn("flex flex-col gap-[var(--space-md)]", className)}>
-        <div className="flex items-center gap-[var(--space-md)]">
+      <div ref={ref} className={cn("flex flex-col", sizeClasses.container, className)}>
+        <div className={cn("flex items-center", sizeClasses.yearGridGap)}>
           {/* Left Navigation Arrow */}
           {enableNavigation && (
             <Button
               variant="default"
               size="sm"
               onClick={handlePreviousYear}
-              className="h-[var(--size-md)] w-[var(--size-md)] p-0 shrink-0"
+              className={cn(sizeClasses.navButton, "p-0 shrink-0")}
             >
-              <Icon name="chevron-left" className="h-[var(--size-xsm)] w-[var(--size-xsm)]" />
+              <Icon name="chevron-left" className={sizeClasses.navIcon} />
             </Button>
           )}
 
           {/* Year Grids */}
-          <div className="flex gap-[var(--space-md)] flex-1">
+          <div className={cn("flex flex-1", sizeClasses.yearGridGap)}>
             {years.map((year) => (
-            <div key={year} className="flex-1 flex flex-col gap-[var(--space-sm)]">
+            <div key={year} className={cn("flex-1 flex flex-col", sizeClasses.yearSectionGap)}>
               {/* Year Header */}
-              <div className="text-label-sm text-[var(--color-text-primary)] text-center">
+              <div className={cn(sizeClasses.yearHeader, "text-[var(--color-text-primary)] text-center")}>
                 {yearLabelFormat ? yearLabelFormat(year) : year}
               </div>
 
               {/* Month Grid (3x4) */}
-              <div className="grid grid-cols-3 gap-[var(--space-xsm)]">
+              <div className={cn("grid grid-cols-3", sizeClasses.monthGridGap)}>
                 {generateMonthGrid(year).map((month) => {
                   const isDisabled = isMonthDisabled(month, minDate, maxDate, disabledDates)
                   const isSelected = isMonthSelected(month)
@@ -226,7 +271,9 @@ export const MonthPicker = React.forwardRef<HTMLDivElement, MonthPickerProps>(
                       onMouseLeave={() => setHoveredMonth(null)}
                       disabled={isDisabled}
                       className={cn(
-                        "rounded-md px-[var(--space-xsm)] py-[var(--space-sm)] text-body-sm transition-colors",
+                        "transition-colors",
+                        sizeClasses.monthBorderRadius,
+                        sizeClasses.monthButton,
                         "bg-[var(--color-background-neutral-subtle)] text-[var(--color-text-primary)]",
                         "hover:bg-[var(--color-background-neutral-hovered)]",
                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)]",
@@ -250,9 +297,9 @@ export const MonthPicker = React.forwardRef<HTMLDivElement, MonthPickerProps>(
               variant="default"
               size="sm"
               onClick={handleNextYear}
-              className="h-[var(--size-md)] w-[var(--size-md)] p-0 shrink-0"
+              className={cn(sizeClasses.navButton, "p-0 shrink-0")}
             >
-              <Icon name="chevron-right" className="h-[var(--size-xsm)] w-[var(--size-xsm)]" />
+              <Icon name="chevron-right" className={sizeClasses.navIcon} />
             </Button>
           )}
         </div>

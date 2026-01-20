@@ -245,3 +245,62 @@ export const WithNavigation: Story = {
     )
   },
 }
+
+// Story: Small Size Variant
+export const SmallSize: Story = {
+  render: () => {
+    const [value, setValue] = React.useState<[Date, Date] | undefined>()
+    const [currentYear, setCurrentYear] = React.useState<number>(new Date().getFullYear())
+
+    return (
+      <div className="space-y-[var(--space-xlg)]">
+        {/* Small variant with navigation */}
+        <div className="w-[500px] p-[var(--space-lg)] bg-[var(--color-surface-primary)] rounded-lg shadow-md">
+          <div className="mb-[var(--space-md)] p-[var(--space-sm)] bg-[var(--color-background-blue-subtle)] rounded-md">
+            <div className="text-caption-medium-sm text-[var(--color-text-primary)]">
+              Small size variant - ideal for filter panels and modals
+            </div>
+          </div>
+          <MonthPicker
+            value={value}
+            onChange={(v) => setValue(v as [Date, Date])}
+            mode="range"
+            yearCount={2}
+            size="small"
+            enableNavigation={true}
+            onYearNavigate={(year) => setCurrentYear(year)}
+          />
+          <div className="mt-[var(--space-md)] pt-[var(--space-md)] border-t border-[var(--color-border-primary-subtle)]">
+            <div className="text-caption-sm text-[var(--color-text-secondary)]">
+              {value ? (
+                <>
+                  {value[0]?.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} -{' '}
+                  {value[1]?.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                </>
+              ) : (
+                'No range selected'
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Default size for comparison */}
+        <div className="w-[700px] p-[var(--space-lg)] bg-[var(--color-surface-primary)] rounded-lg shadow-md">
+          <div className="mb-[var(--space-md)] p-[var(--space-sm)] bg-[var(--color-background-blue-subtle)] rounded-md">
+            <div className="text-caption-medium-sm text-[var(--color-text-primary)]">
+              Default size variant - original sizing
+            </div>
+          </div>
+          <MonthPicker
+            value={value}
+            onChange={(v) => setValue(v as [Date, Date])}
+            mode="range"
+            yearCount={2}
+            enableNavigation={true}
+            onYearNavigate={(year) => setCurrentYear(year)}
+          />
+        </div>
+      </div>
+    )
+  },
+}
