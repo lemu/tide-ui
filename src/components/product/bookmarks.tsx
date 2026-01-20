@@ -32,6 +32,7 @@ import {
 import { Input } from "../fundamental/input";
 import { Label } from "../fundamental/label";
 import { Badge } from "../fundamental/badge";
+import { Skeleton } from "../fundamental/skeleton";
 
 // Import types from other components
 import type { FilterValue } from "./filters";
@@ -68,6 +69,7 @@ export interface Bookmark {
   createdAt: Date;
   updatedAt: Date;
   count?: number; // Filtered row count for tabs variant
+  isLoadingCount?: boolean; // Loading state for count display
   filtersState?: FiltersState;
   tableState?: TableState;
 }
@@ -498,7 +500,11 @@ const BookmarkTab = React.forwardRef<HTMLDivElement, BookmarkTabProps>(
 
         {/* Count metric */}
         <div className="text-heading-lg text-[var(--color-text-primary)]">
-          {bookmark.count ?? '\u00A0'}
+          {bookmark.isLoadingCount ? (
+            <Skeleton height={32} width={40} />
+          ) : (
+            bookmark.count ?? '\u00A0'
+          )}
         </div>
       </div>
     );
@@ -713,9 +719,13 @@ function BookmarkTabs({
                     )}
                     <div className="flex flex-1 items-center gap-[var(--space-xsm)]">
                       <span>{bookmark.name}</span>
-                      {bookmark.count !== undefined && (
+                      {(bookmark.count !== undefined || bookmark.isLoadingCount) && (
                         <Badge size="sm" intent="neutral" appearance="subtle">
-                          {bookmark.count}
+                          {bookmark.isLoadingCount ? (
+                            <Skeleton height={16} width={24} />
+                          ) : (
+                            bookmark.count
+                          )}
                         </Badge>
                       )}
                     </div>

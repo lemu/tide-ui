@@ -493,3 +493,126 @@ export const EmptyState: Story = {
     )
   },
 }
+
+// Loading Counts - Tabs Variant
+export const LoadingCounts: Story = {
+  render: () => {
+    const [bookmarks, setBookmarks] = useState<Bookmark[]>([
+      {
+        id: 'system-1',
+        name: 'All vessels',
+        type: 'system',
+        isDefault: true,
+        createdAt: new Date('2024-01-01'),
+        updatedAt: new Date('2024-01-01'),
+        count: 245,
+      },
+      {
+        id: 'system-2',
+        name: 'Recently viewed',
+        type: 'system',
+        createdAt: new Date('2024-01-01'),
+        updatedAt: new Date('2024-01-01'),
+        isLoadingCount: true,
+      },
+      {
+        id: 'user-1',
+        name: 'Trade on C3',
+        type: 'user',
+        createdAt: new Date('2024-02-15'),
+        updatedAt: new Date('2024-02-15'),
+        count: 56,
+      },
+      {
+        id: 'user-2',
+        name: 'Smaller vessels',
+        type: 'user',
+        createdAt: new Date('2024-03-10'),
+        updatedAt: new Date('2024-03-10'),
+        isLoadingCount: true,
+      },
+    ])
+    const [activeBookmarkId, setActiveBookmarkId] = useState<string>('system-2')
+
+    return (
+      <div className="p-4">
+        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-lg)] rounded-md">
+          <strong>Loading State:</strong> Some bookmark counts show skeleton loaders while loading.
+        </div>
+        <Bookmarks
+          variant="tabs"
+          bookmarks={bookmarks.filter(b => b.type === 'user')}
+          systemBookmarks={bookmarks.filter(b => b.type === 'system')}
+          activeBookmarkId={activeBookmarkId}
+          isDirty={false}
+          onSelect={(bookmark) => setActiveBookmarkId(bookmark.id)}
+          onRevert={() => {}}
+          onSave={async () => {}}
+          onRename={async () => {}}
+          onDelete={async () => {}}
+          onSetDefault={async () => {}}
+        />
+        <div className="mt-4 p-4 bg-[var(--color-background-neutral-default)] rounded-md">
+          <button
+            onClick={() => {
+              setBookmarks(bookmarks.map(b => ({
+                ...b,
+                isLoadingCount: false,
+                count: b.count ?? Math.floor(Math.random() * 100) + 10
+              })))
+            }}
+            className="text-body-sm text-[var(--color-text-brand-bold)] hover:underline"
+          >
+            Simulate loading completion
+          </button>
+        </div>
+      </div>
+    )
+  },
+}
+
+// Loading Counts - List Variant (Overflow Menu)
+export const LoadingCountsListVariant: Story = {
+  render: () => {
+    const [bookmarks] = useState<Bookmark[]>([
+      {
+        id: 'user-1',
+        name: 'Trade on C3',
+        type: 'user',
+        createdAt: new Date('2024-02-15'),
+        updatedAt: new Date('2024-02-15'),
+        count: 56,
+      },
+      {
+        id: 'user-2',
+        name: 'Smaller vessels',
+        type: 'user',
+        createdAt: new Date('2024-03-10'),
+        updatedAt: new Date('2024-03-10'),
+        isLoadingCount: true,
+      },
+    ])
+    const [activeBookmarkId, setActiveBookmarkId] = useState<string>('user-1')
+
+    return (
+      <div className="p-4">
+        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-lg)] rounded-md">
+          <strong>List Variant:</strong> Loading states also work in overflow menu badges.
+        </div>
+        <Bookmarks
+          variant="list"
+          bookmarks={bookmarks}
+          systemBookmarks={sampleSystemBookmarks}
+          activeBookmarkId={activeBookmarkId}
+          isDirty={false}
+          onSelect={(bookmark) => setActiveBookmarkId(bookmark.id)}
+          onRevert={() => {}}
+          onSave={async () => {}}
+          onRename={async () => {}}
+          onDelete={async () => {}}
+          onSetDefault={async () => {}}
+        />
+      </div>
+    )
+  },
+}
