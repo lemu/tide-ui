@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Calendar } from '../components/in-progress/calendar'
+import { Calendar } from '../components/fundamental/calendar'
 import { Button } from '../components/fundamental/button'
 import { Icon } from '../components/fundamental/icon'
 import { Badge } from '../components/fundamental/badge'
@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamen
 import { Label } from '../components/fundamental/label'
 
 const meta: Meta<typeof Calendar> = {
-  title: 'In Progress/Calendar',
+  title: 'NPM • Fundamental/Calendar',
   component: Calendar,
   parameters: {
     layout: 'centered',
@@ -54,6 +54,9 @@ export const DateRange: Story = {
           <Label>
             Selected Range: {dateRange.from?.toLocaleDateString()} - {dateRange.to?.toLocaleDateString()}
           </Label>
+          <p className="text-caption-sm text-[var(--color-text-secondary)] mt-1">
+            Click a start date, then click an end date. Third click starts new selection.
+          </p>
         </div>
         <Calendar
           mode="range"

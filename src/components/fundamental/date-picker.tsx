@@ -2,9 +2,9 @@ import * as React from "react"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { cn } from "../../lib/utils"
-import { Button } from "../fundamental/button"
+import { Button } from "./button"
 import { Calendar } from "./calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "../fundamental/popover"
+import { Popover, PopoverContent, PopoverTrigger } from "./popover"
 
 export interface DatePickerProps {
   date?: Date
@@ -36,9 +36,9 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
         <PopoverTrigger asChild>
           <Button
             ref={ref}
-            variant="ghost"
+            variant="default"
             className={cn(
-              "w-full justify-start text-left font-normal border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
+              "w-full justify-start text-left font-normal",
               !date && "text-[var(--color-text-tertiary)]",
               className
             )}
@@ -104,9 +104,9 @@ const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePickerProps
         <PopoverTrigger asChild>
           <Button
             ref={ref}
-            variant="ghost"
+            variant="default"
             className={cn(
-              "w-full justify-start text-left font-normal border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
+              "w-full justify-start text-left font-normal",
               !dateRange?.from && "text-[var(--color-text-tertiary)]",
               className
             )}
@@ -133,12 +133,16 @@ const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePickerProps
             mode="range"
             defaultMonth={dateRange?.from}
             selected={dateRange}
-            onSelect={(range) => {
-              onDateRangeChange?.({ 
-                from: range?.from || undefined, 
-                to: range?.to || undefined 
-              })
-              if (range?.from && range?.to) {
+            onSelect={(range: any) => {
+              // Handle the range from our custom Calendar logic
+              const newRange = {
+                from: range?.from || undefined,
+                to: range?.to || undefined
+              }
+              onDateRangeChange?.(newRange)
+
+              // Close popover when range is complete (both from and to are set)
+              if (newRange.from && newRange.to) {
                 setOpen(false)
               }
             }}

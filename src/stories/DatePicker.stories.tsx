@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { DatePicker, DateRangePicker } from '../components/in-progress/date-picker'
+import { DatePicker, DateRangePicker } from '../components/fundamental/date-picker'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 import { Button } from '../components/fundamental/button'
 import { Label } from '../components/fundamental/label'
 import { Badge } from '../components/fundamental/badge'
 
 const meta: Meta<typeof DatePicker> = {
-  title: 'In Progress/DatePicker',
+  title: 'NPM • Fundamental/DatePicker',
   component: DatePicker,
   parameters: {
     layout: 'centered',
@@ -61,8 +61,11 @@ export const Default: Story = {
 // Date range picker
 export const DateRange: Story = {
   render: () => {
-    const [dateRange, setDateRange] = useState<{ from: Date | undefined; to: Date | undefined }>()
-    
+    const [dateRange, setDateRange] = useState<{ from: Date | undefined; to: Date | undefined }>({
+      from: undefined,
+      to: undefined
+    })
+
     return (
       <div className="w-96 space-y-4">
         <div>
@@ -265,11 +268,16 @@ export const DisabledState: Story = {
 // Project timeline
 export const ProjectTimeline: Story = {
   render: () => {
-    const [timeline, setTimeline] = useState({
-      planning: { from: undefined as Date | undefined, to: undefined as Date | undefined },
-      development: { from: undefined as Date | undefined, to: undefined as Date | undefined },
-      testing: { from: undefined as Date | undefined, to: undefined as Date | undefined },
-      launch: undefined as Date | undefined,
+    const [timeline, setTimeline] = useState<{
+      planning: { from: Date | undefined; to: Date | undefined };
+      development: { from: Date | undefined; to: Date | undefined };
+      testing: { from: Date | undefined; to: Date | undefined };
+      launch: Date | undefined;
+    }>({
+      planning: { from: undefined, to: undefined },
+      development: { from: undefined, to: undefined },
+      testing: { from: undefined, to: undefined },
+      launch: undefined,
     })
     
     return (
@@ -284,28 +292,28 @@ export const ProjectTimeline: Story = {
                 <Label>Planning Phase</Label>
                 <DateRangePicker
                   dateRange={timeline.planning}
-                  onDateRangeChange={(range) => setTimeline(prev => ({ ...prev, planning: range || { from: undefined, to: undefined } }))}
+                  onDateRangeChange={(range) => setTimeline(prev => ({ ...prev, planning: range }))}
                   placeholder="Select planning period"
                   className="w-full"
                 />
               </div>
-              
+
               <div>
                 <Label>Development Phase</Label>
                 <DateRangePicker
                   dateRange={timeline.development}
-                  onDateRangeChange={(range) => setTimeline(prev => ({ ...prev, development: range || { from: undefined, to: undefined } }))}
+                  onDateRangeChange={(range) => setTimeline(prev => ({ ...prev, development: range }))}
                   placeholder="Select development period"
                   fromDate={timeline.planning?.to}
                   className="w-full"
                 />
               </div>
-              
+
               <div>
                 <Label>Testing Phase</Label>
                 <DateRangePicker
                   dateRange={timeline.testing}
-                  onDateRangeChange={(range) => setTimeline(prev => ({ ...prev, testing: range || { from: undefined, to: undefined } }))}
+                  onDateRangeChange={(range) => setTimeline(prev => ({ ...prev, testing: range }))}
                   placeholder="Select testing period"
                   fromDate={timeline.development?.to}
                   className="w-full"

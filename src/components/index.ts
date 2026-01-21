@@ -258,6 +258,14 @@ export type { KbdProps, KbdGroupProps } from './fundamental/kbd'
 export { MonthPicker } from './fundamental/month-picker'
 export type { MonthPickerProps } from './fundamental/month-picker'
 
+// Calendar component
+export { Calendar } from './fundamental/calendar'
+export type { CalendarProps } from './fundamental/calendar'
+
+// DatePicker components
+export { DatePicker, DateRangePicker } from './fundamental/date-picker'
+export type { DatePickerProps, DateRangePickerProps } from './fundamental/date-picker'
+
 // Command components
 export {
   CommandDialog,
