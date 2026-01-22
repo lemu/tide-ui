@@ -2871,6 +2871,382 @@ Enable row selection by setting \`enableRowSelection={true}\`.
   },
 }
 
+/**
+ * Demonstrates active row highlighting with sidebar detail view.
+ * Shows how to combine activeRowId with onRowClick for master-detail patterns.
+ */
+export const ActiveRowHighlighting: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: `
+Demonstrates the active row highlighting feature for master-detail UI patterns.
+
+**Features:**
+- Click any row to view its details in the sidebar
+- Active row is highlighted with a brand-colored left border (3px)
+- Sidebar updates when clicking different rows
+- Works independently from checkbox selection
+- Keyboard navigation support (Tab + Enter/Space)
+
+Use \`activeRowId\` prop to control which row is highlighted:
+
+\`\`\`tsx
+const [activeRowId, setActiveRowId] = useState<string>()
+
+<DataTable
+  activeRowId={activeRowId}
+  onRowClick={(row) => setActiveRowId(row.id)}
+/>
+\`\`\`
+        `,
+      },
+    },
+  },
+  render: () => {
+    const [activeRowId, setActiveRowId] = React.useState<string>('2')
+
+    const users = React.useMemo(() => [
+      { id: '1', name: 'John Doe', email: 'john@example.com', role: 'Admin', status: 'active' as const, department: 'Engineering', joinDate: '2023-01-15', lastLogin: '2024-03-15 10:30 AM' },
+      { id: '2', name: 'Jane Smith', email: 'jane@example.com', role: 'Manager', status: 'active' as const, department: 'Product', joinDate: '2023-02-20', lastLogin: '2024-03-15 09:15 AM' },
+      { id: '3', name: 'Bob Johnson', email: 'bob@example.com', role: 'Developer', status: 'inactive' as const, department: 'Engineering', joinDate: '2023-03-10', lastLogin: '2024-02-28 02:45 PM' },
+      { id: '4', name: 'Alice Brown', email: 'alice@example.com', role: 'Designer', status: 'active' as const, department: 'Design', joinDate: '2023-04-05', lastLogin: '2024-03-14 04:20 PM' },
+      { id: '5', name: 'Charlie Wilson', email: 'charlie@example.com', role: 'Developer', status: 'active' as const, department: 'Engineering', joinDate: '2023-05-12', lastLogin: '2024-03-15 08:00 AM' },
+      { id: '6', name: 'Diana Lee', email: 'diana@example.com', role: 'Manager', status: 'active' as const, department: 'Sales', joinDate: '2023-06-18', lastLogin: '2024-03-13 03:30 PM' },
+    ], [])
+
+    const activeUser = users.find(u => u.id === activeRowId)
+
+    const columns: ColumnDef<typeof users[0]>[] = React.useMemo(() => [
+      {
+        id: 'name',
+        accessorKey: 'name',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
+        cell: ({ row }) => <div className="text-body-sm font-medium">{row.getValue('name')}</div>,
+      },
+      {
+        id: 'email',
+        accessorKey: 'email',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Email" />,
+        cell: ({ row }) => <div className="text-body-sm">{row.getValue('email')}</div>,
+      },
+      {
+        id: 'role',
+        accessorKey: 'role',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Role" />,
+        cell: ({ row }) => (
+          <Badge variant={row.original.role === 'Admin' ? 'default' : 'secondary'}>
+            {row.getValue('role')}
+          </Badge>
+        ),
+      },
+      {
+        id: 'status',
+        accessorKey: 'status',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
+        cell: ({ row }) => (
+          <Badge variant={row.getValue('status') === 'active' ? 'success' : 'default'}>
+            {row.getValue('status')}
+          </Badge>
+        ),
+      },
+    ], [])
+
+    return (
+      <div className="h-screen w-full p-[var(--space-lg)] bg-[var(--color-surface-base)]">
+        <div className="flex gap-[var(--space-lg)] h-full">
+          {/* Main content - DataTable */}
+          <div className="flex-1 overflow-hidden">
+            <Card className="h-full flex flex-col">
+              <CardHeader>
+                <CardTitle>User Management</CardTitle>
+                <p className="text-body-sm text-[var(--color-text-secondary)]">
+                  Click a row to view details. The active row is indicated by a blue left border.
+                </p>
+              </CardHeader>
+              <CardContent className="flex-1 overflow-hidden">
+                <DataTable
+                  data={users}
+                  columns={columns}
+                  activeRowId={activeRowId}
+                  onRowClick={(row) => setActiveRowId(row.id)}
+                  showPagination={false}
+                />
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Sidebar - Detail view */}
+          <div className="w-[400px]">
+            <Card className="h-full flex flex-col">
+              <CardHeader>
+                <CardTitle>User Details</CardTitle>
+              </CardHeader>
+              <CardContent className="flex-1 overflow-auto">
+                {activeUser ? (
+                  <div className="space-y-[var(--space-lg)]">
+                    {/* Profile section */}
+                    <div className="flex items-center gap-[var(--space-md)]">
+                      <div className="w-16 h-16 rounded-full bg-[var(--color-background-brand)] flex items-center justify-center text-[var(--color-text-on-action)] text-heading-lg">
+                        {activeUser.name.split(' ').map(n => n[0]).join('')}
+                      </div>
+                      <div>
+                        <h3 className="text-heading-sm">{activeUser.name}</h3>
+                        <p className="text-body-sm text-[var(--color-text-secondary)]">{activeUser.role}</p>
+                      </div>
+                    </div>
+
+                    <Separator />
+
+                    {/* Details grid */}
+                    <div className="space-y-[var(--space-md)]">
+                      <div>
+                        <Label className="text-caption-sm text-[var(--color-text-secondary)]">Email</Label>
+                        <p className="text-body-md">{activeUser.email}</p>
+                      </div>
+                      <div>
+                        <Label className="text-caption-sm text-[var(--color-text-secondary)]">Department</Label>
+                        <p className="text-body-md">{activeUser.department}</p>
+                      </div>
+                      <div>
+                        <Label className="text-caption-sm text-[var(--color-text-secondary)]">Status</Label>
+                        <div className="mt-[var(--space-xsm)]">
+                          <Badge variant={activeUser.status === 'active' ? 'success' : 'default'}>
+                            {activeUser.status}
+                          </Badge>
+                        </div>
+                      </div>
+                      <div>
+                        <Label className="text-caption-sm text-[var(--color-text-secondary)]">Join Date</Label>
+                        <p className="text-body-md">{activeUser.joinDate}</p>
+                      </div>
+                      <div>
+                        <Label className="text-caption-sm text-[var(--color-text-secondary)]">Last Login</Label>
+                        <p className="text-body-md">{activeUser.lastLogin}</p>
+                      </div>
+                    </div>
+
+                    <Separator />
+
+                    {/* Actions */}
+                    <div className="flex gap-[var(--space-sm)]">
+                      <Button variant="primary" size="sm">Edit User</Button>
+                      <Button variant="default" size="sm">View Activity</Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center h-full text-[var(--color-text-secondary)] text-body-sm">
+                    Select a user to view details
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    )
+  },
+}
+
+/**
+ * Shows active row highlighting combined with checkbox selection.
+ * Demonstrates that both features work independently.
+ */
+export const ActiveRowWithSelection: Story = {
+  parameters: {
+    layout: 'padded',
+    docs: {
+      description: {
+        story: `
+Demonstrates that active row highlighting and checkbox selection work independently.
+
+**Key Points:**
+- **Active row** (left border) indicates the row currently viewed or focused
+- **Checkbox selection** (background color) indicates rows selected for bulk actions
+- Both visual indicators can be active simultaneously on the same row
+- Each feature serves a different purpose in the UI
+
+**Visual Indicators:**
+- Blue background: Row is selected via checkbox
+- Blue left border (3px): Row is currently active/focused
+        `,
+      },
+    },
+  },
+  render: () => {
+    const [activeRowId, setActiveRowId] = React.useState<string>('2')
+
+    const products = React.useMemo(() => [
+      { id: '1', name: 'Laptop Pro 15', category: 'Electronics', price: 1299, stock: 45 },
+      { id: '2', name: 'Wireless Mouse', category: 'Accessories', price: 29, stock: 120 },
+      { id: '3', name: 'USB-C Hub', category: 'Accessories', price: 49, stock: 85 },
+      { id: '4', name: 'Monitor 27"', category: 'Electronics', price: 399, stock: 30 },
+      { id: '5', name: 'Keyboard Mechanical', category: 'Accessories', price: 129, stock: 60 },
+    ], [])
+
+    const columns: ColumnDef<typeof products[0]>[] = React.useMemo(() => [
+      {
+        id: 'name',
+        accessorKey: 'name',
+        header: 'Product',
+      },
+      {
+        id: 'category',
+        accessorKey: 'category',
+        header: 'Category',
+      },
+      {
+        id: 'price',
+        accessorKey: 'price',
+        header: 'Price',
+        cell: ({ row }) => `$${row.getValue('price')}`,
+      },
+      {
+        id: 'stock',
+        accessorKey: 'stock',
+        header: 'Stock',
+      },
+    ], [])
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <Card>
+          <CardHeader>
+            <CardTitle>Active Row + Checkbox Selection</CardTitle>
+            <div className="text-body-sm text-[var(--color-text-secondary)] space-y-[var(--space-sm)]">
+              <p>
+                <strong>Try this:</strong> Check multiple rows with checkboxes, then click different rows to change the active selection.
+              </p>
+              <div className="flex gap-[var(--space-lg)]">
+                <div className="flex items-center gap-[var(--space-sm)]">
+                  <div className="w-6 h-6 bg-[var(--blue-25)] border border-[var(--color-border-primary)]" />
+                  <span>Checkbox selection (background color)</span>
+                </div>
+                <div className="flex items-center gap-[var(--space-sm)]">
+                  <div className="w-6 h-6 border-l-[3px] border-l-[var(--color-border-brand-bold)]" />
+                  <span>Active row (left border)</span>
+                </div>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <DataTable
+              data={products}
+              columns={columns}
+              activeRowId={activeRowId}
+              onRowClick={(row) => setActiveRowId(row.id)}
+              enableRowSelection
+            />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  },
+}
+
+/**
+ * Demonstrates keyboard navigation with active row highlighting.
+ */
+export const ActiveRowKeyboardNavigation: Story = {
+  parameters: {
+    layout: 'padded',
+    docs: {
+      description: {
+        story: `
+Demonstrates keyboard navigation integration with active row highlighting.
+
+**Keyboard Shortcuts:**
+- **↑ / ↓** - Navigate between rows (custom implementation in this example)
+- **Enter** or **Space** - Select active row (when row has focus)
+- **Tab** - Navigate to focusable elements
+
+The active row indicator provides clear visual feedback for keyboard-driven navigation.
+        `,
+      },
+    },
+  },
+  render: () => {
+    const [activeRowId, setActiveRowId] = React.useState<string>('1')
+
+    const tasks = React.useMemo(() => [
+      { id: '1', title: 'Design homepage mockup', status: 'In Progress', priority: 'High', assignee: 'John Doe' },
+      { id: '2', title: 'Implement user authentication', status: 'Todo', priority: 'High', assignee: 'Jane Smith' },
+      { id: '3', title: 'Write API documentation', status: 'In Progress', priority: 'Medium', assignee: 'Bob Johnson' },
+      { id: '4', title: 'Set up CI/CD pipeline', status: 'Done', priority: 'High', assignee: 'Alice Brown' },
+      { id: '5', title: 'Conduct user testing', status: 'Todo', priority: 'Low', assignee: 'Charlie Wilson' },
+    ], [])
+
+    const columns: ColumnDef<typeof tasks[0]>[] = React.useMemo(() => [
+      {
+        id: 'title',
+        accessorKey: 'title',
+        header: 'Task',
+      },
+      {
+        id: 'status',
+        accessorKey: 'status',
+        header: 'Status',
+        cell: ({ row }) => {
+          const status = row.getValue('status') as string
+          const variant = status === 'Done' ? 'success' : status === 'In Progress' ? 'warning' : 'default'
+          return <Badge variant={variant}>{status}</Badge>
+        },
+      },
+      {
+        id: 'priority',
+        accessorKey: 'priority',
+        header: 'Priority',
+      },
+      {
+        id: 'assignee',
+        accessorKey: 'assignee',
+        header: 'Assignee',
+      },
+    ], [])
+
+    const handleKeyboardNav = React.useCallback((e: React.KeyboardEvent) => {
+      const currentIndex = tasks.findIndex(t => t.id === activeRowId)
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault()
+        const nextIndex = Math.min(currentIndex + 1, tasks.length - 1)
+        setActiveRowId(tasks[nextIndex].id)
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault()
+        const prevIndex = Math.max(currentIndex - 1, 0)
+        setActiveRowId(tasks[prevIndex].id)
+      }
+    }, [activeRowId, tasks])
+
+    return (
+      <div className="p-[var(--space-lg)]" onKeyDown={handleKeyboardNav}>
+        <Card>
+          <CardHeader>
+            <CardTitle>Keyboard Navigation</CardTitle>
+            <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-md)] rounded-md">
+              <strong>Keyboard shortcuts:</strong>
+              <ul className="mt-[var(--space-sm)] space-y-[var(--space-xsm)] list-disc list-inside">
+                <li><kbd className="px-[var(--space-xsm)] py-[1px] bg-[var(--color-surface-primary)] border border-[var(--color-border-primary)] rounded text-caption-sm">↑</kbd> / <kbd className="px-[var(--space-xsm)] py-[1px] bg-[var(--color-surface-primary)] border border-[var(--color-border-primary)] rounded text-caption-sm">↓</kbd> - Navigate between rows</li>
+                <li><kbd className="px-[var(--space-xsm)] py-[1px] bg-[var(--color-surface-primary)] border border-[var(--color-border-primary)] rounded text-caption-sm">Enter</kbd> or <kbd className="px-[var(--space-xsm)] py-[1px] bg-[var(--color-surface-primary)] border border-[var(--color-border-primary)] rounded text-caption-sm">Space</kbd> - Select active row (when focused)</li>
+                <li>Click any row to change active selection</li>
+              </ul>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <DataTable
+              data={tasks}
+              columns={columns}
+              activeRowId={activeRowId}
+              onRowClick={(row) => setActiveRowId(row.id)}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  },
+}
+
 export const RowPinning: Story = {
   parameters: {
     layout: 'fullscreen',

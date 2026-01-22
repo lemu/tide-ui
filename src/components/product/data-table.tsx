@@ -1838,6 +1838,33 @@ export interface DataTableProps<TData, TValue> {
    * Also enables highlighting of matched search terms.
    */
   groupPreservingSearch?: boolean
+  /**
+   * ID of the currently active row (e.g., for detail view or navigation).
+   * When set, displays a left border indicator (3px solid brand color) on the matching row.
+   * Works independently from checkbox selection - both can be active simultaneously.
+   *
+   * @example
+   * // Basic usage with state
+   * const [activeRowId, setActiveRowId] = useState<string>()
+   * <DataTable
+   *   activeRowId={activeRowId}
+   *   onRowClick={(row) => setActiveRowId(row.id)}
+   * />
+   *
+   * @example
+   * // With routing (URL-based selection)
+   * const activeRowId = params.get('selectedId')
+   * <DataTable activeRowId={activeRowId} />
+   */
+  activeRowId?: string | number
+  /**
+   * Custom CSS class name for styling the active row.
+   * When not provided, uses default styling: 3px left border with brand color.
+   *
+   * @example
+   * activeRowClassName="border-l-4 border-[var(--color-border-success)]"
+   */
+  activeRowClassName?: string
 }
 
 export function DataTable<TData, TValue>({
@@ -1916,6 +1943,9 @@ export function DataTable<TData, TValue>({
   isRowClickable,
   clickableRowClassName,
   groupPreservingSearch = false,
+  // Active row props
+  activeRowId,
+  activeRowClassName,
 }: DataTableProps<TData, TValue>) {
   // Auto-enable responsive wrapper when sticky columns are used
   const computedEnableResponsiveWrapper =
@@ -2198,6 +2228,26 @@ export function DataTable<TData, TValue>({
 
     return isSingleItemGroup
   }, [onRowClick, isRowClickable, hideChildrenForSingleItemGroups])
+
+  // Default CSS classes for active row highlighting
+  // Using box-shadow instead of border to avoid shifting cell content
+  // Combine with existing bottom border shadow when showRowBorder is true
+  const getActiveRowClasses = (showRowBorder: boolean) => {
+    if (showRowBorder) {
+      // Combine left border + bottom border shadows
+      return "![box-shadow:inset_3px_0_0_0_var(--color-border-brand-bold),inset_0_-1px_0_0_var(--color-border-primary-medium)]"
+    } else {
+      // Only left border shadow
+      return "![box-shadow:inset_3px_0_0_0_var(--color-border-brand-bold)]"
+    }
+  }
+
+  // Helper to determine if a row matches the activeRowId
+  const isActiveRow = React.useCallback((row: any): boolean => {
+    if (!activeRowId) return false
+    // Type coercion: Convert both to strings for flexible comparison
+    return String(row.id) === String(activeRowId)
+  }, [activeRowId])
 
   // Calculate effective sticky settings with backward compatibility
   const effectiveLeftSticky = React.useMemo(() => {
@@ -3237,6 +3287,7 @@ export function DataTable<TData, TValue>({
                       tabIndex={onRowClick && getRowClickableState(row) ? 0 : undefined}
                       role={onRowClick && getRowClickableState(row) ? "button" : undefined}
                       aria-label={onRowClick && getRowClickableState(row) ? `View details for row ${row.id}` : undefined}
+                      aria-current={isActiveRow(row) ? "true" : undefined}
                     >
                       {row.getVisibleCells().map((cell, index) => {
                         const pinningStyles = getPureCSSPinningStyles(cell.column, false, borderSettings.showRowBorder)
@@ -3290,6 +3341,8 @@ export function DataTable<TData, TValue>({
                             colSpan={isSectionHeader ? row.getVisibleCells().length : undefined}
                             data-section-header={isSectionHeader ? true : undefined}
                             className={cn(
+                              // Active row indicator on first cell
+                              isFirstCell && isActiveRow(row) && (activeRowClassName || getActiveRowClasses(borderSettings.showRowBorder)),
                               // Add sticky border classes for body cells (skip for section headers)
                               !isSectionHeader && getStickyBorderClasses(cell.column),
                               // Sticky columns need higher z-index and explicit backgrounds
@@ -3548,6 +3601,7 @@ export function DataTable<TData, TValue>({
                     tabIndex={onRowClick && getRowClickableState(row) ? 0 : undefined}
                     role={onRowClick && getRowClickableState(row) ? "button" : undefined}
                     aria-label={onRowClick && getRowClickableState(row) ? `View details for row ${row.id}` : undefined}
+                    aria-current={isActiveRow(row) ? "true" : undefined}
                   >
                     {row.getVisibleCells().map((cell, index) => {
                       const pinningStyles = getPureCSSPinningStyles(cell.column, false, borderSettings.showRowBorder)
@@ -3600,6 +3654,8 @@ export function DataTable<TData, TValue>({
                           verticalAlign={cell.column.columnDef.meta?.verticalAlign || defaultVerticalAlign}
                           colSpan={isSectionHeader ? row.getVisibleCells().length : undefined}
                           className={cn(
+                            // Active row indicator on first cell
+                            isFirstCell && isActiveRow(row) && (activeRowClassName || getActiveRowClasses(borderSettings.showRowBorder)),
                             // Sticky columns need higher z-index and explicit backgrounds
                             Object.keys(pinningStyles).length > 0 && [
                               "z-10",
