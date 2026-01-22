@@ -14,14 +14,15 @@ const Slider = React.forwardRef<
       ref={ref}
       className={cn(
         "relative flex w-full touch-none select-none items-center",
+        "[&[data-disabled]]:!cursor-not-allowed [&[data-disabled]_*]:!cursor-not-allowed",
         className
       )}
       value={value}
       defaultValue={defaultValue}
       {...props}
     >
-      <SliderPrimitive.Track className="relative h-[var(--size-3xsm)] w-full grow overflow-hidden rounded-full bg-[var(--color-background-neutral-default)] z-0">
-        <SliderPrimitive.Range className="absolute h-full bg-[var(--color-background-blue-bold)] data-[disabled]:bg-[var(--grey-300)]" />
+      <SliderPrimitive.Track className="relative h-[var(--size-3xsm)] w-full grow overflow-hidden rounded-full bg-[var(--color-background-neutral-default)] data-[disabled]:!cursor-not-allowed z-0">
+        <SliderPrimitive.Range className="absolute h-full bg-[var(--color-background-blue-bold)] data-[disabled]:bg-[var(--grey-300)] data-[disabled]:!cursor-not-allowed" />
       </SliderPrimitive.Track>
       {Array.from({ length: thumbCount }).map((_, index) => (
         <SliderPrimitive.Thumb

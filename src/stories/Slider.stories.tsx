@@ -543,7 +543,7 @@ export const DisabledSlider: Story = {
         </div>
         
         <div className="space-y-2">
-          <Label className={enabled ? '' : 'text-[var(--color-text-disabled)]'}>
+          <Label className={enabled ? '' : 'text-[var(--color-text-disabled)] cursor-not-allowed'}>
             Value: {value[0]}%
           </Label>
           <Slider
