@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { FileUpload, FileUploadFile } from '../components/in-progress/file-upload'
+import { FileUpload, FileUploadFile } from '../components/fundamental/file-upload'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 import { Button } from '../components/fundamental/button'
 import { Icon } from '../components/fundamental/icon'
 import { Badge } from '../components/fundamental/badge'
 
 const meta: Meta<typeof FileUpload.Root> = {
-  title: 'In Progress/FileUpload',
+  title: 'NPM • Fundamental/FileUpload',
   component: FileUpload.Root,
   parameters: {
     layout: 'centered',

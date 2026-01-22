@@ -239,8 +239,37 @@ export type {
 } from './fundamental/empty'
 
 // Flag component
-export { Flag } from './ui/flag'
-export type { FlagProps, FlagSize } from './ui/flag'
+export { Flag } from './fundamental/flag'
+export type { FlagProps, FlagSize } from './fundamental/flag'
+
+// FileUpload components
+export { FileUpload } from './fundamental/file-upload'
+export type {
+  FileUploadFile,
+  FileUploadProps,
+  FileUploadDropzoneProps,
+  FileUploadTriggerProps,
+  FileUploadListProps,
+  FileUploadItemProps,
+  FileUploadItemPreviewProps,
+  FileUploadItemMetadataProps,
+  FileUploadItemProgressProps,
+  FileUploadItemDeleteProps,
+} from './fundamental/file-upload'
+
+// HoverCard components
+export { HoverCard, HoverCardTrigger, HoverCardContent } from './fundamental/hover-card'
+
+// Slider component
+export { Slider } from './fundamental/slider'
+
+// Tag components
+export { Tag, TagGroup, tagVariants } from './fundamental/tag'
+export type { TagProps, TagGroupProps } from './fundamental/tag'
+
+// Tree components
+export { Tree } from './fundamental/tree'
+export type { TreeProps, TreeDataItem } from './fundamental/tree'
 
 // CountryDropdown component
 export { CountryDropdown, useCountryData } from './fundamental/country-dropdown'

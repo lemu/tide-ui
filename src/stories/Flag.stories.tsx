@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Flag, FlagSize } from "@/components/ui/flag";
+import { Flag, FlagSize } from "../components/fundamental/flag";
 
 const meta: Meta<typeof Flag> = {
   title: "NPM • Fundamental/Flag",

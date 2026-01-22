@@ -15,7 +15,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/fundamental/popover";
-import { Flag, FlagSize } from "@/components/ui/flag";
+import { Flag, FlagSize } from "@/components/fundamental/flag";
 import { cn } from "@/lib/utils";
 import { countries } from "country-data-list";
 

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Slider } from '../components/in-progress/slider'
+import { Slider } from '../components/fundamental/slider'
 import { Button } from '../components/fundamental/button'
 import { Icon } from '../components/fundamental/icon'
 import { Badge } from '../components/fundamental/badge'
@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamen
 import { Label } from '../components/fundamental/label'
 
 const meta: Meta<typeof Slider> = {
-  title: 'In Progress/Slider',
+  title: 'NPM • Fundamental/Slider',
   component: Slider,
   parameters: {
     layout: 'centered',

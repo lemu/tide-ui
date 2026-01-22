@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Tree, TreeDataItem } from '../components/in-progress/tree'
+import { Tree, TreeDataItem } from '../components/fundamental/tree'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 import { Button } from '../components/fundamental/button'
 import { Icon } from '../components/fundamental/icon'
 import { Badge } from '../components/fundamental/badge'
 
 const meta: Meta<typeof Tree> = {
-  title: 'In Progress/Tree',
+  title: 'NPM • Fundamental/Tree',
   component: Tree,
   parameters: {
     layout: 'centered',

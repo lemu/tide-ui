@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Tag, TagGroup } from '../components/in-progress/tag'
+import { Tag, TagGroup } from '../components/fundamental/tag'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 import { Button } from '../components/fundamental/button'
 import { Input } from '../components/fundamental/input'
@@ -8,7 +8,7 @@ import { Badge } from '../components/fundamental/badge'
 import { Icon } from '../components/fundamental/icon'
 
 const meta: Meta<typeof Tag> = {
-  title: 'In Progress/Tag',
+  title: 'NPM • Fundamental/Tag',
   component: Tag,
   parameters: {
     layout: 'centered',
