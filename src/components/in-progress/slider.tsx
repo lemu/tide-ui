@@ -20,7 +20,7 @@ const Slider = React.forwardRef<
       defaultValue={defaultValue}
       {...props}
     >
-      <SliderPrimitive.Track className="relative h-[var(--size-3xsm)] w-full grow overflow-hidden rounded-full bg-[var(--color-background-neutral-subtlest)] z-0">
+      <SliderPrimitive.Track className="relative h-[var(--size-3xsm)] w-full grow overflow-hidden rounded-full bg-[var(--color-background-neutral-default)] z-0">
         <SliderPrimitive.Range className="absolute h-full bg-[var(--color-background-blue-bold)]" />
       </SliderPrimitive.Track>
       {Array.from({ length: thumbCount }).map((_, index) => (
