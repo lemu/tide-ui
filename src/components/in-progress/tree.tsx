@@ -65,6 +65,8 @@ const TreeItem = React.forwardRef<HTMLDivElement, TreeItemProps>(
     const isExpanded = expandedItems.has(item.id)
     const isSelected = selectedItemId === item.id
     const hasChildren = item.children && item.children.length > 0
+    const isLeaf = !hasChildren
+    const showSelection = isSelected && isLeaf
     
     const IconComponent = React.useMemo(() => {
       if (item.disabled) {
@@ -117,9 +119,9 @@ const TreeItem = React.forwardRef<HTMLDivElement, TreeItemProps>(
       <div ref={ref} className="relative">
         <div
           className={cn(
-            "flex items-center gap-1 rounded-sm py-1 pr-1 text-body-sm cursor-pointer",
+            "flex items-center gap-1 rounded-sm py-1 pr-1 cursor-pointer transition-colors",
             "hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
-            isSelected && "bg-[var(--color-background-neutral-subtlest)] text-[var(--color-text-primary)]",
+            showSelection && "bg-[var(--color-background-blue-subtle-selected)] hover:bg-[var(--color-background-blue-subtle-selected-hovered)]",
             item.disabled && "opacity-50 cursor-not-allowed"
           )}
           style={{ paddingLeft: `${level * 16 + 8}px` }}
@@ -143,10 +145,22 @@ const TreeItem = React.forwardRef<HTMLDivElement, TreeItemProps>(
           ) : (
             <div className="h-4 w-4" />
           )}
-          
-          <IconComponent className="h-4 w-4 shrink-0" />
-          
-          <span className="flex-1 truncate">{item.name}</span>
+
+          <IconComponent className={cn(
+            "h-4 w-4 shrink-0",
+            showSelection && "text-[var(--color-icon-brand-bold-selected)]"
+          )} />
+
+          <span className={cn(
+            "flex-1 truncate",
+            showSelection ? "text-body-strong-sm" : "text-body-sm"
+          )}>
+            <span className={cn(
+              showSelection && "text-[var(--color-text-brand-bold-selected)]"
+            )}>
+              {item.name}
+            </span>
+          </span>
           
           {item.actions && (
             <div 
