@@ -5,15 +5,18 @@ import { Icon } from "../fundamental/icon";
 
 export type CalendarProps = DayPickerProps;
 
-function Calendar({
-  className,
-  classNames,
-  showOutsideDays = true,
-  mode,
-  selected,
-  onSelect,
-  ...props
-}: CalendarProps) {
+function Calendar(calendarProps: CalendarProps) {
+  const {
+    className,
+    classNames,
+    showOutsideDays = true,
+    mode,
+    ...props
+  } = calendarProps;
+
+  // Extract mode-specific props with proper type handling
+  const selected = 'selected' in calendarProps ? calendarProps.selected : undefined;
+  const onSelect = 'onSelect' in calendarProps ? calendarProps.onSelect : undefined;
   // Internal state for range selection
   const [rangeStart, setRangeStart] = React.useState<Date | null>(null);
   const [hoveredDate, setHoveredDate] = React.useState<Date | null>(null);
@@ -108,76 +111,83 @@ function Calendar({
     return isDateBetween(date, range.from, range.to);
   };
 
-  return (
-    <DayPicker
-      showOutsideDays={showOutsideDays}
-      className={cn("p-[var(--space-md)]", className)}
-      // DON'T pass mode prop for range - we handle it manually
-      mode={mode === 'range' ? undefined : mode}
-      selected={mode === 'range' ? undefined : selected}
-      onSelect={mode === 'range' ? undefined : onSelect}
-      onDayClick={mode === 'range' ? handleDayClick : undefined}
-      onDayMouseEnter={handleDayMouseEnter}
-      onDayMouseLeave={handleDayMouseLeave}
-      modifiers={{
-        rangeStart: isRangeStart,
-        rangePreview: isInHoverPreview,
-        confirmedRangeStart: isConfirmedRangeStart,
-        confirmedRangeEnd: isConfirmedRangeEnd,
-        inConfirmedRange: isInConfirmedRange,
-      }}
-      classNames={{
-        months: "flex flex-col sm:flex-row space-y-[var(--space-lg)] sm:space-x-[var(--space-lg)] sm:space-y-0",
-        month: "space-y-[var(--space-lg)]",
-        month_caption: "flex justify-center pt-[var(--space-xsm)] relative items-center",
-        caption_label: "text-body-medium-md text-[var(--color-text-primary)]",
-        nav: "space-x-[var(--space-xsm)] flex items-center",
-        button_previous: cn(
-          "absolute left-[var(--space-xsm)] inline-flex items-center justify-center rounded-md w-[var(--size-sm)] h-[var(--size-sm)] bg-transparent p-0 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] disabled:pointer-events-none disabled:opacity-50"
-        ),
-        button_next: cn(
-          "absolute right-[var(--space-xsm)] inline-flex items-center justify-center rounded-md w-[var(--size-sm)] h-[var(--size-sm)] bg-transparent p-0 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] disabled:pointer-events-none disabled:opacity-50"
-        ),
-        month_grid: "w-full border-collapse space-y-[var(--space-xsm)]",
-        weekdays: "flex",
-        weekday: "text-[var(--color-text-tertiary)] rounded-md w-[var(--size-md)] font-normal text-caption-medium-sm",
-        week: "flex w-full mt-[var(--space-sm)]",
-        day: "h-[var(--size-md)] w-[var(--size-md)] text-center text-body-sm p-0 relative focus-within:relative focus-within:z-20",
-        day_button: cn(
-          "inline-flex items-center justify-center rounded-md",
-          "w-[var(--size-md)] h-[var(--size-md)] p-0",
-          "text-body-sm font-normal text-[var(--color-text-primary)]",
-          "hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)]",
-          "disabled:pointer-events-none disabled:opacity-50"
-        ),
-        range_start: "day-range-start",
-        range_end: "day-range-end",
-        selected: "!bg-[var(--color-background-blue-bold)] [&_button]:!text-white [&_button]:after:!bg-white rounded-md",
-        today: "[&_button]:relative [&_button]:after:content-[''] [&_button]:after:absolute [&_button]:after:bottom-1 [&_button]:after:left-1/2 [&_button]:after:-translate-x-1/2 [&_button]:after:w-1 [&_button]:after:h-1 [&_button]:after:rounded-full [&_button]:after:bg-red-500 font-medium",
-        outside: "day-outside text-[var(--color-text-tertiary)] opacity-50 aria-selected:bg-[var(--color-background-blue-subtle)] aria-selected:text-[var(--color-text-tertiary)] aria-selected:opacity-30",
-        disabled: "text-[var(--color-text-disabled)] opacity-50",
-        range_middle: "bg-[var(--color-background-blue-subtle)] text-[var(--color-text-primary)]",
-        hidden: "invisible",
-        ...classNames,
-      }}
-      modifiersClassNames={{
-        rangeStart: "!bg-[var(--color-background-blue-bold)] [&_button]:!text-white [&_button]:after:!bg-white rounded-l-md",
-        rangePreview: "bg-[var(--color-background-blue-subtle)] [&_button]:text-[var(--color-text-primary)]",
-        confirmedRangeStart: "!bg-[var(--color-background-blue-bold)] [&_button]:!text-white [&_button]:after:!bg-white rounded-l-md",
-        confirmedRangeEnd: "!bg-[var(--color-background-blue-bold)] [&_button]:!text-white [&_button]:after:!bg-white rounded-r-md",
-        inConfirmedRange: "bg-[var(--color-background-blue-subtle)] [&_button]:text-[var(--color-text-primary)]",
-      }}
-      components={{
-        Chevron: ({ orientation, ...props }) => {
-          const iconName = orientation === "left" ? "chevron-left" : "chevron-right";
-          const { size, ...iconProps } = props;
-          return <Icon name={iconName} size="sm" {...iconProps} />;
-        },
-      }}
-      {...props}
-    />
-  );
+  // Build props for DayPicker based on mode
+  const dayPickerProps = {
+    showOutsideDays,
+    className: cn("p-[var(--space-md)]", className),
+    onDayMouseEnter: handleDayMouseEnter,
+    onDayMouseLeave: handleDayMouseLeave,
+    modifiers: {
+      rangeStart: isRangeStart,
+      rangePreview: isInHoverPreview,
+      confirmedRangeStart: isConfirmedRangeStart,
+      confirmedRangeEnd: isConfirmedRangeEnd,
+      inConfirmedRange: isInConfirmedRange,
+    },
+    classNames: {
+      months: "flex flex-col sm:flex-row space-y-[var(--space-lg)] sm:space-x-[var(--space-lg)] sm:space-y-0",
+      month: "space-y-[var(--space-lg)]",
+      month_caption: "flex justify-center pt-[var(--space-xsm)] relative items-center",
+      caption_label: "text-body-medium-md text-[var(--color-text-primary)]",
+      nav: "space-x-[var(--space-xsm)] flex items-center",
+      button_previous: cn(
+        "absolute left-[var(--space-xsm)] inline-flex items-center justify-center rounded-md w-[var(--size-sm)] h-[var(--size-sm)] bg-transparent p-0 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] disabled:pointer-events-none disabled:opacity-50"
+      ),
+      button_next: cn(
+        "absolute right-[var(--space-xsm)] inline-flex items-center justify-center rounded-md w-[var(--size-sm)] h-[var(--size-sm)] bg-transparent p-0 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] disabled:pointer-events-none disabled:opacity-50"
+      ),
+      month_grid: "w-full border-collapse space-y-[var(--space-xsm)]",
+      weekdays: "flex",
+      weekday: "text-[var(--color-text-tertiary)] rounded-md w-[var(--size-md)] font-normal text-caption-medium-sm",
+      week: "flex w-full mt-[var(--space-sm)]",
+      day: "h-[var(--size-md)] w-[var(--size-md)] text-center text-body-sm p-0 relative focus-within:relative focus-within:z-20",
+      day_button: cn(
+        "inline-flex items-center justify-center rounded-md",
+        "w-[var(--size-md)] h-[var(--size-md)] p-0",
+        "text-body-sm font-normal text-[var(--color-text-primary)]",
+        "hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)]",
+        "disabled:pointer-events-none disabled:opacity-50"
+      ),
+      range_start: "day-range-start",
+      range_end: "day-range-end",
+      selected: "!bg-[var(--color-background-blue-bold)] [&_button]:!text-white [&_button]:after:!bg-white rounded-md",
+      today: "[&_button]:relative [&_button]:after:content-[''] [&_button]:after:absolute [&_button]:after:bottom-1 [&_button]:after:left-1/2 [&_button]:after:-translate-x-1/2 [&_button]:after:w-1 [&_button]:after:h-1 [&_button]:after:rounded-full [&_button]:after:bg-red-500 font-medium",
+      outside: "day-outside text-[var(--color-text-tertiary)] opacity-50 aria-selected:bg-[var(--color-background-blue-subtle)] aria-selected:text-[var(--color-text-tertiary)] aria-selected:opacity-30",
+      disabled: "text-[var(--color-text-disabled)] opacity-50",
+      range_middle: "bg-[var(--color-background-blue-subtle)] text-[var(--color-text-primary)]",
+      hidden: "invisible",
+      ...classNames,
+    },
+    modifiersClassNames: {
+      rangeStart: "!bg-[var(--color-background-blue-bold)] [&_button]:!text-white [&_button]:after:!bg-white rounded-l-md",
+      rangePreview: "bg-[var(--color-background-blue-subtle)] [&_button]:text-[var(--color-text-primary)]",
+      confirmedRangeStart: "!bg-[var(--color-background-blue-bold)] [&_button]:!text-white [&_button]:after:!bg-white rounded-l-md",
+      confirmedRangeEnd: "!bg-[var(--color-background-blue-bold)] [&_button]:!text-white [&_button]:after:!bg-white rounded-r-md",
+      inConfirmedRange: "bg-[var(--color-background-blue-subtle)] [&_button]:text-[var(--color-text-primary)]",
+    },
+    components: {
+      Chevron: ({ orientation, ...props }: any) => {
+        const iconName = orientation === "left" ? "chevron-left" : "chevron-right";
+        const { size, ...iconProps } = props;
+        return <Icon name={iconName} size="sm" {...iconProps} />;
+      },
+    },
+    ...props,
+  } as any;
+
+  // Add mode-specific props
+  if (mode === 'range') {
+    // For range mode, use our custom handler
+    dayPickerProps.onDayClick = handleDayClick;
+  } else {
+    // For single/multiple modes, pass through mode, selected, and onSelect
+    dayPickerProps.mode = mode;
+    dayPickerProps.selected = selected;
+    dayPickerProps.onSelect = onSelect;
+  }
+
+  return <DayPicker {...dayPickerProps} />;
 }
 Calendar.displayName = "Calendar";
 
