@@ -3346,6 +3346,8 @@ export function DataTable<TData, TValue>({
                             className={cn(
                               // Active row indicator on first cell
                               isFirstCell && isActiveRow(row) && (activeRowClassName || getActiveRowClasses(isLastRow ? false : borderSettings.showRowBorder)),
+                              // Remove bottom shadow from last row cells (except active row first cell which has its own shadow)
+                              isLastRow && !(isFirstCell && isActiveRow(row)) && "!shadow-none",
                               // Add sticky border classes for body cells (skip for section headers)
                               !isSectionHeader && getStickyBorderClasses(cell.column),
                               // Sticky columns need higher z-index and explicit backgrounds
@@ -3663,6 +3665,8 @@ export function DataTable<TData, TValue>({
                           className={cn(
                             // Active row indicator on first cell
                             isFirstCell && isActiveRow(row) && (activeRowClassName || getActiveRowClasses(isLastRow ? false : borderSettings.showRowBorder)),
+                            // Remove bottom shadow from last row cells (except active row first cell which has its own shadow)
+                            isLastRow && !(isFirstCell && isActiveRow(row)) && "!shadow-none",
                             // Sticky columns need higher z-index and explicit backgrounds
                             Object.keys(pinningStyles).length > 0 && [
                               "z-10",
