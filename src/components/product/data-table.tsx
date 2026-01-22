@@ -3241,9 +3241,12 @@ export function DataTable<TData, TValue>({
               (() => {
                 if (!enableRowPinning || !keepPinnedRows) {
                   // Standard rendering when cross-page pinning is disabled
-                  return table.getRowModel().rows
+                  const filteredRows = table.getRowModel().rows
                     .filter(row => !renderSubComponent || row.depth === 0)
-                    .map((row) => (
+
+                  return filteredRows.map((row, rowIndex) => {
+                    const isLastRow = rowIndex === filteredRows.length - 1
+                    return (
                     <React.Fragment key={row.id}>
                     <TableRow
                       data-state={row.getIsSelected() && "selected"}
@@ -3336,13 +3339,13 @@ export function DataTable<TData, TValue>({
                           <TableCell
                             key={cell.id}
                             showBorder={borderSettings.showCellBorder}
-                            showRowBorder={borderSettings.showRowBorder}
+                            showRowBorder={isLastRow ? false : borderSettings.showRowBorder}
                             verticalAlign={cell.column.columnDef.meta?.verticalAlign || defaultVerticalAlign}
                             colSpan={isSectionHeader ? row.getVisibleCells().length : undefined}
                             data-section-header={isSectionHeader ? true : undefined}
                             className={cn(
                               // Active row indicator on first cell
-                              isFirstCell && isActiveRow(row) && (activeRowClassName || getActiveRowClasses(borderSettings.showRowBorder)),
+                              isFirstCell && isActiveRow(row) && (activeRowClassName || getActiveRowClasses(isLastRow ? false : borderSettings.showRowBorder)),
                               // Add sticky border classes for body cells (skip for section headers)
                               !isSectionHeader && getStickyBorderClasses(cell.column),
                               // Sticky columns need higher z-index and explicit backgrounds
@@ -3502,7 +3505,8 @@ export function DataTable<TData, TValue>({
                       </TableRow>
                     )}
                     </React.Fragment>
-                  ))
+                  )
+                  })
                 }
 
                 // Manual cross-page pinning implementation
@@ -3523,9 +3527,12 @@ export function DataTable<TData, TValue>({
                   ...pinnedBottomRows
                 ]
 
-                return organizedRows
+                const filteredOrganizedRows = organizedRows
                   .filter(row => !renderSubComponent || row.depth === 0)
-                  .map((row) => (
+
+                return filteredOrganizedRows.map((row, rowIndex) => {
+                  const isLastRow = rowIndex === filteredOrganizedRows.length - 1
+                  return (
                   <React.Fragment key={row.id}>
                   <TableRow
                     data-state={row.getIsSelected() && "selected"}
@@ -3650,12 +3657,12 @@ export function DataTable<TData, TValue>({
                         <TableCell
                           key={cell.id}
                           showBorder={borderSettings.showCellBorder}
-                          showRowBorder={borderSettings.showRowBorder}
+                          showRowBorder={isLastRow ? false : borderSettings.showRowBorder}
                           verticalAlign={cell.column.columnDef.meta?.verticalAlign || defaultVerticalAlign}
                           colSpan={isSectionHeader ? row.getVisibleCells().length : undefined}
                           className={cn(
                             // Active row indicator on first cell
-                            isFirstCell && isActiveRow(row) && (activeRowClassName || getActiveRowClasses(borderSettings.showRowBorder)),
+                            isFirstCell && isActiveRow(row) && (activeRowClassName || getActiveRowClasses(isLastRow ? false : borderSettings.showRowBorder)),
                             // Sticky columns need higher z-index and explicit backgrounds
                             Object.keys(pinningStyles).length > 0 && [
                               "z-10",
@@ -3860,7 +3867,8 @@ export function DataTable<TData, TValue>({
                     </TableRow>
                   )}
                   </React.Fragment>
-                ))
+                )
+                })
               })()
             ) : (
               <TableRow showBorder={borderSettings.showRowBorder} className="h-[400px]">
