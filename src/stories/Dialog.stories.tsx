@@ -546,7 +546,132 @@ export const ComplexContentDialog: Story = {
   },
 };
 
+// Long content dialog with sticky footer
+export const LongContentDialog: Story = {
+  render: () => {
+    const sections = [
+      {
+        title: "Getting Started",
+        content: "Welcome to our comprehensive guide. This dialog demonstrates how the footer remains visible even with extensive content that requires scrolling.",
+      },
+      {
+        title: "Installation",
+        content: "To begin using this component library, install it via npm with the following command: npm install @rafal.lemieszewski/tide-ui",
+      },
+      {
+        title: "Configuration",
+        content: "After installation, import the styles in your main application file. The library includes all necessary CSS and design tokens.",
+      },
+      {
+        title: "Basic Usage",
+        content: "Import components directly from the package. Each component is tree-shakeable and optimized for production builds.",
+      },
+      {
+        title: "Customization",
+        content: "Override design tokens using CSS variables to match your brand. All components support className prop for additional styling.",
+      },
+      {
+        title: "Accessibility",
+        content: "Built with accessibility in mind, following ARIA guidelines and supporting keyboard navigation throughout.",
+      },
+      {
+        title: "Theming",
+        content: "Comprehensive theme system with semantic tokens for colors, spacing, typography, and more.",
+      },
+      {
+        title: "Components",
+        content: "Extensive collection of production-ready components including buttons, inputs, dialogs, cards, and more.",
+      },
+      {
+        title: "Best Practices",
+        content: "Follow semantic HTML patterns and use appropriate ARIA attributes when building complex interfaces.",
+      },
+      {
+        title: "Performance",
+        content: "Optimized bundle sizes with tree-shaking support. Import only what you need for minimal impact.",
+      },
+      {
+        title: "TypeScript Support",
+        content: "Full TypeScript support with exported types for all components and their props.",
+      },
+      {
+        title: "Responsive Design",
+        content: "All components are responsive by default, adapting to different screen sizes and devices.",
+      },
+      {
+        title: "Form Handling",
+        content: "Comprehensive form components with built-in validation support and error handling.",
+      },
+      {
+        title: "State Management",
+        content: "Components support both controlled and uncontrolled patterns, giving you flexibility in state management.",
+      },
+      {
+        title: "Testing",
+        content: "Write tests easily with our semantic class names and proper ARIA labels throughout.",
+      },
+      {
+        title: "Browser Support",
+        content: "Modern browser support including Chrome, Firefox, Safari, and Edge. IE11 is not supported.",
+      },
+      {
+        title: "Documentation",
+        content: "Comprehensive Storybook documentation with interactive examples and code snippets.",
+      },
+      {
+        title: "Migration Guide",
+        content: "Upgrading from a previous version? Check our migration guide for breaking changes and new features.",
+      },
+      {
+        title: "Contributing",
+        content: "Contributions are welcome! Check our GitHub repository for contribution guidelines and development setup.",
+      },
+      {
+        title: "Support",
+        content: "Need help? Open an issue on GitHub or check our documentation for common solutions.",
+      },
+    ];
 
+    return (
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button>Open Long Content Dialog</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Documentation Guide</DialogTitle>
+          </DialogHeader>
+          <DialogBody>
+            <p className="text-body-md mb-4 text-[var(--color-text-secondary)]">
+              This dialog demonstrates the sticky footer behavior. Notice how you can scroll through all the content below, but the footer with action buttons remains visible at the bottom without needing to scroll.
+            </p>
+            <div className="space-y-6">
+              {sections.map((section, index) => (
+                <div key={index}>
+                  <h3 className="text-heading-sm mb-2 text-[var(--color-text-primary)]">
+                    {index + 1}. {section.title}
+                  </h3>
+                  <p className="text-body-md text-[var(--color-text-secondary)]">
+                    {section.content}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </DialogBody>
+          <DialogFooter className="gap-2">
+            <DialogClose asChild>
+              <Button>Cancel</Button>
+            </DialogClose>
+            <Button variant="primary">
+              <Icon name="check" size="sm" className="mr-2" />
+              Got It
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    );
+  },
+};
 
 // Multiple dialogs
 export const MultipleDialogs: Story = {
