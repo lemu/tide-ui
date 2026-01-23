@@ -19,6 +19,7 @@ TODO.md
 !.vscode/extensions.json
 .idea
 .nova
+.claude
 .DS_Store
 *.suo
 *.ntvs*
