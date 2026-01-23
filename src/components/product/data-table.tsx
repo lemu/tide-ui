@@ -3004,6 +3004,8 @@ export function DataTable<TData, TValue>({
       >
       <div className={cn(
         "border border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] overflow-hidden rounded-lg",
+        // Remove bottom border when no pagination to avoid double border with last row
+        !showPagination && "border-b-0",
         className
       )}>
       {/* Header section with title and toolbar */}
