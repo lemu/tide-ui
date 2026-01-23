@@ -2841,9 +2841,9 @@ export function DataTable<TData, TValue>({
       if (isRightmostLeftSticky && isHeader) {
         return {
           ...baseStyles,
-          // 2px border on right edge using linear gradient
-          // Background goes from grey-25 to border color in last 2px
-          backgroundImage: 'linear-gradient(to right, var(--grey-25) calc(100% - 2px), var(--color-border-primary-medium) calc(100% - 2px), var(--color-border-primary-medium) 100%)',
+          // 3px border on right edge using linear gradient
+          // Background goes from grey-25 to border color in last 3px
+          backgroundImage: 'linear-gradient(to right, var(--grey-25) calc(100% - 3px), var(--color-border-primary-medium) calc(100% - 3px), var(--color-border-primary-medium) 100%)',
           backgroundColor: 'transparent', // Override to let gradient show
         }
       }
@@ -2875,8 +2875,8 @@ export function DataTable<TData, TValue>({
       if (isLeftmostRightSticky && isHeader) {
         return {
           ...baseStyles,
-          // 2px border on left edge using linear gradient
-          backgroundImage: 'linear-gradient(to right, var(--color-border-primary-medium) 0, var(--color-border-primary-medium) 2px, var(--grey-25) 2px)',
+          // 3px border on left edge using linear gradient
+          backgroundImage: 'linear-gradient(to right, var(--color-border-primary-medium) 0, var(--color-border-primary-medium) 3px, var(--grey-25) 3px)',
           backgroundColor: 'transparent', // Override to let gradient show
         }
       }
@@ -2903,11 +2903,11 @@ export function DataTable<TData, TValue>({
     const isLeftmostRightSticky = isRightSticky && currentColumnIndex === allColumns.length - effectiveRightSticky
 
     if (isRightmostLeftSticky) {
-      return 'border-r-2 border-[var(--color-border-primary-medium)]'
+      return 'border-r-[3px] border-[var(--color-border-primary-medium)]'
     }
 
     if (isLeftmostRightSticky) {
-      return 'border-l-2 border-[var(--color-border-primary-medium)]'
+      return 'border-l-[3px] border-[var(--color-border-primary-medium)]'
     }
 
     return ''
@@ -2929,6 +2929,27 @@ export function DataTable<TData, TValue>({
     const isLeftmostRightSticky = isRightSticky && currentColumnIndex === allColumns.length - effectiveRightSticky
 
     return isRightmostLeftSticky || isLeftmostRightSticky
+  }
+
+  // Helper to check if column should have right border disabled
+  // (for last non-sticky column when right-sticky columns exist)
+  const shouldDisableRightBorder = (column: any): boolean => {
+    if (!column || typeof column.getSize !== 'function') {
+      return false
+    }
+
+    // No right-sticky columns? Use default border behavior
+    if (effectiveRightSticky === 0) {
+      return false
+    }
+
+    const allColumns = table.getVisibleFlatColumns()
+    const currentColumnIndex = allColumns.findIndex(col => col.id === column.id)
+
+    // Check if this is the last non-sticky column (immediately before first right-sticky)
+    const isLastNonSticky = currentColumnIndex === allColumns.length - effectiveRightSticky - 1
+
+    return isLastNonSticky
   }
 
   // Helper to get resize handle classes (visible when resizing enabled + no vertical borders)
@@ -3100,7 +3121,15 @@ export function DataTable<TData, TValue>({
                     return (
                       <TableHead
                         key={header.id}
-                        showBorder={isLastHeader ? false : (hasSticky ? false : borderSettings.showCellBorder)}
+                        showBorder={
+                          isLastHeader
+                            ? false
+                            : hasSticky
+                              ? false
+                              : shouldDisableRightBorder(header.column)
+                                ? false
+                                : borderSettings.showCellBorder
+                        }
                         onMouseEnter={() => setHoveredColumnIndex(index)}
                         onMouseLeave={() => setHoveredColumnIndex(null)}
                         className={cn(
@@ -3167,7 +3196,15 @@ export function DataTable<TData, TValue>({
                     return (
                       <TableHead
                         key={header.id}
-                        showBorder={isLastHeader ? false : (hasSticky ? false : borderSettings.showCellBorder)}
+                        showBorder={
+                          isLastHeader
+                            ? false
+                            : hasSticky
+                              ? false
+                              : shouldDisableRightBorder(header.column)
+                                ? false
+                                : borderSettings.showCellBorder
+                        }
                         onMouseEnter={() => setHoveredColumnIndex(index)}
                         onMouseLeave={() => setHoveredColumnIndex(null)}
                         className={cn(
@@ -3337,7 +3374,13 @@ export function DataTable<TData, TValue>({
                         return (
                           <TableCell
                             key={cell.id}
-                            showBorder={borderSettings.showCellBorder}
+                            showBorder={
+                              hasStickyBorder(cell.column)
+                                ? false
+                                : shouldDisableRightBorder(cell.column)
+                                  ? false
+                                  : borderSettings.showCellBorder
+                            }
                             showRowBorder={borderSettings.showRowBorder}
                             verticalAlign={cell.column.columnDef.meta?.verticalAlign || defaultVerticalAlign}
                             colSpan={isSectionHeader ? row.getVisibleCells().length : undefined}
