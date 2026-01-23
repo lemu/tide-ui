@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 import { CountryDropdown } from '../components/fundamental/country-dropdown'
-import { Flag } from '../components/ui/flag'
+import { Flag } from '../components/fundamental/flag'
 import { Button } from '../components/fundamental/button'
 import { ChevronDown } from 'lucide-react'
 
