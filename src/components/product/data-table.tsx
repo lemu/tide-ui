@@ -2381,6 +2381,7 @@ export function DataTable<TData, TValue>({
     getSubRows: getSubRows,
     getRowCanExpand: getRowCanExpand,
     paginateExpandedRows: false, // Only paginate top-level rows, not expanded children
+    autoResetPageIndex: false, // Prevent pagination from resetting on data/filter/grouping changes
     enableGrouping: enableGrouping,
     groupedColumnMode: groupedColumnMode,
     manualGrouping: enableManualGrouping,
@@ -2414,6 +2415,9 @@ export function DataTable<TData, TValue>({
     [table.getRowModel().rows]
   )
 
+  // Track previous page count to avoid unnecessary setPageCount calls
+  const previousPageCountRef = React.useRef<number | undefined>(undefined)
+
   // Override page count when grouping is enabled to count only top-level groups
   React.useEffect(() => {
     if (!enableGrouping) return
@@ -2425,18 +2429,22 @@ export function DataTable<TData, TValue>({
     const topLevelRowCount = prePaginationRows.filter((row: any) => row.depth === 0).length
 
     // Calculate page count based on top-level rows
-    const pageSize = table.getState().pagination.pageSize
+    const pageSize = pagination.pageSize
     const calculatedPageCount = Math.max(1, Math.ceil(topLevelRowCount / pageSize))
 
-    // Override TanStack's default page count calculation
-    table.setPageCount(calculatedPageCount)
+    // Only update if the count actually changed
+    if (previousPageCountRef.current !== calculatedPageCount) {
+      previousPageCountRef.current = calculatedPageCount
+      table.setPageCount(calculatedPageCount)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     enableGrouping,
-    table,
-    // Re-run when these values change
-    table.getState().pagination.pageSize,
-    table.getState().grouping,
-    table.getPrePaginationRowModel().rows.length,
+    // NOTE: Deliberately NOT including 'table' to avoid re-running on every render
+    // We access table methods inside but only re-run when these stable values change:
+    pagination.pageSize,
+    JSON.stringify(grouping), // Stringify for deep comparison
+    table.getPrePaginationRowModel().rows.length, // Row count changes
   ])
 
   // Column pinning useEffect removed - using pure CSS approach instead
@@ -2477,7 +2485,12 @@ export function DataTable<TData, TValue>({
     if (hasChanges) {
       setExpanded(newExpanded)
     }
-  }, [expanded, autoExpandChildren, table])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    expanded,
+    autoExpandChildren,
+    // NOTE: Deliberately NOT including 'table' to avoid re-running on every render
+  ])
 
   // Auto-expand groups that match the search term when groupPreservingSearch is enabled
   React.useEffect(() => {
