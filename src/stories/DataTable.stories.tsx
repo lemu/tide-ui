@@ -5838,7 +5838,7 @@ Same fixture lifecycle scenarios as GroupingWithCustomDisplay:
             enableGlobalSearch={false}
             grouping={["fixtureId"]}
             groupDisplayColumn="orderId"
-            hideChildrenForSingleItemGroups={true}
+            hideChildrenForSingleItemGroups={{ fixtureId: true }}
             columnVisibility={{ fixtureId: false }}
             title="Fixture Lifecycle Scenarios"
             stickyHeader

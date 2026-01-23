@@ -3002,7 +3002,6 @@ export function DataTable<TData, TValue>({
       {/* Table section with responsive wrapper and sticky features */}
       <div className={cn(
         "relative",
-        showPagination && "border-b border-[var(--color-border-primary-medium)]",
         computedEnableResponsiveWrapper && [
           "overflow-x-auto",
           "scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[var(--color-border-primary-subtle)]",
@@ -3339,15 +3338,13 @@ export function DataTable<TData, TValue>({
                           <TableCell
                             key={cell.id}
                             showBorder={borderSettings.showCellBorder}
-                            showRowBorder={isLastRow ? false : borderSettings.showRowBorder}
+                            showRowBorder={borderSettings.showRowBorder}
                             verticalAlign={cell.column.columnDef.meta?.verticalAlign || defaultVerticalAlign}
                             colSpan={isSectionHeader ? row.getVisibleCells().length : undefined}
                             data-section-header={isSectionHeader ? true : undefined}
                             className={cn(
                               // Active row indicator on first cell
-                              isFirstCell && isActiveRow(row) && (activeRowClassName || getActiveRowClasses(isLastRow ? false : borderSettings.showRowBorder)),
-                              // Remove bottom shadow from last row cells (except active row first cell which has its own shadow)
-                              isLastRow && !(isFirstCell && isActiveRow(row)) && "!shadow-none",
+                              isFirstCell && isActiveRow(row) && (activeRowClassName || getActiveRowClasses(borderSettings.showRowBorder)),
                               // Add sticky border classes for body cells (skip for section headers)
                               !isSectionHeader && getStickyBorderClasses(cell.column),
                               // Sticky columns need higher z-index and explicit backgrounds
@@ -3368,7 +3365,7 @@ export function DataTable<TData, TValue>({
                               // Section header background
                               isSectionHeader && "bg-[var(--blue-50)]",
                               // Remove bottom border from first column child rows (except last)
-                              shouldRemoveBottomBorder && "!shadow-none"
+                              shouldRemoveBottomBorder && "![box-shadow:none]"
                             )}
                             style={{
                               ...pinningStyles,
@@ -3659,14 +3656,12 @@ export function DataTable<TData, TValue>({
                         <TableCell
                           key={cell.id}
                           showBorder={borderSettings.showCellBorder}
-                          showRowBorder={isLastRow ? false : borderSettings.showRowBorder}
+                          showRowBorder={borderSettings.showRowBorder}
                           verticalAlign={cell.column.columnDef.meta?.verticalAlign || defaultVerticalAlign}
                           colSpan={isSectionHeader ? row.getVisibleCells().length : undefined}
                           className={cn(
                             // Active row indicator on first cell
-                            isFirstCell && isActiveRow(row) && (activeRowClassName || getActiveRowClasses(isLastRow ? false : borderSettings.showRowBorder)),
-                            // Remove bottom shadow from last row cells (except active row first cell which has its own shadow)
-                            isLastRow && !(isFirstCell && isActiveRow(row)) && "!shadow-none",
+                            isFirstCell && isActiveRow(row) && (activeRowClassName || getActiveRowClasses(borderSettings.showRowBorder)),
                             // Sticky columns need higher z-index and explicit backgrounds
                             Object.keys(pinningStyles).length > 0 && [
                               "z-10",
@@ -3729,7 +3724,7 @@ export function DataTable<TData, TValue>({
                             // Section header background
                             isSectionHeader && "bg-[var(--blue-50)]",
                             // Remove bottom border from first column child rows (except last)
-                            shouldRemoveBottomBorder && "!shadow-none"
+                            shouldRemoveBottomBorder && "![box-shadow:none]"
                           )}
                           style={{
                             ...pinningStyles,
