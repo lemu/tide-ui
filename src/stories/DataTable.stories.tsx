@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import React, { useState, useMemo, useRef, useEffect } from 'react'
 import { DataTable, DataTableColumnHeader, NestedHeaderConfig } from '../components/product/data-table'
-import { DataTableSettingsMenu } from '../components/product/data-table-settings-menu'
+import { DataTableSettingsMenu, ColumnOption } from '../components/product/data-table-settings-menu'
 import { ViewModeMenu, ViewModeMenuHandle } from '../components/product/view-mode-menu'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 import { Button } from '../components/fundamental/button'
@@ -51,6 +51,106 @@ A powerful data table component with extensive features including filtering, sor
 - **Nested Headers**: Multi-level column headers
 - **Empty States**: Customizable empty state UI
 - **Density Options**: Compact, normal, and comfortable row heights
+
+---
+
+## Server-Side Data Fetching Patterns
+
+DataTable supports server-side operations for sorting, filtering, and pagination. This is essential for production applications with large datasets.
+
+### State Priority
+
+DataTable renders states in this priority order:
+
+1. **Error state** → Shows error UI with retry option
+2. **Loading state** (initial) → Shows skeleton when \`isLoading && data.length === 0\`
+3. **Empty state** → Shows when \`data.length === 0\` and no filters applied
+4. **No results state** → Shows when \`data.length === 0\` but filters are applied
+5. **Data state** → Shows table with data (+ optional refetching indicator)
+
+### Server-Side Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| \`manualSorting\` | boolean | Enable server-side sorting |
+| \`manualFiltering\` | boolean | Enable server-side filtering |
+| \`manualPagination\` | boolean | Enable server-side pagination |
+| \`rowCount\` | number | Total row count (required for server pagination) |
+| \`error\` | Error \\| null | Error object when fetch fails |
+| \`onRetry\` | () => void | Retry callback for error state |
+| \`isRefetching\` | boolean | Shows subtle indicator during background refetch |
+
+### Usage with React Query
+
+\`\`\`tsx
+function UsersTable() {
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 25 })
+  const [sorting, setSorting] = useState<SortingState>([])
+
+  const { data, error, isLoading, isRefetching, refetch } = useQuery({
+    queryKey: ['users', pagination, sorting],
+    queryFn: () => fetchUsers({
+      page: pagination.pageIndex,
+      pageSize: pagination.pageSize,
+      sortBy: sorting[0]?.id,
+      sortDir: sorting[0]?.desc ? 'desc' : 'asc',
+    })
+  })
+
+  return (
+    <DataTable
+      columns={columns}
+      data={data?.items ?? []}
+
+      // Loading & Error states
+      isLoading={isLoading}
+      isRefetching={isRefetching}
+      error={error}
+      onRetry={refetch}
+
+      // Empty state (no data exists)
+      emptyStateTitle="No users yet"
+      emptyStateDescription="Get started by adding your first user."
+      emptyStateAction={{ label: "Add user", onClick: openModal }}
+
+      // No results state (filtered to empty)
+      noResultsTitle="No matching users"
+      noResultsAction={{ label: "Clear filters", onClick: clearFilters }}
+
+      // Server-side operations
+      manualPagination
+      manualSorting
+      rowCount={data?.total ?? 0}
+
+      // Controlled state - same callbacks, React Query handles refetch
+      sorting={sorting}
+      onSortingChange={setSorting}
+      pagination={pagination}
+      onPaginationChange={setPagination}
+    />
+  )
+}
+\`\`\`
+
+### Empty State vs No Results State
+
+- **Empty State**: Shown when \`data.length === 0\` AND no filters/search applied
+  - Use for "no data exists yet" scenarios
+  - Typically includes a call-to-action like "Add first item"
+
+- **No Results State**: Shown when \`data.length === 0\` AND filters ARE applied
+  - Use for "search returned nothing" scenarios
+  - Typically includes "Clear filters" action
+
+### See Also
+
+- **[Empty State Story](#empty-state)** - Empty state customization
+- **[Error State Story](#error-state)** - Error handling with retry
+- **[Server-Side Pagination Story](#server-side-pagination)** - Manual pagination example
+- **[Server-Side Sorting Story](#server-side-sorting)** - Manual sorting example
+- **[Refetching State Story](#refetching-state)** - Background refresh indicator
+
+---
 
 ## Advanced Integration
 
@@ -6896,6 +6996,419 @@ export const ExpandingRowsStylingCustomization: Story = {
                 },
                 defaultHeight: '36px' // For depth 3 and beyond
               }}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+}
+
+// ============================================================================
+// Empty State Story
+// ============================================================================
+
+/**
+ * ## Empty State
+ *
+ * Shown when `data.length === 0` AND no filters/search are applied.
+ * This indicates "no data exists yet" - use for onboarding scenarios.
+ *
+ * ### Props
+ * - `emptyStateTitle` - Heading text (default: "No data")
+ * - `emptyStateDescription` - Description text
+ * - `emptyStateIcon` - Icon name from your icon library (default: "inbox")
+ * - `emptyStateAction` - Optional CTA button `{ label: string, onClick: () => void }`
+ * - `emptyState` - Custom React node to fully override the empty state UI
+ *
+ * ### When to use
+ * - New user with no data
+ * - Empty database table
+ * - Fresh installation
+ */
+export const EmptyStateCustomized: Story = {
+  render: () => {
+    const columns: ColumnDef<User>[] = [
+      { accessorKey: 'name', header: 'Name' },
+      { accessorKey: 'email', header: 'Email' },
+      { accessorKey: 'role', header: 'Role' },
+      { accessorKey: 'status', header: 'Status' },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <Card>
+          <CardHeader>
+            <CardTitle>Customized Empty State</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <DataTable
+              data={[]}
+              columns={columns}
+              emptyStateTitle="No users yet"
+              emptyStateDescription="Get started by adding your first user to the system."
+              emptyStateIcon="users"
+              emptyStateAction={{
+                label: "Add user",
+                onClick: () => alert('Add user clicked!')
+              }}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+}
+
+// ============================================================================
+// No Results State Story
+// ============================================================================
+
+/**
+ * No results state shown when filters are applied but no data matches.
+ * Customize with `noResultsTitle`, `noResultsDescription`, and `noResultsAction`.
+ */
+export const NoResultsState: Story = {
+  render: () => {
+    const [globalFilter, setGlobalFilter] = useState('nonexistent-search-term')
+
+    const columns: ColumnDef<User>[] = [
+      { accessorKey: 'name', header: 'Name' },
+      { accessorKey: 'email', header: 'Email' },
+      { accessorKey: 'role', header: 'Role' },
+      { accessorKey: 'status', header: 'Status' },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <Card>
+          <CardHeader>
+            <CardTitle>No Results State - Filtered to Empty</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="mb-[var(--space-md)]">
+              <p className="text-body-sm text-[var(--color-text-secondary)]">
+                Current search: "{globalFilter}" (no matches)
+              </p>
+            </div>
+            <DataTable
+              data={sampleUsers}
+              columns={columns}
+              enableGlobalSearch
+              noResultsTitle="No matching users"
+              noResultsDescription="We couldn't find any users matching your search criteria."
+              noResultsAction={{
+                label: "Clear search",
+                onClick: () => setGlobalFilter('')
+              }}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+}
+
+// ============================================================================
+// Error State Story
+// ============================================================================
+
+/**
+ * Error state shown when data fetching fails.
+ * Includes optional retry button with `onRetry` callback.
+ */
+export const ErrorState: Story = {
+  render: () => {
+    const [error, setError] = useState<Error | null>(new Error('Failed to fetch users. Please check your network connection.'))
+    const [isLoading, setIsLoading] = useState(false)
+
+    const columns: ColumnDef<User>[] = [
+      { accessorKey: 'name', header: 'Name' },
+      { accessorKey: 'email', header: 'Email' },
+      { accessorKey: 'role', header: 'Role' },
+      { accessorKey: 'status', header: 'Status' },
+    ]
+
+    const handleRetry = () => {
+      setIsLoading(true)
+      setError(null)
+      // Simulate retry
+      setTimeout(() => {
+        setIsLoading(false)
+        // 50% chance of success on retry
+        if (Math.random() > 0.5) {
+          setError(null)
+        } else {
+          setError(new Error('Retry failed. Server is still unavailable.'))
+        }
+      }, 1500)
+    }
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <Card>
+          <CardHeader>
+            <CardTitle>Error State - Data Fetch Failed</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="mb-[var(--space-md)]">
+              <Button
+                variant="ghost"
+                onClick={() => setError(new Error('Simulated network error'))}
+              >
+                Trigger Error
+              </Button>
+            </div>
+            <DataTable
+              data={error ? [] : sampleUsers}
+              columns={columns}
+              isLoading={isLoading}
+              error={error}
+              onRetry={handleRetry}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+}
+
+// ============================================================================
+// Server-Side Pagination Story
+// ============================================================================
+
+/**
+ * Server-side pagination example using `manualPagination` and `rowCount`.
+ * In production, `onPaginationChange` would trigger a server fetch.
+ */
+export const ServerSidePagination: Story = {
+  render: () => {
+    // Simulated "server" data (in real app, this would be fetched from API)
+    const allUsers = useMemo(() => {
+      return Array.from({ length: 100 }, (_, i) => ({
+        id: String(i + 1),
+        name: `User ${i + 1}`,
+        email: `user${i + 1}@example.com`,
+        role: ['Admin', 'Editor', 'Viewer'][i % 3],
+        status: (['active', 'inactive', 'pending'] as const)[i % 3],
+        lastLogin: new Date(2024, 0, 1 + i).toISOString().split('T')[0],
+        joinDate: new Date(2023, 0, 1 + i).toISOString().split('T')[0],
+      }))
+    }, [])
+
+    const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 })
+    const [isLoading, setIsLoading] = useState(false)
+    const [pageData, setPageData] = useState<typeof allUsers>([])
+
+    // Simulate server fetch
+    useEffect(() => {
+      setIsLoading(true)
+      const timer = setTimeout(() => {
+        const start = pagination.pageIndex * pagination.pageSize
+        const end = start + pagination.pageSize
+        setPageData(allUsers.slice(start, end))
+        setIsLoading(false)
+      }, 500)
+      return () => clearTimeout(timer)
+    }, [pagination, allUsers])
+
+    const columns: ColumnDef<User>[] = [
+      { accessorKey: 'name', header: 'Name' },
+      { accessorKey: 'email', header: 'Email' },
+      { accessorKey: 'role', header: 'Role' },
+      { accessorKey: 'status', header: 'Status' },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <Card>
+          <CardHeader>
+            <CardTitle>Server-Side Pagination (100 total users)</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <DataTable
+              data={pageData}
+              columns={columns}
+              manualPagination
+              rowCount={100}
+              pagination={pagination}
+              onPaginationChange={setPagination}
+              isLoading={isLoading && pageData.length === 0}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+}
+
+// ============================================================================
+// Refetching State Story
+// ============================================================================
+
+/**
+ * Shows the refetching indicator while keeping existing data visible.
+ * Use `isRefetching` for SWR-style background updates.
+ */
+export const RefetchingState: Story = {
+  render: () => {
+    const [isRefetching, setIsRefetching] = useState(false)
+    const [data, setData] = useState(sampleUsers)
+
+    const columns: ColumnDef<User>[] = [
+      { accessorKey: 'name', header: 'Name' },
+      { accessorKey: 'email', header: 'Email' },
+      { accessorKey: 'role', header: 'Role' },
+      { accessorKey: 'status', header: 'Status' },
+    ]
+
+    const handleRefetch = () => {
+      setIsRefetching(true)
+      // Simulate background refresh
+      setTimeout(() => {
+        // Update data slightly to show refresh worked
+        setData(prev => prev.map(user => ({
+          ...user,
+          lastLogin: new Date().toISOString().split('T')[0]
+        })))
+        setIsRefetching(false)
+      }, 2000)
+    }
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <Card>
+          <CardHeader>
+            <div className="flex justify-between items-center">
+              <CardTitle>Refetching State - Background Update</CardTitle>
+              <Button variant="default" onClick={handleRefetch} disabled={isRefetching}>
+                <Icon name="refresh-cw" className={cn("mr-[var(--space-sm)] h-4 w-4", isRefetching && "animate-spin")} />
+                {isRefetching ? 'Refreshing...' : 'Refresh Data'}
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+              Click "Refresh Data" to see the subtle loading indicator while data remains visible.
+            </p>
+            <DataTable
+              data={data}
+              columns={columns}
+              isRefetching={isRefetching}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+}
+
+// ============================================================================
+// Server-Side Sorting Story
+// ============================================================================
+
+/**
+ * Server-side sorting example using `manualSorting` with `DataTableSettingsMenu`.
+ *
+ * Uses `DataTableSettingsMenu` for explicit sort column and direction control,
+ * which is ideal for server-side sorting where you need precise control over
+ * sort parameters sent to the API.
+ *
+ * In production, `onSortingChange` would trigger a server fetch with sort params.
+ */
+export const ServerSideSorting: Story = {
+  render: () => {
+    const [sorting, setSorting] = useState<SortingState>([])
+    const [isLoading, setIsLoading] = useState(false)
+    const [data, setData] = useState(sampleUsers)
+
+    // Sortable columns config for DataTableSettingsMenu
+    const sortableColumns: ColumnOption[] = [
+      { id: 'name', label: 'Name', dataType: 'text' },
+      { id: 'email', label: 'Email', dataType: 'text' },
+      { id: 'role', label: 'Role', dataType: 'text' },
+      { id: 'status', label: 'Status', dataType: 'text' },
+    ]
+
+    // Simple columns without sort headers (sorting controlled via settings menu)
+    const columns: ColumnDef<User>[] = [
+      { accessorKey: 'name', header: 'Name' },
+      { accessorKey: 'email', header: 'Email' },
+      { accessorKey: 'role', header: 'Role' },
+      { accessorKey: 'status', header: 'Status' },
+    ]
+
+    // Derive sort state for settings menu
+    const selectedSortColumn = sorting[0]?.id
+    const sortDirection: 'asc' | 'desc' = sorting[0]?.desc ? 'desc' : 'asc'
+
+    // Handle sorting change - in real app, this would call server
+    const handleSortingChange = (newSorting: SortingState) => {
+      setSorting(newSorting)
+      setIsLoading(true)
+
+      // Simulate server-side sort
+      setTimeout(() => {
+        if (newSorting.length === 0) {
+          setData(sampleUsers)
+        } else {
+          const sorted = [...sampleUsers].sort((a, b) => {
+            const { id, desc } = newSorting[0]
+            const aVal = a[id as keyof User]
+            const bVal = b[id as keyof User]
+            const comparison = String(aVal).localeCompare(String(bVal))
+            return desc ? -comparison : comparison
+          })
+          setData(sorted)
+        }
+        setIsLoading(false)
+      }, 500)
+    }
+
+    // Handlers for DataTableSettingsMenu
+    const handleSortColumnChange = (columnId: string) => {
+      handleSortingChange([{ id: columnId, desc: sortDirection === 'desc' }])
+    }
+
+    const handleSortDirectionChange = (direction: 'asc' | 'desc') => {
+      if (selectedSortColumn) {
+        handleSortingChange([{ id: selectedSortColumn, desc: direction === 'desc' }])
+      }
+    }
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle>Server-Side Sorting</CardTitle>
+            <DataTableSettingsMenu
+              sortableColumns={sortableColumns}
+              selectedSortColumn={selectedSortColumn}
+              sortDirection={sortDirection}
+              onSortChange={handleSortColumnChange}
+              onSortDirectionChange={handleSortDirectionChange}
+              groupableColumns={[]}
+              columns={[]}
+              visibleColumns={[]}
+            />
+          </CardHeader>
+          <CardContent>
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+              Use the settings menu (gear icon) to select sort column and direction.
+              Sorting is handled "server-side" with simulated delay.
+              {sorting.length > 0 && (
+                <span className="ml-[var(--space-sm)]">
+                  Current sort: <strong>{sorting[0].id}</strong> ({sorting[0].desc ? 'desc' : 'asc'})
+                </span>
+              )}
+            </p>
+            <DataTable
+              data={data}
+              columns={columns}
+              manualSorting
+              sorting={sorting}
+              onSortingChange={handleSortingChange}
+              isRefetching={isLoading}
             />
           </CardContent>
         </Card>
