@@ -55,6 +55,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../fundamental/popover"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../fundamental/command"
 import { Pagination } from "../fundamental/pagination"
 import { Skeleton } from "../fundamental/skeleton"
+import { Spinner } from "../fundamental/spinner"
 import { DataTableSettingsMenu } from "./data-table-settings-menu"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../fundamental/tooltip"
 
@@ -81,29 +82,48 @@ interface TruncatedCellProps {
   align?: 'left' | 'right'
 }
 
-function TruncatedCell({ children, align = 'left' }: TruncatedCellProps) {
+const TruncatedCell = React.memo(function TruncatedCell({ children, align = 'left' }: TruncatedCellProps) {
   const ref = React.useRef<HTMLDivElement>(null)
   const [isTruncated, setIsTruncated] = React.useState(false)
   const [textContent, setTextContent] = React.useState('')
 
-  // Check if content is truncated
+  // Check if content is truncated using ResizeObserver with debounce
   React.useEffect(() => {
+    const element = ref.current
+    if (!element) return
+
+    let timeoutId: ReturnType<typeof setTimeout>
+
     const checkTruncation = () => {
-      if (ref.current) {
-        // Check both the wrapper and first child for truncation
-        const wrapperTruncated = ref.current.scrollWidth > ref.current.clientWidth
-        const firstChild = ref.current.firstElementChild as HTMLElement | null
-        const childTruncated = firstChild ? firstChild.scrollWidth > firstChild.clientWidth : false
-        const truncated = wrapperTruncated || childTruncated
-        setIsTruncated(truncated)
-      }
+      clearTimeout(timeoutId)
+      timeoutId = setTimeout(() => {
+        if (ref.current) {
+          // Check both the wrapper and first child for truncation
+          const wrapperTruncated = ref.current.scrollWidth > ref.current.clientWidth
+          const firstChild = ref.current.firstElementChild as HTMLElement | null
+          const childTruncated = firstChild ? firstChild.scrollWidth > firstChild.clientWidth : false
+          const truncated = wrapperTruncated || childTruncated
+          setIsTruncated(truncated)
+        }
+      }, 150) // Debounce 150ms
     }
 
-    checkTruncation()
+    // Initial check (immediate)
+    if (ref.current) {
+      const wrapperTruncated = ref.current.scrollWidth > ref.current.clientWidth
+      const firstChild = ref.current.firstElementChild as HTMLElement | null
+      const childTruncated = firstChild ? firstChild.scrollWidth > firstChild.clientWidth : false
+      setIsTruncated(wrapperTruncated || childTruncated)
+    }
 
-    // Recheck on window resize
-    window.addEventListener('resize', checkTruncation)
-    return () => window.removeEventListener('resize', checkTruncation)
+    // Use ResizeObserver for targeted observation (more efficient than window resize)
+    const resizeObserver = new ResizeObserver(checkTruncation)
+    resizeObserver.observe(element)
+
+    return () => {
+      clearTimeout(timeoutId)
+      resizeObserver.disconnect()
+    }
   }, [children])
 
   // Extract text content from DOM element for tooltip
@@ -141,7 +161,7 @@ function TruncatedCell({ children, align = 'left' }: TruncatedCellProps) {
       </TooltipContent>
     </Tooltip>
   )
-}
+})
 
 // Filter variants and types
 export type FilterVariant = "text" | "select" | "multiselect" | "number" | "date" | "boolean"
@@ -517,6 +537,148 @@ function DataTableSkeleton({ columns, rows, showRowBorder = true, showCellBorder
   )
 }
 
+// Empty state component - shows when data array is empty and no filters applied
+export interface DataTableEmptyStateProps {
+  title?: string
+  description?: string
+  icon?: string
+  action?: {
+    label: string
+    onClick: () => void
+  }
+  customContent?: React.ReactNode
+}
+
+const DataTableEmptyState = React.memo(function DataTableEmptyState({
+  title = "No data",
+  description = "No items to display.",
+  icon = "inbox",
+  action,
+  customContent
+}: DataTableEmptyStateProps) {
+  if (customContent) {
+    return <>{customContent}</>
+  }
+
+  return (
+    <div className="flex flex-col items-center justify-center py-[var(--space-2xlg)] text-center">
+      <div className="mb-[var(--space-md)] rounded-full bg-[var(--color-background-neutral-subtlest)] p-[var(--space-lg)]">
+        <Icon name={icon} className="h-8 w-8 text-[var(--color-text-secondary)]" />
+      </div>
+      <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">
+        {title}
+      </h3>
+      <p className="text-body-sm text-[var(--color-text-secondary)] max-w-[300px]">
+        {description}
+      </p>
+      {action && (
+        <Button
+          variant="primary"
+          className="mt-[var(--space-lg)]"
+          onClick={action.onClick}
+        >
+          {action.label}
+        </Button>
+      )}
+    </div>
+  )
+})
+
+// No results state component - shows when filters return empty results
+export interface DataTableNoResultsStateProps {
+  title?: string
+  description?: string
+  action?: {
+    label: string
+    onClick: () => void
+  }
+  customContent?: React.ReactNode
+}
+
+const DataTableNoResultsState = React.memo(function DataTableNoResultsState({
+  title = "No results found",
+  description = "Try adjusting your search or filters.",
+  action,
+  customContent
+}: DataTableNoResultsStateProps) {
+  if (customContent) {
+    return <>{customContent}</>
+  }
+
+  return (
+    <div className="flex flex-col items-center justify-center py-[var(--space-2xlg)] text-center">
+      <div className="mb-[var(--space-md)] rounded-full bg-[var(--color-background-neutral-subtlest)] p-[var(--space-lg)]">
+        <Icon name="search" className="h-8 w-8 text-[var(--color-text-secondary)]" />
+      </div>
+      <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">
+        {title}
+      </h3>
+      <p className="text-body-sm text-[var(--color-text-secondary)] max-w-[300px]">
+        {description}
+      </p>
+      {action && (
+        <Button
+          variant="ghost"
+          className="mt-[var(--space-lg)]"
+          onClick={action.onClick}
+        >
+          {action.label}
+        </Button>
+      )}
+    </div>
+  )
+})
+
+// Error state component - shows when data fetching fails
+export interface DataTableErrorStateProps {
+  error: Error | null
+  onRetry?: () => void
+  customContent?: React.ReactNode
+}
+
+const DataTableErrorState = React.memo(function DataTableErrorState({
+  error,
+  onRetry,
+  customContent
+}: DataTableErrorStateProps) {
+  if (customContent) {
+    return <>{customContent}</>
+  }
+
+  return (
+    <div className="flex flex-col items-center justify-center py-[var(--space-2xlg)] text-center">
+      <div className="mb-[var(--space-md)] rounded-full bg-[var(--color-background-danger-subtle)] p-[var(--space-lg)]">
+        <Icon name="alert-circle" className="h-8 w-8 text-[var(--color-text-danger)]" />
+      </div>
+      <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">
+        Something went wrong
+      </h3>
+      <p className="text-body-sm text-[var(--color-text-secondary)] max-w-[300px]">
+        {error?.message || "An error occurred while loading data."}
+      </p>
+      {onRetry && (
+        <Button
+          variant="default"
+          className="mt-[var(--space-lg)]"
+          onClick={onRetry}
+        >
+          <Icon name="refresh-cw" className="mr-[var(--space-sm)] h-4 w-4" />
+          Try again
+        </Button>
+      )}
+    </div>
+  )
+})
+
+// Refetching indicator - subtle loading indicator shown during background refetch
+const DataTableRefetchingIndicator = React.memo(function DataTableRefetchingIndicator() {
+  return (
+    <div className="absolute top-0 left-0 right-0 h-[2px] overflow-hidden">
+      <div className="h-full w-full bg-[var(--color-background-brand)] animate-pulse" />
+    </div>
+  )
+})
+
 // Table toolbar with advanced filtering
 interface DataTableToolbarProps<_TData = any> {
   table: any
@@ -534,7 +696,7 @@ interface DataTableToolbarProps<_TData = any> {
   autocompleteMinCharacters?: number
 }
 
-function DataTableToolbar<TData>({
+const DataTableToolbar = React.memo(function DataTableToolbar<TData>({
   table,
   searchKey,
   searchPlaceholder = "Search...",
@@ -624,14 +786,14 @@ function DataTableToolbar<TData>({
       )}
     </div>
   )
-}
+}) as <TData>(props: DataTableToolbarProps<TData>) => React.ReactElement
 
 // Global faceting component that aggregates values from all faceted columns
 interface DataTableGlobalFacetingProps {
   table: any
 }
 
-function DataTableGlobalFaceting({ table }: DataTableGlobalFacetingProps) {
+const DataTableGlobalFaceting = React.memo(function DataTableGlobalFaceting({ table }: DataTableGlobalFacetingProps) {
   const [selectedValues, setSelectedValues] = React.useState<string[]>([])
 
   // Get all columns that have faceting enabled (have filterOptions in meta)
@@ -752,7 +914,7 @@ function DataTableGlobalFaceting({ table }: DataTableGlobalFacetingProps) {
       </PopoverContent>
     </Popover>
   )
-}
+})
 
 
 // Individual column filter component
@@ -760,7 +922,7 @@ interface DataTableFilterProps {
   column: any
 }
 
-function DataTableFilter({ column }: DataTableFilterProps) {
+const DataTableFilter = React.memo(function DataTableFilter({ column }: DataTableFilterProps) {
   const { filterVariant, filterOptions, label, placeholder } = column.columnDef.meta as ColumnMeta || {}
   const filterValue = column.getFilterValue()
 
@@ -898,7 +1060,7 @@ function DataTableFilter({ column }: DataTableFilterProps) {
       className="h-8 w-[150px]"
     />
   )
-}
+})
 
 // Draggable column header for reordering
 interface DraggableColumnHeaderProps {
@@ -907,7 +1069,7 @@ interface DraggableColumnHeaderProps {
   children: React.ReactNode
 }
 
-function DraggableColumnHeader({ header, enableColumnOrdering, children }: DraggableColumnHeaderProps) {
+const DraggableColumnHeader = React.memo(function DraggableColumnHeader({ header, enableColumnOrdering, children }: DraggableColumnHeaderProps) {
   const {
     attributes,
     listeners,
@@ -956,7 +1118,7 @@ function DraggableColumnHeader({ header, enableColumnOrdering, children }: Dragg
       )}
     </div>
   )
-}
+})
 
 // Settings menu component - integrates sorting, grouping, and column visibility
 interface DataTableSettingsMenuWrapperProps {
@@ -964,7 +1126,7 @@ interface DataTableSettingsMenuWrapperProps {
   enableGrouping?: boolean
 }
 
-function DataTableSettingsMenuWrapper({ table, enableGrouping = false }: DataTableSettingsMenuWrapperProps) {
+const DataTableSettingsMenuWrapper = React.memo(function DataTableSettingsMenuWrapper({ table, enableGrouping = false }: DataTableSettingsMenuWrapperProps) {
   // Extract sortable columns
   const sortableColumns = table.getAllColumns()
     .filter((col: any) => col.getCanSort())
@@ -1044,7 +1206,7 @@ function DataTableSettingsMenuWrapper({ table, enableGrouping = false }: DataTab
       onColumnVisibilityChange={handleColumnVisibilityChange}
     />
   )
-}
+})
 
 // Column header with sorting
 interface DataTableColumnHeaderProps<_TData = any, _TValue = any> extends React.HTMLAttributes<HTMLDivElement> {
@@ -1052,7 +1214,7 @@ interface DataTableColumnHeaderProps<_TData = any, _TValue = any> extends React.
   title: string
 }
 
-function DataTableColumnHeader<TData, TValue>({
+const DataTableColumnHeader = React.memo(function DataTableColumnHeader<TData, TValue>({
   column,
   title,
   className,
@@ -1099,7 +1261,7 @@ function DataTableColumnHeader<TData, TValue>({
       )}
     </div>
   )
-}
+}) as <TData, TValue>(props: DataTableColumnHeaderProps<TData, TValue>) => React.ReactElement
 
 // Pagination component
 interface DataTablePaginationProps<_TData = any> {
@@ -1107,13 +1269,17 @@ interface DataTablePaginationProps<_TData = any> {
   enableGrouping?: boolean
   hideChildrenForSingleItemGroups?: Record<string, boolean>
   footerLabel?: React.ReactNode
+  onNextPageHover?: () => void
+  onPreviousPageHover?: () => void
 }
 
-function DataTablePagination<TData>({
+const DataTablePagination = React.memo(function DataTablePagination<TData>({
   table,
   enableGrouping = false,
   hideChildrenForSingleItemGroups = {},
-  footerLabel
+  footerLabel,
+  onNextPageHover,
+  onPreviousPageHover,
 }: DataTablePaginationProps<TData>) {
   const currentPage = table.getState().pagination.pageIndex + 1
   const pageSize = table.getState().pagination.pageSize
@@ -1167,10 +1333,51 @@ function DataTablePagination<TData>({
         onPageChange={handlePageChange}
         onPageSizeChange={handlePageSizeChange}
         pageSizeOptions={[10, 25, 50, 100]}
+        onNextPageHover={onNextPageHover}
+        onPreviousPageHover={onPreviousPageHover}
       />
     </div>
   )
+}) as <TData>(props: DataTablePaginationProps<TData>) => React.ReactElement
+
+// Infinite scroll trigger component
+interface LoadMoreTriggerProps {
+  onLoadMore: () => void
+  isLoading?: boolean
 }
+
+const LoadMoreTrigger = React.memo(function LoadMoreTrigger({
+  onLoadMore,
+  isLoading
+}: LoadMoreTriggerProps) {
+  const ref = React.useRef<HTMLDivElement>(null)
+
+  React.useEffect(() => {
+    const element = ref.current
+    if (!element || isLoading) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          onLoadMore()
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [onLoadMore, isLoading])
+
+  return (
+    <div
+      ref={ref}
+      className="flex justify-center py-[var(--space-md)] border-t border-[var(--color-border-primary-subtle)]"
+    >
+      {isLoading && <Spinner size="sm" />}
+    </div>
+  )
+})
 
 // Border styling options
 export type BorderStyle = "vertical" | "horizontal" | "both" | "none"
@@ -1407,6 +1614,7 @@ function renderGroupDisplayContent(
   // Only show chevron button when there are 2 or more items to expand
   const chevronButton = shouldHideExpander ? null : row.subRows.length > 1 ? (
     <button
+      tabIndex={-1}
       onClick={row.getToggleExpandedHandler()}
       className="flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
     >
@@ -1574,6 +1782,13 @@ export interface DataTableProps<TData, TValue> {
   searchKey?: string
   searchPlaceholder?: string
   title?: string
+  /**
+   * Accessible caption/description for the table.
+   * Rendered as a visually hidden caption for screen readers.
+   * If not provided, falls back to `title` prop.
+   * @example "Product inventory listing with 50 items"
+   */
+  caption?: string
   className?: string
   // Responsive and sticky features
   stickyHeader?: boolean
@@ -1865,6 +2080,218 @@ export interface DataTableProps<TData, TValue> {
    * activeRowClassName="border-l-4 border-[var(--color-border-success)]"
    */
   activeRowClassName?: string
+
+  // === ROW SELECTION CHANGE CALLBACK ===
+  /**
+   * Callback when row selection changes.
+   * Called with the current selection state (map of row IDs to boolean).
+   * Enables external tracking of selection for bulk actions, analytics, etc.
+   *
+   * @example
+   * onRowSelectionChange={(selection) => {
+   *   const selectedIds = Object.keys(selection).filter(id => selection[id])
+   *   console.log('Selected rows:', selectedIds)
+   * }}
+   */
+  onRowSelectionChange?: (selection: Record<string, boolean>) => void
+
+  // === EXPANDED STATE CHANGE CALLBACK ===
+  /**
+   * Callback when expanded state changes.
+   * Called with the current expanded state.
+   * Enables lazy-loading of sub-component data when rows are expanded.
+   *
+   * @example
+   * onExpandedChange={(expanded) => {
+   *   // Fetch additional data for newly expanded rows
+   *   const expandedIds = Object.keys(expanded).filter(id => expanded[id])
+   *   fetchSubRowData(expandedIds)
+   * }}
+   */
+  onExpandedChange?: (expanded: ExpandedState) => void
+
+  // === PAGINATION PREFETCH CALLBACKS ===
+  /**
+   * Callback when user hovers over the next page button.
+   * Use for prefetching next page data (SWR pattern).
+   *
+   * @example
+   * onNextPageHover={() => prefetchNextPage()}
+   */
+  onNextPageHover?: () => void
+
+  /**
+   * Callback when user hovers over the previous page button.
+   * Use for prefetching previous page data.
+   *
+   * @example
+   * onPreviousPageHover={() => prefetchPreviousPage()}
+   */
+  onPreviousPageHover?: () => void
+
+  // === ROW UPDATE CALLBACK ===
+  /**
+   * Callback when a row's data is updated (e.g., via inline editing).
+   * Use for optimistic updates in custom cell renderers.
+   *
+   * @param rowId - The ID of the updated row
+   * @param columnId - The ID of the updated column
+   * @param value - The new value
+   * @param previousValue - The previous value (for rollback)
+   *
+   * @example
+   * onRowUpdate={(rowId, columnId, value, previousValue) => {
+   *   updateData(rowId, columnId, value)
+   *     .catch(() => rollback(rowId, columnId, previousValue))
+   * }}
+   */
+  onRowUpdate?: (
+    rowId: string,
+    columnId: string,
+    value: unknown,
+    previousValue: unknown
+  ) => void | Promise<void>
+
+  // === INFINITE SCROLL ===
+  /**
+   * Callback when user approaches the end of the data.
+   * Use for infinite scroll implementations.
+   *
+   * @param currentPage - Current page index (0-based)
+   *
+   * @example
+   * onLoadMore={(page) => fetchMoreData(page + 1)}
+   */
+  onLoadMore?: (currentPage: number) => void
+
+  /**
+   * Whether more data is available to load.
+   * When false, onLoadMore won't be triggered.
+   */
+  hasMoreData?: boolean
+
+  /**
+   * Whether data is currently being loaded.
+   * Shows loading indicator at bottom when true.
+   */
+  isLoadingMore?: boolean
+
+  // === ERROR HANDLING ===
+  /**
+   * Error object when data fetching fails.
+   * Displays error state UI with optional retry action.
+   */
+  error?: Error | null
+
+  /**
+   * Callback when user clicks retry in error state.
+   * If not provided, retry button is hidden.
+   */
+  onRetry?: () => void
+
+  /**
+   * Custom error component to replace default error UI.
+   */
+  errorComponent?: React.ReactNode
+
+  // === EMPTY STATE (No data at all) ===
+  /**
+   * Custom empty state when data array is empty AND no filters applied.
+   * Use for "no data exists yet" scenarios.
+   */
+  emptyState?: React.ReactNode
+
+  /**
+   * Title for default empty state UI.
+   * @default "No data"
+   */
+  emptyStateTitle?: string
+
+  /**
+   * Description for default empty state UI.
+   * @default "No items to display."
+   */
+  emptyStateDescription?: string
+
+  /**
+   * Icon name for empty state.
+   * @default "inbox"
+   */
+  emptyStateIcon?: string
+
+  /**
+   * Action button for empty state (e.g., "Add first item").
+   */
+  emptyStateAction?: {
+    label: string
+    onClick: () => void
+  }
+
+  // === NO RESULTS STATE (After filtering) ===
+  /**
+   * Custom state when filters/search return no results.
+   * Distinct from emptyState - used when data exists but is filtered out.
+   */
+  noResultsState?: React.ReactNode
+
+  /**
+   * Title for default no results UI.
+   * @default "No results found"
+   */
+  noResultsTitle?: string
+
+  /**
+   * Description for default no results UI.
+   * @default "Try adjusting your search or filters."
+   */
+  noResultsDescription?: string
+
+  /**
+   * Action for no results state (e.g., "Clear filters").
+   */
+  noResultsAction?: {
+    label: string
+    onClick: () => void
+  }
+
+  // === REFETCHING (SWR Pattern) ===
+  /**
+   * Indicates background refetch in progress.
+   * Shows subtle indicator instead of full skeleton.
+   * Keeps existing data visible during refetch.
+   */
+  isRefetching?: boolean
+
+  // === SERVER-SIDE MODE ===
+  /**
+   * Enable server-side sorting. When true:
+   * - Client-side sorting is disabled
+   * - onSortingChange is called when user sorts
+   * - Consumer fetches sorted data from server
+   */
+  manualSorting?: boolean
+
+  /**
+   * Enable server-side filtering. When true:
+   * - Client-side filtering is disabled
+   * - Filter change callbacks are called when filters change
+   * - Consumer fetches filtered data from server
+   */
+  manualFiltering?: boolean
+
+  /**
+   * Enable server-side pagination. When true:
+   * - Client-side pagination is disabled
+   * - onPaginationChange called when page changes
+   * - Requires rowCount prop for total pages
+   */
+  manualPagination?: boolean
+
+  /**
+   * Total row count from server (required for server-side pagination).
+   * Without this, pagination cannot calculate total pages.
+   */
+  rowCount?: number
 }
 
 export function DataTable<TData, TValue>({
@@ -1873,6 +2300,7 @@ export function DataTable<TData, TValue>({
   searchKey,
   searchPlaceholder,
   title,
+  caption,
   className,
   stickyHeader = false,
   stickyFirstColumn = false,
@@ -1946,6 +2374,38 @@ export function DataTable<TData, TValue>({
   // Active row props
   activeRowId,
   activeRowClassName,
+  // Callback props
+  onRowSelectionChange,
+  onExpandedChange,
+  onNextPageHover,
+  onPreviousPageHover,
+  onRowUpdate,
+  // Infinite scroll props
+  onLoadMore,
+  hasMoreData,
+  isLoadingMore,
+  // Error handling props
+  error,
+  onRetry,
+  errorComponent,
+  // Empty state props
+  emptyState,
+  emptyStateTitle = "No data",
+  emptyStateDescription = "No items to display.",
+  emptyStateIcon = "inbox",
+  emptyStateAction,
+  // No results state props
+  noResultsState,
+  noResultsTitle = "No results found",
+  noResultsDescription = "Try adjusting your search or filters.",
+  noResultsAction,
+  // Refetching props
+  isRefetching = false,
+  // Server-side mode props
+  manualSorting = false,
+  manualFiltering = false,
+  manualPagination = false,
+  rowCount,
 }: DataTableProps<TData, TValue>) {
   // Auto-enable responsive wrapper when sticky columns are used
   const computedEnableResponsiveWrapper =
@@ -1990,6 +2450,29 @@ export function DataTable<TData, TValue>({
   const [globalFilter, setGlobalFilter] = React.useState("")
   const [expanded, setExpanded] = React.useState<ExpandedState>(initialState?.expanded || {})
   const [rowPinning, setRowPinning] = React.useState(initialState?.rowPinning || { top: [], bottom: [] })
+
+  // Accessibility: aria-live announcement state
+  const [ariaLiveMessage, setAriaLiveMessage] = React.useState("")
+
+  // Keyboard navigation: Track focused cell position [rowIndex, colIndex]
+  // rowIndex: -1 means header row, 0+ means data rows
+  // colIndex: 0-based column index
+  const [focusedCell, setFocusedCell] = React.useState<[number, number]>([-1, 0])
+  const tableContainerRef = React.useRef<HTMLDivElement>(null)
+
+  // Call row selection change callback when selection changes
+  React.useEffect(() => {
+    if (onRowSelectionChange) {
+      onRowSelectionChange(rowSelection)
+    }
+  }, [rowSelection, onRowSelectionChange])
+
+  // Call expanded change callback when expanded state changes
+  React.useEffect(() => {
+    if (onExpandedChange) {
+      onExpandedChange(expanded)
+    }
+  }, [expanded, onExpandedChange])
 
   // Determine if controlled or uncontrolled
   const isSortingControlled = controlledSorting !== undefined
@@ -2168,8 +2651,7 @@ export function DataTable<TData, TValue>({
     }
   }, [borderStyle])
 
-  // Track which column header is being hovered for resize handle display
-  const [hoveredColumnIndex, setHoveredColumnIndex] = React.useState<number | null>(null)
+  // Note: Hover tracking for resize handles now uses CSS-only approach for better performance
 
   // Row click handler with smart default filtering
   const handleRowClick = React.useCallback((row: any, event: React.MouseEvent<HTMLTableRowElement>) => {
@@ -2310,6 +2792,7 @@ export function DataTable<TData, TValue>({
         id: 'select',
         header: ({ table }) => (
           <Checkbox
+            tabIndex={-1}
             checked={
               table.getIsAllPageRowsSelected() ||
               (table.getIsSomePageRowsSelected() && 'indeterminate')
@@ -2320,6 +2803,7 @@ export function DataTable<TData, TValue>({
         ),
         cell: ({ row }) => (
           <Checkbox
+            tabIndex={-1}
             checked={row.getIsSelected()}
             onCheckedChange={(value) => row.toggleSelected(!!value)}
             aria-label="Select row"
@@ -2371,6 +2855,11 @@ export function DataTable<TData, TValue>({
       columnOrder,
       pagination,
     },
+    // Server-side mode configuration
+    manualSorting: manualSorting,
+    manualFiltering: manualFiltering,
+    manualPagination: manualPagination,
+    rowCount: rowCount, // Required for server-side pagination
     enableRowSelection: enableRowSelection,
     enableColumnPinning: false, // Disable TanStack Table pinning - using CSS approach
     enableGlobalFilter: enableGlobalSearch, // Enable global filtering
@@ -2399,9 +2888,10 @@ export function DataTable<TData, TValue>({
     onColumnOrderChange: setColumnOrder,
     onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: enableVirtualization ? undefined : getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    // Conditionally include row models based on manual mode
+    getFilteredRowModel: manualFiltering ? undefined : getFilteredRowModel(),
+    getPaginationRowModel: (manualPagination || enableVirtualization) ? undefined : getPaginationRowModel(),
+    getSortedRowModel: manualSorting ? undefined : getSortedRowModel(),
     getExpandedRowModel: enableExpanding ? getExpandedRowModel() : undefined,
     getGroupedRowModel: enableGrouping ? getGroupedRowModel() : undefined,
     getFacetedRowModel: getFacetedRowModel(),
@@ -2443,7 +2933,7 @@ export function DataTable<TData, TValue>({
     // NOTE: Deliberately NOT including 'table' to avoid re-running on every render
     // We access table methods inside but only re-run when these stable values change:
     pagination.pageSize,
-    JSON.stringify(grouping), // Stringify for deep comparison
+    grouping.join(','), // Join for efficient deep comparison
     table.getPrePaginationRowModel().rows.length, // Row count changes
   ])
 
@@ -2522,6 +3012,69 @@ export function DataTable<TData, TValue>({
       onTableReady(table)
     }
   }, [table, onTableReady])
+
+  // Accessibility: Announce sorting changes to screen readers
+  React.useEffect(() => {
+    if (sorting.length > 0) {
+      const sortedColumn = sorting[0]
+      const columnDef = columns.find(
+        (col) => (col as any).id === sortedColumn.id || (col as any).accessorKey === sortedColumn.id
+      )
+      const columnLabel = (columnDef as any)?.meta?.label || (columnDef as any)?.header || sortedColumn.id
+      const direction = sortedColumn.desc ? 'descending' : 'ascending'
+      setAriaLiveMessage(`Table sorted by ${columnLabel}, ${direction}`)
+    }
+  }, [sorting, columns])
+
+  // Accessibility: Announce filter results to screen readers
+  React.useEffect(() => {
+    if (debouncedGlobalFilter) {
+      const resultCount = table.getFilteredRowModel().rows.length
+      setAriaLiveMessage(`${resultCount} result${resultCount !== 1 ? 's' : ''} found for "${debouncedGlobalFilter}"`)
+    }
+  }, [debouncedGlobalFilter, table])
+
+  // Accessibility: Announce selection changes to screen readers
+  React.useEffect(() => {
+    const selectedCount = Object.keys(rowSelection).filter((key) => rowSelection[key as keyof typeof rowSelection]).length
+    if (selectedCount > 0) {
+      setAriaLiveMessage(`${selectedCount} row${selectedCount !== 1 ? 's' : ''} selected`)
+    }
+  }, [rowSelection])
+
+  // Keyboard navigation: Keep focus valid when data changes
+  React.useEffect(() => {
+    const [currentRow, currentCol] = focusedCell
+    const rows = table.getRowModel().rows
+    const visibleColumns = table.getVisibleLeafColumns()
+
+    // Clamp row index to valid range
+    let newRow = currentRow
+    let newCol = currentCol
+
+    // If focused on data row and row no longer exists, clamp to last row
+    if (currentRow >= 0 && currentRow >= rows.length) {
+      newRow = Math.max(rows.length - 1, -1) // -1 if no rows, otherwise last row
+    }
+
+    // Clamp column index to valid range
+    if (currentCol >= visibleColumns.length) {
+      newCol = Math.max(visibleColumns.length - 1, 0)
+    }
+
+    // Update if changed
+    if (newRow !== currentRow || newCol !== currentCol) {
+      setFocusedCell([newRow, newCol])
+    }
+  }, [data.length, table, focusedCell])
+
+  // Keyboard navigation: Announce pagination changes
+  React.useEffect(() => {
+    const totalPages = table.getPageCount()
+    if (totalPages > 1) {
+      setAriaLiveMessage(`Page ${pagination.pageIndex + 1} of ${totalPages}`)
+    }
+  }, [pagination.pageIndex, table])
 
   // Highlighting helper functions
   const highlightMatches = React.useCallback((text: string, searchTerm: string): React.ReactNode => {
@@ -2797,6 +3350,151 @@ export function DataTable<TData, TValue>({
     }
   }
 
+  // Keyboard navigation handler for WAI-ARIA grid pattern
+  const handleTableKeyDown = React.useCallback((event: React.KeyboardEvent) => {
+    const [currentRow, currentCol] = focusedCell
+    const visibleColumns = table.getVisibleLeafColumns()
+    const rows = table.getRowModel().rows
+    const totalCols = visibleColumns.length
+    const totalRows = rows.length
+
+    // -1 = header row, 0+ = data rows
+    const minRow = -1
+    const maxRow = totalRows - 1
+
+    let newRow = currentRow
+    let newCol = currentCol
+    let handled = false
+
+    switch (event.key) {
+      case 'ArrowRight':
+        if (currentCol < totalCols - 1) {
+          newCol = currentCol + 1
+          handled = true
+        }
+        break
+      case 'ArrowLeft':
+        if (currentCol > 0) {
+          newCol = currentCol - 1
+          handled = true
+        }
+        break
+      case 'ArrowDown':
+        if (currentRow < maxRow) {
+          newRow = currentRow + 1
+          handled = true
+        }
+        break
+      case 'ArrowUp':
+        if (currentRow > minRow) {
+          newRow = currentRow - 1
+          handled = true
+        }
+        break
+      case 'Home':
+        if (event.ctrlKey || event.metaKey) {
+          // Ctrl+Home: Go to first cell in table (header row, first column)
+          newRow = minRow
+          newCol = 0
+        } else {
+          // Home: Go to first cell in current row
+          newCol = 0
+        }
+        handled = true
+        break
+      case 'End':
+        if (event.ctrlKey || event.metaKey) {
+          // Ctrl+End: Go to last cell in table (last row, last column)
+          newRow = maxRow
+          newCol = totalCols - 1
+        } else {
+          // End: Go to last cell in current row
+          newCol = totalCols - 1
+        }
+        handled = true
+        break
+      case 'PageDown':
+        // Move down by visible page (approximate)
+        newRow = Math.min(currentRow + 10, maxRow)
+        handled = true
+        break
+      case 'PageUp':
+        // Move up by visible page (approximate)
+        newRow = Math.max(currentRow - 10, minRow)
+        handled = true
+        break
+      case 'Enter':
+      case ' ':
+        // Header row: Toggle sort or select all
+        if (currentRow === -1) {
+          const column = visibleColumns[currentCol]
+          // Space on selection column header: Toggle all
+          if (column?.id === 'select' && enableRowSelection && event.key === ' ') {
+            table.toggleAllPageRowsSelected()
+            handled = true
+          } else if (column?.getCanSort()) {
+            column.toggleSorting()
+            handled = true
+          }
+        } else {
+          // Data row: Toggle expand if expandable, or trigger row click
+          const row = rows[currentRow]
+          if (row) {
+            if ((enableExpanding || enableGrouping) && row.getCanExpand()) {
+              row.toggleExpanded()
+              handled = true
+            } else if (enableRowSelection && event.key === ' ') {
+              // Space on data row: Toggle selection
+              row.toggleSelected()
+              handled = true
+            }
+            // Enter on data row: Trigger row click if clickable (and not already handled by expand)
+            if (!handled && event.key === 'Enter' && onRowClick && getRowClickableState(row)) {
+              handleRowClick(row, event as any)
+              handled = true
+            }
+          }
+        }
+        break
+      case 'Escape':
+        // Clear focus (blur the table)
+        if (document.activeElement instanceof HTMLElement) {
+          document.activeElement.blur()
+        }
+        handled = true
+        break
+    }
+
+    if (handled) {
+      event.preventDefault()
+      event.stopPropagation()
+
+      // Update focused cell state
+      if (newRow !== currentRow || newCol !== currentCol) {
+        setFocusedCell([newRow, newCol])
+
+        // Focus the new cell element
+        const cellSelector = newRow === -1
+          ? `[data-header-col="${newCol}"]`
+          : `[data-row="${newRow}"][data-col="${newCol}"]`
+        const cellElement = tableContainerRef.current?.querySelector(cellSelector) as HTMLElement
+        if (cellElement) {
+          cellElement.focus()
+        }
+      }
+    }
+  }, [focusedCell, table, enableExpanding, enableGrouping, enableRowSelection])
+
+  // Track focused cell when table receives focus (don't auto-focus programmatically)
+  const handleTableFocus = React.useCallback((event: React.FocusEvent) => {
+    // Only update state if focus is coming from outside the table
+    // Don't programmatically focus - let the browser handle it naturally
+    // This prevents focus ring from showing on mouse clicks
+    if (!tableContainerRef.current?.contains(event.relatedTarget as Node)) {
+      setFocusedCell([-1, 0])
+    }
+  }, [])
+
   // Virtualization setup - TEMPORARILY DISABLED
   // const virtualContainerRef = React.useRef<HTMLDivElement>(null)
   // const rows = React.useMemo(() => {
@@ -2809,38 +3507,70 @@ export function DataTable<TData, TValue>({
   //   return null
   // }, [])
 
-  // Pure CSS sticky positioning with visual separators
-  const getPureCSSPinningStyles = (column: any, isHeader = false, showRowBorder = true): React.CSSProperties => {
+  // Pre-compute sticky column positions for performance (avoids O(n) calculations per cell)
+  const stickyColumnData = React.useMemo(() => {
+    const allColumns = table.getVisibleFlatColumns()
+    const data = new Map<string, {
+      isLeftSticky: boolean
+      isRightSticky: boolean
+      leftPosition: number
+      rightPosition: number
+      isRightmostLeftSticky: boolean
+      isLeftmostRightSticky: boolean
+      columnIndex: number
+    }>()
+
+    // Calculate cumulative left positions
+    let cumulativeLeft = 0
+    allColumns.forEach((col, index) => {
+      const isLeftSticky = index < effectiveLeftSticky
+      const isRightSticky = index >= allColumns.length - effectiveRightSticky
+      const isRightmostLeftSticky = isLeftSticky && index === effectiveLeftSticky - 1
+      const isLeftmostRightSticky = isRightSticky && index === allColumns.length - effectiveRightSticky
+
+      data.set(col.id, {
+        isLeftSticky,
+        isRightSticky,
+        leftPosition: cumulativeLeft,
+        rightPosition: 0, // Will be calculated below
+        isRightmostLeftSticky,
+        isLeftmostRightSticky,
+        columnIndex: index,
+      })
+
+      cumulativeLeft += col.getSize()
+    })
+
+    // Calculate cumulative right positions (need to traverse from right to left)
+    let cumulativeRight = 0
+    for (let i = allColumns.length - 1; i >= 0; i--) {
+      const col = allColumns[i]
+      const colData = data.get(col.id)
+      if (colData) {
+        colData.rightPosition = cumulativeRight
+      }
+      cumulativeRight += col.getSize()
+    }
+
+    return { data, allColumns }
+  }, [table.getVisibleFlatColumns(), effectiveLeftSticky, effectiveRightSticky])
+
+  // Pure CSS sticky positioning with visual separators (now uses pre-computed positions)
+  const getPureCSSPinningStyles = (column: any, isHeader = false, _showRowBorder = true): React.CSSProperties => {
     // Handle nested header configs that don't have column methods
     if (!column || typeof column.getSize !== 'function') {
       return {}
     }
 
-    // Get all visible columns in their display order
-    const allColumns = table.getVisibleFlatColumns()
-    const currentColumnIndex = allColumns.findIndex(col => col.id === column.id)
-
-    // Determine if this column should be sticky based on our props
-    const isLeftSticky = currentColumnIndex < effectiveLeftSticky
-    const isRightSticky = currentColumnIndex >= allColumns.length - effectiveRightSticky
-
-    if (!isLeftSticky && !isRightSticky) {
+    // Use pre-computed sticky data for O(1) lookup instead of O(n) calculation
+    const colData = stickyColumnData.data.get(column.id)
+    if (!colData || (!colData.isLeftSticky && !colData.isRightSticky)) {
       return {}
     }
 
-    // Detect edge columns for visual separators
-    const isRightmostLeftSticky = isLeftSticky && currentColumnIndex === effectiveLeftSticky - 1
-    const isLeftmostRightSticky = isRightSticky && currentColumnIndex === allColumns.length - effectiveRightSticky
+    const { isLeftSticky, isRightSticky, leftPosition, rightPosition, isRightmostLeftSticky, isLeftmostRightSticky } = colData
 
     if (isLeftSticky) {
-      // Calculate position for left sticky columns
-      let leftPosition = 0
-      for (let i = 0; i < currentColumnIndex; i++) {
-        leftPosition += allColumns[i].getSize()
-      }
-
-      console.log(`CSS Left sticky ${column.id}: index=${currentColumnIndex}, leftPosition=${leftPosition}px, isRightmostLeft=${isRightmostLeftSticky}`)
-
       const baseStyles = {
         position: 'sticky' as const,
         left: `${leftPosition}px`,
@@ -2854,10 +3584,8 @@ export function DataTable<TData, TValue>({
       if (isRightmostLeftSticky && isHeader) {
         return {
           ...baseStyles,
-          // 3px border on right edge using linear gradient
-          // Background goes from grey-25 to border color in last 3px
           backgroundImage: 'linear-gradient(to right, var(--grey-25) calc(100% - 3px), var(--color-border-primary-medium) calc(100% - 3px), var(--color-border-primary-medium) 100%)',
-          backgroundColor: 'transparent', // Override to let gradient show
+          backgroundColor: 'transparent',
         }
       }
 
@@ -2865,16 +3593,6 @@ export function DataTable<TData, TValue>({
     }
 
     if (isRightSticky) {
-      // Calculate position for right sticky columns
-      let rightPosition = 0
-
-      // Calculate from the right edge
-      for (let i = currentColumnIndex + 1; i < allColumns.length; i++) {
-        rightPosition += allColumns[i].getSize()
-      }
-
-      console.log(`CSS Right sticky ${column.id}: index=${currentColumnIndex}, rightPosition=${rightPosition}px, isLeftmostRight=${isLeftmostRightSticky}`)
-
       const baseStyles = {
         position: 'sticky' as const,
         right: `${rightPosition}px`,
@@ -2888,9 +3606,8 @@ export function DataTable<TData, TValue>({
       if (isLeftmostRightSticky && isHeader) {
         return {
           ...baseStyles,
-          // 3px border on left edge using linear gradient
           backgroundImage: 'linear-gradient(to right, var(--color-border-primary-medium) 0, var(--color-border-primary-medium) 3px, var(--grey-25) 3px)',
-          backgroundColor: 'transparent', // Override to let gradient show
+          backgroundColor: 'transparent',
         }
       }
 
@@ -2900,52 +3617,39 @@ export function DataTable<TData, TValue>({
     return {}
   }
 
-  // Helper function to get Tailwind border classes for sticky column edges (body cells only)
+  // Helper function to get Tailwind border classes for sticky column edges (uses pre-computed data)
   const getStickyBorderClasses = (column: any): string => {
     if (!column || typeof column.getSize !== 'function') {
       return ''
     }
 
-    const allColumns = table.getVisibleFlatColumns()
-    const currentColumnIndex = allColumns.findIndex(col => col.id === column.id)
+    const colData = stickyColumnData.data.get(column.id)
+    if (!colData) return ''
 
-    const isLeftSticky = currentColumnIndex < effectiveLeftSticky
-    const isRightSticky = currentColumnIndex >= allColumns.length - effectiveRightSticky
-
-    const isRightmostLeftSticky = isLeftSticky && currentColumnIndex === effectiveLeftSticky - 1
-    const isLeftmostRightSticky = isRightSticky && currentColumnIndex === allColumns.length - effectiveRightSticky
-
-    if (isRightmostLeftSticky) {
+    if (colData.isRightmostLeftSticky) {
       return 'border-r-[3px] border-[var(--color-border-primary-medium)]'
     }
 
-    if (isLeftmostRightSticky) {
+    if (colData.isLeftmostRightSticky) {
       return 'border-l-[3px] border-[var(--color-border-primary-medium)]'
     }
 
     return ''
   }
 
-  // Helper to check if column has sticky border (for disabling regular border)
+  // Helper to check if column has sticky border (uses pre-computed data)
   const hasStickyBorder = (column: any): boolean => {
     if (!column || typeof column.getSize !== 'function') {
       return false
     }
 
-    const allColumns = table.getVisibleFlatColumns()
-    const currentColumnIndex = allColumns.findIndex(col => col.id === column.id)
+    const colData = stickyColumnData.data.get(column.id)
+    if (!colData) return false
 
-    const isLeftSticky = currentColumnIndex < effectiveLeftSticky
-    const isRightSticky = currentColumnIndex >= allColumns.length - effectiveRightSticky
-
-    const isRightmostLeftSticky = isLeftSticky && currentColumnIndex === effectiveLeftSticky - 1
-    const isLeftmostRightSticky = isRightSticky && currentColumnIndex === allColumns.length - effectiveRightSticky
-
-    return isRightmostLeftSticky || isLeftmostRightSticky
+    return colData.isRightmostLeftSticky || colData.isLeftmostRightSticky
   }
 
-  // Helper to check if column should have right border disabled
-  // (for last non-sticky column when right-sticky columns exist)
+  // Helper to check if column should have right border disabled (uses pre-computed data)
   const shouldDisableRightBorder = (column: any): boolean => {
     if (!column || typeof column.getSize !== 'function') {
       return false
@@ -2956,21 +3660,18 @@ export function DataTable<TData, TValue>({
       return false
     }
 
-    const allColumns = table.getVisibleFlatColumns()
-    const currentColumnIndex = allColumns.findIndex(col => col.id === column.id)
+    const colData = stickyColumnData.data.get(column.id)
+    if (!colData) return false
 
     // Check if this is the last non-sticky column (immediately before first right-sticky)
-    const isLastNonSticky = currentColumnIndex === allColumns.length - effectiveRightSticky - 1
+    const isLastNonSticky = colData.columnIndex === stickyColumnData.allColumns.length - effectiveRightSticky - 1
 
     return isLastNonSticky
   }
 
   // Helper to get resize handle classes (visible when resizing enabled + no vertical borders)
   const getResizeHandleClasses = (
-    column: any,
-    currentIndex: number,
-    isDirectHover: boolean,
-    isNextColumnHovered: boolean
+    column: any
   ): string => {
     if (!enableColumnResizing || !column.getCanResize()) {
       return ''
@@ -2982,14 +3683,12 @@ export function DataTable<TData, TValue>({
       return ''
     }
 
-    // Show handle if current column is hovered OR if next column is hovered
-    const shouldShowHandle = isDirectHover || isNextColumnHovered
-
+    // Use CSS-only hover for better performance (avoids full table re-render on hover)
     return cn(
       "after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2",
       "after:w-[2px] after:h-[24px] after:rounded-[2px]",
       "after:bg-[var(--color-border-primary-medium)]",
-      shouldShowHandle ? "after:opacity-100" : "after:opacity-0",
+      "after:opacity-0 hover:after:opacity-100",
       "after:transition-opacity after:pointer-events-none"
     )
   }
@@ -3036,16 +3735,21 @@ export function DataTable<TData, TValue>({
       )}
       
       {/* Table section with responsive wrapper and sticky features */}
-      <div className={cn(
-        "relative",
-        computedEnableResponsiveWrapper && [
-          "overflow-x-auto",
-          "scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[var(--color-border-primary-subtle)]",
-          "hover:scrollbar-thumb-[var(--color-border-primary)]",
-          // Touch-friendly scrollbar
-          "max-sm:scrollbar-none",
-        ]
-      )}>
+      <div
+        ref={tableContainerRef}
+        onKeyDown={handleTableKeyDown}
+        onFocus={handleTableFocus}
+        className={cn(
+          "relative",
+          computedEnableResponsiveWrapper && [
+            "overflow-x-auto",
+            "scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[var(--color-border-primary-subtle)]",
+            "hover:scrollbar-thumb-[var(--color-border-primary)]",
+            // Touch-friendly scrollbar
+            "max-sm:scrollbar-none",
+          ]
+        )}
+      >
         {/* Scroll indicators */}
         {showScrollIndicators && (
           <>
@@ -3054,8 +3758,22 @@ export function DataTable<TData, TValue>({
           </>
         )}
 
+        {/* Accessibility: aria-live region for screen reader announcements */}
+        <div
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          className="sr-only"
+        >
+          {ariaLiveMessage}
+        </div>
+
         <Table
           ref={tableRef}
+          role="grid"
+          aria-label={caption || title}
+          aria-rowcount={data.length}
+          aria-colcount={table.getVisibleLeafColumns().length}
           className={cn(
             "border-separate border-spacing-0", // Required for sticky columns to work properly
             enableColumnResizing && "table-fixed" // Fixed layout for column resizing
@@ -3129,13 +3847,22 @@ export function DataTable<TData, TValue>({
 
                     const hasSticky = hasStickyBorder(header.column)
 
-                    // Calculate hover states for resize handle
-                    const isDirectHover = hoveredColumnIndex === index
-                    const isNextColumnHovered = hoveredColumnIndex === index + 1
-
                     return (
                       <TableHead
                         key={header.id}
+                        scope="col"
+                        aria-sort={
+                          header.column.getCanSort()
+                            ? header.column.getIsSorted()
+                              ? header.column.getIsSorted() === 'desc'
+                                ? 'descending'
+                                : 'ascending'
+                              : 'none'
+                            : undefined
+                        }
+                        aria-colindex={index + 1}
+                        data-header-col={index}
+                        tabIndex={focusedCell[0] === -1 && focusedCell[1] === index ? 0 : -1}
                         showBorder={
                           isLastHeader
                             ? false
@@ -3145,13 +3872,13 @@ export function DataTable<TData, TValue>({
                                 ? false
                                 : borderSettings.showCellBorder
                         }
-                        onMouseEnter={() => setHoveredColumnIndex(index)}
-                        onMouseLeave={() => setHoveredColumnIndex(null)}
                         className={cn(
                           stickyHeader && "z-20",
                           (effectiveLeftSticky > 0 || effectiveRightSticky > 0) && "z-30",
                           enableColumnResizing && "relative",
-                          getResizeHandleClasses(header.column, index, isDirectHover, isNextColumnHovered)
+                          getResizeHandleClasses(header.column),
+                          // Focus ring for keyboard navigation
+                          "focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--color-border-brand-bold)]"
                         )}
                         style={{
                           ...pinningStyles,
@@ -3204,13 +3931,22 @@ export function DataTable<TData, TValue>({
                     const isLastHeader = index === headerGroup.headers.length - 1
                     const hasSticky = hasStickyBorder(header.column)
 
-                    // Calculate hover states for resize handle
-                    const isDirectHover = hoveredColumnIndex === index
-                    const isNextColumnHovered = hoveredColumnIndex === index + 1
-
                     return (
                       <TableHead
                         key={header.id}
+                        scope="col"
+                        aria-sort={
+                          header.column.getCanSort()
+                            ? header.column.getIsSorted()
+                              ? header.column.getIsSorted() === 'desc'
+                                ? 'descending'
+                                : 'ascending'
+                              : 'none'
+                            : undefined
+                        }
+                        aria-colindex={index + 1}
+                        data-header-col={index}
+                        tabIndex={focusedCell[0] === -1 && focusedCell[1] === index ? 0 : -1}
                         showBorder={
                           isLastHeader
                             ? false
@@ -3220,8 +3956,6 @@ export function DataTable<TData, TValue>({
                                 ? false
                                 : borderSettings.showCellBorder
                         }
-                        onMouseEnter={() => setHoveredColumnIndex(index)}
-                        onMouseLeave={() => setHoveredColumnIndex(null)}
                         className={cn(
                           stickyHeader && "z-20",
                           (effectiveLeftSticky > 0 || effectiveRightSticky > 0) && "z-30",
@@ -3229,7 +3963,9 @@ export function DataTable<TData, TValue>({
                           enableColumnOrdering && "group",
                           !showHeader && index === 0 && "rounded-tl-lg",
                           !showHeader && index === headerGroup.headers.length - 1 && "rounded-tr-lg",
-                          getResizeHandleClasses(header.column, index, isDirectHover, isNextColumnHovered)
+                          getResizeHandleClasses(header.column),
+                          // Focus ring for keyboard navigation
+                          "focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--color-border-brand-bold)]"
                         )}
                         style={{
                           ...pinningStyles,
@@ -3273,7 +4009,33 @@ export function DataTable<TData, TValue>({
             )}
           </TableHeader>
           <TableBody>
-            {isLoading ? (
+            {/* Refetching indicator - shows when background refetch is in progress */}
+            {isRefetching && !isLoading && data.length > 0 && (
+              <tr className="absolute top-0 left-0 right-0 z-50 h-0">
+                <td colSpan={table.getVisibleLeafColumns().length} className="p-0">
+                  <DataTableRefetchingIndicator />
+                </td>
+              </tr>
+            )}
+            {/* Error state */}
+            {error ? (
+              <TableRow showBorder={false} className="h-[300px]">
+                <TableCell
+                  colSpan={table.getVisibleLeafColumns().length}
+                  className="text-center"
+                  showBorder={false}
+                  showRowBorder={false}
+                  verticalAlign="middle"
+                >
+                  {errorComponent || (
+                    <DataTableErrorState
+                      error={error}
+                      onRetry={onRetry}
+                    />
+                  )}
+                </TableCell>
+              </TableRow>
+            ) : isLoading && data.length === 0 ? (
               <DataTableSkeleton
                 columns={table.getVisibleLeafColumns().length}
                 rows={computedLoadingRowCount}
@@ -3302,6 +4064,9 @@ export function DataTable<TData, TValue>({
                     <TableRow
                       data-state={row.getIsSelected() && "selected"}
                       showBorder={borderSettings.showRowBorder}
+                      aria-rowindex={rowIndex + 2} // +2 because 1 is header row and aria-rowindex is 1-based
+                      aria-selected={enableRowSelection ? row.getIsSelected() : undefined}
+                      aria-expanded={row.getCanExpand() ? row.getIsExpanded() : undefined}
                       className={cn(
                         "group",
                         // Selected row styling
@@ -3332,14 +4097,7 @@ export function DataTable<TData, TValue>({
                         height: resolveRowHeight(row.depth, nestedRowStyling)
                       }}
                       onClick={onRowClick && getRowClickableState(row) ? (e) => handleRowClick(row, e) : undefined}
-                      onKeyDown={(e) => {
-                        if (onRowClick && getRowClickableState(row) && (e.key === 'Enter' || e.key === ' ')) {
-                          e.preventDefault()
-                          handleRowClick(row, e as any)
-                        }
-                      }}
-                      tabIndex={onRowClick && getRowClickableState(row) ? 0 : undefined}
-                      role={onRowClick && getRowClickableState(row) ? "button" : undefined}
+                      role="row"
                       aria-label={onRowClick && getRowClickableState(row) ? `View details for row ${row.id}` : undefined}
                       aria-current={isActiveRow(row) ? "true" : undefined}
                     >
@@ -3389,6 +4147,11 @@ export function DataTable<TData, TValue>({
                         return (
                           <TableCell
                             key={cell.id}
+                            role="gridcell"
+                            aria-colindex={index + 1}
+                            data-row={rowIndex}
+                            data-col={index}
+                            tabIndex={focusedCell[0] === rowIndex && focusedCell[1] === index ? 0 : -1}
                             showBorder={
                               hasStickyBorder(cell.column)
                                 ? false
@@ -3423,7 +4186,9 @@ export function DataTable<TData, TValue>({
                               // Section header background
                               isSectionHeader && "bg-[var(--blue-50)]",
                               // Remove bottom border from first column child rows (except last)
-                              shouldRemoveBottomBorder && "![box-shadow:none]"
+                              shouldRemoveBottomBorder && "![box-shadow:none]",
+                              // Focus ring for keyboard navigation
+                              "focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--color-border-brand-bold)]"
                             )}
                             style={{
                               ...pinningStyles,
@@ -3478,6 +4243,7 @@ export function DataTable<TData, TValue>({
                                 {/* Expand/Collapse button for first cell */}
                                 {isFirstCell && canExpand && (
                                   <button
+                                    tabIndex={-1}
                                     onClick={row.getToggleExpandedHandler()}
                                     className="flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                   >
@@ -3492,6 +4258,7 @@ export function DataTable<TData, TValue>({
                                   <div className="flex items-center gap-1">
                                     {row.getIsPinned() !== 'top' && (
                                       <button
+                                        tabIndex={-1}
                                         onClick={() => row.pin('top')}
                                         className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                         title="Pin to top"
@@ -3501,6 +4268,7 @@ export function DataTable<TData, TValue>({
                                     )}
                                     {row.getIsPinned() !== 'bottom' && (
                                       <button
+                                        tabIndex={-1}
                                         onClick={() => row.pin('bottom')}
                                         className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                         title="Pin to bottom"
@@ -3510,6 +4278,7 @@ export function DataTable<TData, TValue>({
                                     )}
                                     {row.getIsPinned() && (
                                       <button
+                                        tabIndex={-1}
                                         onClick={() => row.pin(false)}
                                         className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                         title="Unpin row"
@@ -3628,8 +4397,7 @@ export function DataTable<TData, TValue>({
                           return "" // Default background
                         }
 
-                        // Calculate max depth to determine distance from leaf
-                        const maxDepth = calculateMaxDepth(table.getRowModel().rows)
+                        // Use memoized maxDepth to determine distance from leaf
                         const distanceFromLeaf = maxDepth - row.depth
 
                         // Alternate colors based on distance from leaf
@@ -3656,14 +4424,7 @@ export function DataTable<TData, TValue>({
                       onRowClick && getRowClickableState(row) && (clickableRowClassName || "cursor-pointer hover:[background-image:linear-gradient(rgba(0,0,0,0.02),rgba(0,0,0,0.02))]")
                     )}
                     onClick={onRowClick && getRowClickableState(row) ? (e) => handleRowClick(row, e) : undefined}
-                    onKeyDown={(e) => {
-                      if (onRowClick && getRowClickableState(row) && (e.key === 'Enter' || e.key === ' ')) {
-                        e.preventDefault()
-                        handleRowClick(row, e as any)
-                      }
-                    }}
-                    tabIndex={onRowClick && getRowClickableState(row) ? 0 : undefined}
-                    role={onRowClick && getRowClickableState(row) ? "button" : undefined}
+                    role="row"
                     aria-label={onRowClick && getRowClickableState(row) ? `View details for row ${row.id}` : undefined}
                     aria-current={isActiveRow(row) ? "true" : undefined}
                   >
@@ -3713,6 +4474,11 @@ export function DataTable<TData, TValue>({
                       return (
                         <TableCell
                           key={cell.id}
+                          role="gridcell"
+                          aria-colindex={index + 1}
+                          data-row={rowIndex}
+                          data-col={index}
+                          tabIndex={focusedCell[0] === rowIndex && focusedCell[1] === index ? 0 : -1}
                           showBorder={borderSettings.showCellBorder}
                           showRowBorder={borderSettings.showRowBorder}
                           verticalAlign={cell.column.columnDef.meta?.verticalAlign || defaultVerticalAlign}
@@ -3720,6 +4486,8 @@ export function DataTable<TData, TValue>({
                           className={cn(
                             // Active row indicator on first cell
                             isFirstCell && isActiveRow(row) && (activeRowClassName || getActiveRowClasses(borderSettings.showRowBorder)),
+                            // Focus ring for keyboard navigation
+                            "focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--color-border-brand-bold)]",
                             // Sticky columns need higher z-index and explicit backgrounds
                             Object.keys(pinningStyles).length > 0 && [
                               "z-10",
@@ -3752,8 +4520,7 @@ export function DataTable<TData, TValue>({
                                   return "" // Default background
                                 }
 
-                                // Calculate max depth to determine distance from leaf
-                                const maxDepth = calculateMaxDepth(table.getRowModel().rows)
+                                // Use memoized maxDepth to determine distance from leaf
                                 const distanceFromLeaf = maxDepth - row.depth
 
                                 // Alternate colors based on distance from leaf
@@ -3928,17 +4695,56 @@ export function DataTable<TData, TValue>({
                 })
               })()
             ) : (
-              <TableRow showBorder={borderSettings.showRowBorder} className="h-[400px]">
-                <TableCell
-                  colSpan={memoizedColumns.length}
-                  className="text-center"
-                  showBorder={borderSettings.showCellBorder}
-                  showRowBorder={borderSettings.showRowBorder}
-                  verticalAlign={defaultVerticalAlign}
-                >
-                  No results
-                </TableCell>
-              </TableRow>
+              // Empty or no results state
+              (() => {
+                // Determine if filters are applied (for distinguishing empty vs no results)
+                const hasFilters = columnFilters.length > 0 || globalFilter !== ''
+
+                if (hasFilters) {
+                  // Filters applied but no results - show "no results" state
+                  return (
+                    <TableRow showBorder={false} className="h-[300px]">
+                      <TableCell
+                        colSpan={memoizedColumns.length}
+                        className="text-center"
+                        showBorder={false}
+                        showRowBorder={false}
+                        verticalAlign="middle"
+                      >
+                        {noResultsState || (
+                          <DataTableNoResultsState
+                            title={noResultsTitle}
+                            description={noResultsDescription}
+                            action={noResultsAction}
+                          />
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  )
+                }
+
+                // No filters and no data - show "empty" state
+                return (
+                  <TableRow showBorder={false} className="h-[300px]">
+                    <TableCell
+                      colSpan={memoizedColumns.length}
+                      className="text-center"
+                      showBorder={false}
+                      showRowBorder={false}
+                      verticalAlign="middle"
+                    >
+                      {emptyState || (
+                        <DataTableEmptyState
+                          title={emptyStateTitle}
+                          description={emptyStateDescription}
+                          icon={emptyStateIcon}
+                          action={emptyStateAction}
+                        />
+                      )}
+                    </TableCell>
+                  </TableRow>
+                )
+              })()
             )}
           </TableBody>
         </Table>
@@ -3952,8 +4758,18 @@ export function DataTable<TData, TValue>({
             enableGrouping={enableGrouping}
             hideChildrenForSingleItemGroups={hideChildrenForSingleItemGroups}
             footerLabel={footerLabel}
+            onNextPageHover={onNextPageHover}
+            onPreviousPageHover={onPreviousPageHover}
           />
         </div>
+      )}
+
+      {/* Infinite scroll trigger */}
+      {onLoadMore && hasMoreData && (
+        <LoadMoreTrigger
+          onLoadMore={() => onLoadMore(pagination.pageIndex)}
+          isLoading={isLoadingMore}
+        />
       )}
       </div>
     </DndContext>
