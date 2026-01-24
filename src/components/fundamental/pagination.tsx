@@ -18,6 +18,10 @@ export interface PaginationProps extends React.HTMLAttributes<HTMLDivElement> {
   onPageChange: (page: number) => void;
   onPageSizeChange: (pageSize: number) => void;
   pageSizeOptions?: number[];
+  /** Called when hovering over next page button - useful for prefetching */
+  onNextPageHover?: () => void;
+  /** Called when hovering over previous page button - useful for prefetching */
+  onPreviousPageHover?: () => void;
 }
 
 const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
@@ -30,6 +34,8 @@ const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
     onPageChange,
     onPageSizeChange,
     pageSizeOptions = [10, 25, 50, 100],
+    onNextPageHover,
+    onPreviousPageHover,
     ...props
   }, ref) => {
     // Calculate pagination values
@@ -78,6 +84,7 @@ const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
             disabled={isFirstPage}
             aria-label="Go to previous page"
             className="px-[var(--space-sm)] aspect-square"
+            onMouseEnter={!isFirstPage ? onPreviousPageHover : undefined}
           >
             <Icon name="arrow-left" className="w-4 h-4" />
           </Button>
@@ -86,6 +93,7 @@ const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
             disabled={isLastPage}
             aria-label="Go to next page"
             className="px-[var(--space-sm)] aspect-square"
+            onMouseEnter={!isLastPage ? onNextPageHover : undefined}
           >
             <Icon name="arrow-right" className="w-4 h-4" />
           </Button>
