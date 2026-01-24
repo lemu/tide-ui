@@ -463,9 +463,12 @@ export type {
   DepthColorConfig,
   DepthColors,
   DepthHeights,
-  NestedRowStyling
+  NestedRowStyling,
+  DataTableEmptyStateProps,
+  DataTableNoResultsStateProps,
+  DataTableErrorStateProps,
 } from './product/data-table'
-export type { PaginationState } from '@tanstack/react-table'
+export type { PaginationState, SortingState, ColumnFiltersState } from '@tanstack/react-table'
 
 // DataTableSettingsMenu component
 export { DataTableSettingsMenu } from './product/data-table-settings-menu'
