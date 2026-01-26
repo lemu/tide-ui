@@ -2727,8 +2727,9 @@ export function DataTable<TData, TValue>({
   // Helper to determine if a row matches the activeRowId
   const isActiveRow = React.useCallback((row: any): boolean => {
     if (!activeRowId) return false
-    // Type coercion: Convert both to strings for flexible comparison
-    return String(row.id) === String(activeRowId)
+    // Check row.original.id first (data's actual ID), fall back to row.id (TanStack's index)
+    const rowId = row.original?.id !== undefined ? row.original.id : row.id
+    return String(rowId) === String(activeRowId)
   }, [activeRowId])
 
   // Calculate effective sticky settings with backward compatibility

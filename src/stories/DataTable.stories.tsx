@@ -2997,7 +2997,7 @@ const [activeRowId, setActiveRowId] = useState<string>()
 
 <DataTable
   activeRowId={activeRowId}
-  onRowClick={(row) => setActiveRowId(row.id)}
+  onRowClick={(row) => setActiveRowId(row.original.id)}
 />
 \`\`\`
         `,
@@ -3070,7 +3070,7 @@ const [activeRowId, setActiveRowId] = useState<string>()
                   data={users}
                   columns={columns}
                   activeRowId={activeRowId}
-                  onRowClick={(row) => setActiveRowId(row.id)}
+                  onRowClick={(row) => setActiveRowId(row.original.id)}
                   showPagination={false}
                 />
               </CardContent>
@@ -3235,7 +3235,7 @@ Demonstrates that active row highlighting and checkbox selection work independen
               data={products}
               columns={columns}
               activeRowId={activeRowId}
-              onRowClick={(row) => setActiveRowId(row.id)}
+              onRowClick={(row) => setActiveRowId(row.original.id)}
               enableRowSelection
             />
           </CardContent>
@@ -3338,7 +3338,7 @@ The active row indicator provides clear visual feedback for keyboard-driven navi
               data={tasks}
               columns={columns}
               activeRowId={activeRowId}
-              onRowClick={(row) => setActiveRowId(row.id)}
+              onRowClick={(row) => setActiveRowId(row.original.id)}
             />
           </CardContent>
         </Card>
