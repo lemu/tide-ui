@@ -2610,23 +2610,6 @@ export function DataTable<TData, TValue>({
     }
   }, [columnSizing, enableColumnResizePersistence, storageKey])
 
-  // Load pagination from localStorage
-  React.useEffect(() => {
-    if (enablePaginationPersistence && storageKey) {
-      const savedPagination = localStorage.getItem(`${storageKey}-pagination`)
-      if (savedPagination) {
-        try {
-          const parsed = JSON.parse(savedPagination)
-          if (typeof parsed.pageIndex === 'number' && typeof parsed.pageSize === 'number') {
-            setPagination(parsed)
-          }
-        } catch (e) {
-          console.warn('Failed to parse saved pagination:', e)
-        }
-      }
-    }
-  }, [enablePaginationPersistence, storageKey])
-
   // Save pagination to localStorage
   React.useEffect(() => {
     if (enablePaginationPersistence && storageKey) {
