@@ -205,9 +205,10 @@ interface FilterPanelContentProps {
   value: FilterValue
   onChange: (value: FilterValue) => void
   onReset?: () => void
+  autoFocusSearch?: boolean
 }
 
-export const FilterPanelContent = React.memo(function FilterPanelContent({ filter, value, onChange, onReset }: FilterPanelContentProps) {
+export const FilterPanelContent = React.memo(function FilterPanelContent({ filter, value, onChange, onReset, autoFocusSearch = true }: FilterPanelContentProps) {
   const [searchQuery, setSearchQuery] = React.useState("")
   // Use deferred value to prevent input lag during filtering of large option lists
   const deferredSearchQuery = React.useDeferredValue(searchQuery)
@@ -475,7 +476,7 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-[calc(var(--space-md)+var(--size-xsm)+var(--space-sm))]"
-            autoFocus
+            autoFocus={autoFocusSearch}
           />
         </div>
       )}
@@ -805,7 +806,7 @@ const FilterSidebarItem = React.memo(function FilterSidebarItem({ filter, isSele
       className={cn(
         "group/item box-border flex gap-[var(--space-md)] h-[var(--size-md)] items-center justify-start px-[var(--space-lg)] py-[var(--space-sm)] relative rounded-md shrink-0 w-full cursor-pointer transition-colors",
         "hover:bg-[var(--color-background-neutral-hovered)]",
-        isSelected && "bg-[var(--color-background-blue-subtle-selected)] hover:bg-[var(--color-background-blue-subtle-selected-hovered)]"
+        isSelected && "bg-[var(--color-background-blue-subtle-selected)] hover:bg-[var(--color-background-blue-subtle-selected-hovered)] group-focus-visible/listbox:ring-2 group-focus-visible/listbox:ring-[var(--ring-color)] group-focus-visible/listbox:ring-inset"
       )}
       onClick={onSelect}
     >
@@ -976,6 +977,7 @@ export function FilterDropdownMenu({
   onFilterChange,
 }: FilterDropdownMenuProps) {
   const [selectedFilterId, setSelectedFilterId] = React.useState(filters[0]?.id)
+  const [selectionSource, setSelectionSource] = React.useState<'mouse' | 'keyboard'>('mouse')
   const listboxRef = React.useRef<HTMLDivElement>(null)
 
   // Flatten all filters into a single array for keyboard navigation
@@ -1010,6 +1012,7 @@ export function FilterDropdownMenu({
     }
 
     if (newIndex !== currentIndex) {
+      setSelectionSource('keyboard')
       setSelectedFilterId(allFilterIds[newIndex])
     }
   }
@@ -1070,7 +1073,7 @@ export function FilterDropdownMenu({
             aria-activedescendant={selectedFilterId ? `filter-option-${selectedFilterId}` : undefined}
             tabIndex={0}
             onKeyDown={handleListboxKeyDown}
-            className="box-border flex flex-col gap-[var(--space-sm)] p-[var(--space-sm)] overflow-y-auto focus-visible:outline-none"
+            className="group/listbox box-border flex flex-col gap-[var(--space-sm)] p-[var(--space-sm)] overflow-y-auto focus-visible:outline-none"
           >
             {/* Render ungrouped filters first */}
             {groupedFilters.ungrouped.map((filter) => {
@@ -1084,7 +1087,10 @@ export function FilterDropdownMenu({
                   isSelected={filter.id === selectedFilterId}
                   isPinned={pinnedFilters.includes(filter.id)}
                   valueCount={valueCount}
-                  onSelect={() => setSelectedFilterId(filter.id)}
+                  onSelect={() => {
+                    setSelectionSource('mouse')
+                    setSelectedFilterId(filter.id)
+                  }}
                   onTogglePin={() => handleTogglePin(filter.id)}
                 />
               )
@@ -1118,7 +1124,10 @@ export function FilterDropdownMenu({
                         isSelected={filter.id === selectedFilterId}
                         isPinned={pinnedFilters.includes(filter.id)}
                         valueCount={valueCount}
-                        onSelect={() => setSelectedFilterId(filter.id)}
+                        onSelect={() => {
+                          setSelectionSource('mouse')
+                          setSelectedFilterId(filter.id)
+                        }}
                         onTogglePin={() => handleTogglePin(filter.id)}
                       />
                     )
@@ -1137,6 +1146,7 @@ export function FilterDropdownMenu({
               value={activeFilters[selectedFilter.id]}
               onChange={handleFilterPanelChange}
               onReset={handleFilterPanelReset}
+              autoFocusSearch={selectionSource === 'mouse'}
             />
           )}
         </div>
