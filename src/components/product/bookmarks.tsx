@@ -82,12 +82,20 @@ export interface BookmarksProps {
   defaultBookmarkId?: string;
   isDirty: boolean;
   children?: React.ReactNode; // Slot content (e.g., Filters)
+  /** Accessible label for the bookmarks tab list (defaults to "Bookmarks") */
+  "aria-label"?: string;
   onSelect: (bookmark: Bookmark) => void;
   onRevert: () => void;
   onSave: (action: "update" | "create", name?: string) => Promise<void>;
   onRename: (id: string, newName: string) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
   onSetDefault: (id: string) => Promise<void>;
+  /** Called when hovering over a bookmark tab - useful for prefetching count data */
+  onBookmarkHover?: (bookmark: Bookmark) => void;
+  /** Called when overflow menu opens/closes (tabs variant only) */
+  onOverflowMenuChange?: (open: boolean) => void;
+  /** Called when create/rename dialog opens/closes */
+  onDialogChange?: (dialog: "create" | "rename" | null) => void;
 }
 
 // ============================================================================
@@ -216,11 +224,18 @@ function BookmarkSplitButton({
   onDelete,
   onSetDefault,
 }: BookmarkSplitButtonProps) {
-  const activeBookmark = [...systemBookmarks, ...bookmarks].find(
-    (b) => b.id === activeBookmarkId,
+  // PERFORMANCE: Memoize array concatenation and lookup
+  const allBookmarks = React.useMemo(
+    () => [...systemBookmarks, ...bookmarks],
+    [systemBookmarks, bookmarks],
   );
+
+  const activeBookmark = React.useMemo(
+    () => allBookmarks.find((b) => b.id === activeBookmarkId),
+    [allBookmarks, activeBookmarkId],
+  );
+
   const isSystemBookmark = activeBookmark?.type === "system";
-  const allBookmarks = [...systemBookmarks, ...bookmarks];
 
   return (
     <ButtonGroup>
@@ -294,6 +309,7 @@ function BookmarkSplitButton({
         <DropdownMenuTrigger asChild>
           <Button
             icon="more-horizontal"
+            aria-label="Bookmark options"
             className="!rounded-l-none rounded-r-md !border-l !border-l-[var(--color-border-action-outline)] focus:ring-0 data-[state=open]:ring-0"
           />
         </DropdownMenuTrigger>
@@ -393,122 +409,187 @@ interface BookmarkTabProps {
   bookmark: Bookmark;
   isActive: boolean;
   isVisible?: boolean;
-  onSelect: () => void;
-  onRename: () => void;
-  onDelete: () => void;
-  onSetDefault: () => void;
+  /** Index of this tab in the tab list (for keyboard navigation) */
+  index: number;
+  /** Total number of tabs (for aria-setsize) */
+  totalTabs: number;
+  /** Called when tab is selected - receives bookmark */
+  onSelect: (bookmark: Bookmark) => void;
+  /** Called when rename is requested - receives bookmark id */
+  onRename: (id: string) => void;
+  /** Called when delete is requested - receives bookmark id */
+  onDelete: (id: string) => void;
+  /** Called when set default is requested - receives bookmark id */
+  onSetDefault: (id: string) => void;
+  /** Navigate to a tab by index and direction */
+  onNavigate: (index: number, direction: -1 | 1) => void;
+  /** Navigate to first tab */
+  onNavigateFirst: () => void;
+  /** Navigate to last tab */
+  onNavigateLast: () => void;
+  /** Called when hovering over the tab - useful for prefetching */
+  onHover?: (bookmark: Bookmark) => void;
 }
 
-const BookmarkTab = React.forwardRef<HTMLDivElement, BookmarkTabProps>(
-  (
-    {
-      bookmark,
-      isActive,
-      isVisible = true,
-      onSelect,
-      onRename,
-      onDelete,
-      onSetDefault: _onSetDefault,
-    },
-    ref,
-  ) => {
-    const [isHovered, setIsHovered] = React.useState(false);
-    const isUserBookmark = bookmark.type === "user";
-    // const isSystemBookmark = bookmark.type === "system";
+const BookmarkTab = React.memo(
+  React.forwardRef<HTMLDivElement, BookmarkTabProps>(
+    (
+      {
+        bookmark,
+        isActive,
+        isVisible = true,
+        index,
+        totalTabs,
+        onSelect,
+        onRename,
+        onDelete,
+        onSetDefault: _onSetDefault,
+        onNavigate,
+        onNavigateFirst,
+        onNavigateLast,
+        onHover,
+      },
+      ref,
+    ) => {
+      const isUserBookmark = bookmark.type === "user";
 
-    return (
-      <div
-        ref={ref}
-        role="button"
-        tabIndex={0}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onClick={onSelect}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            onSelect();
+      // PERFORMANCE: Stable callbacks that pass bookmark/id to parent
+      const handleSelect = React.useCallback(() => {
+        onSelect(bookmark);
+      }, [onSelect, bookmark]);
+
+      const handleMouseEnter = React.useCallback(() => {
+        onHover?.(bookmark);
+      }, [onHover, bookmark]);
+
+      const handleRename = React.useCallback(() => {
+        onRename(bookmark.id);
+      }, [onRename, bookmark.id]);
+
+      const handleDelete = React.useCallback(() => {
+        onDelete(bookmark.id);
+      }, [onDelete, bookmark.id]);
+
+      const handleKeyDown = React.useCallback(
+        (e: React.KeyboardEvent) => {
+          switch (e.key) {
+            case "Enter":
+            case " ":
+              e.preventDefault();
+              onSelect(bookmark);
+              break;
+            case "ArrowRight":
+              e.preventDefault();
+              onNavigate(index, 1);
+              break;
+            case "ArrowLeft":
+              e.preventDefault();
+              onNavigate(index, -1);
+              break;
+            case "Home":
+              e.preventDefault();
+              onNavigateFirst();
+              break;
+            case "End":
+              e.preventDefault();
+              onNavigateLast();
+              break;
           }
-        }}
-        className={cn(
-          "relative flex min-w-[160px] flex-shrink-0 cursor-pointer flex-col gap-[var(--space-xsm)] rounded-lg p-[var(--space-lg)] transition-colors",
-          isActive
-            ? "bg-[var(--blue-50)] hover:bg-[var(--blue-50)]"
-            : "bg-[var(--color-background-neutral-default)] hover:bg-[var(--color-background-neutral-hovered)]",
-          !isVisible && "pointer-events-none invisible absolute",
-        )}
-      >
-        {/* Top row: icon, name, and three-dot menu */}
-        <div className="flex min-h-[var(--size-sm)] items-center justify-between gap-[var(--space-xsm)]">
-          <div className="flex items-center gap-[var(--space-xsm)]">
-            {isUserBookmark && (
-              <Icon
-                name="bookmark"
-                size="sm"
-                color="secondary"
-                className="flex-shrink-0"
-              />
-            )}
-            <div className="text-body-md whitespace-nowrap text-[var(--color-text-primary)]">
-              {bookmark.name}
+        },
+        [bookmark, index, onSelect, onNavigate, onNavigateFirst, onNavigateLast],
+      );
+
+      return (
+        <div
+          ref={ref}
+          role="tab"
+          aria-selected={isActive}
+          aria-posinset={index + 1}
+          aria-setsize={totalTabs}
+          tabIndex={isActive ? 0 : -1}
+          onClick={handleSelect}
+          onKeyDown={handleKeyDown}
+          onMouseEnter={handleMouseEnter}
+          className={cn(
+            "group relative flex min-w-[160px] flex-shrink-0 cursor-pointer flex-col gap-[var(--space-xsm)] rounded-lg p-[var(--space-lg)] transition-colors",
+            "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-brand-bold)] focus-visible:ring-offset-2",
+            isActive
+              ? "bg-[var(--blue-50)] hover:bg-[var(--blue-50)]"
+              : "bg-[var(--color-background-neutral-default)] hover:bg-[var(--color-background-neutral-hovered)]",
+            !isVisible && "pointer-events-none invisible absolute",
+          )}
+        >
+          {/* Top row: icon, name, and three-dot menu */}
+          <div className="flex min-h-[var(--size-sm)] items-center justify-between gap-[var(--space-xsm)]">
+            <div className="flex items-center gap-[var(--space-xsm)]">
+              {isUserBookmark && (
+                <Icon
+                  name="bookmark"
+                  size="sm"
+                  color="secondary"
+                  className="flex-shrink-0"
+                />
+              )}
+              <div className="text-body-md whitespace-nowrap text-[var(--color-text-primary)]">
+                {bookmark.name}
+              </div>
             </div>
+
+            {/* Three-dot menu - visible on hover/focus, only for user bookmarks */}
+            {isUserBookmark && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    aria-label={`Options for ${bookmark.name}`}
+                    className="p-[var(--space-xsm)] opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
+                    tabIndex={-1}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <Icon
+                      name="more-horizontal"
+                      className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]"
+                    />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRename();
+                    }}
+                  >
+                    <Icon name="pencil" className="mr-2 h-4 w-4" />
+                    Rename
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete();
+                    }}
+                    destructive
+                  >
+                    <Icon name="trash-2" className="mr-2 h-4 w-4" />
+                    Delete
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </div>
 
-          {/* Three-dot menu - visible on hover, only for user bookmarks */}
-          {isUserBookmark && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className={cn(
-                    "p-[var(--space-xsm)] transition-opacity",
-                    isHovered ? "opacity-100" : "opacity-0",
-                  )}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <Icon
-                    name="more-horizontal"
-                    className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]"
-                  />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onRename();
-                  }}
-                >
-                  <Icon name="pencil" className="mr-2 h-4 w-4" />
-                  Rename
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onDelete();
-                  }}
-                  destructive
-                >
-                  <Icon name="trash-2" className="mr-2 h-4 w-4" />
-                  Delete
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
+          {/* Count metric */}
+          <div className="text-heading-lg text-[var(--color-text-primary)]">
+            {bookmark.isLoadingCount ? (
+              <Skeleton height={32} width={40} />
+            ) : (
+              bookmark.count ?? '\u00A0'
+            )}
+          </div>
         </div>
-
-        {/* Count metric */}
-        <div className="text-heading-lg text-[var(--color-text-primary)]">
-          {bookmark.isLoadingCount ? (
-            <Skeleton height={32} width={40} />
-          ) : (
-            bookmark.count ?? '\u00A0'
-          )}
-        </div>
-      </div>
-    );
-  },
+      );
+    },
+  ),
 );
 
 BookmarkTab.displayName = "BookmarkTab";
@@ -521,125 +602,299 @@ interface BookmarkTabsProps {
   bookmarks: Bookmark[];
   systemBookmarks: Bookmark[];
   activeBookmarkId?: string;
+  "aria-label"?: string;
   onSelect: (bookmark: Bookmark) => void;
   onRename: (id: string) => void;
   onDelete: (id: string) => void;
   onSetDefault: (id: string) => void;
+  /** Called when hovering over a bookmark tab - useful for prefetching */
+  onBookmarkHover?: (bookmark: Bookmark) => void;
+  /** Called when overflow menu opens/closes */
+  onOverflowMenuChange?: (open: boolean) => void;
 }
 
 function BookmarkTabs({
   bookmarks,
   systemBookmarks,
   activeBookmarkId,
+  "aria-label": ariaLabel = "Bookmarks",
   onSelect,
   onRename,
   onDelete,
   onSetDefault,
+  onBookmarkHover,
+  onOverflowMenuChange,
 }: BookmarkTabsProps) {
   const [showOverflow, setShowOverflow] = React.useState(false);
+  // Track which overflow bookmark is temporarily promoted to visible
+  const [promotedBookmarkId, setPromotedBookmarkId] = React.useState<string | null>(null);
+
+  // Notify parent when overflow menu state changes
+  const handleOverflowOpenChange = React.useCallback(
+    (open: boolean) => {
+      setShowOverflow(open);
+      onOverflowMenuChange?.(open);
+    },
+    [onOverflowMenuChange],
+  );
   const [visibleCount, setVisibleCount] = React.useState<number | null>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const itemRefs = React.useRef<Map<string, HTMLDivElement>>(new Map());
-  const allBookmarks = [...systemBookmarks, ...bookmarks];
+
+  // Memoize allBookmarks to prevent unnecessary recalculations
+  const allBookmarks = React.useMemo(
+    () => [...systemBookmarks, ...bookmarks],
+    [systemBookmarks, bookmarks],
+  );
+
+  // Clear promotion if the promoted bookmark no longer exists
+  React.useEffect(() => {
+    if (promotedBookmarkId && !allBookmarks.some(b => b.id === promotedBookmarkId)) {
+      setPromotedBookmarkId(null);
+    }
+  }, [allBookmarks, promotedBookmarkId]);
 
   // Calculate how many bookmarks fit in the available space
   React.useEffect(() => {
     if (!containerRef.current || allBookmarks.length === 0) return;
 
+    // Debounce timeout ref
+    let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+
     const calculateVisible = () => {
-      const container = containerRef.current;
-      if (!container) return;
-
-      const containerWidth = container.offsetWidth;
-      const gap = 8; // var(--space-sm)
-      const separatorWidth = 32; // Approximate width of separator between system and user bookmarks
-      const overflowButtonWidth = 52; // Approximate width of overflow button (chevron-down only)
-
-      // Wait until all refs are available
-      if (itemRefs.current.size < allBookmarks.length) {
-        return;
+      // Clear any pending debounce
+      if (debounceTimer) {
+        clearTimeout(debounceTimer);
       }
 
-      let totalWidth = 0;
-      let count = 0;
-      let hasSeparator = false;
+      debounceTimer = setTimeout(() => {
+        const container = containerRef.current;
+        if (!container) return;
 
-      // Find if there's a separator in the bookmarks
-      const systemBookmarksCount = systemBookmarks.length;
-      const hasUserBookmarks = bookmarks.length > 0;
-      const separatorIndex =
-        systemBookmarksCount > 0 && hasUserBookmarks
-          ? systemBookmarksCount
-          : -1;
-
-      for (let i = 0; i < allBookmarks.length; i++) {
-        const bookmark = allBookmarks[i];
-        const item = itemRefs.current.get(bookmark.id);
-        if (!item) continue;
-
-        const itemWidth = item.offsetWidth;
-
-        // Add separator width if this is where the separator would be
-        if (i === separatorIndex) {
-          hasSeparator = true;
-          totalWidth += separatorWidth + gap;
+        // Wait until all refs are available
+        if (itemRefs.current.size < allBookmarks.length) {
+          return;
         }
 
-        const nextWidth =
-          totalWidth + itemWidth + (count > 0 || hasSeparator ? gap : 0);
+        // PERFORMANCE: Batch all DOM reads upfront to prevent layout thrashing
+        // Reading offsetWidth forces synchronous layout - do it once for all items
+        const containerWidth = container.offsetWidth;
+        const itemWidths = new Map<string, number>();
+        allBookmarks.forEach((bookmark) => {
+          const el = itemRefs.current.get(bookmark.id);
+          if (el) {
+            itemWidths.set(bookmark.id, el.offsetWidth);
+          }
+        });
 
-        // Reserve space for overflow button if we have more items
-        const needsOverflow = i < allBookmarks.length - 1;
-        const spaceNeeded = needsOverflow
-          ? nextWidth + gap + overflowButtonWidth
-          : nextWidth;
+        const gap = 8; // var(--space-sm)
+        const separatorWidth = 32; // Approximate width of separator between system and user bookmarks
+        const overflowButtonWidth = 52; // Approximate width of overflow button (chevron-down only)
 
-        if (spaceNeeded > containerWidth) {
-          break;
+        let totalWidth = 0;
+        let count = 0;
+        let hasSeparator = false;
+
+        // Find if there's a separator in the bookmarks
+        const systemBookmarksCount = systemBookmarks.length;
+        const hasUserBookmarks = bookmarks.length > 0;
+        const separatorIndex =
+          systemBookmarksCount > 0 && hasUserBookmarks
+            ? systemBookmarksCount
+            : -1;
+
+        // PERFORMANCE: Loop without DOM reads - use pre-computed widths
+        for (let i = 0; i < allBookmarks.length; i++) {
+          const bookmark = allBookmarks[i];
+          const itemWidth = itemWidths.get(bookmark.id);
+          if (itemWidth === undefined) continue;
+
+          // Add separator width if this is where the separator would be
+          if (i === separatorIndex) {
+            hasSeparator = true;
+            totalWidth += separatorWidth + gap;
+          }
+
+          const nextWidth =
+            totalWidth + itemWidth + (count > 0 || hasSeparator ? gap : 0);
+
+          // Reserve space for overflow button if we have more items
+          const needsOverflow = i < allBookmarks.length - 1;
+          const spaceNeeded = needsOverflow
+            ? nextWidth + gap + overflowButtonWidth
+            : nextWidth;
+
+          if (spaceNeeded > containerWidth) {
+            break;
+          }
+
+          totalWidth = nextWidth;
+          count++;
         }
 
-        totalWidth = nextWidth;
-        count++;
-      }
+        // Always show at least one bookmark
+        if (count === 0 && allBookmarks.length > 0) {
+          count = 1;
+        }
 
-      // Always show at least one bookmark
-      if (count === 0 && allBookmarks.length > 0) {
-        count = 1;
-      }
-
-      setVisibleCount(count);
+        setVisibleCount(count);
+      }, 100);
     };
 
-    // Initial calculation with a small delay to ensure DOM is ready
-    const timer = setTimeout(calculateVisible, 100);
+    // Initial calculation
+    calculateVisible();
 
-    // Recalculate on resize
+    // Recalculate on resize (with debounce via calculateVisible)
     const resizeObserver = new ResizeObserver(calculateVisible);
     resizeObserver.observe(containerRef.current);
 
     return () => {
-      clearTimeout(timer);
+      if (debounceTimer) {
+        clearTimeout(debounceTimer);
+      }
       resizeObserver.disconnect();
     };
-  }, [allBookmarks.length, systemBookmarks.length, bookmarks.length]);
+  }, [allBookmarks, systemBookmarks.length, bookmarks.length]);
 
-  // Determine visible and overflow bookmarks
-  // const visibleBookmarks = visibleCount === null ? allBookmarks : allBookmarks.slice(0, visibleCount);
-  const overflowBookmarks =
-    visibleCount === null ? [] : allBookmarks.slice(visibleCount);
+  // Compute visible and overflow bookmarks, accounting for promotion
+  const { visibleBookmarks, overflowBookmarks } = React.useMemo(() => {
+    if (visibleCount === null) {
+      return { visibleBookmarks: allBookmarks, overflowBookmarks: [] };
+    }
+
+    const normallyVisible = allBookmarks.slice(0, visibleCount);
+    const normallyOverflow = allBookmarks.slice(visibleCount);
+
+    // Check if promoted bookmark is in the overflow
+    const promotedInOverflow = promotedBookmarkId
+      ? normallyOverflow.find(b => b.id === promotedBookmarkId)
+      : null;
+
+    if (promotedInOverflow && normallyVisible.length > 0) {
+      // Move the last normally visible bookmark to overflow
+      const displacedBookmark = normallyVisible[normallyVisible.length - 1];
+
+      // Visible: all but last, then promoted at the end
+      const visible = [
+        ...normallyVisible.slice(0, -1),
+        promotedInOverflow,
+      ];
+
+      // Overflow: displaced bookmark + rest of overflow (excluding promoted)
+      const overflow = [
+        displacedBookmark,
+        ...normallyOverflow.filter(b => b.id !== promotedBookmarkId),
+      ];
+
+      return { visibleBookmarks: visible, overflowBookmarks: overflow };
+    }
+
+    return { visibleBookmarks: normallyVisible, overflowBookmarks: normallyOverflow };
+  }, [allBookmarks, visibleCount, promotedBookmarkId]);
+
+  // PERFORMANCE: Stable navigation handler - receives index from child
+  const handleNavigate = React.useCallback(
+    (currentIndex: number, direction: -1 | 1) => {
+      let newIndex = currentIndex + direction;
+
+      // Wrap around
+      if (newIndex < 0) {
+        newIndex = visibleBookmarks.length - 1;
+      } else if (newIndex >= visibleBookmarks.length) {
+        newIndex = 0;
+      }
+
+      // Focus the new tab
+      const bookmark = visibleBookmarks[newIndex];
+      if (bookmark) {
+        const element = itemRefs.current.get(bookmark.id);
+        element?.focus();
+      }
+    },
+    [visibleBookmarks],
+  );
+
+  // PERFORMANCE: Stable handler that wraps onSelect to work with Bookmark
+  const handleSelect = React.useCallback(
+    (bookmark: Bookmark) => {
+      onSelect(bookmark);
+    },
+    [onSelect],
+  );
+
+  const handleNavigateFirst = React.useCallback(() => {
+    const bookmark = visibleBookmarks[0];
+    if (bookmark) {
+      const element = itemRefs.current.get(bookmark.id);
+      element?.focus();
+    }
+  }, [visibleBookmarks]);
+
+  const handleNavigateLast = React.useCallback(() => {
+    const bookmark = visibleBookmarks[visibleBookmarks.length - 1];
+    if (bookmark) {
+      const element = itemRefs.current.get(bookmark.id);
+      element?.focus();
+    }
+  }, [visibleBookmarks]);
+
+  const totalVisibleTabs = visibleBookmarks.length;
+
+  // Find the index where we need to insert a separator (between system and user bookmarks)
+  const separatorAfterIndex = React.useMemo(() => {
+    for (let i = 0; i < visibleBookmarks.length - 1; i++) {
+      if (visibleBookmarks[i].type === "system" && visibleBookmarks[i + 1].type === "user") {
+        return i;
+      }
+    }
+    return -1;
+  }, [visibleBookmarks]);
+
+  // Handle selection - clear promotion when selecting a non-promoted visible tab
+  const handleTabSelect = React.useCallback(
+    (bookmark: Bookmark) => {
+      // If selecting a visible tab that is not the promoted one, clear promotion
+      const isVisibleTab = visibleBookmarks.some(b => b.id === bookmark.id);
+      if (isVisibleTab && bookmark.id !== promotedBookmarkId) {
+        setPromotedBookmarkId(null);
+      }
+      onSelect(bookmark);
+    },
+    [visibleBookmarks, promotedBookmarkId, onSelect],
+  );
+
+  // Handle overflow item selection - promote the selected bookmark
+  const handleOverflowSelect = React.useCallback(
+    (bookmark: Bookmark) => {
+      setPromotedBookmarkId(bookmark.id);
+      onSelect(bookmark);
+      handleOverflowOpenChange(false);
+    },
+    [onSelect, handleOverflowOpenChange],
+  );
+
+  // Create render order: visible bookmarks first (in their computed order), then overflow bookmarks
+  const renderOrderedBookmarks = React.useMemo(() => {
+    return [...visibleBookmarks, ...overflowBookmarks];
+  }, [visibleBookmarks, overflowBookmarks]);
+
+  // Create a set for quick lookup of visible bookmark IDs
+  const visibleBookmarkIds = React.useMemo(() => {
+    return new Set(visibleBookmarks.map(b => b.id));
+  }, [visibleBookmarks]);
 
   return (
     <div
       ref={containerRef}
+      role="tablist"
+      aria-label={ariaLabel}
       className="flex items-center gap-[var(--space-sm)] overflow-hidden"
     >
-      {allBookmarks.map((bookmark, index) => {
-        const isVisible = visibleCount === null || index < visibleCount;
-        const isLastSystemInVisible =
-          bookmark.type === "system" &&
-          allBookmarks[index + 1]?.type === "user" &&
-          isVisible &&
-          (visibleCount === null || index + 1 < visibleCount);
+      {/* Render all bookmarks - visible ones first, then hidden ones for measurement */}
+      {renderOrderedBookmarks.map((bookmark, index) => {
+        const isVisible = visibleBookmarkIds.has(bookmark.id);
+        const visibleIndex = isVisible ? visibleBookmarks.findIndex(b => b.id === bookmark.id) : -1;
+        const showSeparator = isVisible && visibleIndex === separatorAfterIndex;
 
         return (
           <React.Fragment key={bookmark.id}>
@@ -654,17 +909,24 @@ function BookmarkTabs({
               bookmark={bookmark}
               isActive={activeBookmarkId === bookmark.id}
               isVisible={isVisible}
-              onSelect={() => onSelect(bookmark)}
-              onRename={() => onRename(bookmark.id)}
-              onDelete={() => onDelete(bookmark.id)}
-              onSetDefault={() => onSetDefault(bookmark.id)}
+              index={visibleIndex >= 0 ? visibleIndex : index}
+              totalTabs={totalVisibleTabs}
+              onSelect={isVisible ? handleTabSelect : handleSelect}
+              onRename={onRename}
+              onDelete={onDelete}
+              onSetDefault={onSetDefault}
+              onNavigate={handleNavigate}
+              onNavigateFirst={handleNavigateFirst}
+              onNavigateLast={handleNavigateLast}
+              onHover={onBookmarkHover}
             />
             {/* Add separator between system and user bookmarks */}
-            {isLastSystemInVisible && (
+            {showSeparator && (
               <Separator
                 type="line"
                 layout="horizontal"
                 className="h-20 flex-shrink-0"
+                aria-hidden="true"
               />
             )}
           </React.Fragment>
@@ -673,9 +935,11 @@ function BookmarkTabs({
 
       {/* Overflow menu */}
       {overflowBookmarks.length > 0 && (
-        <Popover open={showOverflow} onOpenChange={setShowOverflow}>
+        <Popover open={showOverflow} onOpenChange={handleOverflowOpenChange}>
           <PopoverTrigger asChild>
             <button
+              aria-label={`Show ${overflowBookmarks.length} more bookmarks`}
+              aria-expanded={showOverflow}
               className={cn(
                 "flex flex-shrink-0 items-center justify-center rounded-lg border border-[var(--color-border-action-outline)] bg-transparent px-[var(--space-md)] transition-colors hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
                 "min-h-[88px]", // Match the height of bookmark tabs (padding + content + padding)
@@ -692,33 +956,37 @@ function BookmarkTabs({
             align="end"
             side="bottom"
             className="w-[280px] p-[var(--space-sm)]"
+            role="menu"
+            aria-label="More bookmarks"
           >
             <div className="flex flex-col">
               {overflowBookmarks.map((bookmark) => {
                 const isActive = activeBookmarkId === bookmark.id;
+                const isUserBookmark = bookmark.type === "user";
                 return (
                   <button
                     key={bookmark.id}
-                    onClick={() => {
-                      onSelect(bookmark);
-                      setShowOverflow(false);
-                    }}
+                    role="menuitem"
+                    aria-label={`Select ${bookmark.name} bookmark${isActive ? " (currently selected)" : ""}`}
+                    onClick={() => handleOverflowSelect(bookmark)}
                     className={cn(
                       "text-body-md flex items-center gap-[var(--space-sm)] rounded-md px-[var(--space-md)] py-[var(--space-sm)] text-left transition-colors",
                       "hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
+                      "focus:outline-none focus-visible:bg-[var(--color-background-neutral-subtlest-hovered)]",
                     )}
                   >
-                    {bookmark.type === "user" && (
+                    {isUserBookmark && (
                       <Icon
                         name="bookmark"
                         className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]"
+                        aria-hidden="true"
                       />
                     )}
-                    {bookmark.type === "system" && (
-                      <div className="w-[var(--size-2xsm)]" />
+                    {!isUserBookmark && (
+                      <div className="w-[var(--size-2xsm)]" aria-hidden="true" />
                     )}
                     <div className="flex flex-1 items-center gap-[var(--space-xsm)]">
-                      <span>{bookmark.name}</span>
+                      <span className="truncate">{bookmark.name}</span>
                       {(bookmark.count !== undefined || bookmark.isLoadingCount) && (
                         <Badge size="sm" intent="neutral" appearance="subtle">
                           {bookmark.isLoadingCount ? (
@@ -733,12 +1001,14 @@ function BookmarkTabs({
                       <Icon
                         name="star"
                         className="h-[var(--size-2xsm)] w-[var(--size-2xsm)] text-[var(--color-icon-warning-bold)]"
+                        aria-hidden="true"
                       />
                     )}
                     {isActive && (
                       <Icon
                         name="check"
                         className="h-[var(--size-2xsm)] w-[var(--size-2xsm)] text-[var(--color-icon-primary)]"
+                        aria-hidden="true"
                       />
                     )}
                   </button>
@@ -860,53 +1130,82 @@ export function Bookmarks({
   activeBookmarkId,
   isDirty,
   children,
+  "aria-label": ariaLabel = "Bookmarks",
   onSelect,
   onRevert,
   onSave,
   onRename,
   onDelete,
   onSetDefault,
+  onBookmarkHover,
+  onOverflowMenuChange,
+  onDialogChange,
 }: BookmarksProps) {
   const [renameDialogOpen, setRenameDialogOpen] = React.useState(false);
   const [createDialogOpen, setCreateDialogOpen] = React.useState(false);
   const [renameBookmarkId, setRenameBookmarkId] = React.useState<string>();
 
-  const activeBookmark = [...systemBookmarks, ...bookmarks].find(
-    (b) => b.id === activeBookmarkId,
+  // Dialog change handlers that notify parent
+  const handleCreateDialogChange = React.useCallback(
+    (open: boolean) => {
+      setCreateDialogOpen(open);
+      onDialogChange?.(open ? "create" : null);
+    },
+    [onDialogChange],
+  );
+
+  const handleRenameDialogChange = React.useCallback(
+    (open: boolean) => {
+      setRenameDialogOpen(open);
+      onDialogChange?.(open ? "rename" : null);
+    },
+    [onDialogChange],
+  );
+
+  // Memoize allBookmarks to avoid recreating on every render
+  const allBookmarks = React.useMemo(
+    () => [...systemBookmarks, ...bookmarks],
+    [systemBookmarks, bookmarks],
+  );
+
+  const activeBookmark = React.useMemo(
+    () => allBookmarks.find((b) => b.id === activeBookmarkId),
+    [allBookmarks, activeBookmarkId],
   );
   const isSystemBookmarkActive = activeBookmark?.type === "system";
 
-  const handleRenameClick = (id?: string) => {
+  const handleRenameClick = React.useCallback((id?: string) => {
     setRenameBookmarkId(id || activeBookmarkId);
-    setRenameDialogOpen(true);
-  };
+    handleRenameDialogChange(true);
+  }, [activeBookmarkId, handleRenameDialogChange]);
 
-  const handleRenameSave = async (name: string) => {
+  const handleRenameSave = React.useCallback(async (name: string) => {
     if (renameBookmarkId) {
       await onRename(renameBookmarkId, name);
     }
-  };
+  }, [renameBookmarkId, onRename]);
 
-  const handleCreateSave = async (name: string) => {
+  const handleCreateSave = React.useCallback(async (name: string) => {
     await onSave("create", name);
-  };
+  }, [onSave]);
 
-  const handleDelete = async (id?: string) => {
+  const handleDelete = React.useCallback(async (id?: string) => {
     const bookmarkId = id || activeBookmarkId;
     if (bookmarkId) {
       await onDelete(bookmarkId);
     }
-  };
+  }, [activeBookmarkId, onDelete]);
 
-  const handleSetDefault = async (id?: string) => {
+  const handleSetDefault = React.useCallback(async (id?: string) => {
     const bookmarkId = id || activeBookmarkId;
     if (bookmarkId) {
       await onSetDefault(bookmarkId);
     }
-  };
+  }, [activeBookmarkId, onSetDefault]);
 
-  const renameBookmark = [...systemBookmarks, ...bookmarks].find(
-    (b) => b.id === renameBookmarkId,
+  const renameBookmark = React.useMemo(
+    () => allBookmarks.find((b) => b.id === renameBookmarkId),
+    [allBookmarks, renameBookmarkId],
   );
 
   // Separate children into content, actions, and settings slots
@@ -945,18 +1244,34 @@ export function Bookmarks({
     };
   }, [children]);
 
-  // Context value for actions
-  const contextValue: BookmarksContextValue = {
-    isDirty,
-    isSystemBookmark: isSystemBookmarkActive,
-    activeBookmark,
-    openCreateDialog: () => setCreateDialogOpen(true),
-    openRenameDialog: handleRenameClick,
-    handleRevert: onRevert,
-    handleUpdate: () => onSave("update"),
-    handleDelete,
-    handleSetDefault,
-  };
+  // Memoized context value to prevent unnecessary re-renders of consumers
+  const openCreateDialog = React.useCallback(() => handleCreateDialogChange(true), [handleCreateDialogChange]);
+  const handleUpdate = React.useCallback(() => onSave("update"), [onSave]);
+
+  const contextValue = React.useMemo<BookmarksContextValue>(
+    () => ({
+      isDirty,
+      isSystemBookmark: isSystemBookmarkActive,
+      activeBookmark,
+      openCreateDialog,
+      openRenameDialog: handleRenameClick,
+      handleRevert: onRevert,
+      handleUpdate,
+      handleDelete,
+      handleSetDefault,
+    }),
+    [
+      isDirty,
+      isSystemBookmarkActive,
+      activeBookmark,
+      openCreateDialog,
+      handleRenameClick,
+      onRevert,
+      handleUpdate,
+      handleDelete,
+      handleSetDefault,
+    ],
+  );
 
   if (variant === "tabs") {
     return (
@@ -966,10 +1281,13 @@ export function Bookmarks({
           bookmarks={bookmarks}
           systemBookmarks={systemBookmarks}
           activeBookmarkId={activeBookmarkId}
+          aria-label={ariaLabel}
           onSelect={onSelect}
           onRename={handleRenameClick}
           onDelete={handleDelete}
           onSetDefault={handleSetDefault}
+          onBookmarkHover={onBookmarkHover}
+          onOverflowMenuChange={onOverflowMenuChange}
         />
 
         {/* Content + Actions + Settings row */}
@@ -1007,13 +1325,13 @@ export function Bookmarks({
         {/* Dialogs */}
         <BookmarkNameDialog
           open={createDialogOpen}
-          onOpenChange={setCreateDialogOpen}
+          onOpenChange={handleCreateDialogChange}
           mode="create"
           onSave={handleCreateSave}
         />
         <BookmarkNameDialog
           open={renameDialogOpen}
-          onOpenChange={setRenameDialogOpen}
+          onOpenChange={handleRenameDialogChange}
           mode="rename"
           initialName={renameBookmark?.name}
           onSave={handleRenameSave}
@@ -1065,13 +1383,13 @@ export function Bookmarks({
       {/* Dialogs */}
       <BookmarkNameDialog
         open={createDialogOpen}
-        onOpenChange={setCreateDialogOpen}
+        onOpenChange={handleCreateDialogChange}
         mode="create"
         onSave={handleCreateSave}
       />
       <BookmarkNameDialog
         open={renameDialogOpen}
-        onOpenChange={setRenameDialogOpen}
+        onOpenChange={handleRenameDialogChange}
         mode="rename"
         initialName={renameBookmark?.name}
         onSave={handleRenameSave}
