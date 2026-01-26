@@ -2791,6 +2791,10 @@ export function DataTable<TData, TValue>({
     if (enableRowSelection) {
       const selectionColumn: ColumnDef<any, any> = {
         id: 'select',
+        size: 48,
+        minSize: 48,
+        maxSize: 48,
+        enableResizing: false,
         header: ({ table }) => (
           <Checkbox
             tabIndex={-1}
@@ -3783,6 +3787,17 @@ export function DataTable<TData, TValue>({
             ...(computedEnableResponsiveWrapper && { minWidth: minTableWidth })
           }}
         >
+          {/* Define column widths - especially important for selection column */}
+          <colgroup>
+            {table.getVisibleLeafColumns().map((column) => (
+              <col
+                key={column.id}
+                style={{
+                  width: column.id === 'select' ? '48px' : undefined,
+                }}
+              />
+            ))}
+          </colgroup>
           <TableHeader className={cn(
             stickyHeader && [
               "sticky top-0 z-20",
