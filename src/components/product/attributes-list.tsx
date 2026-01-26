@@ -111,8 +111,9 @@ const AttributesList = React.forwardRef<HTMLDivElement, AttributesListProps>(
           {hasDirectHiddenItems && (
             <button
               onClick={() => setShowHidden(!showHidden)}
+              aria-expanded={showHidden}
               className={cn(
-                "flex items-center text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] cursor-pointer mt-[var(--space-sm)] bg-transparent border-none p-0",
+                "flex items-center text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] cursor-pointer mt-[var(--space-sm)] bg-transparent border-none p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-sm",
                 size === 'sm' ? 'gap-[var(--space-sm)]' : 'gap-[var(--space-xsm)]',
                 size === 'sm' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm'
               )}
@@ -122,6 +123,7 @@ const AttributesList = React.forwardRef<HTMLDivElement, AttributesListProps>(
               <Icon
                 name="chevron-down"
                 size="sm"
+                aria-hidden="true"
                 className={cn(
                   "transition-transform",
                   showHidden && "rotate-180"
@@ -140,19 +142,25 @@ AttributesList.displayName = "AttributesList";
 export interface AttributesSeparatorProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-const AttributesSeparator = React.forwardRef<
-  HTMLDivElement,
-  AttributesSeparatorProps
->(({ className, ...props }, ref) => {
-  return (
-    <div
-      ref={ref}
-      className={cn("h-px bg-[var(--color-border-primary-subtle)] my-[var(--space-sm)]", className)}
-      style={{ gridColumn: '1 / -1' }}
-      {...props}
-    />
-  );
-});
+const AttributesSeparator = React.memo(
+  React.forwardRef<HTMLDivElement, AttributesSeparatorProps>(
+    ({ className, ...props }, ref) => {
+      return (
+        <div
+          ref={ref}
+          role="separator"
+          aria-hidden="true"
+          className={cn(
+            "h-px bg-[var(--color-border-primary-subtle)] my-[var(--space-sm)]",
+            className
+          )}
+          style={{ gridColumn: '1 / -1' }}
+          {...props}
+        />
+      );
+    }
+  )
+);
 AttributesSeparator.displayName = "AttributesSeparator";
 
 // AttributesGroup - optional section grouping with header
@@ -211,9 +219,9 @@ const AttributesGroup = React.forwardRef<HTMLDivElement, AttributesGroupProps>(
       return checkForHidden(children);
     }, [children]);
 
-    // Process children to filter hidden items
-    const processChildren = (nodes: React.ReactNode): React.ReactNode => {
-      return React.Children.map(nodes, (child) => {
+    // Process children to filter hidden items (memoized)
+    const processedChildren = React.useMemo(() => {
+      return React.Children.map(children, (child) => {
         if (!React.isValidElement(child)) return child;
 
         const displayName = (child.type as any)?.displayName || '';
@@ -229,9 +237,7 @@ const AttributesGroup = React.forwardRef<HTMLDivElement, AttributesGroupProps>(
 
         return child;
       });
-    };
-
-    const processedChildren = processChildren(children);
+    }, [children, showHidden]);
 
     return (
       <div
@@ -263,8 +269,9 @@ const AttributesGroup = React.forwardRef<HTMLDivElement, AttributesGroupProps>(
         {hasHiddenItems && (
           <button
             onClick={() => setShowHidden(!showHidden)}
+            aria-expanded={showHidden}
             className={cn(
-              "flex items-center text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] cursor-pointer mt-[var(--space-sm)] bg-transparent border-none p-0",
+              "flex items-center text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] cursor-pointer mt-[var(--space-sm)] bg-transparent border-none p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-sm",
               size === 'sm' ? 'gap-[var(--space-sm)]' : 'gap-[var(--space-xsm)]',
               size === 'sm' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm'
             )}
@@ -274,6 +281,7 @@ const AttributesGroup = React.forwardRef<HTMLDivElement, AttributesGroupProps>(
             <Icon
               name="chevron-down"
               size="sm"
+              aria-hidden="true"
               className={cn(
                 "transition-transform",
                 showHidden && "rotate-180"
@@ -401,15 +409,16 @@ const AttributesRow = React.forwardRef<HTMLDivElement, AttributesRowProps>(
             <a
               href={externalLink.href}
               className={cn(
-                "text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] inline-flex items-center no-underline shrink-0",
+                "text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] inline-flex items-center no-underline shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-sm",
                 size === 'sm' ? 'gap-[var(--space-sm)]' : 'gap-[var(--space-xsm)]',
                 size === 'sm' ? '[&]:text-body-sm' : '[&]:text-body-xsm'
               )}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={`${externalLink.label} (opens in new tab)`}
             >
               {externalLink.label}
-              <Icon name="external-link" size="sm" />
+              <Icon name="external-link" size="sm" aria-hidden="true" />
             </a>
           </div>,
           ...rest,
@@ -424,7 +433,8 @@ const AttributesRow = React.forwardRef<HTMLDivElement, AttributesRowProps>(
         ref={!asCollapsibleTrigger ? ref : undefined}
         className={cn(
           "grid items-center",
-          asCollapsibleTrigger && "cursor-pointer hover:bg-[var(--color-surface-secondary)] transition-colors rounded-sm px-[var(--space-sm)] py-[var(--space-xsm)] -mx-[var(--space-sm)]",
+          asCollapsibleTrigger &&
+            "cursor-pointer hover:bg-[var(--color-surface-secondary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 transition-colors rounded-sm px-[var(--space-sm)] py-[var(--space-xsm)] -mx-[var(--space-sm)]",
           className
         )}
         style={{
@@ -455,24 +465,26 @@ AttributesRow.displayName = "AttributesRow";
 export interface AttributesLabelProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-const AttributesLabel = React.forwardRef<HTMLDivElement, AttributesLabelProps>(
-  ({ className, children, ...props }, ref) => {
-    const size = React.useContext(AttributesListSizeContext);
+const AttributesLabel = React.memo(
+  React.forwardRef<HTMLDivElement, AttributesLabelProps>(
+    ({ className, children, ...props }, ref) => {
+      const size = React.useContext(AttributesListSizeContext);
 
-    return (
-      <div
-        ref={ref}
-        className={cn(
-          "text-[var(--color-text-secondary)] [[data-hidden='true']_&]:text-[var(--color-text-tertiary)] shrink-0",
-          size === 'sm' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm',
-          className
-        )}
-        {...props}
-      >
-        {children}
-      </div>
-    );
-  }
+      return (
+        <div
+          ref={ref}
+          className={cn(
+            "text-[var(--color-text-secondary)] [[data-hidden='true']_&]:text-[var(--color-text-tertiary)] shrink-0",
+            size === 'sm' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm',
+            className
+          )}
+          {...props}
+        >
+          {children}
+        </div>
+      );
+    }
+  )
 );
 AttributesLabel.displayName = "AttributesLabel";
 
@@ -480,25 +492,27 @@ AttributesLabel.displayName = "AttributesLabel";
 export interface AttributesValueProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-const AttributesValue = React.forwardRef<HTMLDivElement, AttributesValueProps>(
-  ({ className, children, ...props }, ref) => {
-    const size = React.useContext(AttributesListSizeContext);
+const AttributesValue = React.memo(
+  React.forwardRef<HTMLDivElement, AttributesValueProps>(
+    ({ className, children, ...props }, ref) => {
+      const size = React.useContext(AttributesListSizeContext);
 
-    return (
-      <div
-        ref={ref}
-        className={cn(
-          "text-[var(--color-text-primary)] [[data-hidden='true']_&]:text-[var(--color-text-tertiary)] flex items-center",
-          size === 'sm' ? 'gap-[var(--space-sm)]' : 'gap-[var(--space-xsm)]',
-          size === 'sm' ? '[&]:text-body-sm' : '[&]:text-body-xsm',
-          className
-        )}
-        {...props}
-      >
-        {children}
-      </div>
-    );
-  }
+      return (
+        <div
+          ref={ref}
+          className={cn(
+            "text-[var(--color-text-primary)] [[data-hidden='true']_&]:text-[var(--color-text-tertiary)] flex items-center",
+            size === 'sm' ? 'gap-[var(--space-sm)]' : 'gap-[var(--space-xsm)]',
+            size === 'sm' ? '[&]:text-body-sm' : '[&]:text-body-xsm',
+            className
+          )}
+          {...props}
+        >
+          {children}
+        </div>
+      );
+    }
+  )
 );
 AttributesValue.displayName = "AttributesValue";
 
@@ -530,19 +544,26 @@ AttributesContent.displayName = "AttributesContent";
 export interface AttributesChevronProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-const AttributesChevron = React.forwardRef<HTMLDivElement, AttributesChevronProps>(
-  ({ className, ...props }, ref) => {
-    return (
-      <div ref={ref} className={cn("shrink-0 -ml-[4px]", className)} {...props}>
-        <Icon
-          name="chevron-down"
-          size="sm"
-          color="tertiary"
-          className="transition-transform [.group[data-state=open]_&]:rotate-180"
-        />
-      </div>
-    );
-  }
+const AttributesChevron = React.memo(
+  React.forwardRef<HTMLDivElement, AttributesChevronProps>(
+    ({ className, ...props }, ref) => {
+      return (
+        <div
+          ref={ref}
+          aria-hidden="true"
+          className={cn("shrink-0 -ml-[4px]", className)}
+          {...props}
+        >
+          <Icon
+            name="chevron-down"
+            size="sm"
+            color="tertiary"
+            className="transition-transform [.group[data-state=open]_&]:rotate-180"
+          />
+        </div>
+      );
+    }
+  )
 );
 AttributesChevron.displayName = "AttributesChevron";
 
