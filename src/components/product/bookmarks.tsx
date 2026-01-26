@@ -888,7 +888,7 @@ function BookmarkTabs({
       ref={containerRef}
       role="tablist"
       aria-label={ariaLabel}
-      className="flex items-center gap-[var(--space-sm)] overflow-hidden"
+      className="flex items-center gap-[var(--space-sm)]"
     >
       {/* Render all bookmarks - visible ones first, then hidden ones for measurement */}
       {renderOrderedBookmarks.map((bookmark, index) => {
