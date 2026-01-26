@@ -207,8 +207,10 @@ interface FilterPanelContentProps {
   onReset?: () => void
 }
 
-export function FilterPanelContent({ filter, value, onChange, onReset }: FilterPanelContentProps) {
+export const FilterPanelContent = React.memo(function FilterPanelContent({ filter, value, onChange, onReset }: FilterPanelContentProps) {
   const [searchQuery, setSearchQuery] = React.useState("")
+  // Use deferred value to prevent input lag during filtering of large option lists
+  const deferredSearchQuery = React.useDeferredValue(searchQuery)
 
   // Number range state
   const [minInput, setMinInput] = React.useState<string>("")
@@ -259,19 +261,20 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
     return totalOptions >= threshold
   }, [filter])
 
-  // Filter options based on search query
+  // Filter options based on search query (uses deferred value to prevent input lag)
   const filteredGroups: FilterOptionGroup[] = React.useMemo(() => {
     // Handle grouped options
     if (filter.groups) {
-      if (!searchQuery) return filter.groups
+      if (!deferredSearchQuery) return filter.groups
 
+      const normalizedSearch = deferredSearchQuery.toLowerCase()
       return filter.groups
         .map(group => ({
           ...group,
           options: group.options.filter(option =>
-            option.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            option.label.toLowerCase().includes(normalizedSearch) ||
             option.children?.some(child =>
-              child.label.toLowerCase().includes(searchQuery.toLowerCase())
+              child.label.toLowerCase().includes(normalizedSearch)
             )
           )
         }))
@@ -280,10 +283,10 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
 
     // Handle flat options array - convert to single group
     if (filter.options) {
-      const filteredOptions = !searchQuery
+      const filteredOptions = !deferredSearchQuery
         ? filter.options
         : filter.options.filter(option =>
-            option.label.toLowerCase().includes(searchQuery.toLowerCase())
+            option.label.toLowerCase().includes(deferredSearchQuery.toLowerCase())
           )
 
       return filteredOptions.length > 0
@@ -292,7 +295,7 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
     }
 
     return []
-  }, [filter.groups, filter.options, filter.label, searchQuery])
+  }, [filter.groups, filter.options, filter.label, deferredSearchQuery])
 
   const handleToggleOption = (optionValue: string) => {
     if (filter.type === 'multiselect') {
@@ -632,31 +635,44 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
       )}
 
       {/* Option Groups */}
-      {filteredGroups.map((group) => (
-        <div key={group.label} className="flex flex-col gap-[var(--space-sm)]">
+      {filteredGroups.map((group, groupIndex) => {
+        const groupId = `filter-group-${groupIndex}-${group.label.replace(/\s+/g, '-').toLowerCase()}`
+        return (
+        <div
+          key={group.label}
+          role="group"
+          aria-labelledby={groupId}
+          className="flex flex-col gap-[var(--space-sm)]"
+        >
           {/* Group Header */}
           <div className="flex gap-[var(--space-sm)] items-start justify-start w-full">
-            <div className="flex-1 text-body-medium-sm text-[var(--color-text-tertiary)]">
+            <div
+              id={groupId}
+              className="flex-1 text-body-medium-sm text-[var(--color-text-tertiary)]"
+            >
               {group.label}
             </div>
             {onReset && filter.type === 'multiselect' && (
               <div className="flex gap-[var(--space-xsm)] items-center text-body-medium-sm text-[var(--color-text-brand-bold)]">
                 <button
                   onClick={() => handleSelectAllInGroup(group)}
+                  aria-label={`Select all ${group.label} options`}
                   className="hover:text-[var(--color-text-brand-bold-hovered)] hover:underline"
                 >
                   All
                 </button>
-                <span className="text-[var(--color-text-tertiary)]">•</span>
+                <span className="text-[var(--color-text-tertiary)]" aria-hidden="true">•</span>
                 <button
                   onClick={() => handleInverseSelectionInGroup(group)}
+                  aria-label={`Inverse selection in ${group.label}`}
                   className="hover:text-[var(--color-text-brand-bold-hovered)] hover:underline"
                 >
                   Inverse
                 </button>
-                <span className="text-[var(--color-text-tertiary)]">•</span>
+                <span className="text-[var(--color-text-tertiary)]" aria-hidden="true">•</span>
                 <button
                   onClick={() => handleResetGroup(group)}
+                  aria-label={`Clear all ${group.label} selections`}
                   className="hover:text-[var(--color-text-brand-bold-hovered)] hover:underline"
                 >
                   None
@@ -678,12 +694,13 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
                   {/* Parent Option */}
                   <div className="flex gap-[var(--space-sm)] h-[20px] items-center">
                     <Checkbox
+                      id={`checkbox-${filter.id}-${option.value}`}
                       checked={selectedValues.includes(option.value)}
                       onCheckedChange={() => handleToggleOption(option.value)}
                     />
                     <label
+                      htmlFor={`checkbox-${filter.id}-${option.value}`}
                       className="flex-1 text-body-md text-[var(--color-text-primary)] cursor-pointer"
-                      onClick={() => handleToggleOption(option.value)}
                     >
                       {option.label}
                     </label>
@@ -693,12 +710,13 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
                   {option.children && option.children.map((child: FilterOption) => (
                     <div key={child.value} className="flex gap-[var(--space-sm)] h-[20px] items-center pl-[var(--space-2xlg)]">
                       <Checkbox
+                        id={`checkbox-${filter.id}-${child.value}`}
                         checked={selectedValues.includes(child.value)}
                         onCheckedChange={() => handleToggleOption(child.value)}
                       />
                       <label
+                        htmlFor={`checkbox-${filter.id}-${child.value}`}
                         className="flex-1 text-body-md text-[var(--color-text-primary)] cursor-pointer"
-                        onClick={() => handleToggleOption(child.value)}
                       >
                         {child.label}
                       </label>
@@ -708,16 +726,16 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
               ))}
             </div>
           ) : (
-            <RadioGroup value={selectedValues[0] || ''} onValueChange={handleToggleOption}>
+            <RadioGroup value={selectedValues[0] || ''} onValueChange={handleToggleOption} aria-label={group.label}>
               <div className="flex flex-col gap-[var(--space-sm)]">
                 {group.options.map((option) => (
                   <React.Fragment key={option.value}>
                     {/* Parent Option */}
                     <div className="flex gap-[var(--space-sm)] h-[20px] items-center">
-                      <RadioGroupItem value={option.value} />
+                      <RadioGroupItem id={`radio-${filter.id}-${option.value}`} value={option.value} />
                       <label
+                        htmlFor={`radio-${filter.id}-${option.value}`}
                         className="flex-1 text-body-md text-[var(--color-text-primary)] cursor-pointer"
-                        onClick={() => handleToggleOption(option.value)}
                       >
                         {option.label}
                       </label>
@@ -726,10 +744,10 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
                     {/* Child Options (Indented) */}
                     {option.children && option.children.map((child: FilterOption) => (
                       <div key={child.value} className="flex gap-[var(--space-sm)] h-[20px] items-center pl-[var(--space-2xlg)]">
-                        <RadioGroupItem value={child.value} />
+                        <RadioGroupItem id={`radio-${filter.id}-${child.value}`} value={child.value} />
                         <label
+                          htmlFor={`radio-${filter.id}-${child.value}`}
                           className="flex-1 text-body-md text-[var(--color-text-primary)] cursor-pointer"
-                          onClick={() => handleToggleOption(child.value)}
                         >
                           {child.label}
                         </label>
@@ -741,10 +759,11 @@ export function FilterPanelContent({ filter, value, onChange, onReset }: FilterP
             </RadioGroup>
           )}
         </div>
-      ))}
+        )
+      })}
     </div>
   )
-}
+})
 
 // ============================================================================
 // FilterSidebarItem - Sidebar navigation item with pin toggle
@@ -757,28 +776,35 @@ interface FilterSidebarItemProps {
   valueCount?: number
   onSelect: () => void
   onTogglePin: () => void
+  /** Optional callback for prefetching filter data on hover */
+  onPrefetch?: () => void
 }
 
-function FilterSidebarItem({ filter, isSelected, isPinned, valueCount, onSelect, onTogglePin }: FilterSidebarItemProps) {
+const FilterSidebarItem = React.memo(function FilterSidebarItem({ filter, isSelected, isPinned, valueCount, onSelect, onTogglePin, onPrefetch }: FilterSidebarItemProps) {
   const IconComponent = filter.icon
   const [isHovered, setIsHovered] = React.useState(false)
 
   return (
     <div
-      role="button"
-      tabIndex={0}
+      id={`filter-option-${filter.id}`}
+      role="option"
+      aria-selected={isSelected}
+      aria-label={`${filter.label}${valueCount ? `, ${valueCount} selected` : ''}`}
+      tabIndex={-1}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault()
           onSelect()
         }
       }}
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={() => {
+        setIsHovered(true)
+        onPrefetch?.()
+      }}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
         "group/item box-border flex gap-[var(--space-md)] h-[var(--size-md)] items-center justify-start px-[var(--space-lg)] py-[var(--space-sm)] relative rounded-md shrink-0 w-full cursor-pointer transition-colors",
         "hover:bg-[var(--color-background-neutral-hovered)]",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)]",
         isSelected && "bg-[var(--color-background-blue-subtle-selected)] hover:bg-[var(--color-background-blue-subtle-selected-hovered)]"
       )}
       onClick={onSelect}
@@ -811,6 +837,8 @@ function FilterSidebarItem({ filter, isSelected, isPinned, valueCount, onSelect,
           variant="ghost"
           size="sm"
           tabIndex={-1}
+          aria-label={isPinned ? `Unpin ${filter.label} filter` : `Pin ${filter.label} filter`}
+          aria-pressed={isPinned}
           onClick={(e) => {
             e.stopPropagation()
             onTogglePin()
@@ -824,6 +852,7 @@ function FilterSidebarItem({ filter, isSelected, isPinned, valueCount, onSelect,
             <>
               <Icon
                 name="pin"
+                aria-hidden="true"
                 className={cn(
                   "h-[12px] w-[12px] group-hover/pin:hidden",
                   isSelected ? "text-[var(--color-text-brand-bold)]" : "text-[var(--color-text-primary)]"
@@ -831,6 +860,7 @@ function FilterSidebarItem({ filter, isSelected, isPinned, valueCount, onSelect,
               />
               <Icon
                 name="pin-off"
+                aria-hidden="true"
                 className={cn(
                   "h-[12px] w-[12px] hidden group-hover/pin:block",
                   isSelected ? "text-[var(--color-text-brand-bold)]" : "text-[var(--color-text-primary)]"
@@ -840,6 +870,7 @@ function FilterSidebarItem({ filter, isSelected, isPinned, valueCount, onSelect,
           ) : (
             <Icon
               name="pin"
+              aria-hidden="true"
               className={cn(
                 "h-[12px] w-[12px]",
                 isSelected ? "text-[var(--color-text-brand-bold)]" : "text-[var(--color-text-primary)]"
@@ -850,7 +881,7 @@ function FilterSidebarItem({ filter, isSelected, isPinned, valueCount, onSelect,
       </div>
     </div>
   )
-}
+})
 
 // ============================================================================
 // GlobalSearchInput - Search input for global filtering
@@ -876,6 +907,7 @@ function GlobalSearchInput({ placeholder = "Search for keyword...", onAddSearchT
     <div className="min-w-[200px] w-[280px]">
       <Input
         type="search"
+        aria-label="Search filters by keyword"
         placeholder={placeholder}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
@@ -944,8 +976,58 @@ export function FilterDropdownMenu({
   onFilterChange,
 }: FilterDropdownMenuProps) {
   const [selectedFilterId, setSelectedFilterId] = React.useState(filters[0]?.id)
+  const listboxRef = React.useRef<HTMLDivElement>(null)
+
+  // Flatten all filters into a single array for keyboard navigation
+  const allFilterIds = React.useMemo(() => {
+    return filters.map(f => f.id)
+  }, [filters])
+
+  // Handle keyboard navigation for listbox pattern
+  const handleListboxKeyDown = (e: React.KeyboardEvent) => {
+    const currentIndex = allFilterIds.indexOf(selectedFilterId)
+    let newIndex = currentIndex
+
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault()
+        newIndex = Math.min(currentIndex + 1, allFilterIds.length - 1)
+        break
+      case 'ArrowUp':
+        e.preventDefault()
+        newIndex = Math.max(currentIndex - 1, 0)
+        break
+      case 'Home':
+        e.preventDefault()
+        newIndex = 0
+        break
+      case 'End':
+        e.preventDefault()
+        newIndex = allFilterIds.length - 1
+        break
+      default:
+        return
+    }
+
+    if (newIndex !== currentIndex) {
+      setSelectedFilterId(allFilterIds[newIndex])
+    }
+  }
 
   const selectedFilter = filters.find(f => f.id === selectedFilterId)
+
+  // Memoized callbacks to prevent unnecessary re-renders
+  const handleFilterPanelChange = React.useCallback((value: FilterValue) => {
+    if (selectedFilter) {
+      onFilterChange(selectedFilter.id, value)
+    }
+  }, [selectedFilter?.id, onFilterChange])
+
+  const handleFilterPanelReset = React.useCallback(() => {
+    if (selectedFilter) {
+      onFilterChange(selectedFilter.id, undefined)
+    }
+  }, [selectedFilter?.id, onFilterChange])
 
   const handleTogglePin = (filterId: string) => {
     const newPinned = pinnedFilters.includes(filterId)
@@ -980,7 +1062,16 @@ export function FilterDropdownMenu({
       <div className="flex items-stretch justify-start min-h-0 overflow-hidden rounded-md flex-1">
         {/* Left Sidebar */}
         <div className="bg-[var(--color-background-neutral-default)] relative w-[240px] shrink-0 border-r border-[var(--color-border-primary-subtle)] flex flex-col">
-          <div className="box-border flex flex-col gap-[var(--space-sm)] p-[var(--space-sm)] overflow-y-auto">
+          <div
+            ref={listboxRef}
+            role="listbox"
+            aria-label="Filter categories"
+            aria-orientation="vertical"
+            aria-activedescendant={selectedFilterId ? `filter-option-${selectedFilterId}` : undefined}
+            tabIndex={0}
+            onKeyDown={handleListboxKeyDown}
+            className="box-border flex flex-col gap-[var(--space-sm)] p-[var(--space-sm)] overflow-y-auto focus-visible:outline-none"
+          >
             {/* Render ungrouped filters first */}
             {groupedFilters.ungrouped.map((filter) => {
               const value = activeFilters[filter.id]
@@ -1044,8 +1135,8 @@ export function FilterDropdownMenu({
             <FilterPanelContent
               filter={selectedFilter}
               value={activeFilters[selectedFilter.id]}
-              onChange={(value) => onFilterChange(selectedFilter.id, value)}
-              onReset={() => onFilterChange(selectedFilter.id, undefined)}
+              onChange={handleFilterPanelChange}
+              onReset={handleFilterPanelReset}
             />
           )}
         </div>
@@ -1078,6 +1169,77 @@ export function Filters({
 }: FiltersProps) {
   const [isFilterMenuOpen, setIsFilterMenuOpen] = React.useState(false)
   const [openSlotId, setOpenSlotId] = React.useState<string | null>(null)
+  const [announcement, setAnnouncement] = React.useState('')
+  const previousActiveFiltersRef = React.useRef(activeFilters)
+  const previousSearchTermsRef = React.useRef(globalSearchTerms)
+  // Refs for focus management - return focus to trigger when popover closes
+  const filterSlotTriggerRefs = React.useRef<Record<string, HTMLDivElement | null>>({})
+
+  // Handle popover open/close with focus management
+  const handleSlotPopoverChange = React.useCallback((open: boolean, filterId: string) => {
+    const previousOpenSlotId = openSlotId
+    setOpenSlotId(open ? filterId : null)
+
+    // Return focus to trigger when closing
+    if (!open && previousOpenSlotId === filterId) {
+      // Use setTimeout to ensure the popover has closed before focusing
+      setTimeout(() => {
+        filterSlotTriggerRefs.current[filterId]?.focus()
+      }, 0)
+    }
+  }, [openSlotId])
+
+  // Announce filter state changes for screen readers
+  React.useEffect(() => {
+    const prevFilters = previousActiveFiltersRef.current
+    const prevSearchTerms = previousSearchTermsRef.current
+
+    const currentFilterCount = Object.keys(activeFilters).filter(
+      key => activeFilters[key] !== undefined && activeFilters[key] !== null &&
+        (!Array.isArray(activeFilters[key]) || (activeFilters[key] as unknown[]).length > 0)
+    ).length
+    const prevFilterCount = Object.keys(prevFilters).filter(
+      key => prevFilters[key] !== undefined && prevFilters[key] !== null &&
+        (!Array.isArray(prevFilters[key]) || (prevFilters[key] as unknown[]).length > 0)
+    ).length
+
+    const searchTermCount = globalSearchTerms.length
+    const prevSearchTermCount = prevSearchTerms.length
+
+    let message = ''
+
+    // Check for filter changes
+    if (currentFilterCount !== prevFilterCount) {
+      if (currentFilterCount > prevFilterCount) {
+        message = 'Filter applied.'
+      } else if (currentFilterCount < prevFilterCount) {
+        message = 'Filter removed.'
+      }
+    }
+
+    // Check for search term changes
+    if (searchTermCount !== prevSearchTermCount) {
+      if (searchTermCount > prevSearchTermCount) {
+        message = message ? `${message} Search term added.` : 'Search term added.'
+      } else if (searchTermCount < prevSearchTermCount) {
+        message = message ? `${message} Search term removed.` : 'Search term removed.'
+      }
+    }
+
+    // Announce total active state
+    if (message) {
+      const totalActive = currentFilterCount + searchTermCount
+      if (totalActive === 0) {
+        message = 'All filters cleared.'
+      } else {
+        message = `${message} ${totalActive} active filter${totalActive !== 1 ? 's' : ''}.`
+      }
+      setAnnouncement(message)
+    }
+
+    previousActiveFiltersRef.current = activeFilters
+    previousSearchTermsRef.current = globalSearchTerms
+  }, [activeFilters, globalSearchTerms])
 
   // Determine if Filters button should be visible
   const isFiltersButtonVisible = !hideFiltersButton && filters.length > 0
@@ -1188,6 +1350,52 @@ export function Filters({
   const pinnedFilterObjects = filters
     .filter(f => pinnedFilters.includes(f.id))
 
+  // Pre-build lookup map for efficient search term matching (O(1) vs O(n*m*o))
+  // Maps normalized labels to filter info for quick lookups
+  const optionLabelLookup = React.useMemo(() => {
+    const entries: Array<{ normalizedLabel: string; filterId: string; icon: React.ComponentType<{ className?: string }> }> = []
+
+    for (const filter of filters) {
+      const addEntry = (label: string) => {
+        entries.push({
+          normalizedLabel: label.toLowerCase(),
+          filterId: filter.id,
+          icon: filter.icon
+        })
+      }
+
+      if (filter.groups) {
+        for (const group of filter.groups) {
+          for (const option of group.options) {
+            addEntry(option.label)
+            option.children?.forEach(child => addEntry(child.label))
+          }
+        }
+      }
+      if (filter.options) {
+        filter.options.forEach(opt => {
+          addEntry(opt.label)
+          opt.children?.forEach(child => addEntry(child.label))
+        })
+      }
+    }
+
+    return entries
+  }, [filters])
+
+  // Helper function using pre-built lookup (much faster for multiple searches)
+  const findMatchingFilterFromLookup = React.useCallback((searchTerm: string) => {
+    if (!searchTerm) return null
+    const normalizedSearch = searchTerm.toLowerCase()
+
+    for (const entry of optionLabelLookup) {
+      if (entry.normalizedLabel.includes(normalizedSearch)) {
+        return { filterId: entry.filterId, icon: entry.icon }
+      }
+    }
+    return null
+  }, [optionLabelLookup])
+
   // Compute enriched search terms with matched filter icons
   const enrichedSearchTerms: GlobalSearchTerm[] = React.useMemo(() => {
     // Filter out any invalid values (undefined, null, non-strings)
@@ -1208,8 +1416,8 @@ export function Filters({
         }
       }
 
-      // Plain term (from manual entry) - try to find matching filter
-      const matchedFilter = findMatchingFilter(encodedTerm, filters)
+      // Plain term (from manual entry) - use optimized lookup
+      const matchedFilter = findMatchingFilterFromLookup(encodedTerm)
       return {
         value: encodedTerm,
         matchedFilter: matchedFilter ? {
@@ -1218,7 +1426,7 @@ export function Filters({
         } : undefined
       }
     })
-  }, [globalSearchTerms, filters])
+  }, [globalSearchTerms, filters, findMatchingFilterFromLookup])
 
   // Extract all option labels from filters with their source information for autocomplete suggestions
   const autocompleteSuggestions = React.useMemo(() => {
@@ -1325,15 +1533,30 @@ export function Filters({
 
   return (
     <div className="flex gap-[3px] items-center">
+      {/* Screen reader announcements for filter state changes */}
+      <div
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        className="sr-only"
+      >
+        {announcement}
+      </div>
+
       {/* Filter Button */}
       {isFiltersButtonVisible && (
         <Popover open={isFilterMenuOpen} onOpenChange={setIsFilterMenuOpen}>
           <PopoverTrigger asChild>
-            <Button className="h-[var(--size-md)] gap-[var(--space-xsm)]">
-              <Icon name="list-filter" className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]" />
+            <Button
+              className="h-[var(--size-md)] gap-[var(--space-xsm)]"
+              aria-label={`Filters${activeFilterCount > 0 ? `, ${activeFilterCount} active` : ''}`}
+              aria-expanded={isFilterMenuOpen}
+              aria-haspopup="dialog"
+            >
+              <Icon name="list-filter" className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]" aria-hidden="true" />
               <span className="text-label-md">Filters</span>
               {activeFilterCount > 0 && (
-                <Badge size="sm" intent="neutral" appearance="subtle">
+                <Badge size="sm" intent="neutral" appearance="subtle" aria-hidden="true">
                   {activeFilterCount}
                 </Badge>
               )}
@@ -1371,16 +1594,26 @@ export function Filters({
           <Popover
             key={filter.id}
             open={openSlotId === filter.id}
-            onOpenChange={(open) => setOpenSlotId(open ? filter.id : null)}
+            onOpenChange={(open) => handleSlotPopoverChange(open, filter.id)}
           >
             <PopoverTrigger asChild>
               <div
+                ref={(el) => { filterSlotTriggerRefs.current[filter.id] = el }}
                 role="button"
                 tabIndex={0}
+                aria-label={`${filter.label}: ${
+                  slotContent.type === 'empty'
+                    ? 'not set, click to add filter'
+                    : slotContent.type === 'count'
+                    ? `${slotContent.count} selected, click to edit`
+                    : `${slotContent.content}, click to edit`
+                }`}
+                aria-expanded={openSlotId === filter.id}
+                aria-haspopup="dialog"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault()
-                    setOpenSlotId(openSlotId === filter.id ? null : filter.id)
+                    handleSlotPopoverChange(openSlotId !== filter.id, filter.id)
                   }
                 }}
                 className={cn(
@@ -1421,6 +1654,7 @@ export function Filters({
                   <Button
                     variant="ghost"
                     size="sm"
+                    aria-label={`Clear ${filter.label} filter`}
                     onClick={(e) => {
                       e.stopPropagation()
                       onFilterClear(filter.id)
@@ -1434,7 +1668,7 @@ export function Filters({
                     }}
                     className="h-auto w-auto p-[var(--space-xsm)]"
                   >
-                    <Icon name="x" className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]" />
+                    <Icon name="x" className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]" aria-hidden="true" />
                   </Button>
                 )}
               </div>
@@ -1507,10 +1741,11 @@ export function Filters({
             <Button
               variant="ghost"
               size="sm"
+              aria-label={`Remove search term: ${displayValue}`}
               onClick={() => handleRemoveSearchTerm(searchTerm.value)}
               className="h-auto w-auto p-[var(--space-xsm)]"
             >
-              <Icon name="x" className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]" />
+              <Icon name="x" className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]" aria-hidden="true" />
             </Button>
           </div>
         )
@@ -1526,6 +1761,7 @@ export function Filters({
         <Button
           variant="ghost"
           onClick={handleReset}
+          aria-label="Reset all filters and search terms"
           className="h-[var(--size-md)] rounded-sm px-[var(--space-md)]"
         >
           <span className="text-label-md">Reset</span>

@@ -159,6 +159,7 @@ export function AutocompleteSearch({
   onSelect,
 }: AutocompleteSearchProps) {
   const [open, setOpen] = React.useState(false)
+  const listboxId = React.useId()
 
   // Normalize suggestions - convert strings to AutocompleteSuggestion objects
   const normalizedSuggestions = React.useMemo((): AutocompleteSuggestion[] => {
@@ -236,6 +237,12 @@ export function AutocompleteSearch({
             >
               <Input
                 type="search"
+                role="combobox"
+                aria-expanded={open}
+                aria-haspopup="listbox"
+                aria-controls={listboxId}
+                aria-autocomplete="list"
+                aria-label="Search with autocomplete suggestions"
                 placeholder={placeholder}
               />
             </CommandPrimitive.Input>
@@ -254,7 +261,7 @@ export function AutocompleteSearch({
             }}
             className="w-[--radix-popover-trigger-width] p-[var(--space-sm)]"
           >
-            <CommandList>
+            <CommandList id={listboxId} role="listbox" aria-label="Autocomplete suggestions">
               {filteredSuggestions.length > 0 ? (
                 <CommandGroup className="[&]:p-0">
                   {filteredSuggestions.map((suggestion, index) => {
