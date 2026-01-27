@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import React, { useState, useMemo, useRef, useEffect } from 'react'
+import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react'
 import { DataTable, DataTableColumnHeader, NestedHeaderConfig } from '../components/product/data-table'
 import { DataTableSettingsMenu, ColumnOption } from '../components/product/data-table-settings-menu'
 import { ViewModeMenu, ViewModeMenuHandle } from '../components/product/view-mode-menu'
@@ -16,7 +16,8 @@ import { Bookmarks, Bookmark, FiltersState, TableState, useBookmarksActions } fr
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../components/fundamental/dropdown-menu'
 import { Dialog, DialogContent, DialogHeader, DialogBody, DialogTitle, DialogFooter } from '../components/fundamental/dialog'
 import { Label } from '../components/fundamental/label'
-import { ColumnDef, SortingState, VisibilityState, GroupingState, ColumnOrderState } from '@tanstack/react-table'
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '../components/fundamental/select'
+import { ColumnDef, SortingState, VisibilityState, GroupingState, ColumnOrderState, ExpandedState } from '@tanstack/react-table'
 import { formatNumber, formatCurrency, formatDecimal, cn } from '../lib/utils'
 import { SkeletonTable, Skeleton } from '../components/fundamental/skeleton'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/fundamental/table'
@@ -166,6 +167,41 @@ These dedicated guides include complete implementation examples, database schema
   },
   tags: ['autodocs'],
   argTypes: {
+    // Loading
+    isLoading: {
+      control: 'boolean',
+      description: 'Show loading skeleton state',
+    },
+    loadingBehavior: {
+      control: 'radio',
+      options: ['replace', 'preserve'],
+      description: 'Controls skeleton display during loading',
+    },
+    loadingRowCount: {
+      control: { type: 'number', min: 1, max: 20 },
+      description: 'Number of skeleton rows when loading',
+    },
+    // Visual styling
+    borderStyle: {
+      control: 'select',
+      options: ['vertical', 'horizontal', 'both', 'none'],
+      description: 'Table border style',
+    },
+    defaultVerticalAlign: {
+      control: 'radio',
+      options: ['top', 'middle', 'bottom'],
+      description: 'Default vertical alignment for cells',
+    },
+    // Header & pagination
+    showHeader: {
+      control: 'boolean',
+      description: 'Show table header',
+    },
+    showPagination: {
+      control: 'boolean',
+      description: 'Show pagination controls',
+    },
+    // Features
     enableGlobalSearch: {
       control: 'boolean',
       description: 'Enable global search filtering',
@@ -178,9 +214,38 @@ These dedicated guides include complete implementation examples, database schema
       control: 'boolean',
       description: 'Enable nested column headers',
     },
+    enableRowSelection: {
+      control: 'boolean',
+      description: 'Enable row selection checkboxes',
+    },
+    enableExpanding: {
+      control: 'boolean',
+      description: 'Enable row expanding',
+    },
+    enableGrouping: {
+      control: 'boolean',
+      description: 'Enable row grouping',
+    },
+    enableColumnOrdering: {
+      control: 'boolean',
+      description: 'Enable column drag reordering',
+    },
+    // Sticky & responsive
     stickyHeader: {
       control: 'boolean',
       description: 'Make table header sticky',
+    },
+    stickyFirstColumn: {
+      control: 'boolean',
+      description: 'Make first column sticky',
+    },
+    enableResponsiveWrapper: {
+      control: 'boolean',
+      description: 'Enable responsive horizontal scrolling',
+    },
+    showScrollIndicators: {
+      control: 'boolean',
+      description: 'Show scroll shadow indicators',
     },
   },
 } satisfies Meta<typeof DataTable>
@@ -7409,6 +7474,597 @@ export const ServerSideSorting: Story = {
               sorting={sorting}
               onSortingChange={handleSortingChange}
               isRefetching={isLoading}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+}
+
+// ============================================================================
+// Server-Side Group Expansion Story
+// ============================================================================
+
+/**
+ * Server-side group expansion using `manualExpanding`, `onLoadChildren`, and `expandingRowsLoading`.
+ * When a group is expanded, the children are loaded from the "server" asynchronously.
+ */
+export const ServerSideGroupExpansion: Story = {
+  render: () => {
+    // Parent data (groups) - children will be loaded on demand
+    const parentData = useMemo(() => [
+      { id: 'group-1', name: 'Engineering Team', type: 'department', memberCount: 15, budget: '$500K' },
+      { id: 'group-2', name: 'Design Team', type: 'department', memberCount: 8, budget: '$200K' },
+      { id: 'group-3', name: 'Marketing Team', type: 'department', memberCount: 12, budget: '$350K' },
+    ], [])
+
+    // Simulated child data that would come from server
+    const serverChildData: Record<string, any[]> = useMemo(() => ({
+      'group-1': [
+        { id: '1-1', name: 'Alice Chen', type: 'member', role: 'Senior Engineer' },
+        { id: '1-2', name: 'Bob Smith', type: 'member', role: 'Tech Lead' },
+        { id: '1-3', name: 'Carol Davis', type: 'member', role: 'Engineer' },
+      ],
+      'group-2': [
+        { id: '2-1', name: 'David Lee', type: 'member', role: 'Design Lead' },
+        { id: '2-2', name: 'Emma Wilson', type: 'member', role: 'UX Designer' },
+      ],
+      'group-3': [
+        { id: '3-1', name: 'Frank Brown', type: 'member', role: 'Marketing Director' },
+        { id: '3-2', name: 'Grace Miller', type: 'member', role: 'Content Manager' },
+        { id: '3-3', name: 'Henry Taylor', type: 'member', role: 'SEO Specialist' },
+      ],
+    }), [])
+
+    const [data, setData] = useState(parentData)
+    const [loadingGroups, setLoadingGroups] = useState<Record<string, boolean>>({})
+    const [loadedGroups, setLoadedGroups] = useState<Set<string>>(new Set())
+    const [expanded, setExpanded] = useState<ExpandedState>({})
+
+    const columns: ColumnDef<any>[] = [
+      {
+        accessorKey: 'name',
+        header: 'Name',
+        cell: ({ row, getValue }) => (
+          <div style={{ paddingLeft: `${row.depth * 24}px` }}>
+            {getValue() as string}
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'type',
+        header: 'Type',
+        cell: ({ getValue }) => (
+          <Badge variant={getValue() === 'department' ? 'default' : 'secondary'}>
+            {getValue() as string}
+          </Badge>
+        ),
+      },
+      {
+        accessorKey: 'role',
+        header: 'Role / Budget',
+        cell: ({ row }) => row.original.role || row.original.budget || '-',
+      },
+    ]
+
+    // Handle loading children when a row is expanded
+    const handleLoadChildren = useCallback(async (row: any) => {
+      const rowId = row.original.id
+
+      // Skip if already loaded
+      if (loadedGroups.has(rowId)) return
+
+      // Start loading
+      setLoadingGroups(prev => ({ ...prev, [row.id]: true }))
+
+      // Simulate server delay
+      await new Promise(resolve => setTimeout(resolve, 1500))
+
+      // Get children from "server"
+      const children = serverChildData[rowId] || []
+
+      // Merge children into data - insert after the parent row
+      setData(prev => {
+        const parentIndex = prev.findIndex(item => item.id === rowId)
+        if (parentIndex === -1) return prev
+
+        const newData = [...prev]
+        // Insert children right after parent (they will be rendered as sub-rows via getSubRows)
+        const parentWithChildren = {
+          ...newData[parentIndex],
+          children,
+        }
+        newData[parentIndex] = parentWithChildren
+        return newData
+      })
+
+      setLoadedGroups(prev => new Set([...prev, rowId]))
+      setLoadingGroups(prev => ({ ...prev, [row.id]: false }))
+    }, [loadedGroups, serverChildData])
+
+    // Handle expanded change to call onLoadChildren
+    const handleExpandedChange = useCallback((newExpanded: ExpandedState) => {
+      setExpanded(newExpanded)
+    }, [])
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <Card>
+          <CardHeader>
+            <CardTitle>Server-Side Group Expansion</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+              Click the chevron to expand a group. Children are loaded from the "server" with a 1.5s delay.
+              Loading state is shown while fetching. Once loaded, expanding/collapsing is instant.
+            </p>
+            <DataTable
+              data={data}
+              columns={columns}
+              enableExpanding
+              manualExpanding
+              onLoadChildren={handleLoadChildren}
+              expandingRowsLoading={loadingGroups}
+              onExpandedChange={handleExpandedChange}
+              getSubRows={(row: any) => row.children}
+              getRowCanExpand={(row) => row.original.type === 'department'}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+}
+
+// ============================================================================
+// Server-Side Row Expansion Story
+// ============================================================================
+
+/**
+ * Server-side row expansion with `renderSubComponent` for async detail loading.
+ * Uses `subComponentLoading` and `onSubComponentLoad` for loading indicators.
+ */
+export const ServerSideRowExpansion: Story = {
+  render: () => {
+    const orders = useMemo(() => [
+      { id: 'ORD-001', customer: 'Acme Corp', total: '$1,250', status: 'Processing' },
+      { id: 'ORD-002', customer: 'Global Tech', total: '$3,800', status: 'Shipped' },
+      { id: 'ORD-003', customer: 'Local Shop', total: '$450', status: 'Delivered' },
+    ], [])
+
+    // Simulated detailed data loaded on expand
+    const serverOrderDetails: Record<string, any> = useMemo(() => ({
+      'ORD-001': {
+        items: [
+          { name: 'Widget A', qty: 10, price: '$50' },
+          { name: 'Widget B', qty: 5, price: '$150' },
+        ],
+        shippingAddress: '123 Main St, City, ST 12345',
+        notes: 'Priority handling requested',
+      },
+      'ORD-002': {
+        items: [
+          { name: 'Premium Package', qty: 2, price: '$1,500' },
+          { name: 'Support Plan', qty: 1, price: '$800' },
+        ],
+        shippingAddress: '456 Tech Blvd, Tech City, TC 67890',
+        trackingNumber: 'TRK-12345-XYZ',
+      },
+      'ORD-003': {
+        items: [
+          { name: 'Basic Kit', qty: 3, price: '$150' },
+        ],
+        shippingAddress: '789 Local Ave, Small Town, SM 11111',
+        deliveredAt: '2024-01-15 10:30 AM',
+      },
+    }), [])
+
+    const [detailsData, setDetailsData] = useState<Record<string, any>>({})
+    const [loadingDetails, setLoadingDetails] = useState<Record<string, boolean>>({})
+    const [expanded, setExpanded] = useState<ExpandedState>({})
+
+    const columns: ColumnDef<any>[] = [
+      { accessorKey: 'id', header: 'Order ID' },
+      { accessorKey: 'customer', header: 'Customer' },
+      { accessorKey: 'total', header: 'Total' },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        cell: ({ getValue }) => (
+          <Badge variant={getValue() === 'Delivered' ? 'success' : getValue() === 'Shipped' ? 'default' : 'secondary'}>
+            {getValue() as string}
+          </Badge>
+        ),
+      },
+    ]
+
+    // Handle sub-component loading
+    const handleSubComponentLoad = useCallback(async (row: any) => {
+      const orderId = row.original.id
+
+      // Skip if already loaded
+      if (detailsData[row.id]) return
+
+      setLoadingDetails(prev => ({ ...prev, [row.id]: true }))
+
+      // Simulate server delay
+      await new Promise(resolve => setTimeout(resolve, 1200))
+
+      // Get details from "server"
+      const details = serverOrderDetails[orderId]
+      setDetailsData(prev => ({ ...prev, [row.id]: details }))
+      setLoadingDetails(prev => ({ ...prev, [row.id]: false }))
+    }, [detailsData, serverOrderDetails])
+
+    const handleExpandedChange = useCallback((newExpanded: ExpandedState) => {
+      setExpanded(newExpanded)
+    }, [])
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <Card>
+          <CardHeader>
+            <CardTitle>Server-Side Row Expansion</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+              Click the chevron to expand an order. Detail data is loaded from the "server" with a 1.2s delay.
+              The loading spinner shows while fetching. Once loaded, the details persist.
+            </p>
+            <DataTable
+              data={orders}
+              columns={columns}
+              enableExpanding
+              getRowCanExpand={() => true}
+              subComponentLoading={loadingDetails}
+              onSubComponentLoad={handleSubComponentLoad}
+              onExpandedChange={handleExpandedChange}
+              renderSubComponent={(row) => {
+                const details = detailsData[row.id]
+                if (!details) return null
+
+                return (
+                  <div className="p-[var(--space-lg)] bg-[var(--color-background-neutral-subtlest)]">
+                    <div className="grid grid-cols-2 gap-[var(--space-lg)]">
+                      <div>
+                        <h4 className="text-heading-xsm mb-[var(--space-sm)]">Order Items</h4>
+                        <div className="space-y-[var(--space-xsm)]">
+                          {details.items.map((item: any, i: number) => (
+                            <div key={i} className="flex justify-between text-body-sm">
+                              <span>{item.name} x{item.qty}</span>
+                              <span>{item.price}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="text-heading-xsm mb-[var(--space-sm)]">Shipping Info</h4>
+                        <p className="text-body-sm">{details.shippingAddress}</p>
+                        {details.trackingNumber && (
+                          <p className="text-body-sm mt-[var(--space-xsm)]">
+                            Tracking: <code>{details.trackingNumber}</code>
+                          </p>
+                        )}
+                        {details.deliveredAt && (
+                          <p className="text-body-sm mt-[var(--space-xsm)]">
+                            Delivered: {details.deliveredAt}
+                          </p>
+                        )}
+                        {details.notes && (
+                          <p className="text-body-sm mt-[var(--space-xsm)] text-[var(--color-text-warning)]">
+                            Note: {details.notes}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )
+              }}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+}
+
+// ============================================================================
+// Server-Side Filtering Story
+// ============================================================================
+
+/**
+ * Server-side filtering using `manualFiltering`.
+ * Demonstrates how to integrate external filter state with server-side data fetching.
+ */
+export const ServerSideFiltering: Story = {
+  render: () => {
+    // All data on "server"
+    const allProducts = useMemo(() => [
+      { id: 1, name: 'Laptop Pro', category: 'Electronics', price: 1299, stock: 45 },
+      { id: 2, name: 'Wireless Mouse', category: 'Electronics', price: 29, stock: 200 },
+      { id: 3, name: 'Office Chair', category: 'Furniture', price: 349, stock: 30 },
+      { id: 4, name: 'Standing Desk', category: 'Furniture', price: 599, stock: 15 },
+      { id: 5, name: 'Monitor 27"', category: 'Electronics', price: 449, stock: 60 },
+      { id: 6, name: 'Keyboard', category: 'Electronics', price: 79, stock: 150 },
+      { id: 7, name: 'Desk Lamp', category: 'Furniture', price: 45, stock: 80 },
+      { id: 8, name: 'USB Hub', category: 'Electronics', price: 35, stock: 100 },
+    ], [])
+
+    const [selectedCategory, setSelectedCategory] = useState<string>('all')
+    const [priceRange, setPriceRange] = useState<string>('all')
+    const [searchTerm, setSearchTerm] = useState<string>('')
+    const [data, setData] = useState(allProducts)
+    const [isLoading, setIsLoading] = useState(false)
+
+    // Simulate server-side filtering
+    useEffect(() => {
+      setIsLoading(true)
+
+      const timer = setTimeout(() => {
+        let filtered = [...allProducts]
+
+        // Apply category filter
+        if (selectedCategory !== 'all') {
+          filtered = filtered.filter(p => p.category === selectedCategory)
+        }
+
+        // Apply price range filter
+        if (priceRange === 'under50') {
+          filtered = filtered.filter(p => p.price < 50)
+        } else if (priceRange === '50to200') {
+          filtered = filtered.filter(p => p.price >= 50 && p.price <= 200)
+        } else if (priceRange === 'over200') {
+          filtered = filtered.filter(p => p.price > 200)
+        }
+
+        // Apply search filter
+        if (searchTerm) {
+          filtered = filtered.filter(p =>
+            p.name.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        }
+
+        setData(filtered)
+        setIsLoading(false)
+      }, 600)
+
+      return () => clearTimeout(timer)
+    }, [selectedCategory, priceRange, searchTerm, allProducts])
+
+    const columns: ColumnDef<any>[] = [
+      { accessorKey: 'name', header: 'Product Name' },
+      {
+        accessorKey: 'category',
+        header: 'Category',
+        cell: ({ getValue }) => (
+          <Badge variant={getValue() === 'Electronics' ? 'default' : 'secondary'}>
+            {getValue() as string}
+          </Badge>
+        ),
+      },
+      {
+        accessorKey: 'price',
+        header: 'Price',
+        cell: ({ getValue }) => `$${getValue()}`,
+      },
+      { accessorKey: 'stock', header: 'In Stock' },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <Card>
+          <CardHeader>
+            <CardTitle>Server-Side Filtering</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+              Use the filter controls below. Filtering is handled "server-side" with a 600ms simulated delay.
+              The table uses <code>manualFiltering</code> to disable client-side filtering.
+            </p>
+
+            {/* Filter controls */}
+            <div className="flex flex-wrap gap-[var(--space-md)] mb-[var(--space-lg)] p-[var(--space-md)] bg-[var(--color-background-neutral-subtlest)] rounded-lg">
+              <div className="flex flex-col gap-[var(--space-xsm)]">
+                <label className="text-label-sm">Search</label>
+                <Input
+                  placeholder="Search products..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-[200px]"
+                />
+              </div>
+
+              <div className="flex flex-col gap-[var(--space-xsm)]">
+                <label className="text-label-sm">Category</label>
+                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                  <SelectTrigger className="w-[150px]">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Categories</SelectItem>
+                    <SelectItem value="Electronics">Electronics</SelectItem>
+                    <SelectItem value="Furniture">Furniture</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex flex-col gap-[var(--space-xsm)]">
+                <label className="text-label-sm">Price Range</label>
+                <Select value={priceRange} onValueChange={setPriceRange}>
+                  <SelectTrigger className="w-[150px]">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Prices</SelectItem>
+                    <SelectItem value="under50">Under $50</SelectItem>
+                    <SelectItem value="50to200">$50 - $200</SelectItem>
+                    <SelectItem value="over200">Over $200</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <DataTable
+              data={data}
+              columns={columns}
+              manualFiltering
+              isRefetching={isLoading}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+}
+
+// ============================================================================
+// Server-Side Expansion with Error Handling Story
+// ============================================================================
+
+/**
+ * Demonstrates error handling for server-side row expansion.
+ * Some rows will randomly fail to load (30% chance), showing error state with retry option.
+ */
+export const ServerSideExpansionWithError: Story = {
+  render: () => {
+    // Sample orders
+    const orders = useMemo(() => [
+      { id: 'ORD-001', customer: 'Alice Johnson', date: '2024-01-15', total: '$234.50', status: 'Delivered' },
+      { id: 'ORD-002', customer: 'Bob Smith', date: '2024-01-14', total: '$89.99', status: 'Shipped' },
+      { id: 'ORD-003', customer: 'Carol White', date: '2024-01-13', total: '$567.00', status: 'Processing' },
+      { id: 'ORD-004', customer: 'David Brown', date: '2024-01-12', total: '$45.00', status: 'Delivered' },
+      { id: 'ORD-005', customer: 'Eve Davis', date: '2024-01-11', total: '$199.99', status: 'Shipped' },
+    ], [])
+
+    // State for loaded details, loading indicators, and errors
+    const [detailsData, setDetailsData] = useState<Record<string, any>>({})
+    const [loadingDetails, setLoadingDetails] = useState<Record<string, boolean>>({})
+    const [errorDetails, setErrorDetails] = useState<Record<string, Error | null>>({})
+    const [expanded, setExpanded] = useState<ExpandedState>({})
+
+    // Simulated server fetch with 30% failure rate
+    const fetchOrderDetails = useCallback(async (rowId: string): Promise<any> => {
+      // 30% chance of failure
+      if (Math.random() < 0.3) {
+        throw new Error('Network error: Failed to fetch order details')
+      }
+
+      // Simulate random response time
+      await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 700))
+
+      return {
+        items: [
+          { name: 'Product A', qty: 2, price: '$49.99' },
+          { name: 'Product B', qty: 1, price: '$134.52' },
+        ],
+        shippingAddress: '123 Main St, City, ST 12345',
+        trackingNumber: `TRK${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
+      }
+    }, [])
+
+    // Handle subcomponent load with error handling
+    const handleSubComponentLoad = useCallback(async (row: any) => {
+      const rowId = row.id
+
+      // Skip if already loaded
+      if (detailsData[rowId]) return
+
+      // Clear any previous error and set loading
+      setErrorDetails(prev => ({ ...prev, [rowId]: null }))
+      setLoadingDetails(prev => ({ ...prev, [rowId]: true }))
+
+      try {
+        const details = await fetchOrderDetails(rowId)
+        setDetailsData(prev => ({ ...prev, [rowId]: details }))
+      } catch (error) {
+        setErrorDetails(prev => ({ ...prev, [rowId]: error as Error }))
+      } finally {
+        setLoadingDetails(prev => ({ ...prev, [rowId]: false }))
+      }
+    }, [detailsData, fetchOrderDetails])
+
+    // Handle error callback from DataTable
+    const handleExpandError = useCallback((row: any, error: Error, type: 'children' | 'subComponent') => {
+      if (type === 'subComponent') {
+        setErrorDetails(prev => ({ ...prev, [row.id]: error }))
+      }
+    }, [])
+
+    // Handle expanded change
+    const handleExpandedChange = useCallback((newExpanded: ExpandedState) => {
+      setExpanded(newExpanded)
+    }, [])
+
+    // Retry loading for a specific row
+    const retryLoad = useCallback((rowId: string) => {
+      // Clear the error and cached data to allow retry
+      setErrorDetails(prev => ({ ...prev, [rowId]: null }))
+      setDetailsData(prev => {
+        const newData = { ...prev }
+        delete newData[rowId]
+        return newData
+      })
+    }, [])
+
+    const columns: ColumnDef<typeof orders[0]>[] = [
+      { accessorKey: 'id', header: 'Order ID' },
+      { accessorKey: 'customer', header: 'Customer' },
+      { accessorKey: 'date', header: 'Date' },
+      { accessorKey: 'total', header: 'Total' },
+      { accessorKey: 'status', header: 'Status' },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <Card>
+          <CardHeader>
+            <CardTitle>Server-Side Expansion with Error Handling</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+              Click the chevron to expand an order. There's a 30% chance of failure to demonstrate error handling.
+              When an error occurs, you'll see an error message with a "Try again" button.
+            </p>
+            <DataTable
+              data={orders}
+              columns={columns}
+              enableExpanding
+              getRowCanExpand={() => true}
+              subComponentLoading={loadingDetails}
+              subComponentError={errorDetails}
+              onSubComponentLoad={handleSubComponentLoad}
+              onExpandError={handleExpandError}
+              onExpandedChange={handleExpandedChange}
+              renderSubComponent={(row) => {
+                const details = detailsData[row.id]
+                if (!details) return null
+
+                return (
+                  <div className="p-[var(--space-lg)] bg-[var(--color-background-neutral-subtlest)]">
+                    <div className="grid grid-cols-2 gap-[var(--space-lg)]">
+                      <div>
+                        <h4 className="text-heading-xsm mb-[var(--space-sm)]">Order Items</h4>
+                        <div className="space-y-[var(--space-xsm)]">
+                          {details.items.map((item: any, i: number) => (
+                            <div key={i} className="flex justify-between text-body-sm">
+                              <span>{item.name} x{item.qty}</span>
+                              <span>{item.price}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="text-heading-xsm mb-[var(--space-sm)]">Shipping Info</h4>
+                        <p className="text-body-sm">{details.shippingAddress}</p>
+                        <p className="text-body-sm mt-[var(--space-xsm)]">
+                          Tracking: <code>{details.trackingNumber}</code>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }}
             />
           </CardContent>
         </Card>

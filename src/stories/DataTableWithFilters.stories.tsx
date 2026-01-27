@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, useCallback } from 'react'
 import { DataTable } from '../components/product/data-table'
 import { Icon } from '../components/fundamental/icon'
 import { Badge } from '../components/fundamental/badge'
@@ -1002,6 +1002,134 @@ export const WithGlobalSearchOnly: Story = {
         <DataTable
           data={filteredData}
           columns={shippingFixtureColumns}
+          enableGlobalSearch={false}
+          enableColumnVisibility={false}
+          stickyHeader
+        />
+      </div>
+    )
+  },
+}
+
+/**
+ * Server-Side Filtering
+ *
+ * Demonstrates server-side filtering with the Filters component.
+ * Data is fetched from a simulated server with 800ms delay when filters change.
+ *
+ * Key features:
+ * - `manualFiltering` disables client-side filtering
+ * - `isLoading` shows initial skeleton while loading
+ * - `isRefetching` shows subtle loading indicator during filter changes
+ * - Debounced filter changes to avoid excessive server requests
+ */
+export const ServerSideFiltering: Story = {
+  render: () => {
+    const [pinnedFilters, setPinnedFilters] = useState<string[]>(['loadPort', 'dischargePort', 'status'])
+    const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({})
+    const [data, setData] = useState<ShippingFixture[]>([])
+    const [isLoading, setIsLoading] = useState(true)
+    const [isRefetching, setIsRefetching] = useState(false)
+
+    // Simulate server-side data fetch
+    const fetchData = useCallback(async (filters: Record<string, FilterValue>) => {
+      // Simulate API call with 800ms delay
+      await new Promise(resolve => setTimeout(resolve, 800))
+
+      // Generate base data (in real app, this would come from server)
+      const allFixtures = generateFixtures()
+
+      // Server-side filtering simulation
+      const filtered = allFixtures.filter((fixture) => {
+        for (const [filterId, filterValue] of Object.entries(filters)) {
+          if (!filterValue) continue
+          const values = Array.isArray(filterValue) ? filterValue : [filterValue]
+          if (values.length === 0) continue
+          const fixtureValue = fixture[filterId as keyof ShippingFixture]
+          if (!values.includes(String(fixtureValue))) {
+            return false
+          }
+        }
+        return true
+      })
+
+      return filtered
+    }, [])
+
+    // Initial load
+    useEffect(() => {
+      fetchData({}).then(result => {
+        setData(result)
+        setIsLoading(false)
+      })
+    }, [fetchData])
+
+    // Refetch when filters change (with debounce in real app)
+    useEffect(() => {
+      if (isLoading) return // Skip during initial load
+
+      setIsRefetching(true)
+      fetchData(activeFilters).then(result => {
+        setData(result)
+        setIsRefetching(false)
+      })
+    }, [activeFilters, fetchData, isLoading])
+
+    const handleFilterChange = (filterId: string, value: FilterValue) => {
+      setActiveFilters((prev) => ({
+        ...prev,
+        [filterId]: value,
+      }))
+    }
+
+    const handleFilterClear = (filterId: string) => {
+      setActiveFilters((prev) => {
+        const newFilters = { ...prev }
+        delete newFilters[filterId]
+        return newFilters
+      })
+    }
+
+    const handleFilterReset = () => {
+      setActiveFilters({})
+    }
+
+    return (
+      <div className="flex flex-col gap-[var(--space-lg)] w-full">
+        {/* Info Banner */}
+        <div className="text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-lg)] rounded-md">
+          <strong>Server-Side Filtering:</strong> Filter changes trigger a simulated server fetch with 800ms delay.
+          The table uses <code>manualFiltering</code> to disable client-side filtering and shows <code>isRefetching</code> state
+          during server requests. Watch the loading indicator when changing filters.
+        </div>
+
+        {/* Filters */}
+        <Filters
+          filters={shippingFilterDefinitions}
+          pinnedFilters={pinnedFilters}
+          activeFilters={activeFilters}
+          onPinnedFiltersChange={setPinnedFilters}
+          onFilterChange={handleFilterChange}
+          onFilterClear={handleFilterClear}
+          onFilterReset={handleFilterReset}
+        />
+
+        {/* Data Summary */}
+        <div className="text-body-sm text-[var(--color-text-secondary)]">
+          {isRefetching ? (
+            <span>Loading...</span>
+          ) : (
+            <span>Showing <strong>{data.length}</strong> fixtures (server-side filtered)</span>
+          )}
+        </div>
+
+        {/* Data Table with Server-Side Filtering */}
+        <DataTable
+          data={data}
+          columns={shippingFixtureColumns}
+          manualFiltering
+          isLoading={isLoading}
+          isRefetching={isRefetching}
           enableGlobalSearch={false}
           enableColumnVisibility={false}
           stickyHeader
