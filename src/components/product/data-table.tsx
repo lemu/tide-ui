@@ -1616,7 +1616,7 @@ function renderGroupDisplayContent(
     <button
       tabIndex={-1}
       onClick={row.getToggleExpandedHandler()}
-      className="flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+      className="flex h-[var(--size-sm)] w-[var(--size-sm)] cursor-pointer items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
     >
       <Icon
         name={isExpanded ? "chevron-down" : "chevron-right"}
@@ -4244,7 +4244,7 @@ export function DataTable<TData, TValue>({
                                   <button
                                     tabIndex={-1}
                                     onClick={row.getToggleExpandedHandler()}
-                                    className="flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                                    className="flex h-[var(--size-sm)] w-[var(--size-sm)] cursor-pointer items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                   >
                                     <Icon
                                       name={isExpanded ? "chevron-down" : "chevron-right"}
@@ -4607,7 +4607,7 @@ export function DataTable<TData, TValue>({
                               {isFirstCell && canExpand && (
                                 <button
                                   onClick={row.getToggleExpandedHandler()}
-                                  className="flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                                  className="flex h-[var(--size-sm)] w-[var(--size-sm)] cursor-pointer items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                 >
                                   <Icon
                                     name={isExpanded ? "chevron-down" : "chevron-right"}

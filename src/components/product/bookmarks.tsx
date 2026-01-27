@@ -941,7 +941,7 @@ function BookmarkTabs({
               aria-label={`Show ${overflowBookmarks.length} more bookmarks`}
               aria-expanded={showOverflow}
               className={cn(
-                "flex flex-shrink-0 items-center justify-center rounded-lg border border-[var(--color-border-action-outline)] bg-transparent px-[var(--space-md)] transition-colors hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
+                "flex cursor-pointer flex-shrink-0 items-center justify-center rounded-lg border border-[var(--color-border-action-outline)] bg-transparent px-[var(--space-md)] transition-colors hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
                 "min-h-[88px]", // Match the height of bookmark tabs (padding + content + padding)
                 "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-brand-bold)] focus-visible:ring-offset-2",
               )}
@@ -970,7 +970,7 @@ function BookmarkTabs({
                     aria-label={`Select ${bookmark.name} bookmark${isActive ? " (currently selected)" : ""}`}
                     onClick={() => handleOverflowSelect(bookmark)}
                     className={cn(
-                      "text-body-md flex items-center gap-[var(--space-sm)] rounded-md px-[var(--space-md)] py-[var(--space-sm)] text-left transition-colors",
+                      "text-body-md flex cursor-pointer items-center gap-[var(--space-sm)] rounded-md px-[var(--space-md)] py-[var(--space-sm)] text-left transition-colors",
                       "hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
                       "focus:outline-none focus-visible:bg-[var(--color-background-neutral-subtlest-hovered)]",
                     )}
