@@ -8101,6 +8101,7 @@ export const ServerSideGroupingWithPagination: Story = {
     ], [])
 
     const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 })
+    const [expanded, setExpanded] = useState<ExpandedState>({})
 
     const columns: ColumnDef<typeof allEmployees[0]>[] = [
       { accessorKey: 'name', header: 'Name' },
@@ -8117,9 +8118,17 @@ export const ServerSideGroupingWithPagination: Story = {
           </CardHeader>
           <CardContent>
             <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
-              This story tests that grouped rows correctly render their children when <code>manualPagination={"{true}"}</code> is enabled.
-              Click the chevron on a department group to expand and see the employees within that department.
+              This story tests grouped rows with <code>manualPagination={"{true}"}</code> and controlled expansion state.
+              Use the buttons below or click chevrons to expand/collapse groups.
             </p>
+            <div className="flex gap-[var(--space-sm)] mb-[var(--space-md)]">
+              <Button variant="default" size="sm" onClick={() => setExpanded(true)}>
+                Expand All
+              </Button>
+              <Button variant="default" size="sm" onClick={() => setExpanded({})}>
+                Collapse All
+              </Button>
+            </div>
             <DataTable
               data={allEmployees}
               columns={columns}
@@ -8130,6 +8139,8 @@ export const ServerSideGroupingWithPagination: Story = {
               rowCount={allEmployees.length}
               pagination={pagination}
               onPaginationChange={setPagination}
+              expanded={expanded}
+              onExpandedChange={setExpanded}
             />
           </CardContent>
         </Card>

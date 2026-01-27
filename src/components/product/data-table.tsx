@@ -1988,6 +1988,30 @@ export interface DataTableProps<TData, TValue> {
   onColumnSizingChange?: (updaterOrValue: Record<string, number> | ((old: Record<string, number>) => Record<string, number>)) => void
   pagination?: PaginationState
   onPaginationChange?: (updaterOrValue: PaginationState | ((old: PaginationState) => PaginationState)) => void
+  /**
+   * Controlled expanded state. When provided, the component operates in controlled mode.
+   * Use with onExpandedChange to manage expansion state externally.
+   * Set to `true` to expand all rows, or an object mapping row IDs to booleans.
+   *
+   * @example
+   * // Expand specific rows
+   * expanded={{ 'row-1': true, 'row-2': true }}
+   *
+   * @example
+   * // Expand all rows
+   * expanded={true}
+   */
+  expanded?: ExpandedState
+  /**
+   * Callback when expanded state changes (controlled mode).
+   * Receives the new expanded state or an updater function.
+   * Use with `expanded` prop for controlled expansion state.
+   *
+   * @example
+   * const [expanded, setExpanded] = useState<ExpandedState>({})
+   * <DataTable expanded={expanded} onExpandedChange={setExpanded} />
+   */
+  onExpandedChange?: (updaterOrValue: ExpandedState | ((old: ExpandedState) => ExpandedState)) => void
   // Section header rows
   renderSectionHeaderRow?: (row: any) => React.ReactNode | null
   /**
@@ -2102,21 +2126,6 @@ export interface DataTableProps<TData, TValue> {
    * }}
    */
   onRowSelectionChange?: (selection: Record<string, boolean>) => void
-
-  // === EXPANDED STATE CHANGE CALLBACK ===
-  /**
-   * Callback when expanded state changes.
-   * Called with the current expanded state.
-   * Enables lazy-loading of sub-component data when rows are expanded.
-   *
-   * @example
-   * onExpandedChange={(expanded) => {
-   *   // Fetch additional data for newly expanded rows
-   *   const expandedIds = Object.keys(expanded).filter(id => expanded[id])
-   *   fetchSubRowData(expandedIds)
-   * }}
-   */
-  onExpandedChange?: (expanded: ExpandedState) => void
 
   // === PAGINATION PREFETCH CALLBACKS ===
   /**
@@ -2463,6 +2472,8 @@ export function DataTable<TData, TValue>({
   onColumnSizingChange: onControlledColumnSizingChange,
   pagination: controlledPagination,
   onPaginationChange: onControlledPaginationChange,
+  expanded: controlledExpanded,
+  onExpandedChange: onControlledExpandedChange,
   renderSectionHeaderRow,
   renderSubComponent,
   getRowCanExpand,
@@ -2477,7 +2488,6 @@ export function DataTable<TData, TValue>({
   activeRowClassName,
   // Callback props
   onRowSelectionChange,
-  onExpandedChange,
   onNextPageHover,
   onPreviousPageHover,
   onRowUpdate,
@@ -2559,7 +2569,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [rowSelection, setRowSelection] = React.useState({})
   const [globalFilter, setGlobalFilter] = React.useState("")
-  const [expanded, setExpanded] = React.useState<ExpandedState>(initialState?.expanded || {})
+  const [internalExpanded, setInternalExpanded] = React.useState<ExpandedState>(initialState?.expanded || {})
   const [rowPinning, setRowPinning] = React.useState(initialState?.rowPinning || { top: [], bottom: [] })
 
   // Accessibility: aria-live announcement state
@@ -2590,13 +2600,6 @@ export function DataTable<TData, TValue>({
     }
   }, [rowSelection, onRowSelectionChange])
 
-  // Call expanded change callback when expanded state changes
-  React.useEffect(() => {
-    if (onExpandedChange) {
-      onExpandedChange(expanded)
-    }
-  }, [expanded, onExpandedChange])
-
   // Determine if controlled or uncontrolled
   const isSortingControlled = controlledSorting !== undefined
   const isColumnVisibilityControlled = controlledColumnVisibility !== undefined
@@ -2604,6 +2607,7 @@ export function DataTable<TData, TValue>({
   const isColumnOrderControlled = controlledColumnOrder !== undefined
   const isColumnSizingControlled = controlledColumnSizing !== undefined
   const isPaginationControlled = controlledPagination !== undefined
+  const isExpandedControlled = controlledExpanded !== undefined
 
   // Use controlled values if provided, otherwise use internal state
   const sorting = isSortingControlled ? controlledSorting! : internalSorting
@@ -2612,6 +2616,7 @@ export function DataTable<TData, TValue>({
   const columnOrder = isColumnOrderControlled ? controlledColumnOrder! : internalColumnOrder
   const columnSizing = isColumnSizingControlled ? controlledColumnSizing! : internalColumnSizing
   const pagination = isPaginationControlled ? controlledPagination! : internalPagination
+  const expanded = isExpandedControlled ? controlledExpanded! : internalExpanded
 
   // Use controlled setters if provided, otherwise use internal setters
   const setSorting = isSortingControlled ? onControlledSortingChange! : setInternalSorting
@@ -2620,6 +2625,39 @@ export function DataTable<TData, TValue>({
   const setColumnOrder = isColumnOrderControlled ? onControlledColumnOrderChange! : setInternalColumnOrder
   const setColumnSizing = isColumnSizingControlled ? onControlledColumnSizingChange! : setInternalColumnSizing
   const setPagination = isPaginationControlled ? onControlledPaginationChange! : setInternalPagination
+  // Wrap setExpanded to handle TanStack's unwanted state resets
+  // TanStack Table internally tries to normalize/reset expanded state to `{}`,
+  // which overrides the user's controlled state. We detect and ignore these resets.
+  const setExpanded = React.useCallback(
+    (updaterOrValue: ExpandedState | ((prev: ExpandedState) => ExpandedState)) => {
+      if (isExpandedControlled && onControlledExpandedChange) {
+        // Check if this is TanStack trying to reset to empty object
+        const isEmptyObjectReset = typeof updaterOrValue === 'object' &&
+            updaterOrValue !== null &&
+            !(updaterOrValue instanceof Function) &&
+            Object.keys(updaterOrValue).length === 0
+
+        // Ignore empty object resets when:
+        // 1. Current state is `true` (expand all) - TanStack normalizing boolean
+        // 2. Current state has expanded rows - TanStack trying to collapse without user action
+        if (isEmptyObjectReset) {
+          const hasExpandedRows = controlledExpanded === true ||
+            (typeof controlledExpanded === 'object' &&
+             controlledExpanded !== null &&
+             Object.keys(controlledExpanded).length > 0)
+          if (hasExpandedRows) {
+            return // Ignore TanStack's reset attempt
+          }
+        }
+
+        onControlledExpandedChange(updaterOrValue)
+      } else {
+        setInternalExpanded(updaterOrValue)
+      }
+    },
+    [isExpandedControlled, onControlledExpandedChange, controlledExpanded]
+  )
+
 
   // Column pinning state removed - using pure CSS approach instead
 
