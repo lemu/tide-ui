@@ -8072,3 +8072,68 @@ export const ServerSideExpansionWithError: Story = {
     )
   }
 }
+
+// ============================================================================
+// Server-Side Grouping with Manual Pagination Story
+// ============================================================================
+
+/**
+ * Tests grouped row expansion with manualPagination={true}.
+ * This is a regression test for the bug where grouped row children
+ * didn't render when manualPagination was enabled.
+ */
+export const ServerSideGroupingWithPagination: Story = {
+  render: () => {
+    // Flat data that will be grouped by department
+    const allEmployees = useMemo(() => [
+      { id: '1', name: 'Alice Chen', department: 'Engineering', role: 'Senior Engineer', salary: '$120,000' },
+      { id: '2', name: 'Bob Smith', department: 'Engineering', role: 'Tech Lead', salary: '$150,000' },
+      { id: '3', name: 'Carol Davis', department: 'Engineering', role: 'Junior Engineer', salary: '$80,000' },
+      { id: '4', name: 'David Lee', department: 'Design', role: 'Design Lead', salary: '$130,000' },
+      { id: '5', name: 'Emma Wilson', department: 'Design', role: 'UX Designer', salary: '$95,000' },
+      { id: '6', name: 'Frank Brown', department: 'Marketing', role: 'Marketing Director', salary: '$140,000' },
+      { id: '7', name: 'Grace Miller', department: 'Marketing', role: 'Content Manager', salary: '$85,000' },
+      { id: '8', name: 'Henry Taylor', department: 'Marketing', role: 'SEO Specialist', salary: '$75,000' },
+      { id: '9', name: 'Ivy Johnson', department: 'Sales', role: 'Sales Manager', salary: '$110,000' },
+      { id: '10', name: 'Jack Williams', department: 'Sales', role: 'Account Executive', salary: '$90,000' },
+      { id: '11', name: 'Kate Anderson', department: 'Sales', role: 'Sales Rep', salary: '$70,000' },
+      { id: '12', name: 'Liam Martinez', department: 'Sales', role: 'Sales Rep', salary: '$72,000' },
+    ], [])
+
+    const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 })
+
+    const columns: ColumnDef<typeof allEmployees[0]>[] = [
+      { accessorKey: 'name', header: 'Name' },
+      { accessorKey: 'department', header: 'Department' },
+      { accessorKey: 'role', header: 'Role' },
+      { accessorKey: 'salary', header: 'Salary' },
+    ]
+
+    return (
+      <div className="p-[var(--space-lg)]">
+        <Card>
+          <CardHeader>
+            <CardTitle>Server-Side Grouping with Manual Pagination</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+              This story tests that grouped rows correctly render their children when <code>manualPagination={"{true}"}</code> is enabled.
+              Click the chevron on a department group to expand and see the employees within that department.
+            </p>
+            <DataTable
+              data={allEmployees}
+              columns={columns}
+              enableGrouping
+              enableExpanding
+              grouping={['department']}
+              manualPagination
+              rowCount={allEmployees.length}
+              pagination={pagination}
+              onPaginationChange={setPagination}
+            />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+}

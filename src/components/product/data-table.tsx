@@ -8,6 +8,8 @@ import {
   GroupingState,
   ColumnOrderState,
   PaginationState,
+  Row,
+  Cell,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -4312,9 +4314,8 @@ export function DataTable<TData, TValue>({
                   const filteredRows = table.getRowModel().rows
                     .filter(row => !renderSubComponent || row.depth === 0)
 
-                  return filteredRows.map((row, rowIndex) => {
-                    const isLastRow = rowIndex === filteredRows.length - 1
-                    return (
+                  // Recursive row rendering function to handle expanded subRows
+                  const renderRow = (row: Row<TData>, rowIndex: number, isLastRow: boolean): React.ReactNode => (
                     <React.Fragment key={row.id}>
                     <TableRow
                       data-state={row.getIsSelected() && "selected"}
@@ -4356,7 +4357,7 @@ export function DataTable<TData, TValue>({
                       aria-label={onRowClick && getRowClickableState(row) ? `View details for row ${row.id}` : undefined}
                       aria-current={isActiveRow(row) ? "true" : undefined}
                     >
-                      {row.getVisibleCells().map((cell, index) => {
+                      {row.getVisibleCells().map((cell: Cell<TData, unknown>, index: number) => {
                         const pinningStyles = getPureCSSPinningStyles(cell.column, false, borderSettings.showRowBorder)
 
                         // Add expand/collapse control to first cell if expanding is enabled
@@ -4630,9 +4631,18 @@ export function DataTable<TData, TValue>({
                         </TableCell>
                       </TableRow>
                     )}
+                    {/* Recursively render expanded children when renderSubComponent is not provided */}
+                    {!renderSubComponent && row.getIsExpanded() && row.subRows && row.subRows.length > 0 &&
+                      row.subRows.map((subRow: Row<TData>, subIndex: number) =>
+                        renderRow(subRow, subIndex, subIndex === row.subRows.length - 1)
+                      )
+                    }
                     </React.Fragment>
                   )
-                  })
+
+                  return filteredRows.map((row: Row<TData>, rowIndex: number) =>
+                    renderRow(row, rowIndex, rowIndex === filteredRows.length - 1)
+                  )
                 }
 
                 // Manual cross-page pinning implementation
@@ -4656,9 +4666,8 @@ export function DataTable<TData, TValue>({
                 const filteredOrganizedRows = organizedRows
                   .filter(row => !renderSubComponent || row.depth === 0)
 
-                return filteredOrganizedRows.map((row, rowIndex) => {
-                  const isLastRow = rowIndex === filteredOrganizedRows.length - 1
-                  return (
+                // Recursive row rendering function to handle expanded subRows
+                const renderPinnedRow = (row: Row<TData>, rowIndex: number, isLastRow: boolean): React.ReactNode => (
                   <React.Fragment key={row.id}>
                   <TableRow
                     data-state={row.getIsSelected() && "selected"}
@@ -4728,7 +4737,7 @@ export function DataTable<TData, TValue>({
                     aria-label={onRowClick && getRowClickableState(row) ? `View details for row ${row.id}` : undefined}
                     aria-current={isActiveRow(row) ? "true" : undefined}
                   >
-                    {row.getVisibleCells().map((cell, index) => {
+                    {row.getVisibleCells().map((cell: Cell<TData, unknown>, index: number) => {
                       const pinningStyles = getPureCSSPinningStyles(cell.column, false, borderSettings.showRowBorder)
 
                       // Add expand/collapse control to first cell if expanding is enabled
@@ -5018,9 +5027,18 @@ export function DataTable<TData, TValue>({
                       </TableCell>
                     </TableRow>
                   )}
+                  {/* Recursively render expanded children when renderSubComponent is not provided */}
+                  {!renderSubComponent && row.getIsExpanded() && row.subRows && row.subRows.length > 0 &&
+                    row.subRows.map((subRow: Row<TData>, subIndex: number) =>
+                      renderPinnedRow(subRow, subIndex, subIndex === row.subRows.length - 1)
+                    )
+                  }
                   </React.Fragment>
                 )
-                })
+
+                return filteredOrganizedRows.map((row: Row<TData>, rowIndex: number) =>
+                  renderPinnedRow(row, rowIndex, rowIndex === filteredOrganizedRows.length - 1)
+                )
               })()
             ) : (
               // Empty or no results state
