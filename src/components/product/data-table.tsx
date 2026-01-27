@@ -2298,6 +2298,98 @@ export interface DataTableProps<TData, TValue> {
    * Without this, pagination cannot calculate total pages.
    */
   rowCount?: number
+
+  // === SERVER-SIDE EXPANSION ===
+  /**
+   * Enable server-side expansion. When true:
+   * - onLoadChildren is called when a row is expanded
+   * - Consumer fetches child data from server
+   * - Use with expandingRowsLoading for loading indicators
+   */
+  manualExpanding?: boolean
+
+  /**
+   * Callback when a row is expanded and children need to be loaded.
+   * Called only for rows that don't already have children loaded.
+   *
+   * @param row - The TanStack Table row being expanded
+   *
+   * @example
+   * onLoadChildren={async (row) => {
+   *   const children = await fetchGroupChildren(row.original.id)
+   *   setData(prev => mergeChildren(prev, row.id, children))
+   * }}
+   */
+  onLoadChildren?: (row: any) => void | Promise<void>
+
+  /**
+   * Map of row IDs to their loading state.
+   * Shows loading indicator while children are being fetched.
+   *
+   * @example
+   * expandingRowsLoading={{ 'row-1': true, 'row-2': false }}
+   */
+  expandingRowsLoading?: Record<string, boolean>
+
+  // === SERVER-SIDE SUBCOMPONENT ===
+  /**
+   * Loading state for expanded row content (renderSubComponent).
+   * Map of row IDs to boolean indicating if sub-component data is loading.
+   *
+   * @example
+   * subComponentLoading={{ 'row-1': true }}
+   */
+  subComponentLoading?: Record<string, boolean>
+
+  /**
+   * Callback when a row is expanded and needs sub-component data loaded.
+   * Use with renderSubComponent for async detail loading.
+   *
+   * @param row - The row being expanded
+   *
+   * @example
+   * onSubComponentLoad={async (row) => {
+   *   const details = await fetchRowDetails(row.original.id)
+   *   setDetails(prev => ({ ...prev, [row.id]: details }))
+   * }}
+   */
+  onSubComponentLoad?: (row: any) => void | Promise<void>
+
+  // === SERVER-SIDE ERROR HANDLING ===
+  /**
+   * Map of row IDs to error states for child loading failures.
+   * When set, shows error message with retry option instead of children.
+   *
+   * @example
+   * expandingRowsError={{ 'row-1': new Error('Failed to load') }}
+   */
+  expandingRowsError?: Record<string, Error | null>
+
+  /**
+   * Map of row IDs to error states for sub-component loading failures.
+   * When set, shows error message instead of sub-component content.
+   *
+   * @example
+   * subComponentError={{ 'row-1': new Error('Failed to load details') }}
+   */
+  subComponentError?: Record<string, Error | null>
+
+  /**
+   * Callback when expansion fails (either children or sub-component loading).
+   * Use this to set error state and handle retries.
+   *
+   * @param row - The row that failed to expand
+   * @param error - The error that occurred
+   * @param type - Whether it was 'children' or 'subComponent' that failed
+   *
+   * @example
+   * onExpandError={(row, error, type) => {
+   *   if (type === 'children') {
+   *     setExpandingRowsError(prev => ({ ...prev, [row.id]: error }))
+   *   }
+   * }}
+   */
+  onExpandError?: (row: any, error: Error, type: 'children' | 'subComponent') => void
 }
 
 export function DataTable<TData, TValue>({
@@ -2413,6 +2505,16 @@ export function DataTable<TData, TValue>({
   manualFiltering = false,
   manualPagination = false,
   rowCount,
+  // Server-side expansion props
+  manualExpanding = false,
+  onLoadChildren,
+  expandingRowsLoading,
+  subComponentLoading,
+  onSubComponentLoad,
+  // Server-side error handling props
+  expandingRowsError,
+  subComponentError,
+  onExpandError,
 }: DataTableProps<TData, TValue>) {
   // Auto-enable responsive wrapper when sticky columns are used
   const computedEnableResponsiveWrapper =
@@ -2466,6 +2568,18 @@ export function DataTable<TData, TValue>({
   // colIndex: 0-based column index
   const [focusedCell, setFocusedCell] = React.useState<[number, number]>([-1, 0])
   const tableContainerRef = React.useRef<HTMLDivElement>(null)
+
+  // Track pending server-side expansion requests for cancellation and deduplication
+  const pendingChildrenRequestsRef = React.useRef<Map<string, AbortController>>(new Map())
+  const pendingSubComponentRequestsRef = React.useRef<Map<string, AbortController>>(new Map())
+
+  // Cleanup pending requests on unmount
+  React.useEffect(() => {
+    return () => {
+      pendingChildrenRequestsRef.current.forEach(controller => controller.abort())
+      pendingSubComponentRequestsRef.current.forEach(controller => controller.abort())
+    }
+  }, [])
 
   // Call row selection change callback when selection changes
   React.useEffect(() => {
@@ -2977,6 +3091,120 @@ export function DataTable<TData, TValue>({
     // NOTE: Deliberately NOT including 'table' to avoid re-running on every render
   ])
 
+  // Track previous expanded state for server-side callbacks (separate from autoExpandChildren ref)
+  const serverSideExpandedRef = React.useRef<ExpandedState>({})
+
+  // Server-side expansion callbacks - trigger onLoadChildren and onSubComponentLoad
+  // Includes request deduplication, abort handling, and cleanup on collapse
+  React.useEffect(() => {
+    if (!onLoadChildren && !onSubComponentLoad) return
+
+    const currentExpanded = table.getState().expanded as Record<string, boolean>
+    const previousExpanded = serverSideExpandedRef.current as Record<string, boolean>
+
+    // Handle collapsed rows - cancel any pending requests
+    Object.keys(previousExpanded).forEach(rowId => {
+      const wasPreviouslyExpanded = previousExpanded[rowId]
+      const isNowExpanded = currentExpanded[rowId]
+
+      if (wasPreviouslyExpanded && !isNowExpanded) {
+        // Row was collapsed - cancel any pending requests
+        const childrenController = pendingChildrenRequestsRef.current.get(rowId)
+        if (childrenController) {
+          childrenController.abort()
+          pendingChildrenRequestsRef.current.delete(rowId)
+        }
+        const subComponentController = pendingSubComponentRequestsRef.current.get(rowId)
+        if (subComponentController) {
+          subComponentController.abort()
+          pendingSubComponentRequestsRef.current.delete(rowId)
+        }
+      }
+    })
+
+    // Find newly expanded rows
+    Object.keys(currentExpanded).forEach(rowId => {
+      const isNowExpanded = currentExpanded[rowId]
+      const wasPreviouslyExpanded = previousExpanded[rowId]
+
+      if (isNowExpanded && !wasPreviouslyExpanded) {
+        // Row was just expanded - find it in the table
+        const row = table.getRow(rowId)
+        if (!row) return
+
+        // Call onLoadChildren for group rows that don't have children loaded
+        if (onLoadChildren && manualExpanding) {
+          const isGroupOrParent = row.getIsGrouped() || (row.subRows && row.subRows.length === 0 && row.getCanExpand())
+
+          // Skip if:
+          // 1. Not a group/parent row
+          // 2. Already loading this row (deduplication)
+          // 3. Children already loaded
+          const isAlreadyLoading = expandingRowsLoading?.[rowId] === true
+          const hasChildrenLoaded = row.subRows && row.subRows.length > 0
+
+          if (isGroupOrParent && !isAlreadyLoading && !hasChildrenLoaded) {
+            // Create AbortController for this request
+            const controller = new AbortController()
+            pendingChildrenRequestsRef.current.set(rowId, controller)
+
+            // Call the callback (consumer handles the actual fetch)
+            Promise.resolve(onLoadChildren(row))
+              .catch((error) => {
+                // Only report error if not aborted
+                if (error?.name !== 'AbortError' && onExpandError) {
+                  onExpandError(row, error, 'children')
+                }
+              })
+              .finally(() => {
+                pendingChildrenRequestsRef.current.delete(rowId)
+              })
+          }
+        }
+
+        // Call onSubComponentLoad for rows with renderSubComponent
+        if (onSubComponentLoad && renderSubComponent) {
+          // Only call for leaf/non-group rows that use renderSubComponent
+          if (!row.getIsGrouped() && row.depth === 0) {
+            // Skip if already loading (deduplication)
+            const isAlreadyLoading = subComponentLoading?.[rowId] === true
+
+            if (!isAlreadyLoading) {
+              // Create AbortController for this request
+              const controller = new AbortController()
+              pendingSubComponentRequestsRef.current.set(rowId, controller)
+
+              // Call the callback
+              Promise.resolve(onSubComponentLoad(row))
+                .catch((error) => {
+                  // Only report error if not aborted
+                  if (error?.name !== 'AbortError' && onExpandError) {
+                    onExpandError(row, error, 'subComponent')
+                  }
+                })
+                .finally(() => {
+                  pendingSubComponentRequestsRef.current.delete(rowId)
+                })
+            }
+          }
+        }
+      }
+    })
+
+    serverSideExpandedRef.current = currentExpanded
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    expanded,
+    onLoadChildren,
+    onSubComponentLoad,
+    manualExpanding,
+    renderSubComponent,
+    expandingRowsLoading,
+    subComponentLoading,
+    onExpandError,
+    // NOTE: Deliberately NOT including 'table' to avoid re-running on every render
+  ])
+
   // Auto-expand groups that match the search term when groupPreservingSearch is enabled
   React.useEffect(() => {
     if (!groupPreservingSearch || !debouncedGlobalFilter || !enableGrouping) {
@@ -3000,6 +3228,27 @@ export function DataTable<TData, TValue>({
       return prevKeys === newKeys ? prevExpanded : newExpanded
     })
   }, [debouncedGlobalFilter, groupPreservingSearch, enableGrouping])
+
+  // Track previous grouping/sorting for pagination reset in server-side mode
+  const prevGroupingRef = React.useRef<GroupingState>(grouping)
+  const prevSortingRef = React.useRef<SortingState>(sorting)
+
+  // Reset pagination to page 0 when grouping or sorting changes in server-side mode
+  // This prevents empty pages when the result set changes significantly
+  React.useEffect(() => {
+    if (!manualPagination) return
+
+    const groupingChanged = JSON.stringify(grouping) !== JSON.stringify(prevGroupingRef.current)
+    const sortingChanged = JSON.stringify(sorting) !== JSON.stringify(prevSortingRef.current)
+
+    if (groupingChanged || sortingChanged) {
+      // Reset to first page when grouping or sorting changes
+      table.setPageIndex(0)
+    }
+
+    prevGroupingRef.current = grouping
+    prevSortingRef.current = sorting
+  }, [grouping, sorting, manualPagination, table])
 
   // Expose table instance for external control
   React.useEffect(() => {
@@ -4321,6 +4570,25 @@ export function DataTable<TData, TValue>({
                         )
                       })}
                     </TableRow>
+                    {/* Loading indicator for expanding group children */}
+                    {expandingRowsLoading?.[row.id] && row.getIsExpanded() && (
+                      <TableRow showBorder={borderSettings.showRowBorder}>
+                        <TableCell
+                          colSpan={row.getVisibleCells().length}
+                          showBorder={borderSettings.showCellBorder}
+                          showRowBorder={borderSettings.showRowBorder}
+                          verticalAlign={defaultVerticalAlign}
+                          className="py-[var(--space-md)]"
+                        >
+                          <div className="flex items-center justify-center gap-[var(--space-sm)]">
+                            <Spinner size="sm" />
+                            <span className="text-body-sm text-[var(--color-text-secondary)]">
+                              Loading...
+                            </span>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )}
                     {/* Expanded row custom content */}
                     {renderSubComponent && row.getIsExpanded() && row.depth === 0 && (
                       <TableRow showBorder={borderSettings.showRowBorder}>
@@ -4332,7 +4600,33 @@ export function DataTable<TData, TValue>({
                           className="p-0"
                           data-section-header
                         >
-                          {renderSubComponent(row)}
+                          {subComponentError?.[row.id] ? (
+                            <div className="flex flex-col items-center justify-center py-[var(--space-lg)] gap-[var(--space-sm)]">
+                              <div className="flex items-center gap-[var(--space-sm)] text-[var(--color-text-danger)]">
+                                <Icon name="alert-circle" className="h-4 w-4" />
+                                <span className="text-body-sm">
+                                  {subComponentError[row.id]?.message || 'Failed to load details'}
+                                </span>
+                              </div>
+                              {onSubComponentLoad && (
+                                <button
+                                  onClick={() => onSubComponentLoad(row)}
+                                  className="text-body-sm text-[var(--color-text-brand)] hover:underline cursor-pointer"
+                                >
+                                  Try again
+                                </button>
+                              )}
+                            </div>
+                          ) : subComponentLoading?.[row.id] ? (
+                            <div className="flex items-center justify-center py-[var(--space-lg)]">
+                              <Spinner size="sm" />
+                              <span className="ml-[var(--space-sm)] text-body-sm text-[var(--color-text-secondary)]">
+                                Loading details...
+                              </span>
+                            </div>
+                          ) : (
+                            renderSubComponent(row)
+                          )}
                         </TableCell>
                       </TableRow>
                     )}
@@ -4681,6 +4975,25 @@ export function DataTable<TData, TValue>({
                       )
                     })}
                   </TableRow>
+                  {/* Loading indicator for expanding group children */}
+                  {expandingRowsLoading?.[row.id] && row.getIsExpanded() && (
+                    <TableRow showBorder={borderSettings.showRowBorder}>
+                      <TableCell
+                        colSpan={row.getVisibleCells().length}
+                        showBorder={borderSettings.showCellBorder}
+                        showRowBorder={borderSettings.showRowBorder}
+                        verticalAlign={defaultVerticalAlign}
+                        className="py-[var(--space-md)]"
+                      >
+                        <div className="flex items-center justify-center gap-[var(--space-sm)]">
+                          <Spinner size="sm" />
+                          <span className="text-body-sm text-[var(--color-text-secondary)]">
+                            Loading...
+                          </span>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  )}
                   {/* Expanded row custom content */}
                   {renderSubComponent && row.getIsExpanded() && row.depth === 0 && (
                     <TableRow showBorder={borderSettings.showRowBorder}>
@@ -4692,7 +5005,16 @@ export function DataTable<TData, TValue>({
                         className="p-0"
                         data-section-header
                       >
-                        {renderSubComponent(row)}
+                        {subComponentLoading?.[row.id] ? (
+                          <div className="flex items-center justify-center py-[var(--space-lg)]">
+                            <Spinner size="sm" />
+                            <span className="ml-[var(--space-sm)] text-body-sm text-[var(--color-text-secondary)]">
+                              Loading details...
+                            </span>
+                          </div>
+                        ) : (
+                          renderSubComponent(row)
+                        )}
                       </TableCell>
                     </TableRow>
                   )}
