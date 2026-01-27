@@ -1,5 +1,6 @@
 import React from "react";
 import { Icon, IconColor } from "../fundamental/icon";
+import { Badge } from "../fundamental/badge";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../fundamental/tooltip";
 
@@ -132,6 +133,28 @@ const textColorClasses: Partial<Record<IconColor, string>> = {
   violet: "text-[var(--violet-500)]",
 };
 
+// Map IconColor to Badge intent
+type BadgeIntent = "neutral" | "brand" | "success" | "warning" | "destructive" | "information" | "violet";
+const colorToIntent: Partial<Record<IconColor, BadgeIntent>> = {
+  primary: "neutral",
+  secondary: "neutral",
+  tertiary: "neutral",
+  brand: "brand",
+  information: "information",
+  success: "success",
+  warning: "warning",
+  error: "destructive",
+  violet: "violet",
+};
+
+// Size mapping for Badge component
+const badgeSizeMapping = {
+  xsm: "xsm",
+  sm: "sm",
+  md: "md",
+  lg: "lg",
+} as const;
+
 type StatusSize = keyof typeof textSizeClasses;
 
 export interface FixtureStatusProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -141,12 +164,12 @@ export interface FixtureStatusProps extends React.HTMLAttributes<HTMLDivElement>
   size?: StatusSize;
   /** Whether to show the object prefix in the label (e.g., "Order • Draft" vs "Draft") */
   showObject?: boolean;
-  /** Whether the label color should match the icon color (default: true) */
-  coloredLabel?: boolean;
   /** Whether to show only the icon with a tooltip (default: false) */
   iconOnly?: boolean;
   /** Whether to display labels in lowercase (useful for mid-sentence usage) */
   lowercase?: boolean;
+  /** Whether to render as a subtle badge (default: false) */
+  asBadge?: boolean;
 }
 
 const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
@@ -155,9 +178,9 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
       value,
       size = "sm",
       showObject = false,
-      coloredLabel = true,
       iconOnly = false,
       lowercase = false,
+      asBadge = false,
       className,
       ...props
     },
@@ -186,9 +209,7 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
           <span className={cn("flex-shrink-0", iconTranslateClasses[size])}>
             <Icon name="circle-help" size={iconSizeMapping[size]} color="secondary" />
           </span>
-          <span className={cn(
-            coloredLabel ? textColorClasses.secondary : textColorClasses.primary
-          )}>
+          <span className={textColorClasses.secondary}>
             Unknown status
           </span>
         </div>
@@ -201,6 +222,26 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
     const labelText = showObject
       ? `${objectLabel} • ${statusLabel}`
       : statusLabel;
+
+    // Badge mode
+    if (asBadge) {
+      // Tertiary color (draft statuses) needs secondary color for better contrast on neutral badge background
+      const isTertiaryColor = config.color === "tertiary";
+      const badgeIconColor = isTertiaryColor ? "secondary" : config.color;
+      return (
+        <Badge
+          ref={ref}
+          appearance="subtle"
+          intent={colorToIntent[config.color] ?? "neutral"}
+          size={badgeSizeMapping[size]}
+          icon={<Icon name={config.icon} size={iconSizeMapping[size]} color={badgeIconColor} />}
+          className={cn(isTertiaryColor && "text-[var(--color-text-secondary)]", className)}
+          {...props}
+        >
+          {labelText}
+        </Badge>
+      );
+    }
 
     // Icon-only mode with tooltip
     if (iconOnly) {
@@ -243,9 +284,7 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
         <span className={cn("flex-shrink-0", iconTranslateClasses[size])}>
           <Icon name={config.icon} size={iconSizeMapping[size]} color={config.color} />
         </span>
-        <span className={cn(
-          coloredLabel ? textColorClasses[config.color] : textColorClasses.primary
-        )}>
+        <span className={textColorClasses[config.color]}>
           {labelText}
         </span>
       </div>
