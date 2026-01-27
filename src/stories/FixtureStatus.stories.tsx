@@ -55,7 +55,7 @@ const meta: Meta<typeof FixtureStatus> = {
     showObject: {
       control: { type: 'boolean' },
     },
-    coloredLabel: {
+    asBadge: {
       control: { type: 'boolean' },
     },
   },
@@ -174,27 +174,69 @@ export const WithoutObjectLabel: Story = {
   ),
 }
 
-export const LabelColors: Story = {
+export const AsBadge: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '24px' }}>
       <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Colored Labels (Default)</h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <FixtureStatus value="order-draft" coloredLabel={true} />
-          <FixtureStatus value="negotiation-firm-offer" coloredLabel={true} />
-          <FixtureStatus value="contract-final" coloredLabel={true} />
-          <FixtureStatus value="negotiation-withdrawn" coloredLabel={true} />
-          <FixtureStatus value="negotiation-on-subs" coloredLabel={true} />
+        <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Status as Badge</h3>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+          <FixtureStatus value="order-draft" asBadge />
+          <FixtureStatus value="negotiation-firm-offer" asBadge />
+          <FixtureStatus value="negotiation-firm" asBadge />
+          <FixtureStatus value="negotiation-on-subs" asBadge />
+          <FixtureStatus value="contract-final" asBadge />
+          <FixtureStatus value="negotiation-withdrawn" asBadge />
         </div>
       </div>
       <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Black Labels</h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <FixtureStatus value="order-draft" coloredLabel={false} />
-          <FixtureStatus value="negotiation-firm-offer" coloredLabel={false} />
-          <FixtureStatus value="contract-final" coloredLabel={false} />
-          <FixtureStatus value="negotiation-withdrawn" coloredLabel={false} />
-          <FixtureStatus value="negotiation-on-subs" coloredLabel={false} />
+        <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>With Object Label</h3>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+          <FixtureStatus value="order-draft" asBadge showObject />
+          <FixtureStatus value="negotiation-firm-offer" asBadge showObject />
+          <FixtureStatus value="contract-final" asBadge showObject />
+        </div>
+      </div>
+    </div>
+  ),
+}
+
+export const AsBadgeSizes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '24px' }}>
+      <div>
+        <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Extra Small</h3>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+          <FixtureStatus value="order-draft" asBadge size="xsm" />
+          <FixtureStatus value="negotiation-firm-offer" asBadge size="xsm" />
+          <FixtureStatus value="contract-final" asBadge size="xsm" />
+          <FixtureStatus value="negotiation-on-subs" asBadge size="xsm" />
+        </div>
+      </div>
+      <div>
+        <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Small</h3>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+          <FixtureStatus value="order-draft" asBadge size="sm" />
+          <FixtureStatus value="negotiation-firm-offer" asBadge size="sm" />
+          <FixtureStatus value="contract-final" asBadge size="sm" />
+          <FixtureStatus value="negotiation-on-subs" asBadge size="sm" />
+        </div>
+      </div>
+      <div>
+        <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Medium</h3>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+          <FixtureStatus value="order-draft" asBadge size="md" />
+          <FixtureStatus value="negotiation-firm-offer" asBadge size="md" />
+          <FixtureStatus value="contract-final" asBadge size="md" />
+          <FixtureStatus value="negotiation-on-subs" asBadge size="md" />
+        </div>
+      </div>
+      <div>
+        <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Large</h3>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+          <FixtureStatus value="order-draft" asBadge size="lg" />
+          <FixtureStatus value="negotiation-firm-offer" asBadge size="lg" />
+          <FixtureStatus value="contract-final" asBadge size="lg" />
+          <FixtureStatus value="negotiation-on-subs" asBadge size="lg" />
         </div>
       </div>
     </div>

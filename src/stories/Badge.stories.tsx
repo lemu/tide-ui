@@ -20,7 +20,7 @@ const meta: Meta<typeof Badge> = {
     },
     size: {
       control: { type: 'select' },
-      options: ['sm', 'md', 'lg'],
+      options: ['xsm', 'sm', 'md', 'lg'],
     },
   },
 } satisfies Meta<typeof Badge>
@@ -105,9 +105,21 @@ export const AllVariants: Story = {
         <div>
           <h3 className="text-heading-sm mb-[var(--space-md)]">Sizes</h3>
           <div className="flex items-center gap-[var(--space-md)]">
+            <Badge size="xsm">XSmall</Badge>
             <Badge size="sm">Small</Badge>
             <Badge size="md">Medium</Badge>
             <Badge size="lg">Large</Badge>
+          </div>
+        </div>
+
+        {/* Sizes with Icons */}
+        <div>
+          <h3 className="text-heading-sm mb-[var(--space-md)]">Sizes with Icons</h3>
+          <div className="flex items-center gap-[var(--space-md)]">
+            <Badge size="xsm" icon={<CircleHelp />}>XSmall</Badge>
+            <Badge size="sm" icon={<CircleHelp />}>Small</Badge>
+            <Badge size="md" icon={<CircleHelp />}>Medium</Badge>
+            <Badge size="lg" icon={<CircleHelp />}>Large</Badge>
           </div>
         </div>
       </div>

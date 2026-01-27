@@ -21,6 +21,7 @@ const badgeVariants = cva(
         subtle: "",
       },
       size: {
+        xsm: "px-[var(--space-xsm)] h-4 [&]:text-body-medium-xsm min-w-[16px] justify-center",
         sm: "px-[var(--space-xsm)] h-5 [&]:text-body-medium-xsm min-w-[20px] justify-center",
         md: "px-[var(--space-sm)] h-6 [&]:text-body-medium-sm",
         lg: "px-[var(--space-md)] h-7 [&]:text-body-medium-md",
@@ -140,6 +141,14 @@ const badgeVariants = cva(
   },
 );
 
+// Icon size classes based on badge size
+const iconSizeClasses = {
+  xsm: "w-3 h-3",
+  sm: "w-3.5 h-3.5",
+  md: "w-4 h-4",
+  lg: "w-[18px] h-[18px]",
+} as const;
+
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof badgeVariants> {
@@ -147,7 +156,9 @@ export interface BadgeProps
 }
 
 const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
-  ({ className, intent, appearance, size, icon, children, ...props }, ref) => {
+  ({ className, intent, appearance, size = "md", icon, children, ...props }, ref) => {
+    const iconSize = iconSizeClasses[size as keyof typeof iconSizeClasses] ?? iconSizeClasses.md;
+
     return (
       <div
         ref={ref}
@@ -159,7 +170,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
         {...props}
       >
         {icon && (
-          <span className="shrink-0 w-4 h-4 [&_svg]:w-full [&_svg]:h-full">
+          <span className={cn("shrink-0 [&_svg]:w-full [&_svg]:h-full", iconSize)}>
             {icon}
           </span>
         )}
@@ -172,4 +183,4 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
 );
 Badge.displayName = "Badge";
 
-export { Badge, badgeVariants };
+export { Badge, badgeVariants, iconSizeClasses };
