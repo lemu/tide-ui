@@ -1807,6 +1807,12 @@ export interface DataTableProps<TData, TValue> {
   minTableWidth?: string
   // Loading state
   isLoading?: boolean
+  /**
+   * Controls how the table displays during loading.
+   * - 'replace': Full skeleton replaces table content (default)
+   * - 'preserve': Keep existing data visible while loading
+   */
+  loadingBehavior?: 'replace' | 'preserve'
   loadingRowCount?: number
   // Border styling
   borderStyle?: BorderStyle
@@ -2310,6 +2316,7 @@ export function DataTable<TData, TValue>({
   showScrollIndicators = false,
   minTableWidth = "900px",
   isLoading = false,
+  loadingBehavior = 'replace',
   loadingRowCount = 10,
   borderStyle = "both",
   defaultVerticalAlign = 'middle',
@@ -4034,7 +4041,7 @@ export function DataTable<TData, TValue>({
                   )}
                 </TableCell>
               </TableRow>
-            ) : isLoading && data.length === 0 ? (
+            ) : isLoading && (loadingBehavior === 'replace' || data.length === 0) ? (
               <DataTableSkeleton
                 columns={table.getVisibleLeafColumns().length}
                 rows={computedLoadingRowCount}
