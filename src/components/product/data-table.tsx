@@ -4670,11 +4670,31 @@ export function DataTable<TData, TValue>({
                       </TableRow>
                     )}
                     {/* Recursively render expanded children when renderSubComponent is not provided */}
-                    {!renderSubComponent && row.getIsExpanded() && row.subRows && row.subRows.length > 0 &&
-                      row.subRows.map((subRow: Row<TData>, subIndex: number) =>
+                    {(() => {
+                      if (renderSubComponent) return null
+                      if (!row.subRows || row.subRows.length === 0) return null
+
+                      // Check if row is expanded - use TanStack's method first
+                      let isExpanded = row.getIsExpanded()
+
+                      // Fallback: if expanded state is `true` (expand all) but TanStack returns false,
+                      // manually check the expanded state. This handles cases where TanStack's internal
+                      // state doesn't match our controlled state (e.g., with manualPagination).
+                      if (!isExpanded && expanded === true && row.getCanExpand()) {
+                        isExpanded = true
+                      }
+
+                      // Also check if specific row ID is in the expanded object
+                      if (!isExpanded && typeof expanded === 'object' && expanded !== null && expanded[row.id]) {
+                        isExpanded = true
+                      }
+
+                      if (!isExpanded) return null
+
+                      return row.subRows.map((subRow: Row<TData>, subIndex: number) =>
                         renderRow(subRow, subIndex, subIndex === row.subRows.length - 1)
                       )
-                    }
+                    })()}
                     </React.Fragment>
                   )
 
@@ -5066,11 +5086,30 @@ export function DataTable<TData, TValue>({
                     </TableRow>
                   )}
                   {/* Recursively render expanded children when renderSubComponent is not provided */}
-                  {!renderSubComponent && row.getIsExpanded() && row.subRows && row.subRows.length > 0 &&
-                    row.subRows.map((subRow: Row<TData>, subIndex: number) =>
+                  {(() => {
+                    if (renderSubComponent) return null
+                    if (!row.subRows || row.subRows.length === 0) return null
+
+                    // Check if row is expanded - use TanStack's method first
+                    let isExpanded = row.getIsExpanded()
+
+                    // Fallback: if expanded state is `true` (expand all) but TanStack returns false,
+                    // manually check the expanded state
+                    if (!isExpanded && expanded === true && row.getCanExpand()) {
+                      isExpanded = true
+                    }
+
+                    // Also check if specific row ID is in the expanded object
+                    if (!isExpanded && typeof expanded === 'object' && expanded !== null && expanded[row.id]) {
+                      isExpanded = true
+                    }
+
+                    if (!isExpanded) return null
+
+                    return row.subRows.map((subRow: Row<TData>, subIndex: number) =>
                       renderPinnedRow(subRow, subIndex, subIndex === row.subRows.length - 1)
                     )
-                  }
+                  })()}
                   </React.Fragment>
                 )
 
