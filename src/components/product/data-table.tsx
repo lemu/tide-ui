@@ -3054,6 +3054,20 @@ export function DataTable<TData, TValue>({
     [table.getRowModel().rows]
   )
 
+  // Preserve grouped subRows references before getExpandedRowModel flattens them
+  // This is needed for manualPagination + grouping where children might not be in row.subRows
+  const groupedSubRowsMap = React.useMemo(() => {
+    if (!enableGrouping) return null
+    const map = new Map<string, Row<TData>[]>()
+    const groupedRows = table.getGroupedRowModel?.()?.rows
+    groupedRows?.forEach((row: Row<TData>) => {
+      if (row.subRows && row.subRows.length > 0) {
+        map.set(row.id, row.subRows)
+      }
+    })
+    return map
+  }, [enableGrouping, table])
+
   // Track previous page count to avoid unnecessary setPageCount calls
   const previousPageCountRef = React.useRef<number | undefined>(undefined)
 
@@ -4672,7 +4686,14 @@ export function DataTable<TData, TValue>({
                     {/* Recursively render expanded children when renderSubComponent is not provided */}
                     {(() => {
                       if (renderSubComponent) return null
-                      if (!row.subRows || row.subRows.length === 0) return null
+
+                      // Get subRows - fallback to groupedSubRowsMap if row.subRows is empty
+                      // This handles manualPagination + grouping where getExpandedRowModel may flatten children
+                      const subRowsToRender = (row.subRows && row.subRows.length > 0)
+                        ? row.subRows
+                        : groupedSubRowsMap?.get(row.id) || []
+
+                      if (subRowsToRender.length === 0) return null
 
                       // Check if row is expanded - use TanStack's method first
                       let isExpanded = row.getIsExpanded()
@@ -4691,8 +4712,8 @@ export function DataTable<TData, TValue>({
 
                       if (!isExpanded) return null
 
-                      return row.subRows.map((subRow: Row<TData>, subIndex: number) =>
-                        renderRow(subRow, subIndex, subIndex === row.subRows.length - 1)
+                      return subRowsToRender.map((subRow: Row<TData>, subIndex: number) =>
+                        renderRow(subRow, subIndex, subIndex === subRowsToRender.length - 1)
                       )
                     })()}
                     </React.Fragment>
@@ -5088,7 +5109,14 @@ export function DataTable<TData, TValue>({
                   {/* Recursively render expanded children when renderSubComponent is not provided */}
                   {(() => {
                     if (renderSubComponent) return null
-                    if (!row.subRows || row.subRows.length === 0) return null
+
+                    // Get subRows - fallback to groupedSubRowsMap if row.subRows is empty
+                    // This handles manualPagination + grouping where getExpandedRowModel may flatten children
+                    const subRowsToRender = (row.subRows && row.subRows.length > 0)
+                      ? row.subRows
+                      : groupedSubRowsMap?.get(row.id) || []
+
+                    if (subRowsToRender.length === 0) return null
 
                     // Check if row is expanded - use TanStack's method first
                     let isExpanded = row.getIsExpanded()
@@ -5106,8 +5134,8 @@ export function DataTable<TData, TValue>({
 
                     if (!isExpanded) return null
 
-                    return row.subRows.map((subRow: Row<TData>, subIndex: number) =>
-                      renderPinnedRow(subRow, subIndex, subIndex === row.subRows.length - 1)
+                    return subRowsToRender.map((subRow: Row<TData>, subIndex: number) =>
+                      renderPinnedRow(subRow, subIndex, subIndex === subRowsToRender.length - 1)
                     )
                   })()}
                   </React.Fragment>
