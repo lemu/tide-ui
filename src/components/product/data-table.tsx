@@ -3967,9 +3967,10 @@ export function DataTable<TData, TValue>({
     return isLastNonSticky
   }
 
-  // Helper to get resize handle classes (visible when resizing enabled + no vertical borders)
-  const getResizeHandleClasses = (
-    column: any
+  // Helper to get resize indicator classes (visible when resizing enabled + no vertical borders)
+  const getResizeIndicatorClasses = (
+    column: any,
+    isLastColumn: boolean = false
   ): string => {
     if (!enableColumnResizing || !column.getCanResize()) {
       return ''
@@ -3982,12 +3983,22 @@ export function DataTable<TData, TValue>({
     }
 
     // Use CSS-only hover for better performance (avoids full table re-render on hover)
+    // Shows both left and right resize indicators on hover, aligned with resize handle position
     return cn(
-      "after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2",
-      "after:w-[2px] after:h-[24px] after:rounded-[2px]",
-      "after:bg-[var(--color-border-primary-medium)]",
-      "after:opacity-0 hover:after:opacity-100",
-      "after:transition-opacity after:pointer-events-none"
+      // Right side indicator - hidden for last column
+      !isLastColumn && [
+        "after:content-[''] after:absolute after:right-px after:top-1/2 after:-translate-y-1/2",
+        "after:w-[2px] after:h-[24px] after:rounded-[2px]",
+        "after:bg-[var(--color-border-primary-medium)]",
+        "after:opacity-0 hover:after:opacity-100",
+        "after:transition-opacity after:pointer-events-none after:z-10",
+      ],
+      // Left side indicator - positioned to align with resize handle (outside column)
+      "before:content-[''] before:absolute before:left-[-3px] before:top-1/2 before:-translate-y-1/2",
+      "before:w-[2px] before:h-[24px] before:rounded-[2px]",
+      "before:bg-[var(--color-border-primary-medium)]",
+      "before:opacity-0 hover:before:opacity-100",
+      "before:transition-opacity before:pointer-events-none before:z-10"
     )
   }
 
@@ -4184,8 +4195,8 @@ export function DataTable<TData, TValue>({
                         className={cn(
                           stickyHeader && "z-20",
                           (effectiveLeftSticky > 0 || effectiveRightSticky > 0) && "z-30",
-                          enableColumnResizing && "relative",
-                          getResizeHandleClasses(header.column),
+                          enableColumnResizing && "relative overflow-visible group",
+                          getResizeIndicatorClasses(header.column, isLastHeader),
                           // Focus ring for keyboard navigation
                           "focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--color-border-brand-bold)]"
                         )}
@@ -4268,11 +4279,11 @@ export function DataTable<TData, TValue>({
                         className={cn(
                           stickyHeader && "z-20",
                           (effectiveLeftSticky > 0 || effectiveRightSticky > 0) && "z-30",
-                          enableColumnResizing && "relative",
+                          enableColumnResizing && "relative overflow-visible group",
                           enableColumnOrdering && "group",
                           !showHeader && index === 0 && "rounded-tl-lg",
                           !showHeader && index === headerGroup.headers.length - 1 && "rounded-tr-lg",
-                          getResizeHandleClasses(header.column),
+                          getResizeIndicatorClasses(header.column, isLastHeader),
                           // Focus ring for keyboard navigation
                           "focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--color-border-brand-bold)]"
                         )}
@@ -4364,7 +4375,7 @@ export function DataTable<TData, TValue>({
                 if (!enableRowPinning || !keepPinnedRows) {
                   // Standard rendering when cross-page pinning is disabled
                   const filteredRows = table.getRowModel().rows
-                    .filter(row => !renderSubComponent || row.depth === 0)
+                    .filter(row => renderSubComponent || row.depth === 0)
 
                   // Recursive row rendering function to handle expanded subRows
                   const renderRow = (row: Row<TData>, rowIndex: number, isLastRow: boolean): React.ReactNode => (
@@ -4743,7 +4754,7 @@ export function DataTable<TData, TValue>({
                 ]
 
                 const filteredOrganizedRows = organizedRows
-                  .filter(row => !renderSubComponent || row.depth === 0)
+                  .filter(row => renderSubComponent || row.depth === 0)
 
                 // Recursive row rendering function to handle expanded subRows
                 const renderPinnedRow = (row: Row<TData>, rowIndex: number, isLastRow: boolean): React.ReactNode => (

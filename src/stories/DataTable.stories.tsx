@@ -1947,6 +1947,35 @@ export const ColumnResizing: Story = {
           />
 
           <div className="mt-[var(--space-2xlg)] mb-[var(--space-lg)]">
+            <h3 className="text-heading-md mb-[var(--space-sm)]">Column Resizing with Horizontal Borders</h3>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+              This table has horizontal border lines enabled via <code>borderStyle="horizontal"</code>.
+            </p>
+          </div>
+
+          <DataTable
+            data={data}
+            columns={enhancedTradeColumns}
+            enableColumnResizing={true}
+            columnResizeMode="onChange"
+            borderStyle="horizontal"
+            title="Resizable with Horizontal Borders"
+            initialState={{
+              columnSizing: {
+                'id': 150,
+                'counterparty': 180,
+                'notes': 300,
+                'instrument': 120,
+                'email': 250,
+                'quantity': 120,
+                'price': 120,
+                'notional': 140,
+                'status': 120
+              }
+            }}
+          />
+
+          <div className="mt-[var(--space-2xlg)] mb-[var(--space-lg)]">
             <h3 className="text-heading-md mb-[var(--space-sm)]">Text Truncation with TextLinks</h3>
             <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
               This example demonstrates how text automatically truncates with ellipsis (...) when columns are resized to narrow widths.
