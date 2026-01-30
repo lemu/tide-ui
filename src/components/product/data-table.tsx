@@ -4374,11 +4374,20 @@ export function DataTable<TData, TValue>({
               (() => {
                 if (!enableRowPinning || !keepPinnedRows) {
                   // Standard rendering when cross-page pinning is disabled
+                  // Track rendered row IDs to prevent duplicates when getExpandedRowModel
+                  // flattens rows and depth is incorrectly reset to 0
+                  const renderedRowIds = new Set<string>()
+
                   const filteredRows = table.getRowModel().rows
                     .filter(row => renderSubComponent || row.depth === 0)
 
                   // Recursive row rendering function to handle expanded subRows
-                  const renderRow = (row: Row<TData>, rowIndex: number, isLastRow: boolean): React.ReactNode => (
+                  const renderRow = (row: Row<TData>, rowIndex: number, isLastRow: boolean): React.ReactNode => {
+                    // Skip if already rendered (prevents duplicates from flattened row models)
+                    if (renderedRowIds.has(row.id)) return null
+                    renderedRowIds.add(row.id)
+
+                    return (
                     <React.Fragment key={row.id}>
                     <TableRow
                       data-state={row.getIsSelected() && "selected"}
@@ -4728,7 +4737,8 @@ export function DataTable<TData, TValue>({
                       )
                     })()}
                     </React.Fragment>
-                  )
+                    )
+                  }
 
                   return filteredRows.map((row: Row<TData>, rowIndex: number) =>
                     renderRow(row, rowIndex, rowIndex === filteredRows.length - 1)
@@ -4753,11 +4763,20 @@ export function DataTable<TData, TValue>({
                   ...pinnedBottomRows
                 ]
 
+                // Track rendered row IDs to prevent duplicates when getExpandedRowModel
+                // flattens rows and depth is incorrectly reset to 0
+                const renderedPinnedRowIds = new Set<string>()
+
                 const filteredOrganizedRows = organizedRows
                   .filter(row => renderSubComponent || row.depth === 0)
 
                 // Recursive row rendering function to handle expanded subRows
-                const renderPinnedRow = (row: Row<TData>, rowIndex: number, isLastRow: boolean): React.ReactNode => (
+                const renderPinnedRow = (row: Row<TData>, rowIndex: number, isLastRow: boolean): React.ReactNode => {
+                  // Skip if already rendered (prevents duplicates from flattened row models)
+                  if (renderedPinnedRowIds.has(row.id)) return null
+                  renderedPinnedRowIds.add(row.id)
+
+                  return (
                   <React.Fragment key={row.id}>
                   <TableRow
                     data-state={row.getIsSelected() && "selected"}
@@ -5150,7 +5169,8 @@ export function DataTable<TData, TValue>({
                     )
                   })()}
                   </React.Fragment>
-                )
+                  )
+                }
 
                 return filteredOrganizedRows.map((row: Row<TData>, rowIndex: number) =>
                   renderPinnedRow(row, rowIndex, rowIndex === filteredOrganizedRows.length - 1)
