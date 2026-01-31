@@ -501,11 +501,12 @@ interface DataTableSkeletonProps {
 
 function DataTableSkeleton({ columns, rows, showRowBorder = true, showCellBorder = true, skipHeader = false, enableResponsiveWrapper = true }: DataTableSkeletonProps) {
   // Use flexible widths when responsive wrapper is enabled
+  // Removed min-width constraints as they cause overlapping issues with many columns in table-fixed layout
   const headerSkeletonClass = enableResponsiveWrapper
-    ? "h-4 w-full min-w-[80px]"
+    ? "h-4 w-full max-w-full"
     : "h-4 w-[120px]"
   const cellSkeletonClass = enableResponsiveWrapper
-    ? "h-4 w-full min-w-[60px]"
+    ? "h-4 w-full max-w-full"
     : "h-4 w-[100px]"
 
   return (
@@ -514,7 +515,7 @@ function DataTableSkeleton({ columns, rows, showRowBorder = true, showCellBorder
       {!skipHeader && (
         <TableRow showBorder={showRowBorder}>
           {Array.from({ length: columns }).map((_, index) => (
-            <TableHead key={index} showBorder={showCellBorder}>
+            <TableHead key={index} showBorder={showCellBorder} className="overflow-hidden">
               <Skeleton className={headerSkeletonClass} />
             </TableHead>
           ))}
@@ -528,7 +529,7 @@ function DataTableSkeleton({ columns, rows, showRowBorder = true, showCellBorder
               key={colIndex}
               showBorder={showCellBorder}
               showRowBorder={showRowBorder}
-              className="text-body-sm"
+              className="text-body-sm overflow-hidden"
             >
               <Skeleton className={cellSkeletonClass} />
             </TableCell>
