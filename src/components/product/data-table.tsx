@@ -544,7 +544,6 @@ function DataTableSkeleton({ columns, rows, showRowBorder = true, showCellBorder
 export interface DataTableEmptyStateProps {
   title?: string
   description?: string
-  icon?: string
   action?: {
     label: string
     onClick: () => void
@@ -555,7 +554,6 @@ export interface DataTableEmptyStateProps {
 const DataTableEmptyState = React.memo(function DataTableEmptyState({
   title = "No data",
   description = "No items to display.",
-  icon = "inbox",
   action,
   customContent
 }: DataTableEmptyStateProps) {
@@ -564,20 +562,20 @@ const DataTableEmptyState = React.memo(function DataTableEmptyState({
   }
 
   return (
-    <div className="flex flex-col items-center justify-center py-[var(--space-2xlg)] text-center">
-      <div className="mb-[var(--space-md)] rounded-full bg-[var(--color-background-neutral-subtlest)] p-[var(--space-lg)]">
-        <Icon name={icon} className="h-8 w-8 text-[var(--color-text-secondary)]" />
-      </div>
-      <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">
+    <div className="flex flex-col items-center justify-center py-[var(--space-xlg)] text-center">
+      <p className="text-body-medium-md text-[var(--color-text-primary)]">
         {title}
-      </h3>
-      <p className="text-body-sm text-[var(--color-text-secondary)] max-w-[300px]">
-        {description}
       </p>
+      {description && (
+        <p className="text-body-sm text-[var(--color-text-secondary)] mt-[var(--space-xsm)]">
+          {description}
+        </p>
+      )}
       {action && (
         <Button
           variant="primary"
-          className="mt-[var(--space-lg)]"
+          size="sm"
+          className="mt-[var(--space-md)]"
           onClick={action.onClick}
         >
           {action.label}
@@ -609,20 +607,20 @@ const DataTableNoResultsState = React.memo(function DataTableNoResultsState({
   }
 
   return (
-    <div className="flex flex-col items-center justify-center py-[var(--space-2xlg)] text-center">
-      <div className="mb-[var(--space-md)] rounded-full bg-[var(--color-background-neutral-subtlest)] p-[var(--space-lg)]">
-        <Icon name="search" className="h-8 w-8 text-[var(--color-text-secondary)]" />
-      </div>
-      <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">
+    <div className="flex flex-col items-center justify-center py-[var(--space-xlg)] text-center">
+      <p className="text-body-medium-md text-[var(--color-text-primary)]">
         {title}
-      </h3>
-      <p className="text-body-sm text-[var(--color-text-secondary)] max-w-[300px]">
-        {description}
       </p>
+      {description && (
+        <p className="text-body-sm text-[var(--color-text-secondary)] mt-[var(--space-xsm)]">
+          {description}
+        </p>
+      )}
       {action && (
         <Button
-          variant="ghost"
-          className="mt-[var(--space-lg)]"
+          variant="default"
+          size="sm"
+          className="mt-[var(--space-md)]"
           onClick={action.onClick}
         >
           {action.label}
@@ -649,23 +647,20 @@ const DataTableErrorState = React.memo(function DataTableErrorState({
   }
 
   return (
-    <div className="flex flex-col items-center justify-center py-[var(--space-2xlg)] text-center">
-      <div className="mb-[var(--space-md)] rounded-full bg-[var(--color-background-danger-subtle)] p-[var(--space-lg)]">
-        <Icon name="alert-circle" className="h-8 w-8 text-[var(--color-text-danger)]" />
-      </div>
-      <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">
+    <div className="flex flex-col items-center justify-center py-[var(--space-xlg)] text-center">
+      <p className="text-body-medium-md text-[var(--color-text-primary)]">
         Something went wrong
-      </h3>
-      <p className="text-body-sm text-[var(--color-text-secondary)] max-w-[300px]">
+      </p>
+      <p className="text-body-sm text-[var(--color-text-secondary)] mt-[var(--space-xsm)]">
         {error?.message || "An error occurred while loading data."}
       </p>
       {onRetry && (
         <Button
           variant="default"
-          className="mt-[var(--space-lg)]"
+          size="sm"
+          className="mt-[var(--space-md)]"
           onClick={onRetry}
         >
-          <Icon name="refresh-cw" className="mr-[var(--space-sm)] h-4 w-4" />
           Try again
         </Button>
       )}
@@ -2232,12 +2227,6 @@ export interface DataTableProps<TData, TValue> {
   emptyStateDescription?: string
 
   /**
-   * Icon name for empty state.
-   * @default "inbox"
-   */
-  emptyStateIcon?: string
-
-  /**
    * Action button for empty state (e.g., "Add first item").
    */
   emptyStateAction?: {
@@ -2504,7 +2493,6 @@ export function DataTable<TData, TValue>({
   emptyState,
   emptyStateTitle = "No data",
   emptyStateDescription = "No items to display.",
-  emptyStateIcon = "inbox",
   emptyStateAction,
   // No results state props
   noResultsState,
@@ -5220,7 +5208,6 @@ export function DataTable<TData, TValue>({
                         <DataTableEmptyState
                           title={emptyStateTitle}
                           description={emptyStateDescription}
-                          icon={emptyStateIcon}
                           action={emptyStateAction}
                         />
                       )}
