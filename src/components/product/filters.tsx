@@ -484,6 +484,10 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
       {/* Number Range UI */}
       {filter.type === 'number' && filter.rangeMode && (
         <div className="flex flex-col gap-[var(--space-lg)]">
+          {/* Filter Label */}
+          <div className="text-body-medium-sm text-[var(--color-text-tertiary)]">
+            {filter.label}
+          </div>
           {/* Min Input */}
           <div className="flex flex-col gap-[var(--space-sm)]">
             <label className="text-label-md text-[var(--color-text-primary)]">
@@ -598,6 +602,10 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
       {/* Date Range UI */}
       {filter.type === 'date' && filter.rangeMode && (
         <div className="flex flex-col gap-[var(--space-lg)]">
+          {/* Filter Label */}
+          <div className="text-body-medium-sm text-[var(--color-text-tertiary)]">
+            {filter.label}
+          </div>
           {/* Select for preset selection (always visible) */}
           <div className="flex flex-col gap-[var(--space-sm)]">
             <label className="text-label-md text-[var(--color-text-primary)]">

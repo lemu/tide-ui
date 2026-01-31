@@ -153,10 +153,12 @@ export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof badgeVariants> {
   icon?: React.ReactNode;
+  /** Whether to truncate overflowing text. Defaults to true. Set to false for numeric content. */
+  truncate?: boolean;
 }
 
 const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
-  ({ className, intent, appearance, size = "md", icon, children, ...props }, ref) => {
+  ({ className, intent, appearance, size = "md", icon, truncate = true, children, ...props }, ref) => {
     const iconSize = iconSizeClasses[size as keyof typeof iconSizeClasses] ?? iconSizeClasses.md;
 
     return (
@@ -174,7 +176,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
             {icon}
           </span>
         )}
-        <span className="min-w-0 truncate">
+        <span className={cn("min-w-0", truncate && "truncate")}>
           {children}
         </span>
       </div>
