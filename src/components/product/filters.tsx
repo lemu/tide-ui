@@ -483,13 +483,13 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
 
       {/* Number Range UI */}
       {filter.type === 'number' && filter.rangeMode && (
-        <div className="flex flex-col gap-[var(--space-lg)]">
+        <div className="flex flex-col gap-[var(--space-sm)]">
           {/* Filter Label */}
           <div className="text-body-medium-sm text-[var(--color-text-tertiary)]">
             {filter.label}
           </div>
           {/* Separator */}
-          <div className="h-px w-full">
+          <div className="h-px w-full mb-[var(--space-sm)]">
             <div aria-hidden="true" className="border-[var(--color-border-primary-subtle)] border-[0px_0px_1px] border-solid h-px" />
           </div>
           {/* Min Input */}
@@ -605,13 +605,13 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
 
       {/* Date Range UI */}
       {filter.type === 'date' && filter.rangeMode && (
-        <div className="flex flex-col gap-[var(--space-lg)]">
+        <div className="flex flex-col gap-[var(--space-sm)]">
           {/* Filter Label */}
           <div className="text-body-medium-sm text-[var(--color-text-tertiary)]">
             {filter.label}
           </div>
           {/* Separator */}
-          <div className="h-px w-full">
+          <div className="h-px w-full mb-[var(--space-sm)]">
             <div aria-hidden="true" className="border-[var(--color-border-primary-subtle)] border-[0px_0px_1px] border-solid h-px" />
           </div>
           {/* Select for preset selection (always visible) */}
