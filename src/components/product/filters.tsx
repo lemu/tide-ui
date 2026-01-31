@@ -506,6 +506,11 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
                   setMinError(null)
                 }}
                 onBlur={handleNumberBlur}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleNumberBlur()
+                  }
+                }}
                 placeholder={filter.numberConfig?.min?.toString() || '0.00'}
                 className={cn(
                   filter.numberConfig?.prefix && 'pl-[calc(var(--space-lg)+var(--space-md))]',
@@ -547,6 +552,11 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
                   setMaxError(null)
                 }}
                 onBlur={handleNumberBlur}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleNumberBlur()
+                  }
+                }}
                 placeholder={filter.numberConfig?.max?.toString() || '0.00'}
                 className={cn(
                   filter.numberConfig?.prefix && 'pl-[calc(var(--space-lg)+var(--space-md))]',
@@ -967,6 +977,8 @@ interface FilterDropdownMenuProps {
   activeFilters: Record<string, FilterValue>
   onPinnedFiltersChange: (pinnedFilters: string[]) => void
   onFilterChange: (filterId: string, value: FilterValue) => void
+  /** Width of the sidebar in pixels or CSS value. Defaults to 240. */
+  sidebarWidth?: number | string
 }
 
 export function FilterDropdownMenu({
@@ -975,6 +987,7 @@ export function FilterDropdownMenu({
   activeFilters,
   onPinnedFiltersChange,
   onFilterChange,
+  sidebarWidth = 240,
 }: FilterDropdownMenuProps) {
   const [selectedFilterId, setSelectedFilterId] = React.useState(filters[0]?.id)
   const [selectionSource, setSelectionSource] = React.useState<'mouse' | 'keyboard'>('mouse')
@@ -1064,7 +1077,10 @@ export function FilterDropdownMenu({
     <div className="bg-[var(--color-surface-primary)] relative rounded-md max-h-[480px] flex flex-col">
       <div className="flex items-stretch justify-start min-h-0 overflow-hidden rounded-md flex-1">
         {/* Left Sidebar */}
-        <div className="bg-[var(--color-background-neutral-default)] relative w-[240px] shrink-0 border-r border-[var(--color-border-primary-subtle)] flex flex-col">
+        <div
+          className="bg-[var(--color-background-neutral-default)] relative shrink-0 border-r border-[var(--color-border-primary-subtle)] flex flex-col"
+          style={{ width: typeof sidebarWidth === 'number' ? `${sidebarWidth}px` : sidebarWidth }}
+        >
           <div
             ref={listboxRef}
             role="listbox"
