@@ -488,6 +488,10 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
           <div className="text-body-medium-sm text-[var(--color-text-tertiary)]">
             {filter.label}
           </div>
+          {/* Separator */}
+          <div className="h-px w-full">
+            <div aria-hidden="true" className="border-[var(--color-border-primary-subtle)] border-[0px_0px_1px] border-solid h-px" />
+          </div>
           {/* Min Input */}
           <div className="flex flex-col gap-[var(--space-sm)]">
             <label className="text-label-md text-[var(--color-text-primary)]">
@@ -605,6 +609,10 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
           {/* Filter Label */}
           <div className="text-body-medium-sm text-[var(--color-text-tertiary)]">
             {filter.label}
+          </div>
+          {/* Separator */}
+          <div className="h-px w-full">
+            <div aria-hidden="true" className="border-[var(--color-border-primary-subtle)] border-[0px_0px_1px] border-solid h-px" />
           </div>
           {/* Select for preset selection (always visible) */}
           <div className="flex flex-col gap-[var(--space-sm)]">

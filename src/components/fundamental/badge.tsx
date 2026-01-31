@@ -176,7 +176,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
             {icon}
           </span>
         )}
-        <span className={cn("min-w-0", truncate && "truncate")}>
+        <span className={cn("min-w-0 whitespace-nowrap", truncate && "overflow-hidden text-ellipsis")}>
           {children}
         </span>
       </div>
