@@ -83,7 +83,7 @@ export const WithButtonSuffix: Story = {
     <InputGroup className="w-80">
       <InputGroupInput placeholder="Enter your email..." />
       <InputGroupAddon align="inline-end">
-        <InputGroupButton variant="primary" size="sm">
+        <InputGroupButton variant="primary">
           Subscribe
         </InputGroupButton>
       </InputGroupAddon>
@@ -96,9 +96,7 @@ export const WithButtonPrefix: Story = {
   render: () => (
     <InputGroup className="w-80">
       <InputGroupAddon align="inline-start">
-        <InputGroupButton variant="default" size="icon-sm">
-          <Icon name="upload" />
-        </InputGroupButton>
+        <InputGroupButton variant="default" icon="upload" />
       </InputGroupAddon>
       <InputGroupInput placeholder="Upload file..." />
     </InputGroup>
@@ -128,9 +126,7 @@ export const WithDropdownMenu: Story = {
       <InputGroupAddon align="inline-end">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <InputGroupButton size="icon-sm">
-              <Icon name="settings-2" />
-            </InputGroupButton>
+            <InputGroupButton icon="settings-2" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem>
@@ -171,9 +167,7 @@ export const SearchWithClear: Story = {
       </InputGroupAddon>
       <InputGroupInput placeholder="Search..." />
       <InputGroupAddon align="inline-end">
-        <InputGroupButton size="icon-xs" variant="ghost">
-          <Icon name="x" />
-        </InputGroupButton>
+        <InputGroupButton variant="ghost" icon="x" />
       </InputGroupAddon>
     </InputGroup>
   ),
@@ -188,9 +182,7 @@ export const PasswordWithToggle: Story = {
       </InputGroupAddon>
       <InputGroupInput type="password" placeholder="Enter password" />
       <InputGroupAddon align="inline-end">
-        <InputGroupButton size="icon-sm" variant="ghost">
-          <Icon name="eye" />
-        </InputGroupButton>
+        <InputGroupButton variant="ghost" icon="eye" />
       </InputGroupAddon>
     </InputGroup>
   ),
@@ -236,7 +228,7 @@ export const TextareaBlockEnd: Story = {
         <InputGroupText>
           <span className="text-[var(--color-text-tertiary)]">0 / 500 characters</span>
         </InputGroupText>
-        <InputGroupButton size="sm" variant="primary">
+        <InputGroupButton variant="primary">
           Send
         </InputGroupButton>
       </InputGroupAddon>
@@ -266,7 +258,7 @@ export const TextareaBothAddons: Story = {
             <InputGroupText>
               <span className="text-[var(--color-text-tertiary)]">0 / 500</span>
             </InputGroupText>
-            <InputGroupButton size="sm" variant="primary">
+            <InputGroupButton variant="primary">
               Send
             </InputGroupButton>
           </div>
@@ -285,14 +277,11 @@ export const ComplexExample: Story = {
       </InputGroupAddon>
       <InputGroupInput placeholder="Search products..." />
       <InputGroupAddon align="inline-end">
-        <InputGroupButton size="icon-xs" variant="ghost">
-          <Icon name="x" />
-        </InputGroupButton>
+        <InputGroupButton variant="ghost" icon="x" />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <InputGroupButton size="sm" variant="default">
+            <InputGroupButton variant="default" dropdown>
               Filters
-              <Icon name="chevron-down" />
             </InputGroupButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -301,7 +290,7 @@ export const ComplexExample: Story = {
             <DropdownMenuItem>On Sale</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <InputGroupButton size="sm" variant="primary">
+        <InputGroupButton variant="primary">
           Search
         </InputGroupButton>
       </InputGroupAddon>
@@ -316,9 +305,8 @@ export const URLInput: Story = {
       <InputGroupAddon align="inline-start">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <InputGroupButton size="sm" variant="default">
+            <InputGroupButton variant="default" dropdown>
               https://
-              <Icon name="chevron-down" />
             </InputGroupButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
@@ -329,9 +317,7 @@ export const URLInput: Story = {
       </InputGroupAddon>
       <InputGroupInput placeholder="example.com" />
       <InputGroupAddon align="inline-end">
-        <InputGroupButton size="icon-sm" variant="ghost">
-          <Icon name="copy" />
-        </InputGroupButton>
+        <InputGroupButton variant="ghost" icon="copy" />
       </InputGroupAddon>
     </InputGroup>
   ),
@@ -377,7 +363,7 @@ export const FileUpload: Story = {
       </InputGroupAddon>
       <InputGroupInput placeholder="No file chosen" readOnly />
       <InputGroupAddon align="inline-end">
-        <InputGroupButton size="sm" variant="default">
+        <InputGroupButton variant="default">
           Browse
         </InputGroupButton>
       </InputGroupAddon>

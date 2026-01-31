@@ -43,7 +43,6 @@ export {
   InputGroupInput,
   InputGroupTextarea,
   inputGroupAddonVariants,
-  inputGroupButtonVariants,
 } from './fundamental/input-group'
 export type {
   InputGroupProps,

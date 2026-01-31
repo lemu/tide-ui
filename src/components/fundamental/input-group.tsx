@@ -16,19 +16,21 @@ const InputGroup = React.forwardRef<HTMLDivElement, InputGroupProps>(
         data-slot="input-group"
         role="group"
         className={cn(
-          "group/input-group relative flex w-full items-center rounded-md border border-[var(--color-border-input)] bg-[var(--color-surface-primary)] shadow-xs outline-none transition-[color,box-shadow]",
+          "group/input-group relative flex w-full items-center rounded-md border border-[var(--color-interaction-border-input)] bg-[var(--color-interaction-background-input-neutral)] outline-none transition-[color,box-shadow,border-color]",
           // Default height for inputs
-          "h-[var(--size-xlg)] has-[>textarea]:h-auto",
+          "h-[var(--size-md)] has-[>textarea]:h-auto",
           // Adjust padding when inline addons are present
           "has-[>[data-align=inline-start]]:[&>input]:pl-[var(--space-xsm)]",
           "has-[>[data-align=inline-end]]:[&>input]:pr-[var(--space-xsm)]",
           // Block alignment for textareas
           "has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>[data-align=block-start]]:[&>textarea]:pb-[var(--space-md)]",
           "has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-end]]:[&>textarea]:pt-[var(--space-md)]",
+          // Hover state
+          "hover:border-[var(--color-interaction-border-input-hovered)]",
           // Focus state
-          "has-[[data-slot=input-group-control]:focus-visible]:ring-[var(--color-border-focused)] has-[[data-slot=input-group-control]:focus-visible]:ring-1",
+          "has-[[data-slot=input-group-control]:focus-visible]:border-[#005f85] has-[[data-slot=input-group-control]:focus-visible]:shadow-[0px_0px_0px_2px_rgba(0,95,133,0.2),0px_3px_4px_0px_rgba(0,14,20,0.03)]",
           // Invalid state
-          "has-[[data-slot][aria-invalid=true]]:ring-[var(--color-border-error-subtle)] has-[[data-slot][aria-invalid=true]]:border-[var(--color-border-error-bold)]",
+          "has-[[data-slot][aria-invalid=true]]:border-[var(--color-border-error-bold)]",
           // Disabled state
           "group-data-[disabled=true]/input-group:opacity-50 group-data-[disabled=true]/input-group:cursor-not-allowed",
           className
@@ -47,9 +49,9 @@ const inputGroupAddonVariants = cva(
     variants: {
       align: {
         "inline-start":
-          "order-first pl-[var(--space-md)] has-[>button]:ml-[-var(--space-xs)] has-[>kbd]:ml-[-var(--space-xsm)]",
+          "order-first pl-[var(--space-sm)] has-[>button]:pl-[var(--space-xsm)] has-[>.inline-flex]:pl-[var(--space-xsm)] has-[>kbd]:ml-[-var(--space-xsm)]",
         "inline-end":
-          "order-last pr-[var(--space-md)] has-[>button]:mr-[-var(--space-xs)] has-[>kbd]:mr-[-var(--space-xsm)]",
+          "order-last pr-[var(--space-sm)] has-[>button]:pr-[var(--space-xsm)] has-[>.inline-flex]:pr-[var(--space-xsm)] has-[>kbd]:mr-[-var(--space-xsm)]",
         "block-start":
           "order-first w-full justify-start px-[var(--space-md)] pt-[var(--space-md)] group-has-[>input]/input-group:pt-[var(--space-sm)]",
         "block-end":
@@ -91,38 +93,20 @@ const InputGroupAddon = React.forwardRef<HTMLDivElement, InputGroupAddonProps>(
 InputGroupAddon.displayName = "InputGroupAddon";
 
 // InputGroupButton - Specialized button for input groups
-const inputGroupButtonVariants = cva(
-  "flex items-center gap-[var(--space-xsm)] [&]:text-body-sm shadow-none",
-  {
-    variants: {
-      size: {
-        xs: "h-[var(--size-md)] gap-[var(--space-xsm)] rounded-xsm px-[var(--space-xsm)] has-[>svg]:px-[var(--space-xsm)] [&>svg:not([class*='size-'])]:size-[var(--size-xsm)]",
-        sm: "h-[var(--size-lg)] gap-[var(--space-sm)] rounded-sm px-[var(--space-sm)] has-[>svg]:px-[var(--space-sm)]",
-        "icon-xs": "size-[var(--size-md)] rounded-xsm p-0 has-[>svg]:p-0",
-        "icon-sm": "size-[var(--size-lg)] p-0 has-[>svg]:p-0",
-      },
-    },
-    defaultVariants: {
-      size: "xs",
-    },
-  }
-);
-
 export interface InputGroupButtonProps
-  extends Omit<React.ComponentProps<typeof Button>, "size">,
-    VariantProps<typeof inputGroupButtonVariants> {}
+  extends React.ComponentProps<typeof Button> {}
 
 const InputGroupButton = React.forwardRef<
   React.ElementRef<typeof Button>,
   InputGroupButtonProps
->(({ className, type = "button", variant = "ghost", size = "xs", ...props }, ref) => {
+>(({ className, type = "button", variant = "ghost", size = "sm", ...props }, ref) => {
   return (
     <Button
       ref={ref}
       type={type}
-      data-size={size}
       variant={variant}
-      className={cn(inputGroupButtonVariants({ size }), className)}
+      size={size}
+      className={cn("shadow-none", className)}
       {...props}
     />
   );
@@ -161,7 +145,7 @@ const InputGroupInput = React.forwardRef<HTMLInputElement, InputGroupInputProps>
         data-slot="input-group-control"
         size={size}
         className={cn(
-          "flex-1 rounded-none border-0 bg-transparent shadow-none focus-visible:ring-0",
+          "flex-1 rounded-none border-0 bg-transparent shadow-none focus-visible:ring-0 focus-visible:shadow-none",
           className
         )}
         {...props}
@@ -183,7 +167,7 @@ const InputGroupTextarea = React.forwardRef<
       ref={ref}
       data-slot="input-group-control"
       className={cn(
-        "flex-1 resize-none rounded-none border-0 bg-transparent py-[var(--space-md)] shadow-none focus-visible:ring-0",
+        "flex-1 resize-none rounded-none border-0 bg-transparent py-[var(--space-md)] shadow-none focus-visible:ring-0 focus-visible:shadow-none",
         className
       )}
       {...props}
@@ -200,5 +184,4 @@ export {
   InputGroupInput,
   InputGroupTextarea,
   inputGroupAddonVariants,
-  inputGroupButtonVariants,
 };
