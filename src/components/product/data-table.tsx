@@ -553,7 +553,7 @@ export interface DataTableEmptyStateProps {
 
 const DataTableEmptyState = React.memo(function DataTableEmptyState({
   title = "No data",
-  description = "No items to display.",
+  description = "No items to display",
   action,
   customContent
 }: DataTableEmptyStateProps) {
@@ -598,7 +598,7 @@ export interface DataTableNoResultsStateProps {
 
 const DataTableNoResultsState = React.memo(function DataTableNoResultsState({
   title = "No results found",
-  description = "Try adjusting your search or filters.",
+  description = "Try adjusting your search or filters",
   action,
   customContent
 }: DataTableNoResultsStateProps) {
@@ -652,7 +652,7 @@ const DataTableErrorState = React.memo(function DataTableErrorState({
         Something went wrong
       </p>
       <p className="text-body-sm text-[var(--color-text-secondary)] mt-[var(--space-xsm)]">
-        {error?.message || "An error occurred while loading data."}
+        {error?.message || "An error occurred while loading data"}
       </p>
       {onRetry && (
         <Button
@@ -880,7 +880,7 @@ const DataTableGlobalFaceting = React.memo(function DataTableGlobalFaceting({ ta
         <Command>
           <CommandInput placeholder="Search values across all columns..." />
           <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandEmpty>No results found</CommandEmpty>
             <CommandGroup>
               {aggregatedFacetedValues.map((item) => {
                 const isSelected = selectedValues.includes(item.value)
@@ -999,7 +999,7 @@ const DataTableFilter = React.memo(function DataTableFilter({ column }: DataTabl
           <Command>
             <CommandInput placeholder={placeholder || `Search ${label}...`} />
             <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
+              <CommandEmpty>No results found</CommandEmpty>
               <CommandGroup>
                 {filterOptions.map((option) => {
                   const isSelected = selectedValues.includes(option.value)
@@ -2222,7 +2222,7 @@ export interface DataTableProps<TData, TValue> {
 
   /**
    * Description for default empty state UI.
-   * @default "No items to display."
+   * @default "No items to display"
    */
   emptyStateDescription?: string
 
@@ -2249,7 +2249,7 @@ export interface DataTableProps<TData, TValue> {
 
   /**
    * Description for default no results UI.
-   * @default "Try adjusting your search or filters."
+   * @default "Try adjusting your search or filters"
    */
   noResultsDescription?: string
 
@@ -2492,12 +2492,12 @@ export function DataTable<TData, TValue>({
   // Empty state props
   emptyState,
   emptyStateTitle = "No data",
-  emptyStateDescription = "No items to display.",
+  emptyStateDescription = "No items to display",
   emptyStateAction,
   // No results state props
   noResultsState,
   noResultsTitle = "No results found",
-  noResultsDescription = "Try adjusting your search or filters.",
+  noResultsDescription = "Try adjusting your search or filters",
   noResultsAction,
   // Refetching props
   isRefetching = false,
