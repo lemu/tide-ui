@@ -250,6 +250,7 @@ const AttributesGroup = React.forwardRef<HTMLDivElement, AttributesGroupProps>(
         style={{
           gridColumn: '1 / -1',
           gridTemplateColumns: 'subgrid',
+          columnGap: 'var(--space-md)',
         }}
         {...props}
       >
@@ -345,6 +346,7 @@ const AttributesItem = React.forwardRef<HTMLDivElement, AttributesItemProps>(
           style={{
             gridColumn: '1 / -1',
             gridTemplateColumns: 'subgrid',
+            columnGap: 'var(--space-md)',
             ...style,
           }}
           data-hidden={hidden}
@@ -440,6 +442,7 @@ const AttributesRow = React.forwardRef<HTMLDivElement, AttributesRowProps>(
         style={{
           gridColumn: '1 / -1',
           gridTemplateColumns: 'subgrid',
+          columnGap: 'var(--space-md)',
           ...style,
         }}
         {...props}
