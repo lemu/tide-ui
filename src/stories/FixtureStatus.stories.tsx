@@ -73,70 +73,79 @@ export const Default: Story = {
 export const AllStatuses: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '48px', padding: '24px' }}>
-      {/* Order Statuses */}
-      <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>Order</h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <FixtureStatus value="order-draft" />
-          <FixtureStatus value="order-distributed" />
-          <FixtureStatus value="order-withdrawn" />
-        </div>
-      </div>
+      {(['xsm', 'sm', 'md', 'lg'] as const).map((size) => (
+        <div key={size}>
+          <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: 600 }}>
+            Size: {size}
+          </h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+            {/* Order Statuses */}
+            <div>
+              <h4 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Order</h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <FixtureStatus value="order-draft" size={size} />
+                <FixtureStatus value="order-distributed" size={size} />
+                <FixtureStatus value="order-withdrawn" size={size} />
+              </div>
+            </div>
 
-      {/* Negotiation Statuses */}
-      <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>Negotiation</h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <FixtureStatus value="negotiation-indicative-offer" />
-          <FixtureStatus value="negotiation-indicative-bid" />
-          <FixtureStatus value="negotiation-firm-offer" />
-          <FixtureStatus value="negotiation-firm-bid" />
-          <FixtureStatus value="negotiation-firm" />
-          <FixtureStatus value="negotiation-on-subs" />
-          <FixtureStatus value="negotiation-fixed" />
-          <FixtureStatus value="negotiation-firm-offer-expired" />
-          <FixtureStatus value="negotiation-withdrawn" />
-          <FixtureStatus value="negotiation-firm-amendment" />
-          <FixtureStatus value="negotiation-subs-expired" />
-          <FixtureStatus value="negotiation-subs-failed" />
-          <FixtureStatus value="negotiation-on-subs-amendment" />
-        </div>
-      </div>
+            {/* Negotiation Statuses */}
+            <div>
+              <h4 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Negotiation</h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <FixtureStatus value="negotiation-indicative-offer" size={size} />
+                <FixtureStatus value="negotiation-indicative-bid" size={size} />
+                <FixtureStatus value="negotiation-firm-offer" size={size} />
+                <FixtureStatus value="negotiation-firm-bid" size={size} />
+                <FixtureStatus value="negotiation-firm" size={size} />
+                <FixtureStatus value="negotiation-on-subs" size={size} />
+                <FixtureStatus value="negotiation-fixed" size={size} />
+                <FixtureStatus value="negotiation-firm-offer-expired" size={size} />
+                <FixtureStatus value="negotiation-withdrawn" size={size} />
+                <FixtureStatus value="negotiation-firm-amendment" size={size} />
+                <FixtureStatus value="negotiation-subs-expired" size={size} />
+                <FixtureStatus value="negotiation-subs-failed" size={size} />
+                <FixtureStatus value="negotiation-on-subs-amendment" size={size} />
+              </div>
+            </div>
 
-      {/* Contract Statuses */}
-      <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>Contract</h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <FixtureStatus value="contract-draft" />
-          <FixtureStatus value="contract-working-copy" />
-          <FixtureStatus value="contract-final" />
-          <FixtureStatus value="contract-rejected" />
-        </div>
-      </div>
+            {/* Contract Statuses */}
+            <div>
+              <h4 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Contract</h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <FixtureStatus value="contract-draft" size={size} />
+                <FixtureStatus value="contract-working-copy" size={size} />
+                <FixtureStatus value="contract-final" size={size} />
+                <FixtureStatus value="contract-rejected" size={size} />
+              </div>
+            </div>
 
-      {/* Addenda Statuses */}
-      <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>Addenda</h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <FixtureStatus value="addenda-draft" />
-          <FixtureStatus value="addenda-working-copy" />
-          <FixtureStatus value="addenda-final" />
-        </div>
-      </div>
+            {/* Addenda Statuses */}
+            <div>
+              <h4 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Addenda</h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <FixtureStatus value="addenda-draft" size={size} />
+                <FixtureStatus value="addenda-working-copy" size={size} />
+                <FixtureStatus value="addenda-final" size={size} />
+              </div>
+            </div>
 
-      {/* Recap Manager Statuses */}
-      <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>Recap Manager</h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <FixtureStatus value="recap-manager-draft" />
-          <FixtureStatus value="recap-manager-on-subs" />
-          <FixtureStatus value="recap-manager-fully-fixed" />
-          <FixtureStatus value="recap-manager-canceled" />
-          <FixtureStatus value="recap-manager-failed" />
+            {/* Recap Manager Statuses */}
+            <div>
+              <h4 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Recap Manager</h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <FixtureStatus value="recap-manager-draft" size={size} />
+                <FixtureStatus value="recap-manager-on-subs" size={size} />
+                <FixtureStatus value="recap-manager-fully-fixed" size={size} />
+                <FixtureStatus value="recap-manager-canceled" size={size} />
+                <FixtureStatus value="recap-manager-failed" size={size} />
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      ))}
     </div>
-  ),
+  )
 }
 
 export const Sizes: Story = {
@@ -366,6 +375,42 @@ export const IconOnlyWithoutObjectLabel: Story = {
       <FixtureStatus value="contract-final" iconOnly showObject={false} />
       <FixtureStatus value="addenda-working-copy" iconOnly showObject={false} />
       <FixtureStatus value="recap-manager-fully-fixed" iconOnly showObject={false} />
+    </div>
+  ),
+}
+
+const allStatusValues: StatusValue[] = [
+  // Order
+  'order-draft', 'order-distributed', 'order-withdrawn',
+  // Negotiation
+  'negotiation-indicative-offer', 'negotiation-indicative-bid', 'negotiation-firm-offer',
+  'negotiation-firm-bid', 'negotiation-firm', 'negotiation-on-subs', 'negotiation-fixed',
+  'negotiation-firm-offer-expired', 'negotiation-withdrawn', 'negotiation-firm-amendment',
+  'negotiation-subs-expired', 'negotiation-subs-failed', 'negotiation-on-subs-amendment',
+  // Contract
+  'contract-draft', 'contract-working-copy', 'contract-final', 'contract-rejected',
+  // Addenda
+  'addenda-draft', 'addenda-working-copy', 'addenda-final',
+  // Recap Manager
+  'recap-manager-draft', 'recap-manager-on-subs', 'recap-manager-fully-fixed',
+  'recap-manager-canceled', 'recap-manager-failed',
+]
+
+export const AllStatusesAsBadge: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '48px', padding: '24px' }}>
+      {(['xsm', 'sm', 'md', 'lg'] as const).map((size) => (
+        <div key={size}>
+          <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>
+            Size: {size}
+          </h3>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+            {allStatusValues.map((value) => (
+              <FixtureStatus key={value} value={value} size={size} asBadge />
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   ),
 }

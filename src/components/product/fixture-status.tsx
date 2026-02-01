@@ -51,42 +51,42 @@ export type StatusValue =
 // Comprehensive status mapping based on Figma design
 const statusConfig: Record<StatusValue, StatusConfig> = {
   // Order statuses
-  "order-draft": { icon: "order-draft", color: "tertiary", objectLabel: "Order", statusLabel: "Draft" },
-  "order-distributed": { icon: "order-distributed", color: "information", objectLabel: "Order", statusLabel: "Distributed" },
-  "order-withdrawn": { icon: "order-withdrawn", color: "error", objectLabel: "Order", statusLabel: "Withdrawn" },
+  "order-draft": { icon: "hexagon-dashed", color: "tertiary", objectLabel: "Order", statusLabel: "Draft" },
+  "order-distributed": { icon: "hexagon-asterisk", color: "information", objectLabel: "Order", statusLabel: "Distributed" },
+  "order-withdrawn": { icon: "hexagon-minus", color: "error", objectLabel: "Order", statusLabel: "Withdrawn" },
 
   // Negotiation statuses
-  "negotiation-indicative-offer": { icon: "negotiation-indicative-offer", color: "information", objectLabel: "Negotiation", statusLabel: "Indicative offer" },
-  "negotiation-indicative-bid": { icon: "negotiation-indicative-bid", color: "information", objectLabel: "Negotiation", statusLabel: "Indicative bid" },
-  "negotiation-firm-offer": { icon: "negotiation-firm-offer", color: "information", objectLabel: "Negotiation", statusLabel: "Firm offer" },
-  "negotiation-firm-bid": { icon: "negotiation-firm-bid", color: "information", objectLabel: "Negotiation", statusLabel: "Firm bid" },
-  "negotiation-firm": { icon: "negotiation-firm", color: "violet", objectLabel: "Negotiation", statusLabel: "Firm" },
-  "negotiation-on-subs": { icon: "on-subs", color: "warning", objectLabel: "Negotiation", statusLabel: "On subs" },
-  "negotiation-fixed": { icon: "negotiation-fixed", color: "success", objectLabel: "Negotiation", statusLabel: "Fixed" },
-  "negotiation-firm-offer-expired": { icon: "negotiation-expired", color: "error", objectLabel: "Negotiation", statusLabel: "(Firm offer) Expired" },
-  "negotiation-withdrawn": { icon: "negotiation-withdrawn", color: "error", objectLabel: "Negotiation", statusLabel: "Withdrawn" },
-  "negotiation-firm-amendment": { icon: "negotiation-on-subs-amendment", color: "violet", objectLabel: "Negotiation", statusLabel: "Firm (Amendment)" },
-  "negotiation-subs-expired": { icon: "negotiation-expired", color: "error", objectLabel: "Negotiation", statusLabel: "Subs expired" },
-  "negotiation-subs-failed": { icon: "negotiation-subs-failed", color: "error", objectLabel: "Negotiation", statusLabel: "Subs failed" },
-  "negotiation-on-subs-amendment": { icon: "negotiation-on-subs-amendment", color: "warning", objectLabel: "Negotiation", statusLabel: "On subs (amendment)" },
+  "negotiation-indicative-offer": { icon: "circle-dashed-arrow-down", color: "information", objectLabel: "Negotiation", statusLabel: "Indicative offer" },
+  "negotiation-indicative-bid": { icon: "circle-dashed-arrow-up", color: "information", objectLabel: "Negotiation", statusLabel: "Indicative bid" },
+  "negotiation-firm-offer": { icon: "circle-arrow-down", color: "information", objectLabel: "Negotiation", statusLabel: "Firm offer" },
+  "negotiation-firm-bid": { icon: "circle-arrow-up", color: "information", objectLabel: "Negotiation", statusLabel: "Firm bid" },
+  "negotiation-firm": { icon: "circle-dot-2", color: "violet", objectLabel: "Negotiation", statusLabel: "Firm" },
+  "negotiation-on-subs": { icon: "circle-diamond", color: "warning", objectLabel: "Negotiation", statusLabel: "On subs" },
+  "negotiation-fixed": { icon: "circle-check-2", color: "success", objectLabel: "Negotiation", statusLabel: "Fixed" },
+  "negotiation-firm-offer-expired": { icon: "clock-alert", color: "error", objectLabel: "Negotiation", statusLabel: "(Firm offer) Expired" },
+  "negotiation-withdrawn": { icon: "circle-minus", color: "error", objectLabel: "Negotiation", statusLabel: "Withdrawn" },
+  "negotiation-firm-amendment": { icon: "circle-plus", color: "violet", objectLabel: "Negotiation", statusLabel: "Firm (Amendment)" },
+  "negotiation-subs-expired": { icon: "clock-alert", color: "error", objectLabel: "Negotiation", statusLabel: "Subs expired" },
+  "negotiation-subs-failed": { icon: "circle-slash", color: "error", objectLabel: "Negotiation", statusLabel: "Subs failed" },
+  "negotiation-on-subs-amendment": { icon: "circle-plus", color: "warning", objectLabel: "Negotiation", statusLabel: "On subs (amendment)" },
 
   // Contract statuses
-  "contract-draft": { icon: "contract-draft", color: "tertiary", objectLabel: "Contract", statusLabel: "Draft" },
-  "contract-working-copy": { icon: "contract-working-copy", color: "information", objectLabel: "Contract", statusLabel: "Working copy" },
-  "contract-final": { icon: "contract-final", color: "success", objectLabel: "Contract", statusLabel: "Final" },
-  "contract-rejected": { icon: "contract-rejected", color: "error", objectLabel: "Contract", statusLabel: "Rejected" },
+  "contract-draft": { icon: "square-dashed-chart-gantt", color: "tertiary", objectLabel: "Contract", statusLabel: "Draft" },
+  "contract-working-copy": { icon: "square-chart-gantt", color: "information", objectLabel: "Contract", statusLabel: "Working copy" },
+  "contract-final": { icon: "square-check", color: "success", objectLabel: "Contract", statusLabel: "Final" },
+  "contract-rejected": { icon: "square-x", color: "error", objectLabel: "Contract", statusLabel: "Rejected" },
 
   // Addenda statuses
-  "addenda-draft": { icon: "addenda-draft", color: "tertiary", objectLabel: "Addenda", statusLabel: "Draft" },
-  "addenda-working-copy": { icon: "addenda-working-copy", color: "information", objectLabel: "Addenda", statusLabel: "Working copy" },
-  "addenda-final": { icon: "addenda-final", color: "success", objectLabel: "Addenda", statusLabel: "Final" },
+  "addenda-draft": { icon: "square-dashed-corner-plus", color: "tertiary", objectLabel: "Addenda", statusLabel: "Draft" },
+  "addenda-working-copy": { icon: "square-corner-plus", color: "information", objectLabel: "Addenda", statusLabel: "Working copy" },
+  "addenda-final": { icon: "square-corner-check", color: "success", objectLabel: "Addenda", statusLabel: "Final" },
 
   // Recap Manager statuses
-  "recap-manager-draft": { icon: "contract-draft", color: "tertiary", objectLabel: "Recap manager", statusLabel: "Draft" },
-  "recap-manager-on-subs": { icon: "contract-on-subs", color: "warning", objectLabel: "Recap manager", statusLabel: "On subs" },
-  "recap-manager-fully-fixed": { icon: "contract-final", color: "success", objectLabel: "Recap manager", statusLabel: "Fully fixed" },
-  "recap-manager-canceled": { icon: "contract-canceled", color: "error", objectLabel: "Recap manager", statusLabel: "Canceled" },
-  "recap-manager-failed": { icon: "contract-failed", color: "error", objectLabel: "Recap manager", statusLabel: "Failed" },
+  "recap-manager-draft": { icon: "square-dashed-chart-gantt", color: "tertiary", objectLabel: "Recap manager", statusLabel: "Draft" },
+  "recap-manager-on-subs": { icon: "square-diamond", color: "warning", objectLabel: "Recap manager", statusLabel: "On subs" },
+  "recap-manager-fully-fixed": { icon: "square-check", color: "success", objectLabel: "Recap manager", statusLabel: "Fully fixed" },
+  "recap-manager-canceled": { icon: "square-minus", color: "error", objectLabel: "Recap manager", statusLabel: "Canceled" },
+  "recap-manager-failed": { icon: "square-slash", color: "error", objectLabel: "Recap manager", statusLabel: "Failed" },
 };
 
 // Size configuration
@@ -104,12 +104,12 @@ const iconSizeMapping = {
   lg: "lg",
 } as const;
 
-// Size-specific vertical alignment adjustments
+// Size-specific vertical alignment adjustments for icon
 const iconTranslateClasses = {
-  xsm: "translate-y-[1px]",
-  sm: "",
+  xsm: "translate-y-[0.5px]",
+  sm: "translate-y-[0px]",
   md: "translate-y-[0.5px]",
-  lg: "translate-y-[1px]",
+  lg: "translate-y-[0.5px]",
 } as const;
 
 // Size-specific gap between icon and label

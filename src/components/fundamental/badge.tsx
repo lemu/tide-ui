@@ -172,7 +172,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
         {...props}
       >
         {icon && (
-          <span className={cn("shrink-0 [&_svg]:w-full [&_svg]:h-full", iconSize)}>
+          <span className={cn("inline-flex items-center justify-center shrink-0 [&_svg]:w-full [&_svg]:h-full", iconSize)}>
             {icon}
           </span>
         )}
