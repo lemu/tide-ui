@@ -263,8 +263,8 @@ export { HoverCard, HoverCardTrigger, HoverCardContent } from './fundamental/hov
 export { Slider } from './fundamental/slider'
 
 // Tag components
-export { Tag, TagGroup, tagVariants } from './fundamental/tag'
-export type { TagProps, TagGroupProps } from './fundamental/tag'
+export { Tag, TagGroup } from './fundamental/tag'
+export type { TagProps, TagGroupProps, TagDotColor, TagIntent } from './fundamental/tag'
 
 // Tree components
 export { Tree } from './fundamental/tree'

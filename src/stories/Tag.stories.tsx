@@ -1,10 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Tag, TagGroup } from '../components/fundamental/tag'
+import { Tag, TagGroup, type TagDotColor, type TagIntent } from '../components/fundamental/tag'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 import { Button } from '../components/fundamental/button'
 import { Input } from '../components/fundamental/input'
-import { Badge } from '../components/fundamental/badge'
 import { Icon } from '../components/fundamental/icon'
 
 const meta: Meta<typeof Tag> = {
@@ -15,20 +14,24 @@ const meta: Meta<typeof Tag> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    intent: {
-      control: { type: 'select' },
-      options: ['neutral', 'brand', 'success', 'warning', 'destructive'],
-      description: 'Visual intent of the tag',
-    },
-    appearance: {
-      control: { type: 'select' },
-      options: ['solid', 'subtle'],
-      description: 'Visual style of the tag',
-    },
     size: {
       control: { type: 'select' },
-      options: ['sm', 'md', 'lg'],
-      description: 'Size of the tag',
+      options: ['sm', 'md'],
+      description: 'Size of the tag (sm: 20px, md: 24px)',
+    },
+    intent: {
+      control: { type: 'select' },
+      options: [undefined, 'neutral', 'brand', 'success', 'warning', 'destructive'],
+      description: 'Semantic intent - maps to dot color',
+    },
+    color: {
+      control: { type: 'select' },
+      options: [undefined, 'cyan', 'neutral', 'magenta', 'brand', 'green', 'red', 'orange', 'violet'],
+      description: 'Direct dot color (overrides intent)',
+    },
+    showDot: {
+      control: 'boolean',
+      description: 'Whether to show the colored dot',
     },
     closable: {
       control: 'boolean',
@@ -52,75 +55,44 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   render: () => {
     return (
-      <div className="w-80 space-y-4">
-        <div className="flex flex-wrap gap-2">
+      <div className="space-y-6">
+        <div className="flex flex-wrap items-center gap-4">
           <Tag>Default Tag</Tag>
           <Tag closable onClose={() => console.log('Tag closed')}>
-            Closable Tag
+            Closable
           </Tag>
           <Tag interactive onClick={() => console.log('Tag clicked')}>
-            Interactive Tag
+            Interactive
           </Tag>
         </div>
         <p className="text-caption-sm text-[var(--color-text-secondary)]">
-          Tags can be static, closable, or interactive depending on your needs.
+          Sharp label design with distinctive pointed left edge.
         </p>
       </div>
     )
   },
 }
 
-// Different intents and appearances
-export const IntentsAndAppearances: Story = {
-  render: () => {
-    return (
-      <div className="w-full max-w-3xl space-y-6">
-        <div>
-          <h3 className="text-heading-sm mb-4">Solid Appearance</h3>
-          <div className="flex flex-wrap gap-2">
-            <Tag intent="neutral" appearance="solid">Neutral</Tag>
-            <Tag intent="brand" appearance="solid">Brand</Tag>
-            <Tag intent="success" appearance="solid">Success</Tag>
-            <Tag intent="warning" appearance="solid">Warning</Tag>
-            <Tag intent="destructive" appearance="solid">Destructive</Tag>
-          </div>
-        </div>
-
-        <div>
-          <h3 className="text-heading-sm mb-4">Subtle Appearance</h3>
-          <div className="flex flex-wrap gap-2">
-            <Tag intent="neutral" appearance="subtle">Neutral</Tag>
-            <Tag intent="brand" appearance="subtle">Brand</Tag>
-            <Tag intent="success" appearance="subtle">Success</Tag>
-            <Tag intent="warning" appearance="subtle">Warning</Tag>
-            <Tag intent="destructive" appearance="subtle">Destructive</Tag>
-          </div>
-        </div>
-      </div>
-    )
-  },
-}
-
-// Different sizes
+// Size variants
 export const Sizes: Story = {
   render: () => {
     return (
-      <div className="w-80 space-y-6">
+      <div className="space-y-6">
         <div>
-          <h3 className="text-heading-sm mb-4">Tag Sizes</h3>
-          <div className="flex flex-wrap items-center gap-3">
-            <Tag size="sm" intent="brand">Small</Tag>
-            <Tag size="md" intent="brand">Medium</Tag>
-            <Tag size="lg" intent="brand">Large</Tag>
+          <h3 className="text-heading-sm mb-4">Small (20px)</h3>
+          <div className="flex flex-wrap items-center gap-4">
+            <Tag size="sm">Small Tag</Tag>
+            <Tag size="sm" color="brand">With Dot</Tag>
+            <Tag size="sm" closable onClose={() => {}}>Closable</Tag>
           </div>
         </div>
 
         <div>
-          <h3 className="text-heading-sm mb-4">Closable Tags</h3>
-          <div className="flex flex-wrap items-center gap-3">
-            <Tag size="sm" intent="success" closable onClose={() => {}}>Small</Tag>
-            <Tag size="md" intent="success" closable onClose={() => {}}>Medium</Tag>
-            <Tag size="lg" intent="success" closable onClose={() => {}}>Large</Tag>
+          <h3 className="text-heading-sm mb-4">Medium (24px) - Default</h3>
+          <div className="flex flex-wrap items-center gap-4">
+            <Tag size="md">Medium Tag</Tag>
+            <Tag size="md" color="brand">With Dot</Tag>
+            <Tag size="md" closable onClose={() => {}}>Closable</Tag>
           </div>
         </div>
       </div>
@@ -128,87 +100,70 @@ export const Sizes: Story = {
   },
 }
 
-// Interactive tags
-export const InteractiveTags: Story = {
+// Dot color variants
+export const DotColors: Story = {
   render: () => {
-    const [selectedTags, setSelectedTags] = useState<string[]>(['react'])
-
-    const tags = ['react', 'typescript', 'tailwind', 'storybook', 'vite']
-
-    const toggleTag = (tag: string) => {
-      setSelectedTags(prev => 
-        prev.includes(tag) 
-          ? prev.filter(t => t !== tag)
-          : [...prev, tag]
-      )
-    }
+    const colors: TagDotColor[] = ['cyan', 'neutral', 'magenta', 'brand', 'green', 'red', 'orange', 'violet']
 
     return (
-      <div className="w-96 space-y-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Filter by Technology</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap gap-2">
-              {tags.map(tag => (
-                <Tag
-                  key={tag}
-                  interactive
-                  intent={selectedTags.includes(tag) ? "brand" : "neutral"}
-                  appearance={selectedTags.includes(tag) ? "solid" : "subtle"}
-                  onClick={() => toggleTag(tag)}
-                  className="transition-all"
-                >
-                  {tag}
-                </Tag>
-              ))}
-            </div>
-            <div className="mt-4 pt-3 border-t">
-              <p className="text-caption-sm text-[var(--color-text-secondary)]">
-                Selected: {selectedTags.length} tag{selectedTags.length !== 1 ? 's' : ''}
-              </p>
-              {selectedTags.length > 0 && (
-                <div className="flex flex-wrap gap-1 mt-2">
-                  {selectedTags.map(tag => (
-                    <Badge key={tag} intent="brand" size="sm">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-heading-sm mb-4">Direct Colors</h3>
+          <div className="flex flex-wrap items-center gap-3">
+            {colors.map(color => (
+              <Tag key={color} color={color}>
+                {color.charAt(0).toUpperCase() + color.slice(1)}
+              </Tag>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-heading-sm mb-4">Semantic Intents</h3>
+          <div className="flex flex-wrap items-center gap-3">
+            <Tag intent="neutral">Neutral</Tag>
+            <Tag intent="brand">Brand</Tag>
+            <Tag intent="success">Success</Tag>
+            <Tag intent="warning">Warning</Tag>
+            <Tag intent="destructive">Destructive</Tag>
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-heading-sm mb-4">Without Dots</h3>
+          <div className="flex flex-wrap items-center gap-3">
+            <Tag>No Dot</Tag>
+            <Tag color="brand" showDot={false}>Dot Hidden</Tag>
+          </div>
+        </div>
       </div>
     )
   },
 }
 
-// Closable tags with management
+// Closable tags
 export const ClosableTags: Story = {
   render: () => {
-    const [tags, setTags] = useState<Array<{ id: string; label: string; intent: 'warning' | 'brand' | 'success' | 'destructive' | 'neutral' }>>([
-      { id: '1', label: 'JavaScript', intent: 'warning' as const },
-      { id: '2', label: 'React', intent: 'brand' as const },
-      { id: '3', label: 'TypeScript', intent: 'brand' as const },
-      { id: '4', label: 'CSS', intent: 'success' as const },
-      { id: '5', label: 'HTML', intent: 'destructive' as const },
+    const [tags, setTags] = useState([
+      { id: '1', label: 'JavaScript', color: 'orange' as const },
+      { id: '2', label: 'React', color: 'cyan' as const },
+      { id: '3', label: 'TypeScript', color: 'brand' as const },
+      { id: '4', label: 'CSS', color: 'magenta' as const },
+      { id: '5', label: 'Node.js', color: 'green' as const },
     ])
 
     const removeTag = (tagId: string) => {
       setTags(prev => prev.filter(tag => tag.id !== tagId))
     }
 
-    const addRandomTag = () => {
-      const availableTags = ['Vue', 'Angular', 'Svelte', 'Node.js', 'Python', 'Rust']
-      const randomTag = availableTags[Math.floor(Math.random() * availableTags.length)]
-      const newTag = {
-        id: Date.now().toString(),
-        label: randomTag,
-        intent: 'neutral' as const
-      }
-      setTags(prev => [...prev, newTag])
+    const resetTags = () => {
+      setTags([
+        { id: '1', label: 'JavaScript', color: 'orange' as const },
+        { id: '2', label: 'React', color: 'cyan' as const },
+        { id: '3', label: 'TypeScript', color: 'brand' as const },
+        { id: '4', label: 'CSS', color: 'magenta' as const },
+        { id: '5', label: 'Node.js', color: 'green' as const },
+      ])
     }
 
     return (
@@ -217,20 +172,18 @@ export const ClosableTags: Story = {
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Skills ({tags.length})</CardTitle>
-              <Button variant="ghost" size="sm" onClick={addRandomTag}>
-                <Icon name="plus" size="sm" className="mr-1" />
-                Add Skill
+              <Button variant="ghost" size="sm" onClick={resetTags}>
+                Reset
               </Button>
             </div>
           </CardHeader>
           <CardContent>
             {tags.length > 0 ? (
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {tags.map(tag => (
                   <Tag
                     key={tag.id}
-                    intent={tag.intent}
-                    appearance="subtle"
+                    color={tag.color}
                     closable
                     onClose={() => removeTag(tag.id)}
                   >
@@ -239,14 +192,9 @@ export const ClosableTags: Story = {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-8">
-                <p className="text-body-sm text-[var(--color-text-secondary)]">
-                  No skills added yet
-                </p>
-                <Button variant="ghost" size="sm" onClick={addRandomTag} className="mt-2">
-                  Add your first skill
-                </Button>
-              </div>
+              <p className="text-body-sm text-[var(--color-text-secondary)] text-center py-4">
+                No tags. Click Reset to restore.
+              </p>
             )}
           </CardContent>
         </Card>
@@ -255,7 +203,57 @@ export const ClosableTags: Story = {
   },
 }
 
-// Tag input component
+// Interactive tags
+export const InteractiveTags: Story = {
+  render: () => {
+    const [selected, setSelected] = useState<string[]>(['react'])
+
+    const tags = [
+      { id: 'react', label: 'React', color: 'cyan' as const },
+      { id: 'vue', label: 'Vue', color: 'green' as const },
+      { id: 'angular', label: 'Angular', color: 'red' as const },
+      { id: 'svelte', label: 'Svelte', color: 'orange' as const },
+    ]
+
+    const toggleTag = (tagId: string) => {
+      setSelected(prev =>
+        prev.includes(tagId)
+          ? prev.filter(id => id !== tagId)
+          : [...prev, tagId]
+      )
+    }
+
+    return (
+      <div className="w-96 space-y-4">
+        <Card>
+          <CardHeader>
+            <CardTitle>Select Frameworks</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex flex-wrap gap-3">
+              {tags.map(tag => (
+                <Tag
+                  key={tag.id}
+                  color={selected.includes(tag.id) ? tag.color : undefined}
+                  showDot={selected.includes(tag.id)}
+                  interactive
+                  onClick={() => toggleTag(tag.id)}
+                >
+                  {tag.label}
+                </Tag>
+              ))}
+            </div>
+            <p className="text-caption-sm text-[var(--color-text-secondary)]">
+              Selected: {selected.length > 0 ? selected.join(', ') : 'None'}
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  },
+}
+
+// Tag input
 export const TagInput: Story = {
   render: () => {
     const [inputValue, setInputValue] = useState('')
@@ -306,12 +304,11 @@ export const TagInput: Story = {
                 <p className="text-body-sm font-medium mb-2">
                   Tags ({tags.length})
                 </p>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-3">
                   {tags.map(tag => (
                     <Tag
                       key={tag}
-                      intent="brand"
-                      appearance="subtle"
+                      color="brand"
                       closable
                       onClose={() => removeTag(tag)}
                     >
@@ -322,9 +319,9 @@ export const TagInput: Story = {
               </div>
             )}
 
-            <div className="text-caption-sm text-[var(--color-text-secondary)]">
-              Press Enter to add a tag, or Backspace to remove the last one
-            </div>
+            <p className="text-caption-sm text-[var(--color-text-secondary)]">
+              Press Enter to add, Backspace to remove last tag.
+            </p>
           </CardContent>
         </Card>
       </div>
@@ -336,43 +333,31 @@ export const TagInput: Story = {
 export const TagGroupExample: Story = {
   render: () => {
     const [projectTags, setProjectTags] = useState([
-      { id: '1', label: 'Frontend', intent: 'brand' as const },
-      { id: '2', label: 'React', intent: 'brand' as const },
-      { id: '3', label: 'TypeScript', intent: 'success' as const },
-      { id: '4', label: 'Responsive', intent: 'neutral' as const },
-      { id: '5', label: 'Modern UI', intent: 'warning' as const },
-      { id: '6', label: 'Performance', intent: 'success' as const },
-      { id: '7', label: 'Accessibility', intent: 'success' as const },
-      { id: '8', label: 'Testing', intent: 'neutral' as const },
-    ])
-
-    const [categoryTags, setCategoryTags] = useState([
-      { id: '1', label: 'Web Development', intent: 'brand' as const },
-      { id: '2', label: 'UI/UX Design', intent: 'warning' as const },
-      { id: '3', label: 'Mobile Apps', intent: 'success' as const },
-      { id: '4', label: 'Data Science', intent: 'destructive' as const },
+      { id: '1', label: 'Frontend', color: 'brand' as const },
+      { id: '2', label: 'React', color: 'cyan' as const },
+      { id: '3', label: 'TypeScript', color: 'brand' as const },
+      { id: '4', label: 'Testing', color: 'green' as const },
+      { id: '5', label: 'Performance', color: 'orange' as const },
+      { id: '6', label: 'Accessibility', color: 'violet' as const },
+      { id: '7', label: 'Security', color: 'red' as const },
+      { id: '8', label: 'Documentation', color: 'neutral' as const },
     ])
 
     const removeProjectTag = (tagId: string) => {
       setProjectTags(prev => prev.filter(tag => tag.id !== tagId))
     }
 
-    const handleCategoryClick = (tagId: string) => {
-      console.log('Category clicked:', tagId)
-    }
-
     return (
       <div className="w-full max-w-2xl space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Project Technologies</CardTitle>
+            <CardTitle>Project Tags (Closable)</CardTitle>
           </CardHeader>
           <CardContent>
             <TagGroup
               tags={projectTags}
               onTagRemove={removeProjectTag}
               closable
-              size="md"
               maxVisible={5}
             />
           </CardContent>
@@ -380,29 +365,13 @@ export const TagGroupExample: Story = {
 
         <Card>
           <CardHeader>
-            <CardTitle>Service Categories</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <TagGroup
-              tags={categoryTags}
-              onTagClick={handleCategoryClick}
-              interactive
-              size="lg"
-              appearance="solid"
-            />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Compact View</CardTitle>
+            <CardTitle>Small Tags with Max Visible</CardTitle>
           </CardHeader>
           <CardContent>
             <TagGroup
               tags={projectTags}
               size="sm"
-              appearance="subtle"
-              maxVisible={3}
+              maxVisible={4}
             />
           </CardContent>
         </Card>
@@ -422,15 +391,15 @@ export const StatusTags: Story = {
       { id: '5', number: '#ORD-005', status: 'cancelled', amount: '$156.75' },
     ]
 
-    const getStatusTag = (status: string) => {
-      const statusConfig = {
-        pending: { intent: 'warning' as const, label: 'Pending' },
-        processing: { intent: 'brand' as const, label: 'Processing' },
-        shipped: { intent: 'brand' as const, label: 'Shipped' },
-        delivered: { intent: 'success' as const, label: 'Delivered' },
-        cancelled: { intent: 'destructive' as const, label: 'Cancelled' },
+    const getStatusConfig = (status: string) => {
+      const config: Record<string, { intent: TagIntent; label: string }> = {
+        pending: { intent: 'warning', label: 'Pending' },
+        processing: { intent: 'brand', label: 'Processing' },
+        shipped: { intent: 'brand', label: 'Shipped' },
+        delivered: { intent: 'success', label: 'Delivered' },
+        cancelled: { intent: 'destructive', label: 'Cancelled' },
       }
-      return statusConfig[status as keyof typeof statusConfig] || { intent: 'neutral' as const, label: status }
+      return config[status] || { intent: 'neutral' as const, label: status }
     }
 
     return (
@@ -442,12 +411,12 @@ export const StatusTags: Story = {
           <CardContent>
             <div className="space-y-3">
               {orders.map(order => {
-                const statusConfig = getStatusTag(order.status)
+                const statusConfig = getStatusConfig(order.status)
                 return (
                   <div key={order.id} className="flex items-center justify-between p-3 border rounded-lg">
                     <div className="flex items-center gap-3">
                       <span className="text-body-sm font-mono">{order.number}</span>
-                      <Tag intent={statusConfig.intent} appearance="subtle" size="sm">
+                      <Tag intent={statusConfig.intent} size="sm">
                         {statusConfig.label}
                       </Tag>
                     </div>
@@ -467,27 +436,22 @@ export const StatusTags: Story = {
 export const DisabledState: Story = {
   render: () => {
     return (
-      <div className="w-80 space-y-4">
+      <div className="space-y-6">
         <div>
-          <h3 className="text-heading-sm mb-3">Disabled Tags</h3>
-          <div className="flex flex-wrap gap-2">
-            <Tag disabled>Disabled Tag</Tag>
-            <Tag disabled closable onClose={() => {}}>
-              Disabled Closable
-            </Tag>
-            <Tag disabled interactive onClick={() => {}}>
-              Disabled Interactive
-            </Tag>
+          <h3 className="text-heading-sm mb-4">Disabled Tags</h3>
+          <div className="flex flex-wrap items-center gap-3">
+            <Tag disabled>Disabled</Tag>
+            <Tag disabled color="brand">With Dot</Tag>
+            <Tag disabled closable onClose={() => {}}>Closable</Tag>
+            <Tag disabled interactive onClick={() => {}}>Interactive</Tag>
           </div>
         </div>
-        
+
         <div>
-          <h3 className="text-heading-sm mb-3">Different Intents (Disabled)</h3>
-          <div className="flex flex-wrap gap-2">
-            <Tag intent="brand" disabled>Brand</Tag>
-            <Tag intent="success" disabled>Success</Tag>
-            <Tag intent="warning" disabled>Warning</Tag>
-            <Tag intent="destructive" disabled>Destructive</Tag>
+          <h3 className="text-heading-sm mb-4">Comparison</h3>
+          <div className="flex flex-wrap items-center gap-3">
+            <Tag color="brand">Normal</Tag>
+            <Tag color="brand" disabled>Disabled</Tag>
           </div>
         </div>
       </div>
@@ -495,194 +459,59 @@ export const DisabledState: Story = {
   },
 }
 
-// User profile tags
-export const UserProfileTags: Story = {
+// All variants showcase
+export const AllVariants: Story = {
   render: () => {
-    const [userSkills, setUserSkills] = useState([
-      { id: '1', label: 'JavaScript', level: 'expert' },
-      { id: '2', label: 'React', level: 'expert' },
-      { id: '3', label: 'TypeScript', level: 'intermediate' },
-      { id: '4', label: 'Node.js', level: 'intermediate' },
-      { id: '5', label: 'Python', level: 'beginner' },
-    ])
-
-    const [interests, setInterests] = useState([
-      { id: '1', label: 'Web Development' },
-      { id: '2', label: 'Open Source' },
-      { id: '3', label: 'Machine Learning' },
-      { id: '4', label: 'Design Systems' },
-    ])
-
-    const getLevelIntent = (level: string) => {
-      switch (level) {
-        case 'expert': return 'success'
-        case 'intermediate': return 'warning'
-        case 'beginner': return 'brand'
-        default: return 'neutral'
-      }
-    }
-
-    const removeSkill = (skillId: string) => {
-      setUserSkills(prev => prev.filter(skill => skill.id !== skillId))
-    }
-
-    const removeInterest = (interestId: string) => {
-      setInterests(prev => prev.filter(interest => interest.id !== interestId))
-    }
-
     return (
-      <div className="w-96 space-y-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Technical Skills</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap gap-2">
-              {userSkills.map(skill => (
-                <Tag
-                  key={skill.id}
-                  intent={getLevelIntent(skill.level)}
-                  appearance="subtle"
-                  closable
-                  onClose={() => removeSkill(skill.id)}
-                >
-                  {skill.label}
-                  <span className="ml-1 text-xs opacity-75">
-                    ({skill.level})
-                  </span>
-                </Tag>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+      <div className="space-y-8">
+        <div>
+          <h3 className="text-heading-sm mb-4">Size Comparison</h3>
+          <div className="flex flex-wrap items-center gap-4">
+            <Tag size="sm" color="brand">Small (20px)</Tag>
+            <Tag size="md" color="brand">Medium (24px)</Tag>
+          </div>
+        </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Interests</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap gap-2">
-              {interests.map(interest => (
-                <Tag
-                  key={interest.id}
-                  intent="neutral"
-                  appearance="subtle"
-                  closable
-                  onClose={() => removeInterest(interest.id)}
-                >
-                  {interest.label}
-                </Tag>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        <div>
+          <h3 className="text-heading-sm mb-4">All Dot Colors</h3>
+          <div className="flex flex-wrap items-center gap-3">
+            <Tag color="cyan">Cyan</Tag>
+            <Tag color="neutral">Neutral</Tag>
+            <Tag color="magenta">Magenta</Tag>
+            <Tag color="brand">Brand</Tag>
+            <Tag color="green">Green</Tag>
+            <Tag color="red">Red</Tag>
+            <Tag color="orange">Orange</Tag>
+            <Tag color="violet">Violet</Tag>
+          </div>
+        </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Team Roles</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap gap-2">
-              <Tag intent="brand" appearance="solid">Frontend Lead</Tag>
-              <Tag intent="success" appearance="solid">Mentor</Tag>
-              <Tag intent="warning" appearance="subtle">Code Reviewer</Tag>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    )
-  },
-}
+        <div>
+          <h3 className="text-heading-sm mb-4">With Close Button</h3>
+          <div className="flex flex-wrap items-center gap-3">
+            <Tag color="cyan" closable onClose={() => {}}>Cyan</Tag>
+            <Tag color="green" closable onClose={() => {}}>Green</Tag>
+            <Tag color="red" closable onClose={() => {}}>Red</Tag>
+          </div>
+        </div>
 
-// Content filtering
-export const ContentFiltering: Story = {
-  render: () => {
-    const [activeFilters, setActiveFilters] = useState<string[]>(['published'])
-    
-    const filterOptions = [
-      { id: 'published', label: 'Published', intent: 'success' as const },
-      { id: 'draft', label: 'Draft', intent: 'warning' as const },
-      { id: 'archived', label: 'Archived', intent: 'neutral' as const },
-      { id: 'featured', label: 'Featured', intent: 'brand' as const },
-      { id: 'trending', label: 'Trending', intent: 'destructive' as const },
-    ]
+        <div>
+          <h3 className="text-heading-sm mb-4">Small with Close</h3>
+          <div className="flex flex-wrap items-center gap-3">
+            <Tag size="sm" color="brand" closable onClose={() => {}}>Brand</Tag>
+            <Tag size="sm" color="violet" closable onClose={() => {}}>Violet</Tag>
+            <Tag size="sm" color="orange" closable onClose={() => {}}>Orange</Tag>
+          </div>
+        </div>
 
-    const toggleFilter = (filterId: string) => {
-      setActiveFilters(prev => 
-        prev.includes(filterId)
-          ? prev.filter(id => id !== filterId)
-          : [...prev, filterId]
-      )
-    }
-
-    const clearAllFilters = () => {
-      setActiveFilters([])
-    }
-
-    return (
-      <div className="w-96 space-y-4">
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle>Content Filters</CardTitle>
-              {activeFilters.length > 0 && (
-                <Button variant="ghost" size="sm" onClick={clearAllFilters}>
-                  Clear All
-                </Button>
-              )}
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <p className="text-body-sm font-medium mb-2">Available Filters</p>
-              <div className="flex flex-wrap gap-2">
-                {filterOptions.map(filter => (
-                  <Tag
-                    key={filter.id}
-                    intent={activeFilters.includes(filter.id) ? filter.intent : 'neutral'}
-                    appearance={activeFilters.includes(filter.id) ? 'solid' : 'subtle'}
-                    interactive
-                    onClick={() => toggleFilter(filter.id)}
-                  >
-                    {filter.label}
-                  </Tag>
-                ))}
-              </div>
-            </div>
-
-            {activeFilters.length > 0 && (
-              <div>
-                <p className="text-body-sm font-medium mb-2">
-                  Active Filters ({activeFilters.length})
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {activeFilters.map(filterId => {
-                    const filter = filterOptions.find(f => f.id === filterId)
-                    return filter ? (
-                      <Tag
-                        key={filter.id}
-                        intent={filter.intent}
-                        appearance="solid"
-                        size="sm"
-                        closable
-                        onClose={() => toggleFilter(filter.id)}
-                      >
-                        {filter.label}
-                      </Tag>
-                    ) : null
-                  })}
-                </div>
-              </div>
-            )}
-
-            <div className="pt-3 border-t">
-              <p className="text-caption-sm text-[var(--color-text-secondary)]">
-                Showing {activeFilters.length > 0 ? 'filtered' : 'all'} content
-                {activeFilters.length > 0 && ` (${activeFilters.length} filter${activeFilters.length !== 1 ? 's' : ''})`}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+        <div>
+          <h3 className="text-heading-sm mb-4">Plain (No Dot)</h3>
+          <div className="flex flex-wrap items-center gap-3">
+            <Tag>Default</Tag>
+            <Tag closable onClose={() => {}}>Closable</Tag>
+            <Tag interactive onClick={() => {}}>Interactive</Tag>
+          </div>
+        </div>
       </div>
     )
   },
