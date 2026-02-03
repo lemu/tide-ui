@@ -45,7 +45,11 @@ function Calendar(calendarProps: CalendarProps) {
         // Click 1: Set start point
         setRangeStart(date);
       } else if (isSameDay(date, rangeStart)) {
-        // Click same date: Clear selection
+        // Click same date: Create single-day range
+        if (onSelect) {
+          // @ts-ignore - onSelect signature varies by mode
+          onSelect({ from: rangeStart, to: rangeStart });
+        }
         setRangeStart(null);
         setHoveredDate(null);
       } else {
@@ -114,7 +118,12 @@ function Calendar(calendarProps: CalendarProps) {
   // Build props for DayPicker based on mode
   const dayPickerProps = {
     showOutsideDays,
-    className: cn("p-[var(--space-md)]", className),
+    className: cn(
+      // relative for nav positioning; padding creates space around entire calendar including buttons
+      "relative",
+      "py-[var(--space-md)] px-[var(--space-sm)]",
+      className
+    ),
     onDayMouseEnter: handleDayMouseEnter,
     onDayMouseLeave: handleDayMouseLeave,
     modifiers: {
@@ -125,16 +134,32 @@ function Calendar(calendarProps: CalendarProps) {
       inConfirmedRange: isInConfirmedRange,
     },
     classNames: {
-      months: "flex flex-col sm:flex-row space-y-[var(--space-lg)] sm:space-x-[var(--space-lg)] sm:space-y-0",
+      // months: no 'relative' so nav positions to root; horizontal margin creates space for side buttons
+      months: "flex flex-col sm:flex-row sm:gap-[var(--space-lg)] mx-[calc(var(--size-md)+var(--space-sm))]",
       month: "space-y-[var(--space-lg)]",
       month_caption: "flex justify-center pt-[var(--space-xsm)] relative items-center",
       caption_label: "text-body-medium-md text-[var(--color-text-primary)]",
-      nav: "space-x-[var(--space-xsm)] flex items-center",
+      // nav: fills root, flexbox positions buttons at left/right edges, vertically centered
+      nav: "absolute inset-0 flex justify-between items-center px-[var(--space-sm)] pointer-events-none z-10",
       button_previous: cn(
-        "absolute left-[var(--space-xsm)] inline-flex items-center justify-center rounded-md w-[var(--size-sm)] h-[var(--size-sm)] bg-transparent p-0 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] disabled:pointer-events-none disabled:opacity-50"
+        "pointer-events-auto",
+        "inline-flex items-center justify-center rounded-md",
+        "w-[var(--size-md)] h-[var(--size-md)] p-0",
+        "bg-[var(--color-background-neutral-subtlest)] text-[var(--color-text-primary)]",
+        "border border-[var(--color-border-action-outline)]",
+        "hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:border-[var(--color-border-action-outline-hovered)] hover:shadow-sm",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
+        "disabled:pointer-events-none disabled:opacity-50"
       ),
       button_next: cn(
-        "absolute right-[var(--space-xsm)] inline-flex items-center justify-center rounded-md w-[var(--size-sm)] h-[var(--size-sm)] bg-transparent p-0 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] disabled:pointer-events-none disabled:opacity-50"
+        "pointer-events-auto",
+        "inline-flex items-center justify-center rounded-md",
+        "w-[var(--size-md)] h-[var(--size-md)] p-0",
+        "bg-[var(--color-background-neutral-subtlest)] text-[var(--color-text-primary)]",
+        "border border-[var(--color-border-action-outline)]",
+        "hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:border-[var(--color-border-action-outline-hovered)] hover:shadow-sm",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
+        "disabled:pointer-events-none disabled:opacity-50"
       ),
       month_grid: "w-full border-collapse space-y-[var(--space-xsm)]",
       weekdays: "flex",
