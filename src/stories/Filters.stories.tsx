@@ -1444,14 +1444,17 @@ export const WithNumberRangeFilter: Story = {
 /**
  * Date Range Filter
  *
- * Demonstrates date range filters with:
- * - Predefined ranges (This week, Last month, This quarter, etc.)
- * - Custom month picker with two-year grid layout
- * - Month-level granularity (first day of start month → last day of end month)
+ * Demonstrates date range filters with both granularity levels:
+ * - **Month-level** (default): Uses MonthPicker for selecting month ranges
+ * - **Day-level**: Uses Calendar for selecting specific date ranges
+ *
+ * Each granularity has appropriate default presets:
+ * - Month: This month, Last month, This quarter, Last quarter, etc.
+ * - Day: This week, Last week, Last 30 days, Last 90 days, etc.
  */
 export const WithDateRangeFilter: Story = {
   render: () => {
-    const [pinnedFilters, setPinnedFilters] = useState<string[]>(['laycan', 'delivery'])
+    const [pinnedFilters, setPinnedFilters] = useState<string[]>(['laycan', 'appointment', 'delivery'])
     const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({})
 
     const filters: FilterDefinition[] = [
@@ -1461,6 +1464,22 @@ export const WithDateRangeFilter: Story = {
         icon: ({ className }) => <Icon name="calendar" className={className} />,
         type: 'date',
         rangeMode: true,
+        // granularity defaults to 'month' - uses MonthPicker
+        formatValue: (values: string[]) => {
+          const [start, end] = values.map(v => new Date(v))
+          return formatDateRange(start, end)
+        },
+      },
+      {
+        id: 'appointment',
+        label: 'Appointment',
+        icon: ({ className }) => <Icon name="calendar-days" className={className} />,
+        type: 'date',
+        rangeMode: true,
+        dateConfig: {
+          granularity: 'day',  // Day-level selection - uses Calendar
+          // Uses DEFAULT_DAY_PRESETS automatically
+        },
         formatValue: (values: string[]) => {
           const [start, end] = values.map(v => new Date(v))
           return formatDateRange(start, end)
@@ -1473,6 +1492,7 @@ export const WithDateRangeFilter: Story = {
         type: 'date',
         rangeMode: true,
         dateConfig: {
+          granularity: 'month',  // Explicit month-level (same as default)
           presets: ['custom', 'this-month', 'last-month', 'this-quarter', 'last-quarter'],
         },
         formatValue: (values: string[]) => {
@@ -1484,8 +1504,13 @@ export const WithDateRangeFilter: Story = {
 
     return (
       <div className="p-4 space-y-4">
-        <div className="text-caption-sm text-[var(--color-text-secondary)]">
-          Date range filters support predefined ranges and custom month-level selection.
+        <div className="text-caption-sm text-[var(--color-text-secondary)] space-y-2">
+          <p>Date range filters support two granularity levels:</p>
+          <ul className="list-disc list-inside ml-2 space-y-1">
+            <li><strong>Laycan</strong>: Month-level selection (default) - uses MonthPicker</li>
+            <li><strong>Appointment</strong>: Day-level selection - uses Calendar with day presets</li>
+            <li><strong>Delivery date</strong>: Month-level with custom presets</li>
+          </ul>
         </div>
         <Filters
           filters={filters}
@@ -1524,6 +1549,9 @@ export const WithDateRangeFilter: Story = {
                     <div key={filterId} className="flex items-start gap-[var(--space-sm)]">
                       <Label className="min-w-[120px] font-medium">{filter.label}:</Label>
                       <span className="text-body-md">{formatDateRange(start, end)}</span>
+                      <span className="text-body-sm text-[var(--color-text-tertiary)] ml-auto">
+                        ({filter.dateConfig?.granularity || 'month'}-level)
+                      </span>
                     </div>
                   )
                 })}

@@ -8,6 +8,7 @@ import { Checkbox } from "../fundamental/checkbox"
 import { RadioGroup, RadioGroupItem } from "../fundamental/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../fundamental/select"
 import { MonthPicker } from "../fundamental/month-picker"
+import { Calendar } from "../fundamental/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "../fundamental/popover"
 import { Separator } from "../fundamental/separator"
 import { Badge } from "../fundamental/badge"
@@ -45,6 +46,39 @@ export type DateRangePreset =
   | 'last-quarter'
   | 'all-time'
 
+/**
+ * Date selection granularity
+ * - 'day': Day-level selection using Calendar component
+ * - 'month': Month-level selection using MonthPicker component
+ */
+export type DateGranularity = 'day' | 'month'
+
+/**
+ * Default presets for month-level granularity
+ */
+export const DEFAULT_MONTH_PRESETS: DateRangePreset[] = [
+  'this-month',
+  'last-month',
+  'this-quarter',
+  'last-quarter',
+  'this-year',
+  'last-year',
+  'custom',
+]
+
+/**
+ * Default presets for day-level granularity
+ */
+export const DEFAULT_DAY_PRESETS: DateRangePreset[] = [
+  'this-week',
+  'last-week',
+  'last-30-days',
+  'last-90-days',
+  'this-month',
+  'last-month',
+  'custom',
+]
+
 export interface NumberRangeConfig {
   min?: number
   max?: number
@@ -54,6 +88,13 @@ export interface NumberRangeConfig {
 }
 
 export interface DateRangeConfig {
+  /**
+   * Date selection granularity
+   * - 'day': Day-level selection using Calendar component
+   * - 'month': Month-level selection using MonthPicker component
+   * @default 'month'
+   */
+  granularity?: DateGranularity
   presets?: DateRangePreset[]
   minYear?: number
   maxYear?: number
@@ -405,16 +446,14 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
   }
 
   // Date range preset helper functions
+  const granularity = filter.dateConfig?.granularity || 'month'
+
   const getPresetList = (): DateRangePreset[] => {
-    return filter.dateConfig?.presets || [
-      'this-month',
-      'last-month',
-      'this-quarter',
-      'last-quarter',
-      'this-year',
-      'last-year',
-      'custom',
-    ]
+    if (filter.dateConfig?.presets) {
+      return filter.dateConfig.presets
+    }
+    // Return granularity-appropriate defaults
+    return granularity === 'day' ? DEFAULT_DAY_PRESETS : DEFAULT_MONTH_PRESETS
   }
 
   const getSelectedPreset = (): string => {
@@ -633,29 +672,70 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
             </Select>
           </div>
 
-          {/* Custom Month Picker (shown when "Custom" is selected) */}
+          {/* Custom Date Picker (shown when "Custom" is selected) */}
           {getSelectedPreset() === 'custom' && (
             <>
               {/* Instruction Text */}
               <p className="text-body-sm text-[var(--color-text-secondary)]">
-                Select start and end months for custom range
+                {granularity === 'day'
+                  ? 'Select start and end dates for custom range'
+                  : 'Select start and end months for custom range'}
               </p>
 
-              {/* MonthPicker Component */}
-              <MonthPicker
-                value={value as [Date, Date] | undefined}
-                onChange={(newValue) => {
-                  onChange(newValue)
-                  setIsCustomMode(false)  // Exit custom mode after selection
-                }}
-                mode="range"
-                yearCount={2}
-                size="small"
-                enableNavigation={true}
-                onYearNavigate={(year) => setCurrentYear(year)}
-                minDate={filter.dateConfig?.minDate}
-                maxDate={filter.dateConfig?.maxDate}
-              />
+              {/* Day-level Calendar (granularity: 'day') */}
+              {granularity === 'day' && (
+                <Calendar
+                  mode="range"
+                  selected={
+                    value && Array.isArray(value) && value.length === 2
+                      ? { from: value[0] as Date, to: value[1] as Date }
+                      : undefined
+                  }
+                  onSelect={(range) => {
+                    if (range?.from && range?.to) {
+                      // Normalize: start of day for from, end of day for to
+                      const from = new Date(range.from)
+                      from.setHours(0, 0, 0, 0)
+                      const to = new Date(range.to)
+                      to.setHours(23, 59, 59, 999)
+                      onChange([from, to])
+                      setIsCustomMode(false)
+                    }
+                  }}
+                  numberOfMonths={2}
+                  disabled={
+                    filter.dateConfig?.minDate || filter.dateConfig?.maxDate
+                      ? (date) => {
+                          if (filter.dateConfig?.minDate && date < filter.dateConfig.minDate) {
+                            return true
+                          }
+                          if (filter.dateConfig?.maxDate && date > filter.dateConfig.maxDate) {
+                            return true
+                          }
+                          return false
+                        }
+                      : undefined
+                  }
+                />
+              )}
+
+              {/* Month-level MonthPicker (granularity: 'month') */}
+              {granularity === 'month' && (
+                <MonthPicker
+                  value={value as [Date, Date] | undefined}
+                  onChange={(newValue) => {
+                    onChange(newValue)
+                    setIsCustomMode(false)  // Exit custom mode after selection
+                  }}
+                  mode="range"
+                  yearCount={2}
+                  size="small"
+                  enableNavigation={true}
+                  onYearNavigate={(year) => setCurrentYear(year)}
+                  minDate={filter.dateConfig?.minDate}
+                  maxDate={filter.dateConfig?.maxDate}
+                />
+              )}
             </>
           )}
         </div>
@@ -1716,7 +1796,7 @@ export function Filters({
               </div>
             </PopoverTrigger>
             <PopoverContent
-              className="w-[420px] p-[var(--space-lg)]"
+              className="w-[600px] p-[var(--space-lg)]"
               align="start"
             >
               <FilterPanelContent

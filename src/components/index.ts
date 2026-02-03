@@ -478,7 +478,7 @@ export { ViewModeMenu } from './product/view-mode-menu'
 export type { ViewModeMenuProps, ViewMode, ViewModeMenuHandle, ViewModeSettings } from './product/view-mode-menu'
 
 // Filters components
-export { Filters, FilterPanelContent, FilterDropdownMenu } from './product/filters'
+export { Filters, FilterPanelContent, FilterDropdownMenu, DEFAULT_DAY_PRESETS, DEFAULT_MONTH_PRESETS } from './product/filters'
 export type {
   FiltersProps,
   FilterDefinition,
@@ -487,6 +487,7 @@ export type {
   FilterValue,
   GlobalSearchTerm,
   DateRangePreset,
+  DateGranularity,
   NumberRangeConfig,
   DateRangeConfig,
 } from './product/filters'
