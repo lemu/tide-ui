@@ -3057,6 +3057,35 @@ export function DataTable<TData, TValue>({
     return map
   }, [enableGrouping, table])
 
+  // Memoized flat list of all visible rows (including expanded subrows) for keyboard navigation
+  // This ensures keyboard navigation targets the correct row when groups are expanded
+  const { flatVisibleRows, rowIdToFlatIndex } = React.useMemo(() => {
+    const flatRows: Row<TData>[] = []
+    const idToIndex = new Map<string, number>()
+
+    const addRowRecursively = (row: Row<TData>) => {
+      const currentIndex = flatRows.length
+      flatRows.push(row)
+      idToIndex.set(row.id, currentIndex)
+
+      if (row.getIsExpanded()) {
+        // Get subRows - fallback to groupedSubRowsMap if row.subRows is empty
+        // This handles manualPagination + grouping where getExpandedRowModel may flatten children
+        const subRowsToProcess = (row.subRows && row.subRows.length > 0)
+          ? row.subRows
+          : groupedSubRowsMap?.get(row.id) || []
+        subRowsToProcess.forEach(addRowRecursively)
+      }
+    }
+
+    // Get top-level rows (filter by depth when using renderSubComponent)
+    const topLevelRows = table.getRowModel().rows
+      .filter(row => renderSubComponent || row.depth === 0)
+    topLevelRows.forEach(addRowRecursively)
+
+    return { flatVisibleRows: flatRows, rowIdToFlatIndex: idToIndex }
+  }, [table, expanded, groupedSubRowsMap, renderSubComponent])
+
   // Track previous page count to avoid unnecessary setPageCount calls
   const previousPageCountRef = React.useRef<number | undefined>(undefined)
 
@@ -3332,7 +3361,8 @@ export function DataTable<TData, TValue>({
   // Keyboard navigation: Keep focus valid when data changes
   React.useEffect(() => {
     const [currentRow, currentCol] = focusedCell
-    const rows = table.getRowModel().rows
+    // Use flatVisibleRows for consistent bounds with keyboard navigation
+    const totalRows = flatVisibleRows.length
     const visibleColumns = table.getVisibleLeafColumns()
 
     // Clamp row index to valid range
@@ -3340,8 +3370,8 @@ export function DataTable<TData, TValue>({
     let newCol = currentCol
 
     // If focused on data row and row no longer exists, clamp to last row
-    if (currentRow >= 0 && currentRow >= rows.length) {
-      newRow = Math.max(rows.length - 1, -1) // -1 if no rows, otherwise last row
+    if (currentRow >= 0 && currentRow >= totalRows) {
+      newRow = Math.max(totalRows - 1, -1) // -1 if no rows, otherwise last row
     }
 
     // Clamp column index to valid range
@@ -3353,7 +3383,7 @@ export function DataTable<TData, TValue>({
     if (newRow !== currentRow || newCol !== currentCol) {
       setFocusedCell([newRow, newCol])
     }
-  }, [data.length, table, focusedCell])
+  }, [data.length, table, focusedCell, flatVisibleRows.length])
 
   // Keyboard navigation: Announce pagination changes
   React.useEffect(() => {
@@ -3641,7 +3671,8 @@ export function DataTable<TData, TValue>({
   const handleTableKeyDown = React.useCallback((event: React.KeyboardEvent) => {
     const [currentRow, currentCol] = focusedCell
     const visibleColumns = table.getVisibleLeafColumns()
-    const rows = table.getRowModel().rows
+    // Use flatVisibleRows for keyboard navigation to correctly handle expanded children
+    const rows = flatVisibleRows
     const totalCols = visibleColumns.length
     const totalRows = rows.length
 
@@ -3770,7 +3801,7 @@ export function DataTable<TData, TValue>({
         }
       }
     }
-  }, [focusedCell, table, enableExpanding, enableGrouping, enableRowSelection])
+  }, [focusedCell, table, flatVisibleRows, enableExpanding, enableGrouping, enableRowSelection])
 
   // Track focused cell when table receives focus (don't auto-focus programmatically)
   const handleTableFocus = React.useCallback((event: React.FocusEvent) => {
@@ -4371,17 +4402,21 @@ export function DataTable<TData, TValue>({
                     .filter(row => renderSubComponent || row.depth === 0)
 
                   // Recursive row rendering function to handle expanded subRows
-                  const renderRow = (row: Row<TData>, rowIndex: number, isLastRow: boolean): React.ReactNode => {
+                  const renderRow = (row: Row<TData>, _rowIndex: number, isLastRow: boolean): React.ReactNode => {
                     // Skip if already rendered (prevents duplicates from flattened row models)
                     if (renderedRowIds.has(row.id)) return null
                     renderedRowIds.add(row.id)
+
+                    // Get the flat index for this row (includes expanded children in sequence)
+                    // This ensures keyboard navigation targets the correct row
+                    const flatIndex = rowIdToFlatIndex.get(row.id) ?? -1
 
                     return (
                     <React.Fragment key={row.id}>
                     <TableRow
                       data-state={row.getIsSelected() && "selected"}
                       showBorder={borderSettings.showRowBorder}
-                      aria-rowindex={rowIndex + 2} // +2 because 1 is header row and aria-rowindex is 1-based
+                      aria-rowindex={flatIndex + 2} // +2 because 1 is header row and aria-rowindex is 1-based
                       aria-selected={enableRowSelection ? row.getIsSelected() : undefined}
                       aria-expanded={row.getCanExpand() ? row.getIsExpanded() : undefined}
                       className={cn(
@@ -4466,9 +4501,9 @@ export function DataTable<TData, TValue>({
                             key={cell.id}
                             role="gridcell"
                             aria-colindex={index + 1}
-                            data-row={rowIndex}
+                            data-row={flatIndex}
                             data-col={index}
-                            tabIndex={focusedCell[0] === rowIndex && focusedCell[1] === index ? 0 : -1}
+                            tabIndex={focusedCell[0] === flatIndex && focusedCell[1] === index ? 0 : -1}
                             showBorder={
                               hasStickyBorder(cell.column)
                                 ? false
@@ -4760,16 +4795,21 @@ export function DataTable<TData, TValue>({
                   .filter(row => renderSubComponent || row.depth === 0)
 
                 // Recursive row rendering function to handle expanded subRows
-                const renderPinnedRow = (row: Row<TData>, rowIndex: number, isLastRow: boolean): React.ReactNode => {
+                const renderPinnedRow = (row: Row<TData>, _rowIndex: number, isLastRow: boolean): React.ReactNode => {
                   // Skip if already rendered (prevents duplicates from flattened row models)
                   if (renderedPinnedRowIds.has(row.id)) return null
                   renderedPinnedRowIds.add(row.id)
+
+                  // Get the flat index for this row (includes expanded children in sequence)
+                  // This ensures keyboard navigation targets the correct row
+                  const flatIndex = rowIdToFlatIndex.get(row.id) ?? -1
 
                   return (
                   <React.Fragment key={row.id}>
                   <TableRow
                     data-state={row.getIsSelected() && "selected"}
                     showBorder={borderSettings.showRowBorder}
+                    aria-rowindex={flatIndex + 2} // +2 because 1 is header row and aria-rowindex is 1-based
                     className={cn(
                       "group",
                       // Selected row styling
@@ -4883,9 +4923,9 @@ export function DataTable<TData, TValue>({
                           key={cell.id}
                           role="gridcell"
                           aria-colindex={index + 1}
-                          data-row={rowIndex}
+                          data-row={flatIndex}
                           data-col={index}
-                          tabIndex={focusedCell[0] === rowIndex && focusedCell[1] === index ? 0 : -1}
+                          tabIndex={focusedCell[0] === flatIndex && focusedCell[1] === index ? 0 : -1}
                           showBorder={borderSettings.showCellBorder}
                           showRowBorder={borderSettings.showRowBorder}
                           verticalAlign={cell.column.columnDef.meta?.verticalAlign || defaultVerticalAlign}
