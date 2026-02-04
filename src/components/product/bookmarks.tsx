@@ -1294,7 +1294,7 @@ export function Bookmarks({
         {(contentSlot || actionsSlot || settingsSlot) && (
           <div className="flex items-center">
             {/* Content + Actions grouped (7px gap throughout) */}
-            <div className="flex items-center gap-[7px] flex-1 min-w-0 overflow-x-auto scrollbar-hide">
+            <div className="flex items-center gap-[7px] flex-1 min-w-0 overflow-hidden">
               {/* Content slot - constrain to available space */}
               {contentSlot && (
                 <div className="flex items-center gap-[7px] min-w-0">
@@ -1356,7 +1356,7 @@ export function Bookmarks({
         />
 
         {/* Content + Actions grouped (7px gap throughout) */}
-        <div className="flex items-center gap-[7px] flex-1 min-w-0 overflow-x-auto scrollbar-hide">
+        <div className="flex items-center gap-[7px] flex-1 min-w-0 overflow-hidden">
           {/* Content slot - let Filters expand naturally */}
           {contentSlot && (
             <div className="flex items-center gap-[7px]">
