@@ -1294,10 +1294,10 @@ export function Bookmarks({
         {(contentSlot || actionsSlot || settingsSlot) && (
           <div className="flex items-center">
             {/* Content + Actions grouped (7px gap throughout) */}
-            <div className="flex items-center gap-[7px] flex-1 min-w-0 overflow-hidden">
+            <div className="flex items-center gap-[7px] flex-1 min-w-0 overflow-x-auto scrollbar-hide">
               {/* Content slot - constrain to available space */}
               {contentSlot && (
-                <div className="flex items-center gap-[7px] min-w-0 overflow-hidden">
+                <div className="flex items-center gap-[7px] min-w-0">
                   {contentSlot}
                 </div>
               )}
