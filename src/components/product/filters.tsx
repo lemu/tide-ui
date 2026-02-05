@@ -1655,7 +1655,7 @@ export function Filters({
   }
 
   return (
-    <div className="flex gap-[3px] items-center">
+    <div className="flex gap-[3px] items-center min-w-0">
       {/* Screen reader announcements for filter state changes */}
       <div
         role="status"
@@ -1707,7 +1707,7 @@ export function Filters({
 
       {/* Pinned Filter Slots */}
       {pinnedFilterObjects.length > 0 && (
-        <div className="flex gap-[7px] overflow-x-auto scrollbar-hide p-1">
+        <div className="flex-1 min-w-0 flex gap-[7px] overflow-x-auto scrollbar-hide p-1">
           {pinnedFilterObjects.map((filter) => {
         const slotContent = getSlotContent(filter)
         const isActive = slotContent.type !== 'empty'

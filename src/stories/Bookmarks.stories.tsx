@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 import { Bookmarks, Bookmark } from '../components/product/bookmarks'
+import { Filters, FilterDefinition, FilterValue } from '../components/product/filters'
+import { Icon } from '../components/fundamental/icon'
 
 const meta: Meta<typeof Bookmarks> = {
   title: 'NPM • Product Components/Bookmarks',
@@ -612,6 +614,194 @@ export const LoadingCountsListVariant: Story = {
           onDelete={async () => {}}
           onSetDefault={async () => {}}
         />
+      </div>
+    )
+  },
+}
+
+// Helper to create icon components for filters
+const CalendarIcon = ({ className }: { className?: string }) => <Icon name="calendar" className={className} />
+const CheckIcon = ({ className }: { className?: string }) => <Icon name="circle-check-big" className={className} />
+const PackageIcon = ({ className }: { className?: string }) => <Icon name="package" className={className} />
+const UserIcon = ({ className }: { className?: string }) => <Icon name="user" className={className} />
+const AnchorIcon = ({ className }: { className?: string }) => <Icon name="anchor" className={className} />
+const TagIcon = ({ className }: { className?: string }) => <Icon name="tag" className={className} />
+
+// Sample filter definitions for testing horizontal scroll
+const manyFilters: FilterDefinition[] = [
+  {
+    id: 'date',
+    label: 'Date',
+    icon: CalendarIcon,
+    type: 'multiselect',
+    options: [
+      { value: 'today', label: 'Today' },
+      { value: 'yesterday', label: 'Yesterday' },
+      { value: 'last7days', label: 'Last 7 days' },
+    ],
+  },
+  {
+    id: 'status',
+    label: 'Status',
+    icon: CheckIcon,
+    type: 'multiselect',
+    options: [
+      { value: 'open', label: 'Open' },
+      { value: 'in-progress', label: 'In Progress' },
+      { value: 'completed', label: 'Completed' },
+    ],
+  },
+  {
+    id: 'cargoType',
+    label: 'Cargo type',
+    icon: PackageIcon,
+    type: 'multiselect',
+    options: [
+      { value: 'iron-ore', label: 'Iron Ore' },
+      { value: 'coal', label: 'Coal' },
+      { value: 'grain', label: 'Grain' },
+    ],
+  },
+  {
+    id: 'loadPort',
+    label: 'Load port',
+    icon: ({ className }: { className?: string }) => <Icon name="ship-load" className={className} />,
+    type: 'multiselect',
+    options: [
+      { value: 'rotterdam', label: 'Rotterdam' },
+      { value: 'singapore', label: 'Singapore' },
+      { value: 'shanghai', label: 'Shanghai' },
+    ],
+  },
+  {
+    id: 'dischargePort',
+    label: 'Discharge port',
+    icon: ({ className }: { className?: string }) => <Icon name="ship-unload" className={className} />,
+    type: 'multiselect',
+    options: [
+      { value: 'houston', label: 'Houston' },
+      { value: 'antwerp', label: 'Antwerp' },
+    ],
+  },
+  {
+    id: 'owner',
+    label: 'Owner',
+    icon: UserIcon,
+    type: 'multiselect',
+    options: [
+      { value: 'maersk', label: 'Maersk' },
+      { value: 'msc', label: 'MSC' },
+    ],
+  },
+  {
+    id: 'vessel',
+    label: 'Vessel',
+    icon: AnchorIcon,
+    type: 'multiselect',
+    options: [
+      { value: 'vessel1', label: 'Ever Given' },
+      { value: 'vessel2', label: 'Emma Maersk' },
+    ],
+  },
+  {
+    id: 'category',
+    label: 'Category',
+    icon: TagIcon,
+    type: 'multiselect',
+    options: [
+      { value: 'bulk', label: 'Bulk' },
+      { value: 'container', label: 'Container' },
+    ],
+  },
+]
+
+// Bookmarks + Filters with many pinned filters (for testing horizontal scroll)
+export const WithFiltersScrollTest: Story = {
+  render: () => {
+    const [bookmarks, setBookmarks] = useState<Bookmark[]>(sampleUserBookmarks)
+    const [activeBookmarkId, setActiveBookmarkId] = useState<string>('system-1')
+    const [isDirty, setIsDirty] = useState(true)
+    const [pinnedFilters, setPinnedFilters] = useState<string[]>([
+      'date', 'status', 'cargoType', 'loadPort', 'dischargePort', 'owner', 'vessel', 'category'
+    ])
+    const [activeFilters, setActiveFilters] = useState<Record<string, FilterValue>>({
+      status: ['open', 'in-progress'],
+      cargoType: ['iron-ore', 'coal'],
+      loadPort: ['rotterdam'],
+    })
+
+    return (
+      <div className="p-4">
+        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-lg)] rounded-md">
+          <strong>Horizontal Scroll Test:</strong> 8 pinned filters to test responsiveness. Resize browser window to see horizontal scrolling in action.
+        </div>
+        <Bookmarks
+          variant="list"
+          bookmarks={bookmarks}
+          systemBookmarks={sampleSystemBookmarks}
+          activeBookmarkId={activeBookmarkId}
+          isDirty={isDirty}
+          onSelect={(bookmark) => {
+            setActiveBookmarkId(bookmark.id)
+            setIsDirty(false)
+          }}
+          onRevert={() => setIsDirty(false)}
+          onSave={async (action, name) => {
+            if (action === 'create' && name) {
+              const newBookmark: Bookmark = {
+                id: `user-${Date.now()}`,
+                name,
+                type: 'user',
+                createdAt: new Date(),
+                updatedAt: new Date(),
+              }
+              setBookmarks([...bookmarks, newBookmark])
+              setActiveBookmarkId(newBookmark.id)
+            }
+            setIsDirty(false)
+          }}
+          onRename={async (id, name) => {
+            setBookmarks(bookmarks.map(b => b.id === id ? { ...b, name } : b))
+          }}
+          onDelete={async (id) => {
+            setBookmarks(bookmarks.filter(b => b.id !== id))
+          }}
+        >
+          <Bookmarks.Content>
+            <Filters
+              filters={manyFilters}
+              pinnedFilters={pinnedFilters}
+              activeFilters={activeFilters}
+              onPinnedFiltersChange={setPinnedFilters}
+              onFilterChange={(filterId, value) => {
+                setActiveFilters(prev => ({ ...prev, [filterId]: value }))
+                setIsDirty(true)
+              }}
+              onFilterClear={(filterId) => {
+                setActiveFilters(prev => {
+                  const next = { ...prev }
+                  delete next[filterId]
+                  return next
+                })
+                setIsDirty(true)
+              }}
+              onFilterReset={() => {
+                setActiveFilters({})
+                setIsDirty(false)
+              }}
+              hideReset
+            />
+          </Bookmarks.Content>
+          <Bookmarks.DefaultActions />
+        </Bookmarks>
+        <div className="mt-4 p-4 bg-[var(--color-background-neutral-default)] rounded-md">
+          <button
+            onClick={() => setIsDirty(!isDirty)}
+            className="text-body-sm text-[var(--color-text-brand-bold)] hover:underline"
+          >
+            {isDirty ? 'Hide' : 'Show'} action buttons (toggle dirty state)
+          </button>
+        </div>
       </div>
     )
   },
