@@ -1800,7 +1800,10 @@ export function Filters({
                   </PopoverTrigger>
                 </TooltipTrigger>
                 <PopoverContent
-                  className="w-[600px] p-[var(--space-lg)]"
+                  className={cn(
+                    "p-[var(--space-lg)]",
+                    filter.type === 'date' ? "w-[600px]" : "w-[320px]"
+                  )}
                   align="start"
                 >
                   <FilterPanelContent
