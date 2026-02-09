@@ -3253,13 +3253,14 @@ export const ActiveRowWithSelection: Story = {
     docs: {
       description: {
         story: `
-Demonstrates that active row highlighting and checkbox selection work independently.
+Demonstrates that active row highlighting and checkbox selection work independently, with the \`onActiveRowChange\` callback for tracking.
 
 **Key Points:**
 - **Active row** (left border) indicates the row currently viewed or focused
 - **Checkbox selection** (background color) indicates rows selected for bulk actions
 - Both visual indicators can be active simultaneously on the same row
 - Each feature serves a different purpose in the UI
+- **\`onActiveRowChange\`** fires whenever the active row changes, useful for analytics or side effects
 
 **Visual Indicators:**
 - Blue background: Row is selected via checkbox
@@ -3270,6 +3271,7 @@ Demonstrates that active row highlighting and checkbox selection work independen
   },
   render: () => {
     const [activeRowId, setActiveRowId] = React.useState<string>('2')
+    const [activeRowLog, setActiveRowLog] = React.useState<string[]>([])
 
     const products = React.useMemo(() => [
       { id: '1', name: 'Laptop Pro 15', category: 'Electronics', price: 1299, stock: 45 },
@@ -3278,6 +3280,13 @@ Demonstrates that active row highlighting and checkbox selection work independen
       { id: '4', name: 'Monitor 27"', category: 'Electronics', price: 399, stock: 30 },
       { id: '5', name: 'Keyboard Mechanical', category: 'Accessories', price: 129, stock: 60 },
     ], [])
+
+    const handleActiveRowChange = React.useCallback((rowId: string | number | undefined) => {
+      setActiveRowLog(prev => {
+        const entry = `${new Date().toLocaleTimeString()} — Active row: ${rowId ?? 'none'}`
+        return [entry, ...prev].slice(0, 6)
+      })
+    }, [])
 
     const columns: ColumnDef<typeof products[0]>[] = React.useMemo(() => [
       {
@@ -3304,7 +3313,7 @@ Demonstrates that active row highlighting and checkbox selection work independen
     ], [])
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-lg)] space-y-[var(--space-lg)]">
         <Card>
           <CardHeader>
             <CardTitle>Active Row + Checkbox Selection</CardTitle>
@@ -3330,8 +3339,29 @@ Demonstrates that active row highlighting and checkbox selection work independen
               columns={columns}
               activeRowId={activeRowId}
               onRowClick={(row) => setActiveRowId(row.original.id)}
+              onActiveRowChange={handleActiveRowChange}
               enableRowSelection
             />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>onActiveRowChange Log</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-[var(--space-xsm)]">
+              {activeRowLog.length === 0 ? (
+                <p className="text-caption-sm text-[var(--color-text-secondary)] font-mono">
+                  Click a row to see the callback fire...
+                </p>
+              ) : (
+                activeRowLog.map((entry, i) => (
+                  <p key={i} className="text-caption-sm text-[var(--color-text-secondary)] font-mono">
+                    {entry}
+                  </p>
+                ))
+              )}
+            </div>
           </CardContent>
         </Card>
       </div>

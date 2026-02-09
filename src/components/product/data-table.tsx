@@ -2122,6 +2122,14 @@ export interface DataTableProps<TData, TValue> {
    * getRowId={(row) => `${row.type}-${row.id}`}
    */
   getRowId?: (originalRow: TData, index: number, parent?: Row<TData>) => string
+  /**
+   * Callback when active row changes.
+   * Useful for analytics, logging, or side effects when the highlighted row changes.
+   *
+   * @example
+   * onActiveRowChange={(rowId) => console.log('Active row:', rowId)}
+   */
+  onActiveRowChange?: (rowId: string | number | undefined) => void
 
   // === ROW SELECTION CHANGE CALLBACK ===
   /**
@@ -2491,6 +2499,7 @@ export function DataTable<TData, TValue>({
   activeRowId,
   activeRowClassName,
   getRowId,
+  onActiveRowChange,
   // Callback props
   onRowSelectionChange,
   onNextPageHover,
@@ -2603,6 +2612,11 @@ export function DataTable<TData, TValue>({
       onRowSelectionChange(rowSelection)
     }
   }, [rowSelection, onRowSelectionChange])
+
+  // Call active row change callback when activeRowId changes
+  React.useEffect(() => {
+    onActiveRowChange?.(activeRowId)
+  }, [activeRowId, onActiveRowChange])
 
   // Determine if controlled or uncontrolled
   const isSortingControlled = controlledSorting !== undefined
