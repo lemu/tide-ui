@@ -8177,3 +8177,158 @@ export const ServerSideGroupingWithPagination: Story = {
     )
   }
 }
+
+export const ActiveRowWithCustomId: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: `
+Demonstrates using the \`getRowId\` prop to match active rows by a custom identifier field.
+
+When your data doesn't have an \`id\` field (or uses a different key like \`clearanceId\`, \`userId\`, etc.),
+use \`getRowId\` to tell TanStack Table how to derive the row ID from your data.
+
+\`\`\`tsx
+<DataTable
+  data={clearances}
+  columns={columns}
+  getRowId={(row) => row.clearanceId}
+  activeRowId={activeClearanceId}
+  onRowClick={(row) => setActiveClearanceId(row.original.clearanceId)}
+/>
+\`\`\`
+        `,
+      },
+    },
+  },
+  render: () => {
+    const [activeId, setActiveId] = React.useState<string>('CLR-002')
+
+    const clearances = React.useMemo(() => [
+      { clearanceId: 'CLR-001', vessel: 'MV Atlantic Star', port: 'Rotterdam', status: 'cleared' as const, agent: 'Smith & Co', date: '2024-03-10' },
+      { clearanceId: 'CLR-002', vessel: 'SS Pacific Wave', port: 'Hamburg', status: 'pending' as const, agent: 'Nordic Shipping', date: '2024-03-12' },
+      { clearanceId: 'CLR-003', vessel: 'MV Northern Light', port: 'Antwerp', status: 'cleared' as const, agent: 'Belgian Ports Ltd', date: '2024-03-13' },
+      { clearanceId: 'CLR-004', vessel: 'SS Indian Ocean', port: 'Singapore', status: 'rejected' as const, agent: 'Asia Marine', date: '2024-03-14' },
+      { clearanceId: 'CLR-005', vessel: 'MV Mediterranean Sun', port: 'Marseille', status: 'pending' as const, agent: 'French Maritime', date: '2024-03-15' },
+    ], [])
+
+    const activeClearance = clearances.find(c => c.clearanceId === activeId)
+
+    const columns: ColumnDef<typeof clearances[0]>[] = React.useMemo(() => [
+      {
+        id: 'clearanceId',
+        accessorKey: 'clearanceId',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Clearance ID" />,
+        cell: ({ row }) => <div className="text-body-sm font-medium">{row.original.clearanceId}</div>,
+      },
+      {
+        id: 'vessel',
+        accessorKey: 'vessel',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Vessel" />,
+        cell: ({ row }) => <div className="text-body-sm">{row.original.vessel}</div>,
+      },
+      {
+        id: 'port',
+        accessorKey: 'port',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Port" />,
+        cell: ({ row }) => <div className="text-body-sm">{row.original.port}</div>,
+      },
+      {
+        id: 'status',
+        accessorKey: 'status',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
+        cell: ({ row }) => (
+          <Badge variant={row.original.status === 'cleared' ? 'success' : row.original.status === 'rejected' ? 'destructive' : 'default'}>
+            {row.original.status}
+          </Badge>
+        ),
+      },
+      {
+        id: 'agent',
+        accessorKey: 'agent',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Agent" />,
+        cell: ({ row }) => <div className="text-body-sm">{row.original.agent}</div>,
+      },
+      {
+        id: 'date',
+        accessorKey: 'date',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Date" />,
+        cell: ({ row }) => <div className="text-body-sm">{row.original.date}</div>,
+      },
+    ], [])
+
+    return (
+      <div className="h-screen w-full p-[var(--space-lg)] bg-[var(--color-surface-base)]">
+        <div className="flex gap-[var(--space-lg)] h-full">
+          <div className="flex-1 overflow-hidden">
+            <Card className="h-full flex flex-col">
+              <CardHeader>
+                <CardTitle>Port Clearances</CardTitle>
+                <p className="text-body-sm text-[var(--color-text-secondary)]">
+                  Uses <code className="text-caption-sm">getRowId</code> to match rows by <code className="text-caption-sm">clearanceId</code> instead of a generic <code className="text-caption-sm">id</code> field.
+                </p>
+              </CardHeader>
+              <CardContent className="flex-1 overflow-hidden">
+                <DataTable
+                  data={clearances}
+                  columns={columns}
+                  getRowId={(row) => row.clearanceId}
+                  activeRowId={activeId}
+                  onRowClick={(row) => setActiveId(row.original.clearanceId)}
+                  showPagination={false}
+                />
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="w-[360px]">
+            <Card className="h-full flex flex-col">
+              <CardHeader>
+                <CardTitle>Clearance Details</CardTitle>
+              </CardHeader>
+              <CardContent className="flex-1 overflow-auto">
+                {activeClearance ? (
+                  <div className="space-y-[var(--space-md)]">
+                    <div>
+                      <Label className="text-caption-sm text-[var(--color-text-secondary)]">Clearance ID</Label>
+                      <p className="text-body-md font-medium">{activeClearance.clearanceId}</p>
+                    </div>
+                    <div>
+                      <Label className="text-caption-sm text-[var(--color-text-secondary)]">Vessel</Label>
+                      <p className="text-body-md">{activeClearance.vessel}</p>
+                    </div>
+                    <div>
+                      <Label className="text-caption-sm text-[var(--color-text-secondary)]">Port</Label>
+                      <p className="text-body-md">{activeClearance.port}</p>
+                    </div>
+                    <div>
+                      <Label className="text-caption-sm text-[var(--color-text-secondary)]">Status</Label>
+                      <div className="mt-[var(--space-xsm)]">
+                        <Badge variant={activeClearance.status === 'cleared' ? 'success' : activeClearance.status === 'rejected' ? 'destructive' : 'default'}>
+                          {activeClearance.status}
+                        </Badge>
+                      </div>
+                    </div>
+                    <div>
+                      <Label className="text-caption-sm text-[var(--color-text-secondary)]">Agent</Label>
+                      <p className="text-body-md">{activeClearance.agent}</p>
+                    </div>
+                    <div>
+                      <Label className="text-caption-sm text-[var(--color-text-secondary)]">Date</Label>
+                      <p className="text-body-md">{activeClearance.date}</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center h-full text-[var(--color-text-secondary)] text-body-sm">
+                    Select a clearance to view details
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    )
+  },
+}

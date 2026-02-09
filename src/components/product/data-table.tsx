@@ -2108,6 +2108,20 @@ export interface DataTableProps<TData, TValue> {
    * activeRowClassName="border-l-4 border-[var(--color-border-success)]"
    */
   activeRowClassName?: string
+  /**
+   * Function to derive a unique row ID from row data.
+   * When provided, TanStack Table uses this instead of the default index-based ID.
+   * Useful when your data uses a different identifier field (e.g., clearanceId, userId).
+   *
+   * @example
+   * // Data with custom ID field
+   * getRowId={(row) => row.clearanceId}
+   *
+   * @example
+   * // Composite key
+   * getRowId={(row) => `${row.type}-${row.id}`}
+   */
+  getRowId?: (originalRow: TData, index: number, parent?: Row<TData>) => string
 
   // === ROW SELECTION CHANGE CALLBACK ===
   /**
@@ -2476,6 +2490,7 @@ export function DataTable<TData, TValue>({
   // Active row props
   activeRowId,
   activeRowClassName,
+  getRowId,
   // Callback props
   onRowSelectionChange,
   onNextPageHover,
@@ -2860,10 +2875,13 @@ export function DataTable<TData, TValue>({
   // Helper to determine if a row matches the activeRowId
   const isActiveRow = React.useCallback((row: any): boolean => {
     if (!activeRowId) return false
-    // Check row.original.id first (data's actual ID), fall back to row.id (TanStack's index)
-    const rowId = row.original?.id !== undefined ? row.original.id : row.id
+    // When getRowId is provided, TanStack Table sets row.id via that function
+    // Otherwise, check row.original.id first, fall back to row.id (TanStack's index)
+    const rowId = getRowId
+      ? row.id
+      : (row.original?.id !== undefined ? row.original.id : row.id)
     return String(rowId) === String(activeRowId)
-  }, [activeRowId])
+  }, [activeRowId, getRowId])
 
   // Calculate effective sticky settings with backward compatibility
   const effectiveLeftSticky = React.useMemo(() => {
@@ -2976,6 +2994,7 @@ export function DataTable<TData, TValue>({
   const table = useReactTable({
     data: memoizedData,
     columns: memoizedColumns,
+    getRowId,
     filterFns: {
       fuzzy: fuzzyFilter,
       multiSelect: multiSelectFilter,
