@@ -4525,9 +4525,7 @@ export function DataTable<TData, TValue>({
                         // Detect if we should remove the bottom border from first column child rows
                         const isChildRow = enableGrouping && row.depth > 0
                         const isFirstColumn = index === 0
-                        const parentRow = row.getParentRow()
-                        const isLastChildInGroup = parentRow?.subRows?.[parentRow.subRows.length - 1]?.id === row.id
-                        const shouldRemoveBottomBorder = isChildRow && isFirstColumn && !isLastChildInGroup
+                        const shouldRemoveBottomBorder = isChildRow && isFirstColumn && !isLastRow
 
                         return (
                           <TableCell
@@ -4947,9 +4945,7 @@ export function DataTable<TData, TValue>({
                       // Detect if we should remove the bottom border from first column child rows
                       const isChildRow = enableGrouping && row.depth > 0
                       const isFirstColumn = index === 0
-                      const parentRow = row.getParentRow()
-                      const isLastChildInGroup = parentRow?.subRows?.[parentRow.subRows.length - 1]?.id === row.id
-                      const shouldRemoveBottomBorder = isChildRow && isFirstColumn && !isLastChildInGroup
+                      const shouldRemoveBottomBorder = isChildRow && isFirstColumn && !isLastRow
 
                       return (
                         <TableCell
