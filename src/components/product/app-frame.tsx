@@ -299,9 +299,11 @@ interface AppSidebarProps {
   user: AppFrameUser
   teams: AppFrameTeam[]
   onNavigate?: (url: string) => void
+  navigationMode: 'sidebar' | 'horizontal'
+  onNavigationModeChange: (mode: 'sidebar' | 'horizontal') => void
 }
 
-function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps) {
+function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, onNavigationModeChange }: AppSidebarProps) {
   const [commandOpen, setCommandOpen] = React.useState(false)
   const [commandSearch, setCommandSearch] = React.useState('')
   const [expandedItems, setExpandedItems] = React.useState<Record<string, boolean>>(() =>
@@ -756,6 +758,27 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
 
                 <DropdownMenuSeparator />
 
+                {/* Navigation Mode Section */}
+                <DropdownMenuLabel className="px-2 py-1 text-[12px] font-medium text-[var(--color-text-tertiary)]">
+                  Navigation
+                </DropdownMenuLabel>
+                <DropdownMenuItem
+                  className="mx-1 mb-0.5 cursor-pointer gap-2 px-2"
+                  onSelect={() => onNavigationModeChange('sidebar')}
+                >
+                  <span className="flex-1">New sidebar navigation</span>
+                  {navigationMode === 'sidebar' && <Icon name="check" size="md" className="text-[var(--color-icon-brand-bold)]" />}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="mx-1 mb-1 cursor-pointer gap-2 px-2"
+                  onSelect={() => onNavigationModeChange('horizontal')}
+                >
+                  <span className="flex-1">Old horizontal menu</span>
+                  {navigationMode === 'horizontal' && <Icon name="check" size="md" className="text-[var(--color-icon-brand-bold)]" />}
+                </DropdownMenuItem>
+
+                <DropdownMenuSeparator />
+
                 {/* Action Items */}
                 <DropdownMenuItem
                   icon="user"
@@ -877,6 +900,290 @@ function AppSidebar({ navigationData, user, teams, onNavigate }: AppSidebarProps
   )
 }
 
+// ============================================================================
+// Old Horizontal Navigation (Prototype - self-contained, throwaway)
+// ============================================================================
+
+interface OldHorizontalNavProps {
+  navigationData: AppFrameNavigationData
+  user: AppFrameUser
+  activeTeam: AppFrameTeam
+  onNavigate?: (url: string) => void
+  navigationMode: 'sidebar' | 'horizontal'
+  onNavigationModeChange: (mode: 'sidebar' | 'horizontal') => void
+}
+
+function OldHorizontalNav({
+  navigationData,
+  user,
+  activeTeam,
+  onNavigate,
+  navigationMode,
+  onNavigationModeChange,
+}: OldHorizontalNavProps) {
+  const [userMenuOpen, setUserMenuOpen] = React.useState(false)
+  const userMenuRef = React.useRef<HTMLDivElement>(null)
+
+  // Close user menu on outside click
+  React.useEffect(() => {
+    if (!userMenuOpen) return
+    const handleClick = (e: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setUserMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [userMenuOpen])
+
+  // Flatten navigation items from main, operations, intelligence (skip support)
+  const allItems = [
+    ...navigationData.main,
+    ...navigationData.operations,
+    ...navigationData.intelligence,
+  ]
+
+  const initials = getUserInitials(user.name)
+
+  return (
+    <div style={{ width: '100%' }}>
+      {/* Top bar: logo + user */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          height: 48,
+          backgroundColor: '#162736',
+          padding: '0 16px',
+        }}
+      >
+        {/* Logo */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect width="20" height="20" rx="4" fill="#005F85" />
+            <rect x="4" y="4" width="5" height="5" rx="1" fill="white" />
+            <rect x="11" y="4" width="5" height="5" rx="1" fill="white" opacity="0.6" />
+            <rect x="4" y="11" width="5" height="5" rx="1" fill="white" opacity="0.6" />
+            <rect x="11" y="11" width="5" height="5" rx="1" fill="white" opacity="0.4" />
+          </svg>
+          <svg
+            width="28"
+            height="22"
+            viewBox="0 0 28 22"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4.39355 0.688477C6.89528 0.688477 8.12094 1.67409 8.12109 3.74609V7.69043H5.5332V2.87695H3.28711V8.03125L8.12109 11.458V18.2705C8.12109 20.3262 6.92916 21.3125 4.39355 21.3125C1.85827 21.3124 0.701172 20.3261 0.701172 18.2705L0.700195 13.7412H3.28711V19.1396H5.5332V12.6777L0.701172 9.23438V3.74609C0.701322 1.67422 1.89214 0.688597 4.39355 0.688477ZM13.8379 0.6875C16.4752 0.687615 17.6152 1.67395 17.6152 3.74609V10.5312L12.6113 13.7236V19.123H15.0273V14.3096H17.6143V18.2705C17.6143 20.3262 16.4235 21.3125 13.8027 21.3125C11.1821 21.3125 10.0244 20.3262 10.0244 18.2705V3.74609H10.0254C10.0254 1.67382 11.2003 0.6875 13.8379 0.6875ZM23.333 0.6875C25.9537 0.6875 27.1113 1.67378 27.1113 3.72949V18.2539H27.1104C27.1104 20.3261 25.9363 21.3125 23.2988 21.3125C20.6612 21.3125 19.5205 20.3262 19.5205 18.2539V11.4688L24.5254 8.27637V2.87695H22.1084V7.69043H19.5215V3.72949C19.5215 1.67384 20.7124 0.687556 23.333 0.6875ZM22.1084 12.2197V19.1396H24.5254V10.5986L22.1084 12.2197ZM12.6113 11.4014L15.0273 9.78027V2.86035H12.6113V11.4014Z"
+              fill="white"
+            />
+          </svg>
+        </div>
+
+        {/* Spacer */}
+        <div style={{ flex: 1 }} />
+
+        {/* Right side: notification bell + user avatar */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          {/* Bell icon */}
+          <button
+            onClick={() => onNavigate?.('/notifications')}
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 6,
+              borderRadius: 4,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onMouseEnter={(e) => { (e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)') }}
+            onMouseLeave={(e) => { (e.currentTarget.style.backgroundColor = 'transparent') }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+              <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+            </svg>
+          </button>
+
+          {/* User avatar with dropdown */}
+          <div ref={userMenuRef} style={{ position: 'relative' }}>
+            <button
+              onClick={() => setUserMenuOpen((o) => !o)}
+              style={{
+                width: 32,
+                height: 32,
+                borderRadius: '50%',
+                backgroundColor: '#005F85',
+                color: 'white',
+                border: '2px solid rgba(255,255,255,0.3)',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 12,
+                fontWeight: 600,
+                padding: 0,
+              }}
+            >
+              {user.avatarUrl ? (
+                <img
+                  src={user.avatarUrl}
+                  alt={user.name}
+                  style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
+                />
+              ) : (
+                initials
+              )}
+            </button>
+
+            {/* User dropdown */}
+            {userMenuOpen && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 40,
+                  right: 0,
+                  width: 220,
+                  backgroundColor: 'white',
+                  borderRadius: 8,
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.15)',
+                  zIndex: 9999,
+                  padding: '4px 0',
+                  fontSize: 14,
+                }}
+              >
+                {/* User info */}
+                <div style={{ padding: '8px 12px', borderBottom: '1px solid #e5e7eb' }}>
+                  <div style={{ fontWeight: 600, color: '#111827' }}>{user.name}</div>
+                  <div style={{ fontSize: 12, color: '#6b7280' }}>{user.email}</div>
+                </div>
+
+                {/* Navigation toggle */}
+                <div style={{ padding: '4px 0', borderBottom: '1px solid #e5e7eb' }}>
+                  <div style={{ padding: '4px 12px', fontSize: 11, fontWeight: 500, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Navigation
+                  </div>
+                  <button
+                    onClick={() => { onNavigationModeChange('sidebar'); setUserMenuOpen(false) }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      width: '100%',
+                      padding: '6px 12px',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontSize: 14,
+                      color: '#374151',
+                      textAlign: 'left',
+                    }}
+                    onMouseEnter={(e) => { (e.currentTarget.style.backgroundColor = '#f3f4f6') }}
+                    onMouseLeave={(e) => { (e.currentTarget.style.backgroundColor = 'transparent') }}
+                  >
+                    <span style={{ flex: 1 }}>New sidebar navigation</span>
+                    {navigationMode === 'sidebar' && <span style={{ color: '#005F85', fontWeight: 700 }}>✓</span>}
+                  </button>
+                  <button
+                    onClick={() => { onNavigationModeChange('horizontal'); setUserMenuOpen(false) }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      width: '100%',
+                      padding: '6px 12px',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontSize: 14,
+                      color: '#374151',
+                      textAlign: 'left',
+                    }}
+                    onMouseEnter={(e) => { (e.currentTarget.style.backgroundColor = '#f3f4f6') }}
+                    onMouseLeave={(e) => { (e.currentTarget.style.backgroundColor = 'transparent') }}
+                  >
+                    <span style={{ flex: 1 }}>Old horizontal menu</span>
+                    {navigationMode === 'horizontal' && <span style={{ color: '#005F85', fontWeight: 700 }}>✓</span>}
+                  </button>
+                </div>
+
+                {/* Sign out */}
+                <div style={{ padding: '4px 0' }}>
+                  <button
+                    onClick={() => { onNavigate?.('/auth/sign-out'); setUserMenuOpen(false) }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      width: '100%',
+                      padding: '6px 12px',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontSize: 14,
+                      color: '#dc2626',
+                      textAlign: 'left',
+                    }}
+                    onMouseEnter={(e) => { (e.currentTarget.style.backgroundColor = '#fef2f2') }}
+                    onMouseLeave={(e) => { (e.currentTarget.style.backgroundColor = 'transparent') }}
+                  >
+                    Sign out
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom bar: section tabs */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          height: 40,
+          backgroundColor: '#1e3a4f',
+          padding: '0 16px',
+          gap: 2,
+          overflowX: 'auto',
+        }}
+      >
+        {allItems.map((item) => {
+          const isActive = item.isActive || (item.items?.some((sub) => sub.isActive) ?? false)
+          return (
+            <button
+              key={item.title}
+              onClick={(e) => {
+                e.preventDefault()
+                onNavigate?.(item.url)
+              }}
+              style={{
+                padding: '6px 14px',
+                borderRadius: 4,
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: 13,
+                fontWeight: isActive ? 600 : 400,
+                color: 'white',
+                backgroundColor: isActive ? '#005F85' : 'transparent',
+                whiteSpace: 'nowrap',
+                transition: 'background-color 0.15s',
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive) e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)'
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive) e.currentTarget.style.backgroundColor = 'transparent'
+              }}
+            >
+              {item.title}
+            </button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 function SidebarToggleWithTooltip() {
   const { state, toggleSidebar } = useSidebar()
   const isCollapsed = state === 'collapsed'
@@ -925,10 +1232,38 @@ export function AppFrame({
   children,
   onNavigate,
 }: AppFrameProps) {
+  const [navigationMode, setNavigationMode] = React.useState<'sidebar' | 'horizontal'>('sidebar')
+  const [activeTeam, setActiveTeam] = React.useState(teams[0])
+
+  if (navigationMode === 'horizontal') {
+    return (
+      <div className="h-screen overflow-hidden" style={{ display: 'flex', flexDirection: 'column' }}>
+        <OldHorizontalNav
+          navigationData={navigationData}
+          user={user}
+          activeTeam={activeTeam}
+          onNavigate={onNavigate}
+          navigationMode={navigationMode}
+          onNavigationModeChange={setNavigationMode}
+        />
+        <div style={{ flex: 1, overflow: 'auto', minHeight: 0, backgroundColor: 'var(--color-surface-base)' }}>
+          {children}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="h-screen overflow-hidden">
       <SidebarProvider defaultOpen={defaultSidebarOpen}>
-        <AppSidebar navigationData={navigationData} user={user} teams={teams} onNavigate={onNavigate} />
+        <AppSidebar
+          navigationData={navigationData}
+          user={user}
+          teams={teams}
+          onNavigate={onNavigate}
+          navigationMode={navigationMode}
+          onNavigationModeChange={setNavigationMode}
+        />
         <SidebarInset>
           {(headerContent || headerActions) && (
             <header className="flex h-12 shrink-0 items-center gap-2 border-b border-[var(--color-border-primary-subtle)] transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 box-border px-[var(--space-md)]">
