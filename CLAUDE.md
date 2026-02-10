@@ -10,9 +10,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Library Development
 
-- `npm run dev` - Start Storybook development server for component development
+- `npm run dev` - Start Vite development server (NOT Storybook)
 - `npm run build:lib` - Build the library for production (generates `/dist/`)
-- `npm run storybook` - Start Storybook server for component documentation
+- `npm run storybook` - Start Storybook server for component development and documentation
 - `npm run lint` - Run ESLint on all library files
 
 ### Library Structure
