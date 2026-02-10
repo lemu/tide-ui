@@ -50,18 +50,31 @@ export interface SheetContentProps
   extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
     VariantProps<typeof sheetVariants> {
   showClose?: boolean;
+  dismissible?: boolean;
 }
 
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   SheetContentProps
->(({ side = "right", className, children, showClose = true, ...props }, ref) => (
+>(({ side = "right", className, children, showClose = true, dismissible = true, onPointerDownOutside, onInteractOutside, onFocusOutside, ...props }, ref) => (
   <SheetPortal>
     <SheetOverlay />
     <SheetPrimitive.Content
       ref={ref}
       className={cn(sheetVariants({ side }), className)}
       {...props}
+      onPointerDownOutside={(e) => {
+        if (!dismissible) e.preventDefault();
+        onPointerDownOutside?.(e);
+      }}
+      onInteractOutside={(e) => {
+        if (!dismissible) e.preventDefault();
+        onInteractOutside?.(e);
+      }}
+      onFocusOutside={(e) => {
+        if (!dismissible) e.preventDefault();
+        onFocusOutside?.(e);
+      }}
     >
       {children}
       {showClose && (

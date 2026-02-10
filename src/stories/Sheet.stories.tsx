@@ -733,3 +733,86 @@ export const SettingsPanel: Story = {
     )
   },
 }
+
+// Non-dismissible sheet for master-detail pattern
+export const NonDismissible: Story = {
+  render: () => {
+    const [selectedCompany, setSelectedCompany] = useState<string | null>(null)
+
+    const companies = [
+      { name: 'Acme Corp', industry: 'Technology', employees: 1200, revenue: '$45M', status: 'Active' },
+      { name: 'Globex Inc', industry: 'Manufacturing', employees: 3400, revenue: '$120M', status: 'Active' },
+      { name: 'Initech', industry: 'Software', employees: 800, revenue: '$28M', status: 'Pending' },
+      { name: 'Umbrella Ltd', industry: 'Pharmaceuticals', employees: 5600, revenue: '$890M', status: 'Active' },
+      { name: 'Wonka Industries', industry: 'Food & Beverage', employees: 2100, revenue: '$67M', status: 'Inactive' },
+    ]
+
+    const selected = companies.find(c => c.name === selectedCompany)
+
+    return (
+      <div className="w-[700px]">
+        <Sheet modal={false} open={!!selectedCompany} onOpenChange={(open) => { if (!open) setSelectedCompany(null) }}>
+          <div className="border border-[var(--color-border-primary-subtle)] rounded-md">
+            <div className="grid grid-cols-12 gap-4 p-3 border-b border-[var(--color-border-primary-subtle)] bg-[var(--color-background-neutral-subtlest)] text-body-sm font-medium">
+              <div className="col-span-4">Company</div>
+              <div className="col-span-3">Industry</div>
+              <div className="col-span-2">Employees</div>
+              <div className="col-span-3">Status</div>
+            </div>
+            {companies.map((company) => (
+              <div
+                key={company.name}
+                className={`grid grid-cols-12 gap-4 p-3 border-b border-[var(--color-border-primary-subtle)] cursor-pointer transition-colors hover:bg-[var(--color-background-neutral-subtlest-hovered)] ${
+                  selectedCompany === company.name ? 'bg-[var(--color-background-blue-subtle-selected)]' : ''
+                }`}
+                onClick={() => setSelectedCompany(company.name)}
+              >
+                <div className="col-span-4 text-body-sm font-medium">{company.name}</div>
+                <div className="col-span-3 text-body-sm text-[var(--color-text-secondary)]">{company.industry}</div>
+                <div className="col-span-2 text-body-sm text-[var(--color-text-secondary)]">{company.employees.toLocaleString()}</div>
+                <div className="col-span-3">
+                  <Badge variant={company.status === 'Active' ? 'success' : company.status === 'Pending' ? 'warning' : 'default'}>
+                    {company.status}
+                  </Badge>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <SheetContent dismissible={false} showClose>
+            {selected && (
+              <>
+                <SheetHeader>
+                  <SheetTitle>{selected.name}</SheetTitle>
+                  <SheetDescription>Company details and overview</SheetDescription>
+                </SheetHeader>
+                <div className="py-4 space-y-4">
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-body-sm text-[var(--color-text-secondary)]">Industry</span>
+                      <span className="text-body-sm">{selected.industry}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-body-sm text-[var(--color-text-secondary)]">Employees</span>
+                      <span className="text-body-sm">{selected.employees.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-body-sm text-[var(--color-text-secondary)]">Revenue</span>
+                      <span className="text-body-sm">{selected.revenue}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-body-sm text-[var(--color-text-secondary)]">Status</span>
+                      <Badge variant={selected.status === 'Active' ? 'success' : selected.status === 'Pending' ? 'warning' : 'default'}>
+                        {selected.status}
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+          </SheetContent>
+        </Sheet>
+      </div>
+    )
+  },
+}
