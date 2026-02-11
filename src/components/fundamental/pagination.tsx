@@ -7,6 +7,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "./dropdown-menu";
 
@@ -123,6 +124,7 @@ const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="min-w-[80px]">
+            <DropdownMenuLabel>Items per page</DropdownMenuLabel>
             {pageSizeOptions.map((option) => (
               <DropdownMenuItem
                 key={option}
@@ -134,7 +136,7 @@ const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
               >
                 {option}
                 {option === pageSize && (
-                  <Icon name="check" className="w-4 h-4 ml-auto" />
+                  <Icon name="check" className="w-4 h-4 ml-auto text-[var(--color-icon-brand-bold)]" />
                 )}
               </DropdownMenuItem>
             ))}
