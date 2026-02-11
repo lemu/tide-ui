@@ -1288,12 +1288,13 @@ const DataTablePagination = React.memo(function DataTablePagination<TData>({
 
   // Calculate visible row count, accounting for grouping
   const totalItems = (() => {
-    if (enableGrouping) {
-      // When grouping: count only top-level group rows (depth === 0)
+    if (enableGrouping && !table.options.manualPagination) {
+      // Client-side grouping: count only top-level group rows (depth === 0)
       return table.getPrePaginationRowModel().rows.filter((row: any) => row.depth === 0).length
     }
 
-    // Without grouping: use getRowCount() which respects manual rowCount prop
+    // All other cases: getRowCount() respects rowCount prop for manual pagination,
+    // and falls back to getPrePaginationRowModel().rows.length for client-side
     return table.getRowCount()
   })()
 
