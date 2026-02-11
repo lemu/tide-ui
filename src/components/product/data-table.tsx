@@ -1293,8 +1293,8 @@ const DataTablePagination = React.memo(function DataTablePagination<TData>({
       return table.getPrePaginationRowModel().rows.filter((row: any) => row.depth === 0).length
     }
 
-    // Without grouping: count all filtered rows
-    return table.getFilteredRowModel().rows.length
+    // Without grouping: use getRowCount() which respects manual rowCount prop
+    return table.getRowCount()
   })()
 
   const selectedCount = table.getFilteredSelectedRowModel().rows.length
