@@ -1817,7 +1817,7 @@ export function Filters({
                 </PopoverContent>
               </Popover>
               {/* Only show tooltip when active AND not showing label (count mode already shows label) */}
-              {isActive && slotContent.type !== 'count' && (
+              {isActive && slotContent.type !== 'count' && openSlotId !== filter.id && (
                 <TooltipContent side="bottom">
                   {filter.label}
                 </TooltipContent>
