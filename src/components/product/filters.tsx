@@ -1802,9 +1802,11 @@ export function Filters({
                 <PopoverContent
                   className={cn(
                     "p-[var(--space-lg)]",
-                    filter.type === 'date' ? "w-[600px]" : "w-[320px]"
+                    filter.type === 'date' ? "w-[600px]" : "w-[320px]",
+                    "max-h-[var(--radix-popover-content-available-height)] overflow-y-auto"
                   )}
                   align="start"
+                  collisionPadding={8}
                 >
                   <FilterPanelContent
                     filter={filter}
