@@ -45,7 +45,7 @@ export const Default: Story = {
       <SheetTrigger asChild>
         <Button>Open Sheet</Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent overlay>
         <SheetHeader>
           <SheetTitle>Edit Profile</SheetTitle>
           <SheetDescription>
@@ -94,7 +94,7 @@ export const FromLeft: Story = {
           Navigation
         </Button>
       </SheetTrigger>
-      <SheetContent side="left">
+      <SheetContent side="left" overlay>
         <SheetHeader>
           <SheetTitle>Navigation Menu</SheetTitle>
           <SheetDescription>
@@ -147,7 +147,7 @@ export const FromTop: Story = {
           Notifications
         </Button>
       </SheetTrigger>
-      <SheetContent side="top">
+      <SheetContent side="top" overlay>
         <SheetHeader>
           <SheetTitle>Recent Notifications</SheetTitle>
           <SheetDescription>
@@ -188,7 +188,7 @@ export const FromBottom: Story = {
           Share Options
         </Button>
       </SheetTrigger>
-      <SheetContent side="bottom">
+      <SheetContent side="bottom" overlay>
         <SheetHeader>
           <SheetTitle>Share This Project</SheetTitle>
           <SheetDescription>
@@ -251,7 +251,7 @@ export const ShoppingCart: Story = {
             Cart ({cartItems.reduce((sum, item) => sum + item.quantity, 0)})
           </Button>
         </SheetTrigger>
-        <SheetContent>
+        <SheetContent overlay>
           <SheetHeader>
             <SheetTitle>Shopping Cart</SheetTitle>
             <SheetDescription>
@@ -360,7 +360,7 @@ export const FormSheet: Story = {
             Contact Support
           </Button>
         </SheetTrigger>
-        <SheetContent>
+        <SheetContent overlay>
           <SheetHeader>
             <SheetTitle>Contact Support</SheetTitle>
             <SheetDescription>
@@ -478,7 +478,7 @@ export const FileBrowser: Story = {
             Browse Files
           </Button>
         </SheetTrigger>
-        <SheetContent className="sm:max-w-[600px]">
+        <SheetContent overlay className="sm:max-w-[600px]">
           <SheetHeader>
             <SheetTitle>File Browser</SheetTitle>
             <SheetDescription>
@@ -607,7 +607,7 @@ export const SettingsPanel: Story = {
             Settings
           </Button>
         </SheetTrigger>
-        <SheetContent>
+        <SheetContent overlay>
           <SheetHeader>
             <SheetTitle>Application Settings</SheetTitle>
             <SheetDescription>
@@ -779,7 +779,7 @@ export const NonDismissible: Story = {
             ))}
           </div>
 
-          <SheetContent dismissible={false} showClose>
+          <SheetContent dismissible={false} showClose overlay>
             {selected && (
               <>
                 <SheetHeader>
@@ -815,4 +815,32 @@ export const NonDismissible: Story = {
       </div>
     )
   },
+}
+
+export const NoOverlay: Story = {
+  render: () => (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button>Open Sheet (No Overlay)</Button>
+      </SheetTrigger>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Panel Without Overlay</SheetTitle>
+          <SheetDescription>
+            This sheet opens without a backdrop overlay, allowing interaction with the content behind it.
+          </SheetDescription>
+        </SheetHeader>
+        <div className="py-4">
+          <p className="text-body-md text-[var(--color-text-secondary)]">
+            The page behind remains fully visible and interactive.
+          </p>
+        </div>
+        <SheetFooter>
+          <SheetClose asChild>
+            <Button>Close</Button>
+          </SheetClose>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  ),
 }

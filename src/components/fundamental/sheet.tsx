@@ -51,14 +51,15 @@ export interface SheetContentProps
     VariantProps<typeof sheetVariants> {
   showClose?: boolean;
   dismissible?: boolean;
+  overlay?: boolean;
 }
 
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   SheetContentProps
->(({ side = "right", className, children, showClose = true, dismissible = true, onPointerDownOutside, onInteractOutside, onFocusOutside, ...props }, ref) => (
+>(({ side = "right", className, children, showClose = true, dismissible = true, overlay = false, onPointerDownOutside, onInteractOutside, onFocusOutside, ...props }, ref) => (
   <SheetPortal>
-    <SheetOverlay />
+    {overlay && <SheetOverlay />}
     <SheetPrimitive.Content
       ref={ref}
       className={cn(sheetVariants({ side }), className)}
