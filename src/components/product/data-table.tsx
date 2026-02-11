@@ -1269,6 +1269,8 @@ interface DataTablePaginationProps<_TData = any> {
   footerLabel?: React.ReactNode
   onNextPageHover?: () => void
   onPreviousPageHover?: () => void
+  paginationVariant?: "default" | "full"
+  pageSizeOptions?: number[]
 }
 
 const DataTablePagination = React.memo(function DataTablePagination<TData>({
@@ -1278,6 +1280,8 @@ const DataTablePagination = React.memo(function DataTablePagination<TData>({
   footerLabel,
   onNextPageHover,
   onPreviousPageHover,
+  paginationVariant = "full",
+  pageSizeOptions = [10, 25, 50, 100],
 }: DataTablePaginationProps<TData>) {
   const currentPage = table.getState().pagination.pageIndex + 1
   const pageSize = table.getState().pagination.pageSize
@@ -1324,13 +1328,13 @@ const DataTablePagination = React.memo(function DataTablePagination<TData>({
         )}
       </div>
       <Pagination
-        variant="full"
+        variant={paginationVariant}
         currentPage={currentPage}
         totalItems={totalItems}
         pageSize={pageSize}
         onPageChange={handlePageChange}
         onPageSizeChange={handlePageSizeChange}
-        pageSizeOptions={[10, 25, 50, 100]}
+        pageSizeOptions={pageSizeOptions}
         onNextPageHover={onNextPageHover}
         onPreviousPageHover={onPreviousPageHover}
       />
@@ -1954,6 +1958,10 @@ export interface DataTableProps<TData, TValue> {
   // Header and footer control
   showHeader?: boolean
   showPagination?: boolean
+  /** Pagination variant. "full" shows first/last/prev/next buttons, "default" shows only prev/next. Default: "full" */
+  paginationVariant?: "default" | "full"
+  /** Page size options shown in the pagination dropdown. Default: [10, 25, 50, 100] */
+  pageSizeOptions?: number[]
   /** Custom content to display in the table footer, useful for showing filtered item counts or other status information */
   footerLabel?: React.ReactNode
   // External control
@@ -2468,6 +2476,8 @@ export function DataTable<TData, TValue>({
   enableRowSelection = false,
   showHeader = true,
   showPagination = true,
+  paginationVariant = "full",
+  pageSizeOptions = [10, 25, 50, 100],
   footerLabel,
   onTableReady,
   initialState,
@@ -5299,6 +5309,8 @@ export function DataTable<TData, TValue>({
             footerLabel={footerLabel}
             onNextPageHover={onNextPageHover}
             onPreviousPageHover={onPreviousPageHover}
+            paginationVariant={paginationVariant}
+            pageSizeOptions={pageSizeOptions}
           />
         </div>
       )}
