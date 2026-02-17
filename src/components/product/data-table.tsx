@@ -2659,13 +2659,13 @@ export function DataTable<TData, TValue>({
   // which overrides the user's controlled state. We detect and ignore these resets.
   const setExpanded = React.useCallback(
     (updaterOrValue: ExpandedState | ((prev: ExpandedState) => ExpandedState)) => {
-      if (isExpandedControlled && onControlledExpandedChange) {
-        // Check if this is TanStack trying to reset to empty object
-        const isEmptyObjectReset = typeof updaterOrValue === 'object' &&
-            updaterOrValue !== null &&
-            !(updaterOrValue instanceof Function) &&
-            Object.keys(updaterOrValue).length === 0
+      // Check if this is TanStack trying to reset to empty object
+      const isEmptyObjectReset = typeof updaterOrValue === 'object' &&
+          updaterOrValue !== null &&
+          !(updaterOrValue instanceof Function) &&
+          Object.keys(updaterOrValue).length === 0
 
+      if (isExpandedControlled && onControlledExpandedChange) {
         // Ignore empty object resets when:
         // 1. Current state is `true` (expand all) - TanStack normalizing boolean
         // 2. Current state has expanded rows - TanStack trying to collapse without user action
@@ -2681,7 +2681,18 @@ export function DataTable<TData, TValue>({
 
         onControlledExpandedChange(updaterOrValue)
       } else {
-        setInternalExpanded(updaterOrValue)
+        // Also protect uncontrolled mode from TanStack's unwanted resets
+        if (isEmptyObjectReset) {
+          setInternalExpanded(prev => {
+            const hasExpandedRows = prev === true ||
+              (typeof prev === 'object' &&
+               prev !== null &&
+               Object.keys(prev).length > 0)
+            return hasExpandedRows ? prev : updaterOrValue
+          })
+        } else {
+          setInternalExpanded(updaterOrValue)
+        }
       }
     },
     [isExpandedControlled, onControlledExpandedChange, controlledExpanded]
@@ -4559,7 +4570,7 @@ export function DataTable<TData, TValue>({
                             data-section-header={isSectionHeader ? true : undefined}
                             className={cn(
                               // Active row indicator on first cell
-                              isFirstCell && isActiveRow(row) && (activeRowClassName || getActiveRowClasses(borderSettings.showRowBorder)),
+                              isFirstCell && isActiveRow(row) && (activeRowClassName || getActiveRowClasses(shouldRemoveBottomBorder ? false : borderSettings.showRowBorder)),
                               // Add sticky border classes for body cells (skip for section headers)
                               !isSectionHeader && getStickyBorderClasses(cell.column),
                               // Sticky columns need higher z-index and explicit backgrounds
@@ -4579,8 +4590,8 @@ export function DataTable<TData, TValue>({
                               ],
                               // Section header background
                               isSectionHeader && "bg-[var(--blue-50)]",
-                              // Remove bottom border from first column child rows (except last)
-                              shouldRemoveBottomBorder && "![box-shadow:none]",
+                              // Remove bottom border from first column child rows (except last), but not when row is active
+                              shouldRemoveBottomBorder && !isActiveRow(row) && "![box-shadow:none]",
                               // Focus ring for keyboard navigation
                               "focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--color-border-brand-bold)]"
                             )}
@@ -4972,7 +4983,7 @@ export function DataTable<TData, TValue>({
                           colSpan={isSectionHeader ? row.getVisibleCells().length : undefined}
                           className={cn(
                             // Active row indicator on first cell
-                            isFirstCell && isActiveRow(row) && (activeRowClassName || getActiveRowClasses(borderSettings.showRowBorder)),
+                            isFirstCell && isActiveRow(row) && (activeRowClassName || getActiveRowClasses(shouldRemoveBottomBorder ? false : borderSettings.showRowBorder)),
                             // Focus ring for keyboard navigation
                             "focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--color-border-brand-bold)]",
                             // Sticky columns need higher z-index and explicit backgrounds
@@ -5035,8 +5046,8 @@ export function DataTable<TData, TValue>({
                             ],
                             // Section header background
                             isSectionHeader && "bg-[var(--blue-50)]",
-                            // Remove bottom border from first column child rows (except last)
-                            shouldRemoveBottomBorder && "![box-shadow:none]"
+                            // Remove bottom border from first column child rows (except last), but not when row is active
+                            shouldRemoveBottomBorder && !isActiveRow(row) && "![box-shadow:none]"
                           )}
                           style={{
                             ...pinningStyles,
