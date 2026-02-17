@@ -3,7 +3,7 @@ import { Chart, generateChartColors, createChartConfig, formatNumber } from '../
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 
 const meta: Meta<typeof Chart> = {
-  title: 'NPM • Fundamental/Chart',
+  title: 'NPM • Product Components/Chart',
   component: Chart,
   parameters: {
     layout: 'centered',
