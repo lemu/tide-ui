@@ -1715,7 +1715,7 @@ export function Filters({
 
         return (
           <TooltipProvider key={filter.id}>
-            <Tooltip>
+            <Tooltip open={openSlotId === filter.id ? false : undefined}>
               <Popover
                 open={openSlotId === filter.id}
                 onOpenChange={(open) => handleSlotPopoverChange(open, filter.id)}
