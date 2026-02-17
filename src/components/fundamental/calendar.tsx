@@ -95,6 +95,7 @@ function Calendar(calendarProps: CalendarProps) {
   };
 
   const isConfirmedRangeStart = (date: Date): boolean => {
+    if (rangeStart) return false; // Hide old range when new selection is in progress
     if (mode !== 'range' || !selected || typeof selected === 'undefined') return false;
     const range = selected as { from?: Date; to?: Date };
     if (!range.from) return false;
@@ -102,6 +103,7 @@ function Calendar(calendarProps: CalendarProps) {
   };
 
   const isConfirmedRangeEnd = (date: Date): boolean => {
+    if (rangeStart) return false; // Hide old range when new selection is in progress
     if (mode !== 'range' || !selected || typeof selected === 'undefined') return false;
     const range = selected as { from?: Date; to?: Date };
     if (!range.to) return false;
@@ -109,6 +111,7 @@ function Calendar(calendarProps: CalendarProps) {
   };
 
   const isInConfirmedRange = (date: Date): boolean => {
+    if (rangeStart) return false; // Hide old range when new selection is in progress
     if (mode !== 'range' || !selected || typeof selected === 'undefined') return false;
     const range = selected as { from?: Date; to?: Date };
     if (!range.from || !range.to) return false;

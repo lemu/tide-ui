@@ -204,6 +204,7 @@ export const MonthPicker = React.forwardRef<HTMLDivElement, MonthPickerProps>(
 
     // Check if month matches value
     const isMonthSelected = (month: Date): boolean => {
+      if (selectedStart) return false // Hide old range when new selection is in progress
       if (!value) return false
 
       if (Array.isArray(value)) {
@@ -217,6 +218,7 @@ export const MonthPicker = React.forwardRef<HTMLDivElement, MonthPickerProps>(
 
     // Check if month is part of the selected range
     const isMonthInSelectedRange = (month: Date): boolean => {
+      if (selectedStart) return false // Hide old range when new selection is in progress
       if (!value || !Array.isArray(value)) return false
 
       const [rangeStart, rangeEnd] = value
