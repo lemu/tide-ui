@@ -395,7 +395,7 @@ export {
   SheetTitle,
   SheetDescription,
 } from './fundamental/sheet'
-export type { SheetContentProps } from './fundamental/sheet'
+export type { SheetProps, SheetContentProps } from './fundamental/sheet'
 
 // DropdownMenu components
 export {

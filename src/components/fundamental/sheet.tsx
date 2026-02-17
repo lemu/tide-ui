@@ -4,7 +4,18 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 import { Button } from "./button";
 
-const Sheet = SheetPrimitive.Root;
+export interface SheetProps extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Root> {
+  overlay?: boolean;
+}
+
+const SheetContext = React.createContext<{ overlay: boolean }>({ overlay: false });
+
+const Sheet = ({ modal, overlay = false, ...props }: SheetProps) => (
+  <SheetContext.Provider value={{ overlay }}>
+    <SheetPrimitive.Root modal={modal ?? overlay} {...props} />
+  </SheetContext.Provider>
+);
+Sheet.displayName = "Sheet";
 
 const SheetTrigger = SheetPrimitive.Trigger;
 
@@ -57,7 +68,11 @@ export interface SheetContentProps
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   SheetContentProps
->(({ side = "right", className, children, showClose = true, dismissible = true, overlay = false, onPointerDownOutside, onInteractOutside, onFocusOutside, ...props }, ref) => (
+>(({ side = "right", className, children, showClose = true, dismissible = true, overlay: overlayProp, onPointerDownOutside, onInteractOutside, onFocusOutside, ...props }, ref) => {
+  const context = React.useContext(SheetContext);
+  const overlay = overlayProp ?? context.overlay;
+
+  return (
   <SheetPortal>
     {overlay && <SheetOverlay />}
     <SheetPrimitive.Content
@@ -93,7 +108,8 @@ const SheetContent = React.forwardRef<
       )}
     </SheetPrimitive.Content>
   </SheetPortal>
-));
+  );
+});
 SheetContent.displayName = SheetPrimitive.Content.displayName;
 
 const SheetHeader = ({
