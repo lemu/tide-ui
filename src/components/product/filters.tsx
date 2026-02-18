@@ -12,7 +12,6 @@ import { Calendar } from "../fundamental/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "../fundamental/popover"
 import { Separator } from "../fundamental/separator"
 import { Badge } from "../fundamental/badge"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../fundamental/tooltip"
 import { calculatePresetRange, formatDateRange, getPresetLabel } from "../../lib/date-utils"
 
 // ============================================================================
@@ -1292,7 +1291,6 @@ export function Filters({
 }: FiltersProps) {
   const [isFilterMenuOpen, setIsFilterMenuOpen] = React.useState(false)
   const [openSlotId, setOpenSlotId] = React.useState<string | null>(null)
-  const [tooltipSuppressedId, setTooltipSuppressedId] = React.useState<string | null>(null)
   const [announcement, setAnnouncement] = React.useState('')
   const previousActiveFiltersRef = React.useRef(activeFilters)
   const previousSearchTermsRef = React.useRef(globalSearchTerms)
@@ -1304,9 +1302,8 @@ export function Filters({
     const previousOpenSlotId = openSlotId
     setOpenSlotId(open ? filterId : null)
 
-    // Return focus to trigger when closing, suppress tooltip to prevent it from showing on focus
+    // Return focus to trigger when closing
     if (!open && previousOpenSlotId === filterId) {
-      setTooltipSuppressedId(filterId)
       // Use setTimeout to ensure the popover has closed before focusing
       setTimeout(() => {
         filterSlotTriggerRefs.current[filterId]?.focus()
@@ -1716,121 +1713,105 @@ export function Filters({
         const IconComponent = slotContent.icon
 
         return (
-          <TooltipProvider key={filter.id}>
-            <Tooltip open={(openSlotId === filter.id || tooltipSuppressedId === filter.id) ? false : undefined}>
-              <Popover
-                open={openSlotId === filter.id}
-                onOpenChange={(open) => handleSlotPopoverChange(open, filter.id)}
+          <Popover
+            key={filter.id}
+            open={openSlotId === filter.id}
+            onOpenChange={(open) => handleSlotPopoverChange(open, filter.id)}
+          >
+            <PopoverTrigger asChild>
+              <div
+                ref={(el) => { filterSlotTriggerRefs.current[filter.id] = el }}
+                role="button"
+                tabIndex={0}
+                aria-label={`${filter.label}: ${
+                  slotContent.type === 'empty'
+                    ? 'not set, click to add filter'
+                    : slotContent.type === 'count'
+                    ? `${slotContent.count} selected, click to edit`
+                    : `${slotContent.content}, click to edit`
+                }`}
+                aria-expanded={openSlotId === filter.id}
+                aria-haspopup="dialog"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    handleSlotPopoverChange(openSlotId !== filter.id, filter.id)
+                  }
+                }}
+                className={cn(
+                  "group/slot h-[var(--size-md)] rounded-lg flex items-center justify-center gap-[var(--space-sm)] transition-colors cursor-pointer flex-shrink-0",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
+                  isActive
+                    ? "bg-[var(--color-background-neutral-selected)] hover:bg-[var(--color-background-neutral-hovered)] px-[var(--space-md)] pr-[4px]"
+                    : "border border-dashed border-[var(--color-border-primary-strong)] px-[var(--space-md)] pr-[var(--space-sm)] hover:border-[var(--grey-400)] active:bg-[var(--grey-25)]"
+                )}
               >
-                <TooltipTrigger asChild>
-                  <PopoverTrigger asChild>
-                    <div
-                      ref={(el) => { filterSlotTriggerRefs.current[filter.id] = el }}
-                      role="button"
-                      tabIndex={0}
-                      aria-label={`${filter.label}: ${
-                        slotContent.type === 'empty'
-                          ? 'not set, click to add filter'
-                          : slotContent.type === 'count'
-                          ? `${slotContent.count} selected, click to edit`
-                          : `${slotContent.content}, click to edit`
-                      }`}
-                      aria-expanded={openSlotId === filter.id}
-                      aria-haspopup="dialog"
-                      onBlur={() => {
-                        if (tooltipSuppressedId === filter.id) {
-                          setTooltipSuppressedId(null)
-                        }
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          e.preventDefault()
-                          handleSlotPopoverChange(openSlotId !== filter.id, filter.id)
-                        }
-                      }}
-                      className={cn(
-                        "group/slot h-[var(--size-md)] rounded-lg flex items-center justify-center gap-[var(--space-sm)] transition-colors cursor-pointer flex-shrink-0",
-                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
-                        isActive
-                          ? "bg-[var(--color-background-neutral-selected)] hover:bg-[var(--color-background-neutral-hovered)] px-[var(--space-md)] pr-[4px]"
-                          : "border border-dashed border-[var(--color-border-primary-strong)] px-[var(--space-md)] pr-[var(--space-sm)] hover:border-[var(--grey-400)] active:bg-[var(--grey-25)]"
-                      )}
-                    >
-                      {/* Icon (always shown) */}
-                      <IconComponent className={cn(
-                        "h-[var(--size-2xsm)] w-[var(--size-2xsm)]",
-                        isActive ? "text-[var(--color-icon-primary)]" : "text-[var(--grey-400)] group-hover/slot:text-[var(--grey-500)]"
-                      )} />
+                {/* Icon (always shown) */}
+                <IconComponent className={cn(
+                  "h-[var(--size-2xsm)] w-[var(--size-2xsm)]",
+                  isActive ? "text-[var(--color-icon-primary)]" : "text-[var(--grey-400)] group-hover/slot:text-[var(--grey-500)]"
+                )} />
 
-                      {/* Text Content or Label + Badge */}
-                      {slotContent.type === 'count' ? (
-                        <>
-                          <span className="whitespace-nowrap [&]:text-label-md text-[var(--color-text-primary)]">
-                            {slotContent.label}
-                          </span>
-                          <Badge size="sm" intent="neutral" appearance="bold">
-                            {slotContent.count}
-                          </Badge>
-                        </>
-                      ) : (
-                        <span className={cn(
-                          "whitespace-nowrap [&]:text-label-md",
-                          isActive ? "text-[var(--color-text-primary)]" : "text-[var(--color-text-tertiary)] group-hover/slot:text-[var(--grey-500)]"
-                        )}>
-                          {slotContent.content}
-                        </span>
-                      )}
+                {/* Text Content or Label + Badge */}
+                {slotContent.type === 'count' ? (
+                  <>
+                    <span className="whitespace-nowrap [&]:text-label-md text-[var(--color-text-primary)]">
+                      {slotContent.label}
+                    </span>
+                    <Badge size="sm" intent="neutral" appearance="bold">
+                      {slotContent.count}
+                    </Badge>
+                  </>
+                ) : (
+                  <span className={cn(
+                    "whitespace-nowrap [&]:text-label-md",
+                    isActive ? "text-[var(--color-text-primary)]" : "text-[var(--color-text-tertiary)] group-hover/slot:text-[var(--grey-500)]"
+                  )}>
+                    {slotContent.content}
+                  </span>
+                )}
 
-                      {/* Clear Button (only when active) */}
-                      {isActive && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          aria-label={`Clear ${filter.label} filter`}
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            onFilterClear(filter.id)
-                          }}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                              e.preventDefault()
-                              e.stopPropagation()
-                              onFilterClear(filter.id)
-                            }
-                          }}
-                          className="h-auto w-auto p-[var(--space-xsm)]"
-                        >
-                          <Icon name="x" className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]" aria-hidden="true" />
-                        </Button>
-                      )}
-                    </div>
-                  </PopoverTrigger>
-                </TooltipTrigger>
-                <PopoverContent
-                  className={cn(
-                    "p-[var(--space-lg)]",
-                    filter.type === 'date' ? "w-[600px]" : "w-[320px]",
-                    "max-h-[var(--radix-popover-content-available-height)] overflow-y-auto"
-                  )}
-                  align="start"
-                  collisionPadding={8}
-                >
-                  <FilterPanelContent
-                    filter={filter}
-                    value={activeFilters[filter.id]}
-                    onChange={(value) => onFilterChange(filter.id, value)}
-                    onReset={() => onFilterClear(filter.id)}
-                  />
-                </PopoverContent>
-              </Popover>
-              {/* Only show tooltip when active AND not showing label (count mode already shows label) */}
-              {isActive && slotContent.type !== 'count' && openSlotId !== filter.id && (
-                <TooltipContent side="bottom">
-                  {filter.label}
-                </TooltipContent>
+                {/* Clear Button (only when active) */}
+                {isActive && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    aria-label={`Clear ${filter.label} filter`}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onFilterClear(filter.id)
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        onFilterClear(filter.id)
+                      }
+                    }}
+                    className="h-auto w-auto p-[var(--space-xsm)]"
+                  >
+                    <Icon name="x" className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]" aria-hidden="true" />
+                  </Button>
+                )}
+              </div>
+            </PopoverTrigger>
+            <PopoverContent
+              className={cn(
+                "p-[var(--space-lg)]",
+                filter.type === 'date' ? "w-[600px]" : "w-[320px]",
+                "max-h-[var(--radix-popover-content-available-height)] overflow-y-auto"
               )}
-            </Tooltip>
-          </TooltipProvider>
+              align="start"
+              collisionPadding={8}
+            >
+              <FilterPanelContent
+                filter={filter}
+                value={activeFilters[filter.id]}
+                onChange={(value) => onFilterChange(filter.id, value)}
+                onReset={() => onFilterClear(filter.id)}
+              />
+            </PopoverContent>
+          </Popover>
         )
       })}
         </div>
