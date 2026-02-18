@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Tag, TagGroup, type TagDotColor, type TagIntent } from '../components/fundamental/tag'
+import { Tag, TagGroup, type TagDotColor, type TagIntent, type TagVariant } from '../components/fundamental/tag'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 import { Button } from '../components/fundamental/button'
 import { Input } from '../components/fundamental/input'
@@ -14,6 +14,11 @@ const meta: Meta<typeof Tag> = {
   },
   tags: ['autodocs'],
   argTypes: {
+    variant: {
+      control: { type: 'select' },
+      options: ['triangular', 'squared'],
+      description: 'Shape variant of the tag',
+    },
     size: {
       control: { type: 'select' },
       options: ['sm', 'md'],
@@ -454,6 +459,47 @@ export const DisabledState: Story = {
             <Tag color="brand" disabled>Disabled</Tag>
           </div>
         </div>
+      </div>
+    )
+  },
+}
+
+// Shape variants
+export const ShapeVariants: Story = {
+  render: () => {
+    const variants: TagVariant[] = ['triangular', 'squared']
+
+    return (
+      <div className="space-y-8">
+        {variants.map(variant => (
+          <div key={variant}>
+            <h3 className="text-heading-sm mb-4 capitalize">{variant}</h3>
+            <div className="space-y-4">
+              <div>
+                <p className="text-caption-sm text-[var(--color-text-secondary)] mb-2">Medium (24px)</p>
+                <div className="flex flex-wrap items-center gap-3">
+                  <Tag variant={variant}>Default</Tag>
+                  <Tag variant={variant} color="brand">With Dot</Tag>
+                  <Tag variant={variant} closable onClose={() => {}}>Closable</Tag>
+                  <Tag variant={variant} color="green" closable onClose={() => {}}>Dot + Close</Tag>
+                  <Tag variant={variant} interactive onClick={() => {}}>Interactive</Tag>
+                  <Tag variant={variant} disabled>Disabled</Tag>
+                </div>
+              </div>
+              <div>
+                <p className="text-caption-sm text-[var(--color-text-secondary)] mb-2">Small (20px)</p>
+                <div className="flex flex-wrap items-center gap-3">
+                  <Tag variant={variant} size="sm">Default</Tag>
+                  <Tag variant={variant} size="sm" color="brand">With Dot</Tag>
+                  <Tag variant={variant} size="sm" closable onClose={() => {}}>Closable</Tag>
+                  <Tag variant={variant} size="sm" color="green" closable onClose={() => {}}>Dot + Close</Tag>
+                  <Tag variant={variant} size="sm" interactive onClick={() => {}}>Interactive</Tag>
+                  <Tag variant={variant} size="sm" disabled>Disabled</Tag>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     )
   },

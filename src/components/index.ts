@@ -264,7 +264,7 @@ export { Slider } from './fundamental/slider'
 
 // Tag components
 export { Tag, TagGroup } from './fundamental/tag'
-export type { TagProps, TagGroupProps, TagDotColor, TagIntent } from './fundamental/tag'
+export type { TagProps, TagGroupProps, TagDotColor, TagIntent, TagVariant } from './fundamental/tag'
 
 // Tree components
 export { Tree } from './fundamental/tree'

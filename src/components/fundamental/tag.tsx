@@ -25,6 +25,7 @@ const INTENT_TO_COLOR = {
 
 export type TagDotColor = keyof typeof DOT_COLORS
 export type TagIntent = keyof typeof INTENT_TO_COLOR
+export type TagVariant = "triangular" | "squared"
 
 // Full tag shape SVG - draws complete outline (notch + body) as single path
 // This ensures synchronized hover transitions with no gaps
@@ -42,18 +43,17 @@ const TagShapeMd = ({ width, interactive = false, className }: TagShapeProps) =>
   // Path uses y coordinates 0.5 to 23.5 (24px span with 0.5px inset for stroke)
   const rightX = width - 0.5
   const d = `
-    M 12 0.5
+    M 11.8333 0.5
     L ${rightX - r} 0.5
     Q ${rightX} 0.5 ${rightX} ${0.5 + r}
     L ${rightX} ${23.5 - r}
     Q ${rightX} 23.5 ${rightX - r} 23.5
-    L 12 23.5
     L 11.8333 23.5
     C 10.7121 23.5 9.64236 23.0294 8.88472 22.2029
     L 1.55138 14.2029
     C 0.149538 12.6736 0.14954 10.3264 1.55138 8.7971
     L 8.88472 0.7971
-    C 9.64236 -0.0294 10.7121 0.5 11.8333 0.5
+    C 9.64236 0.5 10.7121 0.5 11.8333 0.5
     Z
   `
 
@@ -87,18 +87,17 @@ const TagShapeSm = ({ width, interactive = false, className }: TagShapeProps) =>
   // Path uses y coordinates 0.5 to 19.5 (20px span with 0.5px inset for stroke)
   const rightX = width - 0.5
   const d = `
-    M 12 0.5
+    M 11.1 0.5
     L ${rightX - r} 0.5
     Q ${rightX} 0.5 ${rightX} ${0.5 + r}
     L ${rightX} ${19.5 - r}
     Q ${rightX} 19.5 ${rightX - r} 19.5
-    L 12 19.5
     L 11.1 19.5
     C 10.1049 19.5 9.14559 19.1291 8.40931 18.4598
     L 1.80931 12.4598
     C 0.0635623 10.8727 0.0635653 8.1273 1.80931 6.5402
     L 8.40931 0.5402
-    C 9.14559 -0.1291 10.1049 0.5 11.1 0.5
+    C 9.14559 0.5 10.1049 0.5 11.1 0.5
     Z
   `
 
@@ -157,6 +156,7 @@ export interface TagProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onClick" | "color">,
     TagVariantProps {
   children: React.ReactNode
+  variant?: TagVariant
   intent?: TagIntent
   color?: TagDotColor
   showDot?: boolean
@@ -172,6 +172,7 @@ const Tag = React.forwardRef<HTMLDivElement, TagProps>(
     {
       className,
       size = "md",
+      variant = "triangular",
       children,
       intent,
       color,
@@ -190,9 +191,12 @@ const Tag = React.forwardRef<HTMLDivElement, TagProps>(
     const contentRef = React.useRef<HTMLDivElement>(null)
 
     const sizeConfig = TAG_SIZES[size]
+    const isTriangular = variant === "triangular"
 
     // Measure content width to size the SVG (use border box, not content box)
+    // Only needed for triangular variant
     React.useEffect(() => {
+      if (!isTriangular) return
       if (contentRef.current) {
         const observer = new ResizeObserver((entries) => {
           for (const entry of entries) {
@@ -205,7 +209,7 @@ const Tag = React.forwardRef<HTMLDivElement, TagProps>(
         observer.observe(contentRef.current)
         return () => observer.disconnect()
       }
-    }, [])
+    }, [isTriangular])
 
     const handleClose = (e: React.MouseEvent) => {
       e.stopPropagation()
@@ -250,23 +254,29 @@ const Tag = React.forwardRef<HTMLDivElement, TagProps>(
         onKeyDown={interactive ? handleKeyDown : undefined}
         {...props}
       >
-        {/* Full tag shape SVG - handles fill and stroke for entire tag */}
-        {contentWidth > 0 && (
+        {/* Full tag shape SVG - handles fill and stroke for entire tag (triangular only) */}
+        {isTriangular && contentWidth > 0 && (
           <ShapeComponent
             width={contentWidth}
             interactive={interactive}
           />
         )}
 
-        {/* Content layer - positioned over the SVG background */}
+        {/* Content layer */}
         <div
-          ref={contentRef}
+          ref={isTriangular ? contentRef : undefined}
           className={cn(
             "relative z-10 inline-flex items-center",
             sizeConfig.typography,
             sizeConfig.paddingX,
             "text-[var(--color-text-primary)]",
-            "pl-[calc(12px+var(--space-xsm))]" // notch width + padding
+            isTriangular && "pl-[12px]", // notch width clearance
+            !isTriangular && [
+              "border border-[var(--grey-100)] rounded-md",
+              "bg-[var(--neutral-white)]",
+              interactive && "group-hover:bg-[var(--grey-25)]",
+              "transition-[background-color]",
+            ]
           )}
         >
           {shouldShowDot && dotColor && (
@@ -323,6 +333,7 @@ export interface TagGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   closable?: boolean
   interactive?: boolean
   size?: TagProps["size"]
+  variant?: TagVariant
   intent?: TagIntent
   color?: TagDotColor
   showDot?: boolean
@@ -339,6 +350,7 @@ const TagGroup = React.forwardRef<HTMLDivElement, TagGroupProps>(
       closable = false,
       interactive = false,
       size = "md",
+      variant,
       intent,
       color,
       showDot,
@@ -367,6 +379,7 @@ const TagGroup = React.forwardRef<HTMLDivElement, TagGroupProps>(
             intent={tag.intent || intent}
             color={tag.color || color}
             size={size}
+            variant={variant}
             closable={closable}
             interactive={interactive}
             disabled={tag.disabled}
@@ -379,13 +392,13 @@ const TagGroup = React.forwardRef<HTMLDivElement, TagGroupProps>(
         ))}
 
         {hiddenCount > 0 && (
-          <Tag size={size} interactive onClick={() => setShowAll(true)}>
+          <Tag size={size} variant={variant} interactive onClick={() => setShowAll(true)}>
             +{hiddenCount} more
           </Tag>
         )}
 
         {showAll && maxVisible && (
-          <Tag size={size} interactive onClick={() => setShowAll(false)}>
+          <Tag size={size} variant={variant} interactive onClick={() => setShowAll(false)}>
             Show less
           </Tag>
         )}
