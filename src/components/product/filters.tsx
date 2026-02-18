@@ -1292,6 +1292,7 @@ export function Filters({
 }: FiltersProps) {
   const [isFilterMenuOpen, setIsFilterMenuOpen] = React.useState(false)
   const [openSlotId, setOpenSlotId] = React.useState<string | null>(null)
+  const [tooltipSuppressedId, setTooltipSuppressedId] = React.useState<string | null>(null)
   const [announcement, setAnnouncement] = React.useState('')
   const previousActiveFiltersRef = React.useRef(activeFilters)
   const previousSearchTermsRef = React.useRef(globalSearchTerms)
@@ -1303,8 +1304,9 @@ export function Filters({
     const previousOpenSlotId = openSlotId
     setOpenSlotId(open ? filterId : null)
 
-    // Return focus to trigger when closing
+    // Return focus to trigger when closing, suppress tooltip to prevent it from showing on focus
     if (!open && previousOpenSlotId === filterId) {
+      setTooltipSuppressedId(filterId)
       // Use setTimeout to ensure the popover has closed before focusing
       setTimeout(() => {
         filterSlotTriggerRefs.current[filterId]?.focus()
@@ -1707,7 +1709,7 @@ export function Filters({
 
       {/* Pinned Filter Slots */}
       {pinnedFilterObjects.length > 0 && (
-        <div className="flex-1 min-w-0 flex gap-[7px] overflow-x-auto scrollbar-hide p-1">
+        <div className="min-w-0 flex gap-[7px] overflow-x-auto scrollbar-hide p-1">
           {pinnedFilterObjects.map((filter) => {
         const slotContent = getSlotContent(filter)
         const isActive = slotContent.type !== 'empty'
@@ -1715,7 +1717,7 @@ export function Filters({
 
         return (
           <TooltipProvider key={filter.id}>
-            <Tooltip open={openSlotId === filter.id ? false : undefined}>
+            <Tooltip open={(openSlotId === filter.id || tooltipSuppressedId === filter.id) ? false : undefined}>
               <Popover
                 open={openSlotId === filter.id}
                 onOpenChange={(open) => handleSlotPopoverChange(open, filter.id)}
@@ -1735,6 +1737,11 @@ export function Filters({
                       }`}
                       aria-expanded={openSlotId === filter.id}
                       aria-haspopup="dialog"
+                      onBlur={() => {
+                        if (tooltipSuppressedId === filter.id) {
+                          setTooltipSuppressedId(null)
+                        }
+                      }}
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
                           e.preventDefault()
@@ -1903,7 +1910,7 @@ export function Filters({
           aria-label="Reset all filters and search terms"
           className="h-[var(--size-md)] rounded-sm px-[var(--space-md)]"
         >
-          <span className="text-label-md">Reset</span>
+          <span className="text-label-md">Clear all</span>
         </Button>
       )}
 
