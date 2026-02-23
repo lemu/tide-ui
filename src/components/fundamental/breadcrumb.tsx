@@ -1,7 +1,16 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
-import { ArrowRight, MoreHorizontal } from "lucide-react";
+import { ArrowRight, MoreHorizontal, ChevronDown, Check } from "lucide-react";
 import { cn } from "../../lib/utils";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "./command";
 
 const Breadcrumb = React.forwardRef<
   HTMLElement,
@@ -77,6 +86,84 @@ const BreadcrumbPage = React.forwardRef<
 ));
 BreadcrumbPage.displayName = "BreadcrumbPage";
 
+export interface BreadcrumbPagePickerProps
+  extends Omit<React.ComponentPropsWithoutRef<"button">, "onSelect"> {
+  siblings: Array<{ value: string; label: string }>;
+  value?: string;
+  onSelect: (value: string) => void;
+  searchPlaceholder?: string;
+  emptyMessage?: string;
+}
+
+const BreadcrumbPagePicker = React.forwardRef<
+  HTMLButtonElement,
+  BreadcrumbPagePickerProps
+>(
+  (
+    {
+      children,
+      className,
+      siblings,
+      value,
+      onSelect,
+      searchPlaceholder = "Search...",
+      emptyMessage = "No items found.",
+      ...props
+    },
+    ref,
+  ) => {
+    const [open, setOpen] = React.useState(false);
+
+    return (
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <button
+            ref={ref}
+            aria-current="page"
+            className={cn(
+              "!text-body-medium-md inline-flex cursor-pointer items-center gap-[var(--space-xsm)] text-[var(--color-text-primary)] underline-offset-2 transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2",
+              className,
+            )}
+            {...props}
+          >
+            {children}
+            <ChevronDown className="h-[var(--size-3xsm)] w-[var(--size-3xsm)] shrink-0 text-[var(--color-icon-tertiary)]" />
+          </button>
+        </PopoverTrigger>
+        <PopoverContent align="start" className="min-w-[16rem] p-0">
+          <Command>
+            <CommandInput placeholder={searchPlaceholder} />
+            <CommandList>
+              <CommandEmpty>{emptyMessage}</CommandEmpty>
+              <CommandGroup>
+                {siblings.map((sibling) => (
+                  <CommandItem
+                    key={sibling.value}
+                    value={sibling.value}
+                    onSelect={(v) => {
+                      onSelect(v);
+                      setOpen(false);
+                    }}
+                  >
+                    {sibling.label}
+                    <Check
+                      className={cn(
+                        "ml-auto h-4 w-4 text-[var(--color-icon-brand-bold)]",
+                        value === sibling.value ? "opacity-100" : "opacity-0",
+                      )}
+                    />
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    );
+  },
+);
+BreadcrumbPagePicker.displayName = "BreadcrumbPagePicker";
+
 const BreadcrumbSeparator = ({
   children,
   className,
@@ -120,6 +207,7 @@ export {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbPage,
+  BreadcrumbPagePicker,
   BreadcrumbSeparator,
   BreadcrumbEllipsis,
 };

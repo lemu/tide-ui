@@ -1,3 +1,4 @@
+import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import {
   Breadcrumb,
@@ -6,6 +7,7 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
+  BreadcrumbPagePicker,
   BreadcrumbSeparator,
 } from '../components/fundamental/breadcrumb'
 import { Icon } from '../components/fundamental/icon'
@@ -492,4 +494,40 @@ export const LongPathExamples: Story = {
       </div>
     </div>
   ),
+}
+
+export const WithSiblingPicker: Story = {
+  render: () => {
+    const [current, setCurrent] = React.useState('recap-001')
+    const siblings = [
+      { value: 'recap-001', label: 'VLCC Baltic Star – Q1 2024' },
+      { value: 'recap-002', label: 'Aframax Nordic Wind – Q1 2024' },
+      { value: 'recap-003', label: 'Suezmax Pacific Dawn – Q2 2024' },
+      { value: 'recap-004', label: 'VLCC Golden Arrow – Q2 2024' },
+    ]
+    const currentLabel = siblings.find((s) => s.value === current)?.label ?? ''
+    return (
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/agreements">Agreements</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/agreements/recaps">Recaps</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPagePicker
+              siblings={siblings}
+              value={current}
+              onSelect={setCurrent}
+            >
+              {currentLabel}
+            </BreadcrumbPagePicker>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+    )
+  },
 }

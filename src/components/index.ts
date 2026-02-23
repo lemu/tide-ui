@@ -325,8 +325,10 @@ export {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
+  BreadcrumbPagePicker,
   BreadcrumbSeparator,
 } from './fundamental/breadcrumb'
+export type { BreadcrumbPagePickerProps } from './fundamental/breadcrumb'
 
 // Sidebar components
 export {
