@@ -204,12 +204,24 @@ const defaultNavigationData: AppFrameNavigationData = {
       icon: 'globe',
       url: '/global-market',
       isActive: false,
+      items: [
+        { title: 'Supply', url: '/global-market/supply', isActive: false },
+        { title: 'Commodities', url: '/global-market/commodities', isActive: false },
+        { title: 'Freight', url: '/global-market/freight', isActive: false },
+        { title: 'Routes', url: '/global-market/routes', isActive: false },
+      ],
     },
     {
       title: 'Assets',
       icon: 'container',
       url: '/assets',
       isActive: false,
+      items: [
+        { title: 'Vessels', url: '/assets/vessels', isActive: false },
+        { title: 'Fleets', url: '/assets/fleets', isActive: false },
+        { title: 'Ports', url: '/assets/ports', isActive: false },
+        { title: 'Canals', url: '/assets/canals', isActive: false },
+      ],
     },
     {
       title: 'Fixtures',
@@ -598,25 +610,112 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
               <SidebarMenu>
                 {navigationData.intelligence.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <SidebarMenuButton
-                          isActive={item.isActive}
-                          onClick={(e) => {
-                            if (onNavigate) {
-                              e.preventDefault()
-                              onNavigate(item.url)
-                            }
-                          }}
-                        >
-                          <Icon name={item.icon} size="sm" />
-                          <span>{item.title}</span>
-                        </SidebarMenuButton>
-                      </TooltipTrigger>
-                      <TooltipContent side="right" className="hidden group-data-[collapsible=icon]:block">
-                        {getTooltipText(item)}
-                      </TooltipContent>
-                    </Tooltip>
+                    {item.items && item.items.length > 0 ? (
+                      <>
+                        {/* Expanded state */}
+                        <div className="group-data-[collapsible=icon]:hidden">
+                          <SidebarMenuButton
+                            isActive={item.isActive && !item.items?.length}
+                            onClick={() => toggleExpanded(item.title)}
+                          >
+                            <Icon name={item.icon} size="sm" />
+                            <span>{item.title}</span>
+                            <Icon
+                              name="chevron-right"
+                              size="sm"
+                              className={`ml-auto transition-transform ${
+                                expandedItems[item.title] ? 'rotate-90' : ''
+                              }`}
+                            />
+                          </SidebarMenuButton>
+                        </div>
+
+                        {/* Submenu items */}
+                        {item.items && item.items.length > 0 && expandedItems[item.title] && (
+                          <SidebarMenuSub>
+                            {item.items.map((subItem) => (
+                              <SidebarMenuSubItem key={subItem.title}>
+                                <SidebarMenuSubButton
+                                  isActive={subItem.isActive}
+                                  onClick={(e) => {
+                                    if (onNavigate) {
+                                      e.preventDefault()
+                                      onNavigate(subItem.url)
+                                    }
+                                  }}
+                                >
+                                  <span>{subItem.title}</span>
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                            ))}
+                          </SidebarMenuSub>
+                        )}
+
+                        {/* Collapsed state */}
+                        <div className="hidden group-data-[collapsible=icon]:block">
+                          <DropdownMenu>
+                            <Tooltip>
+                              <DropdownMenuTrigger asChild>
+                                <TooltipTrigger asChild>
+                                  <SidebarMenuButton
+                                    isActive={hasActiveChild(item)}
+                                    className="w-full justify-center"
+                                  >
+                                    <Icon name={item.icon} size="sm" />
+                                  </SidebarMenuButton>
+                                </TooltipTrigger>
+                              </DropdownMenuTrigger>
+                              <TooltipContent side="right" className="hidden group-data-[collapsible=icon]:block">
+                                {getTooltipText(item)}
+                              </TooltipContent>
+                            </Tooltip>
+                            <DropdownMenuContent side="right" sideOffset={8} align="start">
+                              <DropdownMenuLabel className="text-body-medium-sm font-medium">
+                                {item.title}
+                              </DropdownMenuLabel>
+                              <DropdownMenuSeparator />
+                              {item.items.map((subItem) => (
+                                <DropdownMenuItem
+                                  key={subItem.title}
+                                  className={
+                                    subItem.isActive
+                                      ? 'bg-[var(--color-background-blue-subtle-selected)] text-[var(--color-text-brand-bold)]'
+                                      : ''
+                                  }
+                                  onSelect={() => {
+                                    if (onNavigate) {
+                                      onNavigate(subItem.url)
+                                    }
+                                  }}
+                                >
+                                  {subItem.title}
+                                </DropdownMenuItem>
+                              ))}
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </div>
+                      </>
+                    ) : (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <SidebarMenuButton
+                            isActive={item.isActive}
+                            onClick={(e) => {
+                              if (onNavigate) {
+                                e.preventDefault()
+                                onNavigate(item.url)
+                              }
+                            }}
+                          >
+                            <Icon name={item.icon} size="sm" />
+                            <span>{item.title}</span>
+                          </SidebarMenuButton>
+                        </TooltipTrigger>
+                        <TooltipContent side="right" className="hidden group-data-[collapsible=icon]:block">
+                          {getTooltipText(item)}
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
                   </SidebarMenuItem>
                 ))}
               </SidebarMenu>
