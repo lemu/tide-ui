@@ -95,6 +95,11 @@ export interface AppFrameProps {
    */
   headerContent?: React.ReactNode
   /**
+   * Tabs to display in the header, to the left of headerActions.
+   * Rendered with a dot separator between tabs and actions.
+   */
+  headerTabs?: React.ReactNode
+  /**
    * Actions to display in the header (buttons, menus, etc.).
    * Rendered on the right side of the header with ml-auto.
    * This provides a dedicated slot for page-specific actions.
@@ -1327,6 +1332,7 @@ export function AppFrame({
   teams = defaultTeams,
   defaultSidebarOpen = true,
   headerContent,
+  headerTabs,
   headerActions,
   children,
   onNavigate,
@@ -1364,7 +1370,7 @@ export function AppFrame({
           onNavigationModeChange={setNavigationMode}
         />
         <SidebarInset>
-          {(headerContent || headerActions) && (
+          {(headerContent || headerActions || headerTabs) && (
             <header className="flex h-12 shrink-0 items-center gap-2 border-b border-[var(--color-border-primary-subtle)] transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 box-border px-[var(--space-md)]">
               <SidebarToggleWithTooltip />
               <Separator layout="horizontal" className="mr-2 h-4" />
@@ -1374,12 +1380,22 @@ export function AppFrame({
                 {headerContent}
               </div>
 
-              {/* Right side: Actions */}
-              {headerActions && (
-                <div className="flex items-center gap-2 ml-auto">
-                  {headerActions}
-                </div>
-              )}
+              {/* Tabs + dot separator + actions — all pushed right */}
+              <div className="flex items-center gap-2 ml-auto shrink-0">
+                {headerTabs && (
+                  <div className="flex items-center gap-2">
+                    {headerTabs}
+                  </div>
+                )}
+                {headerTabs && headerActions && (
+                  <span className="text-[var(--color-text-tertiary)] select-none" aria-hidden>•</span>
+                )}
+                {headerActions && (
+                  <div className="flex items-center gap-2">
+                    {headerActions}
+                  </div>
+                )}
+              </div>
             </header>
           )}
           <div className="flex flex-1 flex-col overflow-auto min-h-0 min-w-0">{children}</div>

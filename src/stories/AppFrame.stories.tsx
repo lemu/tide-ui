@@ -11,6 +11,7 @@ import {
   BreadcrumbSeparator,
 } from '../components/fundamental/breadcrumb'
 import { Button } from '../components/fundamental/button'
+import { Tabs, TabsList, TabsTrigger } from '../components/fundamental/tabs'
 import { DataTable } from '../components/product/data-table'
 import { ColumnDef } from '@tanstack/react-table'
 
@@ -48,6 +49,15 @@ export const Default: Story = {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+      }
+      headerTabs={
+        <Tabs defaultValue="overview">
+          <TabsList variant="pilled" size="sm">
+            <TabsTrigger value="overview" variant="pilled" size="sm">Overview</TabsTrigger>
+            <TabsTrigger value="analytics" variant="pilled" size="sm">Analytics</TabsTrigger>
+            <TabsTrigger value="history" variant="pilled" size="sm">History</TabsTrigger>
+          </TabsList>
+        </Tabs>
       }
       headerActions={
         <>
