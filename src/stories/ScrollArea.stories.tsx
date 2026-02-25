@@ -21,7 +21,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   render: () => (
     <div className="w-80">
-      <ScrollArea className="h-48 w-full rounded-md border p-4">
+      <ScrollArea className="h-48 w-full rounded-m border p-4">
         <div className="space-y-2">
           {Array.from({ length: 30 }, (_, i) => (
             <div key={i} className="text-body-sm">
@@ -38,7 +38,7 @@ export const Default: Story = {
 export const Horizontal: Story = {
   render: () => (
     <div className="w-80">
-      <ScrollArea className="w-full whitespace-nowrap rounded-md border">
+      <ScrollArea className="w-full whitespace-nowrap rounded-m border">
         <div className="flex w-max space-x-4 p-4">
           {Array.from({ length: 20 }, (_, i) => (
             <div
@@ -82,7 +82,7 @@ export const ChatMessages: Story = {
                     <span className="text-body-sm font-medium">{msg.user}</span>
                     <span className="text-caption-sm text-[var(--color-text-secondary)]">{msg.time}</span>
                   </div>
-                  <p className="text-body-sm bg-[var(--color-background-neutral-subtlest)] rounded-lg p-3">
+                  <p className="text-body-sm bg-[var(--color-background-neutral-subtlest)] rounded-l p-3">
                     {msg.message}
                   </p>
                 </div>
@@ -102,7 +102,7 @@ export const CodePreview: Story = {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Icon name="code" size="sm" />
+            <Icon name="code" size="s" />
             Code Preview
           </CardTitle>
         </CardHeader>
@@ -114,7 +114,7 @@ import { ScrollArea } from './components/ui/scroll-area'
 
 export function MyComponent() {
   return (
-    <ScrollArea className="h-48 w-full rounded-md border p-4">
+    <ScrollArea className="h-48 w-full rounded-m border p-4">
       <div className="space-y-2">
         {data.map((item, index) => (
           <div key={index} className="p-2 border rounded">
@@ -190,7 +190,7 @@ export const SidebarNavigation: Story = {
                   variant="ghost"
                   className="w-full justify-start h-auto p-2"
                 >
-                  <Icon name={item.icon as any} size="sm" className="mr-2" />
+                  <Icon name={item.icon as any} size="s" className="mr-2" />
                   <span className="flex-1 text-left">{item.label}</span>
                   {item.count && (
                     <Badge className="text-xs">

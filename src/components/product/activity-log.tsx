@@ -84,7 +84,7 @@ const ActivityLog = React.forwardRef<HTMLDivElement, ActivityLogProps>(
         aria-label={ariaLabel}
         aria-live="polite"
         aria-relevant="additions"
-        className={cn("flex flex-col gap-[var(--space-sm)]", className)}
+        className={cn("flex flex-col gap-[var(--space-s)]", className)}
         {...props}
       >
         {processedChildren}
@@ -174,7 +174,7 @@ const ActivityLogSeparator = React.memo(
           )}
           {...props}
         >
-          <div className="w-px h-[var(--space-lg)] bg-[var(--grey-alpha-100)]" />
+          <div className="w-px h-[var(--space-l)] bg-[var(--grey-alpha-100)]" />
         </div>
       );
     }
@@ -233,9 +233,9 @@ const ActivityLogHeader = React.forwardRef<HTMLDivElement, ActivityLogHeaderProp
       <div
         ref={!asCollapsibleTrigger ? ref : undefined}
         className={cn(
-          "flex gap-[var(--space-sm)] items-start w-full [&>*:first-child]:translate-y-[1px]",
+          "flex gap-[var(--space-s)] items-start w-full [&>*:first-child]:translate-y-[1px]",
           asCollapsibleTrigger &&
-            "cursor-pointer rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
+            "cursor-pointer rounded-s focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
           className
         )}
         {...props}
@@ -243,7 +243,7 @@ const ActivityLogHeader = React.forwardRef<HTMLDivElement, ActivityLogHeaderProp
         {avatarOrIcon}
         {description && chevron ? (
           // Group description and chevron together
-          <div className="inline-flex gap-[var(--space-xsm)] items-center min-w-0 flex-1">
+          <div className="inline-flex gap-[var(--space-xs)] items-center min-w-0 flex-1">
             {description}
             {chevron}
           </div>
@@ -282,7 +282,7 @@ const ActivityLogContent = React.forwardRef<
     <CollapsibleContent
       ref={ref}
       className={cn(
-        "mt-[var(--space-sm)] pl-[var(--space-sm)] ml-[7.5px] border-l border-l-[var(--grey-alpha-100)] max-w-[320px]",
+        "mt-[var(--space-s)] pl-[var(--space-s)] ml-[7.5px] border-l border-l-[var(--grey-alpha-100)] max-w-[320px]",
         "[.group:last-child_&]:border-l-0",
         className
       )}
@@ -306,7 +306,7 @@ const ActivityLogDescription = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "inline-flex flex-wrap gap-x-[var(--space-xsm)] gap-y-0 items-center min-w-0 [&]:text-body-sm text-[var(--color-text-primary)]",
+        "inline-flex flex-wrap gap-x-[var(--space-xs)] gap-y-0 items-center min-w-0 [&]:text-body-sm text-[var(--color-text-primary)]",
         className
       )}
       {...props}
@@ -362,7 +362,7 @@ const ActivityLogChevron = React.memo(
         >
           <Icon
             name="chevron-down"
-            size="sm"
+            size="s"
             color="tertiary"
             className="[.group[data-state=open]_&]:rotate-180"
           />
@@ -384,7 +384,7 @@ const ActivityLogValue = React.memo(
         <div
           ref={ref}
           className={cn(
-            "inline-flex items-center gap-[var(--space-xsm)] px-[4px] py-[2px] bg-[var(--color-background-neutral-subtlest)] border border-[var(--color-border-primary-medium)] rounded-xsm shrink",
+            "inline-flex items-center gap-[var(--space-xs)] px-[4px] py-[2px] bg-[var(--color-background-neutral-subtlest)] border border-[var(--color-border-primary-medium)] rounded-xs shrink",
             className
           )}
           {...props}

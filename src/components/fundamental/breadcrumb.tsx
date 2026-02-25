@@ -27,7 +27,7 @@ const BreadcrumbList = React.forwardRef<
   <ol
     ref={ref}
     className={cn(
-      "[&]:text-body-md flex  flex-wrap items-center gap-[var(--space-sm)] text-[var(--color-text-secondary)]",
+      "[&]:text-body-md flex  flex-wrap items-center gap-[var(--space-s)] text-[var(--color-text-secondary)]",
       className,
     )}
     {...props}
@@ -41,7 +41,7 @@ const BreadcrumbItem = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <li
     ref={ref}
-    className={cn("inline-flex items-center gap-[var(--space-sm)]", className)}
+    className={cn("inline-flex items-center gap-[var(--space-s)]", className)}
     {...props}
   />
 ));
@@ -59,7 +59,7 @@ const BreadcrumbLink = React.forwardRef<
     <Comp
       ref={ref}
       className={cn(
-        "rounded-xsm cursor-pointer underline-offset-2 transition-colors hover:text-[var(--color-text-primary)] hover:underline focus:ring-2 focus:ring-[var(--color-border-focused)] focus:ring-offset-2 focus:outline-none",
+        "rounded-xs cursor-pointer underline-offset-2 transition-colors hover:text-[var(--color-text-primary)] hover:underline focus:ring-2 focus:ring-[var(--color-border-focused)] focus:ring-offset-2 focus:outline-none",
         className,
       )}
       {...props}
@@ -121,13 +121,13 @@ const BreadcrumbPagePicker = React.forwardRef<
             ref={ref}
             aria-current="page"
             className={cn(
-              "!text-body-medium-md inline-flex cursor-pointer items-center gap-[var(--space-xsm)] text-[var(--color-text-primary)] underline-offset-2 transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2",
+              "!text-body-medium-md inline-flex cursor-pointer items-center gap-[var(--space-xs)] text-[var(--color-text-primary)] underline-offset-2 transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2",
               className,
             )}
             {...props}
           >
             {children}
-            <ChevronDown className="h-[var(--size-3xsm)] w-[var(--size-3xsm)] shrink-0 text-[var(--color-icon-tertiary)]" />
+            <ChevronDown className="h-[var(--size-3xs)] w-[var(--size-3xs)] shrink-0 text-[var(--color-icon-tertiary)]" />
           </button>
         </PopoverTrigger>
         <PopoverContent align="start" className="min-w-[16rem] p-0">
@@ -176,7 +176,7 @@ const BreadcrumbSeparator = ({
     {...props}
   >
     {children ?? (
-      <ArrowRight className="h-[var(--size-3xsm)] w-[var(--size-3xsm)]" />
+      <ArrowRight className="h-[var(--size-3xs)] w-[var(--size-3xs)]" />
     )}
   </li>
 );
@@ -190,12 +190,12 @@ const BreadcrumbEllipsis = ({
     role="presentation"
     aria-hidden="true"
     className={cn(
-      "flex h-[var(--size-2xsm)] w-[var(--size-2xsm)] items-center justify-center",
+      "flex h-[var(--size-2xs)] w-[var(--size-2xs)] items-center justify-center",
       className,
     )}
     {...props}
   >
-    <MoreHorizontal className="h-[var(--size-3xsm)] w-[var(--size-3xsm)] text-[var(--color-text-tertiary)]" />
+    <MoreHorizontal className="h-[var(--size-3xs)] w-[var(--size-3xs)] text-[var(--color-text-tertiary)]" />
     <span className="sr-only">More</span>
   </span>
 );

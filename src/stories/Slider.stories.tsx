@@ -162,7 +162,7 @@ export const ColorPicker: Story = {
           <CardContent className="space-y-4">
             <div className="space-y-4">
               <div 
-                className="w-full h-24 rounded-lg border border-[var(--color-border-primary-subtle)]"
+                className="w-full h-24 rounded-l border border-[var(--color-border-primary-subtle)]"
                 style={{ backgroundColor: rgbaColor }}
               />
               
@@ -268,7 +268,7 @@ export const MediaPlayer: Story = {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Icon name="music" size="sm" />
+              <Icon name="music" size="s" />
               Now Playing
             </CardTitle>
           </CardHeader>
@@ -295,18 +295,18 @@ export const MediaPlayer: Story = {
 
             {/* Playback controls */}
             <div className="flex items-center justify-center gap-4">
-              <Button variant="ghost" size="sm">
-                <Icon name="skip-back" size="sm" />
+              <Button variant="ghost" size="s">
+                <Icon name="skip-back" size="s" />
               </Button>
               <Button 
                 variant="ghost" 
-                size="sm"
+                size="s"
                 onClick={() => setIsPlaying(!isPlaying)}
               >
-                <Icon name={isPlaying ? "pause" : "play"} size="md" />
+                <Icon name={isPlaying ? "pause" : "play"} size="m" />
               </Button>
-              <Button variant="ghost" size="sm">
-                <Icon name="skip-forward" size="sm" />
+              <Button variant="ghost" size="s">
+                <Icon name="skip-forward" size="s" />
               </Button>
             </div>
 
@@ -316,13 +316,13 @@ export const MediaPlayer: Story = {
                 <Label className="flex items-center gap-2">
                   <Button 
                     variant="ghost" 
-                    size="sm" 
+                    size="s" 
                     className="h-6 w-6 p-0"
                     onClick={() => setIsMuted(!isMuted)}
                   >
                     <Icon 
                       name={isMuted || volume[0] === 0 ? "volume-x" : volume[0] < 50 ? "volume-1" : "volume-2"} 
-                      size="sm" 
+                      size="s" 
                     />
                   </Button>
                   Volume
@@ -500,7 +500,7 @@ export const SettingsPanel: Story = {
               <div className="flex gap-2">
                 <Button 
                   variant="ghost" 
-                  size="sm"
+                  size="s"
                   onClick={() => {
                     setSettings({
                       brightness: [100],
@@ -514,7 +514,7 @@ export const SettingsPanel: Story = {
                 >
                   Reset to Defaults
                 </Button>
-                <Button size="sm">Apply Changes</Button>
+                <Button size="s">Apply Changes</Button>
               </div>
             </div>
           </CardContent>

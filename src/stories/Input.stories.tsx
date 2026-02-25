@@ -16,7 +16,7 @@ const meta: Meta<typeof Input> = {
     },
     size: {
       control: { type: 'select' },
-      options: ['sm', 'md', 'lg'],
+      options: ['s', 'm', 'l'],
     },
     type: {
       control: { type: 'select' },
@@ -105,18 +105,18 @@ export const Number: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div className="flex flex-col gap-[var(--space-lg)] w-[320px]">
-      <div className="flex flex-col gap-[var(--space-sm)]">
-        <Label>Small (sm)</Label>
-        <Input size="sm" placeholder="Small input" />
+    <div className="flex flex-col gap-[var(--space-l)] w-[320px]">
+      <div className="flex flex-col gap-[var(--space-s)]">
+        <Label>Small (s)</Label>
+        <Input size="s" placeholder="Small input" />
       </div>
-      <div className="flex flex-col gap-[var(--space-sm)]">
-        <Label>Medium (md) - Default</Label>
-        <Input size="md" placeholder="Medium input" />
+      <div className="flex flex-col gap-[var(--space-s)]">
+        <Label>Medium (m) - Default</Label>
+        <Input size="m" placeholder="Medium input" />
       </div>
-      <div className="flex flex-col gap-[var(--space-sm)]">
-        <Label>Large (lg)</Label>
-        <Input size="lg" placeholder="Large input" />
+      <div className="flex flex-col gap-[var(--space-s)]">
+        <Label>Large (l)</Label>
+        <Input size="l" placeholder="Large input" />
       </div>
     </div>
   ),
@@ -124,8 +124,8 @@ export const Sizes: Story = {
 
 export const ErrorVariant: Story = {
   render: () => (
-    <div className="flex flex-col gap-[var(--space-lg)] w-[320px]">
-      <div className="flex flex-col gap-[var(--space-sm)]">
+    <div className="flex flex-col gap-[var(--space-l)] w-[320px]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <Label htmlFor="email-error">Email Address</Label>
         <Input
           id="email-error"
@@ -144,18 +144,18 @@ export const ErrorVariant: Story = {
 
 export const SearchSizes: Story = {
   render: () => (
-    <div className="flex flex-col gap-[var(--space-lg)] w-[320px]">
-      <div className="flex flex-col gap-[var(--space-sm)]">
+    <div className="flex flex-col gap-[var(--space-l)] w-[320px]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <Label>Small Search</Label>
-        <Input size="sm" type="search" placeholder="Search small..." />
+        <Input size="s" type="search" placeholder="Search small..." />
       </div>
-      <div className="flex flex-col gap-[var(--space-sm)]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <Label>Medium Search - Default</Label>
-        <Input size="md" type="search" placeholder="Search medium..." />
+        <Input size="m" type="search" placeholder="Search medium..." />
       </div>
-      <div className="flex flex-col gap-[var(--space-sm)]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <Label>Large Search</Label>
-        <Input size="lg" type="search" placeholder="Search large..." />
+        <Input size="l" type="search" placeholder="Search large..." />
       </div>
     </div>
   ),
@@ -163,44 +163,44 @@ export const SearchSizes: Story = {
 
 export const AllVariants: Story = {
   render: () => (
-    <div className="flex flex-col gap-[var(--space-2xlg)] w-[400px]">
+    <div className="flex flex-col gap-[var(--space-3xl)] w-[400px]">
       {/* Default Variant */}
-      <div className="flex flex-col gap-[var(--space-md)]">
+      <div className="flex flex-col gap-[var(--space-m)]">
         <h3 className="text-heading-sm">Default Variant</h3>
-        <div className="flex flex-col gap-[var(--space-sm)]">
-          <Input size="sm" placeholder="Small" />
-          <Input size="md" placeholder="Medium" />
-          <Input size="lg" placeholder="Large" />
+        <div className="flex flex-col gap-[var(--space-s)]">
+          <Input size="s" placeholder="Small" />
+          <Input size="m" placeholder="Medium" />
+          <Input size="l" placeholder="Large" />
         </div>
       </div>
 
       {/* Error Variant */}
-      <div className="flex flex-col gap-[var(--space-md)]">
+      <div className="flex flex-col gap-[var(--space-m)]">
         <h3 className="text-heading-sm">Error Variant</h3>
-        <div className="flex flex-col gap-[var(--space-sm)]">
-          <Input size="sm" variant="error" placeholder="Small error" />
-          <Input size="md" variant="error" placeholder="Medium error" />
-          <Input size="lg" variant="error" placeholder="Large error" />
+        <div className="flex flex-col gap-[var(--space-s)]">
+          <Input size="s" variant="error" placeholder="Small error" />
+          <Input size="m" variant="error" placeholder="Medium error" />
+          <Input size="l" variant="error" placeholder="Large error" />
         </div>
       </div>
 
       {/* Search Type */}
-      <div className="flex flex-col gap-[var(--space-md)]">
+      <div className="flex flex-col gap-[var(--space-m)]">
         <h3 className="text-heading-sm">Search Type</h3>
-        <div className="flex flex-col gap-[var(--space-sm)]">
-          <Input size="sm" type="search" placeholder="Small search" />
-          <Input size="md" type="search" placeholder="Medium search" />
-          <Input size="lg" type="search" placeholder="Large search" />
+        <div className="flex flex-col gap-[var(--space-s)]">
+          <Input size="s" type="search" placeholder="Small search" />
+          <Input size="m" type="search" placeholder="Medium search" />
+          <Input size="l" type="search" placeholder="Large search" />
         </div>
       </div>
 
       {/* Disabled State */}
-      <div className="flex flex-col gap-[var(--space-md)]">
+      <div className="flex flex-col gap-[var(--space-m)]">
         <h3 className="text-heading-sm">Disabled State</h3>
-        <div className="flex flex-col gap-[var(--space-sm)]">
-          <Input size="sm" disabled placeholder="Small disabled" />
-          <Input size="md" disabled placeholder="Medium disabled" />
-          <Input size="lg" disabled placeholder="Large disabled" />
+        <div className="flex flex-col gap-[var(--space-s)]">
+          <Input size="s" disabled placeholder="Small disabled" />
+          <Input size="m" disabled placeholder="Medium disabled" />
+          <Input size="l" disabled placeholder="Large disabled" />
         </div>
       </div>
     </div>

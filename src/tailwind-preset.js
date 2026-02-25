@@ -40,20 +40,20 @@ export default {
       
       // Design System Spacing
       spacing: {
-        'space-xsm': 'var(--space-xsm)',
-        'space-sm': 'var(--space-sm)', 
-        'space-md': 'var(--space-md)',
-        'space-lg': 'var(--space-lg)',
-        'space-xlg': 'var(--space-xlg)',
+        'space-xs': 'var(--space-xs)',
+        'space-s': 'var(--space-s)',
+        'space-m': 'var(--space-m)',
+        'space-l': 'var(--space-l)',
+        'space-2xl': 'var(--space-2xl)',
       },
-      
+
       // Design System Sizing
       size: {
-        'size-xsm': 'var(--size-xsm)',
-        'size-sm': 'var(--size-sm)',
-        'size-md': 'var(--size-md)',
-        'size-lg': 'var(--size-lg)',
-        'size-xlg': 'var(--size-xlg)',
+        'size-xs': 'var(--size-xs)',
+        'size-s': 'var(--size-s)',
+        'size-m': 'var(--size-m)',
+        'size-l': 'var(--size-l)',
+        'size-xl': 'var(--size-xl)',
       },
       
       // Typography utilities (already included in your CSS)
@@ -84,11 +84,11 @@ export default {
       // Custom border radius values
       borderRadius: {
         'null': '0',
-        'xsm': '0.125rem', // 2px
-        'sm': '0.25rem',   // 4px
-        'md': '0.375rem',  // 6px
-        'lg': '0.5rem',    // 8px
-        'xlg': '0.75rem',  // 12px
+        'xs': '0.125rem', // 2px
+        's': '0.25rem',   // 4px
+        'm': '0.375rem',  // 6px
+        'l': '0.5rem',    // 8px
+        'xl': '0.75rem',  // 12px
       },
       
       // Custom shadows

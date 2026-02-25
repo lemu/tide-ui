@@ -124,7 +124,7 @@ function Calendar(calendarProps: CalendarProps) {
     className: cn(
       // relative for nav positioning; padding creates space around entire calendar including buttons
       "relative",
-      "py-[var(--space-md)] px-[var(--space-sm)]",
+      "py-[var(--space-m)] px-[var(--space-s)]",
       className
     ),
     onDayMouseEnter: handleDayMouseEnter,
@@ -138,16 +138,16 @@ function Calendar(calendarProps: CalendarProps) {
     },
     classNames: {
       // months: no 'relative' so nav positions to root; horizontal margin creates space for side buttons
-      months: "flex flex-col sm:flex-row sm:gap-[var(--space-lg)] mx-[calc(var(--size-md)+var(--space-sm))]",
-      month: "space-y-[var(--space-lg)]",
-      month_caption: "flex justify-center pt-[var(--space-xsm)] relative items-center",
+      months: "flex flex-col sm:flex-row sm:gap-[var(--space-l)] mx-[calc(var(--size-m)+var(--space-s))]",
+      month: "space-y-[var(--space-l)]",
+      month_caption: "flex justify-center pt-[var(--space-xs)] relative items-center",
       caption_label: "text-body-medium-md text-[var(--color-text-primary)]",
       // nav: fills root, flexbox positions buttons at left/right edges, vertically centered
-      nav: "absolute inset-0 flex justify-between items-center px-[var(--space-sm)] pointer-events-none z-10",
+      nav: "absolute inset-0 flex justify-between items-center px-[var(--space-s)] pointer-events-none z-10",
       button_previous: cn(
         "pointer-events-auto",
-        "inline-flex items-center justify-center rounded-md",
-        "w-[var(--size-md)] h-[var(--size-md)] p-0",
+        "inline-flex items-center justify-center rounded-m",
+        "w-[var(--size-m)] h-[var(--size-m)] p-0",
         "bg-[var(--color-background-neutral-subtlest)] text-[var(--color-text-primary)]",
         "border border-[var(--color-border-action-outline)]",
         "hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:border-[var(--color-border-action-outline-hovered)] hover:shadow-sm",
@@ -156,22 +156,22 @@ function Calendar(calendarProps: CalendarProps) {
       ),
       button_next: cn(
         "pointer-events-auto",
-        "inline-flex items-center justify-center rounded-md",
-        "w-[var(--size-md)] h-[var(--size-md)] p-0",
+        "inline-flex items-center justify-center rounded-m",
+        "w-[var(--size-m)] h-[var(--size-m)] p-0",
         "bg-[var(--color-background-neutral-subtlest)] text-[var(--color-text-primary)]",
         "border border-[var(--color-border-action-outline)]",
         "hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:border-[var(--color-border-action-outline-hovered)] hover:shadow-sm",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
         "disabled:pointer-events-none disabled:opacity-50"
       ),
-      month_grid: "w-full border-collapse space-y-[var(--space-xsm)]",
+      month_grid: "w-full border-collapse space-y-[var(--space-xs)]",
       weekdays: "flex",
-      weekday: "text-[var(--color-text-tertiary)] rounded-md w-[var(--size-md)] font-normal text-caption-medium-sm",
-      week: "flex w-full mt-[var(--space-sm)]",
-      day: "h-[var(--size-md)] w-[var(--size-md)] text-center text-body-sm p-0 relative focus-within:relative focus-within:z-20",
+      weekday: "text-[var(--color-text-tertiary)] rounded-m w-[var(--size-m)] font-normal text-caption-medium-sm",
+      week: "flex w-full mt-[var(--space-s)]",
+      day: "h-[var(--size-m)] w-[var(--size-m)] text-center text-body-sm p-0 relative focus-within:relative focus-within:z-20",
       day_button: cn(
-        "inline-flex items-center justify-center rounded-md",
-        "w-[var(--size-md)] h-[var(--size-md)] p-0",
+        "inline-flex items-center justify-center rounded-m",
+        "w-[var(--size-m)] h-[var(--size-m)] p-0",
         "text-body-sm font-normal text-[var(--color-text-primary)]",
         "hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)]",
@@ -179,7 +179,7 @@ function Calendar(calendarProps: CalendarProps) {
       ),
       range_start: "day-range-start",
       range_end: "day-range-end",
-      selected: "!bg-[var(--color-background-blue-bold)] [&_button]:!text-white [&_button]:after:!bg-white rounded-md",
+      selected: "!bg-[var(--color-background-blue-bold)] [&_button]:!text-white [&_button]:after:!bg-white rounded-m",
       today: "[&_button]:relative [&_button]:after:content-[''] [&_button]:after:absolute [&_button]:after:bottom-1 [&_button]:after:left-1/2 [&_button]:after:-translate-x-1/2 [&_button]:after:w-1 [&_button]:after:h-1 [&_button]:after:rounded-full [&_button]:after:bg-red-500 font-medium",
       outside: "day-outside text-[var(--color-text-tertiary)] opacity-50 aria-selected:bg-[var(--color-background-blue-subtle)] aria-selected:text-[var(--color-text-tertiary)] aria-selected:opacity-30",
       disabled: "text-[var(--color-text-disabled)] opacity-50",
@@ -198,7 +198,7 @@ function Calendar(calendarProps: CalendarProps) {
       Chevron: ({ orientation, ...props }: any) => {
         const iconName = orientation === "left" ? "chevron-left" : "chevron-right";
         const { size, ...iconProps } = props;
-        return <Icon name={iconName} size="sm" {...iconProps} />;
+        return <Icon name={iconName} size="s" {...iconProps} />;
       },
     },
     ...props,

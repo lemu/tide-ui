@@ -259,7 +259,7 @@ export function AutocompleteSearch({
                 e.preventDefault()
               }
             }}
-            className="w-[--radix-popover-trigger-width] p-[var(--space-sm)]"
+            className="w-[--radix-popover-trigger-width] p-[var(--space-s)]"
           >
             <CommandList id={listboxId} role="listbox" aria-label="Autocomplete suggestions">
               {filteredSuggestions.length > 0 ? (
@@ -273,11 +273,11 @@ export function AutocompleteSearch({
                         value={`${suggestion.value}|${suggestion.filterLabel}`}
                         onMouseDown={(e) => e.preventDefault()}
                         onSelect={() => handleSelect(suggestion)}
-                        className="text-body-md h-[var(--size-md)] py-0 gap-[var(--space-md)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                        className="text-body-md h-[var(--size-m)] py-0 gap-[var(--space-m)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                       >
                         <HighlightedText text={suggestion.label} search={value} />
                         {hasFilterContext && (
-                          <span className="ml-auto flex items-center gap-[var(--space-xsm)] text-caption-sm text-[var(--color-text-tertiary)]">
+                          <span className="ml-auto flex items-center gap-[var(--space-xs)] text-caption-sm text-[var(--color-text-tertiary)]">
                             <FilterIcon className="w-[12px] h-[12px]" />
                             {suggestion.filterLabel}
                           </span>

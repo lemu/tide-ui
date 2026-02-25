@@ -700,7 +700,7 @@ const userColumns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const role = row.getValue('role') as string
       return (
-        <Badge size="sm">
+        <Badge size="s">
           {role}
         </Badge>
       )
@@ -712,7 +712,7 @@ const userColumns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const status = row.getValue('status') as string
       return (
-        <Badge size="sm">
+        <Badge size="s">
           {status}
         </Badge>
       )
@@ -754,7 +754,7 @@ export const LoadingState: Story = {
     return (
       <div className="w-full max-w-4xl space-y-4">
         <div className="flex gap-2">
-          <Button onClick={() => setIsLoading(!isLoading)} size="sm">
+          <Button onClick={() => setIsLoading(!isLoading)} size="s">
             {isLoading ? 'Hide Loading' : 'Show Loading'}
           </Button>
         </div>
@@ -792,7 +792,7 @@ export const LoadingStateWithPagination: Story = {
     return (
       <div className="w-full max-w-4xl space-y-4">
         <div className="flex gap-2 items-center">
-          <Button onClick={() => setIsLoading(!isLoading)} size="sm">
+          <Button onClick={() => setIsLoading(!isLoading)} size="s">
             {isLoading ? 'Hide Loading' : 'Show Loading'}
           </Button>
           <span className="text-body-sm text-[var(--color-text-secondary)]">
@@ -847,7 +847,7 @@ export const LoadingStateWithManyColumns: Story = {
     return (
       <div className="w-full space-y-4">
         <div className="flex gap-2">
-          <Button onClick={() => setIsLoading(!isLoading)} size="sm">
+          <Button onClick={() => setIsLoading(!isLoading)} size="s">
             {isLoading ? 'Show Data' : 'Show Loading'}
           </Button>
           <div className="text-body-sm text-[var(--color-text-secondary)]">
@@ -1171,17 +1171,17 @@ export const VerticalAlignment: Story = {
     ]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1400px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Vertical Alignment Options</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Vertical Alignment Options</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-m)]">
               This example demonstrates how different vertical alignment options affect cell content
               layout. Notice how cells with varying content heights align differently based on their
               column configuration.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)] space-y-[var(--space-sm)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)] space-y-[var(--space-s)]">
+              <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm font-medium text-[var(--color-text-accent)]">
                   Column Alignment Configuration
@@ -1288,16 +1288,16 @@ export const CustomColumnWidth: Story = {
     ]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1400px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Custom Column Width</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Custom Column Width</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               Set custom column widths using the <code>size</code>, <code>minSize</code>, and <code>maxSize</code> properties
               in your column definitions. These properties control the initial and constrained widths of each column.
             </p>
-            <div className="bg-[var(--blue-25)] border border-[var(--blue-100)] rounded-md p-[var(--space-md)] mb-[var(--space-md)]">
-              <div className="flex items-start gap-[var(--space-sm)]">
+            <div className="bg-[var(--blue-25)] border border-[var(--blue-100)] rounded-m p-[var(--space-m)] mb-[var(--space-m)]">
+              <div className="flex items-start gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--blue-700)] mt-0.5" />
                 <div className="flex-1">
                   <p className="text-body-sm text-[var(--blue-900)] font-medium mb-1">Column Width Properties:</p>
@@ -1359,7 +1359,7 @@ export const NestedColumnHeaders: Story = {
               const trader = row.getValue('trader') as string
               if (!trader) return null
               return (
-                <div className="flex items-center gap-[var(--space-sm)]">
+                <div className="flex items-center gap-[var(--space-s)]">
                   <div className="h-6 w-6 rounded-full bg-[var(--color-background-brand-subtle)] flex items-center justify-center">
                     <span className="text-caption-sm font-medium text-[var(--color-text-brand-bold)]">
                       {trader.charAt(0)}
@@ -1475,17 +1475,17 @@ export const NestedColumnHeaders: Story = {
     const flatColumns = nestedHeaders.flatMap(group => group.columns)
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1400px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Nested Column Headers</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Nested Column Headers</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               This example demonstrates nested column headers that organize related columns under parent categories.
               The header groups provide logical organization for complex datasets, commonly used in financial reports,
               dashboards, and analytical interfaces.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+              <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
                   Column groups can have custom styling and span multiple sub-columns. This creates a clear visual hierarchy for complex data structures.
@@ -1493,20 +1493,20 @@ export const NestedColumnHeaders: Story = {
               </div>
             </div>
 
-            <div className="mt-[var(--space-md)] grid grid-cols-1 md:grid-cols-3 gap-4 text-body-sm">
-              <div className="bg-[var(--color-surface-secondary)] rounded-md p-[var(--space-md)]">
+            <div className="mt-[var(--space-m)] grid grid-cols-1 md:grid-cols-3 gap-4 text-body-sm">
+              <div className="bg-[var(--color-surface-secondary)] rounded-m p-[var(--space-m)]">
                 <div className="text-heading-sm font-semibold text-[var(--color-text-primary)]">
                   {nestedHeaders.length}
                 </div>
                 <div className="text-[var(--color-text-secondary)]">Header Groups</div>
               </div>
-              <div className="bg-[var(--color-surface-secondary)] rounded-md p-[var(--space-md)]">
+              <div className="bg-[var(--color-surface-secondary)] rounded-m p-[var(--space-m)]">
                 <div className="text-heading-sm font-semibold text-[var(--color-text-primary)]">
                   {flatColumns.length}
                 </div>
                 <div className="text-[var(--color-text-secondary)]">Total Columns</div>
               </div>
-              <div className="bg-[var(--color-surface-secondary)] rounded-md p-[var(--space-md)]">
+              <div className="bg-[var(--color-surface-secondary)] rounded-m p-[var(--space-m)]">
                 <div className="text-heading-sm font-semibold text-[var(--color-text-primary)]">
                   2 Levels
                 </div>
@@ -1738,16 +1738,16 @@ export const ColumnVisibility: Story = {
     ]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Column Visibility Controls</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Column Visibility Controls</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               Users can show and hide columns using the view options dropdown. Click the three-dot menu in the
               table header to access column visibility controls. Toggle any column on or off to customize the view.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+              <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="eye" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
                   Try hiding some columns (like Trader, Status, or Notional) to see how the table adapts.
@@ -1890,26 +1890,26 @@ export const ColumnResizing: Story = {
     ]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1400px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Column Resizing</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Column Resizing</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               This example shows initial column widths set via <code>initialState.columnSizing</code>.
               Drag the resize handles (vertical lines) on the right edge of column headers to adjust widths.
               Column sizes are automatically saved to localStorage and restored on page reload.
             </p>
-            <div className="space-y-[var(--space-sm)] mb-[var(--space-md)]">
-              <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-                <div className="flex items-center gap-[var(--space-sm)]">
+            <div className="space-y-[var(--space-s)] mb-[var(--space-m)]">
+              <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+                <div className="flex items-center gap-[var(--space-s)]">
                   <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                   <span className="text-body-sm text-[var(--color-text-accent)]">
                     Try resizing columns and then refreshing the page - your column widths will be preserved!
                   </span>
                 </div>
               </div>
-              <div className="bg-[var(--blue-25)] border border-[var(--blue-100)] rounded-md p-[var(--space-md)]">
-                <div className="flex items-start gap-[var(--space-sm)]">
+              <div className="bg-[var(--blue-25)] border border-[var(--blue-100)] rounded-m p-[var(--space-m)]">
+                <div className="flex items-start gap-[var(--space-s)]">
                   <Icon name="lightbulb" className="h-4 w-4 text-[var(--blue-700)] mt-0.5" />
                   <div className="flex-1">
                     <p className="text-body-sm text-[var(--blue-900)] font-medium mb-1">Text Truncation:</p>
@@ -1946,9 +1946,9 @@ export const ColumnResizing: Story = {
             }}
           />
 
-          <div className="mt-[var(--space-2xlg)] mb-[var(--space-lg)]">
-            <h3 className="text-heading-md mb-[var(--space-sm)]">Column Resizing with Horizontal Borders</h3>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+          <div className="mt-[var(--space-3xl)] mb-[var(--space-l)]">
+            <h3 className="text-heading-md mb-[var(--space-s)]">Column Resizing with Horizontal Borders</h3>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-m)]">
               This table has horizontal border lines enabled via <code>borderStyle="horizontal"</code>.
             </p>
           </div>
@@ -1975,15 +1975,15 @@ export const ColumnResizing: Story = {
             }}
           />
 
-          <div className="mt-[var(--space-2xlg)] mb-[var(--space-lg)]">
-            <h3 className="text-heading-md mb-[var(--space-sm)]">Text Truncation with TextLinks</h3>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+          <div className="mt-[var(--space-3xl)] mb-[var(--space-l)]">
+            <h3 className="text-heading-md mb-[var(--space-s)]">Text Truncation with TextLinks</h3>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               This example demonstrates how text automatically truncates with ellipsis (...) when columns are resized to narrow widths.
               Hover over truncated text to see the full content in a tooltip.
             </p>
-            <div className="space-y-[var(--space-sm)] mb-[var(--space-md)]">
-              <div className="bg-[var(--blue-25)] border border-[var(--blue-100)] rounded-md p-[var(--space-md)]">
-                <div className="flex items-start gap-[var(--space-sm)]">
+            <div className="space-y-[var(--space-s)] mb-[var(--space-m)]">
+              <div className="bg-[var(--blue-25)] border border-[var(--blue-100)] rounded-m p-[var(--space-m)]">
+                <div className="flex items-start gap-[var(--space-s)]">
                   <Icon name="lightbulb" className="h-4 w-4 text-[var(--blue-700)] mt-0.5" />
                   <div className="flex-1">
                     <p className="text-body-sm text-[var(--blue-900)] font-medium mb-1">Per-Column Control:</p>
@@ -2142,7 +2142,7 @@ export const ColumnResizing: Story = {
                       target="_blank"
                       icon="external-link"
                       iconPosition="right"
-                      size="sm"
+                      size="s"
                     >
                       {row.getValue('documentUrl')}
                     </TextLink>
@@ -2161,7 +2161,7 @@ export const ColumnResizing: Story = {
                       href="#"
                       icon="paperclip"
                       iconPosition="left"
-                      size="sm"
+                      size="s"
                     >
                       {row.getValue('attachment')}
                     </TextLink>
@@ -2178,14 +2178,14 @@ export const ColumnResizing: Story = {
                   cell: ({ row }) => {
                     const links = row.getValue('relatedLinks') as Array<{ label: string; href: string }>
                     return (
-                      <div className="flex flex-col gap-[var(--space-xsm)]">
+                      <div className="flex flex-col gap-[var(--space-xs)]">
                         {links.map((link, index) => (
                           <TextLink
                             key={index}
                             href={link.href}
                             icon="link"
                             iconPosition="left"
-                            size="sm"
+                            size="s"
                           >
                             {link.label}
                           </TextLink>
@@ -2333,16 +2333,16 @@ export const ColumnReordering: Story = {
     ]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Column Reordering</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Column Reordering</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               Drag and drop column headers to reorder columns. Hover over column headers to see the grab cursor,
               then click and drag to move columns to your preferred position.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+              <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="move" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
                   Try dragging the "Status" column to the beginning, or reorder numeric columns to group them together.
@@ -2479,8 +2479,8 @@ export const RowActions: Story = {
           return (
             <div className="flex items-center justify-end gap-2">
               <span className="tabular-nums">{rate}%</span>
-              {rate > 40 && <Icon name="trending-up" size="sm" className="text-[var(--color-text-error-bold)]" />}
-              {rate <= 20 && <Icon name="trending-down" size="sm" className="text-[var(--color-text-success-bold)]" />}
+              {rate > 40 && <Icon name="trending-up" size="s" className="text-[var(--color-text-error-bold)]" />}
+              {rate <= 20 && <Icon name="trending-down" size="s" className="text-[var(--color-text-success-bold)]" />}
             </div>
           )
         },
@@ -2501,9 +2501,9 @@ export const RowActions: Story = {
         cell: ({ row }) => {
           return (
             <div className="flex items-center justify-end gap-1">
-              <Button size="sm" variant="ghost" icon="edit" />
-              <Button size="sm" variant="ghost" icon="trash-2" />
-              <Button size="sm" variant="ghost" icon="more-horizontal" />
+              <Button size="s" variant="ghost" icon="edit" />
+              <Button size="s" variant="ghost" icon="trash-2" />
+              <Button size="s" variant="ghost" icon="more-horizontal" />
             </div>
           )
         },
@@ -2545,8 +2545,8 @@ export const RowActions: Story = {
           return (
             <div className="flex items-center justify-end gap-2">
               <span className="tabular-nums">{rate}%</span>
-              {rate > 40 && <Icon name="trending-up" size="sm" className="text-[var(--color-text-error-bold)]" />}
-              {rate <= 20 && <Icon name="trending-down" size="sm" className="text-[var(--color-text-success-bold)]" />}
+              {rate > 40 && <Icon name="trending-up" size="s" className="text-[var(--color-text-error-bold)]" />}
+              {rate <= 20 && <Icon name="trending-down" size="s" className="text-[var(--color-text-success-bold)]" />}
             </div>
           )
         },
@@ -2568,9 +2568,9 @@ export const RowActions: Story = {
         cell: ({ row }) => {
           return (
             <div className="flex items-center justify-end gap-1">
-              <Button size="sm" variant="ghost" icon="edit" />
-              <Button size="sm" variant="ghost" icon="trash-2" />
-              <Button size="sm" variant="ghost" icon="more-horizontal" />
+              <Button size="s" variant="ghost" icon="edit" />
+              <Button size="s" variant="ghost" icon="trash-2" />
+              <Button size="s" variant="ghost" icon="more-horizontal" />
             </div>
           )
         },
@@ -2706,10 +2706,10 @@ Use \`isRowClickable\` to customize which rows can be clicked.
         id: 'actions',
         header: 'Actions',
         cell: ({ row }) => (
-          <div className="flex gap-[var(--space-sm)]">
+          <div className="flex gap-[var(--space-s)]">
             <Button
               variant="ghost"
-              size="sm"
+              size="s"
               onClick={(e) => {
                 e.stopPropagation()
                 alert(`Edit ${row.original.name}`)
@@ -2719,7 +2719,7 @@ Use \`isRowClickable\` to customize which rows can be clicked.
             </Button>
             <Button
               variant="ghost"
-              size="sm"
+              size="s"
               onClick={(e) => {
                 e.stopPropagation()
                 alert(`Delete ${row.original.name}`)
@@ -2733,36 +2733,36 @@ Use \`isRowClickable\` to customize which rows can be clicked.
     ], [])
 
     return (
-      <div className="p-[var(--space-xlg)]">
-        <div className="max-w-6xl mx-auto space-y-[var(--space-lg)]">
+      <div className="p-[var(--space-2xl)]">
+        <div className="max-w-6xl mx-auto space-y-[var(--space-l)]">
           {/* Header */}
           <div>
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Row Click Example</h2>
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Row Click Example</h2>
             <p className="text-body-md text-[var(--color-text-secondary)]">
               Click any row to view details. Notice that buttons within rows don't trigger the row click.
             </p>
           </div>
 
           {/* Stats */}
-          <div className="flex gap-[var(--space-md)]">
+          <div className="flex gap-[var(--space-m)]">
             <Card>
-              <CardContent className="p-[var(--space-lg)]">
-                <div className="text-caption-sm text-[var(--color-text-secondary)] mb-[var(--space-xsm)]">
+              <CardContent className="p-[var(--space-l)]">
+                <div className="text-caption-sm text-[var(--color-text-secondary)] mb-[var(--space-xs)]">
                   Total Clicks
                 </div>
                 <div className="text-heading-lg font-semibold">{clickCount}</div>
               </CardContent>
             </Card>
             <Card className="flex-1">
-              <CardContent className="p-[var(--space-lg)]">
-                <div className="text-caption-sm text-[var(--color-text-secondary)] mb-[var(--space-xsm)]">
+              <CardContent className="p-[var(--space-l)]">
+                <div className="text-caption-sm text-[var(--color-text-secondary)] mb-[var(--space-xs)]">
                   Selected Row
                 </div>
                 <div className="text-body-md font-medium">
                   {selectedRow ? selectedRow.name : 'None'}
                 </div>
                 {selectedRow && (
-                  <div className="mt-[var(--space-sm)] text-body-sm text-[var(--color-text-secondary)]">
+                  <div className="mt-[var(--space-s)] text-body-sm text-[var(--color-text-secondary)]">
                     SKU: {selectedRow.sku} • Price: {formatCurrency(selectedRow.price)} • Stock: {selectedRow.stock}
                   </div>
                 )}
@@ -2793,8 +2793,8 @@ Use \`isRowClickable\` to customize which rows can be clicked.
             <CardHeader>
               <CardTitle>With Grouping (Smart Default)</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-[var(--space-md)]">
-              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-md)] rounded-md">
+            <CardContent className="space-y-[var(--space-m)]">
+              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-m)] rounded-m">
                 <strong>Try clicking:</strong> Notice that parent category rows with multiple items are NOT clickable (no cursor change),
                 but individual product rows are. This is the smart default behavior.
               </div>
@@ -2821,8 +2821,8 @@ Use \`isRowClickable\` to customize which rows can be clicked.
             <CardHeader>
               <CardTitle>Custom Clickable Filter</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-[var(--space-md)]">
-              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-md)] rounded-md">
+            <CardContent className="space-y-[var(--space-m)]">
+              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-m)] rounded-m">
                 <strong>Custom behavior:</strong> This example uses <code>isRowClickable</code> to allow ALL rows (including parent groups) to be clicked.
               </div>
               <DataTable
@@ -2854,8 +2854,8 @@ Use \`isRowClickable\` to customize which rows can be clicked.
             <CardHeader>
               <CardTitle>Keyboard Navigation</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-[var(--space-md)]">
-              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-md)] rounded-md">
+            <CardContent className="space-y-[var(--space-m)]">
+              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-m)] rounded-m">
                 <strong>Accessibility:</strong> Press <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-medium)] rounded">Tab</kbd> to navigate between rows,
                 then press <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-medium)] rounded">Enter</kbd> or <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-medium)] rounded">Space</kbd> to activate.
               </div>
@@ -2991,21 +2991,21 @@ Enable row selection by setting \`enableRowSelection={true}\`.
     }
 
     return (
-      <div className="p-[var(--space-xlg)]">
-        <div className="max-w-6xl mx-auto space-y-[var(--space-lg)]">
+      <div className="p-[var(--space-2xl)]">
+        <div className="max-w-6xl mx-auto space-y-[var(--space-l)]">
           {/* Header */}
           <div>
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Row Selection Example</h2>
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Row Selection Example</h2>
             <p className="text-body-md text-[var(--color-text-secondary)]">
               Select rows using checkboxes to perform bulk actions. Use the header checkbox to select/deselect all.
             </p>
           </div>
 
           {/* Selection Stats & Actions */}
-          <div className="flex items-center gap-[var(--space-md)]">
+          <div className="flex items-center gap-[var(--space-m)]">
             <Card className="flex-1">
-              <CardContent className="p-[var(--space-lg)]">
-                <div className="text-caption-sm text-[var(--color-text-secondary)] mb-[var(--space-xsm)]">
+              <CardContent className="p-[var(--space-l)]">
+                <div className="text-caption-sm text-[var(--color-text-secondary)] mb-[var(--space-xs)]">
                   Selected Rows
                 </div>
                 <div className="text-heading-lg font-semibold">
@@ -3014,13 +3014,13 @@ Enable row selection by setting \`enableRowSelection={true}\`.
               </CardContent>
             </Card>
 
-            <div className="flex gap-[var(--space-sm)]">
+            <div className="flex gap-[var(--space-s)]">
               <Button
                 variant="default"
                 disabled={selectedCount === 0}
                 onClick={handleBulkExport}
               >
-                <Icon name="download" className="mr-[var(--space-sm)]" />
+                <Icon name="download" className="mr-[var(--space-s)]" />
                 Export Selected
               </Button>
               <Button
@@ -3028,7 +3028,7 @@ Enable row selection by setting \`enableRowSelection={true}\`.
                 disabled={selectedCount === 0}
                 onClick={handleBulkDelete}
               >
-                <Icon name="trash" className="mr-[var(--space-sm)]" />
+                <Icon name="trash" className="mr-[var(--space-s)]" />
                 Delete Selected
               </Button>
             </div>
@@ -3050,8 +3050,8 @@ Enable row selection by setting \`enableRowSelection={true}\`.
           </Card>
 
           {/* Info Box */}
-          <div className="bg-[var(--blue-25)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-            <div className="flex items-start gap-[var(--space-sm)]">
+          <div className="bg-[var(--blue-25)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+            <div className="flex items-start gap-[var(--space-s)]">
               <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)] mt-1" />
               <div className="text-body-sm text-[var(--color-text-accent)]">
                 <strong>Tip:</strong> The header checkbox shows an indeterminate state when some (but not all) rows are selected.
@@ -3148,8 +3148,8 @@ const [activeRowId, setActiveRowId] = useState<string>()
     ], [])
 
     return (
-      <div className="h-screen w-full p-[var(--space-lg)] bg-[var(--color-surface-base)]">
-        <div className="flex gap-[var(--space-lg)] h-full">
+      <div className="h-screen w-full p-[var(--space-l)] bg-[var(--color-surface-base)]">
+        <div className="flex gap-[var(--space-l)] h-full">
           {/* Main content - DataTable */}
           <div className="flex-1 overflow-hidden">
             <Card className="h-full flex flex-col">
@@ -3179,9 +3179,9 @@ const [activeRowId, setActiveRowId] = useState<string>()
               </CardHeader>
               <CardContent className="flex-1 overflow-auto">
                 {activeUser ? (
-                  <div className="space-y-[var(--space-lg)]">
+                  <div className="space-y-[var(--space-l)]">
                     {/* Profile section */}
-                    <div className="flex items-center gap-[var(--space-md)]">
+                    <div className="flex items-center gap-[var(--space-m)]">
                       <div className="w-16 h-16 rounded-full bg-[var(--color-background-brand)] flex items-center justify-center text-[var(--color-text-on-action)] text-heading-lg">
                         {activeUser.name.split(' ').map(n => n[0]).join('')}
                       </div>
@@ -3194,7 +3194,7 @@ const [activeRowId, setActiveRowId] = useState<string>()
                     <Separator />
 
                     {/* Details grid */}
-                    <div className="space-y-[var(--space-md)]">
+                    <div className="space-y-[var(--space-m)]">
                       <div>
                         <Label className="text-caption-sm text-[var(--color-text-secondary)]">Email</Label>
                         <p className="text-body-md">{activeUser.email}</p>
@@ -3205,7 +3205,7 @@ const [activeRowId, setActiveRowId] = useState<string>()
                       </div>
                       <div>
                         <Label className="text-caption-sm text-[var(--color-text-secondary)]">Status</Label>
-                        <div className="mt-[var(--space-xsm)]">
+                        <div className="mt-[var(--space-xs)]">
                           <Badge variant={activeUser.status === 'active' ? 'success' : 'default'}>
                             {activeUser.status}
                           </Badge>
@@ -3224,9 +3224,9 @@ const [activeRowId, setActiveRowId] = useState<string>()
                     <Separator />
 
                     {/* Actions */}
-                    <div className="flex gap-[var(--space-sm)]">
-                      <Button variant="primary" size="sm">Edit User</Button>
-                      <Button variant="default" size="sm">View Activity</Button>
+                    <div className="flex gap-[var(--space-s)]">
+                      <Button variant="primary" size="s">Edit User</Button>
+                      <Button variant="default" size="s">View Activity</Button>
                     </div>
                   </div>
                 ) : (
@@ -3313,20 +3313,20 @@ Demonstrates that active row highlighting and checkbox selection work independen
     ], [])
 
     return (
-      <div className="p-[var(--space-lg)] space-y-[var(--space-lg)]">
+      <div className="p-[var(--space-l)] space-y-[var(--space-l)]">
         <Card>
           <CardHeader>
             <CardTitle>Active Row + Checkbox Selection</CardTitle>
-            <div className="text-body-sm text-[var(--color-text-secondary)] space-y-[var(--space-sm)]">
+            <div className="text-body-sm text-[var(--color-text-secondary)] space-y-[var(--space-s)]">
               <p>
                 <strong>Try this:</strong> Check multiple rows with checkboxes, then click different rows to change the active selection.
               </p>
-              <div className="flex gap-[var(--space-lg)]">
-                <div className="flex items-center gap-[var(--space-sm)]">
+              <div className="flex gap-[var(--space-l)]">
+                <div className="flex items-center gap-[var(--space-s)]">
                   <div className="w-6 h-6 bg-[var(--blue-25)] border border-[var(--color-border-primary)]" />
                   <span>Checkbox selection (background color)</span>
                 </div>
-                <div className="flex items-center gap-[var(--space-sm)]">
+                <div className="flex items-center gap-[var(--space-s)]">
                   <div className="w-6 h-6 border-l-[3px] border-l-[var(--color-border-brand-bold)]" />
                   <span>Active row (left border)</span>
                 </div>
@@ -3349,7 +3349,7 @@ Demonstrates that active row highlighting and checkbox selection work independen
             <CardTitle>onActiveRowChange Log</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-[var(--space-xsm)]">
+            <div className="space-y-[var(--space-xs)]">
               {activeRowLog.length === 0 ? (
                 <p className="text-caption-sm text-[var(--color-text-secondary)] font-mono">
                   Click a row to see the callback fire...
@@ -3444,15 +3444,15 @@ The active row indicator provides clear visual feedback for keyboard-driven navi
     }, [activeRowId, tasks])
 
     return (
-      <div className="p-[var(--space-lg)]" onKeyDown={handleKeyboardNav}>
+      <div className="p-[var(--space-l)]" onKeyDown={handleKeyboardNav}>
         <Card>
           <CardHeader>
             <CardTitle>Keyboard Navigation</CardTitle>
-            <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-md)] rounded-md">
+            <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-m)] rounded-m">
               <strong>Keyboard shortcuts:</strong>
-              <ul className="mt-[var(--space-sm)] space-y-[var(--space-xsm)] list-disc list-inside">
-                <li><kbd className="px-[var(--space-xsm)] py-[1px] bg-[var(--color-surface-primary)] border border-[var(--color-border-primary)] rounded text-caption-sm">↑</kbd> / <kbd className="px-[var(--space-xsm)] py-[1px] bg-[var(--color-surface-primary)] border border-[var(--color-border-primary)] rounded text-caption-sm">↓</kbd> - Navigate between rows</li>
-                <li><kbd className="px-[var(--space-xsm)] py-[1px] bg-[var(--color-surface-primary)] border border-[var(--color-border-primary)] rounded text-caption-sm">Enter</kbd> or <kbd className="px-[var(--space-xsm)] py-[1px] bg-[var(--color-surface-primary)] border border-[var(--color-border-primary)] rounded text-caption-sm">Space</kbd> - Select active row (when focused)</li>
+              <ul className="mt-[var(--space-s)] space-y-[var(--space-xs)] list-disc list-inside">
+                <li><kbd className="px-[var(--space-xs)] py-[1px] bg-[var(--color-surface-primary)] border border-[var(--color-border-primary)] rounded text-caption-sm">↑</kbd> / <kbd className="px-[var(--space-xs)] py-[1px] bg-[var(--color-surface-primary)] border border-[var(--color-border-primary)] rounded text-caption-sm">↓</kbd> - Navigate between rows</li>
+                <li><kbd className="px-[var(--space-xs)] py-[1px] bg-[var(--color-surface-primary)] border border-[var(--color-border-primary)] rounded text-caption-sm">Enter</kbd> or <kbd className="px-[var(--space-xs)] py-[1px] bg-[var(--color-surface-primary)] border border-[var(--color-border-primary)] rounded text-caption-sm">Space</kbd> - Select active row (when focused)</li>
                 <li>Click any row to change active selection</li>
               </ul>
             </div>
@@ -3484,17 +3484,17 @@ export const RowPinning: Story = {
     const [data] = useState(() => generateTradeData(170))
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Row Pinning</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Row Pinning</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               This example shows row pinning where individual rows can be pinned to the top or bottom of the table.
               Hover over rows to see pin controls (up arrow for top, down arrow for bottom, X to unpin).
               Test cross-page pinning by pinning rows on one page and navigating to other pages.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+              <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
                   Pinned rows appear at the top/bottom of all pages and maintain their position during sorting and filtering. They have neutral background styling to distinguish them.
@@ -3614,11 +3614,11 @@ export const GlobalSearchWithAutocomplete: Story = {
     const [data] = useState(() => sampleShipments)
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Global Search with Autocomplete</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Global Search with Autocomplete</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               Type at least 2 characters to see autocomplete suggestions. The autocomplete shows results from
               vessel names, ports, operators, and charterers. Notice how shared keywords appear across multiple
               columns, making it easy to find related shipments.
@@ -3782,16 +3782,16 @@ export const ColumnFaceting: Story = {
     ]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Column Faceting with Count Badges</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Column Faceting with Count Badges</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               This example demonstrates enhanced column faceting where filter options show count badges indicating
               how many rows match each filter value. The counts update dynamically as you apply and remove filters.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+              <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
                   Try filtering by Counterparty, Side, Status, or Instrument. Notice the count badges that show matching row counts for each option.
@@ -3961,17 +3961,17 @@ export const GlobalFaceting: Story = {
     ]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Global Faceting Across Columns</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Global Faceting Across Columns</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               This example demonstrates global faceting where you can search and filter across all columns simultaneously.
               The "Global Faceting" button aggregates values from all faceted columns (Counterparty, Side, Status, Trader, Instrument)
               and allows you to filter multiple columns at once with a unified interface.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+              <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
                   Click "Global Faceting" to see aggregated values from all columns. Search and select values that will be applied across matching columns automatically.
@@ -4017,17 +4017,17 @@ export const ExpandingRows: Story = {
     })
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Expanding Rows</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Expanding Rows</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               This example shows hierarchical data with expandable rows and automatic depth-based coloring.
               Click the chevron icons to expand and collapse rows to see child data.
               The nested rows are automatically indented to show the hierarchy.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+              <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
                   Parent rows with children show chevron controls. Expanded parents use blue-50 background, collapsed parents use neutral-subtle, and children use blue-25 for visual hierarchy.
@@ -4174,11 +4174,11 @@ const orderColumns: ColumnDef<OrderData>[] = [
         const isExpanded = row.getIsExpanded()
 
         return (
-          <div className="flex items-center gap-[var(--space-sm)] h-7 px-[var(--space-md)] pl-[var(--space-xlg)]">
+          <div className="flex items-center gap-[var(--space-s)] h-7 px-[var(--space-m)] pl-[var(--space-2xl)]">
             {canExpand && (
               <button
                 onClick={row.getToggleExpandedHandler()}
-                className="flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--blue-100)] hover:text-[var(--color-text-primary)]"
+                className="flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--blue-100)] hover:text-[var(--color-text-primary)]"
               >
                 <Icon
                   name={isExpanded ? "chevron-down" : "chevron-right"}
@@ -4303,16 +4303,16 @@ export const ExpandingRowsMultiLevelOrderTable: Story = {
     })[0]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1400px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Multi-Level Order Table</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Multi-Level Order Table</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               A 3-level hierarchical structure demonstrating order aggregation with collapsible broker groups and individual offers.
               Click chevron icons to expand/collapse levels. When you expand an order, all broker groups are automatically expanded.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+              <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
                   Level 1: Orders with aggregated counterparties → Level 2: Broker groups → Level 3: Individual offers with full details
@@ -4482,24 +4482,24 @@ const CheckCard = ({
     <CardHeader>
       <CardTitle className="text-heading-sm">{title}</CardTitle>
     </CardHeader>
-    <CardContent className="space-y-[var(--space-md)]">
-      <div className="flex items-center gap-[var(--space-sm)]">
+    <CardContent className="space-y-[var(--space-m)]">
+      <div className="flex items-center gap-[var(--space-s)]">
         <Badge variant="success" className="text-caption-sm">
           {status}
         </Badge>
       </div>
-      <div className="space-y-[var(--space-sm)]">
-        <div className="flex items-center gap-[var(--space-sm)] text-body-sm text-[var(--color-text-secondary)]">
+      <div className="space-y-[var(--space-s)]">
+        <div className="flex items-center gap-[var(--space-s)] text-body-sm text-[var(--color-text-secondary)]">
           <Icon name="clock" className="h-4 w-4" />
           <span>{date}</span>
         </div>
         {assignedTo && (
-          <div className="flex items-center gap-[var(--space-sm)] text-body-sm text-[var(--color-text-secondary)]">
+          <div className="flex items-center gap-[var(--space-s)] text-body-sm text-[var(--color-text-secondary)]">
             <Icon name="user" className="h-4 w-4" />
             <span>{assignedTo}</span>
           </div>
         )}
-        <div className="flex items-center gap-[var(--space-sm)] text-body-sm text-[var(--color-text-secondary)]">
+        <div className="flex items-center gap-[var(--space-s)] text-body-sm text-[var(--color-text-secondary)]">
           <Icon name="message-square" className="h-4 w-4" />
           <span>{comments} {comments === 1 ? 'comment' : 'comments'}</span>
         </div>
@@ -4550,7 +4550,7 @@ const requestColumns: ColumnDef<RequestData>[] = [
     cell: ({ row }) => {
       const count = row.getValue('attachments') as number
       return (
-        <div className="flex items-center gap-[var(--space-sm)] text-body-sm">
+        <div className="flex items-center gap-[var(--space-s)] text-body-sm">
           <Icon name="paperclip" className="h-4 w-4" />
           <span>{count}</span>
         </div>
@@ -4563,7 +4563,7 @@ const requestColumns: ColumnDef<RequestData>[] = [
     cell: ({ row }) => {
       const count = row.getValue('comments') as number
       return (
-        <div className="flex items-center gap-[var(--space-sm)] text-body-sm">
+        <div className="flex items-center gap-[var(--space-s)] text-body-sm">
           <Icon name="message-square" className="h-4 w-4" />
           <span>{count}</span>
         </div>
@@ -4651,15 +4651,15 @@ export const ExpandingRowsWithCards: Story = {
     const [data] = useState(() => generateRequestData())
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1400px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Request List</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Request List</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               Expand any row to see detailed check information displayed as cards. Each expanded row shows three check cards with status, timestamps, comments, and actions.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+              <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
                   Click the chevron icon on any row to reveal check cards with detailed information
@@ -4674,7 +4674,7 @@ export const ExpandingRowsWithCards: Story = {
             getSubRows={(row) => row.children}
             getRowCanExpand={(row) => row.depth === 0}
             renderSubComponent={(row) => (
-              <div className="flex gap-[var(--space-md)] p-[var(--space-md)] bg-[var(--blue-25)]">
+              <div className="flex gap-[var(--space-m)] p-[var(--space-m)] bg-[var(--blue-25)]">
                 <CheckCard
                   title="Sanction screening"
                   status={row.original.details.sanctionScreening.status}
@@ -4729,16 +4729,16 @@ export const GroupingRows: Story = {
     })
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Row Grouping</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Row Grouping</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               This example shows dynamic row grouping functionality. Use the "Group by..." dropdown in the toolbar to select different columns to group by.
               Grouped rows show the group value and count, with expand/collapse controls to show/hide group members.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+              <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
                   Try grouping by Instrument, Status, Counterparty, Trader, or Side. Groups are collapsible and show item counts.
@@ -4920,25 +4920,25 @@ This feature is useful for:
               <div className="flex items-center gap-[var(--space-xs)]">
                 <Button
                   variant="ghost"
-                  size="sm"
+                  size="s"
                   onClick={(e) => {
                     e.stopPropagation()
                     console.log(`Export action for ${groupColumn}: ${groupValue} (${itemCount} items)`, row.subRows)
                   }}
                   title="Export all items in this group"
-                  className="h-[var(--size-md)] px-[var(--space-sm)]"
+                  className="h-[var(--size-m)] px-[var(--space-s)]"
                 >
                   <Icon name="download" className="h-3 w-3" />
                 </Button>
                 <Button
                   variant="ghost"
-                  size="sm"
+                  size="s"
                   onClick={(e) => {
                     e.stopPropagation()
                     console.log(`Approve action for ${groupColumn}: ${groupValue} (${itemCount} items)`, row.subRows)
                   }}
                   title="Approve all items in this group"
-                  className="h-[var(--size-md)] px-[var(--space-sm)]"
+                  className="h-[var(--size-m)] px-[var(--space-s)]"
                 >
                   <Icon name="check" className="h-3 w-3" />
                 </Button>
@@ -4952,49 +4952,49 @@ This feature is useful for:
               <div className="flex items-center gap-[var(--space-xs)]">
                 <Button
                   variant="ghost"
-                  size="sm"
+                  size="s"
                   onClick={(e) => {
                     e.stopPropagation()
                     console.log(`Edit action for row:`, rowData)
                   }}
                   title="Edit this item"
-                  className="h-[var(--size-md)] px-[var(--space-sm)]"
+                  className="h-[var(--size-m)] px-[var(--space-s)]"
                 >
                   <Icon name="pencil" className="h-3 w-3" />
                 </Button>
                 <Button
                   variant="ghost"
-                  size="sm"
+                  size="s"
                   onClick={(e) => {
                     e.stopPropagation()
                     console.log(`Delete action for row:`, rowData)
                   }}
                   title="Delete this item"
-                  className="h-[var(--size-md)] px-[var(--space-sm)]"
+                  className="h-[var(--size-m)] px-[var(--space-s)]"
                 >
                   <Icon name="trash-2" className="h-3 w-3" />
                 </Button>
                 <Button
                   variant="ghost"
-                  size="sm"
+                  size="s"
                   onClick={(e) => {
                     e.stopPropagation()
                     console.log(`Export action for row:`, rowData)
                   }}
                   title="Export this item"
-                  className="h-[var(--size-md)] px-[var(--space-sm)]"
+                  className="h-[var(--size-m)] px-[var(--space-s)]"
                 >
                   <Icon name="download" className="h-3 w-3" />
                 </Button>
                 <Button
                   variant="ghost"
-                  size="sm"
+                  size="s"
                   onClick={(e) => {
                     e.stopPropagation()
                     console.log(`Approve action for row:`, rowData)
                   }}
                   title="Approve this item"
-                  className="h-[var(--size-md)] px-[var(--space-sm)]"
+                  className="h-[var(--size-m)] px-[var(--space-s)]"
                 >
                   <Icon name="check" className="h-3 w-3" />
                 </Button>
@@ -5010,16 +5010,16 @@ This feature is useful for:
     ]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Row Grouping with Actions</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Row Grouping with Actions</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               This example shows dynamic row grouping with action buttons in a pinned right column.
               Grouped rows show bulk actions (Export, Approve), while individual rows show all actions (Edit, Delete, Export, Approve).
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)] mb-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)] mb-[var(--space-m)]">
+              <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
                   The Actions column is pinned to the right. Grouped rows show bulk actions (Export, Approve only), individual rows show all actions. Check the console to see logged actions.
@@ -5027,12 +5027,12 @@ This feature is useful for:
               </div>
             </div>
 
-            <div className="bg-[var(--color-background-neutral-subtlest)] border border-[var(--color-border-primary-subtle)] rounded-md p-[var(--space-md)]">
-              <h3 className="text-heading-sm mb-[var(--space-sm)]">Implementation: renderInGroupedRows</h3>
-              <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-neutral-subtlest)] border border-[var(--color-border-primary-subtle)] rounded-m p-[var(--space-m)]">
+              <h3 className="text-heading-sm mb-[var(--space-s)]">Implementation: renderInGroupedRows</h3>
+              <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-s)]">
                 By default, grouped rows show empty cells (or aggregated data if configured) for all columns except the first. To render custom content in grouped rows, add the <code className="bg-[var(--color-background-neutral-subtlest)] px-[var(--space-xs)] py-[1px] rounded text-body-sm">renderInGroupedRows: true</code> flag to your column's meta:
               </p>
-              <pre className="bg-[var(--color-background-primary)] border border-[var(--color-border-primary-subtle)] rounded-md p-[var(--space-md)] overflow-x-auto">
+              <pre className="bg-[var(--color-background-primary)] border border-[var(--color-border-primary-subtle)] rounded-m p-[var(--space-m)] overflow-x-auto">
                 <code className="text-caption-sm">{`{
   id: 'actions',
   header: 'Actions',
@@ -5074,9 +5074,9 @@ This feature is useful for:
           />
 
           {/* Cell Borders Variation */}
-          <div className="mt-[var(--space-2xlg)]">
-            <h3 className="text-heading-md mb-[var(--space-sm)]">Cell Borders (Vertical Lines)</h3>
-            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+          <div className="mt-[var(--space-3xl)]">
+            <h3 className="text-heading-md mb-[var(--space-s)]">Cell Borders (Vertical Lines)</h3>
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
               Vertical borders between cells create clear column separation, useful when data needs strong visual column boundaries.
             </p>
             <DataTable
@@ -5105,9 +5105,9 @@ This feature is useful for:
           </div>
 
           {/* Row Borders Variation */}
-          <div className="mt-[var(--space-2xlg)]">
-            <h3 className="text-heading-md mb-[var(--space-sm)]">Row Borders (Horizontal Lines)</h3>
-            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+          <div className="mt-[var(--space-3xl)]">
+            <h3 className="text-heading-md mb-[var(--space-s)]">Row Borders (Horizontal Lines)</h3>
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
               Horizontal borders between rows provide clear row separation, useful for dense data where row distinction is important.
             </p>
             <DataTable
@@ -5186,17 +5186,17 @@ Notice how the entire group stays visible and expands automatically, with matche
     }, [])
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Group-Preserving Search</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Group-Preserving Search</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               This example demonstrates the group-preserving search mode. When you search, entire groups
               are preserved - if any row in a group matches, all rows in that group remain visible.
               Matching groups automatically expand and matched terms are highlighted.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)] mb-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)] mb-[var(--space-m)]">
+              <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
                   Try using the global search above the table. Groups containing your search term will
@@ -5204,8 +5204,8 @@ Notice how the entire group stays visible and expands automatically, with matche
                 </span>
               </div>
             </div>
-            <div className="bg-[var(--color-background-warning-subtle)] border border-[var(--color-border-warning-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-warning-subtle)] border border-[var(--color-border-warning-subtle)] rounded-m p-[var(--space-m)]">
+              <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="lightbulb" className="h-4 w-4 text-[var(--color-text-warning-bold)]" />
                 <span className="text-body-sm text-[var(--color-text-warning-bold)]">
                   <strong>Tip:</strong> Use the settings menu (gear icon) to try different grouping options
@@ -5866,7 +5866,7 @@ Same fixture lifecycle scenarios as GroupingWithCustomDisplay:
             return <span className="text-[var(--color-text-primary)]">{uniqueNegotiationIds[0]}</span>
           } else {
             return (
-              <div className="flex items-center gap-[var(--space-xsm)]">
+              <div className="flex items-center gap-[var(--space-xs)]">
                 <span className="text-[var(--color-text-secondary)]">{uniqueNegotiationIds.length} negotiations</span>
               </div>
             )
@@ -5892,7 +5892,7 @@ Same fixture lifecycle scenarios as GroupingWithCustomDisplay:
             return <span className="text-[var(--color-text-primary)]">{uniqueContractIds[0]}</span>
           } else {
             return (
-              <div className="flex items-center gap-[var(--space-xsm)]">
+              <div className="flex items-center gap-[var(--space-xs)]">
                 <span className="text-[var(--color-text-secondary)]">{uniqueContractIds.length} contracts</span>
               </div>
             )
@@ -5979,7 +5979,7 @@ Same fixture lifecycle scenarios as GroupingWithCustomDisplay:
                 status === 'Order' ? 'default' :
                 'accent'
               }
-              size="sm"
+              size="s"
             >
               {status}
             </Badge>
@@ -5993,7 +5993,7 @@ Same fixture lifecycle scenarios as GroupingWithCustomDisplay:
           }, {} as Record<string, number>)
 
           return (
-            <div className="flex items-center gap-[var(--space-xsm)]">
+            <div className="flex items-center gap-[var(--space-xs)]">
               {Object.entries(statusCounts).map(([status, count]) => (
                 <Badge
                   key={status}
@@ -6002,7 +6002,7 @@ Same fixture lifecycle scenarios as GroupingWithCustomDisplay:
                     status === 'Order' ? 'default' :
                     'accent'
                   }
-                  size="sm"
+                  size="s"
                 >
                   {count} {status}
                 </Badge>
@@ -6029,11 +6029,11 @@ Same fixture lifecycle scenarios as GroupingWithCustomDisplay:
     }, [baseColumns, globalSearchTerms])
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1400px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Fixture Lifecycle with External Filters</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Fixture Lifecycle with External Filters</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-m)]">
               This example demonstrates external filtering with the Filters component, tag-based global search,
               and custom highlighting for grouped data. Filter by Status, Vessel, or Counterparty, and use the
               search bar to highlight matching text across all cells.
@@ -6683,7 +6683,7 @@ const [activeRowId, setActiveRowId] = useState<string | undefined>(undefined)
             return <span className="text-[var(--color-text-primary)]">{uniqueNegotiationIds[0]}</span>
           } else {
             return (
-              <div className="flex items-center gap-[var(--space-xsm)]">
+              <div className="flex items-center gap-[var(--space-xs)]">
                 <span className="text-[var(--color-text-secondary)]">{uniqueNegotiationIds.length} negotiations</span>
               </div>
             )
@@ -6709,7 +6709,7 @@ const [activeRowId, setActiveRowId] = useState<string | undefined>(undefined)
             return <span className="text-[var(--color-text-primary)]">{uniqueContractIds[0]}</span>
           } else {
             return (
-              <div className="flex items-center gap-[var(--space-xsm)]">
+              <div className="flex items-center gap-[var(--space-xs)]">
                 <span className="text-[var(--color-text-secondary)]">{uniqueContractIds.length} contracts</span>
               </div>
             )
@@ -6796,7 +6796,7 @@ const [activeRowId, setActiveRowId] = useState<string | undefined>(undefined)
                 status === 'Order' ? 'default' :
                 'accent'
               }
-              size="sm"
+              size="s"
             >
               {status}
             </Badge>
@@ -6810,7 +6810,7 @@ const [activeRowId, setActiveRowId] = useState<string | undefined>(undefined)
           }, {} as Record<string, number>)
 
           return (
-            <div className="flex items-center gap-[var(--space-xsm)]">
+            <div className="flex items-center gap-[var(--space-xs)]">
               {Object.entries(statusCounts).map(([status, count]) => (
                 <Badge
                   key={status}
@@ -6819,7 +6819,7 @@ const [activeRowId, setActiveRowId] = useState<string | undefined>(undefined)
                     status === 'Order' ? 'default' :
                     'accent'
                   }
-                  size="sm"
+                  size="s"
                 >
                   {count} {status}
                 </Badge>
@@ -6846,11 +6846,11 @@ const [activeRowId, setActiveRowId] = useState<string | undefined>(undefined)
     }, [baseColumns, globalSearchTerms])
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1400px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Fixture Lifecycle with Active Row and Filters</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Fixture Lifecycle with Active Row and Filters</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-m)]">
               Click any row to highlight it. Combine with external filters and tag-based search
               to find and select specific fixtures across grouped data.
             </p>
@@ -7160,16 +7160,16 @@ export const HeaderlessModeWithExternalControl: Story = {
     ], [])
 
     return (
-      <div className="p-[var(--space-lg)]">
-        <div className="mb-[var(--space-lg)]">
-          <h2 className="text-heading-lg mb-[var(--space-sm)]">External Control Example</h2>
-          <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+      <div className="p-[var(--space-l)]">
+        <div className="mb-[var(--space-l)]">
+          <h2 className="text-heading-lg mb-[var(--space-s)]">External Control Example</h2>
+          <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Demonstrates external control using Filters component and ViewModeMenu (table-only variant).
             Filter by Side (Buy/Sell) and Status, use global search, and control sorting and column visibility through the settings menu.
           </p>
         </div>
 
-        <div className="mb-[var(--space-lg)]">
+        <div className="mb-[var(--space-l)]">
           <Filters
           filters={filterDefinitions}
           pinnedFilters={pinnedFilters}
@@ -7241,17 +7241,17 @@ across page refreshes or browser sessions.
     const [data] = useState(() => generateTradeData(50))
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Footer Utilities</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Footer Utilities</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               This example demonstrates two footer utility features: custom footer labels and
               pagination persistence. Try changing the page or page size, then refresh the browser
               to see your pagination preferences maintained.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-center gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+              <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
                   Pagination state is saved to localStorage with the key "footer-utilities-demo-table-pagination".
@@ -7524,27 +7524,27 @@ This example demonstrates a complex cell layout pattern where the last 4 columns
     ]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1400px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Multi-row cell layout</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Multi-row cell layout</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-m)]">
               This example demonstrates a complex cell layout where the last 4 columns display 3 sub-rows each.
               All sub-rows are clickable and highlight together across all columns when hovered.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-md)] mb-[var(--space-lg)]">
-              <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info-subtle)] rounded-md p-[var(--space-md)]">
-                <div className="flex items-start gap-[var(--space-sm)]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-m)] mb-[var(--space-l)]">
+              <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info-subtle)] rounded-m p-[var(--space-m)]">
+                <div className="flex items-start gap-[var(--space-s)]">
                   <Icon name="mouse-pointer-click" className="h-5 w-5 text-[var(--color-text-info)] mt-[2px]" />
                   <div>
-                    <div className="text-body-strong-sm text-[var(--color-text-info)] mb-[var(--space-xsm)]">
+                    <div className="text-body-strong-sm text-[var(--color-text-info)] mb-[var(--space-xs)]">
                       Main row clicks
                     </div>
-                    <div className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+                    <div className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-s)]">
                       Click on "Asset" or "Status" columns to trigger main row click
                     </div>
-                    <div className="flex items-center gap-[var(--space-sm)]">
+                    <div className="flex items-center gap-[var(--space-s)]">
                       <Badge>{mainRowClicks} clicks</Badge>
                       {selectedRow && (
                         <span className="text-body-sm text-[var(--color-text-primary)]">
@@ -7556,17 +7556,17 @@ This example demonstrates a complex cell layout pattern where the last 4 columns
                 </div>
               </div>
 
-              <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-subtle)] rounded-md p-[var(--space-md)]">
-                <div className="flex items-start gap-[var(--space-sm)]">
+              <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-subtle)] rounded-m p-[var(--space-m)]">
+                <div className="flex items-start gap-[var(--space-s)]">
                   <Icon name="hand-metal" className="h-5 w-5 text-[var(--color-text-success)] mt-[2px]" />
                   <div>
-                    <div className="text-body-strong-sm text-[var(--color-text-success)] mb-[var(--space-xsm)]">
+                    <div className="text-body-strong-sm text-[var(--color-text-success)] mb-[var(--space-xs)]">
                       Inner row clicks
                     </div>
-                    <div className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+                    <div className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-s)]">
                       Click on any sub-row in any of the 4 multi-row columns
                     </div>
-                    <div className="flex items-center gap-[var(--space-sm)]">
+                    <div className="flex items-center gap-[var(--space-s)]">
                       <Badge>{innerRowClicks} clicks</Badge>
                       {selectedSubRow && (
                         <span className="text-body-sm text-[var(--color-text-primary)]">
@@ -7579,12 +7579,12 @@ This example demonstrates a complex cell layout pattern where the last 4 columns
               </div>
             </div>
 
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)]">
-              <div className="flex items-start gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+              <div className="flex items-start gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)] mt-1" />
                 <div className="text-body-sm text-[var(--color-text-accent)]">
                   <strong>Pattern notes:</strong>
-                  <ul className="list-disc ml-[var(--space-lg)] mt-[var(--space-xsm)] space-y-[var(--space-xsm)]">
+                  <ul className="list-disc ml-[var(--space-l)] mt-[var(--space-xs)] space-y-[var(--space-xs)]">
                     <li>Each multi-row cell contains 3 vertically stacked sub-rows</li>
                     <li>All multi-row columns are clickable and trigger the same handler</li>
                     <li>Unified hover effect: hovering over any sub-row highlights all cells at that sub-row index</li>
@@ -7686,7 +7686,7 @@ export const NestedRowColorsCustomization: Story = {
     ]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <Card>
           <CardHeader>
             <CardTitle>Nested Row Colors - Depth-Based Customization</CardTitle>
@@ -7799,7 +7799,7 @@ export const NestedRowHeightsCustomization: Story = {
     ]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <Card>
           <CardHeader>
             <CardTitle>Nested Row Heights - Depth-Based Customization</CardTitle>
@@ -7904,7 +7904,7 @@ export const ExpandingRowsStylingCustomization: Story = {
     ]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <Card>
           <CardHeader>
             <CardTitle>Expanding Rows - Combined Styling Customization</CardTitle>
@@ -7978,7 +7978,7 @@ export const EmptyStateCustomized: Story = {
     ]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <Card>
           <CardHeader>
             <CardTitle>Customized Empty State</CardTitle>
@@ -8022,13 +8022,13 @@ export const NoResultsState: Story = {
     ]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <Card>
           <CardHeader>
             <CardTitle>No Results State - Filtered to Empty</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="mb-[var(--space-md)]">
+            <div className="mb-[var(--space-m)]">
               <p className="text-body-sm text-[var(--color-text-secondary)]">
                 Current search: "{globalFilter}" (no matches)
               </p>
@@ -8087,13 +8087,13 @@ export const ErrorState: Story = {
     }
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <Card>
           <CardHeader>
             <CardTitle>Error State - Data Fetch Failed</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="mb-[var(--space-md)]">
+            <div className="mb-[var(--space-m)]">
               <Button
                 variant="ghost"
                 onClick={() => setError(new Error('Simulated network error'))}
@@ -8162,7 +8162,7 @@ export const ServerSidePagination: Story = {
     ]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <Card>
           <CardHeader>
             <CardTitle>Server-Side Pagination (100 total users)</CardTitle>
@@ -8218,19 +8218,19 @@ export const RefetchingState: Story = {
     }
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <Card>
           <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle>Refetching State - Background Update</CardTitle>
               <Button variant="default" onClick={handleRefetch} disabled={isRefetching}>
-                <Icon name="refresh-cw" className={cn("mr-[var(--space-sm)] h-4 w-4", isRefetching && "animate-spin")} />
+                <Icon name="refresh-cw" className={cn("mr-[var(--space-s)] h-4 w-4", isRefetching && "animate-spin")} />
                 {isRefetching ? 'Refreshing...' : 'Refresh Data'}
               </Button>
             </div>
           </CardHeader>
           <CardContent>
-            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
               Click "Refresh Data" to see the subtle loading indicator while data remains visible.
             </p>
             <DataTable
@@ -8319,7 +8319,7 @@ export const ServerSideSorting: Story = {
     }
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Server-Side Sorting</CardTitle>
@@ -8335,11 +8335,11 @@ export const ServerSideSorting: Story = {
             />
           </CardHeader>
           <CardContent>
-            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
               Use the settings menu (gear icon) to select sort column and direction.
               Sorting is handled "server-side" with simulated delay.
               {sorting.length > 0 && (
-                <span className="ml-[var(--space-sm)]">
+                <span className="ml-[var(--space-s)]">
                   Current sort: <strong>{sorting[0].id}</strong> ({sorting[0].desc ? 'desc' : 'asc'})
                 </span>
               )}
@@ -8466,13 +8466,13 @@ export const ServerSideGroupExpansion: Story = {
     }, [])
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <Card>
           <CardHeader>
             <CardTitle>Server-Side Group Expansion</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
               Click the chevron to expand a group. Children are loaded from the "server" with a 1.5s delay.
               Loading state is shown while fetching. Once loaded, expanding/collapsing is instant.
             </p>
@@ -8579,13 +8579,13 @@ export const ServerSideRowExpansion: Story = {
     }, [])
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <Card>
           <CardHeader>
             <CardTitle>Server-Side Row Expansion</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
               Click the chevron to expand an order. Detail data is loaded from the "server" with a 1.2s delay.
               The loading spinner shows while fetching. Once loaded, the details persist.
             </p>
@@ -8602,11 +8602,11 @@ export const ServerSideRowExpansion: Story = {
                 if (!details) return null
 
                 return (
-                  <div className="p-[var(--space-lg)] bg-[var(--color-background-neutral-subtlest)]">
-                    <div className="grid grid-cols-2 gap-[var(--space-lg)]">
+                  <div className="p-[var(--space-l)] bg-[var(--color-background-neutral-subtlest)]">
+                    <div className="grid grid-cols-2 gap-[var(--space-l)]">
                       <div>
-                        <h4 className="text-heading-xsm mb-[var(--space-sm)]">Order Items</h4>
-                        <div className="space-y-[var(--space-xsm)]">
+                        <h4 className="text-heading-xsm mb-[var(--space-s)]">Order Items</h4>
+                        <div className="space-y-[var(--space-xs)]">
                           {details.items.map((item: any, i: number) => (
                             <div key={i} className="flex justify-between text-body-sm">
                               <span>{item.name} x{item.qty}</span>
@@ -8616,20 +8616,20 @@ export const ServerSideRowExpansion: Story = {
                         </div>
                       </div>
                       <div>
-                        <h4 className="text-heading-xsm mb-[var(--space-sm)]">Shipping Info</h4>
+                        <h4 className="text-heading-xsm mb-[var(--space-s)]">Shipping Info</h4>
                         <p className="text-body-sm">{details.shippingAddress}</p>
                         {details.trackingNumber && (
-                          <p className="text-body-sm mt-[var(--space-xsm)]">
+                          <p className="text-body-sm mt-[var(--space-xs)]">
                             Tracking: <code>{details.trackingNumber}</code>
                           </p>
                         )}
                         {details.deliveredAt && (
-                          <p className="text-body-sm mt-[var(--space-xsm)]">
+                          <p className="text-body-sm mt-[var(--space-xs)]">
                             Delivered: {details.deliveredAt}
                           </p>
                         )}
                         {details.notes && (
-                          <p className="text-body-sm mt-[var(--space-xsm)] text-[var(--color-text-warning)]">
+                          <p className="text-body-sm mt-[var(--space-xs)] text-[var(--color-text-warning)]">
                             Note: {details.notes}
                           </p>
                         )}
@@ -8729,20 +8729,20 @@ export const ServerSideFiltering: Story = {
     ]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <Card>
           <CardHeader>
             <CardTitle>Server-Side Filtering</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
               Use the filter controls below. Filtering is handled "server-side" with a 600ms simulated delay.
               The table uses <code>manualFiltering</code> to disable client-side filtering.
             </p>
 
             {/* Filter controls */}
-            <div className="flex flex-wrap gap-[var(--space-md)] mb-[var(--space-lg)] p-[var(--space-md)] bg-[var(--color-background-neutral-subtlest)] rounded-lg">
-              <div className="flex flex-col gap-[var(--space-xsm)]">
+            <div className="flex flex-wrap gap-[var(--space-m)] mb-[var(--space-l)] p-[var(--space-m)] bg-[var(--color-background-neutral-subtlest)] rounded-l">
+              <div className="flex flex-col gap-[var(--space-xs)]">
                 <label className="text-label-sm">Search</label>
                 <Input
                   placeholder="Search products..."
@@ -8752,7 +8752,7 @@ export const ServerSideFiltering: Story = {
                 />
               </div>
 
-              <div className="flex flex-col gap-[var(--space-xsm)]">
+              <div className="flex flex-col gap-[var(--space-xs)]">
                 <label className="text-label-sm">Category</label>
                 <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                   <SelectTrigger className="w-[150px]">
@@ -8766,7 +8766,7 @@ export const ServerSideFiltering: Story = {
                 </Select>
               </div>
 
-              <div className="flex flex-col gap-[var(--space-xsm)]">
+              <div className="flex flex-col gap-[var(--space-xs)]">
                 <label className="text-label-sm">Price Range</label>
                 <Select value={priceRange} onValueChange={setPriceRange}>
                   <SelectTrigger className="w-[150px]">
@@ -8893,13 +8893,13 @@ export const ServerSideExpansionWithError: Story = {
     ]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <Card>
           <CardHeader>
             <CardTitle>Server-Side Expansion with Error Handling</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
               Click the chevron to expand an order. There's a 30% chance of failure to demonstrate error handling.
               When an error occurs, you'll see an error message with a "Try again" button.
             </p>
@@ -8918,11 +8918,11 @@ export const ServerSideExpansionWithError: Story = {
                 if (!details) return null
 
                 return (
-                  <div className="p-[var(--space-lg)] bg-[var(--color-background-neutral-subtlest)]">
-                    <div className="grid grid-cols-2 gap-[var(--space-lg)]">
+                  <div className="p-[var(--space-l)] bg-[var(--color-background-neutral-subtlest)]">
+                    <div className="grid grid-cols-2 gap-[var(--space-l)]">
                       <div>
-                        <h4 className="text-heading-xsm mb-[var(--space-sm)]">Order Items</h4>
-                        <div className="space-y-[var(--space-xsm)]">
+                        <h4 className="text-heading-xsm mb-[var(--space-s)]">Order Items</h4>
+                        <div className="space-y-[var(--space-xs)]">
                           {details.items.map((item: any, i: number) => (
                             <div key={i} className="flex justify-between text-body-sm">
                               <span>{item.name} x{item.qty}</span>
@@ -8932,9 +8932,9 @@ export const ServerSideExpansionWithError: Story = {
                         </div>
                       </div>
                       <div>
-                        <h4 className="text-heading-xsm mb-[var(--space-sm)]">Shipping Info</h4>
+                        <h4 className="text-heading-xsm mb-[var(--space-s)]">Shipping Info</h4>
                         <p className="text-body-sm">{details.shippingAddress}</p>
-                        <p className="text-body-sm mt-[var(--space-xsm)]">
+                        <p className="text-body-sm mt-[var(--space-xs)]">
                           Tracking: <code>{details.trackingNumber}</code>
                         </p>
                       </div>
@@ -8988,21 +8988,21 @@ export const ServerSideGroupingWithPagination: Story = {
     ]
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <Card>
           <CardHeader>
             <CardTitle>Server-Side Grouping with Manual Pagination</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
               This story tests grouped rows with <code>manualPagination={"{true}"}</code> and controlled expansion state.
               Use the buttons below or click chevrons to expand/collapse groups.
             </p>
-            <div className="flex gap-[var(--space-sm)] mb-[var(--space-md)]">
-              <Button variant="default" size="sm" onClick={() => setExpanded(true)}>
+            <div className="flex gap-[var(--space-s)] mb-[var(--space-m)]">
+              <Button variant="default" size="s" onClick={() => setExpanded(true)}>
                 Expand All
               </Button>
-              <Button variant="default" size="sm" onClick={() => setExpanded({})}>
+              <Button variant="default" size="s" onClick={() => setExpanded({})}>
                 Collapse All
               </Button>
             </div>
@@ -9107,8 +9107,8 @@ use \`getRowId\` to tell TanStack Table how to derive the row ID from your data.
     ], [])
 
     return (
-      <div className="h-screen w-full p-[var(--space-lg)] bg-[var(--color-surface-base)]">
-        <div className="flex gap-[var(--space-lg)] h-full">
+      <div className="h-screen w-full p-[var(--space-l)] bg-[var(--color-surface-base)]">
+        <div className="flex gap-[var(--space-l)] h-full">
           <div className="flex-1 overflow-hidden">
             <Card className="h-full flex flex-col">
               <CardHeader>
@@ -9137,7 +9137,7 @@ use \`getRowId\` to tell TanStack Table how to derive the row ID from your data.
               </CardHeader>
               <CardContent className="flex-1 overflow-auto">
                 {activeClearance ? (
-                  <div className="space-y-[var(--space-md)]">
+                  <div className="space-y-[var(--space-m)]">
                     <div>
                       <Label className="text-caption-sm text-[var(--color-text-secondary)]">Clearance ID</Label>
                       <p className="text-body-md font-medium">{activeClearance.clearanceId}</p>
@@ -9152,7 +9152,7 @@ use \`getRowId\` to tell TanStack Table how to derive the row ID from your data.
                     </div>
                     <div>
                       <Label className="text-caption-sm text-[var(--color-text-secondary)]">Status</Label>
-                      <div className="mt-[var(--space-xsm)]">
+                      <div className="mt-[var(--space-xs)]">
                         <Badge variant={activeClearance.status === 'cleared' ? 'success' : activeClearance.status === 'rejected' ? 'destructive' : 'default'}>
                           {activeClearance.status}
                         </Badge>

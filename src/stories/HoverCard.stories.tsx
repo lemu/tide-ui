@@ -103,20 +103,20 @@ export const UserProfile: Story = {
               </div>
               
               <div className="flex items-center gap-2 text-caption-sm text-[var(--color-text-secondary)]">
-                <Icon name="map-pin" size="sm" />
+                <Icon name="map-pin" size="s" />
                 <span>San Francisco, CA</span>
                 <span>•</span>
-                <Icon name="calendar" size="sm" />
+                <Icon name="calendar" size="s" />
                 <span>Joined March 2020</span>
               </div>
               
               <div className="flex gap-2">
-                <Button size="sm" className="flex-1">
-                  <Icon name="user-plus" size="sm" className="mr-2" />
+                <Button size="s" className="flex-1">
+                  <Icon name="user-plus" size="s" className="mr-2" />
                   Follow
                 </Button>
-                <Button size="sm" variant="ghost" className="flex-1">
-                  <Icon name="message-circle" size="sm" className="mr-2" />
+                <Button size="s" variant="ghost" className="flex-1">
+                  <Icon name="message-circle" size="s" className="mr-2" />
                   Message
                 </Button>
               </div>
@@ -169,20 +169,20 @@ export const UserProfile: Story = {
               </div>
               
               <div className="flex items-center gap-2 text-caption-sm text-[var(--color-text-secondary)]">
-                <Icon name="map-pin" size="sm" />
+                <Icon name="map-pin" size="s" />
                 <span>New York, NY</span>
                 <span>•</span>
-                <Icon name="calendar" size="sm" />
+                <Icon name="calendar" size="s" />
                 <span>Joined June 2021</span>
               </div>
               
               <div className="flex gap-2">
-                <Button size="sm" className="flex-1">
-                  <Icon name="user-plus" size="sm" className="mr-2" />
+                <Button size="s" className="flex-1">
+                  <Icon name="user-plus" size="s" className="mr-2" />
                   Follow
                 </Button>
-                <Button size="sm" variant="ghost" className="flex-1">
-                  <Icon name="message-circle" size="sm" className="mr-2" />
+                <Button size="s" variant="ghost" className="flex-1">
+                  <Icon name="message-circle" size="s" className="mr-2" />
                   Message
                 </Button>
               </div>
@@ -234,20 +234,20 @@ export const UserProfile: Story = {
               </div>
               
               <div className="flex items-center gap-2 text-caption-sm text-[var(--color-text-secondary)]">
-                <Icon name="map-pin" size="sm" />
+                <Icon name="map-pin" size="s" />
                 <span>Austin, TX</span>
                 <span>•</span>
-                <Icon name="calendar" size="sm" />
+                <Icon name="calendar" size="s" />
                 <span>Joined January 2019</span>
               </div>
               
               <div className="flex gap-2">
-                <Button size="sm" className="flex-1">
-                  <Icon name="user-plus" size="sm" className="mr-2" />
+                <Button size="s" className="flex-1">
+                  <Icon name="user-plus" size="s" className="mr-2" />
                   Follow
                 </Button>
-                <Button size="sm" variant="ghost" className="flex-1">
-                  <Icon name="message-circle" size="sm" className="mr-2" />
+                <Button size="s" variant="ghost" className="flex-1">
+                  <Icon name="message-circle" size="s" className="mr-2" />
                   Message
                 </Button>
               </div>
@@ -273,8 +273,8 @@ export const LinkPreview: Story = {
           <HoverCardContent className="w-96">
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="w-12 h-12 bg-[var(--color-background-info-subtle)] rounded-lg flex items-center justify-center">
-                  <Icon name="book-open" size="md" className="text-[var(--color-text-on-action)]" />
+                <div className="w-12 h-12 bg-[var(--color-background-info-subtle)] rounded-l flex items-center justify-center">
+                  <Icon name="book-open" size="m" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">
                   <h4 className="text-body-md font-semibold">React Documentation</h4>
@@ -288,26 +288,26 @@ export const LinkPreview: Story = {
               
               <div className="flex items-center gap-4 text-caption-sm text-[var(--color-text-secondary)]">
                 <div className="flex items-center gap-1">
-                  <Icon name="eye" size="sm" />
+                  <Icon name="eye" size="s" />
                   <span>2.3M views</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Icon name="star" size="sm" />
+                  <Icon name="star" size="s" />
                   <span>4.9/5 rating</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Icon name="clock" size="sm" />
+                  <Icon name="clock" size="s" />
                   <span>Updated daily</span>
                 </div>
               </div>
               
               <div className="flex gap-2">
-                <Button size="sm" className="flex-1">
-                  <Icon name="external-link" size="sm" className="mr-2" />
+                <Button size="s" className="flex-1">
+                  <Icon name="external-link" size="s" className="mr-2" />
                   Visit Site
                 </Button>
-                <Button size="sm" variant="ghost">
-                  <Icon name="bookmark" size="sm" className="mr-2" />
+                <Button size="s" variant="ghost">
+                  <Icon name="bookmark" size="s" className="mr-2" />
                   Save
                 </Button>
               </div>
@@ -322,8 +322,8 @@ export const LinkPreview: Story = {
           <HoverCardContent className="w-96">
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="w-12 h-12 bg-[var(--color-background-success-subtle)] rounded-lg flex items-center justify-center">
-                  <Icon name="zap" size="md" className="text-[var(--color-text-on-action)]" />
+                <div className="w-12 h-12 bg-[var(--color-background-success-subtle)] rounded-l flex items-center justify-center">
+                  <Icon name="zap" size="m" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">
                   <h4 className="text-body-md font-semibold">Next.js by Vercel</h4>
@@ -337,26 +337,26 @@ export const LinkPreview: Story = {
               
               <div className="flex items-center gap-4 text-caption-sm text-[var(--color-text-secondary)]">
                 <div className="flex items-center gap-1">
-                  <Icon name="download" size="sm" />
+                  <Icon name="download" size="s" />
                   <span>5M+ downloads</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Icon name="github" size="sm" />
+                  <Icon name="github" size="s" />
                   <span>115k stars</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Icon name="users" size="sm" />
+                  <Icon name="users" size="s" />
                   <span>Active community</span>
                 </div>
               </div>
               
               <div className="flex gap-2">
-                <Button size="sm" className="flex-1">
-                  <Icon name="external-link" size="sm" className="mr-2" />
+                <Button size="s" className="flex-1">
+                  <Icon name="external-link" size="s" className="mr-2" />
                   Get Started
                 </Button>
-                <Button size="sm" variant="ghost">
-                  <Icon name="github" size="sm" className="mr-2" />
+                <Button size="s" variant="ghost">
+                  <Icon name="github" size="s" className="mr-2" />
                   GitHub
                 </Button>
               </div>
@@ -371,8 +371,8 @@ export const LinkPreview: Story = {
           <HoverCardContent className="w-96">
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="w-12 h-12 bg-[var(--color-background-blue-bold)] rounded-lg flex items-center justify-center">
-                  <Icon name="palette" size="md" className="text-[var(--color-text-on-action)]" />
+                <div className="w-12 h-12 bg-[var(--color-background-blue-bold)] rounded-l flex items-center justify-center">
+                  <Icon name="palette" size="m" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">
                   <h4 className="text-body-md font-semibold">Tailwind CSS</h4>
@@ -386,26 +386,26 @@ export const LinkPreview: Story = {
               
               <div className="flex items-center gap-4 text-caption-sm text-[var(--color-text-secondary)]">
                 <div className="flex items-center gap-1">
-                  <Icon name="package" size="sm" />
+                  <Icon name="package" size="s" />
                   <span>4M+ weekly downloads</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Icon name="heart" size="sm" />
+                  <Icon name="heart" size="s" />
                   <span>Loved by developers</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Icon name="trending-up" size="sm" />
+                  <Icon name="trending-up" size="s" />
                   <span>Growing fast</span>
                 </div>
               </div>
               
               <div className="flex gap-2">
-                <Button size="sm" className="flex-1">
-                  <Icon name="external-link" size="sm" className="mr-2" />
+                <Button size="s" className="flex-1">
+                  <Icon name="external-link" size="s" className="mr-2" />
                   Documentation
                 </Button>
-                <Button size="sm" variant="ghost">
-                  <Icon name="play" size="sm" className="mr-2" />
+                <Button size="s" variant="ghost">
+                  <Icon name="play" size="s" className="mr-2" />
                   Playground
                 </Button>
               </div>
@@ -442,7 +442,7 @@ export const ProductCard: Story = {
                   <div className="flex items-center gap-2 mt-1">
                     <div className="flex items-center">
                       {Array.from({ length: 5 }, (_, i) => (
-                        <Icon key={i} name="star" size="sm" className="text-yellow-400 fill-current" />
+                        <Icon key={i} name="star" size="s" className="text-yellow-400 fill-current" />
                       ))}
                     </div>
                     <span className="text-body-sm text-[var(--color-text-secondary)]">(127 reviews)</span>
@@ -479,12 +479,12 @@ export const ProductCard: Story = {
               </div>
               
               <div className="flex gap-2">
-                <Button size="sm" className="flex-1">
-                  <Icon name="shopping-cart" size="sm" className="mr-2" />
+                <Button size="s" className="flex-1">
+                  <Icon name="shopping-cart" size="s" className="mr-2" />
                   Add to Cart
                 </Button>
-                <Button size="sm" variant="ghost">
-                  <Icon name="heart" size="sm" className="mr-2" />
+                <Button size="s" variant="ghost">
+                  <Icon name="heart" size="s" className="mr-2" />
                   Wishlist
                 </Button>
               </div>
@@ -510,7 +510,7 @@ export const ProductCard: Story = {
                   <div className="flex items-center gap-2 mt-1">
                     <div className="flex items-center">
                       {Array.from({ length: 5 }, (_, i) => (
-                        <Icon key={i} name="star" size="sm" className="text-yellow-400 fill-current" />
+                        <Icon key={i} name="star" size="s" className="text-yellow-400 fill-current" />
                       ))}
                     </div>
                     <span className="text-body-sm text-[var(--color-text-secondary)]">(89 reviews)</span>
@@ -546,12 +546,12 @@ export const ProductCard: Story = {
               </div>
               
               <div className="flex gap-2">
-                <Button size="sm" className="flex-1">
-                  <Icon name="shopping-cart" size="sm" className="mr-2" />
+                <Button size="s" className="flex-1">
+                  <Icon name="shopping-cart" size="s" className="mr-2" />
                   Add to Cart
                 </Button>
-                <Button size="sm" variant="ghost">
-                  <Icon name="heart" size="sm" className="mr-2" />
+                <Button size="s" variant="ghost">
+                  <Icon name="heart" size="s" className="mr-2" />
                   Wishlist
                 </Button>
               </div>
@@ -577,8 +577,8 @@ export const FileInfo: Story = {
           <HoverCardContent className="w-72">
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-[var(--color-background-info-subtle)] rounded-lg flex items-center justify-center">
-                  <Icon name="file-text" size="sm" className="text-[var(--color-text-on-action)]" />
+                <div className="w-10 h-10 bg-[var(--color-background-info-subtle)] rounded-l flex items-center justify-center">
+                  <Icon name="file-text" size="s" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">
                   <h4 className="text-body-md font-semibold font-mono">README.md</h4>
@@ -630,8 +630,8 @@ export const FileInfo: Story = {
           <HoverCardContent className="w-72">
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-[var(--color-background-success-subtle)] rounded-lg flex items-center justify-center">
-                  <Icon name="package" size="sm" className="text-[var(--color-text-on-action)]" />
+                <div className="w-10 h-10 bg-[var(--color-background-success-subtle)] rounded-l flex items-center justify-center">
+                  <Icon name="package" size="s" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">
                   <h4 className="text-body-md font-semibold font-mono">package.json</h4>

@@ -86,10 +86,10 @@ export const Default: Story = {
         <Tree
           data={sampleData}
           onSelectChange={setSelectedItem}
-          className="border rounded-lg p-4"
+          className="border rounded-l p-4"
         />
         {selectedItem && (
-          <div className="p-3 bg-[var(--color-background-neutral-subtlest)] rounded-lg">
+          <div className="p-3 bg-[var(--color-background-neutral-subtlest)] rounded-l">
             <p className="text-body-sm">
               Selected: <strong>{selectedItem.name}</strong>
             </p>
@@ -111,7 +111,7 @@ export const ExpandedByDefault: Story = {
           data={sampleData}
           expandAll={true}
           onSelectChange={setSelectedItem}
-          className="border rounded-lg p-4"
+          className="border rounded-l p-4"
         />
       </div>
     )
@@ -213,11 +213,11 @@ export const WithActions: Story = {
                 name: 'John Doe',
                 actions: (
                   <div className="flex gap-1">
-                    <Button size="sm" variant="ghost">
-                      <Icon name="mail" size="sm" />
+                    <Button size="s" variant="ghost">
+                      <Icon name="mail" size="s" />
                     </Button>
-                    <Button size="sm" variant="ghost">
-                      <Icon name="more-horizontal" size="sm" />
+                    <Button size="s" variant="ghost">
+                      <Icon name="more-horizontal" size="s" />
                     </Button>
                   </div>
                 ),
@@ -228,11 +228,11 @@ export const WithActions: Story = {
                 name: 'Jane Smith',
                 actions: (
                   <div className="flex gap-1">
-                    <Button size="sm" variant="ghost">
-                      <Icon name="mail" size="sm" />
+                    <Button size="s" variant="ghost">
+                      <Icon name="mail" size="s" />
                     </Button>
-                    <Button size="sm" variant="ghost">
-                      <Icon name="more-horizontal" size="sm" />
+                    <Button size="s" variant="ghost">
+                      <Icon name="more-horizontal" size="s" />
                     </Button>
                   </div>
                 ),
@@ -249,8 +249,8 @@ export const WithActions: Story = {
                 name: 'Bob Johnson',
                 actions: (
                   <div className="flex gap-1">
-                    <Button size="sm" variant="ghost">
-                      <Icon name="mail" size="sm" />
+                    <Button size="s" variant="ghost">
+                      <Icon name="mail" size="s" />
                     </Button>
                   </div>
                 ),
@@ -266,8 +266,8 @@ export const WithActions: Story = {
         id: `member-${Date.now()}`,
         name: 'New Member',
         actions: (
-          <Button size="sm" variant="ghost">
-            <Icon name="mail" size="sm" />
+          <Button size="s" variant="ghost">
+            <Icon name="mail" size="s" />
           </Button>
         ),
       }
@@ -378,7 +378,7 @@ export const NavigationTree: Story = {
               className="space-y-1"
             />
             {selectedItem && (
-              <div className="mt-4 p-3 bg-[var(--color-background-brand-subtle)] rounded-lg">
+              <div className="mt-4 p-3 bg-[var(--color-background-brand-subtle)] rounded-l">
                 <p className="text-body-sm text-[var(--color-text-brand-bold)]">
                   Active: {selectedItem.name}
                 </p>
@@ -580,18 +580,18 @@ export const Interactive: Story = {
       <div className="w-96 space-y-4">
         <div className="flex gap-2">
           <Button
-            size="sm"
+            size="s"
             onClick={() => addItem('root', 'folder')}
           >
-            <Icon name="folder-plus" size="sm" className="mr-1" />
+            <Icon name="folder-plus" size="s" className="mr-1" />
             Add Folder
           </Button>
           <Button
-            size="sm"
+            size="s"
             variant="ghost"
             onClick={() => addItem('root', 'file')}
           >
-            <Icon name="file-plus" size="sm" className="mr-1" />
+            <Icon name="file-plus" size="s" className="mr-1" />
             Add File
           </Button>
         </div>

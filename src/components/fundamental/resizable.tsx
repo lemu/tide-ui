@@ -32,10 +32,10 @@ const ResizableHandle = ({
     {...props}
   >
     {withHandle && (
-      <div className="z-10 flex h-4 w-3 items-center justify-center rounded-sm border border-[var(--color-border-primary-subtle)] bg-[var(--color-background-secondary)]">
+      <div className="z-10 flex h-4 w-3 items-center justify-center rounded-s border border-[var(--color-border-primary-subtle)] bg-[var(--color-background-secondary)]">
         <Icon
           name="grip-vertical"
-          size="sm"
+          size="s"
           className="text-[var(--color-icon-secondary)]"
         />
       </div>

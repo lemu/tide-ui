@@ -15,7 +15,7 @@ const meta: Meta<typeof Flag> = {
     },
     size: {
       control: "select",
-      options: ["sm", "md", "lg", "xl"],
+      options: ["s", "m", "l", "xl"],
       description: "Size variant matching Icon component sizes",
     },
   },
@@ -30,7 +30,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     country: "us",
-    size: "md",
+    size: "m",
   },
 };
 
@@ -40,7 +40,7 @@ export const Default: Story = {
 export const Small: Story = {
   args: {
     country: "us",
-    size: "sm",
+    size: "s",
   },
 };
 
@@ -50,7 +50,7 @@ export const Small: Story = {
 export const Medium: Story = {
   args: {
     country: "us",
-    size: "md",
+    size: "m",
   },
 };
 
@@ -60,7 +60,7 @@ export const Medium: Story = {
 export const Large: Story = {
   args: {
     country: "us",
-    size: "lg",
+    size: "l",
   },
 };
 
@@ -79,26 +79,26 @@ export const ExtraLarge: Story = {
  */
 export const AllSizes: Story = {
   render: () => (
-    <div className="flex items-center gap-[var(--space-md)]">
-      <div className="flex flex-col items-center gap-[var(--space-sm)]">
-        <Flag country="us" size="sm" />
+    <div className="flex items-center gap-[var(--space-m)]">
+      <div className="flex flex-col items-center gap-[var(--space-s)]">
+        <Flag country="us" size="s" />
         <span className="text-caption-xsm text-[var(--color-text-secondary)]">
-          sm
+          s
         </span>
       </div>
-      <div className="flex flex-col items-center gap-[var(--space-sm)]">
-        <Flag country="us" size="md" />
+      <div className="flex flex-col items-center gap-[var(--space-s)]">
+        <Flag country="us" size="m" />
         <span className="text-caption-xsm text-[var(--color-text-secondary)]">
-          md
+          m
         </span>
       </div>
-      <div className="flex flex-col items-center gap-[var(--space-sm)]">
-        <Flag country="us" size="lg" />
+      <div className="flex flex-col items-center gap-[var(--space-s)]">
+        <Flag country="us" size="l" />
         <span className="text-caption-xsm text-[var(--color-text-secondary)]">
-          lg
+          l
         </span>
       </div>
-      <div className="flex flex-col items-center gap-[var(--space-sm)]">
+      <div className="flex flex-col items-center gap-[var(--space-s)]">
         <Flag country="us" size="xl" />
         <span className="text-caption-xsm text-[var(--color-text-secondary)]">
           xl
@@ -132,13 +132,13 @@ export const PopularCountries: Story = {
     ];
 
     return (
-      <div className="flex flex-wrap gap-[var(--space-md)] max-w-[400px]">
+      <div className="flex flex-wrap gap-[var(--space-m)] max-w-[400px]">
         {countries.map((country) => (
           <div
             key={country.code}
-            className="flex flex-col items-center gap-[var(--space-sm)]"
+            className="flex flex-col items-center gap-[var(--space-s)]"
           >
-            <Flag country={country.code} size="lg" aria-label={`${country.name} flag`} />
+            <Flag country={country.code} size="l" aria-label={`${country.name} flag`} />
             <span className="text-caption-xsm text-[var(--color-text-secondary)]">
               {country.code.toUpperCase()}
             </span>
@@ -154,9 +154,9 @@ export const PopularCountries: Story = {
  */
 export const WithLabels: Story = {
   render: () => (
-    <div className="flex flex-col gap-[var(--space-md)]">
-      {(["sm", "md", "lg", "xl"] as FlagSize[]).map((size) => (
-        <div key={size} className="flex items-center gap-[var(--space-md)]">
+    <div className="flex flex-col gap-[var(--space-m)]">
+      {(["s", "m", "l", "xl"] as FlagSize[]).map((size) => (
+        <div key={size} className="flex items-center gap-[var(--space-m)]">
           <Flag country="us" size={size} />
           <Flag country="gb" size={size} />
           <Flag country="fr" size={size} />
@@ -176,11 +176,11 @@ export const WithLabels: Story = {
  */
 export const WithAccessibility: Story = {
   render: () => (
-    <div className="flex items-center gap-[var(--space-md)]">
-      <Flag country="us" size="lg" aria-label="United States flag" />
-      <Flag country="gb" size="lg" aria-label="United Kingdom flag" />
-      <Flag country="ca" size="lg" aria-label="Canada flag" />
-      <Flag country="au" size="lg" aria-label="Australia flag" />
+    <div className="flex items-center gap-[var(--space-m)]">
+      <Flag country="us" size="l" aria-label="United States flag" />
+      <Flag country="gb" size="l" aria-label="United Kingdom flag" />
+      <Flag country="ca" size="l" aria-label="Canada flag" />
+      <Flag country="au" size="l" aria-label="Australia flag" />
     </div>
   ),
 };
@@ -190,25 +190,25 @@ export const WithAccessibility: Story = {
  */
 export const InContext: Story = {
   render: () => (
-    <div className="flex flex-col gap-[var(--space-sm)] min-w-[200px]">
-      <div className="flex items-center gap-[var(--space-sm)]">
-        <Flag country="us" size="md" />
+    <div className="flex flex-col gap-[var(--space-s)] min-w-[200px]">
+      <div className="flex items-center gap-[var(--space-s)]">
+        <Flag country="us" size="m" />
         <span className="text-body-md">United States</span>
       </div>
-      <div className="flex items-center gap-[var(--space-sm)]">
-        <Flag country="gb" size="md" />
+      <div className="flex items-center gap-[var(--space-s)]">
+        <Flag country="gb" size="m" />
         <span className="text-body-md">United Kingdom</span>
       </div>
-      <div className="flex items-center gap-[var(--space-sm)]">
-        <Flag country="ca" size="md" />
+      <div className="flex items-center gap-[var(--space-s)]">
+        <Flag country="ca" size="m" />
         <span className="text-body-md">Canada</span>
       </div>
-      <div className="flex items-center gap-[var(--space-sm)]">
-        <Flag country="au" size="md" />
+      <div className="flex items-center gap-[var(--space-s)]">
+        <Flag country="au" size="m" />
         <span className="text-body-md">Australia</span>
       </div>
-      <div className="flex items-center gap-[var(--space-sm)]">
-        <Flag country="de" size="md" />
+      <div className="flex items-center gap-[var(--space-s)]">
+        <Flag country="de" size="m" />
         <span className="text-body-md">Germany</span>
       </div>
     </div>

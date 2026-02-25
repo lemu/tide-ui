@@ -156,16 +156,16 @@ export const DisabledEmpty: Story = {
 // Usage Examples with Code
 export const UsageExamples: Story = {
   render: () => (
-    <div className="space-y-[var(--space-lg)] max-w-4xl">
-      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
-        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+    <div className="space-y-[var(--space-l)] max-w-4xl">
+      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Basic Country Dropdown
         </h3>
-        <div className="flex flex-col gap-[var(--space-md)]">
+        <div className="flex flex-col gap-[var(--space-m)]">
           <div className="w-64">
             <ControlledCountryDropdown />
           </div>
-          <code className="text-body-sm rounded-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] text-[var(--color-text-primary)]">
+          <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
             {`<CountryDropdown
   value={selectedCountry}
   onValueChange={setSelectedCountry}
@@ -174,16 +174,16 @@ export const UsageExamples: Story = {
         </div>
       </div>
 
-      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
-        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Slim Variant (Flag Only)
         </h3>
-        <div className="flex flex-col gap-[var(--space-md)]">
-          <div className="flex items-center gap-[var(--space-md)]">
+        <div className="flex flex-col gap-[var(--space-m)]">
+          <div className="flex items-center gap-[var(--space-m)]">
             <span className="text-body-sm">Country:</span>
             <ControlledCountryDropdown variant="slim" value="US" />
           </div>
-          <code className="text-body-sm rounded-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] text-[var(--color-text-primary)]">
+          <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
             {`<CountryDropdown
   variant="slim"
   value={selectedCountry}
@@ -193,15 +193,15 @@ export const UsageExamples: Story = {
         </div>
       </div>
 
-      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
-        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           With Country Codes
         </h3>
-        <div className="flex flex-col gap-[var(--space-md)]">
+        <div className="flex flex-col gap-[var(--space-m)]">
           <div className="w-64">
             <ControlledCountryDropdown showCode={true} />
           </div>
-          <code className="text-body-sm rounded-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] text-[var(--color-text-primary)]">
+          <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
             {`<CountryDropdown
   showCode={true}
   value={selectedCountry}
@@ -211,18 +211,18 @@ export const UsageExamples: Story = {
         </div>
       </div>
 
-      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
-        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Custom Priority Countries
         </h3>
-        <div className="flex flex-col gap-[var(--space-md)]">
+        <div className="flex flex-col gap-[var(--space-m)]">
           <div className="w-64">
             <ControlledCountryDropdown
               priorityCountries={['CA', 'MX', 'BR', 'AR', 'CL']}
               placeholder="Americas priority..."
             />
           </div>
-          <code className="text-body-sm rounded-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] text-[var(--color-text-primary)]">
+          <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
             {`<CountryDropdown
   priorityCountries={['CA', 'MX', 'BR', 'AR', 'CL']}
   value={selectedCountry}
@@ -321,9 +321,9 @@ export const CustomTriggerCompact: Story = {
     <ControlledCountryDropdown
       value="US"
       trigger={(props) => (
-        <Button variant="default" size="sm" disabled={props.disabled} className="gap-[var(--space-sm)]">
+        <Button variant="default" size="s" disabled={props.disabled} className="gap-[var(--space-s)]">
           {props.selectedCountry && (
-            <Flag country={props.selectedCountry.alpha2} size="sm" />
+            <Flag country={props.selectedCountry.alpha2} size="s" />
           )}
           <span>{props.selectedCountry?.alpha2 || 'Select'}</span>
           <ChevronDown className="h-3 w-3" />

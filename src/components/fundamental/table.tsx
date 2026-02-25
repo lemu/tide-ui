@@ -7,13 +7,13 @@ const tableVariants = cva(
   {
     variants: {
       size: {
-        sm: "[&_td:not([data-section-header])]:!text-body-xsm [&_th]:!text-body-strong-xsm [&_td:not([data-section-header])]:!px-3 [&_td:not([data-section-header])]:!py-1 [&_td:not([data-section-header])]:!h-7 [&_th]:!px-3 [&_th]:!py-1 [&_td[data-section-header]]:!p-0 [&_td[data-section-header]]:!h-5",
-        md: "[&_td:not([data-section-header])]:!text-body-sm [&_th]:!text-body-strong-sm [&_td:not([data-section-header])]:!px-4 [&_td:not([data-section-header])]:!py-2 [&_td:not([data-section-header])]:!h-9 [&_th]:!px-4 [&_th]:!py-2 [&_td[data-section-header]]:!p-0 [&_td[data-section-header]]:!h-7",
-        lg: "[&_td:not([data-section-header])]:!text-body-md [&_th]:!text-body-strong-md [&_td:not([data-section-header])]:!px-6 [&_td:not([data-section-header])]:!py-3 [&_td:not([data-section-header])]:!h-11 [&_th]:!px-6 [&_th]:!py-3 [&_td[data-section-header]]:!p-0 [&_td[data-section-header]]:!h-9",
+        s: "[&_td:not([data-section-header])]:!text-body-xsm [&_th]:!text-body-strong-xsm [&_td:not([data-section-header])]:!px-3 [&_td:not([data-section-header])]:!py-1 [&_td:not([data-section-header])]:!h-7 [&_th]:!px-3 [&_th]:!py-1 [&_td[data-section-header]]:!p-0 [&_td[data-section-header]]:!h-5",
+        m: "[&_td:not([data-section-header])]:!text-body-sm [&_th]:!text-body-strong-sm [&_td:not([data-section-header])]:!px-4 [&_td:not([data-section-header])]:!py-2 [&_td:not([data-section-header])]:!h-9 [&_th]:!px-4 [&_th]:!py-2 [&_td[data-section-header]]:!p-0 [&_td[data-section-header]]:!h-7",
+        l: "[&_td:not([data-section-header])]:!text-body-md [&_th]:!text-body-strong-md [&_td:not([data-section-header])]:!px-6 [&_td:not([data-section-header])]:!py-3 [&_td:not([data-section-header])]:!h-11 [&_th]:!px-6 [&_th]:!py-3 [&_td[data-section-header]]:!p-0 [&_td[data-section-header]]:!h-9",
       },
     },
     defaultVariants: {
-      size: "md",
+      size: "m",
     },
   }
 );
@@ -44,9 +44,9 @@ const tableCellVariants = cva(
   {
     variants: {
       size: {
-        sm: "px-3 py-1 h-7 text-body-xsm",
-        md: "px-4 py-2 h-9 text-body-sm",
-        lg: "px-6 py-3 h-11 text-body-md",
+        s: "px-3 py-1 h-7 text-body-xsm",
+        m: "px-4 py-2 h-9 text-body-sm",
+        l: "px-6 py-3 h-11 text-body-md",
       },
       align: {
         left: "text-left",
@@ -72,7 +72,7 @@ const tableCellVariants = cva(
       },
     },
     defaultVariants: {
-      size: "md",
+      size: "m",
       align: "left",
       verticalAlign: "middle",
       numeric: false,
@@ -87,9 +87,9 @@ const tableHeaderVariants = cva(
   {
     variants: {
       size: {
-        sm: "px-3 py-1 text-body-strong-xsm",
-        md: "px-4 py-2 text-body-strong-sm",
-        lg: "px-6 py-3 text-body-strong-md",
+        s: "px-3 py-1 text-body-strong-xsm",
+        m: "px-4 py-2 text-body-strong-sm",
+        l: "px-6 py-3 text-body-strong-md",
       },
       align: {
         left: "text-left",
@@ -106,7 +106,7 @@ const tableHeaderVariants = cva(
       },
     },
     defaultVariants: {
-      size: "md",
+      size: "m",
       align: "left",
       numeric: false,
       showBorder: true,
@@ -243,7 +243,7 @@ const TableCaption = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <caption
     ref={ref}
-    className={cn("mt-[var(--space-md)] text-body-sm text-[var(--color-text-secondary)]", className)}
+    className={cn("mt-[var(--space-m)] text-body-sm text-[var(--color-text-secondary)]", className)}
     {...props}
   />
 ));
@@ -268,10 +268,10 @@ const TableSortHeader = React.forwardRef<HTMLTableCellElement, TableSortHeaderPr
       onClick={sortable ? onSort : undefined}
       {...props}
     >
-      <div className="flex items-center gap-[var(--space-sm)]">
+      <div className="flex items-center gap-[var(--space-s)]">
         {children}
         {sortable && (
-          <div className="w-[var(--size-3xsm)] h-[var(--size-3xsm)] flex items-center justify-center">
+          <div className="w-[var(--size-3xs)] h-[var(--size-3xs)] flex items-center justify-center">
             {sorted === "asc" && (
               <div className="w-0 h-0 border-l-[3px] border-r-[3px] border-b-[4px] border-l-transparent border-r-transparent border-b-current"></div>
             )}
@@ -279,7 +279,7 @@ const TableSortHeader = React.forwardRef<HTMLTableCellElement, TableSortHeaderPr
               <div className="w-0 h-0 border-l-[3px] border-r-[3px] border-t-[4px] border-l-transparent border-r-transparent border-t-current"></div>
             )}
             {!sorted && (
-              <div className="w-[var(--size-3xsm)] h-[var(--size-3xsm)] opacity-30">
+              <div className="w-[var(--size-3xs)] h-[var(--size-3xs)] opacity-30">
                 <div className="w-0 h-0 border-l-[2px] border-r-[2px] border-b-[2px] border-l-transparent border-r-transparent border-b-current mb-[1px]"></div>
                 <div className="w-0 h-0 border-l-[2px] border-r-[2px] border-t-[2px] border-l-transparent border-r-transparent border-t-current"></div>
               </div>
@@ -307,7 +307,7 @@ const TableGroupHeader = React.forwardRef<
   >
     <TableCell
       colSpan={colSpan}
-      className="font-medium text-[var(--color-text-primary)] py-[var(--space-sm)]"
+      className="font-medium text-[var(--color-text-primary)] py-[var(--space-s)]"
     >
       {children}
     </TableCell>

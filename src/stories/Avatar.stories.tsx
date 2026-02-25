@@ -15,7 +15,7 @@ const meta: Meta<typeof Avatar> = {
   argTypes: {
     size: {
       control: { type: 'select' },
-      options: ['xxs', 'xs', 'sm', 'md', 'lg', 'xl'],
+      options: ['xxs', 'xs', 's', 'm', 'l', 'xl'],
     },
     type: {
       control: { type: 'select' },
@@ -29,7 +29,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    size: 'md',
+    size: 'm',
     type: 'user',
   },
   render: (args) => (
@@ -42,7 +42,7 @@ export const Default: Story = {
 
 export const WithFallback: Story = {
   args: {
-    size: 'md',
+    size: 'm',
     type: 'user',
   },
   render: (args) => (
@@ -54,8 +54,8 @@ export const WithFallback: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div className="flex flex-col gap-[var(--space-xlg)] items-start">
-      <div className="flex flex-col gap-[var(--space-sm)]">
+    <div className="flex flex-col gap-[var(--space-2xl)] items-start">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <span className="text-caption-sm text-[var(--color-text-tertiary)]">XXS (16px)</span>
         <Avatar size="xxs">
           <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=16&h=16&fit=crop&crop=face" alt="Extra Extra Small" />
@@ -63,7 +63,7 @@ export const Sizes: Story = {
         </Avatar>
       </div>
 
-      <div className="flex flex-col gap-[var(--space-sm)]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <span className="text-caption-sm text-[var(--color-text-tertiary)]">XS (20px)</span>
         <Avatar size="xs">
           <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=20&h=20&fit=crop&crop=face" alt="Extra Small" />
@@ -71,31 +71,31 @@ export const Sizes: Story = {
         </Avatar>
       </div>
 
-      <div className="flex flex-col gap-[var(--space-sm)]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <span className="text-caption-sm text-[var(--color-text-tertiary)]">SM (24px)</span>
-        <Avatar size="sm">
+        <Avatar size="s">
           <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=24&h=24&fit=crop&crop=face" alt="Small" />
-          <AvatarFallback size="sm" variant="information">JD</AvatarFallback>
+          <AvatarFallback size="s" variant="information">JD</AvatarFallback>
         </Avatar>
       </div>
 
-      <div className="flex flex-col gap-[var(--space-sm)]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <span className="text-caption-sm text-[var(--color-text-tertiary)]">MD (32px)</span>
-        <Avatar size="md">
+        <Avatar size="m">
           <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="Medium" />
-          <AvatarFallback size="md" variant="information">JD</AvatarFallback>
+          <AvatarFallback size="m" variant="information">JD</AvatarFallback>
         </Avatar>
       </div>
 
-      <div className="flex flex-col gap-[var(--space-sm)]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <span className="text-caption-sm text-[var(--color-text-tertiary)]">LG (48px)</span>
-        <Avatar size="lg">
+        <Avatar size="l">
           <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=48&h=48&fit=crop&crop=face" alt="Large" />
-          <AvatarFallback size="lg" variant="information">JD</AvatarFallback>
+          <AvatarFallback size="l" variant="information">JD</AvatarFallback>
         </Avatar>
       </div>
 
-      <div className="flex flex-col gap-[var(--space-sm)]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <span className="text-caption-sm text-[var(--color-text-tertiary)]">XL (64px)</span>
         <Avatar size="xl">
           <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop&crop=face" alt="Extra Large" />
@@ -108,43 +108,43 @@ export const Sizes: Story = {
 
 export const SizesWithFallback: Story = {
   render: () => (
-    <div className="flex flex-col gap-[var(--space-xlg)] items-start">
-      <div className="flex flex-col gap-[var(--space-sm)]">
+    <div className="flex flex-col gap-[var(--space-2xl)] items-start">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <span className="text-caption-sm text-[var(--color-text-tertiary)]">XXS (16px)</span>
         <Avatar size="xxs">
           <AvatarFallback size="xxs" variant="information">JD</AvatarFallback>
         </Avatar>
       </div>
 
-      <div className="flex flex-col gap-[var(--space-sm)]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <span className="text-caption-sm text-[var(--color-text-tertiary)]">XS (20px)</span>
         <Avatar size="xs">
           <AvatarFallback size="xs" variant="information">JD</AvatarFallback>
         </Avatar>
       </div>
 
-      <div className="flex flex-col gap-[var(--space-sm)]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <span className="text-caption-sm text-[var(--color-text-tertiary)]">SM (24px)</span>
-        <Avatar size="sm">
-          <AvatarFallback size="sm" variant="information">JD</AvatarFallback>
+        <Avatar size="s">
+          <AvatarFallback size="s" variant="information">JD</AvatarFallback>
         </Avatar>
       </div>
 
-      <div className="flex flex-col gap-[var(--space-sm)]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <span className="text-caption-sm text-[var(--color-text-tertiary)]">MD (32px)</span>
-        <Avatar size="md">
-          <AvatarFallback size="md" variant="information">JD</AvatarFallback>
+        <Avatar size="m">
+          <AvatarFallback size="m" variant="information">JD</AvatarFallback>
         </Avatar>
       </div>
 
-      <div className="flex flex-col gap-[var(--space-sm)]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <span className="text-caption-sm text-[var(--color-text-tertiary)]">LG (48px)</span>
-        <Avatar size="lg">
-          <AvatarFallback size="lg" variant="information">JD</AvatarFallback>
+        <Avatar size="l">
+          <AvatarFallback size="l" variant="information">JD</AvatarFallback>
         </Avatar>
       </div>
 
-      <div className="flex flex-col gap-[var(--space-sm)]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <span className="text-caption-sm text-[var(--color-text-tertiary)]">XL (64px)</span>
         <Avatar size="xl">
           <AvatarFallback size="xl" variant="information">JD</AvatarFallback>
@@ -157,7 +157,7 @@ export const SizesWithFallback: Story = {
 // Fallback variants
 export const FallbackVariants: Story = {
   render: () => (
-    <div className="flex items-center gap-[var(--space-md)]">
+    <div className="flex items-center gap-[var(--space-m)]">
       <div className="flex flex-col items-center gap-2">
         <Avatar>
           <AvatarFallback variant="information">AB</AvatarFallback>
@@ -207,25 +207,25 @@ export const FallbackVariants: Story = {
 // Icon fallbacks
 export const IconFallbacks: Story = {
   render: () => (
-    <div className="flex items-center gap-[var(--space-md)]">
+    <div className="flex items-center gap-[var(--space-m)]">
       <Avatar>
         <AvatarFallback variant="information">
-          <Icon name="user" size="sm" color="inverse" />
+          <Icon name="user" size="s" color="inverse" />
         </AvatarFallback>
       </Avatar>
       <Avatar>
         <AvatarFallback variant="violet">
-          <Icon name="info" size="sm" color="inverse" />
+          <Icon name="info" size="s" color="inverse" />
         </AvatarFallback>
       </Avatar>
       <Avatar>
         <AvatarFallback variant="success">
-          <Icon name="check" size="sm" color="inverse" />
+          <Icon name="check" size="s" color="inverse" />
         </AvatarFallback>
       </Avatar>
       <Avatar>
         <AvatarFallback variant="warning">
-          <Icon name="package" size="sm" color="inverse" />
+          <Icon name="package" size="s" color="inverse" />
         </AvatarFallback>
       </Avatar>
     </div>
@@ -235,10 +235,10 @@ export const IconFallbacks: Story = {
 // Avatar types
 export const Types: Story = {
   render: () => (
-    <div className="space-y-[var(--space-lg)]">
+    <div className="space-y-[var(--space-l)]">
       <div>
-        <h3 className="text-heading-sm mb-[var(--space-sm)]">User (Default)</h3>
-        <div className="flex items-center gap-[var(--space-sm)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)]">User (Default)</h3>
+        <div className="flex items-center gap-[var(--space-s)]">
           <Avatar type="user">
             <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="User" />
             <AvatarFallback type="user" variant="information">JD</AvatarFallback>
@@ -248,14 +248,14 @@ export const Types: Story = {
           </Avatar>
           <Avatar type="user">
             <AvatarFallback type="user" variant="magenta">
-              <Icon name="user" size="sm" color="inverse" />
+              <Icon name="user" size="s" color="inverse" />
             </AvatarFallback>
           </Avatar>
         </div>
       </div>
       <div>
-        <h3 className="text-heading-sm mb-[var(--space-sm)]">Organization</h3>
-        <div className="flex items-center gap-[var(--space-sm)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)]">Organization</h3>
+        <div className="flex items-center gap-[var(--space-s)]">
           <Avatar type="organization">
             <AvatarImage src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt="User" />
             <AvatarFallback type="organization" variant="information">EM</AvatarFallback>
@@ -265,7 +265,7 @@ export const Types: Story = {
           </Avatar>
           <Avatar type="organization">
             <AvatarFallback type="organization" variant="success">
-              <Icon name="circle-check-big" size="sm" color="inverse" />
+              <Icon name="circle-check-big" size="s" color="inverse" />
             </AvatarFallback>
           </Avatar>
         </div>
@@ -277,16 +277,16 @@ export const Types: Story = {
 // User profile example
 export const UserProfile: Story = {
   render: () => (
-    <div className="max-w-sm space-y-[var(--space-lg)]">
-      <div className="flex items-start gap-[var(--space-md)]">
-        <Avatar size="lg">
+    <div className="max-w-sm space-y-[var(--space-l)]">
+      <div className="flex items-start gap-[var(--space-m)]">
+        <Avatar size="l">
           <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=48&h=48&fit=crop&crop=face" alt="John Doe" />
-          <AvatarFallback size="lg" variant="information">JD</AvatarFallback>
+          <AvatarFallback size="l" variant="information">JD</AvatarFallback>
         </Avatar>
-        <div className="flex-1 space-y-[var(--space-sm)]">
-          <div className="flex items-center gap-[var(--space-sm)]">
+        <div className="flex-1 space-y-[var(--space-s)]">
+          <div className="flex items-center gap-[var(--space-s)]">
             <h3 className="text-body-medium-md">John Doe</h3>
-            <Badge intent="success" size="sm">Online</Badge>
+            <Badge intent="success" size="s">Online</Badge>
           </div>
           <p className="text-body-sm text-[var(--color-text-secondary)]">
             Senior Product Designer at Acme Inc.
@@ -299,15 +299,15 @@ export const UserProfile: Story = {
 
       <Separator />
 
-      <div className="flex items-start gap-[var(--space-md)]">
-        <Avatar size="lg">
+      <div className="flex items-start gap-[var(--space-m)]">
+        <Avatar size="l">
           <AvatarImage src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=48&h=48&fit=crop&crop=face" alt="Sarah Wilson" />
-          <AvatarFallback size="lg" variant="magenta">SW</AvatarFallback>
+          <AvatarFallback size="l" variant="magenta">SW</AvatarFallback>
         </Avatar>
-        <div className="flex-1 space-y-[var(--space-sm)]">
-          <div className="flex items-center gap-[var(--space-sm)]">
+        <div className="flex-1 space-y-[var(--space-s)]">
+          <div className="flex items-center gap-[var(--space-s)]">
             <h3 className="text-body-medium-md">Sarah Wilson</h3>
-            <Badge intent="warning" size="sm">Away</Badge>
+            <Badge intent="warning" size="s">Away</Badge>
           </div>
           <p className="text-body-sm text-[var(--color-text-secondary)]">
             Frontend Engineer at TechCorp
@@ -324,14 +324,14 @@ export const UserProfile: Story = {
 // Comment thread
 export const CommentThread: Story = {
   render: () => (
-    <div className="max-w-md space-y-[var(--space-lg)]">
-      <div className="flex gap-[var(--space-sm)]">
-        <Avatar size="sm">
+    <div className="max-w-md space-y-[var(--space-l)]">
+      <div className="flex gap-[var(--space-s)]">
+        <Avatar size="s">
           <AvatarImage src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" alt="Mike Johnson" />
-          <AvatarFallback size="sm" variant="information">MJ</AvatarFallback>
+          <AvatarFallback size="s" variant="information">MJ</AvatarFallback>
         </Avatar>
-        <div className="flex-1 space-y-[var(--space-xsm)]">
-          <div className="flex items-center gap-[var(--space-sm)]">
+        <div className="flex-1 space-y-[var(--space-xs)]">
+          <div className="flex items-center gap-[var(--space-s)]">
             <span className="text-body-medium-sm">Mike Johnson</span>
             <span className="text-caption-xsm text-[var(--color-text-tertiary)]">2 hours ago</span>
           </div>
@@ -341,12 +341,12 @@ export const CommentThread: Story = {
         </div>
       </div>
 
-      <div className="flex gap-[var(--space-sm)]">
-        <Avatar size="sm">
-          <AvatarFallback size="sm" variant="success">AL</AvatarFallback>
+      <div className="flex gap-[var(--space-s)]">
+        <Avatar size="s">
+          <AvatarFallback size="s" variant="success">AL</AvatarFallback>
         </Avatar>
-        <div className="flex-1 space-y-[var(--space-xsm)]">
-          <div className="flex items-center gap-[var(--space-sm)]">
+        <div className="flex-1 space-y-[var(--space-xs)]">
+          <div className="flex items-center gap-[var(--space-s)]">
             <span className="text-body-medium-sm">Alex Lee</span>
             <span className="text-caption-xsm text-[var(--color-text-tertiary)]">1 hour ago</span>
           </div>
@@ -356,13 +356,13 @@ export const CommentThread: Story = {
         </div>
       </div>
 
-      <div className="flex gap-[var(--space-sm)]">
-        <Avatar size="sm">
+      <div className="flex gap-[var(--space-s)]">
+        <Avatar size="s">
           <AvatarImage src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face" alt="Emma Davis" />
-          <AvatarFallback size="sm" variant="magenta">ED</AvatarFallback>
+          <AvatarFallback size="s" variant="magenta">ED</AvatarFallback>
         </Avatar>
-        <div className="flex-1 space-y-[var(--space-xsm)]">
-          <div className="flex items-center gap-[var(--space-sm)]">
+        <div className="flex-1 space-y-[var(--space-xs)]">
+          <div className="flex items-center gap-[var(--space-s)]">
             <span className="text-body-medium-sm">Emma Davis</span>
             <span className="text-caption-xsm text-[var(--color-text-tertiary)]">30 minutes ago</span>
           </div>
@@ -378,44 +378,44 @@ export const CommentThread: Story = {
 // Avatar stack
 export const AvatarStack: Story = {
   render: () => (
-    <div className="space-y-[var(--space-lg)]">
-      <div className="space-y-[var(--space-md)]">
+    <div className="space-y-[var(--space-l)]">
+      <div className="space-y-[var(--space-m)]">
         <div className="text-body-medium-sm">Project Team (5 members)</div>
-        <div className="flex items-center gap-[var(--space-xsm)]">
-          <AvatarGroup size="sm">
-            <Avatar size="sm">
+        <div className="flex items-center gap-[var(--space-xs)]">
+          <AvatarGroup size="s">
+            <Avatar size="s">
               <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="User 1" />
-              <AvatarFallback size="sm" variant="information">JD</AvatarFallback>
+              <AvatarFallback size="s" variant="information">JD</AvatarFallback>
             </Avatar>
-            <Avatar size="sm">
+            <Avatar size="s">
               <AvatarImage src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face" alt="User 2" />
-              <AvatarFallback size="sm" variant="magenta">SW</AvatarFallback>
+              <AvatarFallback size="s" variant="magenta">SW</AvatarFallback>
             </Avatar>
-            <Avatar size="sm">
-              <AvatarFallback size="sm" variant="success">AL</AvatarFallback>
+            <Avatar size="s">
+              <AvatarFallback size="s" variant="success">AL</AvatarFallback>
             </Avatar>
-            <Avatar size="sm">
-              <AvatarFallback size="sm" variant="warning">EM</AvatarFallback>
+            <Avatar size="s">
+              <AvatarFallback size="s" variant="warning">EM</AvatarFallback>
             </Avatar>
           </AvatarGroup>
           <span className="text-body-medium-sm text-[var(--color-text-tertiary)]">+1</span>
         </div>
       </div>
 
-      <div className="space-y-[var(--space-md)]">
+      <div className="space-y-[var(--space-m)]">
         <div className="text-body-medium-sm">Design Team (8+ members)</div>
-        <div className="flex items-center gap-[var(--space-xsm)]">
-          <AvatarGroup size="md">
-            <Avatar size="md">
+        <div className="flex items-center gap-[var(--space-xs)]">
+          <AvatarGroup size="m">
+            <Avatar size="m">
               <AvatarImage src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt="User 1" />
-              <AvatarFallback size="md" variant="information">MJ</AvatarFallback>
+              <AvatarFallback size="m" variant="information">MJ</AvatarFallback>
             </Avatar>
-            <Avatar size="md">
+            <Avatar size="m">
               <AvatarImage src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt="User 2" />
-              <AvatarFallback size="md" variant="magenta">ED</AvatarFallback>
+              <AvatarFallback size="m" variant="magenta">ED</AvatarFallback>
             </Avatar>
-            <Avatar size="md">
-              <AvatarFallback size="md" variant="success">RH</AvatarFallback>
+            <Avatar size="m">
+              <AvatarFallback size="m" variant="success">RH</AvatarFallback>
             </Avatar>
           </AvatarGroup>
           <span className="text-body-medium-md text-[var(--color-text-secondary)]">+5</span>
@@ -428,10 +428,10 @@ export const AvatarStack: Story = {
 // Company avatars
 export const CompanyAvatars: Story = {
   render: () => (
-    <div className="space-y-[var(--space-lg)]">
+    <div className="space-y-[var(--space-l)]">
       <div>
-        <h3 className="text-heading-sm mb-[var(--space-sm)]">Company Logo</h3>
-        <div className="flex items-center gap-[var(--space-md)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)]">Company Logo</h3>
+        <div className="flex items-center gap-[var(--space-m)]">
           <Avatar type="organization">
             <AvatarImage src="https://useful-toucan-91.convex.cloud/api/storage/5e36a31d-3f0a-4bb0-95db-f5b1c8e8af93" alt="Company Logo" />
             <AvatarFallback type="organization" variant="information">CO</AvatarFallback>
@@ -440,8 +440,8 @@ export const CompanyAvatars: Story = {
       </div>
       
       <div>
-        <h3 className="text-heading-sm mb-[var(--space-sm)]">Company Initials</h3>
-        <div className="flex items-center gap-[var(--space-md)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)]">Company Initials</h3>
+        <div className="flex items-center gap-[var(--space-m)]">
           <Avatar type="organization">
             <AvatarFallback type="organization" variant="information">AC</AvatarFallback>
           </Avatar>
@@ -458,26 +458,26 @@ export const CompanyAvatars: Story = {
       </div>
       
       <div>
-        <h3 className="text-heading-sm mb-[var(--space-sm)]">Brand Icons</h3>
-        <div className="flex items-center gap-[var(--space-md)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)]">Brand Icons</h3>
+        <div className="flex items-center gap-[var(--space-m)]">
           <Avatar type="organization">
             <AvatarFallback type="organization" variant="information">
-              <Icon name="package" size="sm" color="inverse" />
+              <Icon name="package" size="s" color="inverse" />
             </AvatarFallback>
           </Avatar>
           <Avatar type="organization">
             <AvatarFallback type="organization" variant="magenta">
-              <Icon name="ship" size="sm" color="inverse" />
+              <Icon name="ship" size="s" color="inverse" />
             </AvatarFallback>
           </Avatar>
           <Avatar type="organization">
             <AvatarFallback type="organization" variant="success">
-              <Icon name="star" size="sm" color="inverse" />
+              <Icon name="star" size="s" color="inverse" />
             </AvatarFallback>
           </Avatar>
           <Avatar type="organization">
             <AvatarFallback type="organization" variant="warning">
-              <Icon name="handshake" size="sm" color="inverse" />
+              <Icon name="handshake" size="s" color="inverse" />
             </AvatarFallback>
           </Avatar>
         </div>

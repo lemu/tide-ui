@@ -21,9 +21,9 @@ import { countries } from "country-data-list";
 
 // Helper function to map pixel size to Flag size variant
 const getFlagSizeVariant = (pixelSize: number): FlagSize => {
-  if (pixelSize <= 12) return "sm";
-  if (pixelSize <= 16) return "md";
-  if (pixelSize <= 20) return "lg";
+  if (pixelSize <= 12) return "s";
+  if (pixelSize <= 16) return "m";
+  if (pixelSize <= 20) return "l";
   return "xl";
 };
 
@@ -163,7 +163,7 @@ export function CountryDropdown({
         key={country.alpha2}
         value={`${country.name} ${country.alpha2} ${country.alpha3}`}
         onSelect={() => handleSelect(country.alpha2)}
-        className="flex items-center gap-[var(--space-sm)] cursor-pointer"
+        className="flex items-center gap-[var(--space-s)] cursor-pointer"
         data-index={index}
       >
         {showFlag && (
@@ -202,7 +202,7 @@ export function CountryDropdown({
 
     if (selectedCountry) {
       return (
-        <div className="flex items-center gap-[var(--space-sm)]">
+        <div className="flex items-center gap-[var(--space-s)]">
           {showFlag && (
             <Flag
               country={selectedCountry.alpha2}
@@ -232,7 +232,7 @@ export function CountryDropdown({
       disabled={disabled}
       className={cn(
         "justify-between",
-        variant === "slim" ? "w-auto px-[var(--space-sm)]" : "w-full",
+        variant === "slim" ? "w-auto px-[var(--space-s)]" : "w-full",
         className
       )}
     >

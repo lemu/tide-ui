@@ -42,14 +42,14 @@ describe('Button', () => {
   })
 
   it('renders with small size', () => {
-    render(<Button size="sm">Small</Button>)
+    render(<Button size="s">Small</Button>)
     const button = screen.getByText('Small')
-    expect(button).toHaveClass('h-[var(--size-sm)]')
+    expect(button).toHaveClass('h-[var(--size-s)]')
   })
 
   it('renders with large size', () => {
-    render(<Button size="lg">Large</Button>)
+    render(<Button size="l">Large</Button>)
     const button = screen.getByText('Large')
-    expect(button).toHaveClass('h-[var(--size-lg)]')
+    expect(button).toHaveClass('h-[var(--size-l)]')
   })
 })

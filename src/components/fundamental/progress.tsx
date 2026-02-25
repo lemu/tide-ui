@@ -14,14 +14,14 @@ const progressVariants = cva(
         error: "bg-[var(--color-background-error-subtle)]",
       },
       size: {
-        sm: "h-1",
-        md: "h-2",
-        lg: "h-3",
+        s: "h-1",
+        m: "h-2",
+        l: "h-3",
       },
     },
     defaultVariants: {
       variant: "default",
-      size: "md",
+      size: "m",
     },
   }
 )

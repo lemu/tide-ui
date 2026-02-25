@@ -34,7 +34,7 @@ export const Default: Story = {
     const [search, setSearch] = useState('')
 
     return (
-      <Command className="rounded-lg border border-[var(--color-border-primary-subtle)] shadow-md w-[450px]">
+      <Command className="rounded-l border border-[var(--color-border-primary-subtle)] shadow-md w-[450px]">
         <CommandInput
           placeholder="Type a command or search..."
           value={search}
@@ -94,7 +94,7 @@ export const DialogExample: Story = {
           onClick={() => setOpen(true)}
           className="flex items-center gap-2"
         >
-          <Icon name="search" size="sm" />
+          <Icon name="search" size="s" />
           Search...
           <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-[var(--color-surface-secondary)] px-1.5 font-mono text-[10px] font-medium text-[var(--color-text-secondary)] opacity-100">
             <span className="text-caption-xsm">⌘</span>K
@@ -159,7 +159,7 @@ export const DialogExample: Story = {
 // File search command
 export const FileSearch: Story = {
   render: () => (
-    <Command className="rounded-lg border border-[var(--color-border-primary-subtle)] shadow-md w-[500px]">
+    <Command className="rounded-l border border-[var(--color-border-primary-subtle)] shadow-md w-[500px]">
       <CommandInput placeholder="Search files and folders..." />
       <CommandList>
         <CommandEmpty>No files found</CommandEmpty>
@@ -198,7 +198,7 @@ export const FileSearch: Story = {
             <Icon name="folder" className="mr-2 h-4 w-4" />
             <span>components</span>
             <div className="ml-auto flex items-center gap-1">
-              <Badge appearance="outline" size="sm">
+              <Badge appearance="outline" size="s">
                 24 files
               </Badge>
             </div>
@@ -207,7 +207,7 @@ export const FileSearch: Story = {
             <Icon name="folder" className="mr-2 h-4 w-4" />
             <span>utils</span>
             <div className="ml-auto flex items-center gap-1">
-              <Badge appearance="outline" size="sm">
+              <Badge appearance="outline" size="s">
                 8 files
               </Badge>
             </div>
@@ -221,7 +221,7 @@ export const FileSearch: Story = {
 // Command palette with status indicators
 export const WithStatusIndicators: Story = {
   render: () => (
-    <Command className="rounded-lg border border-[var(--color-border-primary-subtle)] shadow-md w-[450px]">
+    <Command className="rounded-l border border-[var(--color-border-primary-subtle)] shadow-md w-[450px]">
       <CommandInput placeholder="Search commands..." />
       <CommandList>
         <CommandEmpty>No commands found</CommandEmpty>
@@ -230,7 +230,7 @@ export const WithStatusIndicators: Story = {
             <Icon name="git-branch" className="mr-2 h-4 w-4" />
             <span>Create Branch</span>
             <div className="ml-auto flex items-center gap-2">
-              <Badge size="sm">
+              <Badge size="s">
                 Git
               </Badge>
               <CommandShortcut>⌘B</CommandShortcut>
@@ -248,7 +248,7 @@ export const WithStatusIndicators: Story = {
             <Icon name="git-pull-request" className="mr-2 h-4 w-4" />
             <span>Create Pull Request</span>
             <div className="ml-auto flex items-center gap-2">
-              <Badge appearance="outline" size="sm">
+              <Badge appearance="outline" size="s">
                 Unavailable
               </Badge>
             </div>
@@ -273,7 +273,7 @@ export const WithStatusIndicators: Story = {
             <Icon name="upload" className="mr-2 h-4 w-4" />
             <span>Deploy to Staging</span>
             <div className="ml-auto flex items-center gap-2">
-              <Badge appearance="outline" size="sm" className="text-[var(--color-text-info-bold)]">
+              <Badge appearance="outline" size="s" className="text-[var(--color-text-info-bold)]">
                 Ready
               </Badge>
             </div>
@@ -287,7 +287,7 @@ export const WithStatusIndicators: Story = {
 // User and team switching
 export const TeamSwitcher: Story = {
   render: () => (
-    <Command className="rounded-lg border border-[var(--color-border-primary-subtle)] shadow-md w-[400px]">
+    <Command className="rounded-l border border-[var(--color-border-primary-subtle)] shadow-md w-[400px]">
       <CommandInput placeholder="Search teams and users..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
@@ -303,7 +303,7 @@ export const TeamSwitcher: Story = {
                   acme-corp.com
                 </span>
               </div>
-              <Badge size="sm">
+              <Badge size="s">
                 Current
               </Badge>
             </div>
@@ -372,7 +372,7 @@ export const TeamSwitcher: Story = {
 // Command palette for IDE/Editor
 export const IDECommands: Story = {
   render: () => (
-    <Command className="rounded-lg border border-[var(--color-border-primary-subtle)] shadow-md w-[520px]">
+    <Command className="rounded-l border border-[var(--color-border-primary-subtle)] shadow-md w-[520px]">
       <CommandInput placeholder="Search commands, files, and symbols..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
@@ -452,7 +452,7 @@ export const WithClearButton: Story = {
         <p className="text-body-sm text-[var(--color-text-secondary)]">
           Type in the search box to see the clear button. Click X to clear.
         </p>
-        <Command className="rounded-lg border border-[var(--color-border-primary-subtle)] shadow-md w-[450px]">
+        <Command className="rounded-l border border-[var(--color-border-primary-subtle)] shadow-md w-[450px]">
           <CommandInput
             placeholder="Type a command or search..."
             value={search}
@@ -489,7 +489,7 @@ export const WithClearButton: Story = {
 // Help and documentation search
 export const HelpSearch: Story = {
   render: () => (
-    <Command className="rounded-lg border border-[var(--color-border-primary-subtle)] shadow-md w-[480px]">
+    <Command className="rounded-l border border-[var(--color-border-primary-subtle)] shadow-md w-[480px]">
       <CommandInput placeholder="Search documentation and help..." />
       <CommandList>
         <CommandEmpty>
@@ -510,7 +510,7 @@ export const HelpSearch: Story = {
                 Learn the basics in 5 minutes
               </span>
             </div>
-            <Badge size="sm">
+            <Badge size="s">
               Popular
             </Badge>
           </CommandItem>

@@ -613,41 +613,45 @@
 
   /* Semantic Spacing Tokens */
   --space-null: var(--dimension-0);
-  --space-2xsm: var(--dimension-50);
-  --space-xsm: var(--dimension-100);
-  --space-sm: var(--dimension-200);
-  --space-md: var(--dimension-300);
-  --space-lg: var(--dimension-400);
-  --space-xlg: var(--dimension-600);
-  --space-2xlg: var(--dimension-800);
-  --space-3xlg: var(--dimension-1000);
+  --space-2xs: var(--dimension-50);
+  --space-xs: var(--dimension-100);
+  --space-s: var(--dimension-200);
+  --space-m: var(--dimension-300);
+  --space-l: var(--dimension-400);
+  --space-xl: var(--dimension-500);
+  --space-2xl: var(--dimension-600);
+  --space-3xl: var(--dimension-800);
+  --space-4xl: var(--dimension-1000);
+  --space-5xl: var(--dimension-1200);
+  --space-6xl: var(--dimension-1600);
 
   /* Semantic Sizing Tokens */
-  --size-3xsm: var(--dimension-300);
-  --size-2xsm: var(--dimension-400);
-  --size-xsm: var(--dimension-500);
-  --size-sm: var(--dimension-600);
-  --size-md: var(--dimension-800);
-  --size-lg: var(--dimension-1000);
-  --size-xlg: var(--dimension-1200);
-  --size-2xlg: var(--dimension-1600);
-  --size-3xlg: var(--dimension-1800);
-  --size-4xlg: var(--dimension-2000);
+  --size-4xs: var(--dimension-300);
+  --size-3xs: var(--dimension-300);
+  --size-2xs: var(--dimension-400);
+  --size-xs: var(--dimension-500);
+  --size-s: var(--dimension-600);
+  --size-m: var(--dimension-800);
+  --size-l: var(--dimension-1000);
+  --size-xl: var(--dimension-1200);
+  --size-2xl: var(--dimension-1600);
+  --size-3xl: var(--dimension-1800);
+  --size-4xl: var(--dimension-2000);
 
-  /* Semantic Border Border Radius */
-  --radius-null: var(--dimension-0);
-  --radius-xsm: var(--dimension-50);
-  --radius-sm: var(--dimension-100);
-  --radius-md: var(--dimension-150);
-  --radius-lg: var(--dimension-200);
-  --radius-xlg: var(--dimension-300);
-  --radius-full: 9999px;
+  /* Semantic Border Radius */
+  --border-radius-null: var(--dimension-0);
+  --border-radius-xs: var(--dimension-50);
+  --border-radius-s: var(--dimension-100);
+  --border-radius-m: var(--dimension-150);
+  --border-radius-l: var(--dimension-200);
+  --border-radius-xl: var(--dimension-300);
+  --border-radius-full: 62.4375rem;
 
   /* Semantic Border Width Tokens */
   --border-width-null: var(--dimension-0);
-  --border-width-xsm: var(--dimension-25);
-  --border-width-sm: var(--dimension-50);
-  --border-width-md: var(--dimension-100);
+  --border-width-xs: var(--dimension-25);
+  --border-width-s: var(--dimension-50);
+  --border-width-m: var(--dimension-100);
 
   /* ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -989,14 +993,14 @@
   --text-caption-strong-xsm--letter-spacing: var(--font-letter-spacing-light);
 
   /* Tailwind Theme - Border Radius Setup  */
-  /* Example: rounded-sm */
-  --radius-null: var(--dimension-0);
-  --radius-xsm: var(--dimension-50);
-  --radius-sm: var(--dimension-100);
-  --radius-md: var(--dimension-150);
-  --radius-lg: var(--dimension-200);
-  --radius-xlg: var(--dimension-300);
-  --radius-full: 9999px;
+  /* Example: rounded-s */
+  --radius-null: var(--border-radius-null);
+  --radius-xs: var(--border-radius-xs);
+  --radius-s: var(--border-radius-s);
+  --radius-m: var(--border-radius-m);
+  --radius-l: var(--border-radius-l);
+  --radius-xl: var(--border-radius-xl);
+  --radius-full: var(--border-radius-full);
 
   /* Tailwind Theme - Shadows Setup  */
   /* Example: shadow-sm */

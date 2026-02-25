@@ -16,7 +16,7 @@ const meta: Meta<typeof Toggle> = {
     },
     size: {
       control: { type: 'select' },
-      options: ['sm', 'md', 'lg'],
+      options: ['s', 'm', 'l'],
     },
     disabled: {
       control: { type: 'boolean' },
@@ -48,7 +48,7 @@ export const Outline: Story = {
 
 export const Small: Story = {
   render: () => (
-    <Toggle size="sm" aria-label="Toggle underline">
+    <Toggle size="s" aria-label="Toggle underline">
       <Underline className="h-4 w-4" />
     </Toggle>
   ),
@@ -56,7 +56,7 @@ export const Small: Story = {
 
 export const Large: Story = {
   render: () => (
-    <Toggle size="lg" aria-label="Toggle bold">
+    <Toggle size="l" aria-label="Toggle bold">
       <Bold className="h-4 w-4" />
     </Toggle>
   ),
@@ -137,27 +137,27 @@ export const Favorites: Story = {
 
 export const ToolbarExample: Story = {
   render: () => (
-    <div className="border rounded-lg p-2 inline-flex items-center space-x-1">
+    <div className="border rounded-l p-2 inline-flex items-center space-x-1">
       <div className="flex space-x-1">
-        <Toggle size="sm" aria-label="Toggle bold">
+        <Toggle size="s" aria-label="Toggle bold">
           <Bold className="h-4 w-4" />
         </Toggle>
-        <Toggle size="sm" aria-label="Toggle italic">
+        <Toggle size="s" aria-label="Toggle italic">
           <Italic className="h-4 w-4" />
         </Toggle>
-        <Toggle size="sm" aria-label="Toggle underline">
+        <Toggle size="s" aria-label="Toggle underline">
           <Underline className="h-4 w-4" />
         </Toggle>
       </div>
       <div className="w-px h-6 bg-border mx-1" />
       <div className="flex space-x-1">
-        <Toggle size="sm" aria-label="Align left">
+        <Toggle size="s" aria-label="Align left">
           <AlignLeft className="h-4 w-4" />
         </Toggle>
-        <Toggle size="sm" aria-label="Align center">
+        <Toggle size="s" aria-label="Align center">
           <AlignCenter className="h-4 w-4" />
         </Toggle>
-        <Toggle size="sm" aria-label="Align right">
+        <Toggle size="s" aria-label="Align right">
           <AlignRight className="h-4 w-4" />
         </Toggle>
       </div>
@@ -172,28 +172,28 @@ export const ColumnDisplayToggles: Story = {
       <div className="space-y-2">
         <h4 className="text-label-sm text-[var(--color-text-tertiary)]">Display columns</h4>
         <div className="flex flex-wrap gap-1 items-start justify-start">
-          <Toggle variant="outline" size="sm" pressed aria-label="Toggle laycan year">
+          <Toggle variant="outline" size="s" pressed aria-label="Toggle laycan year">
             Laycan year
           </Toggle>
-          <Toggle variant="outline" size="sm" pressed aria-label="Toggle laycan month">
+          <Toggle variant="outline" size="s" pressed aria-label="Toggle laycan month">
             Laycan month
           </Toggle>
-          <Toggle variant="outline" size="sm" pressed aria-label="Toggle fixture count">
+          <Toggle variant="outline" size="s" pressed aria-label="Toggle fixture count">
             Fixture count
           </Toggle>
-          <Toggle variant="outline" size="sm" pressed aria-label="Toggle cargo count">
+          <Toggle variant="outline" size="s" pressed aria-label="Toggle cargo count">
             Cargo count
           </Toggle>
-          <Toggle variant="outline" size="sm" pressed aria-label="Toggle gross freight">
+          <Toggle variant="outline" size="s" pressed aria-label="Toggle gross freight">
             Gross freight
           </Toggle>
-          <Toggle variant="outline" size="sm" pressed aria-label="Toggle avg. freight rate">
+          <Toggle variant="outline" size="s" pressed aria-label="Toggle avg. freight rate">
             Avg. freight rate
           </Toggle>
-          <Toggle variant="outline" size="sm" pressed aria-label="Toggle avg. demurrage">
+          <Toggle variant="outline" size="s" pressed aria-label="Toggle avg. demurrage">
             Avg. demurrage
           </Toggle>
-          <Toggle variant="outline" size="sm" aria-label="Toggle hidden property">
+          <Toggle variant="outline" size="s" aria-label="Toggle hidden property">
             Hidden property
           </Toggle>
         </div>
@@ -208,13 +208,13 @@ export const AllVariants: Story = {
       <div className="space-y-2">
         <h4 className="text-sm font-medium">Default Variant</h4>
         <div className="flex space-x-2">
-          <Toggle size="sm" aria-label="Small default">
+          <Toggle size="s" aria-label="Small default">
             <Bold className="h-4 w-4" />
           </Toggle>
-          <Toggle size="md" aria-label="Medium default">
+          <Toggle size="m" aria-label="Medium default">
             <Bold className="h-4 w-4" />
           </Toggle>
-          <Toggle size="lg" aria-label="Large default">
+          <Toggle size="l" aria-label="Large default">
             <Bold className="h-4 w-4" />
           </Toggle>
         </div>
@@ -222,13 +222,13 @@ export const AllVariants: Story = {
       <div className="space-y-2">
         <h4 className="text-sm font-medium">Outline Variant</h4>
         <div className="flex space-x-2">
-          <Toggle variant="outline" size="sm" aria-label="Small outline">
+          <Toggle variant="outline" size="s" aria-label="Small outline">
             <Italic className="h-4 w-4" />
           </Toggle>
-          <Toggle variant="outline" size="md" aria-label="Medium outline">
+          <Toggle variant="outline" size="m" aria-label="Medium outline">
             <Italic className="h-4 w-4" />
           </Toggle>
-          <Toggle variant="outline" size="lg" aria-label="Large outline">
+          <Toggle variant="outline" size="l" aria-label="Large outline">
             <Italic className="h-4 w-4" />
           </Toggle>
         </div>
@@ -236,13 +236,13 @@ export const AllVariants: Story = {
       <div className="space-y-2">
         <h4 className="text-sm font-medium">Text Toggles - All Sizes</h4>
         <div className="flex space-x-2 items-center">
-          <Toggle variant="outline" size="sm" aria-label="Small text">
+          <Toggle variant="outline" size="s" aria-label="Small text">
             Small
           </Toggle>
-          <Toggle variant="outline" size="md" aria-label="Medium text">
+          <Toggle variant="outline" size="m" aria-label="Medium text">
             Medium
           </Toggle>
-          <Toggle variant="outline" size="lg" aria-label="Large text">
+          <Toggle variant="outline" size="l" aria-label="Large text">
             Large
           </Toggle>
         </div>

@@ -33,7 +33,7 @@ export const Default: Story = {
           mode="single"
           selected={selected}
           onSelect={setSelected}
-          className="rounded-md border border-[var(--color-border-primary-subtle)]"
+          className="rounded-m border border-[var(--color-border-primary-subtle)]"
         />
       </div>
     )
@@ -63,7 +63,7 @@ export const DateRange: Story = {
           selected={dateRange}
           onSelect={setDateRange}
           numberOfMonths={2}
-          className="rounded-md border border-[var(--color-border-primary-subtle)]"
+          className="rounded-m border border-[var(--color-border-primary-subtle)]"
         />
       </div>
     )
@@ -95,7 +95,7 @@ export const MultipleSelection: Story = {
           mode="multiple"
           selected={selectedDates}
           onSelect={setSelectedDates}
-          className="rounded-md border border-[var(--color-border-primary-subtle)]"
+          className="rounded-m border border-[var(--color-border-primary-subtle)]"
         />
       </div>
     )
@@ -155,7 +155,7 @@ export const EventScheduling: Story = {
                       fontWeight: 'bold'
                     }
                   }}
-                  className="rounded-md border border-[var(--color-border-primary-subtle)]"
+                  className="rounded-m border border-[var(--color-border-primary-subtle)]"
                 />
                 <div className="mt-3 text-caption-sm text-[var(--color-text-secondary)]">
                   <div className="flex items-center gap-2">
@@ -174,11 +174,11 @@ export const EventScheduling: Story = {
                 {selectedDate ? (
                   <div className="space-y-4">
                     {getEventsForDate(selectedDate).length > 0 && (
-                      <div className="p-3 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-md">
+                      <div className="p-3 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m">
                         <h4 className="text-body-sm font-medium mb-2">Existing Events:</h4>
                         {getEventsForDate(selectedDate).map((event, index) => (
                           <div key={index} className="flex items-center gap-2 text-body-sm">
-                            <Icon name="clock" size="sm" />
+                            <Icon name="clock" size="s" />
                             <span>{event.time} - {event.title}</span>
                           </div>
                         ))}
@@ -192,34 +192,34 @@ export const EventScheduling: Story = {
                           <Button
                             key={time}
                             variant={selectedTime === time ? 'default' : 'ghost'}
-                            size="sm"
+                            size="s"
                             disabled={isBooked}
                             onClick={() => setSelectedTime(selectedTime === time ? '' : time)}
                             className="justify-center"
                           >
                             {time}
-                            {isBooked && <Icon name="x" size="sm" className="ml-1" />}
+                            {isBooked && <Icon name="x" size="s" className="ml-1" />}
                           </Button>
                         )
                       })}
                     </div>
 
                     {selectedTime && (
-                      <div className="p-4 bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] rounded-md">
+                      <div className="p-4 bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] rounded-m">
                         <h4 className="text-body-sm font-medium mb-2">Selected Time Slot:</h4>
                         <p className="text-body-sm">
                           {selectedDate.toLocaleDateString()} at {selectedTime}
                         </p>
                         <div className="flex gap-2 mt-3">
-                          <Button size="sm">Book Meeting</Button>
-                          <Button size="sm" variant="ghost">Add to Calendar</Button>
+                          <Button size="s">Book Meeting</Button>
+                          <Button size="s" variant="ghost">Add to Calendar</Button>
                         </div>
                       </div>
                     )}
                   </div>
                 ) : (
                   <div className="text-center py-8 text-[var(--color-text-secondary)]">
-                    <Icon name="calendar" size="lg" className="mx-auto mb-2" />
+                    <Icon name="calendar" size="l" className="mx-auto mb-2" />
                     <p>Select a date to view available time slots</p>
                   </div>
                 )}
@@ -308,7 +308,7 @@ export const VacationBooking: Story = {
                     }
                   }}
                   numberOfMonths={2}
-                  className="rounded-md border border-[var(--color-border-primary-subtle)]"
+                  className="rounded-m border border-[var(--color-border-primary-subtle)]"
                 />
                 
                 <div className="mt-4 space-y-2 text-caption-sm">
@@ -328,7 +328,7 @@ export const VacationBooking: Story = {
                 
                 {vacationDates?.from && vacationDates?.to ? (
                   <div className="space-y-4">
-                    <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-md">
+                    <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m">
                       <h4 className="text-body-sm font-medium mb-3">Request Details:</h4>
                       <div className="space-y-2 text-body-sm">
                         <div className="flex justify-between">
@@ -357,7 +357,7 @@ export const VacationBooking: Story = {
                     <div className="space-y-2">
                       <Label>Reason for Leave:</Label>
                       <textarea 
-                        className="w-full p-3 border border-[var(--color-interaction-border-input)] rounded-md resize-none"
+                        className="w-full p-3 border border-[var(--color-interaction-border-input)] rounded-m resize-none"
                         rows={3}
                         placeholder="Optional: Describe the reason for your vacation request"
                       />
@@ -367,7 +367,7 @@ export const VacationBooking: Story = {
                       <Label>Emergency Contact:</Label>
                       <input 
                         type="text"
-                        className="w-full p-2 border border-[var(--color-interaction-border-input)] rounded-md"
+                        className="w-full p-2 border border-[var(--color-interaction-border-input)] rounded-m"
                         placeholder="Name and phone number"
                       />
                     </div>
@@ -381,7 +381,7 @@ export const VacationBooking: Story = {
                   </div>
                 ) : (
                   <div className="text-center py-8 text-[var(--color-text-secondary)]">
-                    <Icon name="calendar-days" size="lg" className="mx-auto mb-2" />
+                    <Icon name="calendar-days" size="l" className="mx-auto mb-2" />
                     <p>Select your vacation dates to see the summary</p>
                   </div>
                 )}
@@ -474,7 +474,7 @@ export const ProjectDeadlines: Story = {
                       fontWeight: 'bold'
                     }
                   }}
-                  className="rounded-md border border-[var(--color-border-primary-subtle)]"
+                  className="rounded-m border border-[var(--color-border-primary-subtle)]"
                 />
                 
                 <div className="mt-4 text-caption-sm text-[var(--color-text-secondary)]">
@@ -498,7 +498,7 @@ export const ProjectDeadlines: Story = {
                     ? getProjectsForDate(selectedDate) 
                     : projects
                   ).map((project, index) => (
-                    <div key={index} className="p-4 border border-[var(--color-border-primary-subtle)] rounded-md">
+                    <div key={index} className="p-4 border border-[var(--color-border-primary-subtle)] rounded-m">
                       <div className="flex items-start justify-between mb-2">
                         <h4 className="text-body-md font-medium">{project.name}</h4>
                         <Badge appearance={getStatusAppearance(project.status)} className="text-xs capitalize">
@@ -508,7 +508,7 @@ export const ProjectDeadlines: Story = {
                       
                       <div className="space-y-2">
                         <div className="flex items-center gap-2 text-body-sm text-[var(--color-text-secondary)]">
-                          <Icon name="calendar" size="sm" />
+                          <Icon name="calendar" size="s" />
                           <span>Due: {project.deadline.toLocaleDateString()}</span>
                         </div>
                         
@@ -529,12 +529,12 @@ export const ProjectDeadlines: Story = {
                         </div>
                         
                         <div className="flex gap-2">
-                          <Button size="sm" variant="ghost">
-                            <Icon name="eye" size="sm" className="mr-1" />
+                          <Button size="s" variant="ghost">
+                            <Icon name="eye" size="s" className="mr-1" />
                             View
                           </Button>
-                          <Button size="sm" variant="ghost">
-                            <Icon name="edit" size="sm" className="mr-1" />
+                          <Button size="s" variant="ghost">
+                            <Icon name="edit" size="s" className="mr-1" />
                             Edit
                           </Button>
                         </div>
@@ -544,7 +544,7 @@ export const ProjectDeadlines: Story = {
                   
                   {selectedDate && !hasDeadline(selectedDate) && (
                     <div className="text-center py-8 text-[var(--color-text-secondary)]">
-                      <Icon name="calendar-x" size="lg" className="mx-auto mb-2" />
+                      <Icon name="calendar-x" size="l" className="mx-auto mb-2" />
                       <p>No deadlines on this date</p>
                     </div>
                   )}
@@ -609,7 +609,7 @@ export const AvailabilityBooking: Story = {
                       fontWeight: 'bold'
                     }
                   }}
-                  className="rounded-md border border-[var(--color-border-primary-subtle)]"
+                  className="rounded-m border border-[var(--color-border-primary-subtle)]"
                 />
                 
                 <div className="mt-4 space-y-2 text-caption-sm">
@@ -637,7 +637,7 @@ export const AvailabilityBooking: Story = {
                             <Button
                               key={time}
                               variant="ghost"
-                              size="sm"
+                              size="s"
                               className="justify-center"
                             >
                               {time}
@@ -645,7 +645,7 @@ export const AvailabilityBooking: Story = {
                           ))}
                         </div>
                         
-                        <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-md">
+                        <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m">
                           <h4 className="text-body-sm font-medium mb-2">Session Details:</h4>
                           <ul className="text-body-sm space-y-1">
                             <li>• Duration: 60 minutes</li>
@@ -657,14 +657,14 @@ export const AvailabilityBooking: Story = {
                       </>
                     ) : (
                       <div className="text-center py-8 text-[var(--color-text-secondary)]">
-                        <Icon name="calendar-x" size="lg" className="mx-auto mb-2" />
+                        <Icon name="calendar-x" size="l" className="mx-auto mb-2" />
                         <p>No available times on this date</p>
                       </div>
                     )}
                   </div>
                 ) : (
                   <div className="text-center py-8 text-[var(--color-text-secondary)]">
-                    <Icon name="calendar" size="lg" className="mx-auto mb-2" />
+                    <Icon name="calendar" size="l" className="mx-auto mb-2" />
                     <p>Select a date to view available time slots</p>
                   </div>
                 )}
@@ -743,7 +743,7 @@ export const CustomCalendar: Story = {
               fontWeight: 'bold'
             }
           }}
-          className="rounded-md border border-[var(--color-border-primary-subtle)]"
+          className="rounded-m border border-[var(--color-border-primary-subtle)]"
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-caption-sm">

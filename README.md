@@ -73,7 +73,7 @@ import { designTokens } from '@rafal.lemieszewski/tide-ui'
 
 const styles = {
   backgroundColor: designTokens.colors.backgroundBrand,
-  padding: designTokens.spacing.md,
+  padding: designTokens.spacing.m,
 }
 ```
 

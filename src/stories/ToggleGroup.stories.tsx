@@ -26,7 +26,7 @@ const meta: Meta<typeof ToggleGroup> = {
     },
     size: {
       control: 'select',
-      options: ['sm', 'md', 'lg'],
+      options: ['s', 'm', 'l'],
       description: 'Size of the toggle items',
     },
   },
@@ -48,16 +48,16 @@ export const Default = {
         </div>
         <ToggleGroup type="single" value={value} onValueChange={setValue}>
           <ToggleGroupItem value="left">
-            <Icon name="align-left" size="sm" />
+            <Icon name="align-left" size="s" />
           </ToggleGroupItem>
           <ToggleGroupItem value="center">
-            <Icon name="align-center" size="sm" />
+            <Icon name="align-center" size="s" />
           </ToggleGroupItem>
           <ToggleGroupItem value="right">
-            <Icon name="align-right" size="sm" />
+            <Icon name="align-right" size="s" />
           </ToggleGroupItem>
           <ToggleGroupItem value="justify">
-            <Icon name="align-justify" size="sm" />
+            <Icon name="align-justify" size="s" />
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
@@ -80,16 +80,16 @@ export const MultipleSelection = {
         </div>
         <ToggleGroup type="multiple" value={values} onValueChange={setValues}>
           <ToggleGroupItem value="bold">
-            <Icon name="bold" size="sm" />
+            <Icon name="bold" size="s" />
           </ToggleGroupItem>
           <ToggleGroupItem value="italic">
-            <Icon name="italic" size="sm" />
+            <Icon name="italic" size="s" />
           </ToggleGroupItem>
           <ToggleGroupItem value="underline">
-            <Icon name="underline" size="sm" />
+            <Icon name="underline" size="s" />
           </ToggleGroupItem>
           <ToggleGroupItem value="strikethrough">
-            <Icon name="strikethrough" size="sm" />
+            <Icon name="strikethrough" size="s" />
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
@@ -108,7 +108,7 @@ export const Sizes = {
       <div className="space-y-6">
         <div className="space-y-2">
           <Label>Small Size</Label>
-          <ToggleGroup type="single" size="sm" value={smallValue} onValueChange={setSmallValue}>
+          <ToggleGroup type="single" size="s" value={smallValue} onValueChange={setSmallValue}>
             <ToggleGroupItem value="option1">Option 1</ToggleGroupItem>
             <ToggleGroupItem value="option2">Option 2</ToggleGroupItem>
             <ToggleGroupItem value="option3">Option 3</ToggleGroupItem>
@@ -117,7 +117,7 @@ export const Sizes = {
 
         <div className="space-y-2">
           <Label>Medium Size (Default)</Label>
-          <ToggleGroup type="single" size="md" value={mediumValue} onValueChange={setMediumValue}>
+          <ToggleGroup type="single" size="m" value={mediumValue} onValueChange={setMediumValue}>
             <ToggleGroupItem value="option1">Option 1</ToggleGroupItem>
             <ToggleGroupItem value="option2">Option 2</ToggleGroupItem>
             <ToggleGroupItem value="option3">Option 3</ToggleGroupItem>
@@ -126,7 +126,7 @@ export const Sizes = {
 
         <div className="space-y-2">
           <Label>Large Size</Label>
-          <ToggleGroup type="single" size="lg" value={largeValue} onValueChange={setLargeValue}>
+          <ToggleGroup type="single" size="l" value={largeValue} onValueChange={setLargeValue}>
             <ToggleGroupItem value="option1">Option 1</ToggleGroupItem>
             <ToggleGroupItem value="option2">Option 2</ToggleGroupItem>
             <ToggleGroupItem value="option3">Option 3</ToggleGroupItem>
@@ -186,15 +186,15 @@ export const TextEditorToolbar = {
               {/* Font size */}
               <div className="space-y-2">
                 <Label className="text-xs">Font Size</Label>
-                <ToggleGroup type="single" size="sm" value={fontSize} onValueChange={setFontSize}>
+                <ToggleGroup type="single" size="s" value={fontSize} onValueChange={setFontSize}>
                   <ToggleGroupItem value="small">
-                    <Icon name="type" size="sm" className="scale-75" />
+                    <Icon name="type" size="s" className="scale-75" />
                   </ToggleGroupItem>
                   <ToggleGroupItem value="medium">
-                    <Icon name="type" size="sm" />
+                    <Icon name="type" size="s" />
                   </ToggleGroupItem>
                   <ToggleGroupItem value="large">
-                    <Icon name="type" size="sm" className="scale-125" />
+                    <Icon name="type" size="s" className="scale-125" />
                   </ToggleGroupItem>
                 </ToggleGroup>
               </div>
@@ -202,15 +202,15 @@ export const TextEditorToolbar = {
               {/* Text formatting */}
               <div className="space-y-2">
                 <Label className="text-xs">Formatting</Label>
-                <ToggleGroup type="multiple" size="sm" value={formatting} onValueChange={setFormatting}>
+                <ToggleGroup type="multiple" size="s" value={formatting} onValueChange={setFormatting}>
                   <ToggleGroupItem value="bold">
-                    <Icon name="bold" size="sm" />
+                    <Icon name="bold" size="s" />
                   </ToggleGroupItem>
                   <ToggleGroupItem value="italic">
-                    <Icon name="italic" size="sm" />
+                    <Icon name="italic" size="s" />
                   </ToggleGroupItem>
                   <ToggleGroupItem value="underline">
-                    <Icon name="underline" size="sm" />
+                    <Icon name="underline" size="s" />
                   </ToggleGroupItem>
                 </ToggleGroup>
               </div>
@@ -218,18 +218,18 @@ export const TextEditorToolbar = {
               {/* Text alignment */}
               <div className="space-y-2">
                 <Label className="text-xs">Alignment</Label>
-                <ToggleGroup type="single" size="sm" value={alignment} onValueChange={setAlignment}>
+                <ToggleGroup type="single" size="s" value={alignment} onValueChange={setAlignment}>
                   <ToggleGroupItem value="left">
-                    <Icon name="align-left" size="sm" />
+                    <Icon name="align-left" size="s" />
                   </ToggleGroupItem>
                   <ToggleGroupItem value="center">
-                    <Icon name="align-center" size="sm" />
+                    <Icon name="align-center" size="s" />
                   </ToggleGroupItem>
                   <ToggleGroupItem value="right">
-                    <Icon name="align-right" size="sm" />
+                    <Icon name="align-right" size="s" />
                   </ToggleGroupItem>
                   <ToggleGroupItem value="justify">
-                    <Icon name="align-justify" size="sm" />
+                    <Icon name="align-justify" size="s" />
                   </ToggleGroupItem>
                 </ToggleGroup>
               </div>
@@ -237,12 +237,12 @@ export const TextEditorToolbar = {
               {/* Lists */}
               <div className="space-y-2">
                 <Label className="text-xs">Lists</Label>
-                <ToggleGroup type="single" size="sm" value={listType} onValueChange={setListType}>
+                <ToggleGroup type="single" size="s" value={listType} onValueChange={setListType}>
                   <ToggleGroupItem value="bullet">
-                    <Icon name="list" size="sm" />
+                    <Icon name="list" size="s" />
                   </ToggleGroupItem>
                   <ToggleGroupItem value="numbered">
-                    <Icon name="list-ordered" size="sm" />
+                    <Icon name="list-ordered" size="s" />
                   </ToggleGroupItem>
                 </ToggleGroup>
               </div>
@@ -252,7 +252,7 @@ export const TextEditorToolbar = {
             <div className="border-t border-[var(--color-border-primary-subtle)] pt-4">
               <Label className="text-xs">Preview</Label>
               <div 
-                className={`mt-2 p-4 border border-[var(--color-border-primary-subtle)] rounded-md min-h-24 ${
+                className={`mt-2 p-4 border border-[var(--color-border-primary-subtle)] rounded-m min-h-24 ${
                   alignment === 'left' ? 'text-left' :
                   alignment === 'center' ? 'text-center' :
                   alignment === 'right' ? 'text-right' :
@@ -314,15 +314,15 @@ export const ViewModeSelector = {
               <Label>Display Mode</Label>
               <ToggleGroup type="single" value={viewMode} onValueChange={setViewMode}>
                 <ToggleGroupItem value="list">
-                  <Icon name="list" size="sm" />
+                  <Icon name="list" size="s" />
                   <span className="ml-2">List</span>
                 </ToggleGroupItem>
                 <ToggleGroupItem value="grid">
-                  <Icon name="grid-3x3" size="sm" />
+                  <Icon name="grid-3x3" size="s" />
                   <span className="ml-2">Grid</span>
                 </ToggleGroupItem>
                 <ToggleGroupItem value="card">
-                  <Icon name="credit-card" size="sm" />
+                  <Icon name="credit-card" size="s" />
                   <span className="ml-2">Cards</span>
                 </ToggleGroupItem>
               </ToggleGroup>
@@ -331,7 +331,7 @@ export const ViewModeSelector = {
             {/* Preview */}
             <div className="border-t border-[var(--color-border-primary-subtle)] pt-4">
               <Label className="text-xs mb-2 block">Preview</Label>
-              <div className="border border-[var(--color-border-primary-subtle)] rounded-md p-4 min-h-32">
+              <div className="border border-[var(--color-border-primary-subtle)] rounded-m p-4 min-h-32">
                 {viewMode === 'list' && (
                   <div className="space-y-2">
                     {Array.from({ length: 3 }, (_, i) => (
@@ -399,17 +399,17 @@ export const FilterOptions = {
           <CardContent className="space-y-6">
             <div className="space-y-2">
               <Label>Status (Multiple)</Label>
-              <ToggleGroup type="multiple" size="sm" value={status} onValueChange={setStatus}>
+              <ToggleGroup type="multiple" size="s" value={status} onValueChange={setStatus}>
                 <ToggleGroupItem value="active">
-                  <Icon name="check-circle" size="sm" className="mr-2" />
+                  <Icon name="check-circle" size="s" className="mr-2" />
                   Active
                 </ToggleGroupItem>
                 <ToggleGroupItem value="pending">
-                  <Icon name="clock" size="sm" className="mr-2" />
+                  <Icon name="clock" size="s" className="mr-2" />
                   Pending
                 </ToggleGroupItem>
                 <ToggleGroupItem value="inactive">
-                  <Icon name="x-circle" size="sm" className="mr-2" />
+                  <Icon name="x-circle" size="s" className="mr-2" />
                   Inactive
                 </ToggleGroupItem>
               </ToggleGroup>
@@ -417,7 +417,7 @@ export const FilterOptions = {
 
             <div className="space-y-2">
               <Label>Category</Label>
-              <ToggleGroup type="single" size="sm" value={category} onValueChange={setCategory}>
+              <ToggleGroup type="single" size="s" value={category} onValueChange={setCategory}>
                 <ToggleGroupItem value="all">All</ToggleGroupItem>
                 <ToggleGroupItem value="design">Design</ToggleGroupItem>
                 <ToggleGroupItem value="development">Dev</ToggleGroupItem>
@@ -427,17 +427,17 @@ export const FilterOptions = {
 
             <div className="space-y-2">
               <Label>Sort By</Label>
-              <ToggleGroup type="single" size="sm" value={sortBy} onValueChange={setSortBy}>
+              <ToggleGroup type="single" size="s" value={sortBy} onValueChange={setSortBy}>
                 <ToggleGroupItem value="name">
-                  <Icon name="type" size="sm" className="mr-2" />
+                  <Icon name="type" size="s" className="mr-2" />
                   Name
                 </ToggleGroupItem>
                 <ToggleGroupItem value="date">
-                  <Icon name="calendar" size="sm" className="mr-2" />
+                  <Icon name="calendar" size="s" className="mr-2" />
                   Date
                 </ToggleGroupItem>
                 <ToggleGroupItem value="priority">
-                  <Icon name="flag" size="sm" className="mr-2" />
+                  <Icon name="flag" size="s" className="mr-2" />
                   Priority
                 </ToggleGroupItem>
               </ToggleGroup>
@@ -476,23 +476,23 @@ export const ChartTypeSelector = {
               <Label>Chart Type</Label>
               <ToggleGroup type="single" value={chartType} onValueChange={setChartType}>
                 <ToggleGroupItem value="line">
-                  <Icon name="trending-up" size="sm" />
+                  <Icon name="trending-up" size="s" />
                 </ToggleGroupItem>
                 <ToggleGroupItem value="bar">
-                  <Icon name="bar-chart" size="sm" />
+                  <Icon name="bar-chart" size="s" />
                 </ToggleGroupItem>
                 <ToggleGroupItem value="pie">
-                  <Icon name="pie-chart" size="sm" />
+                  <Icon name="pie-chart" size="s" />
                 </ToggleGroupItem>
                 <ToggleGroupItem value="area">
-                  <Icon name="activity" size="sm" />
+                  <Icon name="activity" size="s" />
                 </ToggleGroupItem>
               </ToggleGroup>
             </div>
 
             <div className="space-y-2">
               <Label>Time Range</Label>
-              <ToggleGroup type="single" size="sm" value={timeRange} onValueChange={setTimeRange}>
+              <ToggleGroup type="single" size="s" value={timeRange} onValueChange={setTimeRange}>
                 <ToggleGroupItem value="24h">24h</ToggleGroupItem>
                 <ToggleGroupItem value="7d">7d</ToggleGroupItem>
                 <ToggleGroupItem value="30d">30d</ToggleGroupItem>
@@ -502,17 +502,17 @@ export const ChartTypeSelector = {
 
             <div className="space-y-2">
               <Label>Data Points</Label>
-              <ToggleGroup type="multiple" size="sm" value={dataPoints} onValueChange={setDataPoints}>
+              <ToggleGroup type="multiple" size="s" value={dataPoints} onValueChange={setDataPoints}>
                 <ToggleGroupItem value="revenue">
-                  <Icon name="dollar-sign" size="sm" className="mr-1" />
+                  <Icon name="dollar-sign" size="s" className="mr-1" />
                   Revenue
                 </ToggleGroupItem>
                 <ToggleGroupItem value="users">
-                  <Icon name="users" size="sm" className="mr-1" />
+                  <Icon name="users" size="s" className="mr-1" />
                   Users
                 </ToggleGroupItem>
                 <ToggleGroupItem value="sessions">
-                  <Icon name="activity" size="sm" className="mr-1" />
+                  <Icon name="activity" size="s" className="mr-1" />
                   Sessions
                 </ToggleGroupItem>
               </ToggleGroup>
@@ -521,13 +521,13 @@ export const ChartTypeSelector = {
             {/* Chart preview placeholder */}
             <div className="border-t border-[var(--color-border-primary-subtle)] pt-4">
               <Label className="text-xs mb-2 block">Chart Preview</Label>
-              <div className="border border-[var(--color-border-primary-subtle)] rounded-md p-4 h-32 flex items-center justify-center bg-[var(--color-background-neutral-subtlest)]">
+              <div className="border border-[var(--color-border-primary-subtle)] rounded-m p-4 h-32 flex items-center justify-center bg-[var(--color-background-neutral-subtlest)]">
                 <div className="text-center text-[var(--color-text-secondary)]">
                   <Icon name={
                     chartType === 'line' ? 'trending-up' :
                     chartType === 'bar' ? 'bar-chart' :
                     chartType === 'pie' ? 'pie-chart' : 'activity'
-                  } size="lg" className="mx-auto mb-2" />
+                  } size="l" className="mx-auto mb-2" />
                   <div className="text-sm">{chartType.charAt(0).toUpperCase() + chartType.slice(1)} Chart</div>
                   <div className="text-xs">{timeRange} • {dataPoints.length} metrics</div>
                 </div>
@@ -560,7 +560,7 @@ export const ColumnDisplayToggles = {
               <ToggleGroup
                 type="multiple"
                 variant="outline"
-                size="sm"
+                size="s"
                 value={selectedColumns}
                 onValueChange={setSelectedColumns}
                 className="flex-wrap justify-start"

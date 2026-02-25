@@ -106,7 +106,7 @@ export function Combobox({
                       value={option.value}
                       disabled={option.disabled}
                       onSelect={handleSelect}
-                      className="h-[var(--size-md)] px-[var(--space-md)] transition-colors hover:bg-[var(--color-background-neutral-subtlest-hovered)] aria-selected:bg-[var(--color-background-neutral-subtlest-hovered)]"
+                      className="h-[var(--size-m)] px-[var(--space-m)] transition-colors hover:bg-[var(--color-background-neutral-subtlest-hovered)] aria-selected:bg-[var(--color-background-neutral-subtlest-hovered)]"
                     >
                       {option.label}
                       <Check
@@ -134,7 +134,7 @@ export function Combobox({
           {trigger({ open, selectedOption, placeholder, disabled })}
         </DrawerTrigger>
         <DrawerContent className={cn("p-0", popoverClassName)}>
-          <div className="space-y-[var(--space-xsm)] px-[var(--space-md)] pb-[var(--space-md)]">
+          <div className="space-y-[var(--space-xs)] px-[var(--space-m)] pb-[var(--space-m)]">
             <Command>
               <CommandInput
                 placeholder={searchPlaceholder}
@@ -152,7 +152,7 @@ export function Combobox({
                       value={option.value}
                       disabled={option.disabled}
                       onSelect={handleSelect}
-                      className="h-[var(--size-lg)] px-[var(--space-md)] active:bg-[var(--color-background-neutral-subtlest-hovered)]"
+                      className="h-[var(--size-l)] px-[var(--space-m)] active:bg-[var(--color-background-neutral-subtlest-hovered)]"
                     >
                       {option.label}
                       <Check
@@ -258,7 +258,7 @@ export function MultiCombobox({
                       value={option.value}
                       disabled={option.disabled}
                       onSelect={handleSelect}
-                      className="h-[var(--size-md)] px-[var(--space-md)] transition-colors hover:bg-[var(--color-background-neutral-subtlest-hovered)] aria-selected:bg-[var(--color-background-neutral-subtlest-hovered)]"
+                      className="h-[var(--size-m)] px-[var(--space-m)] transition-colors hover:bg-[var(--color-background-neutral-subtlest-hovered)] aria-selected:bg-[var(--color-background-neutral-subtlest-hovered)]"
                     >
                       {option.label}
                       <Check
@@ -286,7 +286,7 @@ export function MultiCombobox({
           {trigger({ open, selectedOptions, placeholder, disabled, maxDisplayedItems })}
         </DrawerTrigger>
         <DrawerContent className={cn("p-0", popoverClassName)}>
-          <div className="space-y-[var(--space-xsm)] px-[var(--space-md)] pb-[var(--space-md)]">
+          <div className="space-y-[var(--space-xs)] px-[var(--space-m)] pb-[var(--space-m)]">
             <Command>
               <CommandInput
                 placeholder={searchPlaceholder}
@@ -304,7 +304,7 @@ export function MultiCombobox({
                       value={option.value}
                       disabled={option.disabled}
                       onSelect={handleSelect}
-                      className="h-[var(--size-lg)] px-[var(--space-md)] active:bg-[var(--color-background-neutral-subtlest-hovered)]"
+                      className="h-[var(--size-l)] px-[var(--space-m)] active:bg-[var(--color-background-neutral-subtlest-hovered)]"
                     >
                       {option.label}
                       <Check

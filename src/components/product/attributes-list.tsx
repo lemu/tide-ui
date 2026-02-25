@@ -8,14 +8,14 @@ import {
 import { Icon } from "../fundamental/icon";
 
 // Size context to share size state across all sub-components
-type AttributesListSize = 'sm' | 'xsm';
-const AttributesListSizeContext = React.createContext<AttributesListSize>('sm');
+type AttributesListSize = 's' | 'xs';
+const AttributesListSizeContext = React.createContext<AttributesListSize>('s');
 
 // AttributesList root component with optional hidden items management
 export interface AttributesListProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Size variant for the entire attributes list
-   * @default "sm"
+   * @default "s"
    */
   size?: AttributesListSize;
   /**
@@ -44,7 +44,7 @@ const AttributesList = React.forwardRef<HTMLDivElement, AttributesListProps>(
     {
       className,
       children,
-      size = 'sm',
+      size = 's',
       showHiddenLabel = "More details",
       hideLabel = "Less details",
       defaultShowHidden = false,
@@ -97,12 +97,12 @@ const AttributesList = React.forwardRef<HTMLDivElement, AttributesListProps>(
           ref={ref}
           className={cn(
             "grid",
-            size === 'sm' ? 'gap-y-[12px]' : 'gap-y-[8px]',
+            size === 's' ? 'gap-y-[12px]' : 'gap-y-[8px]',
             className
           )}
           style={{
             gridTemplateColumns: `${labelWidthValue || 'auto'} 1fr`,
-            columnGap: 'var(--space-md)',
+            columnGap: 'var(--space-m)',
             ...(props.style || {}),
           }}
           {...props}
@@ -113,16 +113,16 @@ const AttributesList = React.forwardRef<HTMLDivElement, AttributesListProps>(
               onClick={() => setShowHidden(!showHidden)}
               aria-expanded={showHidden}
               className={cn(
-                "flex items-center text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] cursor-pointer mt-[var(--space-sm)] bg-transparent border-none p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-sm",
-                size === 'sm' ? 'gap-[var(--space-sm)]' : 'gap-[var(--space-xsm)]',
-                size === 'sm' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm'
+                "flex items-center text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] cursor-pointer mt-[var(--space-s)] bg-transparent border-none p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-s",
+                size === 's' ? 'gap-[var(--space-s)]' : 'gap-[var(--space-xs)]',
+                size === 's' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm'
               )}
               style={{ gridColumn: '1 / -1' }}
             >
               {showHidden ? hideLabel : showHiddenLabel}
               <Icon
                 name="chevron-down"
-                size="sm"
+                size="s"
                 aria-hidden="true"
                 className={cn(
                   "transition-transform",
@@ -151,7 +151,7 @@ const AttributesSeparator = React.memo(
           role="separator"
           aria-hidden="true"
           className={cn(
-            "h-px bg-[var(--color-border-primary-subtle)] my-[var(--space-sm)]",
+            "h-px bg-[var(--color-border-primary-subtle)] my-[var(--space-s)]",
             className
           )}
           style={{ gridColumn: '1 / -1' }}
@@ -244,13 +244,13 @@ const AttributesGroup = React.forwardRef<HTMLDivElement, AttributesGroupProps>(
         ref={ref}
         className={cn(
           "grid",
-          size === 'sm' ? 'gap-y-[12px]' : 'gap-y-[8px]',
+          size === 's' ? 'gap-y-[12px]' : 'gap-y-[8px]',
           className
         )}
         style={{
           gridColumn: '1 / -1',
           gridTemplateColumns: 'subgrid',
-          columnGap: 'var(--space-md)',
+          columnGap: 'var(--space-m)',
         }}
         {...props}
       >
@@ -258,8 +258,8 @@ const AttributesGroup = React.forwardRef<HTMLDivElement, AttributesGroupProps>(
           <h3
             className={cn(
               "text-[var(--color-text-tertiary)]",
-              size === 'sm' ? 'mb-[6px]' : 'mb-[4px]',
-              size === 'sm' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm'
+              size === 's' ? 'mb-[6px]' : 'mb-[4px]',
+              size === 's' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm'
             )}
             style={{ gridColumn: '1 / -1' }}
           >
@@ -272,16 +272,16 @@ const AttributesGroup = React.forwardRef<HTMLDivElement, AttributesGroupProps>(
             onClick={() => setShowHidden(!showHidden)}
             aria-expanded={showHidden}
             className={cn(
-              "flex items-center text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] cursor-pointer mt-[var(--space-sm)] bg-transparent border-none p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-sm",
-              size === 'sm' ? 'gap-[var(--space-sm)]' : 'gap-[var(--space-xsm)]',
-              size === 'sm' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm'
+              "flex items-center text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] cursor-pointer mt-[var(--space-s)] bg-transparent border-none p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-s",
+              size === 's' ? 'gap-[var(--space-s)]' : 'gap-[var(--space-xs)]',
+              size === 's' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm'
             )}
             style={{ gridColumn: '1 / -1' }}
           >
             {showHidden ? hideLabel : showHiddenLabel}
             <Icon
               name="chevron-down"
-              size="sm"
+              size="s"
               aria-hidden="true"
               className={cn(
                 "transition-transform",
@@ -346,7 +346,7 @@ const AttributesItem = React.forwardRef<HTMLDivElement, AttributesItemProps>(
           style={{
             gridColumn: '1 / -1',
             gridTemplateColumns: 'subgrid',
-            columnGap: 'var(--space-md)',
+            columnGap: 'var(--space-m)',
             ...style,
           }}
           data-hidden={hidden}
@@ -406,21 +406,21 @@ const AttributesRow = React.forwardRef<HTMLDivElement, AttributesRowProps>(
 
         return [
           label,
-          <div key="value-with-link" className="flex items-center justify-between gap-[var(--space-md)]" style={{ gridColumn: '2' }}>
+          <div key="value-with-link" className="flex items-center justify-between gap-[var(--space-m)]" style={{ gridColumn: '2' }}>
             {value}
             <a
               href={externalLink.href}
               className={cn(
-                "text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] inline-flex items-center no-underline shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-sm",
-                size === 'sm' ? 'gap-[var(--space-sm)]' : 'gap-[var(--space-xsm)]',
-                size === 'sm' ? '[&]:text-body-sm' : '[&]:text-body-xsm'
+                "text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] inline-flex items-center no-underline shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-s",
+                size === 's' ? 'gap-[var(--space-s)]' : 'gap-[var(--space-xs)]',
+                size === 's' ? '[&]:text-body-sm' : '[&]:text-body-xsm'
               )}
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`${externalLink.label} (opens in new tab)`}
             >
               {externalLink.label}
-              <Icon name="external-link" size="sm" aria-hidden="true" />
+              <Icon name="external-link" size="s" aria-hidden="true" />
             </a>
           </div>,
           ...rest,
@@ -436,13 +436,13 @@ const AttributesRow = React.forwardRef<HTMLDivElement, AttributesRowProps>(
         className={cn(
           "grid items-center",
           asCollapsibleTrigger &&
-            "cursor-pointer hover:bg-[var(--color-surface-secondary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 transition-colors rounded-sm px-[var(--space-sm)] py-[var(--space-xsm)] -mx-[var(--space-sm)]",
+            "cursor-pointer hover:bg-[var(--color-surface-secondary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 transition-colors rounded-s px-[var(--space-s)] py-[var(--space-xs)] -mx-[var(--space-s)]",
           className
         )}
         style={{
           gridColumn: '1 / -1',
           gridTemplateColumns: 'subgrid',
-          columnGap: 'var(--space-md)',
+          columnGap: 'var(--space-m)',
           ...style,
         }}
         {...props}
@@ -478,7 +478,7 @@ const AttributesLabel = React.memo(
           ref={ref}
           className={cn(
             "text-[var(--color-text-secondary)] [[data-hidden='true']_&]:text-[var(--color-text-tertiary)] shrink-0",
-            size === 'sm' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm',
+            size === 's' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm',
             className
           )}
           {...props}
@@ -505,8 +505,8 @@ const AttributesValue = React.memo(
           ref={ref}
           className={cn(
             "text-[var(--color-text-primary)] [[data-hidden='true']_&]:text-[var(--color-text-tertiary)] flex items-center",
-            size === 'sm' ? 'gap-[var(--space-sm)]' : 'gap-[var(--space-xsm)]',
-            size === 'sm' ? '[&]:text-body-sm' : '[&]:text-body-xsm',
+            size === 's' ? 'gap-[var(--space-s)]' : 'gap-[var(--space-xs)]',
+            size === 's' ? '[&]:text-body-sm' : '[&]:text-body-xsm',
             className
           )}
           {...props}
@@ -531,7 +531,7 @@ const AttributesContent = React.forwardRef<
     <CollapsibleContent
       ref={ref}
       className={cn(
-        "pt-[var(--space-sm)] pb-[var(--space-sm)]",
+        "pt-[var(--space-s)] pb-[var(--space-s)]",
         className
       )}
       style={{ gridColumn: '1 / -1', ...style }}
@@ -559,7 +559,7 @@ const AttributesChevron = React.memo(
         >
           <Icon
             name="chevron-down"
-            size="sm"
+            size="s"
             color="tertiary"
             className="transition-transform [.group[data-state=open]_&]:rotate-180"
           />

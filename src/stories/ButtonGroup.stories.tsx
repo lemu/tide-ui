@@ -79,7 +79,7 @@ export const Sizes: Story = {
     <div className="space-y-4">
       <div>
         <p className="text-body-sm font-medium mb-2">Small</p>
-        <ButtonGroup size="sm">
+        <ButtonGroup size="s">
           <Button>Small</Button>
           <Button>Button</Button>
           <Button>Group</Button>
@@ -88,7 +88,7 @@ export const Sizes: Story = {
 
       <div>
         <p className="text-body-sm font-medium mb-2">Medium (Default)</p>
-        <ButtonGroup size="md">
+        <ButtonGroup size="m">
           <Button>Medium</Button>
           <Button>Button</Button>
           <Button>Group</Button>
@@ -97,7 +97,7 @@ export const Sizes: Story = {
 
       <div>
         <p className="text-body-sm font-medium mb-2">Large</p>
-        <ButtonGroup size="lg">
+        <ButtonGroup size="l">
           <Button>Large</Button>
           <Button>Button</Button>
           <Button>Group</Button>
@@ -128,7 +128,7 @@ export const WithIcons: Story = {
 
       <div>
         <p className="text-body-sm font-medium mb-2">Text Formatting</p>
-        <ButtonGroup variant="ghost" size="sm">
+        <ButtonGroup variant="ghost" size="s">
           <Button>
             <Icon name="bold" className="w-4 h-4" />
           </Button>
@@ -200,7 +200,7 @@ export const ManyButtons: Story = {
     <div className="space-y-4">
       <div>
         <p className="text-body-sm font-medium mb-2">Number Picker</p>
-        <ButtonGroup size="sm">
+        <ButtonGroup size="s">
           <Button>1</Button>
           <Button>2</Button>
           <Button>3</Button>
@@ -254,7 +254,7 @@ export const FilterExample: Story = {
           <div className="space-y-4">
             <div>
               <p className="text-body-sm font-medium mb-2">Status Filter</p>
-              <ButtonGroup size="sm">
+              <ButtonGroup size="s">
                 <Button>All</Button>
                 <Button>Active</Button>
                 <Button>Pending</Button>
@@ -292,7 +292,7 @@ export const FilterExample: Story = {
               </Button>
             </ButtonGroup>
 
-            <ButtonGroup variant="ghost" size="sm">
+            <ButtonGroup variant="ghost" size="s">
               <Button>
                 <Icon name="copy" className="w-4 h-4" />
               </Button>
@@ -326,9 +326,9 @@ export const MixedButtons: Story = {
       <div>
         <p className="text-body-sm font-medium mb-2">Mixed Sizes (not recommended)</p>
         <ButtonGroup>
-          <Button size="sm">Small</Button>
-          <Button size="md">Medium</Button>
-          <Button size="lg">Large</Button>
+          <Button size="s">Small</Button>
+          <Button size="m">Medium</Button>
+          <Button size="l">Large</Button>
         </ButtonGroup>
       </div>
     </div>
@@ -341,7 +341,7 @@ export const WithDisabledButtons: Story = {
     <div className="space-y-6">
       <div>
         <p className="text-body-sm font-medium mb-2">Some Disabled Buttons</p>
-        <ButtonGroup size="sm">
+        <ButtonGroup size="s">
           <Button disabled>
             <Icon name="arrow-left" className="w-4 h-4" />
           </Button>
@@ -353,7 +353,7 @@ export const WithDisabledButtons: Story = {
 
       <div>
         <p className="text-body-sm font-medium mb-2">Pagination-like (matching Pagination component)</p>
-        <ButtonGroup size="sm">
+        <ButtonGroup size="s">
           <Button disabled>
             <Icon name="arrow-left" className="w-4 h-4" />
           </Button>
@@ -394,7 +394,7 @@ export const VerticalOrientation: Story = {
 
       <div>
         <p className="text-body-sm font-medium mb-2">Vertical Icon-Only Group</p>
-        <ButtonGroup orientation="vertical" size="md">
+        <ButtonGroup orientation="vertical" size="m">
           <Button>
             <Icon name="bold" className="w-4 h-4" />
           </Button>
@@ -428,7 +428,7 @@ export const WithSeparator: Story = {
     <div className="space-y-6">
       <div>
         <p className="text-body-sm font-medium mb-2">Split Button - Primary Action</p>
-        <ButtonGroup variant="primary" size="md">
+        <ButtonGroup variant="primary" size="m">
           <Button>Save</Button>
           <ButtonGroupSeparator />
           <DropdownMenu>
@@ -448,7 +448,7 @@ export const WithSeparator: Story = {
 
       <div>
         <p className="text-body-sm font-medium mb-2">Split Button - Default</p>
-        <ButtonGroup size="md">
+        <ButtonGroup size="m">
           <Button>Export</Button>
           <ButtonGroupSeparator />
           <DropdownMenu>
@@ -469,15 +469,15 @@ export const WithSeparator: Story = {
       <div>
         <p className="text-body-sm font-medium mb-2">Action Group with Separators</p>
         <ButtonGroup>
-          <Button size="sm">
+          <Button size="s">
             <Icon name="copy" className="w-4 h-4" />
           </Button>
           <ButtonGroupSeparator />
-          <Button size="sm">
+          <Button size="s">
             <Icon name="edit" className="w-4 h-4" />
           </Button>
           <ButtonGroupSeparator />
-          <Button size="sm">
+          <Button size="s">
             <Icon name="trash-2" className="w-4 h-4" />
           </Button>
         </ButtonGroup>
@@ -497,13 +497,13 @@ export const WithText: Story = {
             <Icon name="layout" />
             View:
           </ButtonGroupText>
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="s">
             <Icon name="list" className="w-4 h-4" />
           </Button>
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="s">
             <Icon name="grid-2x2" className="w-4 h-4" />
           </Button>
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="s">
             <Icon name="layout-grid" className="w-4 h-4" />
           </Button>
         </ButtonGroup>
@@ -513,10 +513,10 @@ export const WithText: Story = {
         <p className="text-body-sm font-medium mb-2">Filter with Label</p>
         <ButtonGroup>
           <ButtonGroupText>Status:</ButtonGroupText>
-          <Button size="sm">All</Button>
-          <Button size="sm">Active</Button>
-          <Button size="sm">Pending</Button>
-          <Button size="sm">Closed</Button>
+          <Button size="s">All</Button>
+          <Button size="s">Active</Button>
+          <Button size="s">Pending</Button>
+          <Button size="s">Closed</Button>
         </ButtonGroup>
       </div>
 
@@ -527,12 +527,12 @@ export const WithText: Story = {
             <Icon name="sliders" />
             Sort by:
           </ButtonGroupText>
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="s">
             Date
             <Icon name="chevron-down" className="w-4 h-4 ml-1" />
           </Button>
           <ButtonGroupSeparator />
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="s">
             <Icon name="arrow-up" className="w-4 h-4" />
           </Button>
         </ButtonGroup>
@@ -547,15 +547,15 @@ export const ComplexLayouts: Story = {
     <div className="space-y-6">
       <div>
         <p className="text-body-sm font-medium mb-2">Toolbar with Multiple Groups</p>
-        <div className="flex gap-[var(--space-sm)]">
+        <div className="flex gap-[var(--space-s)]">
           <ButtonGroup>
-            <Button size="sm">
+            <Button size="s">
               <Icon name="bold" className="w-4 h-4" />
             </Button>
-            <Button size="sm">
+            <Button size="s">
               <Icon name="italic" className="w-4 h-4" />
             </Button>
-            <Button size="sm">
+            <Button size="s">
               <Icon name="underline" className="w-4 h-4" />
             </Button>
           </ButtonGroup>
@@ -563,13 +563,13 @@ export const ComplexLayouts: Story = {
           <ButtonGroupSeparator orientation="vertical" />
 
           <ButtonGroup>
-            <Button size="sm">
+            <Button size="s">
               <Icon name="align-left" className="w-4 h-4" />
             </Button>
-            <Button size="sm">
+            <Button size="s">
               <Icon name="align-center" className="w-4 h-4" />
             </Button>
-            <Button size="sm">
+            <Button size="s">
               <Icon name="align-right" className="w-4 h-4" />
             </Button>
           </ButtonGroup>
@@ -577,10 +577,10 @@ export const ComplexLayouts: Story = {
           <ButtonGroupSeparator orientation="vertical" />
 
           <ButtonGroup>
-            <Button size="sm">
+            <Button size="s">
               <Icon name="list" className="w-4 h-4" />
             </Button>
-            <Button size="sm">
+            <Button size="s">
               <Icon name="list-ordered" className="w-4 h-4" />
             </Button>
           </ButtonGroup>
@@ -589,28 +589,28 @@ export const ComplexLayouts: Story = {
 
       <div>
         <p className="text-body-sm font-medium mb-2">Filter Bar with Labels and Actions</p>
-        <div className="flex gap-[var(--space-md)] items-center">
+        <div className="flex gap-[var(--space-m)] items-center">
           <ButtonGroup>
             <ButtonGroupText>
               <Icon name="filter" />
               Status:
             </ButtonGroupText>
-            <Button size="sm">All</Button>
-            <Button size="sm">Active</Button>
-            <Button size="sm">Inactive</Button>
+            <Button size="s">All</Button>
+            <Button size="s">Active</Button>
+            <Button size="s">Inactive</Button>
           </ButtonGroup>
 
           <ButtonGroup>
             <ButtonGroupText>Priority:</ButtonGroupText>
-            <Button size="sm" variant="ghost">High</Button>
-            <Button size="sm" variant="ghost">Medium</Button>
-            <Button size="sm" variant="ghost">Low</Button>
+            <Button size="s" variant="ghost">High</Button>
+            <Button size="s" variant="ghost">Medium</Button>
+            <Button size="s" variant="ghost">Low</Button>
           </ButtonGroup>
 
           <ButtonGroup>
-            <Button size="sm" variant="primary">Apply Filters</Button>
+            <Button size="s" variant="primary">Apply Filters</Button>
             <ButtonGroupSeparator />
-            <Button size="sm" variant="ghost">Reset</Button>
+            <Button size="s" variant="ghost">Reset</Button>
           </ButtonGroup>
         </div>
       </div>
@@ -619,7 +619,7 @@ export const ComplexLayouts: Story = {
         <p className="text-body-sm font-medium mb-2">Vertical Sidebar Navigation</p>
         <ButtonGroup orientation="vertical">
           <ButtonGroupText asChild>
-            <div className="justify-start px-[var(--space-md)] py-[var(--space-sm)]">
+            <div className="justify-start px-[var(--space-m)] py-[var(--space-s)]">
               <Icon name="folder" />
               <span className="text-body-strong-sm">Projects</span>
             </div>

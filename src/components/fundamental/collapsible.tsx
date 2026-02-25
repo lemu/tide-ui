@@ -29,7 +29,7 @@ const CollapsibleTrigger = React.forwardRef<
     <CollapsiblePrimitive.CollapsibleTrigger
       ref={ref}
       className={cn(
-        "[&]:text-body-medium-md flex flex-1 cursor-pointer items-center justify-between gap-[var(--space-sm)] py-[var(--space-lg)] text-left text-[var(--color-text-primary)] transition-all focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 focus-visible:outline-none [&[data-state=open]>svg]:rotate-180",
+        "[&]:text-body-medium-md flex flex-1 cursor-pointer items-center justify-between gap-[var(--space-s)] py-[var(--space-l)] text-left text-[var(--color-text-primary)] transition-all focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 focus-visible:outline-none [&[data-state=open]>svg]:rotate-180",
         className,
       )}
       {...props}
@@ -38,7 +38,7 @@ const CollapsibleTrigger = React.forwardRef<
       {!hideIcon && (
         <Icon
           name="chevron-down"
-          size="md"
+          size="m"
           color="tertiary"
           className="shrink-0 transition-transform duration-200"
         />
@@ -60,7 +60,7 @@ const CollapsibleContent = React.forwardRef<
     )}
     {...props}
   >
-    <div className="pt-0 pb-[var(--space-lg)]">{children}</div>
+    <div className="pt-0 pb-[var(--space-l)]">{children}</div>
   </CollapsiblePrimitive.CollapsibleContent>
 ));
 CollapsibleContent.displayName = CollapsiblePrimitive.CollapsibleContent.displayName;

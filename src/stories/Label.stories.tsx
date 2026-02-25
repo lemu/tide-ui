@@ -25,7 +25,7 @@ const meta: Meta<typeof Label> = {
     size: {
       description: 'Label size',
       control: 'select',
-      options: ['sm', 'md'],
+      options: ['s', 'm'],
     },
     color: {
       description: 'Label color variant',
@@ -57,14 +57,14 @@ export const Default: Story = {
 // Size variants
 export const Sizes: Story = {
   render: () => (
-    <div className="space-y-[var(--space-sm)]">
+    <div className="space-y-[var(--space-s)]">
       <div>
-        <Label size="sm" htmlFor="small-input">
+        <Label size="s" htmlFor="small-input">
           Small label
         </Label>
       </div>
       <div>
-        <Label size="md" htmlFor="medium-input">
+        <Label size="m" htmlFor="medium-input">
           Medium label (default)
         </Label>
       </div>
@@ -75,7 +75,7 @@ export const Sizes: Story = {
 // Color variants
 export const Colors: Story = {
   render: () => (
-    <div className="space-y-[var(--space-sm)]">
+    <div className="space-y-[var(--space-s)]">
       <div>
         <Label color="primary" htmlFor="primary-input">
           Primary label (default)
@@ -93,7 +93,7 @@ export const Colors: Story = {
 // Required field with asterisk
 export const Required: Story = {
   render: () => (
-    <div className="w-80 space-y-[var(--space-sm)]">
+    <div className="w-80 space-y-[var(--space-s)]">
       <Label htmlFor="required-email" required>
         Email address
       </Label>
@@ -110,7 +110,7 @@ export const Required: Story = {
 // Label with info tooltip
 export const WithInfoTooltip: Story = {
   render: () => (
-    <div className="w-80 space-y-[var(--space-sm)]">
+    <div className="w-80 space-y-[var(--space-s)]">
       <Label
         htmlFor="password"
         info="Password must be at least 8 characters with uppercase, lowercase, and numbers"
@@ -129,7 +129,7 @@ export const WithInfoTooltip: Story = {
 // Required field with info tooltip
 export const RequiredWithInfo: Story = {
   render: () => (
-    <div className="w-80 space-y-[var(--space-sm)]">
+    <div className="w-80 space-y-[var(--space-s)]">
       <Label
         htmlFor="username"
         required
@@ -149,27 +149,27 @@ export const RequiredWithInfo: Story = {
 export const AllVariants: Story = {
   render: () => (
     <div className="w-96 space-y-6">
-      <div className="space-y-[var(--space-sm)]">
-        <Label size="sm" color="primary" htmlFor="variant-1">
+      <div className="space-y-[var(--space-s)]">
+        <Label size="s" color="primary" htmlFor="variant-1">
           Small primary
         </Label>
         <Input id="variant-1" placeholder="Input" />
       </div>
-      <div className="space-y-[var(--space-sm)]">
-        <Label size="sm" color="secondary" htmlFor="variant-2">
+      <div className="space-y-[var(--space-s)]">
+        <Label size="s" color="secondary" htmlFor="variant-2">
           Small secondary
         </Label>
         <Input id="variant-2" placeholder="Input" />
       </div>
-      <div className="space-y-[var(--space-sm)]">
-        <Label size="md" color="primary" htmlFor="variant-3" required>
+      <div className="space-y-[var(--space-s)]">
+        <Label size="m" color="primary" htmlFor="variant-3" required>
           Medium primary required
         </Label>
         <Input id="variant-3" placeholder="Input" />
       </div>
-      <div className="space-y-[var(--space-sm)]">
+      <div className="space-y-[var(--space-s)]">
         <Label
-          size="md"
+          size="m"
           color="secondary"
           htmlFor="variant-4"
           info="This is helpful information"
@@ -178,9 +178,9 @@ export const AllVariants: Story = {
         </Label>
         <Input id="variant-4" placeholder="Input" />
       </div>
-      <div className="space-y-[var(--space-sm)]">
+      <div className="space-y-[var(--space-s)]">
         <Label
-          size="sm"
+          size="s"
           htmlFor="variant-5"
           required
           info="Required field with tooltip"
@@ -196,7 +196,7 @@ export const AllVariants: Story = {
 // Label with input
 export const WithInput: Story = {
   render: () => (
-    <div className="w-80 space-y-[var(--space-sm)]">
+    <div className="w-80 space-y-[var(--space-s)]">
       <Label htmlFor="email-input">Email address</Label>
       <Input
         id="email-input"
@@ -210,7 +210,7 @@ export const WithInput: Story = {
 // Label with textarea
 export const WithTextarea: Story = {
   render: () => (
-    <div className="w-80 space-y-[var(--space-sm)]">
+    <div className="w-80 space-y-[var(--space-s)]">
       <Label htmlFor="message">Message</Label>
       <Textarea
         id="message"
@@ -251,7 +251,7 @@ export const WithRadioGroup: Story = {
   render: () => (
     <div className="space-y-3">
       <Label className="font-medium">Notification preferences</Label>
-      <RadioGroup defaultValue="email" className="space-y-[var(--space-sm)]">
+      <RadioGroup defaultValue="email" className="space-y-[var(--space-s)]">
         <div className="flex items-center space-x-2">
           <RadioGroupItem value="email" id="email-notifications" />
           <Label htmlFor="email-notifications" className="font-normal">
@@ -279,7 +279,7 @@ export const WithRadioGroup: Story = {
 // Optional field label
 export const OptionalField: Story = {
   render: () => (
-    <div className="w-80 space-y-[var(--space-sm)]">
+    <div className="w-80 space-y-[var(--space-s)]">
       <Label htmlFor="optional-input" className="flex items-center gap-1">
         Phone number
         <span className="text-body-sm text-[var(--color-text-secondary)] font-normal">
@@ -298,7 +298,7 @@ export const OptionalField: Story = {
 // Disabled field label
 export const DisabledField: Story = {
   render: () => (
-    <div className="w-80 space-y-[var(--space-sm)]">
+    <div className="w-80 space-y-[var(--space-s)]">
       <Label htmlFor="disabled-input" className="text-[var(--color-text-disabled)]">
         Username (read-only)
       </Label>
@@ -315,7 +315,7 @@ export const DisabledField: Story = {
 // Long label text
 export const LongLabel: Story = {
   render: () => (
-    <div className="w-80 space-y-[var(--space-sm)]">
+    <div className="w-80 space-y-[var(--space-s)]">
       <Label htmlFor="long-label-input">
         Please provide a detailed description of your business requirements and specific needs
       </Label>
@@ -331,7 +331,7 @@ export const LongLabel: Story = {
 // Label with helper text pattern
 export const WithHelperText: Story = {
   render: () => (
-    <div className="w-80 space-y-[var(--space-sm)]">
+    <div className="w-80 space-y-[var(--space-s)]">
       <Label htmlFor="password-input">Password</Label>
       <Input
         id="password-input"
@@ -349,7 +349,7 @@ export const WithHelperText: Story = {
 export const MultipleFormControls: Story = {
   render: () => (
     <div className="w-96 space-y-6">
-      <div className="space-y-[var(--space-sm)]">
+      <div className="space-y-[var(--space-s)]">
         <Label htmlFor="text-input">Text Input</Label>
         <Input
           id="text-input"
@@ -357,11 +357,11 @@ export const MultipleFormControls: Story = {
         />
       </div>
 
-      <div className="space-y-[var(--space-sm)]">
+      <div className="space-y-[var(--space-s)]">
         <Label htmlFor="select-input">Select Option</Label>
         <select
           id="select-input"
-          className="flex h-10 w-full rounded-md border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3 py-2 text-body-md ring-offset-[var(--color-surface-primary)] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-placeholder)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex h-10 w-full rounded-m border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3 py-2 text-body-md ring-offset-[var(--color-surface-primary)] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-placeholder)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <option value="">Choose option...</option>
           <option value="option1">Option 1</option>
@@ -391,18 +391,18 @@ export const FormSection: Story = {
     <div className="w-96 space-y-6">
       <div>
         <h3 className="text-heading-md font-semibold mb-4">Personal Information</h3>
-        <div className="space-y-[var(--space-sm)]">
+        <div className="space-y-[var(--space-s)]">
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-[var(--space-sm)]">
+            <div className="space-y-[var(--space-s)]">
               <Label htmlFor="first-name">First name</Label>
               <Input id="first-name" placeholder="John" />
             </div>
-            <div className="space-y-[var(--space-sm)]">
+            <div className="space-y-[var(--space-s)]">
               <Label htmlFor="last-name">Last name</Label>
               <Input id="last-name" placeholder="Doe" />
             </div>
           </div>
-          <div className="space-y-[var(--space-sm)]">
+          <div className="space-y-[var(--space-s)]">
             <Label htmlFor="email-section">Email address</Label>
             <Input id="email-section" type="email" placeholder="john@example.com" />
           </div>

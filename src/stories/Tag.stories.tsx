@@ -21,8 +21,8 @@ const meta: Meta<typeof Tag> = {
     },
     size: {
       control: { type: 'select' },
-      options: ['sm', 'md'],
-      description: 'Size of the tag (sm: 20px, md: 24px)',
+      options: ['s', 'm'],
+      description: 'Size of the tag (s: 20px, m: 24px)',
     },
     intent: {
       control: { type: 'select' },
@@ -86,18 +86,18 @@ export const Sizes: Story = {
         <div>
           <h3 className="text-heading-sm mb-4">Small (20px)</h3>
           <div className="flex flex-wrap items-center gap-4">
-            <Tag size="sm">Small Tag</Tag>
-            <Tag size="sm" color="brand">With Dot</Tag>
-            <Tag size="sm" closable onClose={() => {}}>Closable</Tag>
+            <Tag size="s">Small Tag</Tag>
+            <Tag size="s" color="brand">With Dot</Tag>
+            <Tag size="s" closable onClose={() => {}}>Closable</Tag>
           </div>
         </div>
 
         <div>
           <h3 className="text-heading-sm mb-4">Medium (24px) - Default</h3>
           <div className="flex flex-wrap items-center gap-4">
-            <Tag size="md">Medium Tag</Tag>
-            <Tag size="md" color="brand">With Dot</Tag>
-            <Tag size="md" closable onClose={() => {}}>Closable</Tag>
+            <Tag size="m">Medium Tag</Tag>
+            <Tag size="m" color="brand">With Dot</Tag>
+            <Tag size="m" closable onClose={() => {}}>Closable</Tag>
           </div>
         </div>
       </div>
@@ -177,7 +177,7 @@ export const ClosableTags: Story = {
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Skills ({tags.length})</CardTitle>
-              <Button variant="ghost" size="sm" onClick={resetTags}>
+              <Button variant="ghost" size="s" onClick={resetTags}>
                 Reset
               </Button>
             </div>
@@ -375,7 +375,7 @@ export const TagGroupExample: Story = {
           <CardContent>
             <TagGroup
               tags={projectTags}
-              size="sm"
+              size="s"
               maxVisible={4}
             />
           </CardContent>
@@ -418,10 +418,10 @@ export const StatusTags: Story = {
               {orders.map(order => {
                 const statusConfig = getStatusConfig(order.status)
                 return (
-                  <div key={order.id} className="flex items-center justify-between p-3 border rounded-lg">
+                  <div key={order.id} className="flex items-center justify-between p-3 border rounded-l">
                     <div className="flex items-center gap-3">
                       <span className="text-body-sm font-mono">{order.number}</span>
-                      <Tag intent={statusConfig.intent} size="sm">
+                      <Tag intent={statusConfig.intent} size="s">
                         {statusConfig.label}
                       </Tag>
                     </div>
@@ -489,12 +489,12 @@ export const ShapeVariants: Story = {
               <div>
                 <p className="text-caption-sm text-[var(--color-text-secondary)] mb-2">Small (20px)</p>
                 <div className="flex flex-wrap items-center gap-3">
-                  <Tag variant={variant} size="sm">Default</Tag>
-                  <Tag variant={variant} size="sm" color="brand">With Dot</Tag>
-                  <Tag variant={variant} size="sm" closable onClose={() => {}}>Closable</Tag>
-                  <Tag variant={variant} size="sm" color="green" closable onClose={() => {}}>Dot + Close</Tag>
-                  <Tag variant={variant} size="sm" interactive onClick={() => {}}>Interactive</Tag>
-                  <Tag variant={variant} size="sm" disabled>Disabled</Tag>
+                  <Tag variant={variant} size="s">Default</Tag>
+                  <Tag variant={variant} size="s" color="brand">With Dot</Tag>
+                  <Tag variant={variant} size="s" closable onClose={() => {}}>Closable</Tag>
+                  <Tag variant={variant} size="s" color="green" closable onClose={() => {}}>Dot + Close</Tag>
+                  <Tag variant={variant} size="s" interactive onClick={() => {}}>Interactive</Tag>
+                  <Tag variant={variant} size="s" disabled>Disabled</Tag>
                 </div>
               </div>
             </div>
@@ -513,8 +513,8 @@ export const AllVariants: Story = {
         <div>
           <h3 className="text-heading-sm mb-4">Size Comparison</h3>
           <div className="flex flex-wrap items-center gap-4">
-            <Tag size="sm" color="brand">Small (20px)</Tag>
-            <Tag size="md" color="brand">Medium (24px)</Tag>
+            <Tag size="s" color="brand">Small (20px)</Tag>
+            <Tag size="m" color="brand">Medium (24px)</Tag>
           </div>
         </div>
 
@@ -544,9 +544,9 @@ export const AllVariants: Story = {
         <div>
           <h3 className="text-heading-sm mb-4">Small with Close</h3>
           <div className="flex flex-wrap items-center gap-3">
-            <Tag size="sm" color="brand" closable onClose={() => {}}>Brand</Tag>
-            <Tag size="sm" color="violet" closable onClose={() => {}}>Violet</Tag>
-            <Tag size="sm" color="orange" closable onClose={() => {}}>Orange</Tag>
+            <Tag size="s" color="brand" closable onClose={() => {}}>Brand</Tag>
+            <Tag size="s" color="violet" closable onClose={() => {}}>Violet</Tag>
+            <Tag size="s" color="orange" closable onClose={() => {}}>Orange</Tag>
           </div>
         </div>
 

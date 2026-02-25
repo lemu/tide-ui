@@ -18,7 +18,7 @@ const FieldSet = React.forwardRef<HTMLFieldSetElement, FieldSetProps>(
   ({ className, ...props }, ref) => (
     <fieldset
       ref={ref}
-      className={cn("flex flex-col gap-[var(--space-md)]", className)}
+      className={cn("flex flex-col gap-[var(--space-m)]", className)}
       {...props}
     />
   ),
@@ -27,7 +27,7 @@ FieldSet.displayName = "FieldSet";
 
 // FieldLegend - Legend element for FieldSet with sizing variants
 const fieldLegendVariants = cva(
-  "block text-[var(--color-text-primary)] mb-[var(--space-xsm)]",
+  "block text-[var(--color-text-primary)] mb-[var(--space-xs)]",
   {
     variants: {
       variant: {
@@ -63,7 +63,7 @@ const FieldGroup = React.forwardRef<HTMLDivElement, FieldGroupProps>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("@container/field-group flex flex-col gap-[var(--space-md)]", className)}
+      className={cn("@container/field-group flex flex-col gap-[var(--space-m)]", className)}
       {...props}
     />
   ),
@@ -72,7 +72,7 @@ FieldGroup.displayName = "FieldGroup";
 
 // Field - Main wrapper with orientation control
 const fieldVariants = cva(
-  "flex gap-[var(--space-md)]",
+  "flex gap-[var(--space-m)]",
   {
     variants: {
       orientation: {
@@ -119,7 +119,7 @@ const FieldContent = React.forwardRef<HTMLDivElement, FieldContentProps>(
     return (
       <div
         ref={ref}
-        className={cn("flex flex-col gap-[var(--space-xsm)]", className)}
+        className={cn("flex flex-col gap-[var(--space-xs)]", className)}
         {...props}
       />
     );
@@ -198,7 +198,7 @@ const FieldSeparator = React.forwardRef<
 >(({ children, className, ...props }, ref) => {
   if (children) {
     return (
-      <div className={cn("relative flex items-center gap-[var(--space-md)]", className)}>
+      <div className={cn("relative flex items-center gap-[var(--space-m)]", className)}>
         <Separator ref={ref} className="flex-1" {...props} />
         <span className="[&]:text-body-sm text-[var(--color-text-tertiary)]">{children}</span>
         <Separator className="flex-1" {...props} />
@@ -229,14 +229,14 @@ const FieldError = React.forwardRef<HTMLDivElement, FieldErrorProps>(
           role="alert"
           aria-live="polite"
           className={cn(
-            "[&]:text-body-sm flex items-start gap-[var(--space-xsm)] text-[var(--color-text-error-bold)]",
+            "[&]:text-body-sm flex items-start gap-[var(--space-xs)] text-[var(--color-text-error-bold)]",
             className
           )}
           {...props}
         >
           <Icon
             name="circle-alert"
-            size="sm"
+            size="s"
             color="error"
             className="mt-[1px] flex-shrink-0"
           />
@@ -258,7 +258,7 @@ const FieldError = React.forwardRef<HTMLDivElement, FieldErrorProps>(
           )}
           {...props}
         >
-          <ul className="flex flex-col gap-[var(--space-xsm)] list-disc list-inside">
+          <ul className="flex flex-col gap-[var(--space-xs)] list-disc list-inside">
             {content.map((error, index) => (
               <li key={index}>{error}</li>
             ))}
@@ -292,7 +292,7 @@ const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
         ref={ref}
         data-invalid={invalid ? "" : undefined}
         className={cn(
-          isCheckboxField ? "space-y-[var(--space-xsm)]" : "space-y-[var(--space-sm)]",
+          isCheckboxField ? "space-y-[var(--space-xs)]" : "space-y-[var(--space-s)]",
           className
         )}
         {...props}
@@ -313,7 +313,7 @@ const FormLabel = React.forwardRef<HTMLLabelElement, FormLabelProps>(
       <label
         ref={ref}
         className={cn(
-          "[&]:text-body-md mb-[var(--space-xsm)] block text-[var(--color-text-primary)] cursor-pointer",
+          "[&]:text-body-md mb-[var(--space-xs)] block text-[var(--color-text-primary)] cursor-pointer",
           invalid && "text-[var(--color-text-error-bold)]",
           className,
         )}
@@ -346,7 +346,7 @@ const FormHelperText = React.forwardRef<HTMLDivElement, FormHelperTextProps>(
     if (isCheckboxField) {
       // For checkbox fields: no icon, aligned with label text
       return (
-        <div className="ml-[calc(var(--size-2xsm)+var(--space-sm))]">
+        <div className="ml-[calc(var(--size-2xs)+var(--space-s))]">
           <div
             ref={ref}
             className={cn(
@@ -366,14 +366,14 @@ const FormHelperText = React.forwardRef<HTMLDivElement, FormHelperTextProps>(
       <div
         ref={ref}
         className={cn(
-          "[&]:text-body-sm flex items-start gap-[var(--space-xsm)] text-[var(--color-text-tertiary)]",
+          "[&]:text-body-sm flex items-start gap-[var(--space-xs)] text-[var(--color-text-tertiary)]",
           className,
         )}
         {...props}
       >
         <Icon
           name="info"
-          size="sm"
+          size="s"
           color="tertiary"
           className="mt-[1px] flex-shrink-0"
         />
@@ -403,7 +403,7 @@ const FormErrorMessage = React.forwardRef<
   if (Array.isArray(content)) {
     if (isCheckboxField) {
       return (
-        <div className="ml-[calc(var(--size-2xsm)+var(--space-sm))]">
+        <div className="ml-[calc(var(--size-2xs)+var(--space-s))]">
           <div
             ref={ref}
             role="alert"
@@ -414,7 +414,7 @@ const FormErrorMessage = React.forwardRef<
             )}
             {...props}
           >
-            <ul className="flex flex-col gap-[var(--space-xsm)] list-disc list-inside">
+            <ul className="flex flex-col gap-[var(--space-xs)] list-disc list-inside">
               {content.map((error, index) => (
                 <li key={index}>{error}</li>
               ))}
@@ -430,12 +430,12 @@ const FormErrorMessage = React.forwardRef<
         role="alert"
         aria-live="polite"
         className={cn(
-          "[&]:text-body-sm flex flex-col gap-[var(--space-xsm)] text-[var(--color-text-error-bold)]",
+          "[&]:text-body-sm flex flex-col gap-[var(--space-xs)] text-[var(--color-text-error-bold)]",
           className,
         )}
         {...props}
       >
-        <ul className="flex flex-col gap-[var(--space-xsm)] list-disc list-inside ml-[calc(var(--size-sm)+var(--space-xsm))]">
+        <ul className="flex flex-col gap-[var(--space-xs)] list-disc list-inside ml-[calc(var(--size-s)+var(--space-xs))]">
           {content.map((error, index) => (
             <li key={index}>{error}</li>
           ))}
@@ -448,7 +448,7 @@ const FormErrorMessage = React.forwardRef<
   if (isCheckboxField) {
     // For checkbox fields: no icon, aligned with label text
     return (
-      <div className="ml-[calc(var(--size-2xsm)+var(--space-sm))]">
+      <div className="ml-[calc(var(--size-2xs)+var(--space-s))]">
         <div
           ref={ref}
           role="alert"
@@ -472,14 +472,14 @@ const FormErrorMessage = React.forwardRef<
       role="alert"
       aria-live="polite"
       className={cn(
-        "[&]:text-body-sm flex items-start gap-[var(--space-xsm)] text-[var(--color-text-error-bold)]",
+        "[&]:text-body-sm flex items-start gap-[var(--space-xs)] text-[var(--color-text-error-bold)]",
         className,
       )}
       {...props}
     >
       <Icon
         name="circle-alert"
-        size="sm"
+        size="s"
         color="error"
         className="mt-[1px] flex-shrink-0"
       />

@@ -48,7 +48,7 @@ export const WithButton: Story = {
   render: () => (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Button variant="destructive" size="sm">
+        <Button variant="destructive" size="s">
           Delete
         </Button>
       </TooltipTrigger>
@@ -62,7 +62,7 @@ export const WithButton: Story = {
 // Simple tooltips
 export const SimpleTooltips: Story = {
   render: () => (
-    <div className="flex flex-wrap items-center gap-[var(--space-md)]">
+    <div className="flex flex-wrap items-center gap-[var(--space-m)]">
       <Tooltip>
         <TooltipTrigger asChild>
           <Button>Hover me</Button>
@@ -74,7 +74,7 @@ export const SimpleTooltips: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="destructive" size="sm">
+          <Button variant="destructive" size="s">
             Delete
           </Button>
         </TooltipTrigger>
@@ -85,7 +85,7 @@ export const SimpleTooltips: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="md" icon="info" />
+          <Button variant="ghost" size="m" icon="info" />
         </TooltipTrigger>
         <TooltipContent>
           <p>Get more information</p>
@@ -98,10 +98,10 @@ export const SimpleTooltips: Story = {
 // Icon tooltips
 export const IconTooltips: Story = {
   render: () => (
-    <div className="flex flex-wrap items-center gap-[var(--space-md)]">
+    <div className="flex flex-wrap items-center gap-[var(--space-m)]">
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="sm" icon="settings" />
+          <Button variant="ghost" size="s" icon="settings" />
         </TooltipTrigger>
         <TooltipContent>
           <p>Settings</p>
@@ -110,7 +110,7 @@ export const IconTooltips: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="sm" icon="share" />
+          <Button variant="ghost" size="s" icon="share" />
         </TooltipTrigger>
         <TooltipContent>
           <p>Share this item</p>
@@ -119,7 +119,7 @@ export const IconTooltips: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="sm" icon="bookmark" />
+          <Button variant="ghost" size="s" icon="bookmark" />
         </TooltipTrigger>
         <TooltipContent>
           <p>Add to bookmarks</p>
@@ -128,7 +128,7 @@ export const IconTooltips: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="sm" icon="trash-2" />
+          <Button variant="ghost" size="s" icon="trash-2" />
         </TooltipTrigger>
         <TooltipContent>
           <p>Move to trash</p>
@@ -141,10 +141,10 @@ export const IconTooltips: Story = {
 // Positioning
 export const Positioning: Story = {
   render: () => (
-    <div className="grid min-h-[200px] grid-cols-2 place-items-center gap-[var(--space-lg)]">
+    <div className="grid min-h-[200px] grid-cols-2 place-items-center gap-[var(--space-l)]">
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button size="sm">
+          <Button size="s">
             Top
           </Button>
         </TooltipTrigger>
@@ -155,7 +155,7 @@ export const Positioning: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button size="sm">
+          <Button size="s">
             Right
           </Button>
         </TooltipTrigger>
@@ -166,7 +166,7 @@ export const Positioning: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button size="sm">
+          <Button size="s">
             Bottom
           </Button>
         </TooltipTrigger>
@@ -177,7 +177,7 @@ export const Positioning: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button size="sm">
+          <Button size="s">
             Left
           </Button>
         </TooltipTrigger>
@@ -192,13 +192,13 @@ export const Positioning: Story = {
 // Rich content
 export const RichContent: Story = {
   render: () => (
-    <div className="flex items-center gap-[var(--space-md)]">
+    <div className="flex items-center gap-[var(--space-m)]">
       <Tooltip>
         <TooltipTrigger asChild>
           <Button>Feature Info</Button>
         </TooltipTrigger>
         <TooltipContent className="max-w-72">
-          <div className="space-y-[var(--space-xsm)]">
+          <div className="space-y-[var(--space-xs)]">
             <p className="text-body-strong-sm">Enhanced Feature</p>
             <p className="text-body-sm">
               This feature provides advanced functionality with multiple options and configurations.
@@ -212,9 +212,9 @@ export const RichContent: Story = {
           <Button>Keyboard Shortcut</Button>
         </TooltipTrigger>
         <TooltipContent>
-          <div className="flex items-center gap-[var(--space-sm)]">
+          <div className="flex items-center gap-[var(--space-s)]">
             <span className="block">Save</span>
-            <Kbd variant="dark" size="sm">
+            <Kbd variant="dark" size="s">
               ⌘S
             </Kbd>
           </div>
@@ -260,12 +260,12 @@ export const WithLinks: Story = {
 // Form elements
 export const FormElements: Story = {
   render: () => (
-    <div className="space-y-[var(--space-md)]">
-      <div className="flex items-center space-x-[var(--space-sm)]">
+    <div className="space-y-[var(--space-m)]">
+      <div className="flex items-center space-x-[var(--space-s)]">
         <label className="text-body-medium-md">Password</label>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Icon name="circle-help" size="sm" color="secondary" />
+            <Icon name="circle-help" size="s" color="secondary" />
           </TooltipTrigger>
           <TooltipContent className="max-w-xs">
             <p>
@@ -275,11 +275,11 @@ export const FormElements: Story = {
         </Tooltip>
       </div>
 
-      <div className="flex items-center space-x-[var(--space-sm)]">
+      <div className="flex items-center space-x-[var(--space-s)]">
         <label className="text-body-medium-md">API Key</label>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Icon name="info" size="sm" color="secondary" />
+            <Icon name="info" size="s" color="secondary" />
           </TooltipTrigger>
           <TooltipContent>
             <p>You can find your API key in the developer settings</p>
@@ -293,10 +293,10 @@ export const FormElements: Story = {
 // Toolbar example
 export const ToolbarExample: Story = {
   render: () => (
-    <div className="flex items-center space-x-[var(--space-sm)] rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-md)]">
+    <div className="flex items-center space-x-[var(--space-s)] rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-m)]">
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="sm" icon="plus" />
+          <Button variant="ghost" size="s" icon="plus" />
         </TooltipTrigger>
         <TooltipContent>
           <p>Create new item</p>
@@ -305,7 +305,7 @@ export const ToolbarExample: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="sm" icon="search" />
+          <Button variant="ghost" size="s" icon="search" />
         </TooltipTrigger>
         <TooltipContent>
           <p>Search items</p>
@@ -314,18 +314,18 @@ export const ToolbarExample: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="sm" icon="list-filter" />
+          <Button variant="ghost" size="s" icon="list-filter" />
         </TooltipTrigger>
         <TooltipContent>
           <p>Filter results</p>
         </TooltipContent>
       </Tooltip>
 
-      <div className="h-[var(--size-md)] w-px bg-[var(--color-border-primary-subtle)]" />
+      <div className="h-[var(--size-m)] w-px bg-[var(--color-border-primary-subtle)]" />
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="sm" icon="layout-dashboard" />
+          <Button variant="ghost" size="s" icon="layout-dashboard" />
         </TooltipTrigger>
         <TooltipContent>
           <p>Dashboard view</p>
@@ -334,7 +334,7 @@ export const ToolbarExample: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="sm" icon="table-2" />
+          <Button variant="ghost" size="s" icon="table-2" />
         </TooltipTrigger>
         <TooltipContent>
           <p>Table view</p>
@@ -347,11 +347,11 @@ export const ToolbarExample: Story = {
 // Status indicators
 export const StatusIndicators: Story = {
   render: () => (
-    <div className="flex items-center space-x-[var(--space-lg)]">
+    <div className="flex items-center space-x-[var(--space-l)]">
       <Tooltip>
         <TooltipTrigger asChild>
-          <div className="flex cursor-help items-center space-x-[var(--space-sm)]">
-            <div className="h-[var(--size-sm)] w-[var(--size-sm)] rounded-full bg-[var(--color-background-success-subtle)]"></div>
+          <div className="flex cursor-help items-center space-x-[var(--space-s)]">
+            <div className="h-[var(--size-s)] w-[var(--size-s)] rounded-full bg-[var(--color-background-success-subtle)]"></div>
             <span className="text-body-sm">Online</span>
           </div>
         </TooltipTrigger>
@@ -362,8 +362,8 @@ export const StatusIndicators: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <div className="flex cursor-help items-center space-x-[var(--space-sm)]">
-            <div className="h-[var(--size-sm)] w-[var(--size-sm)] rounded-full bg-[var(--color-background-warning-subtle)]"></div>
+          <div className="flex cursor-help items-center space-x-[var(--space-s)]">
+            <div className="h-[var(--size-s)] w-[var(--size-s)] rounded-full bg-[var(--color-background-warning-subtle)]"></div>
             <span className="text-body-sm">Warning</span>
           </div>
         </TooltipTrigger>
@@ -374,8 +374,8 @@ export const StatusIndicators: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <div className="flex cursor-help items-center space-x-[var(--space-sm)]">
-            <div className="h-[var(--size-sm)] w-[var(--size-sm)] rounded-full bg-[var(--color-background-error-subtle)]"></div>
+          <div className="flex cursor-help items-center space-x-[var(--space-s)]">
+            <div className="h-[var(--size-s)] w-[var(--size-s)] rounded-full bg-[var(--color-background-error-subtle)]"></div>
             <span className="text-body-sm">Offline</span>
           </div>
         </TooltipTrigger>
@@ -390,51 +390,51 @@ export const StatusIndicators: Story = {
 // Keyboard shortcuts
 export const KeyboardShortcuts: Story = {
   render: () => (
-    <div className="flex flex-wrap items-center gap-[var(--space-md)]">
+    <div className="flex flex-wrap items-center gap-[var(--space-m)]">
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="sm" icon="search" />
+          <Button variant="ghost" size="s" icon="search" />
         </TooltipTrigger>
         <TooltipContent>
           <div className="flex items-center gap-[var(--space-xs)]">
             <span>Search</span>
-            <Kbd variant="dark" size="sm">⌘K</Kbd>
+            <Kbd variant="dark" size="s">⌘K</Kbd>
           </div>
         </TooltipContent>
       </Tooltip>
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="sm" icon="plus" />
+          <Button variant="ghost" size="s" icon="plus" />
         </TooltipTrigger>
         <TooltipContent>
           <div className="flex items-center gap-[var(--space-xs)]">
             <span>Create new</span>
-            <Kbd variant="dark" size="sm">⌘N</Kbd>
+            <Kbd variant="dark" size="s">⌘N</Kbd>
           </div>
         </TooltipContent>
       </Tooltip>
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="sm" icon="settings" />
+          <Button variant="ghost" size="s" icon="settings" />
         </TooltipTrigger>
         <TooltipContent>
           <div className="flex items-center gap-[var(--space-xs)]">
             <span>Settings</span>
-            <Kbd variant="dark" size="sm">⌘,</Kbd>
+            <Kbd variant="dark" size="s">⌘,</Kbd>
           </div>
         </TooltipContent>
       </Tooltip>
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="destructive" size="sm" icon="trash-2" />
+          <Button variant="destructive" size="s" icon="trash-2" />
         </TooltipTrigger>
         <TooltipContent>
           <div className="flex items-center gap-[var(--space-xs)]">
             <span>Delete</span>
-            <Kbd variant="dark" size="sm">Del</Kbd>
+            <Kbd variant="dark" size="s">Del</Kbd>
           </div>
         </TooltipContent>
       </Tooltip>
@@ -450,7 +450,7 @@ export const LongContent: Story = {
         <Button>Complex Feature</Button>
       </TooltipTrigger>
       <TooltipContent className="max-w-sm">
-        <div className="space-y-[var(--space-sm)]">
+        <div className="space-y-[var(--space-s)]">
           <p className="text-body-strong-sm">Advanced Data Processing</p>
           <p className="text-body-sm">
             This feature automatically processes and analyzes your data using machine learning algorithms to provide intelligent insights and recommendations.
@@ -467,11 +467,11 @@ export const LongContent: Story = {
 // Interactive content warning
 export const InteractiveElements: Story = {
   render: () => (
-    <div className="space-y-[var(--space-md)]">
+    <div className="space-y-[var(--space-m)]">
       <p className="text-body-sm text-[var(--color-text-secondary)] max-w-md">
         Examples of elements that commonly use tooltips:
       </p>
-      <div className="flex flex-wrap items-center gap-[var(--space-md)]">
+      <div className="flex flex-wrap items-center gap-[var(--space-m)]">
         <Tooltip>
           <TooltipTrigger asChild>
             <button className="cursor-help text-body-sm text-[var(--color-text-brand-bold)] underline decoration-dotted">
@@ -496,8 +496,8 @@ export const InteractiveElements: Story = {
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <div className="cursor-help inline-flex items-center gap-[var(--space-xsm)]">
-              <Icon name="circle-help" size="sm" color="secondary" />
+            <div className="cursor-help inline-flex items-center gap-[var(--space-xs)]">
+              <Icon name="circle-help" size="s" color="secondary" />
               <span className="text-body-sm">Help</span>
             </div>
           </TooltipTrigger>

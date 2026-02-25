@@ -562,20 +562,20 @@ const DataTableEmptyState = React.memo(function DataTableEmptyState({
   }
 
   return (
-    <div className="flex flex-col items-center justify-center py-[var(--space-xlg)] text-center">
+    <div className="flex flex-col items-center justify-center py-[var(--space-2xl)] text-center">
       <p className="text-body-medium-md text-[var(--color-text-primary)]">
         {title}
       </p>
       {description && (
-        <p className="text-body-sm text-[var(--color-text-secondary)] mt-[var(--space-xsm)]">
+        <p className="text-body-sm text-[var(--color-text-secondary)] mt-[var(--space-xs)]">
           {description}
         </p>
       )}
       {action && (
         <Button
           variant="primary"
-          size="sm"
-          className="mt-[var(--space-md)]"
+          size="s"
+          className="mt-[var(--space-m)]"
           onClick={action.onClick}
         >
           {action.label}
@@ -607,20 +607,20 @@ const DataTableNoResultsState = React.memo(function DataTableNoResultsState({
   }
 
   return (
-    <div className="flex flex-col items-center justify-center py-[var(--space-xlg)] text-center">
+    <div className="flex flex-col items-center justify-center py-[var(--space-2xl)] text-center">
       <p className="text-body-medium-md text-[var(--color-text-primary)]">
         {title}
       </p>
       {description && (
-        <p className="text-body-sm text-[var(--color-text-secondary)] mt-[var(--space-xsm)]">
+        <p className="text-body-sm text-[var(--color-text-secondary)] mt-[var(--space-xs)]">
           {description}
         </p>
       )}
       {action && (
         <Button
           variant="default"
-          size="sm"
-          className="mt-[var(--space-md)]"
+          size="s"
+          className="mt-[var(--space-m)]"
           onClick={action.onClick}
         >
           {action.label}
@@ -647,18 +647,18 @@ const DataTableErrorState = React.memo(function DataTableErrorState({
   }
 
   return (
-    <div className="flex flex-col items-center justify-center py-[var(--space-xlg)] text-center">
+    <div className="flex flex-col items-center justify-center py-[var(--space-2xl)] text-center">
       <p className="text-body-medium-md text-[var(--color-text-primary)]">
         Something went wrong
       </p>
-      <p className="text-body-sm text-[var(--color-text-secondary)] mt-[var(--space-xsm)]">
+      <p className="text-body-sm text-[var(--color-text-secondary)] mt-[var(--space-xs)]">
         {error?.message || "An error occurred while loading data"}
       </p>
       {onRetry && (
         <Button
           variant="default"
-          size="sm"
-          className="mt-[var(--space-md)]"
+          size="s"
+          className="mt-[var(--space-m)]"
           onClick={onRetry}
         >
           Try again
@@ -863,13 +863,13 @@ const DataTableGlobalFaceting = React.memo(function DataTableGlobalFaceting({ ta
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="ghost" size="sm" className="h-8 border-dashed">
+        <Button variant="ghost" size="s" className="h-8 border-dashed">
           <Icon name="filter" className="mr-2 h-4 w-4" />
           Global Faceting
           {selectedValues.length > 0 && (
             <>
               <div className="mx-2 h-4 w-px bg-[var(--color-border-primary)]" />
-              <Badge className="rounded-sm px-1 font-normal">
+              <Badge className="rounded-s px-1 font-normal">
                 {selectedValues.length} selected
               </Badge>
             </>
@@ -967,25 +967,25 @@ const DataTableFilter = React.memo(function DataTableFilter({ column }: DataTabl
     return (
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="ghost" size="sm" className="h-8 border-dashed">
+          <Button variant="ghost" size="s" className="h-8 border-dashed">
             <Icon name="plus-circle" className="mr-2 h-4 w-4" />
             {label}
             {selectedValues.length > 0 && (
               <>
                 <div className="mx-2 h-4 w-px bg-[var(--color-border-primary)]" />
-                <Badge className="rounded-sm px-1 font-normal lg:hidden">
+                <Badge className="rounded-s px-1 font-normal lg:hidden">
                   {selectedValues.length}
                 </Badge>
                 <div className="hidden space-x-1 lg:flex">
                   {selectedValues.length > 2 ? (
-                    <Badge className="rounded-sm px-1 font-normal">
+                    <Badge className="rounded-s px-1 font-normal">
                       {selectedValues.length} selected
                     </Badge>
                   ) : (
                     filterOptions
                       .filter(option => selectedValues.includes(option.value))
                       .map(option => (
-                        <Badge key={option.value} className="rounded-sm px-1 font-normal">
+                        <Badge key={option.value} className="rounded-s px-1 font-normal">
                           {option.label}
                         </Badge>
                       ))
@@ -1104,7 +1104,7 @@ const DraggableColumnHeader = React.memo(function DraggableColumnHeader({ header
       </div>
       {enableColumnOrdering && (
         <div
-          className="ml-2 p-1 !cursor-grab active:!cursor-grabbing hover:bg-[var(--color-background-neutral-subtlest-hovered)] rounded-sm transition-colors"
+          className="ml-2 p-1 !cursor-grab active:!cursor-grabbing hover:bg-[var(--color-background-neutral-subtlest-hovered)] rounded-s transition-colors"
           {...attributes}
           {...listeners}
         >
@@ -1312,7 +1312,7 @@ const DataTablePagination = React.memo(function DataTablePagination<TData>({
     <div className="flex items-center justify-between">
       <div className="flex-1 text-body-sm text-[var(--color-text-secondary)]">
         {footerLabel ? (
-          <div className="flex items-center gap-[var(--space-md)]">
+          <div className="flex items-center gap-[var(--space-m)]">
             {footerLabel}
             {selectedCount > 0 && (
               <span>
@@ -1375,9 +1375,9 @@ const LoadMoreTrigger = React.memo(function LoadMoreTrigger({
   return (
     <div
       ref={ref}
-      className="flex justify-center py-[var(--space-md)] border-t border-[var(--color-border-primary-subtle)]"
+      className="flex justify-center py-[var(--space-m)] border-t border-[var(--color-border-primary-subtle)]"
     >
-      {isLoading && <Spinner size="sm" />}
+      {isLoading && <Spinner size="s" />}
     </div>
   )
 })
@@ -1619,7 +1619,7 @@ function renderGroupDisplayContent(
     <button
       tabIndex={-1}
       onClick={row.getToggleExpandedHandler()}
-      className="flex h-[var(--size-sm)] w-[var(--size-sm)] cursor-pointer items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+      className="flex h-[var(--size-s)] w-[var(--size-s)] cursor-pointer items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
     >
       <Icon
         name={isExpanded ? "chevron-down" : "chevron-right"}
@@ -1628,12 +1628,12 @@ function renderGroupDisplayContent(
     </button>
   ) : (
     // Spacer to maintain alignment when there's only 1 item
-    <div className="h-[var(--size-sm)] w-[var(--size-sm)]" />
+    <div className="h-[var(--size-s)] w-[var(--size-s)]" />
   )
 
   // Only show count badge when there are 2 or more items
   const countBadge = row.subRows.length > 1 ? (
-    <Badge appearance="subtle" size="sm" truncate={false}>
+    <Badge appearance="subtle" size="s" truncate={false}>
       {row.subRows.length}
     </Badge>
   ) : null
@@ -1651,9 +1651,9 @@ function renderGroupDisplayContent(
         const displayCell = row.getAllCells().find((cell: any) => cell.column.id === groupDisplayColumn)
 
         return (
-          <div className="flex items-center gap-[var(--space-sm)] font-medium text-[var(--color-text-primary)]">
+          <div className="flex items-center gap-[var(--space-s)] font-medium text-[var(--color-text-primary)]">
             {chevronButton}
-            <div className="flex items-center gap-[var(--space-sm)]">
+            <div className="flex items-center gap-[var(--space-s)]">
               {displayCell ? flexRender(columnDef.aggregatedCell, displayCell.getContext()) : null}
               {countBadge}
             </div>
@@ -1664,9 +1664,9 @@ function renderGroupDisplayContent(
         const firstRowValue = row.subRows[0]?.original?.[groupDisplayColumn]
 
         return (
-          <div className="flex items-center gap-[var(--space-sm)] font-medium text-[var(--color-text-primary)]">
+          <div className="flex items-center gap-[var(--space-s)] font-medium text-[var(--color-text-primary)]">
             {chevronButton}
-            <div className="flex items-center gap-[var(--space-sm)]">
+            <div className="flex items-center gap-[var(--space-s)]">
               <span className="font-medium">{String(firstRowValue)}</span>
               {countBadge}
             </div>
@@ -1678,9 +1678,9 @@ function renderGroupDisplayContent(
 
   // Default behavior: show grouped column value
   return (
-    <div className="flex items-center gap-[var(--space-sm)] font-medium text-[var(--color-text-primary)]">
+    <div className="flex items-center gap-[var(--space-s)] font-medium text-[var(--color-text-primary)]">
       {chevronButton}
-      <div className="flex items-center gap-[var(--space-sm)]">
+      <div className="flex items-center gap-[var(--space-s)]">
         <span className="font-medium">
           {String(row.getGroupingValue(row.groupingColumnId!))}
         </span>
@@ -4086,14 +4086,14 @@ export function DataTable<TData, TValue>({
         onDragEnd={handleDragEnd}
       >
       <div className={cn(
-        "border border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] overflow-hidden rounded-lg",
+        "border border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] overflow-hidden rounded-l",
         // Remove bottom border when no pagination to avoid double border with last row
         !showPagination && "border-b-0",
         className
       )}>
       {/* Header section with title and toolbar */}
       {showHeader && (title || enableGlobalSearch) && (
-        <div className="border-b border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] px-[var(--space-lg)] py-[var(--space-md)]">
+        <div className="border-b border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] px-[var(--space-l)] py-[var(--space-m)]">
           {title && (
             <div className="flex justify-between items-center">
               <h3 className="text-heading-sm font-semibold text-[var(--color-text-primary)]">{title}</h3>
@@ -4212,8 +4212,8 @@ export function DataTable<TData, TValue>({
                         className={cn(
                           "text-center bg-[var(--color-background-neutral-subtlest)] font-medium border-b border-[var(--color-border-primary-medium)]",
                           stickyHeader && "z-20",
-                          !showHeader && index === 0 && "rounded-tl-lg",
-                          !showHeader && index === nestedHeaders.length - 1 && "rounded-tr-lg",
+                          !showHeader && index === 0 && "rounded-tl-l",
+                          !showHeader && index === nestedHeaders.length - 1 && "rounded-tr-l",
                           headerConfig.className
                         )}
                         style={{
@@ -4356,8 +4356,8 @@ export function DataTable<TData, TValue>({
                           (effectiveLeftSticky > 0 || effectiveRightSticky > 0) && "z-30",
                           enableColumnResizing && "relative overflow-visible group",
                           enableColumnOrdering && "group",
-                          !showHeader && index === 0 && "rounded-tl-lg",
-                          !showHeader && index === headerGroup.headers.length - 1 && "rounded-tr-lg",
+                          !showHeader && index === 0 && "rounded-tl-l",
+                          !showHeader && index === headerGroup.headers.length - 1 && "rounded-tr-l",
                           getResizeIndicatorClasses(header.column, isLastHeader),
                           // Focus ring for keyboard navigation
                           "focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--color-border-brand-bold)]"
@@ -4599,7 +4599,7 @@ export function DataTable<TData, TValue>({
                               ...pinningStyles,
                               // Add left padding for nested rows
                               paddingLeft: isFirstCell && depth > 0 && !isSectionHeader
-                                ? `calc(var(--space-md) + ${depth * 20}px)`
+                                ? `calc(var(--space-m) + ${depth * 20}px)`
                                 : undefined,
                             }}
                           >
@@ -4644,13 +4644,13 @@ export function DataTable<TData, TValue>({
                               )
                             ) : (
                               // Regular row rendering
-                              <div className="flex items-center gap-[var(--space-sm)]">
+                              <div className="flex items-center gap-[var(--space-s)]">
                                 {/* Expand/Collapse button for first cell */}
                                 {isFirstCell && canExpand && (
                                   <button
                                     tabIndex={-1}
                                     onClick={row.getToggleExpandedHandler()}
-                                    className="flex h-[var(--size-sm)] w-[var(--size-sm)] cursor-pointer items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                                    className="flex h-[var(--size-s)] w-[var(--size-s)] cursor-pointer items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                   >
                                     <Icon
                                       name={isExpanded ? "chevron-down" : "chevron-right"}
@@ -4665,7 +4665,7 @@ export function DataTable<TData, TValue>({
                                       <button
                                         tabIndex={-1}
                                         onClick={() => row.pin('top')}
-                                        className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                                        className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                         title="Pin to top"
                                       >
                                         <Icon name="arrow-up-to-line" className="h-3 w-3" />
@@ -4675,7 +4675,7 @@ export function DataTable<TData, TValue>({
                                       <button
                                         tabIndex={-1}
                                         onClick={() => row.pin('bottom')}
-                                        className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                                        className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                         title="Pin to bottom"
                                       >
                                         <Icon name="arrow-down-to-line" className="h-3 w-3" />
@@ -4685,7 +4685,7 @@ export function DataTable<TData, TValue>({
                                       <button
                                         tabIndex={-1}
                                         onClick={() => row.pin(false)}
-                                        className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                                        className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                         title="Unpin row"
                                       >
                                         <Icon name="x" className="h-3 w-3" />
@@ -4696,7 +4696,7 @@ export function DataTable<TData, TValue>({
 
                                 {/* Empty space for alignment when no controls */}
                                 {isFirstCell && !canExpand && !enableRowPinning && (enableExpanding || enableGrouping) && (
-                                  <div className="h-[var(--size-sm)] w-[var(--size-sm)]" />
+                                  <div className="h-[var(--size-s)] w-[var(--size-s)]" />
                                 )}
 
                                 {/* Cell content */}
@@ -4728,10 +4728,10 @@ export function DataTable<TData, TValue>({
                           showBorder={borderSettings.showCellBorder}
                           showRowBorder={borderSettings.showRowBorder}
                           verticalAlign={defaultVerticalAlign}
-                          className="py-[var(--space-md)]"
+                          className="py-[var(--space-m)]"
                         >
-                          <div className="flex items-center justify-center gap-[var(--space-sm)]">
-                            <Spinner size="sm" />
+                          <div className="flex items-center justify-center gap-[var(--space-s)]">
+                            <Spinner size="s" />
                             <span className="text-body-sm text-[var(--color-text-secondary)]">
                               Loading...
                             </span>
@@ -4751,8 +4751,8 @@ export function DataTable<TData, TValue>({
                           data-section-header
                         >
                           {subComponentError?.[row.id] ? (
-                            <div className="flex flex-col items-center justify-center py-[var(--space-lg)] gap-[var(--space-sm)]">
-                              <div className="flex items-center gap-[var(--space-sm)] text-[var(--color-text-danger)]">
+                            <div className="flex flex-col items-center justify-center py-[var(--space-l)] gap-[var(--space-s)]">
+                              <div className="flex items-center gap-[var(--space-s)] text-[var(--color-text-danger)]">
                                 <Icon name="alert-circle" className="h-4 w-4" />
                                 <span className="text-body-sm">
                                   {subComponentError[row.id]?.message || 'Failed to load details'}
@@ -4768,9 +4768,9 @@ export function DataTable<TData, TValue>({
                               )}
                             </div>
                           ) : subComponentLoading?.[row.id] ? (
-                            <div className="flex items-center justify-center py-[var(--space-lg)]">
-                              <Spinner size="sm" />
-                              <span className="ml-[var(--space-sm)] text-body-sm text-[var(--color-text-secondary)]">
+                            <div className="flex items-center justify-center py-[var(--space-l)]">
+                              <Spinner size="s" />
+                              <span className="ml-[var(--space-s)] text-body-sm text-[var(--color-text-secondary)]">
                                 Loading details...
                               </span>
                             </div>
@@ -5056,7 +5056,7 @@ export function DataTable<TData, TValue>({
                             ...(isSectionHeader ? { height: '32px', padding: '0' } : {}),
                             // Add left padding for nested rows
                             paddingLeft: isFirstCell && depth > 0 && !isSectionHeader
-                              ? `calc(var(--space-md) + ${depth * 20}px)`
+                              ? `calc(var(--space-m) + ${depth * 20}px)`
                               : undefined,
                           }}
                         >
@@ -5101,12 +5101,12 @@ export function DataTable<TData, TValue>({
                             )
                           ) : (
                             // Regular row rendering
-                            <div className="flex items-center gap-[var(--space-sm)]">
+                            <div className="flex items-center gap-[var(--space-s)]">
                               {/* Expand/Collapse button for first cell */}
                               {isFirstCell && canExpand && (
                                 <button
                                   onClick={row.getToggleExpandedHandler()}
-                                  className="flex h-[var(--size-sm)] w-[var(--size-sm)] cursor-pointer items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                                  className="flex h-[var(--size-s)] w-[var(--size-s)] cursor-pointer items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                 >
                                   <Icon
                                     name={isExpanded ? "chevron-down" : "chevron-right"}
@@ -5120,7 +5120,7 @@ export function DataTable<TData, TValue>({
                                   {row.getIsPinned() !== 'top' && (
                                     <button
                                       onClick={() => row.pin('top')}
-                                      className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                                      className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                       title="Pin to top"
                                     >
                                       <Icon name="arrow-up-to-line" className="h-3 w-3" />
@@ -5129,7 +5129,7 @@ export function DataTable<TData, TValue>({
                                   {row.getIsPinned() !== 'bottom' && (
                                     <button
                                       onClick={() => row.pin('bottom')}
-                                      className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                                      className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                       title="Pin to bottom"
                                     >
                                       <Icon name="arrow-down-to-line" className="h-3 w-3" />
@@ -5138,7 +5138,7 @@ export function DataTable<TData, TValue>({
                                   {row.getIsPinned() && (
                                     <button
                                       onClick={() => row.pin(false)}
-                                      className="opacity-0 group-hover:opacity-100 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                                      className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                       title="Unpin row"
                                     >
                                       <Icon name="x" className="h-3 w-3" />
@@ -5149,7 +5149,7 @@ export function DataTable<TData, TValue>({
 
                               {/* Empty space for alignment when no controls */}
                               {isFirstCell && !canExpand && !enableRowPinning && (enableExpanding || enableGrouping) && (
-                                <div className="h-[var(--size-sm)] w-[var(--size-sm)]" />
+                                <div className="h-[var(--size-s)] w-[var(--size-s)]" />
                               )}
 
                               {/* Cell content */}
@@ -5181,10 +5181,10 @@ export function DataTable<TData, TValue>({
                         showBorder={borderSettings.showCellBorder}
                         showRowBorder={borderSettings.showRowBorder}
                         verticalAlign={defaultVerticalAlign}
-                        className="py-[var(--space-md)]"
+                        className="py-[var(--space-m)]"
                       >
-                        <div className="flex items-center justify-center gap-[var(--space-sm)]">
-                          <Spinner size="sm" />
+                        <div className="flex items-center justify-center gap-[var(--space-s)]">
+                          <Spinner size="s" />
                           <span className="text-body-sm text-[var(--color-text-secondary)]">
                             Loading...
                           </span>
@@ -5204,9 +5204,9 @@ export function DataTable<TData, TValue>({
                         data-section-header
                       >
                         {subComponentLoading?.[row.id] ? (
-                          <div className="flex items-center justify-center py-[var(--space-lg)]">
-                            <Spinner size="sm" />
-                            <span className="ml-[var(--space-sm)] text-body-sm text-[var(--color-text-secondary)]">
+                          <div className="flex items-center justify-center py-[var(--space-l)]">
+                            <Spinner size="s" />
+                            <span className="ml-[var(--space-s)] text-body-sm text-[var(--color-text-secondary)]">
                               Loading details...
                             </span>
                           </div>
@@ -5313,7 +5313,7 @@ export function DataTable<TData, TValue>({
       
       {/* Footer section with pagination */}
       {showPagination && (
-        <div className="bg-[var(--color-surface-primary)] px-[var(--space-lg)] py-[var(--space-md)]">
+        <div className="bg-[var(--color-surface-primary)] px-[var(--space-l)] py-[var(--space-m)]">
           <DataTablePagination
             table={table}
             enableGrouping={enableGrouping}

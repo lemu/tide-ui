@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
 const textareaVariants = cva(
-  "flex min-h-[80px] w-full rounded-md border transition-colors placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:shadow-[0px_0px_0px_2px_rgba(0,95,133,0.2),0px_3px_4px_0px_rgba(0,14,20,0.03)] disabled:cursor-not-allowed disabled:opacity-50 resize-y",
+  "flex min-h-[80px] w-full rounded-m border transition-colors placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:shadow-[0px_0px_0px_2px_rgba(0,95,133,0.2),0px_3px_4px_0px_rgba(0,14,20,0.03)] disabled:cursor-not-allowed disabled:opacity-50 resize-y",
   {
     variants: {
       variant: {
@@ -20,14 +20,14 @@ const textareaVariants = cva(
         ],
       },
       size: {
-        sm: "px-[var(--space-sm)] py-[var(--space-xsm)] text-body-sm",
-        md: "px-[var(--space-md)] py-[var(--space-sm)] text-body-md",
-        lg: "px-[var(--space-lg)] py-[var(--space-md)] text-body-md",
+        s: "px-[var(--space-s)] py-[var(--space-xs)] text-body-sm",
+        m: "px-[var(--space-m)] py-[var(--space-s)] text-body-md",
+        l: "px-[var(--space-l)] py-[var(--space-m)] text-body-md",
       },
     },
     defaultVariants: {
       variant: "default",
-      size: "md",
+      size: "m",
     },
   },
 );

@@ -37,7 +37,7 @@ export const Default: Story = {
       <DropdownMenuTrigger asChild>
         <Button>
           Open Menu
-          <Icon name="chevron-down" size="sm" className="ml-2" />
+          <Icon name="chevron-down" size="s" className="ml-2" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
@@ -57,7 +57,7 @@ export const SimpleMenu: Story = {
       <DropdownMenuTrigger asChild>
         <Button>
           Actions
-          <Icon name="chevron-down" size="sm" className="ml-2" />
+          <Icon name="chevron-down" size="s" className="ml-2" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
@@ -96,7 +96,7 @@ export const CheckboxMenu: Story = {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost">
             View
-            <Icon name="chevron-down" size="sm" className="ml-2" />
+            <Icon name="chevron-down" size="s" className="ml-2" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
@@ -136,7 +136,7 @@ export const RadioGroupMenu: Story = {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost">
             Panel Position
-            <Icon name="chevron-down" size="sm" className="ml-2" />
+            <Icon name="chevron-down" size="s" className="ml-2" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
@@ -159,7 +159,7 @@ export const WithSubmenu: Story = {
       <DropdownMenuTrigger asChild>
         <Button>
           More Options
-          <Icon name="chevron-down" size="sm" className="ml-2" />
+          <Icon name="chevron-down" size="s" className="ml-2" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
@@ -204,8 +204,8 @@ export const IconButtonTrigger: Story = {
   render: () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="h-[var(--size-md)] w-[var(--size-md)] p-0">
-          <Icon name="more-horizontal" size="sm" />
+        <Button variant="ghost" size="s" className="h-[var(--size-m)] w-[var(--size-m)] p-0">
+          <Icon name="more-horizontal" size="s" />
           <span className="sr-only">Open menu</span>
         </Button>
       </DropdownMenuTrigger>
@@ -229,7 +229,7 @@ export const TextLinkTrigger: Story = {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-auto p-0 font-normal text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)]">
           john.doe@example.com
-          <Icon name="chevron-down" size="sm" className="ml-1" />
+          <Icon name="chevron-down" size="s" className="ml-1" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-56">
@@ -255,8 +255,8 @@ export const AvatarTrigger: Story = {
   render: () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-[var(--size-md)] w-[var(--size-md)] rounded-full p-0">
-          <div className="h-[var(--size-md)] w-[var(--size-md)] rounded-full bg-[var(--color-background-blue-bold)] flex items-center justify-center">
+        <Button variant="ghost" className="relative h-[var(--size-m)] w-[var(--size-m)] rounded-full p-0">
+          <div className="h-[var(--size-m)] w-[var(--size-m)] rounded-full bg-[var(--color-background-blue-bold)] flex items-center justify-center">
             <span className="text-xs font-medium text-[var(--color-text-on-action)]">
               JD
             </span>
@@ -292,16 +292,16 @@ export const AvatarTrigger: Story = {
 // Table row actions
 export const TableRowActions: Story = {
   render: () => (
-    <div className="border border-[var(--color-border-primary-subtle)] rounded-md max-w-md">
-      <div className="flex items-center justify-between p-[var(--space-md)]">
+    <div className="border border-[var(--color-border-primary-subtle)] rounded-m max-w-md">
+      <div className="flex items-center justify-between p-[var(--space-m)]">
         <div>
           <h4 className="font-medium text-body-sm">Project Alpha</h4>
           <p className="text-body-sm text-[var(--color-text-secondary)]">Updated 2 hours ago</p>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-[var(--size-md)] w-[var(--size-md)] p-0">
-              <Icon name="more-horizontal" size="sm" />
+            <Button variant="ghost" className="h-[var(--size-m)] w-[var(--size-m)] p-0">
+              <Icon name="more-horizontal" size="s" />
               <span className="sr-only">Open menu</span>
             </Button>
           </DropdownMenuTrigger>
@@ -332,7 +332,7 @@ export const TableRowActions: Story = {
 // Navigation user menu
 export const NavigationUserMenu: Story = {
   render: () => (
-    <div className="flex items-center space-x-[var(--space-md)] p-[var(--space-md)] border border-[var(--color-border-primary-subtle)] rounded-md max-w-sm">
+    <div className="flex items-center space-x-[var(--space-m)] p-[var(--space-m)] border border-[var(--color-border-primary-subtle)] rounded-m max-w-sm">
       <div className="h-10 w-10 rounded-full bg-[var(--color-background-blue-bold)] flex items-center justify-center">
         <span className="text-sm font-medium text-[var(--color-text-on-action)]">
           AB
@@ -344,8 +344,8 @@ export const NavigationUserMenu: Story = {
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="sm">
-            <Icon name="chevron-down" size="sm" />
+          <Button variant="ghost" size="s">
+            <Icon name="chevron-down" size="s" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end">
@@ -380,7 +380,7 @@ export const ComplexMenuWithGroups: Story = {
       <DropdownMenuTrigger asChild>
         <Button>
           File Menu
-          <Icon name="chevron-down" size="sm" className="ml-2" />
+          <Icon name="chevron-down" size="s" className="ml-2" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-64">
@@ -440,21 +440,21 @@ export const ComplexMenuWithGroups: Story = {
 // Contextual actions menu
 export const ContextualActionsMenu: Story = {
   render: () => (
-    <div className="space-y-[var(--space-md)]">
+    <div className="space-y-[var(--space-m)]">
       <p className="text-body-sm text-[var(--color-text-secondary)]">
         Different context menus for different content types:
       </p>
-      <div className="flex gap-[var(--space-md)]">
+      <div className="flex gap-[var(--space-m)]">
         {/* Image context menu */}
-        <div className="border border-[var(--color-border-primary-subtle)] rounded-md p-[var(--space-md)] relative">
-          <div className="w-16 h-12 bg-[var(--color-background-secondary)] rounded flex items-center justify-center mb-[var(--space-sm)]">
-            <Icon name="image" size="sm" />
+        <div className="border border-[var(--color-border-primary-subtle)] rounded-m p-[var(--space-m)] relative">
+          <div className="w-16 h-12 bg-[var(--color-background-secondary)] rounded flex items-center justify-center mb-[var(--space-s)]">
+            <Icon name="image" size="s" />
           </div>
           <p className="text-body-sm">image.jpg</p>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="absolute top-1 right-1">
-                <Icon name="more-horizontal" size="sm" />
+              <Button variant="ghost" size="s" className="absolute top-1 right-1">
+                <Icon name="more-horizontal" size="s" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -480,15 +480,15 @@ export const ContextualActionsMenu: Story = {
         </div>
 
         {/* Document context menu */}
-        <div className="border border-[var(--color-border-primary-subtle)] rounded-md p-[var(--space-md)] relative">
-          <div className="w-16 h-12 bg-[var(--color-background-secondary)] rounded flex items-center justify-center mb-[var(--space-sm)]">
-            <Icon name="file-text" size="sm" />
+        <div className="border border-[var(--color-border-primary-subtle)] rounded-m p-[var(--space-m)] relative">
+          <div className="w-16 h-12 bg-[var(--color-background-secondary)] rounded flex items-center justify-center mb-[var(--space-s)]">
+            <Icon name="file-text" size="s" />
           </div>
           <p className="text-body-sm">document.pdf</p>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="absolute top-1 right-1">
-                <Icon name="more-horizontal" size="sm" />
+              <Button variant="ghost" size="s" className="absolute top-1 right-1">
+                <Icon name="more-horizontal" size="s" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -546,25 +546,25 @@ export const ResponsivePreview: Story = {
     },
   },
   render: () => (
-    <div className="p-[var(--space-lg)]">
+    <div className="p-[var(--space-l)]">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-[var(--space-lg)]">
-          <h2 className="text-heading-lg mb-[var(--space-md)]">Responsive DropdownMenu</h2>
-          <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-lg)]">
+        <div className="mb-[var(--space-l)]">
+          <h2 className="text-heading-lg mb-[var(--space-m)]">Responsive DropdownMenu</h2>
+          <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-l)]">
             This dropdown menu automatically switches between a desktop dropdown (≥768px) and a mobile bottom sheet (&lt;768px). 
             Use the viewport controls in Storybook to switch between mobile and desktop views.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[var(--space-lg)]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[var(--space-l)]">
           {/* Basic Menu */}
-          <div className="space-y-[var(--space-md)]">
+          <div className="space-y-[var(--space-m)]">
             <h3 className="text-heading-sm">Basic Menu</h3>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button>
                   Open Menu
-                  <Icon name="chevron-down" size="sm" className="ml-2" />
+                  <Icon name="chevron-down" size="s" className="ml-2" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
@@ -584,13 +584,13 @@ export const ResponsivePreview: Story = {
           </div>
 
           {/* Checkbox Menu */}
-          <div className="space-y-[var(--space-md)]">
+          <div className="space-y-[var(--space-m)]">
             <h3 className="text-heading-sm">Checkbox Menu</h3>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost">
                   View Options
-                  <Icon name="chevron-down" size="sm" className="ml-2" />
+                  <Icon name="chevron-down" size="s" className="ml-2" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
@@ -609,13 +609,13 @@ export const ResponsivePreview: Story = {
           </div>
 
           {/* Radio Menu */}
-          <div className="space-y-[var(--space-md)]">
+          <div className="space-y-[var(--space-m)]">
             <h3 className="text-heading-sm">Radio Menu</h3>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost">
                   Theme
-                  <Icon name="chevron-down" size="sm" className="ml-2" />
+                  <Icon name="chevron-down" size="s" className="ml-2" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
@@ -636,9 +636,9 @@ export const ResponsivePreview: Story = {
           </div>
         </div>
 
-        <div className="mt-[var(--space-2xlg)] p-[var(--space-lg)] bg-[var(--color-surface-secondary)] rounded-lg">
-          <h3 className="text-heading-sm mb-[var(--space-md)]">Testing Instructions</h3>
-          <div className="space-y-[var(--space-sm)] text-body-sm">
+        <div className="mt-[var(--space-3xl)] p-[var(--space-l)] bg-[var(--color-surface-secondary)] rounded-l">
+          <h3 className="text-heading-sm mb-[var(--space-m)]">Testing Instructions</h3>
+          <div className="space-y-[var(--space-s)] text-body-sm">
             <p><strong>Desktop (≥768px):</strong> Shows traditional dropdown with positioning</p>
             <p><strong>Mobile (&lt;768px):</strong> Shows bottom sheet with slide-up animation</p>
             <p><strong>Styling:</strong> Both versions use identical design tokens and spacing</p>
@@ -654,24 +654,24 @@ export const ResponsivePreview: Story = {
 // Automatic icon integration example
 export const AutomaticIconIntegration: Story = {
   render: () => (
-    <div className="space-y-[var(--space-lg)]">
+    <div className="space-y-[var(--space-l)]">
       <div>
-        <h3 className="text-heading-md mb-[var(--space-md)]">Automatic Icon Integration</h3>
-        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-lg)]">
+        <h3 className="text-heading-md mb-[var(--space-m)]">Automatic Icon Integration</h3>
+        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-l)]">
           Compare the new automatic icon integration with the traditional manual approach.
-          Icons are automatically sized to `md` (16px) with proper `mr-2` spacing.
+          Icons are automatically sized to `m` (16px) with proper `mr-2` spacing.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-lg)]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-l)]">
         {/* New Automatic Approach */}
-        <div className="space-y-[var(--space-md)]">
+        <div className="space-y-[var(--space-m)]">
           <h4 className="text-heading-sm">✨ New: Automatic Icons</h4>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button>
                 User Menu (Auto)
-                <Icon name="chevron-down" size="sm" className="ml-2" />
+                <Icon name="chevron-down" size="s" className="ml-2" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
@@ -696,8 +696,8 @@ export const AutomaticIconIntegration: Story = {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <div className="bg-[var(--color-surface-secondary)] p-[var(--space-md)] rounded-md">
-            <h5 className="text-heading-sm mb-[var(--space-sm)]">Code Example:</h5>
+          <div className="bg-[var(--color-surface-secondary)] p-[var(--space-m)] rounded-m">
+            <h5 className="text-heading-sm mb-[var(--space-s)]">Code Example:</h5>
             <pre className="text-caption-sm text-[var(--color-text-secondary)] overflow-x-auto">
 {`<DropdownMenuItem icon="user">
   Profile
@@ -710,71 +710,71 @@ export const AutomaticIconIntegration: Story = {
         </div>
 
         {/* Traditional Manual Approach */}
-        <div className="space-y-[var(--space-md)]">
+        <div className="space-y-[var(--space-m)]">
           <h4 className="text-heading-sm">🔧 Traditional: Manual Icons</h4>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost">
                 User Menu (Manual)
-                <Icon name="chevron-down" size="sm" className="ml-2" />
+                <Icon name="chevron-down" size="s" className="ml-2" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
               <DropdownMenuLabel>Account</DropdownMenuLabel>
               <DropdownMenuItem>
-                <Icon name="user" size="md" className="mr-2" />
+                <Icon name="user" size="m" className="mr-2" />
                 Profile
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Icon name="settings" size="md" className="mr-2" />
+                <Icon name="settings" size="m" className="mr-2" />
                 Settings
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Icon name="credit-card" size="md" className="mr-2" />
+                <Icon name="credit-card" size="m" className="mr-2" />
                 Billing
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
-                  <Icon name="share-2" size="md" className="mr-2" />
+                  <Icon name="share-2" size="m" className="mr-2" />
                   Share
                 </DropdownMenuSubTrigger>
                 <DropdownMenuSubContent>
                   <DropdownMenuItem>
-                    <Icon name="mail" size="md" className="mr-2" />
+                    <Icon name="mail" size="m" className="mr-2" />
                     Email
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Icon name="message-square" size="md" className="mr-2" />
+                    <Icon name="message-square" size="m" className="mr-2" />
                     Message
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Icon name="copy" size="md" className="mr-2" />
+                    <Icon name="copy" size="m" className="mr-2" />
                     Copy Link
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuSub>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Icon name="help-circle" size="md" className="mr-2" />
+                <Icon name="help-circle" size="m" className="mr-2" />
                 Help
               </DropdownMenuItem>
               <DropdownMenuItem destructive>
-                <Icon name="log-out" size="md" className="mr-2" />
+                <Icon name="log-out" size="m" className="mr-2" />
                 Logout
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <div className="bg-[var(--color-surface-secondary)] p-[var(--space-md)] rounded-md">
-            <h5 className="text-heading-sm mb-[var(--space-sm)]">Code Example:</h5>
+          <div className="bg-[var(--color-surface-secondary)] p-[var(--space-m)] rounded-m">
+            <h5 className="text-heading-sm mb-[var(--space-s)]">Code Example:</h5>
             <pre className="text-caption-sm text-[var(--color-text-secondary)] overflow-x-auto">
 {`<DropdownMenuItem>
-  <Icon name="user" size="md" className="mr-2" />
+  <Icon name="user" size="m" className="mr-2" />
   Profile
 </DropdownMenuItem>
 <DropdownMenuItem>
-  <Icon name="settings" size="md" className="mr-2" />
+  <Icon name="settings" size="m" className="mr-2" />
   Settings
 </DropdownMenuItem>`}
             </pre>
@@ -782,21 +782,21 @@ export const AutomaticIconIntegration: Story = {
         </div>
       </div>
 
-      <div className="mt-[var(--space-2xlg)] p-[var(--space-lg)] bg-[var(--color-background-blue-bold)] bg-opacity-5 rounded-lg border border-[var(--color-border-brand-bold)]">
-        <h3 className="text-heading-sm mb-[var(--space-md)] text-[var(--color-text-brand-bold)]">Benefits of Automatic Icon Integration</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-md)] text-body-sm">
+      <div className="mt-[var(--space-3xl)] p-[var(--space-l)] bg-[var(--color-background-blue-bold)] bg-opacity-5 rounded-l border border-[var(--color-border-brand-bold)]">
+        <h3 className="text-heading-sm mb-[var(--space-m)] text-[var(--color-text-brand-bold)]">Benefits of Automatic Icon Integration</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-m)] text-body-sm">
           <div>
-            <h4 className="font-medium mb-[var(--space-sm)]">Developer Experience</h4>
-            <ul className="space-y-[var(--space-xsm)] text-[var(--color-text-secondary)]">
+            <h4 className="font-medium mb-[var(--space-s)]">Developer Experience</h4>
+            <ul className="space-y-[var(--space-xs)] text-[var(--color-text-secondary)]">
               <li>✅ Cleaner, more readable code</li>
-              <li>✅ Consistent icon sizing (md/16px)</li>
+              <li>✅ Consistent icon sizing (m/16px)</li>
               <li>✅ Automatic spacing (mr-2)</li>
               <li>✅ Reduced code duplication</li>
             </ul>
           </div>
           <div>
-            <h4 className="font-medium mb-[var(--space-sm)]">Compatibility</h4>
-            <ul className="space-y-[var(--space-xsm)] text-[var(--color-text-secondary)]">
+            <h4 className="font-medium mb-[var(--space-s)]">Compatibility</h4>
+            <ul className="space-y-[var(--space-xs)] text-[var(--color-text-secondary)]">
               <li>✅ Works with all menu item types</li>
               <li>✅ Supports submenus and triggers</li>
               <li>✅ Backward compatible with manual icons</li>
@@ -827,23 +827,23 @@ export const MobileAutoDismissTest: Story = {
     },
   },
   render: () => (
-    <div className="p-[var(--space-lg)] space-y-[var(--space-lg)]">
+    <div className="p-[var(--space-l)] space-y-[var(--space-l)]">
       <div>
-        <h2 className="text-heading-lg mb-[var(--space-md)]">Mobile Auto-Dismiss Behavior</h2>
-        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-lg)]">
+        <h2 className="text-heading-lg mb-[var(--space-m)]">Mobile Auto-Dismiss Behavior</h2>
+        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-l)]">
           Test the mobile dropdown auto-dismiss functionality. Switch to mobile view (≤768px) to see bottom sheet behavior.
         </p>
       </div>
 
-      <div className="space-y-[var(--space-lg)]">
+      <div className="space-y-[var(--space-l)]">
         {/* Regular menu items - should auto-close */}
         <div>
-          <h3 className="text-heading-sm mb-[var(--space-md)]">Regular Menu Items (Auto-Close)</h3>
+          <h3 className="text-heading-sm mb-[var(--space-m)]">Regular Menu Items (Auto-Close)</h3>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button>
                 Actions Menu
-                <Icon name="chevron-down" size="sm" className="ml-2" />
+                <Icon name="chevron-down" size="s" className="ml-2" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
@@ -863,19 +863,19 @@ export const MobileAutoDismissTest: Story = {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <p className="text-body-sm text-[var(--color-text-tertiary)] mt-[var(--space-sm)]">
+          <p className="text-body-sm text-[var(--color-text-tertiary)] mt-[var(--space-s)]">
             ✅ These items should auto-close the mobile sheet after selection
           </p>
         </div>
 
         {/* Checkbox menu - should stay open */}
         <div>
-          <h3 className="text-heading-sm mb-[var(--space-md)]">Checkbox Menu (Stay Open)</h3>
+          <h3 className="text-heading-sm mb-[var(--space-m)]">Checkbox Menu (Stay Open)</h3>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost">
                 View Options
-                <Icon name="chevron-down" size="sm" className="ml-2" />
+                <Icon name="chevron-down" size="s" className="ml-2" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
@@ -894,19 +894,19 @@ export const MobileAutoDismissTest: Story = {
               </DropdownMenuCheckboxItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <p className="text-body-sm text-[var(--color-text-tertiary)] mt-[var(--space-sm)]">
+          <p className="text-body-sm text-[var(--color-text-tertiary)] mt-[var(--space-s)]">
             🔄 Checkbox items should keep the mobile sheet open for multi-selection
           </p>
         </div>
 
         {/* Radio menu - should auto-close */}
         <div>
-          <h3 className="text-heading-sm mb-[var(--space-md)]">Radio Menu (Auto-Close)</h3>
+          <h3 className="text-heading-sm mb-[var(--space-m)]">Radio Menu (Auto-Close)</h3>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost">
                 Theme Selection
-                <Icon name="chevron-down" size="sm" className="ml-2" />
+                <Icon name="chevron-down" size="s" className="ml-2" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
@@ -924,19 +924,19 @@ export const MobileAutoDismissTest: Story = {
               </DropdownMenuRadioGroup>
             </DropdownMenuContent>
           </DropdownMenu>
-          <p className="text-body-sm text-[var(--color-text-tertiary)] mt-[var(--space-sm)]">
+          <p className="text-body-sm text-[var(--color-text-tertiary)] mt-[var(--space-s)]">
             ✅ Radio items should auto-close after theme selection
           </p>
         </div>
 
         {/* Custom autoClose control */}
         <div>
-          <h3 className="text-heading-sm mb-[var(--space-md)]">Custom Auto-Close Control</h3>
+          <h3 className="text-heading-sm mb-[var(--space-m)]">Custom Auto-Close Control</h3>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost">
                 Mixed Behavior
-                <Icon name="chevron-down" size="sm" className="ml-2" />
+                <Icon name="chevron-down" size="s" className="ml-2" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
@@ -961,19 +961,19 @@ export const MobileAutoDismissTest: Story = {
               </DropdownMenuRadioGroup>
             </DropdownMenuContent>
           </DropdownMenu>
-          <p className="text-body-sm text-[var(--color-text-tertiary)] mt-[var(--space-sm)]">
+          <p className="text-body-sm text-[var(--color-text-tertiary)] mt-[var(--space-s)]">
             🎛️ Custom autoClose prop overrides default behavior
           </p>
         </div>
       </div>
 
-      <div className="mt-[var(--space-2xlg)] p-[var(--space-lg)] bg-[var(--color-surface-secondary)] rounded-lg">
-        <h3 className="text-heading-sm mb-[var(--space-md)]">Testing Instructions</h3>
-        <div className="space-y-[var(--space-sm)] text-body-sm">
+      <div className="mt-[var(--space-3xl)] p-[var(--space-l)] bg-[var(--color-surface-secondary)] rounded-l">
+        <h3 className="text-heading-sm mb-[var(--space-m)]">Testing Instructions</h3>
+        <div className="space-y-[var(--space-s)] text-body-sm">
           <p><strong>Mobile (≤768px):</strong> Uses bottom sheet with auto-dismiss behavior</p>
           <p><strong>Desktop (≥768px):</strong> Regular dropdown behavior unchanged</p>
           <p><strong>Auto-Close Defaults:</strong></p>
-          <ul className="ml-[var(--space-lg)] space-y-[var(--space-xsm)]">
+          <ul className="ml-[var(--space-l)] space-y-[var(--space-xs)]">
             <li>• Regular items: <code>autoClose=true</code></li>
             <li>• Checkbox items: <code>autoClose=false</code></li>
             <li>• Radio items: <code>autoClose=true</code></li>
@@ -987,10 +987,10 @@ export const MobileAutoDismissTest: Story = {
 
 export const MultiLevelNavigation: Story = {
   render: () => (
-    <div className="flex flex-col space-y-[var(--space-lg)]">
+    <div className="flex flex-col space-y-[var(--space-l)]">
       <div>
-        <h3 className="text-heading-md mb-[var(--space-md)]">Multi-Level Navigation Test</h3>
-        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-lg)]">
+        <h3 className="text-heading-md mb-[var(--space-m)]">Multi-Level Navigation Test</h3>
+        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-l)]">
           Test multiple levels of navigation with separate bottom sheets on mobile
         </p>
       </div>
@@ -999,7 +999,7 @@ export const MultiLevelNavigation: Story = {
         <DropdownMenuTrigger asChild>
           <Button>
             Navigation Menu
-            <Icon name="chevron-down" size="sm" className="ml-2" />
+            <Icon name="chevron-down" size="s" className="ml-2" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-64">
@@ -1075,9 +1075,9 @@ export const MultiLevelNavigation: Story = {
         </DropdownMenuContent>
       </DropdownMenu>
       
-      <div className="mt-[var(--space-2xlg)] p-[var(--space-lg)] bg-[var(--color-surface-secondary)] rounded-lg">
-        <h3 className="text-heading-sm mb-[var(--space-md)]">Multi-Level Testing Instructions</h3>
-        <div className="space-y-[var(--space-sm)] text-body-sm">
+      <div className="mt-[var(--space-3xl)] p-[var(--space-l)] bg-[var(--color-surface-secondary)] rounded-l">
+        <h3 className="text-heading-sm mb-[var(--space-m)]">Multi-Level Testing Instructions</h3>
+        <div className="space-y-[var(--space-s)] text-body-sm">
           <p><strong>Desktop (≥768px):</strong> Traditional floating submenus with hover/click interactions</p>
           <p><strong>Mobile (&lt;768px):</strong> Each submenu opens as a separate bottom sheet with slide animations</p>
           <p><strong>Navigation:</strong> Use back button or swipe to return to parent level</p>

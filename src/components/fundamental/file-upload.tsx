@@ -105,7 +105,7 @@ FileUploadRoot.displayName = "FileUploadRoot";
 
 // Dropzone component
 const dropzoneVariants = cva(
-  "relative flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-6 text-center transition-colors duration-200",
+  "relative flex flex-col items-center justify-center rounded-l border-2 border-dashed p-6 text-center transition-colors duration-200",
   {
     variants: {
       isDragActive: {
@@ -325,7 +325,7 @@ const FileUploadItem = React.forwardRef<HTMLDivElement, FileUploadItemProps>(
       <div
         ref={ref}
         className={cn(
-          "flex items-center gap-3 rounded-lg border p-3",
+          "flex items-center gap-3 rounded-l border p-3",
           "border-[var(--color-border-primary)]",
           file.status === "error" &&
             "border-[var(--color-border-error-bold)] bg-[var(--color-background-error-subtle)]",
@@ -464,7 +464,7 @@ const FileUploadItemDelete = React.forwardRef<
     <Button
       ref={ref}
       variant="ghost"
-      size="sm"
+      size="s"
       onClick={handleDelete}
       aria-label={`Remove ${file.file.name}`}
       {...props}

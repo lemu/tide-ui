@@ -79,20 +79,20 @@ export const WithActions: Story = {
         <Button onClick={() =>
           toast.success('File deleted', {
             description: (
-              <div className="flex flex-col gap-[var(--space-md)]">
+              <div className="flex flex-col gap-[var(--space-m)]">
                 <p className="text-body-md text-[var(--color-text-primary)]">
                   project-notes.md has been moved to trash
                 </p>
-                <div className="flex gap-[var(--space-sm)]">
+                <div className="flex gap-[var(--space-s)]">
                   <Button
-                    size="md"
+                    size="m"
                     variant="primary"
                     onClick={() => toast.success('File restored successfully!')}
                   >
                     Undo
                   </Button>
                   <Button
-                    size="md"
+                    size="m"
                     variant="default"
                     onClick={() => toast('Action dismissed')}
                   >
@@ -108,20 +108,20 @@ export const WithActions: Story = {
         <Button onClick={() =>
           toast.success('Changes saved', {
             description: (
-              <div className="flex flex-col gap-[var(--space-md)]">
+              <div className="flex flex-col gap-[var(--space-m)]">
                 <p className="text-body-md text-[var(--color-text-primary)]">
                   Your document has been auto-saved
                 </p>
-                <div className="flex gap-[var(--space-sm)]">
+                <div className="flex gap-[var(--space-s)]">
                   <Button
-                    size="md"
+                    size="m"
                     variant="primary"
                     onClick={() => toast('Opening document...')}
                   >
                     View
                   </Button>
                   <Button
-                    size="md"
+                    size="m"
                     variant="default"
                     onClick={() => toast('Action dismissed')}
                   >
@@ -137,20 +137,20 @@ export const WithActions: Story = {
         <Button onClick={() =>
           toast.error('Connection lost', {
             description: (
-              <div className="flex flex-col gap-[var(--space-md)]">
+              <div className="flex flex-col gap-[var(--space-m)]">
                 <p className="text-body-md text-[var(--color-text-primary)]">
                   Unable to connect to the server. Check your internet connection.
                 </p>
-                <div className="flex gap-[var(--space-sm)]">
+                <div className="flex gap-[var(--space-s)]">
                   <Button
-                    size="md"
+                    size="m"
                     variant="primary"
                     onClick={() => toast.success('Connection restored!')}
                   >
                     Retry
                   </Button>
                   <Button
-                    size="md"
+                    size="m"
                     variant="default"
                     onClick={() => toast('Action dismissed')}
                   >
@@ -177,13 +177,13 @@ export const WithCancel: Story = {
         <Button onClick={() =>
           toast('Sync in progress', {
             description: (
-              <div className="flex flex-col gap-[var(--space-md)]">
+              <div className="flex flex-col gap-[var(--space-m)]">
                 <p className="text-body-md text-[var(--color-text-primary)]">
                   Synchronizing your data with the cloud...
                 </p>
-                <div className="flex gap-[var(--space-sm)]">
+                <div className="flex gap-[var(--space-s)]">
                   <Button
-                    size="md"
+                    size="m"
                     variant="default"
                     onClick={() => toast.warning('Sync operation cancelled')}
                   >
@@ -199,13 +199,13 @@ export const WithCancel: Story = {
         <Button onClick={() =>
           toast('Backup starting', {
             description: (
-              <div className="flex flex-col gap-[var(--space-md)]">
+              <div className="flex flex-col gap-[var(--space-m)]">
                 <p className="text-body-md text-[var(--color-text-primary)]">
                   Creating a backup of your project files. This may take a few minutes.
                 </p>
-                <div className="flex gap-[var(--space-sm)]">
+                <div className="flex gap-[var(--space-s)]">
                   <Button
-                    size="md"
+                    size="m"
                     variant="default"
                     onClick={() => toast.error('Backup process stopped')}
                   >
@@ -331,27 +331,27 @@ export const RichContent: Story = {
   render: () => {
     const showNotificationToast = () => {
       toast(
-        <div className="flex items-start gap-[var(--space-md)]">
+        <div className="flex items-start gap-[var(--space-m)]">
           <div className="w-[40px] h-[40px] rounded-full bg-[var(--color-background-blue-bold)] flex items-center justify-center shrink-0">
-            <Icon name="bell" size="sm" className="text-[var(--color-text-on-action)]" />
+            <Icon name="bell" size="s" className="text-[var(--color-text-on-action)]" />
           </div>
-          <div className="flex-1 flex flex-col gap-[var(--space-md)]">
+          <div className="flex-1 flex flex-col gap-[var(--space-m)]">
             <div>
               <p className="text-heading-sm text-[var(--color-text-primary)]">New notification</p>
               <p className="text-body-md text-[var(--color-text-secondary)]">
                 You have 3 unread messages from your team
               </p>
             </div>
-            <div className="flex gap-[var(--space-sm)]">
+            <div className="flex gap-[var(--space-s)]">
               <Button
-                size="md"
+                size="m"
                 variant="primary"
                 onClick={() => toast('Opening messages')}
               >
                 View all
               </Button>
               <Button
-                size="md"
+                size="m"
                 variant="default"
                 onClick={() => toast.success('Marked as read')}
               >
@@ -365,27 +365,27 @@ export const RichContent: Story = {
 
     const showUpdateToast = () => {
       toast(
-        <div className="flex items-start gap-[var(--space-md)]">
-          <div className="w-[40px] h-[40px] rounded-lg bg-[var(--color-background-success-subtle)] flex items-center justify-center shrink-0">
-            <Icon name="download" size="sm" className="text-[var(--color-icon-success-bold)]" />
+        <div className="flex items-start gap-[var(--space-m)]">
+          <div className="w-[40px] h-[40px] rounded-l bg-[var(--color-background-success-subtle)] flex items-center justify-center shrink-0">
+            <Icon name="download" size="s" className="text-[var(--color-icon-success-bold)]" />
           </div>
-          <div className="flex-1 flex flex-col gap-[var(--space-md)]">
+          <div className="flex-1 flex flex-col gap-[var(--space-m)]">
             <div>
               <p className="text-heading-sm text-[var(--color-text-primary)]">App update available</p>
               <p className="text-body-md text-[var(--color-text-secondary)]">
                 Version 2.4.1 is ready to install with new features and bug fixes
               </p>
             </div>
-            <div className="flex gap-[var(--space-sm)]">
+            <div className="flex gap-[var(--space-s)]">
               <Button
-                size="md"
+                size="m"
                 variant="primary"
                 onClick={() => toast.success('Updating app')}
               >
                 Update now
               </Button>
               <Button
-                size="md"
+                size="m"
                 variant="default"
                 onClick={() => toast('Remind me later')}
               >
@@ -403,12 +403,12 @@ export const RichContent: Story = {
     const showProgressToast = () => {
       let progress = 0
       const id = toast(
-        <div className="flex flex-col gap-[var(--space-md)]">
-          <div className="flex items-center justify-between gap-[var(--space-sm)]">
+        <div className="flex flex-col gap-[var(--space-m)]">
+          <div className="flex items-center justify-between gap-[var(--space-s)]">
             <p className="text-heading-sm text-[var(--color-text-primary)]">Downloading file...</p>
             <span className="text-body-md text-[var(--color-text-secondary)]">{progress}%</span>
           </div>
-          <Progress value={progress} size="lg" className="w-[322px]" />
+          <Progress value={progress} size="l" className="w-[322px]" />
         </div>,
         {
           duration: Infinity,
@@ -419,14 +419,14 @@ export const RichContent: Story = {
         progress += 10
         if (progress <= 100) {
           toast(
-            <div className="flex flex-col gap-[var(--space-md)]">
-              <div className="flex items-center justify-between gap-[var(--space-sm)]">
+            <div className="flex flex-col gap-[var(--space-m)]">
+              <div className="flex items-center justify-between gap-[var(--space-s)]">
                 <p className="text-heading-sm text-[var(--color-text-primary)]">
                   {progress === 100 ? 'Download complete!' : 'Downloading file...'}
                 </p>
                 <span className="text-body-md text-[var(--color-text-secondary)]">{progress}%</span>
               </div>
-              <Progress value={progress} size="lg" className="w-[322px]" />
+              <Progress value={progress} size="l" className="w-[322px]" />
             </div>,
             { id }
           )

@@ -16,7 +16,7 @@ const Command = React.forwardRef<
     ref={ref}
     loop
     className={cn(
-      "flex h-full w-full flex-col overflow-hidden rounded-md bg-[var(--color-surface-primary)] text-[var(--color-text-primary)]",
+      "flex h-full w-full flex-col overflow-hidden rounded-m bg-[var(--color-surface-primary)] text-[var(--color-text-primary)]",
       className
     )}
     {...props}
@@ -37,11 +37,11 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
         />
         <DialogPrimitive.Content
           className={cn(
-            "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed top-[50%] left-[50%] z-50 grid w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] overflow-hidden rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-0 shadow-lg duration-200 max-w-[450px]"
+            "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed top-[50%] left-[50%] z-50 grid w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] overflow-hidden rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-0 shadow-lg duration-200 max-w-[450px]"
           )}
           aria-describedby={undefined}
         >
-          <Command className="[&_[cmdk-group-heading]]:px-[var(--space-md)] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-[var(--color-text-tertiary)] [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-4 [&_[cmdk-input-wrapper]_svg]:w-4 [&_[cmdk-item]]:px-[var(--space-md)] [&_[cmdk-item]]:min-h-[var(--size-md)] [&_[cmdk-item]]:py-[var(--space-sm)] [&_[cmdk-item]_svg]:h-4 [&_[cmdk-item]_svg]:w-4">
+          <Command className="[&_[cmdk-group-heading]]:px-[var(--space-m)] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-[var(--color-text-tertiary)] [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-4 [&_[cmdk-input-wrapper]_svg]:w-4 [&_[cmdk-item]]:px-[var(--space-m)] [&_[cmdk-item]]:min-h-[var(--size-m)] [&_[cmdk-item]]:py-[var(--space-s)] [&_[cmdk-item]_svg]:h-4 [&_[cmdk-item]_svg]:w-4">
             {children}
           </Command>
         </DialogPrimitive.Content>
@@ -66,27 +66,27 @@ interface CommandInputProps
 const CommandInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   CommandInputProps
->(({ className, size = "md", clearable = true, onClear, value, ...props }, ref) => {
+>(({ className, size = "m", clearable = true, onClear, value, ...props }, ref) => {
   const showClearButton = clearable && value && String(value).length > 0;
 
   // Calculate icon sizes based on input size
-  const iconSize = size === "sm" ? "sm" : "md";
+  const iconSize = size === "s" ? "s" : "m";
 
   // Calculate left padding: icon_position + icon_width
   // For sm: 18px + 12px = 30px
   // For md/lg: 18px + 16px = 34px
-  const leftPadding = size === "sm"
+  const leftPadding = size === "s"
     ? "pl-[30px]"
     : "pl-[34px]";
 
   // Calculate right padding for clear button if visible
   // Button width (--size-sm = 24px) + button position (--space-md = 12px) + spacing buffer (--space-sm = 8px)
   const rightPadding = showClearButton
-    ? "pr-[calc(var(--size-sm)+var(--space-md)+var(--space-sm))]"
+    ? "pr-[calc(var(--size-s)+var(--space-m)+var(--space-s))]"
     : "";
 
   return (
-    <div className="relative p-[var(--space-sm)] border-b border-[var(--color-border-primary-subtle)]" cmdk-input-wrapper="">
+    <div className="relative p-[var(--space-s)] border-b border-[var(--color-border-primary-subtle)]" cmdk-input-wrapper="">
       <Icon
         name="search"
         size={iconSize}
@@ -101,9 +101,9 @@ const CommandInput = React.forwardRef<
           leftPadding,
           rightPadding,
           // Force typography to override cmdk defaults
-          size === "sm" && "[&]:text-body-sm",
-          size === "md" && "[&]:text-body-md",
-          size === "lg" && "[&]:text-body-md",
+          size === "s" && "[&]:text-body-sm",
+          size === "m" && "[&]:text-body-md",
+          size === "l" && "[&]:text-body-md",
           // Force focus styles to override cmdk defaults - includes outer blue ring
           "[&]:focus-visible:outline-none",
           "[&]:focus-visible:border-[#005f85]",
@@ -118,7 +118,7 @@ const CommandInput = React.forwardRef<
         <Button
           type="button"
           variant="ghost"
-          size="sm"
+          size="s"
           icon="x"
           iconPosition="only"
           onClick={(e) => {
@@ -126,7 +126,7 @@ const CommandInput = React.forwardRef<
             e.stopPropagation();
             onClear?.();
           }}
-          className="absolute right-[var(--space-md)] top-1/2 -translate-y-1/2 active:!translate-y-[-50%]"
+          className="absolute right-[var(--space-m)] top-1/2 -translate-y-1/2 active:!translate-y-[-50%]"
           aria-label="Clear search"
         />
       )}
@@ -169,7 +169,7 @@ const CommandGroup = React.forwardRef<
   <CommandPrimitive.Group
     ref={ref}
     className={cn(
-      "overflow-hidden p-[var(--space-sm)] text-[var(--color-text-primary)] [&_[cmdk-group-heading]]:px-[var(--space-md)] [&_[cmdk-group-heading]]:py-[var(--space-sm)] [&_[cmdk-group-heading]]:[&]:text-body-medium-sm [&_[cmdk-group-heading]]:text-[var(--color-text-tertiary)]",
+      "overflow-hidden p-[var(--space-s)] text-[var(--color-text-primary)] [&_[cmdk-group-heading]]:px-[var(--space-m)] [&_[cmdk-group-heading]]:py-[var(--space-s)] [&_[cmdk-group-heading]]:[&]:text-body-medium-sm [&_[cmdk-group-heading]]:text-[var(--color-text-tertiary)]",
       className
     )}
     {...props}
@@ -197,7 +197,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      "[&]:text-body-md relative flex cursor-pointer select-none items-center rounded-md px-[var(--space-md)] min-h-[var(--size-md)] py-[var(--space-sm)] outline-none transition-colors aria-selected:bg-[var(--color-background-neutral-subtlest-hovered)] aria-selected:text-[var(--color-text-primary)] data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
+      "[&]:text-body-md relative flex cursor-pointer select-none items-center rounded-m px-[var(--space-m)] min-h-[var(--size-m)] py-[var(--space-s)] outline-none transition-colors aria-selected:bg-[var(--color-background-neutral-subtlest-hovered)] aria-selected:text-[var(--color-text-primary)] data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
       className
     )}
     {...props}

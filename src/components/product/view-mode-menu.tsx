@@ -324,7 +324,7 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          size="md"
+          size="m"
           icon="settings"
           className={triggerClassName}
         />
@@ -338,17 +338,17 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                 View mode
               </h3>
               <Tabs value={settings.viewMode} onValueChange={handleViewModeChange}>
-                <TabsList variant="pilled" size="sm" fullWidth>
-                  <TabsTrigger variant="pilled" size="sm" fullWidth value="table">
+                <TabsList variant="pilled" size="s" fullWidth>
+                  <TabsTrigger variant="pilled" size="s" fullWidth value="table">
                     Table
                   </TabsTrigger>
                   {hasFoldersView && (
-                    <TabsTrigger variant="pilled" size="sm" fullWidth value="folders">
+                    <TabsTrigger variant="pilled" size="s" fullWidth value="folders">
                       Folders
                     </TabsTrigger>
                   )}
                   {hasColumnsGrouping && (
-                    <TabsTrigger variant="pilled" size="sm" fullWidth value="columns">
+                    <TabsTrigger variant="pilled" size="s" fullWidth value="columns">
                       Columns
                     </TabsTrigger>
                   )}
@@ -372,7 +372,7 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                   </h4>
                   <div className="flex flex-col gap-2">
                     <Select value={settings.table.sortColumn} onValueChange={handleTableSortChange}>
-                      <SelectTrigger size="sm">
+                      <SelectTrigger size="s">
                         <SelectValue placeholder="Select column to sort" />
                       </SelectTrigger>
                       <SelectContent>
@@ -388,7 +388,7 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                         value={settings.table.sortDirection}
                         onValueChange={(value) => handleTableSortDirectionChange(value as 'asc' | 'desc')}
                       >
-                        <SelectTrigger size="sm">
+                        <SelectTrigger size="s">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -399,13 +399,13 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                               <>
                                 <SelectItem value="asc">
                                   <div className="flex items-center gap-2">
-                                    <Icon name="arrow-down-narrow-wide" size="sm" />
+                                    <Icon name="arrow-down-narrow-wide" size="s" />
                                     <span>{directionLabels.asc}</span>
                                   </div>
                                 </SelectItem>
                                 <SelectItem value="desc">
                                   <div className="flex items-center gap-2">
-                                    <Icon name="arrow-down-wide-narrow" size="sm" />
+                                    <Icon name="arrow-down-wide-narrow" size="s" />
                                     <span>{directionLabels.desc}</span>
                                   </div>
                                 </SelectItem>
@@ -426,7 +426,7 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                     Grouping
                   </h4>
                   <Select value={settings.table.groupColumn || 'none'} onValueChange={handleTableGroupChange}>
-                    <SelectTrigger size="sm">
+                    <SelectTrigger size="s">
                       <SelectValue placeholder="Select column to group by" />
                     </SelectTrigger>
                     <SelectContent>
@@ -450,7 +450,7 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                   {showSearch && (
                     <Input
                       type="search"
-                      size="sm"
+                      size="s"
                       placeholder="Search columns..."
                       value={columnSearch}
                       onChange={(e) => setColumnSearch(e.target.value)}
@@ -463,7 +463,7 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                         <Toggle
                           key={col.id}
                           variant="outline"
-                          size="sm"
+                          size="s"
                           pressed={isVisible}
                           onPressedChange={(pressed) => {
                             handleTableColumnVisibilityChange(col.id, pressed);
@@ -489,7 +489,7 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                     value={settings.folders.sortColumn}
                     onValueChange={handleFoldersSortChange}
                   >
-                    <SelectTrigger size="sm">
+                    <SelectTrigger size="s">
                       <SelectValue placeholder="Select column" />
                     </SelectTrigger>
                     <SelectContent>
@@ -505,7 +505,7 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                       value={settings.folders.sortDirection}
                       onValueChange={(value) => handleFoldersSortDirectionChange(value as 'asc' | 'desc')}
                     >
-                      <SelectTrigger size="sm">
+                      <SelectTrigger size="s">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -516,13 +516,13 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                             <>
                               <SelectItem value="asc">
                                 <div className="flex items-center gap-2">
-                                  <Icon name="arrow-down-narrow-wide" size="sm" />
+                                  <Icon name="arrow-down-narrow-wide" size="s" />
                                   <span>{directionLabels.asc}</span>
                                 </div>
                               </SelectItem>
                               <SelectItem value="desc">
                                 <div className="flex items-center gap-2">
-                                  <Icon name="arrow-down-wide-narrow" size="sm" />
+                                  <Icon name="arrow-down-wide-narrow" size="s" />
                                   <span>{directionLabels.desc}</span>
                                 </div>
                               </SelectItem>
@@ -546,7 +546,7 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                     Grouping
                   </h4>
                   <Select value={settings.columns.groupColumn || 'none'} onValueChange={handleColumnsGroupChange}>
-                    <SelectTrigger size="sm">
+                    <SelectTrigger size="s">
                       <SelectValue placeholder="Select column to group by" />
                     </SelectTrigger>
                     <SelectContent>
@@ -569,7 +569,7 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                   </h4>
                   <div className="flex flex-col gap-2">
                     <Select value={settings.columns.sortColumn} onValueChange={handleColumnsSortChange}>
-                      <SelectTrigger size="sm">
+                      <SelectTrigger size="s">
                         <SelectValue placeholder="Select column to sort" />
                       </SelectTrigger>
                       <SelectContent>
@@ -585,7 +585,7 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                         value={settings.columns.sortDirection}
                         onValueChange={(value) => handleColumnsSortDirectionChange(value as 'asc' | 'desc')}
                       >
-                        <SelectTrigger size="sm">
+                        <SelectTrigger size="s">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -596,13 +596,13 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                               <>
                                 <SelectItem value="asc">
                                   <div className="flex items-center gap-2">
-                                    <Icon name="arrow-down-narrow-wide" size="sm" />
+                                    <Icon name="arrow-down-narrow-wide" size="s" />
                                     <span>{directionLabels.asc}</span>
                                   </div>
                                 </SelectItem>
                                 <SelectItem value="desc">
                                   <div className="flex items-center gap-2">
-                                    <Icon name="arrow-down-wide-narrow" size="sm" />
+                                    <Icon name="arrow-down-wide-narrow" size="s" />
                                     <span>{directionLabels.desc}</span>
                                   </div>
                                 </SelectItem>

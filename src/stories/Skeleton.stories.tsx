@@ -57,7 +57,7 @@ export const Table: Story = {
 
 export const Profile: Story = {
   render: () => (
-    <div className="w-80 border rounded-lg p-6">
+    <div className="w-80 border rounded-l p-6">
       <div className="flex items-center space-x-4 mb-4">
         <Skeleton className="h-16 w-16 rounded-full" />
         <div className="space-y-2">
@@ -99,7 +99,7 @@ export const Dashboard: Story = {
       {/* Stats Cards */}
       <div className="grid grid-cols-2 gap-4">
         {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="border rounded-lg p-4">
+          <div key={i} className="border rounded-l p-4">
             <Skeleton className="h-4 w-16 mb-2" />
             <Skeleton className="h-8 w-20" />
           </div>
@@ -107,7 +107,7 @@ export const Dashboard: Story = {
       </div>
       
       {/* Chart */}
-      <div className="border rounded-lg p-4">
+      <div className="border rounded-l p-4">
         <Skeleton className="h-5 w-24 mb-4" />
         <Skeleton className="h-32 w-full" />
       </div>

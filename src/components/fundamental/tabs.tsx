@@ -8,13 +8,13 @@ const tabsListVariants = cva(
   {
     variants: {
       variant: {
-        pilled: "bg-[var(--color-surface-deepest)] p-[4px] rounded-md gap-[var(--space-2xsm)]",
-        line: "border-b border-[var(--grey-100)] gap-[var(--space-sm)] p-0",
+        pilled: "bg-[var(--color-surface-deepest)] p-[4px] rounded-m gap-[var(--space-2xs)]",
+        line: "border-b border-[var(--grey-100)] gap-[var(--space-s)] p-0",
       },
       size: {
-        sm: "",
-        md: "",
-        lg: "",
+        s: "",
+        m: "",
+        l: "",
       },
       fullWidth: {
         true: "w-full",
@@ -24,23 +24,23 @@ const tabsListVariants = cva(
     compoundVariants: [
       {
         variant: "pilled",
-        size: "sm",
+        size: "s",
         className: "h-[32px]",
       },
       {
         variant: "pilled",
-        size: "md",
+        size: "m",
         className: "h-[40px]",
       },
       {
         variant: "pilled",
-        size: "lg",
+        size: "l",
         className: "h-[48px]",
       },
     ],
     defaultVariants: {
       variant: "pilled",
-      size: "md",
+      size: "m",
       fullWidth: false,
     },
   },
@@ -48,7 +48,7 @@ const tabsListVariants = cva(
 
 const tabsTriggerVariants = cva(
   [
-    "inline-flex items-center justify-center whitespace-nowrap cursor-pointer gap-[var(--space-sm)]",
+    "inline-flex items-center justify-center whitespace-nowrap cursor-pointer gap-[var(--space-s)]",
     "transition-all ring-offset-[var(--color-surface-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2",
     "disabled:cursor-not-allowed disabled:pointer-events-none",
   ],
@@ -56,7 +56,7 @@ const tabsTriggerVariants = cva(
     variants: {
       variant: {
         pilled: [
-          "rounded-sm bg-transparent",
+          "rounded-s bg-transparent",
           "data-[state=active]:bg-[var(--color-surface-primary)] data-[state=active]:text-[var(--color-text-brand-bold-selected)] data-[state=active]:[&_svg]:text-[var(--color-text-brand-bold-selected)] data-[state=active]:shadow-xs",
           "hover:bg-[var(--grey-alpha-50)] hover:text-[var(--color-text-primary)]",
           "disabled:opacity-50",
@@ -71,9 +71,9 @@ const tabsTriggerVariants = cva(
         ],
       },
       size: {
-        sm: "text-label-sm px-[var(--space-md)] py-[var(--space-xsm)] [&_svg]:w-[var(--size-3xsm)] [&_svg]:h-[var(--size-3xsm)]",
-        md: "text-label-md px-[var(--space-md)] py-[6px] [&_svg]:w-[var(--size-2xsm)] [&_svg]:h-[var(--size-2xsm)]",
-        lg: "text-label-md px-[var(--space-lg)] py-[10px] [&_svg]:w-[var(--size-xsm)] [&_svg]:h-[var(--size-xsm)]",
+        s: "text-label-sm px-[var(--space-m)] py-[var(--space-xs)] [&_svg]:w-[var(--size-3xs)] [&_svg]:h-[var(--size-3xs)]",
+        m: "text-label-md px-[var(--space-m)] py-[6px] [&_svg]:w-[var(--size-2xs)] [&_svg]:h-[var(--size-2xs)]",
+        l: "text-label-md px-[var(--space-l)] py-[10px] [&_svg]:w-[var(--size-xs)] [&_svg]:h-[var(--size-xs)]",
       },
       fullWidth: {
         true: "flex-1",
@@ -83,23 +83,23 @@ const tabsTriggerVariants = cva(
     compoundVariants: [
       {
         variant: "line",
-        size: "sm",
-        className: "text-label-sm px-[var(--space-sm)] py-[var(--space-xsm)]",
+        size: "s",
+        className: "text-label-sm px-[var(--space-s)] py-[var(--space-xs)]",
       },
       {
         variant: "line",
-        size: "md",
-        className: "text-label-md px-[var(--space-sm)] py-[var(--space-sm)]",
+        size: "m",
+        className: "text-label-md px-[var(--space-s)] py-[var(--space-s)]",
       },
       {
         variant: "line",
-        size: "lg",
-        className: "text-body-medium-lg px-[var(--space-sm)] py-[var(--space-sm)]",
+        size: "l",
+        className: "text-body-medium-lg px-[var(--space-s)] py-[var(--space-s)]",
       },
     ],
     defaultVariants: {
       variant: "pilled",
-      size: "md",
+      size: "m",
       fullWidth: false,
     },
   },
@@ -114,7 +114,7 @@ const Tabs = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.Root
     ref={ref}
-    className={cn("flex flex-col gap-[var(--space-sm)]", className)}
+    className={cn("flex flex-col gap-[var(--space-s)]", className)}
     {...props}
   />
 ));
@@ -164,7 +164,7 @@ const TabsContent = React.forwardRef<
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-      "mt-[var(--space-sm)] ring-offset-[var(--color-surface-primary)] focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 focus-visible:outline-none",
+      "mt-[var(--space-s)] ring-offset-[var(--color-surface-primary)] focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 focus-visible:outline-none",
       className,
     )}
     {...props}
@@ -182,7 +182,7 @@ const TabsGroupLabel = React.forwardRef<HTMLDivElement, TabsGroupLabelProps>(
     <div
       ref={ref}
       className={cn(
-        "text-caption-sm mb-[var(--space-sm)] font-medium text-[var(--color-text-tertiary)]",
+        "text-caption-sm mb-[var(--space-s)] font-medium text-[var(--color-text-tertiary)]",
         className,
       )}
       {...props}

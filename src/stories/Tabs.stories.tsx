@@ -24,9 +24,9 @@ A tabs component built on Radix UI for organizing content into separate views.
 
 ## Sizing
 
-- **Small (sm)**: Compact tabs for dense UIs
-- **Medium (md)**: Default size, works for most use cases
-- **Large (lg)**: Prominent tabs for main navigation
+- **Small (s)**: Compact tabs for dense UIs
+- **Medium (m)**: Default size, works for most use cases
+- **Large (l)**: Prominent tabs for main navigation
 
 ## Accessibility
 
@@ -59,10 +59,10 @@ A tabs component built on Radix UI for organizing content into separate views.
     },
     size: {
       control: { type: 'radio' },
-      options: ['sm', 'md', 'lg'],
+      options: ['s', 'm', 'l'],
       description: 'Size of the tabs (applies to TabsList and TabsTrigger)',
       table: {
-        defaultValue: { summary: 'md' },
+        defaultValue: { summary: 'm' },
       },
     },
     fullWidth: {
@@ -313,10 +313,10 @@ export const PilledTabsSizes: Story = {
       <div>
         <h3 className="text-heading-sm mb-4">Small Size</h3>
         <Tabs defaultValue="tab1">
-          <TabsList variant="pilled" size="sm">
-            <TabsTrigger variant="pilled" size="sm" value="tab1">Tab 1</TabsTrigger>
-            <TabsTrigger variant="pilled" size="sm" value="tab2">Tab 2</TabsTrigger>
-            <TabsTrigger variant="pilled" size="sm" value="tab3">Tab 3</TabsTrigger>
+          <TabsList variant="pilled" size="s">
+            <TabsTrigger variant="pilled" size="s" value="tab1">Tab 1</TabsTrigger>
+            <TabsTrigger variant="pilled" size="s" value="tab2">Tab 2</TabsTrigger>
+            <TabsTrigger variant="pilled" size="s" value="tab3">Tab 3</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1" className="mt-4">
             <p className="text-body-sm">Small size content</p>
@@ -332,10 +332,10 @@ export const PilledTabsSizes: Story = {
       <div>
         <h3 className="text-heading-sm mb-4">Medium Size (Default)</h3>
         <Tabs defaultValue="tab1">
-          <TabsList variant="pilled" size="md">
-            <TabsTrigger variant="pilled" size="md" value="tab1">Tab 1</TabsTrigger>
-            <TabsTrigger variant="pilled" size="md" value="tab2">Tab 2</TabsTrigger>
-            <TabsTrigger variant="pilled" size="md" value="tab3">Tab 3</TabsTrigger>
+          <TabsList variant="pilled" size="m">
+            <TabsTrigger variant="pilled" size="m" value="tab1">Tab 1</TabsTrigger>
+            <TabsTrigger variant="pilled" size="m" value="tab2">Tab 2</TabsTrigger>
+            <TabsTrigger variant="pilled" size="m" value="tab3">Tab 3</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1" className="mt-4">
             <p className="text-body-md">Medium size content</p>
@@ -351,10 +351,10 @@ export const PilledTabsSizes: Story = {
       <div>
         <h3 className="text-heading-sm mb-4">Large Size</h3>
         <Tabs defaultValue="tab1">
-          <TabsList variant="pilled" size="lg">
-            <TabsTrigger variant="pilled" size="lg" value="tab1">Tab 1</TabsTrigger>
-            <TabsTrigger variant="pilled" size="lg" value="tab2">Tab 2</TabsTrigger>
-            <TabsTrigger variant="pilled" size="lg" value="tab3">Tab 3</TabsTrigger>
+          <TabsList variant="pilled" size="l">
+            <TabsTrigger variant="pilled" size="l" value="tab1">Tab 1</TabsTrigger>
+            <TabsTrigger variant="pilled" size="l" value="tab2">Tab 2</TabsTrigger>
+            <TabsTrigger variant="pilled" size="l" value="tab3">Tab 3</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1" className="mt-4">
             <p className="text-body-lg">Large size content</p>
@@ -378,21 +378,21 @@ export const PilledTabsWithIcons: Story = {
         <TabsTrigger
           variant="pilled"
           value="home"
-          icon={<Icon name="home" size="sm" />}
+          icon={<Icon name="home" size="s" />}
         >
           Home
         </TabsTrigger>
         <TabsTrigger
           variant="pilled"
           value="notifications"
-          icon={<Icon name="bell" size="sm" />}
+          icon={<Icon name="bell" size="s" />}
         >
           Notifications
         </TabsTrigger>
         <TabsTrigger
           variant="pilled"
           value="settings"
-          icon={<Icon name="settings" size="sm" />}
+          icon={<Icon name="settings" size="s" />}
         >
           Settings
         </TabsTrigger>
@@ -416,10 +416,10 @@ export const LineTabsSizes: Story = {
       <div>
         <h3 className="text-heading-sm mb-4">Small Size</h3>
         <Tabs defaultValue="tab1">
-          <TabsList variant="line" size="sm">
-            <TabsTrigger variant="line" size="sm" value="tab1">Tab 1</TabsTrigger>
-            <TabsTrigger variant="line" size="sm" value="tab2">Tab 2</TabsTrigger>
-            <TabsTrigger variant="line" size="sm" value="tab3">Tab 3</TabsTrigger>
+          <TabsList variant="line" size="s">
+            <TabsTrigger variant="line" size="s" value="tab1">Tab 1</TabsTrigger>
+            <TabsTrigger variant="line" size="s" value="tab2">Tab 2</TabsTrigger>
+            <TabsTrigger variant="line" size="s" value="tab3">Tab 3</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1" className="mt-4">
             <p className="text-body-sm">Small size content</p>
@@ -435,10 +435,10 @@ export const LineTabsSizes: Story = {
       <div>
         <h3 className="text-heading-sm mb-4">Medium Size (Default)</h3>
         <Tabs defaultValue="tab1">
-          <TabsList variant="line" size="md">
-            <TabsTrigger variant="line" size="md" value="tab1">Tab 1</TabsTrigger>
-            <TabsTrigger variant="line" size="md" value="tab2">Tab 2</TabsTrigger>
-            <TabsTrigger variant="line" size="md" value="tab3">Tab 3</TabsTrigger>
+          <TabsList variant="line" size="m">
+            <TabsTrigger variant="line" size="m" value="tab1">Tab 1</TabsTrigger>
+            <TabsTrigger variant="line" size="m" value="tab2">Tab 2</TabsTrigger>
+            <TabsTrigger variant="line" size="m" value="tab3">Tab 3</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1" className="mt-4">
             <p className="text-body-md">Medium size content</p>
@@ -454,10 +454,10 @@ export const LineTabsSizes: Story = {
       <div>
         <h3 className="text-heading-sm mb-4">Large Size</h3>
         <Tabs defaultValue="tab1">
-          <TabsList variant="line" size="lg">
-            <TabsTrigger variant="line" size="lg" value="tab1">Tab 1</TabsTrigger>
-            <TabsTrigger variant="line" size="lg" value="tab2">Tab 2</TabsTrigger>
-            <TabsTrigger variant="line" size="lg" value="tab3">Tab 3</TabsTrigger>
+          <TabsList variant="line" size="l">
+            <TabsTrigger variant="line" size="l" value="tab1">Tab 1</TabsTrigger>
+            <TabsTrigger variant="line" size="l" value="tab2">Tab 2</TabsTrigger>
+            <TabsTrigger variant="line" size="l" value="tab3">Tab 3</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1" className="mt-4">
             <p className="text-body-lg">Large size content</p>
@@ -603,7 +603,7 @@ export const Playground: Story = {
     defaultValue: 'tab1',
     orientation: 'horizontal',
     variant: 'pilled',
-    size: 'md',
+    size: 'm',
     fullWidth: false,
   },
   render: (args) => {

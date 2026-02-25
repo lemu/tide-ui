@@ -9,18 +9,18 @@ const skeletonVariants = cva(
       variant: {
         default: "",
         circle: "rounded-full",
-        rectangular: "rounded-sm",
+        rectangular: "rounded-s",
       },
       size: {
-        sm: "h-4",
-        md: "h-6",
-        lg: "h-8",
+        s: "h-4",
+        m: "h-6",
+        l: "h-8",
         xl: "h-12",
       },
     },
     defaultVariants: {
       variant: "default",
-      size: "md",
+      size: "m",
     },
   }
 );
@@ -89,7 +89,7 @@ const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
       return (
         <div
           ref={ref}
-          className={cn("space-y-[var(--space-sm)]", className)}
+          className={cn("space-y-[var(--space-s)]", className)}
           {...props}
         >
           {Array.from({ length: lines }).map((_, index) => (
@@ -132,13 +132,13 @@ Skeleton.displayName = "Skeleton";
 const SkeletonAvatar = React.forwardRef<
   HTMLDivElement,
   Omit<SkeletonProps, "variant" | "size"> & {
-    size?: "sm" | "md" | "lg" | "xl";
+    size?: "s" | "m" | "l" | "xl";
   }
->(({ size = "md", className, ...props }, ref) => {
+>(({ size = "m", className, ...props }, ref) => {
   const sizeClasses = {
-    sm: "h-8 w-8",
-    md: "h-10 w-10",
-    lg: "h-12 w-12",
+    s: "h-8 w-8",
+    m: "h-10 w-10",
+    l: "h-12 w-12",
     xl: "h-16 w-16",
   };
 
@@ -156,13 +156,13 @@ SkeletonAvatar.displayName = "SkeletonAvatar";
 const SkeletonButton = React.forwardRef<
   HTMLDivElement,
   Omit<SkeletonProps, "size"> & {
-    size?: "sm" | "md" | "lg";
+    size?: "s" | "m" | "l";
   }
->(({ size = "md", className, ...props }, ref) => {
+>(({ size = "m", className, ...props }, ref) => {
   const sizeClasses = {
-    sm: "h-9 w-20",
-    md: "h-10 w-24",
-    lg: "h-11 w-28",
+    s: "h-9 w-20",
+    m: "h-10 w-24",
+    l: "h-11 w-28",
   };
 
   return (
@@ -183,21 +183,21 @@ const SkeletonCard = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-lg border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] space-y-[var(--space-md)]",
+      "rounded-l border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] space-y-[var(--space-m)]",
       className
     )}
     {...props}
   >
-    <div className="space-y-[var(--space-sm)]">
+    <div className="space-y-[var(--space-s)]">
       <Skeleton height={20} width="60%" />
-      <Skeleton lines={2} size="sm" randomWidth />
+      <Skeleton lines={2} size="s" randomWidth />
     </div>
     <div className="flex items-center justify-between">
-      <div className="flex items-center gap-[var(--space-sm)]">
-        <SkeletonAvatar size="sm" />
+      <div className="flex items-center gap-[var(--space-s)]">
+        <SkeletonAvatar size="s" />
         <Skeleton height={16} width="80px" />
       </div>
-      <SkeletonButton size="sm" />
+      <SkeletonButton size="s" />
     </div>
   </div>
 ));
@@ -212,11 +212,11 @@ const SkeletonTable = React.forwardRef<
 >(({ className, rows = 5, columns = 4, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("space-y-[var(--space-md)]", className)}
+    className={cn("space-y-[var(--space-m)]", className)}
     {...props}
   >
     {/* Table header */}
-    <div className="grid gap-[var(--space-md)]" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
+    <div className="grid gap-[var(--space-m)]" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
       {Array.from({ length: columns }).map((_, index) => (
         <Skeleton key={`header-${index}`} height={20} width="70%" />
       ))}
@@ -226,7 +226,7 @@ const SkeletonTable = React.forwardRef<
     {Array.from({ length: rows }).map((_, rowIndex) => (
       <div 
         key={`row-${rowIndex}`} 
-        className="grid gap-[var(--space-md)]" 
+        className="grid gap-[var(--space-m)]" 
         style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}
       >
         {Array.from({ length: columns }).map((_, colIndex) => (

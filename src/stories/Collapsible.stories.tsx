@@ -54,7 +54,7 @@ export const CodeSnippet: Story = {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Icon name="code" size="sm" />
+              <Icon name="code" size="s" />
               Example Implementation
             </CardTitle>
           </CardHeader>
@@ -64,7 +64,7 @@ export const CodeSnippet: Story = {
                 View source code
               </CollapsibleTrigger>
               <CollapsibleContent className="mt-4">
-                <div className="rounded-md bg-[var(--color-surface-secondary)] p-4 font-mono text-sm">
+                <div className="rounded-m bg-[var(--color-surface-secondary)] p-4 font-mono text-sm">
                   <pre className="text-[var(--color-text-primary)]">
 {`import { Button } from '@/components/fundamental/button'
 import { Card } from '@/components/fundamental/card'
@@ -79,12 +79,12 @@ export function Example() {
                   </pre>
                 </div>
                 <div className="mt-3 flex gap-2">
-                  <Button size="sm" variant="ghost">
-                    <Icon name="copy" size="sm" className="mr-2" />
+                  <Button size="s" variant="ghost">
+                    <Icon name="copy" size="s" className="mr-2" />
                     Copy
                   </Button>
-                  <Button size="sm" variant="ghost">
-                    <Icon name="external-link" size="sm" className="mr-2" />
+                  <Button size="s" variant="ghost">
+                    <Icon name="external-link" size="s" className="mr-2" />
                     Open in CodeSandbox
                   </Button>
                 </div>
@@ -112,7 +112,7 @@ export const SettingsSection: Story = {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <label className="text-body-sm font-medium">Theme</label>
-              <select className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm">
+              <select className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-m bg-[var(--color-surface-primary)] text-body-sm">
                 <option>Light</option>
                 <option>Dark</option>
                 <option>System</option>
@@ -121,7 +121,7 @@ export const SettingsSection: Story = {
 
             <div className="space-y-2">
               <label className="text-body-sm font-medium">Language</label>
-              <select className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm">
+              <select className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-m bg-[var(--color-surface-primary)] text-body-sm">
                 <option>English</option>
                 <option>Spanish</option>
                 <option>French</option>
@@ -139,7 +139,7 @@ export const SettingsSection: Story = {
                     <input 
                       type="number" 
                       defaultValue="256"
-                      className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm"
+                      className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-m bg-[var(--color-surface-primary)] text-body-sm"
                     />
                   </div>
                   <div className="space-y-2">
@@ -147,7 +147,7 @@ export const SettingsSection: Story = {
                     <input 
                       type="number" 
                       defaultValue="5000"
-                      className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm"
+                      className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-m bg-[var(--color-surface-primary)] text-body-sm"
                     />
                   </div>
                   <div className="flex items-center justify-between">
@@ -183,7 +183,7 @@ export const SettingsSection: Story = {
                     <input type="checkbox" className="rounded" />
                   </div>
                   <div className="pt-2 border-t border-[var(--color-border-primary-subtle)]">
-                    <Button size="sm" variant="ghost" className="text-[var(--color-text-error-bold)]">
+                    <Button size="s" variant="ghost" className="text-[var(--color-text-error-bold)]">
                       Clear All Debug Data
                     </Button>
                   </div>
@@ -211,7 +211,7 @@ export const NavigationSidebar: Story = {
     }
 
     return (
-      <div className="w-64 border border-[var(--color-border-primary-subtle)] rounded-lg bg-[var(--color-surface-primary)]">
+      <div className="w-64 border border-[var(--color-border-primary-subtle)] rounded-l bg-[var(--color-surface-primary)]">
         <div className="p-4 border-b border-[var(--color-border-primary-subtle)]">
           <h2 className="text-heading-sm font-semibold">Navigation</h2>
         </div>
@@ -224,12 +224,12 @@ export const NavigationSidebar: Story = {
                 <CollapsibleTrigger asChild>
                   <Button variant="ghost" className="flex w-full items-center justify-between px-2 py-1.5">
                     <div className="flex items-center gap-2">
-                      <Icon name="layout-dashboard" size="sm" />
+                      <Icon name="layout-dashboard" size="s" />
                       <span className="text-body-sm">Dashboard</span>
                     </div>
                     <Icon
                       name="chevron-down"
-                      size="md"
+                      size="m"
                       color="tertiary"
                       className={`transition-transform duration-200 ${openSections.dashboard ? 'rotate-180' : ''}`}
                     />
@@ -257,13 +257,13 @@ export const NavigationSidebar: Story = {
                 <CollapsibleTrigger asChild>
                   <Button variant="ghost" className="flex w-full items-center justify-between px-2 py-1.5">
                     <div className="flex items-center gap-2">
-                      <Icon name="folder" size="sm" />
+                      <Icon name="folder" size="s" />
                       <span className="text-body-sm">Projects</span>
                       <Badge className="text-xs">3</Badge>
                     </div>
                     <Icon
                       name="chevron-down"
-                      size="md"
+                      size="m"
                       color="tertiary"
                       className={`transition-transform duration-200 ${openSections.projects ? 'rotate-180' : ''}`}
                     />
@@ -282,7 +282,7 @@ export const NavigationSidebar: Story = {
                     </Button>
                     <div className="pt-1 border-t border-[var(--color-border-primary-subtle)] mt-2">
                       <Button variant="ghost" className="w-full justify-start px-2 py-1 h-auto text-body-sm text-[var(--color-text-secondary)]">
-                        <Icon name="plus" size="sm" className="mr-2" />
+                        <Icon name="plus" size="s" className="mr-2" />
                         New Project
                       </Button>
                     </div>
@@ -297,12 +297,12 @@ export const NavigationSidebar: Story = {
                 <CollapsibleTrigger asChild>
                   <Button variant="ghost" className="flex w-full items-center justify-between px-2 py-1.5">
                     <div className="flex items-center gap-2">
-                      <Icon name="settings" size="sm" />
+                      <Icon name="settings" size="s" />
                       <span className="text-body-sm">Settings</span>
                     </div>
                     <Icon
                       name="chevron-down"
-                      size="md"
+                      size="m"
                       color="tertiary"
                       className={`transition-transform duration-200 ${openSections.settings ? 'rotate-180' : ''}`}
                     />
@@ -329,11 +329,11 @@ export const NavigationSidebar: Story = {
 
             {/* Single Items */}
             <Button variant="ghost" className="flex w-full items-center gap-2 px-2 py-1.5 justify-start">
-              <Icon name="users" size="sm" />
+              <Icon name="users" size="s" />
               <span className="text-body-sm">Team</span>
             </Button>
             <Button variant="ghost" className="flex w-full items-center gap-2 px-2 py-1.5 justify-start">
-              <Icon name="help-circle" size="sm" />
+              <Icon name="help-circle" size="s" />
               <span className="text-body-sm">Help</span>
             </Button>
           </div>
@@ -427,8 +427,8 @@ export const FeatureList: Story = {
                   <CardHeader className="cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-[var(--color-background-blue-bold)] flex items-center justify-center">
-                          <Icon name={feature.icon as any} size="sm" className="text-[var(--color-text-on-action)]" />
+                        <div className="w-10 h-10 rounded-l bg-[var(--color-background-blue-bold)] flex items-center justify-center">
+                          <Icon name={feature.icon as any} size="s" className="text-[var(--color-text-on-action)]" />
                         </div>
                         <div className="text-left">
                           <CardTitle className="text-heading-sm">{feature.title}</CardTitle>
@@ -439,7 +439,7 @@ export const FeatureList: Story = {
                       </div>
                       <Icon
                         name="chevron-down"
-                        size="md"
+                        size="m"
                         color="tertiary"
                         className={`transition-transform duration-200 ${openFeatures[feature.id] ? 'rotate-180' : ''}`}
                       />
@@ -453,15 +453,15 @@ export const FeatureList: Story = {
                       <ul className="space-y-2">
                         {feature.details.map((detail, index) => (
                           <li key={index} className="flex items-start gap-2 text-body-sm">
-                            <Icon name="check" size="sm" className="mt-0.5 text-[var(--color-text-success-bold)] flex-shrink-0" />
+                            <Icon name="check" size="s" className="mt-0.5 text-[var(--color-text-success-bold)] flex-shrink-0" />
                             <span>{detail}</span>
                           </li>
                         ))}
                       </ul>
                       <div className="pt-4">
-                        <Button size="sm">
+                        <Button size="s">
                           Learn More
-                          <Icon name="arrow-right" size="sm" className="ml-2" />
+                          <Icon name="arrow-right" size="s" className="ml-2" />
                         </Button>
                       </div>
                     </div>
@@ -493,14 +493,14 @@ export const MultipleControlled: Story = {
       <div className="w-full max-w-md space-y-4">
         <div className="flex gap-2 mb-4">
           <Button 
-            size="sm" 
+            size="s" 
             variant="ghost"
             onClick={() => setStates({ personal: true, work: true, social: true })}
           >
             Expand All
           </Button>
           <Button 
-            size="sm" 
+            size="s" 
             variant="ghost"
             onClick={() => setStates({ personal: false, work: false, social: false })}
           >
@@ -514,12 +514,12 @@ export const MultipleControlled: Story = {
               <CardHeader className="cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Icon name="user" size="sm" />
+                    <Icon name="user" size="s" />
                     <span className="text-body-md font-medium">Personal Information</span>
                   </div>
                   <Icon
                     name="chevron-down"
-                    size="md"
+                    size="m"
                     color="tertiary"
                     className={`transition-transform duration-200 ${states.personal ? 'rotate-180' : ''}`}
                   />
@@ -545,12 +545,12 @@ export const MultipleControlled: Story = {
               <CardHeader className="cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Icon name="briefcase" size="sm" />
+                    <Icon name="briefcase" size="s" />
                     <span className="text-body-md font-medium">Work Information</span>
                   </div>
                   <Icon
                     name="chevron-down"
-                    size="md"
+                    size="m"
                     color="tertiary"
                     className={`transition-transform duration-200 ${states.work ? 'rotate-180' : ''}`}
                   />
@@ -574,12 +574,12 @@ export const MultipleControlled: Story = {
               <CardHeader className="cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Icon name="share-2" size="sm" />
+                    <Icon name="share-2" size="s" />
                     <span className="text-body-md font-medium">Social Links</span>
                   </div>
                   <Icon
                     name="chevron-down"
-                    size="md"
+                    size="m"
                     color="tertiary"
                     className={`transition-transform duration-200 ${states.social ? 'rotate-180' : ''}`}
                   />
@@ -589,15 +589,15 @@ export const MultipleControlled: Story = {
             <CollapsibleContent>
               <CardContent className="pt-0 space-y-3">
                 <div className="flex items-center gap-2">
-                  <Icon name="twitter" size="sm" />
+                  <Icon name="twitter" size="s" />
                   <input placeholder="Twitter username" className="flex-1 px-3 py-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm" />
                 </div>
                 <div className="flex items-center gap-2">
-                  <Icon name="github" size="sm" />
+                  <Icon name="github" size="s" />
                   <input placeholder="GitHub username" className="flex-1 px-3 py-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm" />
                 </div>
                 <div className="flex items-center gap-2">
-                  <Icon name="linkedin" size="sm" />
+                  <Icon name="linkedin" size="s" />
                   <input placeholder="LinkedIn profile" className="flex-1 px-3 py-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm" />
                 </div>
               </CardContent>

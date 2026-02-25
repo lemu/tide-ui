@@ -13,7 +13,7 @@ const meta: Meta<typeof AvatarGroup> = {
   argTypes: {
     size: {
       control: { type: 'select' },
-      options: ['xxs', 'xs', 'sm', 'md', 'lg', 'xl'],
+      options: ['xxs', 'xs', 's', 'm', 'l', 'xl'],
     },
   },
 } satisfies Meta<typeof AvatarGroup>
@@ -23,17 +23,17 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: () => (
-    <AvatarGroup size="md">
-      <Avatar size="md">
+    <AvatarGroup size="m">
+      <Avatar size="m">
         <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="User 1" />
-        <AvatarFallback size="md" variant="information">JD</AvatarFallback>
+        <AvatarFallback size="m" variant="information">JD</AvatarFallback>
       </Avatar>
-      <Avatar size="md">
+      <Avatar size="m">
         <AvatarImage src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt="User 2" />
-        <AvatarFallback size="md" variant="magenta">SW</AvatarFallback>
+        <AvatarFallback size="m" variant="magenta">SW</AvatarFallback>
       </Avatar>
-      <Avatar size="md">
-        <AvatarFallback size="md" variant="success">AL</AvatarFallback>
+      <Avatar size="m">
+        <AvatarFallback size="m" variant="success">AL</AvatarFallback>
       </Avatar>
     </AvatarGroup>
   ),
@@ -41,8 +41,8 @@ export const Default: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div className="flex flex-col gap-[var(--space-xlg)] items-start">
-      <div className="flex flex-col gap-[var(--space-sm)]">
+    <div className="flex flex-col gap-[var(--space-2xl)] items-start">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <span className="text-caption-sm text-[var(--color-text-tertiary)]">XXS (16px)</span>
         <AvatarGroup size="xxs">
           <Avatar size="xxs">
@@ -57,7 +57,7 @@ export const Sizes: Story = {
         </AvatarGroup>
       </div>
 
-      <div className="flex flex-col gap-[var(--space-sm)]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <span className="text-caption-sm text-[var(--color-text-tertiary)]">XS (20px)</span>
         <AvatarGroup size="xs">
           <Avatar size="xs">
@@ -72,52 +72,52 @@ export const Sizes: Story = {
         </AvatarGroup>
       </div>
 
-      <div className="flex flex-col gap-[var(--space-sm)]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <span className="text-caption-sm text-[var(--color-text-tertiary)]">SM (24px)</span>
-        <AvatarGroup size="sm">
-          <Avatar size="sm">
-            <AvatarFallback size="sm" variant="information">JD</AvatarFallback>
+        <AvatarGroup size="s">
+          <Avatar size="s">
+            <AvatarFallback size="s" variant="information">JD</AvatarFallback>
           </Avatar>
-          <Avatar size="sm">
-            <AvatarFallback size="sm" variant="magenta">SW</AvatarFallback>
+          <Avatar size="s">
+            <AvatarFallback size="s" variant="magenta">SW</AvatarFallback>
           </Avatar>
-          <Avatar size="sm">
-            <AvatarFallback size="sm" variant="success">AL</AvatarFallback>
+          <Avatar size="s">
+            <AvatarFallback size="s" variant="success">AL</AvatarFallback>
           </Avatar>
         </AvatarGroup>
       </div>
 
-      <div className="flex flex-col gap-[var(--space-sm)]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <span className="text-caption-sm text-[var(--color-text-tertiary)]">MD (32px)</span>
-        <AvatarGroup size="md">
-          <Avatar size="md">
-            <AvatarFallback size="md" variant="information">JD</AvatarFallback>
+        <AvatarGroup size="m">
+          <Avatar size="m">
+            <AvatarFallback size="m" variant="information">JD</AvatarFallback>
           </Avatar>
-          <Avatar size="md">
-            <AvatarFallback size="md" variant="magenta">SW</AvatarFallback>
+          <Avatar size="m">
+            <AvatarFallback size="m" variant="magenta">SW</AvatarFallback>
           </Avatar>
-          <Avatar size="md">
-            <AvatarFallback size="md" variant="success">AL</AvatarFallback>
+          <Avatar size="m">
+            <AvatarFallback size="m" variant="success">AL</AvatarFallback>
           </Avatar>
         </AvatarGroup>
       </div>
 
-      <div className="flex flex-col gap-[var(--space-sm)]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <span className="text-caption-sm text-[var(--color-text-tertiary)]">LG (48px)</span>
-        <AvatarGroup size="lg">
-          <Avatar size="lg">
-            <AvatarFallback size="lg" variant="information">JD</AvatarFallback>
+        <AvatarGroup size="l">
+          <Avatar size="l">
+            <AvatarFallback size="l" variant="information">JD</AvatarFallback>
           </Avatar>
-          <Avatar size="lg">
-            <AvatarFallback size="lg" variant="magenta">SW</AvatarFallback>
+          <Avatar size="l">
+            <AvatarFallback size="l" variant="magenta">SW</AvatarFallback>
           </Avatar>
-          <Avatar size="lg">
-            <AvatarFallback size="lg" variant="success">AL</AvatarFallback>
+          <Avatar size="l">
+            <AvatarFallback size="l" variant="success">AL</AvatarFallback>
           </Avatar>
         </AvatarGroup>
       </div>
 
-      <div className="flex flex-col gap-[var(--space-sm)]">
+      <div className="flex flex-col gap-[var(--space-s)]">
         <span className="text-caption-sm text-[var(--color-text-tertiary)]">XL (64px)</span>
         <AvatarGroup size="xl">
           <Avatar size="xl">
@@ -137,18 +137,18 @@ export const Sizes: Story = {
 
 export const WithImages: Story = {
   render: () => (
-    <AvatarGroup size="md">
-      <Avatar size="md">
+    <AvatarGroup size="m">
+      <Avatar size="m">
         <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="John Doe" />
-        <AvatarFallback size="md" variant="information">JD</AvatarFallback>
+        <AvatarFallback size="m" variant="information">JD</AvatarFallback>
       </Avatar>
-      <Avatar size="md">
+      <Avatar size="m">
         <AvatarImage src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt="Sarah Wilson" />
-        <AvatarFallback size="md" variant="magenta">SW</AvatarFallback>
+        <AvatarFallback size="m" variant="magenta">SW</AvatarFallback>
       </Avatar>
-      <Avatar size="md">
+      <Avatar size="m">
         <AvatarImage src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt="Mike Johnson" />
-        <AvatarFallback size="md" variant="success">MJ</AvatarFallback>
+        <AvatarFallback size="m" variant="success">MJ</AvatarFallback>
       </Avatar>
     </AvatarGroup>
   ),
@@ -156,30 +156,30 @@ export const WithImages: Story = {
 
 export const MixedTypes: Story = {
   render: () => (
-    <div className="flex flex-col gap-[var(--space-lg)]">
+    <div className="flex flex-col gap-[var(--space-l)]">
       <div>
-        <h3 className="text-heading-sm mb-[var(--space-sm)]">User + Organization</h3>
-        <AvatarGroup size="md">
-          <Avatar size="md">
-            <AvatarFallback size="md" variant="information">IC</AvatarFallback>
+        <h3 className="text-heading-sm mb-[var(--space-s)]">User + Organization</h3>
+        <AvatarGroup size="m">
+          <Avatar size="m">
+            <AvatarFallback size="m" variant="information">IC</AvatarFallback>
           </Avatar>
-          <Avatar size="md" type="organization">
-            <AvatarFallback size="md" type="organization" variant="violet">AC</AvatarFallback>
+          <Avatar size="m" type="organization">
+            <AvatarFallback size="m" type="organization" variant="violet">AC</AvatarFallback>
           </Avatar>
         </AvatarGroup>
       </div>
 
       <div>
-        <h3 className="text-heading-sm mb-[var(--space-sm)]">Multiple Organizations</h3>
-        <AvatarGroup size="md">
-          <Avatar size="md" type="organization">
-            <AvatarFallback size="md" type="organization" variant="information">AC</AvatarFallback>
+        <h3 className="text-heading-sm mb-[var(--space-s)]">Multiple Organizations</h3>
+        <AvatarGroup size="m">
+          <Avatar size="m" type="organization">
+            <AvatarFallback size="m" type="organization" variant="information">AC</AvatarFallback>
           </Avatar>
-          <Avatar size="md" type="organization">
-            <AvatarFallback size="md" type="organization" variant="magenta">BC</AvatarFallback>
+          <Avatar size="m" type="organization">
+            <AvatarFallback size="m" type="organization" variant="magenta">BC</AvatarFallback>
           </Avatar>
-          <Avatar size="md" type="organization">
-            <AvatarFallback size="md" type="organization" variant="success">CC</AvatarFallback>
+          <Avatar size="m" type="organization">
+            <AvatarFallback size="m" type="organization" variant="success">CC</AvatarFallback>
           </Avatar>
         </AvatarGroup>
       </div>
@@ -189,24 +189,24 @@ export const MixedTypes: Story = {
 
 export const LargeGroup: Story = {
   render: () => (
-    <div className="flex items-center gap-[var(--space-xsm)]">
-      <AvatarGroup size="sm">
-        <Avatar size="sm">
+    <div className="flex items-center gap-[var(--space-xs)]">
+      <AvatarGroup size="s">
+        <Avatar size="s">
           <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="User 1" />
-          <AvatarFallback size="sm" variant="information">JD</AvatarFallback>
+          <AvatarFallback size="s" variant="information">JD</AvatarFallback>
         </Avatar>
-        <Avatar size="sm">
+        <Avatar size="s">
           <AvatarImage src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face" alt="User 2" />
-          <AvatarFallback size="sm" variant="magenta">SW</AvatarFallback>
+          <AvatarFallback size="s" variant="magenta">SW</AvatarFallback>
         </Avatar>
-        <Avatar size="sm">
-          <AvatarFallback size="sm" variant="success">AL</AvatarFallback>
+        <Avatar size="s">
+          <AvatarFallback size="s" variant="success">AL</AvatarFallback>
         </Avatar>
-        <Avatar size="sm">
-          <AvatarFallback size="sm" variant="warning">EM</AvatarFallback>
+        <Avatar size="s">
+          <AvatarFallback size="s" variant="warning">EM</AvatarFallback>
         </Avatar>
-        <Avatar size="sm">
-          <AvatarFallback size="sm" variant="error">RH</AvatarFallback>
+        <Avatar size="s">
+          <AvatarFallback size="s" variant="error">RH</AvatarFallback>
         </Avatar>
       </AvatarGroup>
       <span className="text-body-medium-sm text-[var(--color-text-secondary)]">+3</span>
@@ -216,10 +216,10 @@ export const LargeGroup: Story = {
 
 export const WithOverflowCount: Story = {
   render: () => (
-    <div className="flex flex-col gap-[var(--space-lg)]">
+    <div className="flex flex-col gap-[var(--space-l)]">
       <div>
-        <h3 className="text-heading-sm mb-[var(--space-sm)]">XXS Group with Overflow</h3>
-        <div className="flex items-center gap-[var(--space-xsm)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)]">XXS Group with Overflow</h3>
+        <div className="flex items-center gap-[var(--space-xs)]">
           <AvatarGroup size="xxs">
             <Avatar size="xxs">
               <AvatarFallback size="xxs" variant="information">JD</AvatarFallback>
@@ -240,17 +240,17 @@ export const WithOverflowCount: Story = {
       </div>
 
       <div>
-        <h3 className="text-heading-sm mb-[var(--space-sm)]">Small Group with Overflow</h3>
-        <div className="flex items-center gap-[var(--space-xsm)]">
-          <AvatarGroup size="sm">
-            <Avatar size="sm">
-              <AvatarFallback size="sm" variant="information">JD</AvatarFallback>
+        <h3 className="text-heading-sm mb-[var(--space-s)]">Small Group with Overflow</h3>
+        <div className="flex items-center gap-[var(--space-xs)]">
+          <AvatarGroup size="s">
+            <Avatar size="s">
+              <AvatarFallback size="s" variant="information">JD</AvatarFallback>
             </Avatar>
-            <Avatar size="sm">
-              <AvatarFallback size="sm" variant="magenta">SW</AvatarFallback>
+            <Avatar size="s">
+              <AvatarFallback size="s" variant="magenta">SW</AvatarFallback>
             </Avatar>
-            <Avatar size="sm">
-              <AvatarFallback size="sm" variant="success">AL</AvatarFallback>
+            <Avatar size="s">
+              <AvatarFallback size="s" variant="success">AL</AvatarFallback>
             </Avatar>
           </AvatarGroup>
           <span className="text-body-medium-sm text-[var(--color-text-tertiary)]">+12</span>
@@ -258,22 +258,22 @@ export const WithOverflowCount: Story = {
       </div>
 
       <div>
-        <h3 className="text-heading-sm mb-[var(--space-sm)]">Medium Group with Overflow</h3>
-        <div className="flex items-center gap-[var(--space-xsm)]">
-          <AvatarGroup size="md">
-            <Avatar size="md">
+        <h3 className="text-heading-sm mb-[var(--space-s)]">Medium Group with Overflow</h3>
+        <div className="flex items-center gap-[var(--space-xs)]">
+          <AvatarGroup size="m">
+            <Avatar size="m">
               <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="User 1" />
-              <AvatarFallback size="md" variant="information">JD</AvatarFallback>
+              <AvatarFallback size="m" variant="information">JD</AvatarFallback>
             </Avatar>
-            <Avatar size="md">
+            <Avatar size="m">
               <AvatarImage src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt="User 2" />
-              <AvatarFallback size="md" variant="magenta">SW</AvatarFallback>
+              <AvatarFallback size="m" variant="magenta">SW</AvatarFallback>
             </Avatar>
-            <Avatar size="md">
-              <AvatarFallback size="md" variant="success">AL</AvatarFallback>
+            <Avatar size="m">
+              <AvatarFallback size="m" variant="success">AL</AvatarFallback>
             </Avatar>
-            <Avatar size="md">
-              <AvatarFallback size="md" variant="warning">EM</AvatarFallback>
+            <Avatar size="m">
+              <AvatarFallback size="m" variant="warning">EM</AvatarFallback>
             </Avatar>
           </AvatarGroup>
           <span className="text-body-medium-md text-[var(--color-text-tertiary)]">+8</span>
@@ -285,20 +285,20 @@ export const WithOverflowCount: Story = {
 
 export const WithIcons: Story = {
   render: () => (
-    <AvatarGroup size="md">
-      <Avatar size="md">
-        <AvatarFallback size="md" variant="information">
-          <Icon name="user" size="sm" color="inverse" />
+    <AvatarGroup size="m">
+      <Avatar size="m">
+        <AvatarFallback size="m" variant="information">
+          <Icon name="user" size="s" color="inverse" />
         </AvatarFallback>
       </Avatar>
-      <Avatar size="md" type="organization">
-        <AvatarFallback size="md" type="organization" variant="violet">
-          <Icon name="package" size="sm" color="inverse" />
+      <Avatar size="m" type="organization">
+        <AvatarFallback size="m" type="organization" variant="violet">
+          <Icon name="package" size="s" color="inverse" />
         </AvatarFallback>
       </Avatar>
-      <Avatar size="md">
-        <AvatarFallback size="md" variant="success">
-          <Icon name="check" size="sm" color="inverse" />
+      <Avatar size="m">
+        <AvatarFallback size="m" variant="success">
+          <Icon name="check" size="s" color="inverse" />
         </AvatarFallback>
       </Avatar>
     </AvatarGroup>

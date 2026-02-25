@@ -65,17 +65,17 @@ const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
     return (
       <div
         ref={ref}
-        className={cn("flex items-center gap-[var(--space-sm)]", className)}
+        className={cn("flex items-center gap-[var(--space-s)]", className)}
         {...props}
       >
         {/* Navigation ButtonGroup */}
-        <ButtonGroup size="sm">
+        <ButtonGroup size="s">
           {variant === "full" && (
             <Button
               onClick={goToFirstPage}
               disabled={isFirstPage}
               aria-label="Go to first page"
-              className="px-[var(--space-sm)] aspect-square"
+              className="px-[var(--space-s)] aspect-square"
             >
               <Icon name="arrow-left-to-line" className="w-4 h-4" />
             </Button>
@@ -84,7 +84,7 @@ const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
             onClick={goToPreviousPage}
             disabled={isFirstPage}
             aria-label="Go to previous page"
-            className="px-[var(--space-sm)] aspect-square"
+            className="px-[var(--space-s)] aspect-square"
             onMouseEnter={!isFirstPage ? onPreviousPageHover : undefined}
           >
             <Icon name="arrow-left" className="w-4 h-4" />
@@ -93,7 +93,7 @@ const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
             onClick={goToNextPage}
             disabled={isLastPage}
             aria-label="Go to next page"
-            className="px-[var(--space-sm)] aspect-square"
+            className="px-[var(--space-s)] aspect-square"
             onMouseEnter={!isLastPage ? onNextPageHover : undefined}
           >
             <Icon name="arrow-right" className="w-4 h-4" />
@@ -103,7 +103,7 @@ const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
               onClick={goToLastPage}
               disabled={isLastPage}
               aria-label="Go to last page"
-              className="px-[var(--space-sm)] aspect-square"
+              className="px-[var(--space-s)] aspect-square"
             >
               <Icon name="arrow-right-to-line" className="w-4 h-4" />
             </Button>
@@ -113,7 +113,7 @@ const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
         {/* Range Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="gap-1 min-w-0">
+            <Button variant="ghost" size="s" className="gap-1 min-w-0">
               <span className="whitespace-nowrap">
                 {totalItems === 0
                   ? "0 of 0"

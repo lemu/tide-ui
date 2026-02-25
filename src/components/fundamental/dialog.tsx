@@ -36,7 +36,7 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed top-[50%] left-[50%] z-50 flex flex-col w-[calc(100%-2rem)] max-w-lg max-h-[85vh] translate-x-[-50%] translate-y-[-50%] overflow-hidden rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] shadow-xl duration-200 sm:max-w-[425px]",
+        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed top-[50%] left-[50%] z-50 flex flex-col w-[calc(100%-2rem)] max-w-lg max-h-[85vh] translate-x-[-50%] translate-y-[-50%] overflow-hidden rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] shadow-xl duration-200 sm:max-w-[425px]",
         className,
       )}
       aria-describedby={undefined}
@@ -46,10 +46,10 @@ const DialogContent = React.forwardRef<
       <DialogPrimitive.Close asChild>
         <Button
           variant="ghost"
-          size="sm"
+          size="s"
           className="absolute top-3 right-3 h-8 w-8 p-0"
         >
-          <Icon name="x" size="md" />
+          <Icon name="x" size="m" />
           <span className="sr-only">Close</span>
         </Button>
       </DialogPrimitive.Close>
@@ -64,7 +64,7 @@ const DialogHeader = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col space-y-[var(--space-sm)] border-b border-[var(--color-border-primary-subtle)] px-[var(--space-xlg)] py-[var(--space-lg)] text-center sm:text-left",
+      "flex flex-col space-y-[var(--space-s)] border-b border-[var(--color-border-primary-subtle)] px-[var(--space-2xl)] py-[var(--space-l)] text-center sm:text-left",
       className,
     )}
     {...props}
@@ -76,7 +76,7 @@ const DialogBody = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("flex-1 overflow-y-auto px-[var(--space-xlg)] py-[var(--space-xlg)]", className)} {...props} />
+  <div className={cn("flex-1 overflow-y-auto px-[var(--space-2xl)] py-[var(--space-2xl)]", className)} {...props} />
 );
 DialogBody.displayName = "DialogBody";
 
@@ -86,7 +86,7 @@ const DialogFooter = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col-reverse border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-base)] p-[var(--space-xlg)] py-[var(--space-lg)] sm:flex-row sm:justify-end sm:space-x-[var(--space-sm)]",
+      "flex flex-col-reverse border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-base)] p-[var(--space-2xl)] py-[var(--space-l)] sm:flex-row sm:justify-end sm:space-x-[var(--space-s)]",
       className,
     )}
     {...props}

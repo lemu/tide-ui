@@ -371,7 +371,7 @@ export const AreaCharts: Story = {
   render: () => (
     <div className="w-full max-w-5xl space-y-8">
       <div className="prose max-w-none">
-        <h1 className="text-heading-lg text-[var(--color-text-primary)] mb-[var(--space-lg)]">Area Charts - Stroke Removed</h1>
+        <h1 className="text-heading-lg text-[var(--color-text-primary)] mb-[var(--space-l)]">Area Charts - Stroke Removed</h1>
         <p className="text-body-md text-[var(--color-text-secondary)]">
           Area charts now render without stroke borders for cleaner, more modern appearance.
           Perfect for showing filled regions and trend areas.
@@ -381,8 +381,8 @@ export const AreaCharts: Story = {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Single Area Chart */}
         <div>
-          <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Single Area Series</h2>
-          <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+          <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Single Area Series</h2>
+          <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
             <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`<Chart
   type="composed"
@@ -396,7 +396,7 @@ export const AreaCharts: Story = {
 />`}
             </pre>
           </div>
-          <div className="h-80 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+          <div className="h-80 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
             <Chart
               type="composed"
               data={[
@@ -419,8 +419,8 @@ export const AreaCharts: Story = {
 
         {/* Multiple Area Charts */}
         <div>
-          <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Multiple Overlapping Areas</h2>
-          <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+          <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Multiple Overlapping Areas</h2>
+          <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
             <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`config={{
   mobile: { label: 'Mobile', type: 'area' },
@@ -429,7 +429,7 @@ export const AreaCharts: Story = {
 }}`}
             </pre>
           </div>
-          <div className="h-80 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+          <div className="h-80 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
             <Chart
               type="composed"
               data={[
@@ -454,8 +454,8 @@ export const AreaCharts: Story = {
 
       {/* Mixed Chart Type */}
       <div>
-        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Mixed Chart: Area + Line + Bar</h2>
-        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Mixed Chart: Area + Line + Bar</h2>
+        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
           <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`config={{
   background: { label: 'Market Size', type: 'area' },
@@ -464,7 +464,7 @@ export const AreaCharts: Story = {
 }}`}
           </pre>
         </div>
-        <div className="h-96 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+        <div className="h-96 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
           <Chart
             type="composed"
             data={[
@@ -487,8 +487,8 @@ export const AreaCharts: Story = {
 
       {/* Native AreaChart Example */}
       <div>
-        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Temperature Range Area Chart</h2>
-        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Temperature Range Area Chart</h2>
+        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
           <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`// Temperature range area chart with array data
 const rangeData = [
@@ -513,7 +513,7 @@ const rangeData = [
 />`}
           </pre>
         </div>
-        <div className="h-80 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden p-4 bg-white">
+        <div className="h-80 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden p-4 bg-white">
           <Chart
             type="composed"
             data={[
@@ -543,12 +543,12 @@ const rangeData = [
 
 
       {/* Benefits Info */}
-      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-lg)] rounded-lg">
-        <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">🎨 Area Chart Benefits</h3>
+      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-l)] rounded-l">
+        <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">🎨 Area Chart Benefits</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Visual Improvements</h4>
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-s)]">Visual Improvements</h4>
             <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
               <li><strong>No border lines</strong> - Cleaner, modern appearance</li>
               <li><strong>Smooth filled regions</strong> - Better for trend visualization</li>
@@ -558,7 +558,7 @@ const rangeData = [
           </div>
 
           <div>
-            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Best Use Cases</h4>
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-s)]">Best Use Cases</h4>
             <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
               <li><strong>Time series data</strong> - Revenue, users, metrics over time</li>
               <li><strong>Cumulative values</strong> - Total sales, growth areas</li>
@@ -727,10 +727,10 @@ export const DataConfigurationGuide: Story = {
   render: () => (
     <div className="w-full max-w-7xl space-y-8">
       <div className="prose max-w-none">
-        <h1 className="text-heading-lg text-[var(--color-text-primary)] mb-[var(--space-lg)]">Chart Data Configuration Guide</h1>
+        <h1 className="text-heading-lg text-[var(--color-text-primary)] mb-[var(--space-l)]">Chart Data Configuration Guide</h1>
 
-        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-lg)] rounded-lg mb-[var(--space-lg)]">
-          <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Quick Reference</h2>
+        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-l)] rounded-l mb-[var(--space-l)]">
+          <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Quick Reference</h2>
           <div className="text-body-sm text-[var(--color-text-secondary)] space-y-2">
             <p><strong>Required Props:</strong> <code>type</code>, <code>data</code>, <code>config</code></p>
             <p><strong>Data Key:</strong> Must include <code>name</code> field for X-axis labels (except scatter charts)</p>
@@ -742,12 +742,12 @@ export const DataConfigurationGuide: Story = {
 
       {/* 1. Basic Data Structure Examples */}
       <div>
-        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">1. Data Structure Examples</h2>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">1. Data Structure Examples</h2>
 
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-[var(--space-lg)]">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-[var(--space-l)]">
           <div>
-            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Bar/Line Chart Data</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] rounded-md">
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Bar/Line Chart Data</h3>
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`const data = [
   { name: 'Jan', revenue: 4000, sales: 240 },
@@ -756,7 +756,7 @@ export const DataConfigurationGuide: Story = {
 ]`}
               </pre>
             </div>
-            <div className="mt-[var(--space-sm)] h-64">
+            <div className="mt-[var(--space-s)] h-64">
               <Chart
                 type="bar"
                 data={[
@@ -774,8 +774,8 @@ export const DataConfigurationGuide: Story = {
           </div>
 
           <div>
-            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Scatter Chart Data</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] rounded-md">
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Scatter Chart Data</h3>
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`const data = [
   { x: 10, y: 30, performance: 85 },
@@ -784,7 +784,7 @@ export const DataConfigurationGuide: Story = {
 ]`}
               </pre>
             </div>
-            <div className="mt-[var(--space-sm)] h-64">
+            <div className="mt-[var(--space-s)] h-64">
               <Chart
                 type="scatter"
                 data={[
@@ -804,12 +804,12 @@ export const DataConfigurationGuide: Story = {
 
       {/* 2. Configuration Methods */}
       <div>
-        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">2. Configuration Methods</h2>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">2. Configuration Methods</h2>
 
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-[var(--space-lg)]">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-[var(--space-l)]">
           <div>
-            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Manual Configuration</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Manual Configuration</h3>
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`const config = {
   revenue: {
@@ -826,8 +826,8 @@ export const DataConfigurationGuide: Story = {
           </div>
 
           <div>
-            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Using createChartConfig Helper</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Using createChartConfig Helper</h3>
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`const config = createChartConfig({
   revenue: { label: 'Revenue ($)' },
@@ -841,13 +841,13 @@ export const DataConfigurationGuide: Story = {
 
       {/* 3. Chart Type Examples */}
       <div>
-        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">3. Chart Types with Code Examples</h2>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">3. Chart Types with Code Examples</h2>
 
         <div className="space-y-8">
           {/* Composed Chart Example */}
           <div>
-            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Composed Chart (Mixed Types)</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Composed Chart (Mixed Types)</h3>
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`<Chart
   type="composed"
@@ -881,11 +881,11 @@ export const DataConfigurationGuide: Story = {
 
           {/* Color Customization */}
           <div>
-            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Custom Colors & Color Schemes</h3>
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Custom Colors & Color Schemes</h3>
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
               <div>
-                <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Custom Colors</h4>
-                <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+                <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-s)]">Custom Colors</h4>
+                <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
                   <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`config={{
   series1: {
@@ -917,8 +917,8 @@ export const DataConfigurationGuide: Story = {
               </div>
 
               <div>
-                <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Color Schemes</h4>
-                <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+                <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-s)]">Color Schemes</h4>
+                <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
                   <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`<Chart
   colorScheme="accessible"
@@ -949,8 +949,8 @@ export const DataConfigurationGuide: Story = {
 
           {/* Complete Example */}
           <div>
-            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Complete Implementation Example</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Complete Implementation Example</h3>
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`import { Chart, createChartConfig } from '@rafal.lemieszewski/tide-ui'
 
@@ -975,14 +975,14 @@ const MyChart = () => {
       height={400}
       showGrid={true}
       showLegend={true}
-      className="border rounded-lg p-4"
+      className="border rounded-l p-4"
       onDataPointClick={(data, index) => console.log('Clicked:', data)}
     />
   )
 }`}
               </pre>
             </div>
-            <div className="h-96 border rounded-lg p-4">
+            <div className="h-96 border rounded-l p-4">
               <Chart
                 type="bar"
                 data={[
@@ -1007,8 +1007,8 @@ const MyChart = () => {
       </div>
 
       {/* 4. Tips and Best Practices */}
-      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-lg)] rounded-lg">
-        <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">💡 Tips & Best Practices</h3>
+      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-l)] rounded-l">
+        <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">💡 Tips & Best Practices</h3>
         <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
           <li><strong>Data Consistency:</strong> Ensure all data points have the same structure</li>
           <li><strong>Field Names:</strong> Use descriptive field names that match your config labels</li>
@@ -1026,10 +1026,10 @@ export const TickFormatting: Story = {
   render: () => (
     <div className="w-full max-w-7xl space-y-8">
       <div className="prose max-w-none">
-        <h1 className="text-heading-lg text-[var(--color-text-primary)] mb-[var(--space-lg)]">Axis Formatting & Tooltip Behavior</h1>
+        <h1 className="text-heading-lg text-[var(--color-text-primary)] mb-[var(--space-l)]">Axis Formatting & Tooltip Behavior</h1>
 
-        <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-lg)] rounded-lg mb-[var(--space-lg)]">
-          <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Key Concept: Axis vs Tooltip</h2>
+        <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-l)] rounded-l mb-[var(--space-l)]">
+          <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Key Concept: Axis vs Tooltip</h2>
           <div className="text-body-sm text-[var(--color-text-secondary)] space-y-3">
             <p><strong>Axis tick formatters</strong> control how values appear on the chart axes (compact display).</p>
             <p><strong>Tooltips always show full unformatted values</strong> from your data, formatted with spaces as thousands separators (e.g., 1 000 000).</p>
@@ -1040,12 +1040,12 @@ export const TickFormatting: Story = {
 
       {/* Number Formatting Examples */}
       <div>
-        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Number Formatting Examples</h2>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Number Formatting Examples</h2>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-[var(--space-lg)]">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-[var(--space-l)]">
           <div>
-            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Thousands (1K-10K)</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Thousands (1K-10K)</h3>
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`yAxisTickFormatter={(v) =>
   v >= 1000 ? \`\${v/1000}K\` : v
@@ -1054,7 +1054,7 @@ export const TickFormatting: Story = {
 // Tooltip: "5 000"`}
               </pre>
             </div>
-            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
               <Chart
                 type="bar"
                 data={[
@@ -1076,8 +1076,8 @@ export const TickFormatting: Story = {
           </div>
 
           <div>
-            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Hundred Thousands (100K-1M)</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Hundred Thousands (100K-1M)</h3>
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`yAxisTickFormatter={(v) =>
   v >= 1000 ? \`\${v/1000}K\` : v
@@ -1086,7 +1086,7 @@ export const TickFormatting: Story = {
 // Tooltip: "450 000"`}
               </pre>
             </div>
-            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
               <Chart
                 type="bar"
                 data={[
@@ -1108,8 +1108,8 @@ export const TickFormatting: Story = {
           </div>
 
           <div>
-            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Millions (1M-10M)</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Millions (1M-10M)</h3>
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`yAxisTickFormatter={(v) =>
   v >= 1e6 ? \`\${v/1e6}M\` :
@@ -1119,7 +1119,7 @@ export const TickFormatting: Story = {
 // Tooltip: "2 500 000"`}
               </pre>
             </div>
-            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
               <Chart
                 type="bar"
                 data={[
@@ -1147,12 +1147,12 @@ export const TickFormatting: Story = {
 
       {/* Date Formatting Example */}
       <div>
-        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Date Formatting: Full Dates in Tooltips</h2>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Date Formatting: Full Dates in Tooltips</h2>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-[var(--space-lg)]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-[var(--space-l)]">
           <div>
-            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Short Axis, Full Tooltip</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Short Axis, Full Tooltip</h3>
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`// Store full dates in data
 data: [{ name: 'January 2025', value: 450 }]
@@ -1167,7 +1167,7 @@ xAxisTickFormatter={(value) => {
 // Tooltip shows: "January 2025"`}
               </pre>
             </div>
-            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
               <Chart
                 type="line"
                 data={[
@@ -1192,8 +1192,8 @@ xAxisTickFormatter={(value) => {
           </div>
 
           <div>
-            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Best Practice</h3>
-            <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] p-[var(--space-md)] rounded-md">
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Best Practice</h3>
+            <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] p-[var(--space-m)] rounded-m">
               <div className="text-body-sm text-[var(--color-text-primary)] space-y-3">
                 <p className="font-medium">✅ Always store full values in your data</p>
                 <p>• Numbers: Store 1000000, not "1M"</p>
@@ -1212,8 +1212,8 @@ xAxisTickFormatter={(value) => {
       </div>
 
       {/* Code Examples */}
-      <div className="bg-[var(--color-background-neutral-subtlest)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
-        <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">Complete Code Example</h3>
+      <div className="bg-[var(--color-background-neutral-subtlest)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+        <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">Complete Code Example</h3>
         <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`import { Chart, createChartConfig } from '@rafal.lemieszewski/tide-ui';
 
@@ -1249,10 +1249,10 @@ export const AccessibilityFeatures: Story = {
   render: () => (
     <div className="w-full max-w-7xl space-y-8">
       <div className="prose max-w-none">
-        <h1 className="text-heading-lg text-[var(--color-text-primary)] mb-[var(--space-lg)]">Chart Accessibility Features</h1>
+        <h1 className="text-heading-lg text-[var(--color-text-primary)] mb-[var(--space-l)]">Chart Accessibility Features</h1>
 
-        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-lg)] rounded-lg mb-[var(--space-lg)]">
-          <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Accessibility Props</h2>
+        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-l)] rounded-l mb-[var(--space-l)]">
+          <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Accessibility Props</h2>
           <div className="text-body-sm text-[var(--color-text-secondary)] space-y-2">
             <p><strong>title:</strong> Chart title for screen readers</p>
             <p><strong>description:</strong> Chart description for screen readers</p>
@@ -1264,18 +1264,18 @@ export const AccessibilityFeatures: Story = {
 
       {/* Enhanced ARIA Labels */}
       <div>
-        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Enhanced ARIA Labels</h2>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Enhanced ARIA Labels</h2>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-[var(--space-lg)]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-[var(--space-l)]">
           <div>
-            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Basic Chart</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Basic Chart</h3>
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`// Basic accessibility
 <Chart type="bar" data={data} config={config} />`}
               </pre>
             </div>
-            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
               <Chart
                 type="bar"
                 data={[
@@ -1296,8 +1296,8 @@ export const AccessibilityFeatures: Story = {
           </div>
 
           <div>
-            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Enhanced Accessibility</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-md)] rounded-md mb-[var(--space-sm)]">
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Enhanced Accessibility</h3>
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`// Full accessibility features
 <Chart
@@ -1307,7 +1307,7 @@ export const AccessibilityFeatures: Story = {
 />`}
               </pre>
             </div>
-            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
               <Chart
                 type="bar"
                 data={[
@@ -1335,10 +1335,10 @@ export const AccessibilityFeatures: Story = {
 
       {/* Data Table Fallback */}
       <div>
-        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Screen Reader Support</h2>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Screen Reader Support</h2>
 
-        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-lg)] rounded-lg mb-[var(--space-lg)]">
-          <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">What Screen Readers Get:</h3>
+        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-l)] rounded-l mb-[var(--space-l)]">
+          <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">What Screen Readers Get:</h3>
           <div className="space-y-4">
             <div>
               <h4 className="text-body-md font-medium text-[var(--color-text-primary)]">1. Chart Title & Description</h4>
@@ -1355,7 +1355,7 @@ export const AccessibilityFeatures: Story = {
           </div>
         </div>
 
-        <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-md overflow-hidden">
+        <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
           <Chart
             type="line"
             data={[
@@ -1379,12 +1379,12 @@ export const AccessibilityFeatures: Story = {
       </div>
 
       {/* Best Practices */}
-      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-lg)] rounded-lg mt-[var(--space-xlg)]">
-        <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">♿ Accessibility Best Practices</h3>
+      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-l)] rounded-l mt-[var(--space-2xl)]">
+        <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">♿ Accessibility Best Practices</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Always Include</h4>
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-s)]">Always Include</h4>
             <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
               <li><strong>title</strong> - Clear, descriptive chart title</li>
               <li><strong>description</strong> - Key insights and trends</li>
@@ -1394,7 +1394,7 @@ export const AccessibilityFeatures: Story = {
           </div>
 
           <div>
-            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-sm)]">Consider Adding</h4>
+            <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-s)]">Consider Adding</h4>
             <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
               <li><strong>Tick formatters</strong> - Improve readability</li>
               <li><strong>Legend</strong> - For multi-series charts</li>
@@ -1412,15 +1412,15 @@ export const MultiMetricLegend: Story = {
   render: () => (
     <div className="w-[800px] space-y-8">
       <div>
-        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-md)]">Multi-Metric Legend Wrapping</h2>
-        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-lg)]">
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Multi-Metric Legend Wrapping</h2>
+        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-l)]">
           Tests legend behavior with many metrics to ensure proper row wrapping without text wrapping within labels.
         </p>
 
         <div className="space-y-6">
           <div>
-            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">8 Metrics Bar Chart</h3>
-            <div className="bg-white border border-[var(--color-border-primary-subtle)] rounded-lg p-4">
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">8 Metrics Bar Chart</h3>
+            <div className="bg-white border border-[var(--color-border-primary-subtle)] rounded-l p-4">
               <Chart
                 type="bar"
                 data={[
@@ -1488,11 +1488,11 @@ export const MultiMetricLegend: Story = {
           </div>
 
           <div>
-            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Narrow Container (400px)</h3>
-            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+            <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Narrow Container (400px)</h3>
+            <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               Testing legend wrapping in constrained width containers
             </p>
-            <div className="w-[400px] bg-white border border-[var(--color-border-primary-subtle)] rounded-lg p-4">
+            <div className="w-[400px] bg-white border border-[var(--color-border-primary-subtle)] rounded-l p-4">
               <Chart
                 type="line"
                 data={[
@@ -1541,8 +1541,8 @@ export const MultiMetricLegend: Story = {
           </div>
         </div>
 
-        <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] p-[var(--space-lg)] rounded-lg mt-[var(--space-xlg)]">
-          <h4 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">✅ Legend Behavior</h4>
+        <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] p-[var(--space-l)] rounded-l mt-[var(--space-2xl)]">
+          <h4 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">✅ Legend Behavior</h4>
           <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
             <li><strong>Multi-row wrapping</strong> - Legend items flow to multiple rows when needed</li>
             <li><strong>No text wrapping</strong> - Individual legend labels remain intact (whitespace-nowrap)</li>
@@ -1568,19 +1568,19 @@ const dualAxisData = [
 
 export const DualYAxisCharts: Story = {
   render: () => (
-    <div className="w-full max-w-7xl mx-auto p-[var(--space-lg)] space-y-[var(--space-xlg)]">
+    <div className="w-full max-w-7xl mx-auto p-[var(--space-l)] space-y-[var(--space-2xl)]">
       <div>
-        <h2 className="text-heading-lg mb-[var(--space-md)]">Dual Y-Axis Charts</h2>
-        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-xlg)]">
+        <h2 className="text-heading-lg mb-[var(--space-m)]">Dual Y-Axis Charts</h2>
+        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-2xl)]">
           Demonstrating dual Y-axis functionality for displaying data with different units and scales.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-xlg)]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-2xl)]">
         {/* Line Chart with Dual Y-Axis */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
-          <h3 className="text-heading-md mb-[var(--space-md)]">Line Chart - Revenue vs Growth Rate</h3>
-          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+          <h3 className="text-heading-md mb-[var(--space-m)]">Line Chart - Revenue vs Growth Rate</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Revenue (left axis, $) and Growth Rate (right axis, %) on different scales.
           </p>
           <Chart
@@ -1611,9 +1611,9 @@ export const DualYAxisCharts: Story = {
         </div>
 
         {/* Composed Chart with Dual Y-Axis - Temperature Line */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
-          <h3 className="text-heading-md mb-[var(--space-md)]">Line Chart - Temperature vs Humidity</h3>
-          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+          <h3 className="text-heading-md mb-[var(--space-m)]">Line Chart - Temperature vs Humidity</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Temperature (left axis, °C) and Humidity (right axis, %) on different scales.
           </p>
           <Chart
@@ -1644,9 +1644,9 @@ export const DualYAxisCharts: Story = {
         </div>
 
         {/* Composed Chart with Dual Y-Axis */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
-          <h3 className="text-heading-md mb-[var(--space-md)]">Composed Chart - Mixed Elements</h3>
-          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+          <h3 className="text-heading-md mb-[var(--space-m)]">Composed Chart - Mixed Elements</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Revenue bars (left) with growth rate line (right) and temperature area.
           </p>
           <Chart
@@ -1684,9 +1684,9 @@ export const DualYAxisCharts: Story = {
         </div>
 
         {/* Advanced Configuration */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
-          <h3 className="text-heading-md mb-[var(--space-md)]">Advanced Configuration</h3>
-          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+          <h3 className="text-heading-md mb-[var(--space-m)]">Advanced Configuration</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Multiple lines with different axis assignments, tick counts, and formatters.
           </p>
           <Chart
@@ -1726,9 +1726,9 @@ export const DualYAxisCharts: Story = {
         </div>
       </div>
 
-      <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] p-[var(--space-lg)] rounded-lg">
-        <h4 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">✅ Dual Y-Axis Features</h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-md)]">
+      <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] p-[var(--space-l)] rounded-l">
+        <h4 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">✅ Dual Y-Axis Features</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-m)]">
           <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
             <li><strong>Independent Scaling</strong> - Left and right axes scale independently for different data ranges</li>
             <li><strong>Custom Formatters</strong> - Different tick formatters for left and right axes (currency, percentage, etc.)</li>
@@ -1743,8 +1743,8 @@ export const DualYAxisCharts: Story = {
           </ul>
         </div>
 
-        <div className="mt-[var(--space-md)] p-[var(--space-md)] bg-[var(--color-background-info-subtle)] rounded-md">
-          <h5 className="text-body-medium-sm text-[var(--color-text-primary)] mb-[var(--space-sm)]">Configuration Example:</h5>
+        <div className="mt-[var(--space-m)] p-[var(--space-m)] bg-[var(--color-background-info-subtle)] rounded-m">
+          <h5 className="text-body-medium-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Configuration Example:</h5>
           <pre className="text-caption-sm text-[var(--color-text-secondary)] font-mono">
 {`<Chart
   type="line"
@@ -1780,19 +1780,19 @@ const manyItemsData = [
 
 export const LegendPositioning: Story = {
   render: () => (
-    <div className="w-full max-w-7xl mx-auto p-[var(--space-lg)] space-y-[var(--space-xlg)]">
+    <div className="w-full max-w-7xl mx-auto p-[var(--space-l)] space-y-[var(--space-2xl)]">
       <div>
-        <h2 className="text-heading-lg mb-[var(--space-md)]">Legend Positioning & Overflow Prevention</h2>
-        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-xlg)]">
+        <h2 className="text-heading-lg mb-[var(--space-m)]">Legend Positioning & Overflow Prevention</h2>
+        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-2xl)]">
           Demonstrating how legend positioning prevents overflow with X-axis labels and maintains proper layout across different positions.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-xlg)]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-2xl)]">
         {/* Bottom Legend (Default) - Shows overflow prevention */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
-          <h3 className="text-heading-md mb-[var(--space-md)]">Bottom Legend (Overflow Protected)</h3>
-          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+          <h3 className="text-heading-md mb-[var(--space-m)]">Bottom Legend (Overflow Protected)</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Automatic bottom margin calculation prevents legend from overlapping X-axis labels.
           </p>
           <Chart
@@ -1817,9 +1817,9 @@ export const LegendPositioning: Story = {
         </div>
 
         {/* Right Legend */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
-          <h3 className="text-heading-md mb-[var(--space-md)]">Right Legend (Vertical Layout)</h3>
-          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+          <h3 className="text-heading-md mb-[var(--space-m)]">Right Legend (Vertical Layout)</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Vertical layout saves vertical space and provides clean side alignment.
           </p>
           <Chart
@@ -1844,9 +1844,9 @@ export const LegendPositioning: Story = {
         </div>
 
         {/* Top Legend */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
-          <h3 className="text-heading-md mb-[var(--space-md)]">Top Legend (Header Style)</h3>
-          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+          <h3 className="text-heading-md mb-[var(--space-m)]">Top Legend (Header Style)</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Top positioning places legend above chart for header-style layout.
           </p>
           <Chart
@@ -1871,9 +1871,9 @@ export const LegendPositioning: Story = {
         </div>
 
         {/* Composed Chart with Bottom Legend */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
-          <h3 className="text-heading-md mb-[var(--space-md)]">Composed Chart (Protected Layout)</h3>
-          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+          <h3 className="text-heading-md mb-[var(--space-m)]">Composed Chart (Protected Layout)</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Combined bar and line elements with overflow-protected legend positioning.
           </p>
           <Chart
@@ -1898,9 +1898,9 @@ export const LegendPositioning: Story = {
         </div>
       </div>
 
-      <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] p-[var(--space-lg)] rounded-lg">
-        <h4 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-md)]">✅ Legend Layout Features</h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-md)]">
+      <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] p-[var(--space-l)] rounded-l">
+        <h4 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">✅ Legend Layout Features</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-m)]">
           <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
             <li><strong>Overflow Prevention</strong> - Bottom margin automatically adjusts for multi-row legends</li>
             <li><strong>Position Control</strong> - Choose from bottom, top, or right placement</li>
@@ -1934,20 +1934,20 @@ const freightRatesData = [
 
 export const ReferenceMarkers: Story = {
   render: () => (
-    <div className="w-full max-w-7xl mx-auto p-[var(--space-lg)] space-y-[var(--space-xlg)]">
+    <div className="w-full max-w-7xl mx-auto p-[var(--space-l)] space-y-[var(--space-2xl)]">
       <div>
-        <h2 className="text-heading-lg mb-[var(--space-md)]">Reference Markers</h2>
-        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-xlg)]">
+        <h2 className="text-heading-lg mb-[var(--space-m)]">Reference Markers</h2>
+        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-2xl)]">
           Reference markers display independent data points (like negotiation offers, bids, or events) at specific X-axis positions
           with a vertical black line spanning the full chart height. Hover over the marked position to see marker data in the tooltip.
         </p>
       </div>
 
-      <div className="space-y-[var(--space-xlg)]">
+      <div className="space-y-[var(--space-2xl)]">
         {/* Freight Rates with Negotiation Markers */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
-          <h3 className="text-heading-md mb-[var(--space-md)]">Freight Rates with Order Negotiations</h3>
-          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+          <h3 className="text-heading-md mb-[var(--space-m)]">Freight Rates with Order Negotiations</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             This chart shows freight rates over time with a reference marker at Sep 25 showing negotiation offers for a specific order.
             Hover over Sep 25 to see all marker data in the tooltip.
           </p>
@@ -2012,9 +2012,9 @@ export const ReferenceMarkers: Story = {
         </div>
 
         {/* Multiple Reference Markers */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
-          <h3 className="text-heading-md mb-[var(--space-md)]">Multiple Events on Timeline</h3>
-          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+          <h3 className="text-heading-md mb-[var(--space-m)]">Multiple Events on Timeline</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Multiple reference markers can mark different events at different times. Each marker can have its own custom styling and tooltip label.
           </p>
           <Chart
@@ -2068,21 +2068,21 @@ export const ReferenceMarkers: Story = {
 
 export const LegendHeightControl: Story = {
   render: () => (
-    <div className="w-full max-w-7xl mx-auto p-[var(--space-lg)] space-y-[var(--space-xlg)]">
+    <div className="w-full max-w-7xl mx-auto p-[var(--space-l)] space-y-[var(--space-2xl)]">
       <div>
-        <h2 className="text-heading-lg mb-[var(--space-md)]">Legend Height Control</h2>
-        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-xlg)]">
+        <h2 className="text-heading-lg mb-[var(--space-m)]">Legend Height Control</h2>
+        <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-2xl)]">
           Use the <code className="text-caption-sm px-1 py-0.5 bg-[var(--grey-100)] rounded">legendHeight</code> prop to reserve space for the legend.
           The height prop is the total container height. Chart body gets <code className="text-caption-sm px-1 py-0.5 bg-[var(--grey-100)] rounded">height - legendHeight</code>.
           This ensures consistent chart body sizes across different legend configurations.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-xlg)]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-2xl)]">
         {/* Standard Height (Default Behavior) */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
-          <h3 className="text-heading-md mb-[var(--space-md)]">Standard Mode (no legendHeight)</h3>
-          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+          <h3 className="text-heading-md mb-[var(--space-m)]">Standard Mode (no legendHeight)</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Total height = 200px fixed. Chart body and legend share this space. Charts with more legend items have smaller plotting areas.
           </p>
           <div className="border border-dashed border-[var(--color-border-accent)] rounded p-2">
@@ -2103,9 +2103,9 @@ export const LegendHeightControl: Story = {
         </div>
 
         {/* Legend Height Mode */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg">
-          <h3 className="text-heading-md mb-[var(--space-md)]">Legend Height Mode (height=240, legendHeight=40)</h3>
-          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+          <h3 className="text-heading-md mb-[var(--space-m)]">Legend Height Mode (height=240, legendHeight=40)</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Total = 240px. Chart body = 200px (240-40). Legend = 40px reserved.
           </p>
           <div className="border border-dashed border-[var(--color-border-accent)] rounded p-2">
@@ -2127,9 +2127,9 @@ export const LegendHeightControl: Story = {
         </div>
 
         {/* Legend Height with Many Legend Items */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg lg:col-span-2">
-          <h3 className="text-heading-md mb-[var(--space-md)]">Legend Height with Multi-Row Legend</h3>
-          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l lg:col-span-2">
+          <h3 className="text-heading-md mb-[var(--space-m)]">Legend Height with Multi-Row Legend</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             With 6 metrics needing 2 rows. Total = 318px. Chart body = 250px (318-68). Legend = 68px reserved.
           </p>
           <div className="border border-dashed border-[var(--color-border-accent)] rounded p-2">
@@ -2159,9 +2159,9 @@ export const LegendHeightControl: Story = {
         </div>
 
         {/* Use Case: Dashboard Grid */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-lg)] rounded-lg lg:col-span-2">
-          <h3 className="text-heading-md mb-[var(--space-md)]">Use Case: Dashboard with Consistent Chart Bodies</h3>
-          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l lg:col-span-2">
+          <h3 className="text-heading-md mb-[var(--space-m)]">Use Case: Dashboard with Consistent Chart Bodies</h3>
+          <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             All three charts: <code className="text-caption-sm px-1 py-0.5 bg-[var(--grey-100)] rounded">height=248</code> and <code className="text-caption-sm px-1 py-0.5 bg-[var(--grey-100)] rounded">legendHeight=68</code>.
             Chart body for all = 180px (248-68). Total container for all = 248px. Perfect alignment!
           </p>

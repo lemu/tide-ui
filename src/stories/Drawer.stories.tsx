@@ -39,7 +39,7 @@ export const Default: Story = {
             This is a drawer component that slides up from the bottom of the screen.
           </DrawerDescription>
         </DrawerHeader>
-        <div className="p-[var(--space-lg)]">
+        <div className="p-[var(--space-l)]">
           <p className="text-body-sm text-[var(--color-text-secondary)]">
             Drawer content goes here. This component is built using Vaul and provides
             a mobile-friendly bottom sheet experience.
@@ -73,8 +73,8 @@ export const WithForm: Story = {
               Make changes to your profile here. Click save when you're done.
             </DrawerDescription>
           </DrawerHeader>
-          <div className="p-[var(--space-lg)] space-y-[var(--space-md)]">
-            <div className="space-y-[var(--space-sm)]">
+          <div className="p-[var(--space-l)] space-y-[var(--space-m)]">
+            <div className="space-y-[var(--space-s)]">
               <Label htmlFor="name">Name</Label>
               <Input
                 id="name"
@@ -83,7 +83,7 @@ export const WithForm: Story = {
                 placeholder="Enter your name"
               />
             </div>
-            <div className="space-y-[var(--space-sm)]">
+            <div className="space-y-[var(--space-s)]">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -122,7 +122,7 @@ export const Nested: Story = {
               This drawer contains another drawer inside it.
             </DrawerDescription>
           </DrawerHeader>
-          <div className="p-[var(--space-lg)] space-y-[var(--space-md)]">
+          <div className="p-[var(--space-l)] space-y-[var(--space-m)]">
             <p className="text-body-sm text-[var(--color-text-secondary)]">
               You can nest drawers to create multi-level navigation experiences.
             </p>
@@ -137,7 +137,7 @@ export const Nested: Story = {
                     This is a nested drawer component.
                   </DrawerDescription>
                 </DrawerHeader>
-                <div className="p-[var(--space-lg)]">
+                <div className="p-[var(--space-l)]">
                   <p className="text-body-sm text-[var(--color-text-secondary)]">
                     Content of the nested drawer.
                   </p>
@@ -174,8 +174,8 @@ export const WithScrollContent: Story = {
             Please read and accept our terms and conditions.
           </DrawerDescription>
         </DrawerHeader>
-        <div className="p-[var(--space-lg)] max-h-[400px] overflow-y-auto">
-          <div className="space-y-[var(--space-md)] text-body-sm text-[var(--color-text-secondary)]">
+        <div className="p-[var(--space-l)] max-h-[400px] overflow-y-auto">
+          <div className="space-y-[var(--space-m)] text-body-sm text-[var(--color-text-secondary)]">
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,

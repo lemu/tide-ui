@@ -20,7 +20,7 @@ const meta: Meta<typeof Textarea> = {
     },
     size: {
       control: 'select',
-      options: ['sm', 'md', 'lg'],
+      options: ['s', 'm', 'l'],
       description: 'Size of the textarea',
     },
     placeholder: {
@@ -64,7 +64,7 @@ export const Sizes: Story = {
       <div>
         <Label className="font-medium mb-2 block">Small</Label>
         <Textarea
-          size="sm"
+          size="s"
           placeholder="Small textarea"
           rows={3}
         />
@@ -72,7 +72,7 @@ export const Sizes: Story = {
       <div>
         <Label className="font-medium mb-2 block">Medium (Default)</Label>
         <Textarea
-          size="md"
+          size="m"
           placeholder="Medium textarea"
           rows={3}
         />
@@ -80,7 +80,7 @@ export const Sizes: Story = {
       <div>
         <Label className="font-medium mb-2 block">Large</Label>
         <Textarea
-          size="lg"
+          size="l"
           placeholder="Large textarea"
           rows={3}
         />
@@ -133,7 +133,7 @@ export const ErrorState: Story = {
         defaultValue="This message is too short"
       />
       <div className="flex items-start gap-2 text-body-sm text-[var(--color-text-error-bold)]">
-        <Icon name="circle-alert" size="sm" className="mt-0.5 flex-shrink-0" />
+        <Icon name="circle-alert" size="s" className="mt-0.5 flex-shrink-0" />
         <span>Message must be at least 10 characters long.</span>
       </div>
     </div>
@@ -271,7 +271,7 @@ export const InForm: Story = {
             placeholder="your@email.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="flex h-10 w-full rounded-md border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3 py-2 text-body-md ring-offset-[var(--color-surface-primary)] placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex h-10 w-full rounded-m border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3 py-2 text-body-md ring-offset-[var(--color-surface-primary)] placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             required
           />
         </div>
@@ -372,7 +372,7 @@ Best regards,
             <Button
               type="button"
               variant="ghost"
-              size="sm"
+              size="s"
               onClick={handleTemplate}
               className="h-6 px-2 text-xs"
             >
@@ -381,7 +381,7 @@ Best regards,
             <Button
               type="button"
               variant="ghost"
-              size="sm"
+              size="s"
               onClick={handleClear}
               className="h-6 px-2 text-xs"
             >
@@ -401,10 +401,10 @@ Best regards,
             {content.split(' ').filter(word => word.length > 0).length} words
           </p>
           <div className="flex gap-2">
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="s">
               Save Draft
             </Button>
-            <Button size="sm">
+            <Button size="s">
               Send
             </Button>
           </div>

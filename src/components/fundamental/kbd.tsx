@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
 const kbdVariants = cva(
-  "inline-flex items-center justify-center rounded-xsm font-mono font-medium transition-colors select-none relative",
+  "inline-flex items-center justify-center rounded-xs font-mono font-medium transition-colors select-none relative",
   {
     variants: {
       variant: {
@@ -19,13 +19,13 @@ const kbdVariants = cva(
         ],
       },
       size: {
-        sm: "px-[var(--space-2xsm)] py-[var(--space-null)] min-w-[var(--size-2xsm)] [&]:text-body-xsm",
-        md: "px-[var(--space-sm)] py-[var(--space-2xsm)] min-w-[var(--size-md)] [&]:text-body-sm",
+        s: "px-[var(--space-2xs)] py-[var(--space-null)] min-w-[var(--size-2xs)] [&]:text-body-xsm",
+        m: "px-[var(--space-s)] py-[var(--space-2xs)] min-w-[var(--size-m)] [&]:text-body-sm",
       },
     },
     defaultVariants: {
       variant: "light",
-      size: "sm",
+      size: "s",
     },
   },
 );
@@ -54,7 +54,7 @@ const KbdGroup = React.forwardRef<HTMLSpanElement, KbdGroupProps>(
   ({ className, ...props }, ref) => {
     return (
       <span
-        className={cn("inline-flex items-center gap-[var(--space-xsm)]", className)}
+        className={cn("inline-flex items-center gap-[var(--space-xs)]", className)}
         ref={ref}
         {...props}
       />

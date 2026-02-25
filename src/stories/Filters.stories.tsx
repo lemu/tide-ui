@@ -947,26 +947,26 @@ export const SingleSelectVsMultiselect: Story = {
     }
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Single-Select vs Multi-Select Filters</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Single-Select vs Multi-Select Filters</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-m)]">
               This example demonstrates the difference between single-select and multi-select filters, as well as conditional search visibility.
               Single-select filters use radio buttons (one choice only), while multi-select filters use checkboxes (multiple choices).
             </p>
 
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)] mb-[var(--space-md)]">
-              <div className="flex flex-col gap-[var(--space-sm)]">
-                <div className="text-body-sm font-medium text-[var(--color-text-accent)] mb-[var(--space-xsm)]">Selection Types:</div>
-                <div className="flex items-start gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)] mb-[var(--space-m)]">
+              <div className="flex flex-col gap-[var(--space-s)]">
+                <div className="text-body-sm font-medium text-[var(--color-text-accent)] mb-[var(--space-xs)]">Selection Types:</div>
+                <div className="flex items-start gap-[var(--space-s)]">
                   <Icon name="circle" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Single-Select (Radio Buttons):</span>
                     <span className="text-body-sm text-[var(--color-text-accent)]"> Priority, Country - Choose only one option</span>
                   </div>
                 </div>
-                <div className="flex items-start gap-[var(--space-sm)]">
+                <div className="flex items-start gap-[var(--space-s)]">
                   <Icon name="square" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Multi-Select (Checkboxes):</span>
@@ -976,24 +976,24 @@ export const SingleSelectVsMultiselect: Story = {
               </div>
             </div>
 
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)] mb-[var(--space-lg)]">
-              <div className="flex flex-col gap-[var(--space-sm)]">
-                <div className="text-body-sm font-medium text-[var(--color-text-accent)] mb-[var(--space-xsm)]">Search Visibility:</div>
-                <div className="flex items-start gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)] mb-[var(--space-l)]">
+              <div className="flex flex-col gap-[var(--space-s)]">
+                <div className="text-body-sm font-medium text-[var(--color-text-accent)] mb-[var(--space-xs)]">Search Visibility:</div>
+                <div className="flex items-start gap-[var(--space-s)]">
                   <Icon name="search" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Auto (default):</span>
                     <span className="text-body-sm text-[var(--color-text-accent)]"> Status (4 options) - No search. Country (10 options) - Has search (≥8 threshold)</span>
                   </div>
                 </div>
-                <div className="flex items-start gap-[var(--space-sm)]">
+                <div className="flex items-start gap-[var(--space-s)]">
                   <Icon name="eye-off" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Hidden:</span>
                     <span className="text-body-sm text-[var(--color-text-accent)]"> Priority (showSearch: false) - Search always hidden</span>
                   </div>
                 </div>
-                <div className="flex items-start gap-[var(--space-sm)]">
+                <div className="flex items-start gap-[var(--space-s)]">
                   <Icon name="eye" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Forced:</span>
@@ -1015,7 +1015,7 @@ export const SingleSelectVsMultiselect: Story = {
           />
 
           {/* Display active filters */}
-          <div className="mt-[var(--space-lg)]">
+          <div className="mt-[var(--space-l)]">
             <Card>
               <CardHeader>
                 <CardTitle>Active Filters</CardTitle>
@@ -1024,7 +1024,7 @@ export const SingleSelectVsMultiselect: Story = {
                 {Object.keys(activeFilters).length === 0 ? (
                   <p className="text-body-md text-[var(--color-text-secondary)]">No filters applied</p>
                 ) : (
-                  <div className="flex flex-col gap-[var(--space-sm)]">
+                  <div className="flex flex-col gap-[var(--space-s)]">
                     {Object.entries(activeFilters).map(([filterId, value]) => {
                       const filter = filters.find(f => f.id === filterId)
                       const displayValue = Array.isArray(value)
@@ -1032,7 +1032,7 @@ export const SingleSelectVsMultiselect: Story = {
                         : String(value)
 
                       return (
-                        <div key={filterId} className="flex items-start gap-[var(--space-sm)]">
+                        <div key={filterId} className="flex items-start gap-[var(--space-s)]">
                           <Label className="min-w-[120px] font-medium">{filter?.label}:</Label>
                           <span className="text-body-md">{displayValue}</span>
                           <span className="text-body-sm text-[var(--color-text-tertiary)] ml-auto">
@@ -1237,18 +1237,18 @@ export const GroupedVsUngroupedFilters: Story = {
     }
 
     return (
-      <div className="p-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
         <div className="max-w-[1200px] mx-auto">
-          <div className="mb-[var(--space-lg)]">
-            <h2 className="text-heading-lg mb-[var(--space-sm)]">Grouped vs Ungrouped Filters</h2>
-            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+          <div className="mb-[var(--space-l)]">
+            <h2 className="text-heading-lg mb-[var(--space-s)]">Grouped vs Ungrouped Filters</h2>
+            <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-m)]">
               This example demonstrates the difference between ungrouped filters (simple flat lists) and grouped filters (categorized with section headers).
             </p>
 
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)] mb-[var(--space-md)]">
-              <div className="flex flex-col gap-[var(--space-sm)]">
-                <div className="text-body-sm font-medium text-[var(--color-text-accent)] mb-[var(--space-xsm)]">Ungrouped Filters (using options array):</div>
-                <div className="flex items-start gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)] mb-[var(--space-m)]">
+              <div className="flex flex-col gap-[var(--space-s)]">
+                <div className="text-body-sm font-medium text-[var(--color-text-accent)] mb-[var(--space-xs)]">Ungrouped Filters (using options array):</div>
+                <div className="flex items-start gap-[var(--space-s)]">
                   <Icon name="list" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Priority, Status, Team:</span>
@@ -1258,24 +1258,24 @@ export const GroupedVsUngroupedFilters: Story = {
               </div>
             </div>
 
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-md p-[var(--space-md)] mb-[var(--space-lg)]">
-              <div className="flex flex-col gap-[var(--space-sm)]">
-                <div className="text-body-sm font-medium text-[var(--color-text-accent)] mb-[var(--space-xsm)]">Grouped Filters (using groups array):</div>
-                <div className="flex items-start gap-[var(--space-sm)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)] mb-[var(--space-l)]">
+              <div className="flex flex-col gap-[var(--space-s)]">
+                <div className="text-body-sm font-medium text-[var(--color-text-accent)] mb-[var(--space-xs)]">Grouped Filters (using groups array):</div>
+                <div className="flex items-start gap-[var(--space-s)]">
                   <Icon name="layers" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Country:</span>
                     <span className="text-body-sm text-[var(--color-text-accent)]"> Grouped by continent (Europe, Asia, Americas). Best for 10+ options with logical categories.</span>
                   </div>
                 </div>
-                <div className="flex items-start gap-[var(--space-sm)]">
+                <div className="flex items-start gap-[var(--space-s)]">
                   <Icon name="layers" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Department:</span>
                     <span className="text-body-sm text-[var(--color-text-accent)]"> Grouped by division (Engineering, Business, Operations). Each group has a Reset button.</span>
                   </div>
                 </div>
-                <div className="flex items-start gap-[var(--space-sm)]">
+                <div className="flex items-start gap-[var(--space-s)]">
                   <Icon name="git-branch" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Cargo Type:</span>
@@ -1297,7 +1297,7 @@ export const GroupedVsUngroupedFilters: Story = {
           />
 
           {/* Display active filters */}
-          <div className="mt-[var(--space-lg)]">
+          <div className="mt-[var(--space-l)]">
             <Card>
               <CardHeader>
                 <CardTitle>Active Filters</CardTitle>
@@ -1306,7 +1306,7 @@ export const GroupedVsUngroupedFilters: Story = {
                 {Object.keys(activeFilters).length === 0 ? (
                   <p className="text-body-md text-[var(--color-text-secondary)]">No filters applied</p>
                 ) : (
-                  <div className="flex flex-col gap-[var(--space-sm)]">
+                  <div className="flex flex-col gap-[var(--space-s)]">
                     {Object.entries(activeFilters).map(([filterId, value]) => {
                       const filter = filters.find(f => f.id === filterId)
                       const displayValue = Array.isArray(value)
@@ -1314,7 +1314,7 @@ export const GroupedVsUngroupedFilters: Story = {
                         : String(value)
 
                       return (
-                        <div key={filterId} className="flex items-start gap-[var(--space-sm)]">
+                        <div key={filterId} className="flex items-start gap-[var(--space-s)]">
                           <Label className="min-w-[120px] font-medium">{filter?.label}:</Label>
                           <span className="text-body-md">{displayValue}</span>
                           <span className="text-body-sm text-[var(--color-text-tertiary)] ml-auto">
@@ -1417,14 +1417,14 @@ export const WithNumberRangeFilter: Story = {
             {Object.keys(activeFilters).length === 0 ? (
               <p className="text-body-md text-[var(--color-text-secondary)]">No ranges applied</p>
             ) : (
-              <div className="flex flex-col gap-[var(--space-sm)]">
+              <div className="flex flex-col gap-[var(--space-s)]">
                 {Object.entries(activeFilters).map(([filterId, value]) => {
                   const filter = filters.find(f => f.id === filterId)
                   if (!filter || !Array.isArray(value)) return null
                   const [min, max] = value as [number, number]
 
                   return (
-                    <div key={filterId} className="flex items-start gap-[var(--space-sm)]">
+                    <div key={filterId} className="flex items-start gap-[var(--space-s)]">
                       <Label className="min-w-[120px] font-medium">{filter.label}:</Label>
                       <span className="text-body-md">
                         Min: {min === -Infinity ? 'N/A' : min}, Max: {max === Infinity ? 'N/A' : max}
@@ -1539,14 +1539,14 @@ export const WithDateRangeFilter: Story = {
             {Object.keys(activeFilters).length === 0 ? (
               <p className="text-body-md text-[var(--color-text-secondary)]">No date ranges applied</p>
             ) : (
-              <div className="flex flex-col gap-[var(--space-sm)]">
+              <div className="flex flex-col gap-[var(--space-s)]">
                 {Object.entries(activeFilters).map(([filterId, value]) => {
                   const filter = filters.find(f => f.id === filterId)
                   if (!filter || !Array.isArray(value)) return null
                   const [start, end] = value as [Date, Date]
 
                   return (
-                    <div key={filterId} className="flex items-start gap-[var(--space-sm)]">
+                    <div key={filterId} className="flex items-start gap-[var(--space-s)]">
                       <Label className="min-w-[120px] font-medium">{filter.label}:</Label>
                       <span className="text-body-md">{formatDateRange(start, end)}</span>
                       <span className="text-body-sm text-[var(--color-text-tertiary)] ml-auto">
@@ -1661,7 +1661,7 @@ export const WithMixedFilterTypes: Story = {
             {Object.keys(activeFilters).length === 0 ? (
               <p className="text-body-md text-[var(--color-text-secondary)]">No filters applied</p>
             ) : (
-              <div className="flex flex-col gap-[var(--space-sm)]">
+              <div className="flex flex-col gap-[var(--space-s)]">
                 {Object.entries(activeFilters).map(([filterId, value]) => {
                   const filter = filters.find(f => f.id === filterId)
                   if (!filter) return null
@@ -1680,7 +1680,7 @@ export const WithMixedFilterTypes: Story = {
                   }
 
                   return (
-                    <div key={filterId} className="flex items-start gap-[var(--space-sm)]">
+                    <div key={filterId} className="flex items-start gap-[var(--space-s)]">
                       <Label className="min-w-[120px] font-medium">{filter.label}:</Label>
                       <span className="text-body-md">{displayValue}</span>
                       <span className="text-body-sm text-[var(--color-text-tertiary)] ml-auto">

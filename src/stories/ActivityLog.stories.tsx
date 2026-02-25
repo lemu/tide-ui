@@ -142,7 +142,7 @@ export const TimeBasedSeparators: Story = {
         {/* Separator auto-inserted here (4 days later) */}
         <ActivityLogItem timestamp={new Date('2025-07-10T14:28:00')}>
           <ActivityLogHeader>
-            <Icon name="shield-check" size="md" color="primary" />
+            <Icon name="shield-check" size="m" color="primary" />
             <ActivityLogDescription>
               <span>Compliance check completed successfully</span>
               <ActivityLogTime dateTime="2025-07-10T14:28:00">Jul 10, 2025 at 14:28</ActivityLogTime>
@@ -174,7 +174,7 @@ export const CollapsibleItems: Story = {
           </ActivityLogHeader>
           <ActivityLogContent>
             <Card>
-              <CardContent className="p-[var(--space-md)]">
+              <CardContent className="p-[var(--space-m)]">
                 <div className="space-y-2 text-body-sm">
                   <div className="flex justify-between">
                     <span className="text-[var(--color-text-secondary)]">Order ID:</span>
@@ -211,7 +211,7 @@ export const CollapsibleItems: Story = {
           </ActivityLogHeader>
           <ActivityLogContent>
             <Card>
-              <CardContent className="p-[var(--space-md)]">
+              <CardContent className="p-[var(--space-m)]">
                 <div className="space-y-2 text-body-sm">
                   <div className="flex justify-between">
                     <span className="text-[var(--color-text-secondary)]">Bid Price:</span>
@@ -248,7 +248,7 @@ export const CollapsibleItems: Story = {
           </ActivityLogHeader>
           <ActivityLogContent>
             <Card>
-              <CardContent className="p-[var(--space-md)]">
+              <CardContent className="p-[var(--space-m)]">
                 <div className="space-y-2 text-body-sm">
                   <div className="flex justify-between">
                     <span className="text-[var(--color-text-secondary)]">Counter Offer:</span>
@@ -331,7 +331,7 @@ export const RichContent: Story = {
               <AvatarFallback size="xxs">RL</AvatarFallback>
             </Avatar>
             <ActivityLogDescription>
-              <Icon name="arrow-right" size="sm" color="tertiary" />
+              <Icon name="arrow-right" size="s" color="tertiary" />
               <AvatarGroup size="xxs">
                 <Avatar size="xxs">
                   <AvatarFallback size="xxs">IC</AvatarFallback>
@@ -375,7 +375,7 @@ export const RichContent: Story = {
               <AvatarFallback size="xxs">RL</AvatarFallback>
             </Avatar>
             <ActivityLogDescription>
-              <Icon name="arrow-left-right" size="sm" color="tertiary" />
+              <Icon name="arrow-left-right" size="s" color="tertiary" />
               <AvatarGroup size="xxs">
                 <Avatar size="xxs">
                   <AvatarFallback size="xxs">IC</AvatarFallback>
@@ -400,7 +400,7 @@ export const RichContent: Story = {
               <AvatarFallback size="xxs">RL</AvatarFallback>
             </Avatar>
             <ActivityLogDescription>
-              <Icon name="arrow-left-right" size="sm" color="tertiary" />
+              <Icon name="arrow-left-right" size="s" color="tertiary" />
               <AvatarGroup size="xxs">
                 <Avatar size="xxs">
                   <AvatarFallback size="xxs">IC</AvatarFallback>
@@ -421,10 +421,10 @@ export const RichContent: Story = {
 
         <ActivityLogItem>
           <ActivityLogHeader>
-            <Icon name="shield-check" size="md" color="primary" />
+            <Icon name="shield-check" size="m" color="primary" />
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Compliance check has finished with the result</span>
-              <Badge intent="success" size="sm">Compliant</Badge>
+              <Badge intent="success" size="s">Compliant</Badge>
               <ActivityLogTime dateTime="2025-07-10T14:28:00">Jul 10, 2025 at 14:28</ActivityLogTime>
             </ActivityLogDescription>
           </ActivityLogHeader>
@@ -438,7 +438,7 @@ export const RichContent: Story = {
               <AvatarFallback size="xxs">RL</AvatarFallback>
             </Avatar>
             <ActivityLogDescription>
-              <Icon name="arrow-left-right" size="sm" color="tertiary" />
+              <Icon name="arrow-left-right" size="s" color="tertiary" />
               <AvatarGroup size="xxs">
                 <Avatar size="xxs">
                   <AvatarFallback size="xxs">IC</AvatarFallback>
@@ -522,7 +522,7 @@ export const ManualSeparators: Story = {
 
         <ActivityLogItem>
           <ActivityLogHeader>
-            <Icon name="check-circle" size="md" color="primary" />
+            <Icon name="check-circle" size="m" color="primary" />
             <ActivityLogDescription>
               <span>Project completed successfully</span>
               <ActivityLogTime dateTime="2025-07-12T07:02:00">Jul 12, 2025 at 7:02</ActivityLogTime>
@@ -554,20 +554,20 @@ export const CustomContent: Story = {
           <ActivityLogContent>
             <div className="space-y-3">
               <Card>
-                <CardContent className="p-[var(--space-md)]">
+                <CardContent className="p-[var(--space-m)]">
                   <div className="space-y-2">
                     <div className="text-body-medium-sm">Version 2.1.0</div>
                     <ul className="space-y-1 text-body-sm text-[var(--color-text-secondary)]">
                       <li className="flex items-start gap-2">
-                        <Icon name="check" size="sm" color="success" className="mt-0.5 shrink-0" />
+                        <Icon name="check" size="s" color="success" className="mt-0.5 shrink-0" />
                         <span>Added new Timeline component</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <Icon name="check" size="sm" color="success" className="mt-0.5 shrink-0" />
+                        <Icon name="check" size="s" color="success" className="mt-0.5 shrink-0" />
                         <span>Fixed dark mode color issues</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <Icon name="check" size="sm" color="success" className="mt-0.5 shrink-0" />
+                        <Icon name="check" size="s" color="success" className="mt-0.5 shrink-0" />
                         <span>Improved accessibility across all components</span>
                       </li>
                     </ul>
@@ -589,7 +589,7 @@ export const CustomContent: Story = {
 
         <ActivityLogItem collapsible>
           <ActivityLogHeader asCollapsibleTrigger>
-            <Icon name="alert-circle" size="md" color="primary" />
+            <Icon name="alert-circle" size="m" color="primary" />
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Build warning detected</span>
               <ActivityLogTime dateTime="2025-07-04T12:45:00">Jul 4, 2025 at 12:45</ActivityLogTime>
@@ -598,14 +598,14 @@ export const CustomContent: Story = {
           </ActivityLogHeader>
           <ActivityLogContent>
             <Card>
-              <CardContent className="p-[var(--space-md)] space-y-2">
+              <CardContent className="p-[var(--space-m)] space-y-2">
                 <div className="text-body-sm">
                   <span className="text-[var(--color-text-warning-bold)]">Warning:</span>
                   <span className="text-[var(--color-text-secondary)] ml-1">
                     Deprecated API usage detected in 3 files
                   </span>
                 </div>
-                <div className="text-caption-sm font-mono text-[var(--color-text-tertiary)] bg-[var(--color-surface-secondary)] p-2 rounded-sm">
+                <div className="text-caption-sm font-mono text-[var(--color-text-tertiary)] bg-[var(--color-surface-secondary)] p-2 rounded-s">
                   components/legacy-button.tsx:42
                 </div>
               </CardContent>
@@ -629,10 +629,10 @@ export const CustomContent: Story = {
           </ActivityLogHeader>
           <ActivityLogContent>
             <Card>
-              <CardContent className="p-[var(--space-md)]">
+              <CardContent className="p-[var(--space-m)]">
                 <div className="space-y-2 text-body-sm">
                   <div className="flex items-center gap-2">
-                    <Icon name="git-pull-request" size="sm" />
+                    <Icon name="git-pull-request" size="s" />
                     <span className="text-body-medium-sm">Pull Request #456</span>
                   </div>
                   <p className="text-[var(--color-text-secondary)]">
@@ -686,7 +686,7 @@ export const MixedItems: Story = {
             <ActivityLogChevron />
           </ActivityLogHeader>
           <ActivityLogContent>
-            <div className="space-y-1 text-body-sm pl-[var(--space-lg)]">
+            <div className="space-y-1 text-body-sm pl-[var(--space-l)]">
               <div className="text-[var(--color-text-secondary)]">Initial commit</div>
               <div className="text-[var(--color-text-secondary)]">Add project structure</div>
               <div className="text-[var(--color-text-secondary)]">Setup development environment</div>
@@ -700,7 +700,7 @@ export const MixedItems: Story = {
 
         <ActivityLogItem>
           <ActivityLogHeader>
-            <Icon name="users" size="md" color="primary" />
+            <Icon name="users" size="m" color="primary" />
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Ivy Chu</span>
               <span>was added as a collaborator</span>
@@ -725,7 +725,7 @@ export const MixedItems: Story = {
           </ActivityLogHeader>
           <ActivityLogContent>
             <Card>
-              <CardContent className="p-[var(--space-md)] space-y-2">
+              <CardContent className="p-[var(--space-m)] space-y-2">
                 <div className="text-body-medium-sm">Feature: Add user authentication</div>
                 <p className="text-body-sm text-[var(--color-text-secondary)]">
                   Implements OAuth2 authentication flow with support for Google and GitHub providers
@@ -810,22 +810,22 @@ export const ValueChanges: Story = {
           </ActivityLogHeader>
           <ActivityLogContent>
             <div className="space-y-2 text-body-sm">
-              <div className="flex items-center gap-[var(--space-xsm)]">
+              <div className="flex items-center gap-[var(--space-xs)]">
                 <span className="text-[var(--color-text-secondary)]">Load Port:</span>
                 <ActivityLogValue>Santos, BR</ActivityLogValue>
-                <Icon name="arrow-right" size="sm" color="tertiary" />
+                <Icon name="arrow-right" size="s" color="tertiary" />
                 <ActivityLogValue>Tubarão, BR</ActivityLogValue>
               </div>
-              <div className="flex items-center gap-[var(--space-xsm)]">
+              <div className="flex items-center gap-[var(--space-xs)]">
                 <span className="text-[var(--color-text-secondary)]">Cargo:</span>
                 <ActivityLogValue>150,000 mt</ActivityLogValue>
-                <Icon name="arrow-right" size="sm" color="tertiary" />
+                <Icon name="arrow-right" size="s" color="tertiary" />
                 <ActivityLogValue>160,000 mt</ActivityLogValue>
               </div>
-              <div className="flex items-center gap-[var(--space-xsm)]">
+              <div className="flex items-center gap-[var(--space-xs)]">
                 <span className="text-[var(--color-text-secondary)]">Laycan:</span>
                 <ActivityLogValue>Oct 25-28, 2025</ActivityLogValue>
-                <Icon name="arrow-right" size="sm" color="tertiary" />
+                <Icon name="arrow-right" size="s" color="tertiary" />
                 <ActivityLogValue>Oct 27-30, 2025</ActivityLogValue>
               </div>
             </div>

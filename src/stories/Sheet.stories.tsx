@@ -90,7 +90,7 @@ export const FromLeft: Story = {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost">
-          <Icon name="menu" size="sm" className="mr-2" />
+          <Icon name="menu" size="s" className="mr-2" />
           Navigation
         </Button>
       </SheetTrigger>
@@ -104,23 +104,23 @@ export const FromLeft: Story = {
         <div className="py-4">
           <nav className="space-y-2">
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="home" size="sm" className="mr-2" />
+              <Icon name="home" size="s" className="mr-2" />
               Dashboard
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="folder" size="sm" className="mr-2" />
+              <Icon name="folder" size="s" className="mr-2" />
               Projects
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="users" size="sm" className="mr-2" />
+              <Icon name="users" size="s" className="mr-2" />
               Team
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="bar-chart" size="sm" className="mr-2" />
+              <Icon name="bar-chart" size="s" className="mr-2" />
               Analytics
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="settings" size="sm" className="mr-2" />
+              <Icon name="settings" size="s" className="mr-2" />
               Settings
             </Button>
           </nav>
@@ -143,7 +143,7 @@ export const FromTop: Story = {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost">
-          <Icon name="bell" size="sm" className="mr-2" />
+          <Icon name="bell" size="s" className="mr-2" />
           Notifications
         </Button>
       </SheetTrigger>
@@ -160,7 +160,7 @@ export const FromTop: Story = {
               <Card key={i}>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <Icon name="info" size="sm" className="text-[var(--color-text-info-bold)]" />
+                    <Icon name="info" size="s" className="text-[var(--color-text-info-bold)]" />
                     <span className="text-body-sm font-medium">System Update</span>
                   </div>
                   <p className="text-caption-sm text-[var(--color-text-secondary)]">
@@ -184,7 +184,7 @@ export const FromBottom: Story = {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost">
-          <Icon name="share" size="sm" className="mr-2" />
+          <Icon name="share" size="s" className="mr-2" />
           Share Options
         </Button>
       </SheetTrigger>
@@ -198,19 +198,19 @@ export const FromBottom: Story = {
         <div className="py-4">
           <div className="grid grid-cols-4 gap-4">
             <Button variant="ghost" className="flex flex-col gap-2 h-auto py-4">
-              <Icon name="mail" size="md" />
+              <Icon name="mail" size="m" />
               <span className="text-sm">Email</span>
             </Button>
             <Button variant="ghost" className="flex flex-col gap-2 h-auto py-4">
-              <Icon name="link" size="md" />
+              <Icon name="link" size="m" />
               <span className="text-sm">Copy Link</span>
             </Button>
             <Button variant="ghost" className="flex flex-col gap-2 h-auto py-4">
-              <Icon name="download" size="md" />
+              <Icon name="download" size="m" />
               <span className="text-sm">Export</span>
             </Button>
             <Button variant="ghost" className="flex flex-col gap-2 h-auto py-4">
-              <Icon name="share-2" size="md" />
+              <Icon name="share-2" size="m" />
               <span className="text-sm">Social</span>
             </Button>
           </div>
@@ -247,7 +247,7 @@ export const ShoppingCart: Story = {
       <Sheet>
         <SheetTrigger asChild>
           <Button>
-            <Icon name="shopping-cart" size="sm" className="mr-2" />
+            <Icon name="shopping-cart" size="s" className="mr-2" />
             Cart ({cartItems.reduce((sum, item) => sum + item.quantity, 0)})
           </Button>
         </SheetTrigger>
@@ -262,7 +262,7 @@ export const ShoppingCart: Story = {
           <div className="py-4 flex-1 overflow-auto">
             {cartItems.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full space-y-4">
-                <Icon name="shopping-cart" size="lg" className="text-[var(--color-text-tertiary)]" />
+                <Icon name="shopping-cart" size="l" className="text-[var(--color-text-tertiary)]" />
                 <div className="text-center">
                   <p className="text-body-md font-medium">Your cart is empty</p>
                   <p className="text-body-sm text-[var(--color-text-secondary)]">Add some items to get started</p>
@@ -272,8 +272,8 @@ export const ShoppingCart: Story = {
             ) : (
               <div className="space-y-4">
                 {cartItems.map((item) => (
-                  <div key={item.id} className="flex items-center gap-4 p-4 border border-[var(--color-border-primary-subtle)] rounded-md">
-                    <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded-md" />
+                  <div key={item.id} className="flex items-center gap-4 p-4 border border-[var(--color-border-primary-subtle)] rounded-m">
+                    <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded-m" />
                     <div className="flex-1">
                       <h4 className="font-medium">{item.name}</h4>
                       <p className="text-body-sm text-[var(--color-text-secondary)]">${item.price}</p>
@@ -281,29 +281,29 @@ export const ShoppingCart: Story = {
                     <div className="flex items-center gap-2">
                       <Button 
                         variant="ghost" 
-                        size="sm" 
+                        size="s" 
                         className="h-8 w-8 p-0"
                         onClick={() => updateQuantity(item.id, item.quantity - 1)}
                       >
-                        <Icon name="minus" size="sm" />
+                        <Icon name="minus" size="s" />
                       </Button>
                       <span className="w-8 text-center">{item.quantity}</span>
                       <Button 
                         variant="ghost" 
-                        size="sm" 
+                        size="s" 
                         className="h-8 w-8 p-0"
                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
                       >
-                        <Icon name="plus" size="sm" />
+                        <Icon name="plus" size="s" />
                       </Button>
                     </div>
                     <Button 
                       variant="ghost" 
-                      size="sm" 
+                      size="s" 
                       className="h-8 w-8 p-0 text-[var(--color-text-error-bold)]"
                       onClick={() => updateQuantity(item.id, 0)}
                     >
-                      <Icon name="trash-2" size="sm" />
+                      <Icon name="trash-2" size="s" />
                     </Button>
                   </div>
                 ))}
@@ -323,7 +323,7 @@ export const ShoppingCart: Story = {
                     <Button variant="ghost" className="flex-1">Continue Shopping</Button>
                   </SheetClose>
                   <Button className="flex-1">
-                    <Icon name="credit-card" size="sm" className="mr-2" />
+                    <Icon name="credit-card" size="s" className="mr-2" />
                     Checkout
                   </Button>
                 </div>
@@ -356,7 +356,7 @@ export const FormSheet: Story = {
       <Sheet>
         <SheetTrigger asChild>
           <Button>
-            <Icon name="message-circle" size="sm" className="mr-2" />
+            <Icon name="message-circle" size="s" className="mr-2" />
             Contact Support
           </Button>
         </SheetTrigger>
@@ -396,7 +396,7 @@ export const FormSheet: Story = {
                 id="support-priority"
                 value={formData.priority}
                 onChange={(e) => setFormData(prev => ({ ...prev, priority: e.target.value }))}
-                className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm"
+                className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-m bg-[var(--color-surface-primary)] text-body-sm"
               >
                 <option value="low">Low - General inquiry</option>
                 <option value="medium">Medium - Need help</option>
@@ -416,9 +416,9 @@ export const FormSheet: Story = {
               />
             </div>
 
-            <div className="bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-md p-4">
+            <div className="bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m p-4">
               <div className="flex items-start gap-2">
-                <Icon name="info" size="sm" className="mt-0.5 text-[var(--color-text-info-bold)]" />
+                <Icon name="info" size="s" className="mt-0.5 text-[var(--color-text-info-bold)]" />
                 <div className="space-y-1">
                   <p className="text-body-sm font-medium">Response Time</p>
                   <ul className="text-caption-sm space-y-1">
@@ -437,7 +437,7 @@ export const FormSheet: Story = {
               <Button variant="ghost">Cancel</Button>
             </SheetClose>
             <Button onClick={handleSubmit}>
-              <Icon name="send" size="sm" className="mr-2" />
+              <Icon name="send" size="s" className="mr-2" />
               Send Message
             </Button>
           </SheetFooter>
@@ -474,7 +474,7 @@ export const FileBrowser: Story = {
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="ghost">
-            <Icon name="folder-open" size="sm" className="mr-2" />
+            <Icon name="folder-open" size="s" className="mr-2" />
             Browse Files
           </Button>
         </SheetTrigger>
@@ -489,13 +489,13 @@ export const FileBrowser: Story = {
           <div className="py-4 space-y-4">
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-body-sm">
-              <Button variant="ghost" size="sm" className="h-6 px-2">
-                <Icon name="home" size="sm" />
+              <Button variant="ghost" size="s" className="h-6 px-2">
+                <Icon name="home" size="s" />
               </Button>
               {currentPath.map((folder, index) => (
                 <div key={index} className="flex items-center gap-2">
-                  <Icon name="chevron-right" size="sm" className="text-[var(--color-text-tertiary)]" />
-                  <Button variant="ghost" size="sm" className="h-6 px-2">
+                  <Icon name="chevron-right" size="s" className="text-[var(--color-text-tertiary)]" />
+                  <Button variant="ghost" size="s" className="h-6 px-2">
                     {folder}
                   </Button>
                 </div>
@@ -505,12 +505,12 @@ export const FileBrowser: Story = {
             {/* Toolbar */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Button size="sm" variant="ghost">
-                  <Icon name="upload" size="sm" className="mr-2" />
+                <Button size="s" variant="ghost">
+                  <Icon name="upload" size="s" className="mr-2" />
                   Upload
                 </Button>
-                <Button size="sm" variant="ghost">
-                  <Icon name="folder-plus" size="sm" className="mr-2" />
+                <Button size="s" variant="ghost">
+                  <Icon name="folder-plus" size="s" className="mr-2" />
                   New Folder
                 </Button>
               </div>
@@ -518,12 +518,12 @@ export const FileBrowser: Story = {
               {selectedFiles.length > 0 && (
                 <div className="flex items-center gap-2">
                   <span className="text-body-sm">{selectedFiles.length} selected</span>
-                  <Button size="sm" variant="ghost">
-                    <Icon name="download" size="sm" className="mr-2" />
+                  <Button size="s" variant="ghost">
+                    <Icon name="download" size="s" className="mr-2" />
                     Download
                   </Button>
-                  <Button size="sm" variant="ghost" className="text-[var(--color-text-error-bold)]">
-                    <Icon name="trash-2" size="sm" className="mr-2" />
+                  <Button size="s" variant="ghost" className="text-[var(--color-text-error-bold)]">
+                    <Icon name="trash-2" size="s" className="mr-2" />
                     Delete
                   </Button>
                 </div>
@@ -531,7 +531,7 @@ export const FileBrowser: Story = {
             </div>
 
             {/* File list */}
-            <div className="border border-[var(--color-border-primary-subtle)] rounded-md">
+            <div className="border border-[var(--color-border-primary-subtle)] rounded-m">
               <div className="grid grid-cols-12 gap-4 p-3 border-b border-[var(--color-border-primary-subtle)] bg-[var(--color-background-neutral-subtlest)] text-body-sm font-medium">
                 <div className="col-span-1"></div>
                 <div className="col-span-6">Name</div>
@@ -557,7 +557,7 @@ export const FileBrowser: Story = {
                       />
                     </div>
                     <div className="col-span-6 flex items-center gap-2">
-                      <Icon name={file.icon as any} size="sm" className="text-[var(--color-text-secondary)]" />
+                      <Icon name={file.icon as any} size="s" className="text-[var(--color-text-secondary)]" />
                       <span className="text-body-sm">{file.name}</span>
                     </div>
                     <div className="col-span-2 text-body-sm text-[var(--color-text-secondary)]">
@@ -603,7 +603,7 @@ export const SettingsPanel: Story = {
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="ghost">
-            <Icon name="settings" size="sm" className="mr-2" />
+            <Icon name="settings" size="s" className="mr-2" />
             Settings
           </Button>
         </SheetTrigger>
@@ -670,7 +670,7 @@ export const SettingsPanel: Story = {
                   <select
                     value={settings.language}
                     onChange={(e) => setSettings(prev => ({ ...prev, language: e.target.value }))}
-                    className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm"
+                    className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-m bg-[var(--color-surface-primary)] text-body-sm"
                   >
                     <option value="en">English</option>
                     <option value="es">Spanish</option>
@@ -684,7 +684,7 @@ export const SettingsPanel: Story = {
                   <select
                     value={settings.timezone}
                     onChange={(e) => setSettings(prev => ({ ...prev, timezone: e.target.value }))}
-                    className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-md bg-[var(--color-surface-primary)] text-body-sm"
+                    className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-m bg-[var(--color-surface-primary)] text-body-sm"
                   >
                     <option value="UTC-8">Pacific Time (UTC-8)</option>
                     <option value="UTC-5">Eastern Time (UTC-5)</option>
@@ -700,19 +700,19 @@ export const SettingsPanel: Story = {
               
               <div className="space-y-3">
                 <Button variant="ghost" className="w-full justify-start">
-                  <Icon name="user" size="sm" className="mr-2" />
+                  <Icon name="user" size="s" className="mr-2" />
                   Edit Profile
                 </Button>
                 <Button variant="ghost" className="w-full justify-start">
-                  <Icon name="shield" size="sm" className="mr-2" />
+                  <Icon name="shield" size="s" className="mr-2" />
                   Security Settings
                 </Button>
                 <Button variant="ghost" className="w-full justify-start">
-                  <Icon name="credit-card" size="sm" className="mr-2" />
+                  <Icon name="credit-card" size="s" className="mr-2" />
                   Billing & Subscription
                 </Button>
                 <Button variant="ghost" className="w-full justify-start text-[var(--color-text-error-bold)]">
-                  <Icon name="log-out" size="sm" className="mr-2" />
+                  <Icon name="log-out" size="s" className="mr-2" />
                   Sign Out
                 </Button>
               </div>
@@ -724,7 +724,7 @@ export const SettingsPanel: Story = {
               <Button variant="ghost">Cancel</Button>
             </SheetClose>
             <Button>
-              <Icon name="check" size="sm" className="mr-2" />
+              <Icon name="check" size="s" className="mr-2" />
               Save Settings
             </Button>
           </SheetFooter>
@@ -752,7 +752,7 @@ export const NonDismissible: Story = {
     return (
       <div className="w-[700px]">
         <Sheet modal={false} open={!!selectedCompany} onOpenChange={(open) => { if (!open) setSelectedCompany(null) }}>
-          <div className="border border-[var(--color-border-primary-subtle)] rounded-md">
+          <div className="border border-[var(--color-border-primary-subtle)] rounded-m">
             <div className="grid grid-cols-12 gap-4 p-3 border-b border-[var(--color-border-primary-subtle)] bg-[var(--color-background-neutral-subtlest)] text-body-sm font-medium">
               <div className="col-span-4">Company</div>
               <div className="col-span-3">Industry</div>

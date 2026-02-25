@@ -211,9 +211,9 @@ const Sidebar = React.forwardRef<
             "group-data-[collapsible=offcanvas]:w-0",
             "group-data-[collapsible=icon]:w-[var(--sidebar-width-icon)]",
             variant === "floating" &&
-              "m-[var(--space-sm)] rounded-md border border-[var(--color-border-primary-subtle)] shadow-md",
+              "m-[var(--space-s)] rounded-m border border-[var(--color-border-primary-subtle)] shadow-md",
             variant === "inset" &&
-              "m-[var(--space-sm)] ml-0 rounded-r-md border-r border-[var(--color-border-primary-subtle)]",
+              "m-[var(--space-s)] ml-0 rounded-r-m border-r border-[var(--color-border-primary-subtle)]",
             className
           )}
           {...props}
@@ -242,7 +242,7 @@ const SidebarTrigger = React.forwardRef<
       ref={ref}
       data-sidebar="trigger"
       variant="ghost"
-      size="sm"
+      size="s"
       className={cn("h-7 w-7 p-0", className)}
       onClick={(event) => {
         onClick?.(event)
@@ -250,7 +250,7 @@ const SidebarTrigger = React.forwardRef<
       }}
       {...props}
     >
-      <Icon name="panel-left" size="sm" />
+      <Icon name="panel-left" size="s" />
       <span className="sr-only">Toggle sidebar</span>
     </Button>
   )
@@ -313,7 +313,7 @@ const SidebarInput = React.forwardRef<
       ref={ref}
       data-sidebar="input"
       className={cn(
-        "flex h-8 w-full rounded-lg border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-[var(--space-md)] py-[var(--space-sm)] text-sm text-[var(--color-text-primary)] ring-offset-[var(--color-surface-primary)] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+        "flex h-8 w-full rounded-l border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-[var(--space-m)] py-[var(--space-s)] text-sm text-[var(--color-text-primary)] ring-offset-[var(--color-surface-primary)] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
         className
       )}
       {...props}
@@ -334,7 +334,7 @@ const SidebarSearchButton = React.forwardRef<
       ref={ref}
       data-sidebar="search-button"
       className={cn(
-        "text-body-md flex h-8 w-full cursor-pointer items-center rounded-md border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-3 py-1 pr-20 pl-8 text-left text-[var(--color-text-tertiary)] transition-colors hover:border-[var(--color-border-primary-medium)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] focus:border-[var(--color-border-brand-bold)] focus:ring-2 focus:ring-[var(--color-border-brand-bold)] focus:ring-offset-2 focus:outline-none active:border-[var(--color-border-primary-medium)] group-data-[collapsible=icon]:hidden",
+        "text-body-md flex h-8 w-full cursor-pointer items-center rounded-m border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-3 py-1 pr-20 pl-8 text-left text-[var(--color-text-tertiary)] transition-colors hover:border-[var(--color-border-primary-medium)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] focus:border-[var(--color-border-brand-bold)] focus:ring-2 focus:ring-[var(--color-border-brand-bold)] focus:ring-offset-2 focus:outline-none active:border-[var(--color-border-primary-medium)] group-data-[collapsible=icon]:hidden",
         className
       )}
       onClick={() => onOpenChange?.(true)}
@@ -384,7 +384,7 @@ const SidebarHeader = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="header"
-      className={cn("flex flex-col gap-[var(--space-sm)] p-[var(--space-md)] group-data-[collapsible=icon]:p-[var(--space-sm)]", className)}
+      className={cn("flex flex-col gap-[var(--space-s)] p-[var(--space-m)] group-data-[collapsible=icon]:p-[var(--space-s)]", className)}
       {...props}
     />
   )
@@ -399,7 +399,7 @@ const SidebarFooter = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="footer"
-      className={cn("flex flex-col gap-[var(--space-sm)] p-[var(--space-md)] group-data-[collapsible=icon]:p-[var(--space-sm)]", className)}
+      className={cn("flex flex-col gap-[var(--space-s)] p-[var(--space-m)] group-data-[collapsible=icon]:p-[var(--space-s)]", className)}
       {...props}
     />
   )
@@ -447,7 +447,7 @@ const SidebarGroup = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="group"
-      className={cn("relative flex w-full min-w-0 flex-col p-[var(--space-md)] group-data-[collapsible=icon]:p-[var(--space-sm)]", className)}
+      className={cn("relative flex w-full min-w-0 flex-col p-[var(--space-m)] group-data-[collapsible=icon]:p-[var(--space-s)]", className)}
       {...props}
     />
   )
@@ -465,7 +465,7 @@ const SidebarGroupLabel = React.forwardRef<
       ref={ref}
       data-sidebar="group-label"
       className={cn(
-        "duration-200 flex h-8 shrink-0 items-center rounded-md px-2 [&]:text-body-medium-sm text-[var(--color-text-tertiary)] outline-none ring-[var(--color-border-focused)] transition-opacity ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+        "duration-200 flex h-8 shrink-0 items-center rounded-m px-2 [&]:text-body-medium-sm text-[var(--color-text-tertiary)] outline-none ring-[var(--color-border-focused)] transition-opacity ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
         "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0",
         className
       )}
@@ -486,7 +486,7 @@ const SidebarGroupAction = React.forwardRef<
       ref={ref}
       data-sidebar="group-action"
       className={cn(
-        "absolute right-3 top-3.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-transform hover:bg-[var(--color-background-neutral-subtlest)] focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+        "absolute right-3 top-3.5 flex aspect-square w-5 items-center justify-center rounded-m p-0 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-transform hover:bg-[var(--color-background-neutral-subtlest)] focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
         "after:absolute after:-inset-2 after:md:hidden",
         "group-data-[collapsible=icon]:hidden",
         className
@@ -517,7 +517,7 @@ const SidebarMenu = React.forwardRef<
   <ul
     ref={ref}
     data-sidebar="menu"
-    className={cn("flex w-full min-w-0 flex-col gap-[var(--space-sm)]", className)}
+    className={cn("flex w-full min-w-0 flex-col gap-[var(--space-s)]", className)}
     {...props}
   />
 ))
@@ -537,7 +537,7 @@ const SidebarMenuItem = React.forwardRef<
 SidebarMenuItem.displayName = "SidebarMenuItem"
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-2 py-1.5 text-left text-body-medium-md outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-[var(--color-background-blue-subtle-selected)] data-[active=true]:text-[var(--color-text-brand-bold-selected)] data-[state=open]:bg-[var(--color-surface-secondary)] group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 group-data-[collapsible=icon]:justify-center [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 data-[active=true]:[&>svg]:text-[var(--color-text-brand-bold-selected)] cursor-pointer",
+  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-m px-2 py-1.5 text-left text-body-medium-md outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-[var(--color-background-blue-subtle-selected)] data-[active=true]:text-[var(--color-text-brand-bold-selected)] data-[state=open]:bg-[var(--color-surface-secondary)] group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 group-data-[collapsible=icon]:justify-center [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 data-[active=true]:[&>svg]:text-[var(--color-text-brand-bold-selected)] cursor-pointer",
   {
     variants: {
       variant: {
@@ -547,8 +547,8 @@ const sidebarMenuButtonVariants = cva(
       },
       size: {
         default: "h-8",
-        sm: "h-7 text-body-sm py-1",
-        lg: "h-12 py-3 text-body-lg group-data-[collapsible=icon]:!size-8",
+        s: "h-7 text-body-sm py-1",
+        l: "h-12 py-3 text-body-lg group-data-[collapsible=icon]:!size-8",
       },
     },
     defaultVariants: {
@@ -654,12 +654,12 @@ const SidebarMenuButton = React.forwardRef<
 
       return cn(
         // Base button styles
-        "relative peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-2 py-1.5 text-left text-body-medium-md outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 cursor-pointer z-2",
+        "relative peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-m px-2 py-1.5 text-left text-body-medium-md outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 cursor-pointer z-2",
 
         // Size variants
-        size === "sm" && "h-7 text-body-sm py-1",
+        size === "s" && "h-7 text-body-sm py-1",
         size === "default" && "h-8",
-        size === "lg" && "h-12 py-3 text-body-lg group-data-[collapsible=icon]:!size-8",
+        size === "l" && "h-12 py-3 text-body-lg group-data-[collapsible=icon]:!size-8",
 
         // Enhanced hover behavior for non-active items
         isHovered && !isFocused && !isActive && "bg-[var(--color-background-neutral-subtlest-hovered)]",
@@ -734,7 +734,7 @@ const SidebarMenuButton = React.forwardRef<
           side="right"
           align="center"
           hidden={state !== "collapsed" || isMobile}
-          className="z-50 overflow-hidden rounded-md bg-[var(--color-surface-primary)] px-3 py-1.5 text-xs text-[var(--color-text-primary)] border border-[var(--color-border-primary-subtle)] shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
+          className="z-50 overflow-hidden rounded-m bg-[var(--color-surface-primary)] px-3 py-1.5 text-xs text-[var(--color-text-primary)] border border-[var(--color-border-primary-subtle)] shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
           {...tooltip}
         />
       </TooltipPrimitive.Root>
@@ -747,18 +747,18 @@ const SidebarMenuAction = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Button> & {
     showOnHover?: boolean
-    size?: 'sm' | 'md' | 'lg'
+    size?: 's' | 'm' | 'l'
   }
->(({ className, showOnHover = false, size = 'md', ...props }, ref) => {
+>(({ className, showOnHover = false, size = 'm', ...props }, ref) => {
   return (
     <Button
       ref={ref}
       data-sidebar="menu-action"
       variant="ghost"
-      size="sm"
+      size="s"
       className={cn(
         // Base positioning and styling - Fixed inconsistencies
-        "absolute right-1 flex aspect-square items-center justify-center rounded-md p-0",
+        "absolute right-1 flex aspect-square items-center justify-center rounded-m p-0",
         "text-[var(--color-text-secondary)] outline-none transition-all duration-150 ease-in-out",
         "hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]",
         "focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)]",
@@ -773,9 +773,9 @@ const SidebarMenuAction = React.forwardRef<
         "top-1",
 
         // Size-responsive positioning for different menu button sizes
-        "peer-data-[size=sm]/menu-button:top-1",
+        "peer-data-[size=s]/menu-button:top-1",
         "peer-data-[size=default]/menu-button:top-1",
-        "peer-data-[size=lg]/menu-button:top-2.5",
+        "peer-data-[size=l]/menu-button:top-2.5",
 
         // Enhanced showOnHover behavior with improved transitions
         showOnHover && [
@@ -806,11 +806,11 @@ const SidebarMenuBadge = React.forwardRef<
     ref={ref}
     data-sidebar="menu-badge"
     className={cn(
-      "absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-xs font-medium tabular-nums text-[var(--color-text-on-action)] select-none pointer-events-none",
+      "absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-m px-1 text-xs font-medium tabular-nums text-[var(--color-text-on-action)] select-none pointer-events-none",
       "peer-hover/menu-button:text-[var(--color-text-brand-bold-selected)] peer-data-[active=true]/menu-button:text-[var(--color-text-brand-bold-selected)]",
-      "peer-data-[size=sm]/menu-button:top-1",
+      "peer-data-[size=s]/menu-button:top-1",
       "peer-data-[size=default]/menu-button:top-1.5",
-      "peer-data-[size=lg]/menu-button:top-2.5",
+      "peer-data-[size=l]/menu-button:top-2.5",
       "group-data-[collapsible=icon]:hidden",
       className
     )}
@@ -834,14 +834,14 @@ const SidebarMenuSkeleton = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="menu-skeleton"
-      className={cn("rounded-md h-8 flex gap-2 px-2 items-center", className)}
+      className={cn("rounded-m h-8 flex gap-2 px-2 items-center", className)}
       {...props}
     >
       {showIcon && (
-        <div className="rounded-md bg-[var(--color-surface-secondary)] size-4 animate-pulse" />
+        <div className="rounded-m bg-[var(--color-surface-secondary)] size-4 animate-pulse" />
       )}
       <div
-        className="h-4 flex-1 max-w-[--skeleton-width] bg-[var(--color-surface-secondary)] rounded-md animate-pulse"
+        className="h-4 flex-1 max-w-[--skeleton-width] bg-[var(--color-surface-secondary)] rounded-m animate-pulse"
         style={
           {
             "--skeleton-width": width,
@@ -880,14 +880,14 @@ const SidebarMenuSubButton = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<"button"> & {
     asChild?: boolean
-    size?: "sm" | "md"
+    size?: "s" | "m"
     isActive?: boolean
     enhancedHover?: boolean
     preserveActiveOnFocus?: boolean
   }
 >(({
   asChild = false,
-  size = "md",
+  size = "m",
   isActive = false,
   enhancedHover = true,
   preserveActiveOnFocus = true,
@@ -960,11 +960,11 @@ const SidebarMenuSubButton = React.forwardRef<
   const enhancedClasses = React.useMemo(() => {
     return cn(
       // Base submenu button styles
-      "relative flex w-full justify-start h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 cursor-pointer [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--color-text-secondary)] z-2",
+      "relative flex w-full justify-start h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-m px-2 text-[var(--color-text-secondary)] outline-none ring-[var(--color-border-focused)] transition-all duration-150 ease-in-out disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 cursor-pointer [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--color-text-secondary)] z-2",
 
       // Size variants
-      size === "sm" && "text-body-sm px-1.5 py-0.5",
-      size === "md" && "text-body-md",
+      size === "s" && "text-body-sm px-1.5 py-0.5",
+      size === "m" && "text-body-md",
 
       // Enhanced hover behavior for non-active items
       enhancedHover && isHovered && !isFocused && !isActive && "bg-[var(--color-background-neutral-subtlest-hovered)]",

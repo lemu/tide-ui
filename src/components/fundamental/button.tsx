@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { Icon, IconType, IconSize } from "./icon";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center relative transition-all duration-150 ease-in-out focus:outline-none cursor-pointer select-none disabled:cursor-not-allowed gap-[var(--space-xsm)] whitespace-nowrap",
+  "inline-flex items-center justify-center relative transition-all duration-150 ease-in-out focus:outline-none cursor-pointer select-none disabled:cursor-not-allowed gap-[var(--space-xs)] whitespace-nowrap",
   {
     variants: {
       variant: {
@@ -58,14 +58,14 @@ const buttonVariants = cva(
         ],
       },
       size: {
-        sm: [
-          "text-label-sm h-[var(--size-sm)] rounded-sm px-[var(--space-md)]",
+        s: [
+          "text-label-sm h-[var(--size-s)] rounded-s px-[var(--space-m)]",
         ],
-        md: [
-          "text-label-md h-[var(--size-md)] rounded-sm px-[var(--space-md)]",
+        m: [
+          "text-label-md h-[var(--size-m)] rounded-s px-[var(--space-m)]",
         ],
-        lg: [
-          "text-label-md h-[var(--size-lg)] rounded-sm px-[var(--space-lg)]",
+        l: [
+          "text-label-md h-[var(--size-l)] rounded-s px-[var(--space-l)]",
         ],
       },
       iconPosition: {
@@ -78,54 +78,54 @@ const buttonVariants = cva(
     compoundVariants: [
       // Icon padding adjustments for different sizes
       {
-        size: "sm",
+        size: "s",
         iconPosition: "left",
-        className: "pl-[var(--space-sm)] pr-[var(--space-md)]",
+        className: "pl-[var(--space-s)] pr-[var(--space-m)]",
       },
       {
-        size: "sm",
+        size: "s",
         iconPosition: "right",
-        className: "pl-[var(--space-md)] pr-[var(--space-sm)]",
+        className: "pl-[var(--space-m)] pr-[var(--space-s)]",
       },
       {
-        size: "sm",
+        size: "s",
         iconPosition: "only",
-        className: "px-[var(--space-sm)] min-w-[var(--size-sm)]",
+        className: "px-[var(--space-s)] min-w-[var(--size-s)]",
       },
       {
-        size: "md",
+        size: "m",
         iconPosition: "left",
-        className: "pl-[var(--space-sm)] pr-[var(--space-md)]",
+        className: "pl-[var(--space-s)] pr-[var(--space-m)]",
       },
       {
-        size: "md",
+        size: "m",
         iconPosition: "right",
-        className: "pl-[var(--space-md)] pr-[var(--space-sm)]",
+        className: "pl-[var(--space-m)] pr-[var(--space-s)]",
       },
       {
-        size: "md",
+        size: "m",
         iconPosition: "only",
-        className: "px-[var(--space-sm)] min-w-[var(--size-md)]",
+        className: "px-[var(--space-s)] min-w-[var(--size-m)]",
       },
       {
-        size: "lg",
+        size: "l",
         iconPosition: "left",
-        className: "pl-[var(--space-md)] pr-[var(--space-lg)]",
+        className: "pl-[var(--space-m)] pr-[var(--space-l)]",
       },
       {
-        size: "lg",
+        size: "l",
         iconPosition: "right",
-        className: "pl-[var(--space-lg)] pr-[var(--space-md)]",
+        className: "pl-[var(--space-l)] pr-[var(--space-m)]",
       },
       {
-        size: "lg",
+        size: "l",
         iconPosition: "only",
-        className: "px-[var(--space-md)] min-w-[var(--size-lg)]",
+        className: "px-[var(--space-m)] min-w-[var(--size-l)]",
       },
     ],
     defaultVariants: {
       variant: "default",
-      size: "md",
+      size: "m",
       iconPosition: "none",
     },
   },
@@ -160,7 +160,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
-    const iconSize: IconSize = size || "md"; // Safe mapping with fallback
+    const iconSize: IconSize = size || "m"; // Safe mapping with fallback
 
     // Determine if button should be disabled (disabled prop or loading state)
     const isDisabled = disabled || loading;

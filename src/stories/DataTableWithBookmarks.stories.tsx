@@ -707,7 +707,7 @@ const shippingFixtureColumns: ColumnDef<ShippingFixture>[] = [
       const intent = status === 'fixed' ? 'success' : status === 'pending' ? 'warning' : 'error'
       return (
         <div className="flex justify-start">
-          <Badge intent={intent} appearance="subtle" size="sm">
+          <Badge intent={intent} appearance="subtle" size="s">
             {label}
           </Badge>
         </div>
@@ -1137,9 +1137,9 @@ export const WithBookmarksListVariant: Story = {
     }, [activeFilters, globalSearchTerms])
 
     return (
-      <div className="flex flex-col gap-[var(--space-lg)] p-[var(--space-lg)]">
+      <div className="flex flex-col gap-[var(--space-l)] p-[var(--space-l)]">
         {/* Page Header */}
-        <div className="flex flex-col gap-[var(--space-sm)]">
+        <div className="flex flex-col gap-[var(--space-s)]">
           <h1 className="text-heading-lg">Shipping Fixtures</h1>
           <p className="text-body-md text-[var(--color-text-secondary)]">
             List variant with bookmarks managing both filters and table state
@@ -1243,7 +1243,7 @@ export const WithBookmarksListVariant: Story = {
               })
             }}
             align="end"
-            triggerClassName="h-[var(--size-md)]"
+            triggerClassName="h-[var(--size-m)]"
           />
           </Bookmarks.Settings>
         </Bookmarks>
@@ -1705,9 +1705,9 @@ export const WithBookmarksTabsVariant: Story = {
     }, [activeFilters, globalSearchTerms])
 
     return (
-      <div className="flex flex-col gap-[var(--space-lg)] p-[var(--space-lg)]">
+      <div className="flex flex-col gap-[var(--space-l)] p-[var(--space-l)]">
         {/* Page Header */}
-        <div className="flex flex-col gap-[var(--space-sm)]">
+        <div className="flex flex-col gap-[var(--space-s)]">
           <h1 className="text-heading-lg">Shipping Fixtures</h1>
           <p className="text-body-md text-[var(--color-text-secondary)]">
             Tabs variant with bookmarks managing both filters and table state
@@ -1756,7 +1756,7 @@ export const WithBookmarksTabsVariant: Story = {
                     <Button
                       variant="ghost"
                       onClick={handleRevert}
-                      className="h-[var(--size-md)] flex-shrink-0"
+                      className="h-[var(--size-m)] flex-shrink-0"
                     >
                       Reset
                     </Button>
@@ -1768,7 +1768,7 @@ export const WithBookmarksTabsVariant: Story = {
                     <Button
                       variant="ghost"
                       onClick={handleRevert}
-                      className="h-[var(--size-md)] flex-shrink-0"
+                      className="h-[var(--size-m)] flex-shrink-0"
                     >
                       Revert changes
                     </Button>
@@ -1837,7 +1837,7 @@ export const WithBookmarksTabsVariant: Story = {
                 })
               }}
               align="end"
-              triggerClassName="h-[var(--size-md)]"
+              triggerClassName="h-[var(--size-m)]"
             />
           </Bookmarks.Settings>
         </Bookmarks>

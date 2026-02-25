@@ -110,10 +110,10 @@ const iconColors = {
 
 // Size mapping for semantic size tokens - using Tailwind classes with CSS variables
 const iconSizes = {
-  sm: "w-[var(--size-3xsm)] h-[var(--size-3xsm)]", // 12px
-  md: "w-[var(--size-2xsm)] h-[var(--size-2xsm)]", // 16px
-  lg: "w-[var(--size-xsm)] h-[var(--size-xsm)]", // 20px
-  xl: "w-[var(--size-sm)] h-[var(--size-sm)]", // 24px
+  s: "w-[var(--size-3xs)] h-[var(--size-3xs)]", // 12px
+  m: "w-[var(--size-2xs)] h-[var(--size-2xs)]", // 16px
+  l: "w-[var(--size-xs)] h-[var(--size-xs)]", // 20px
+  xl: "w-[var(--size-s)] h-[var(--size-s)]", // 24px
 } as const;
 
 export type IconColor = keyof typeof iconColors;
@@ -227,7 +227,7 @@ const Icon = React.forwardRef<SVGSVGElement, IconProps>(
   (
     {
       name,
-      size = "md",
+      size = "m",
       color,
       className,
       "aria-label": ariaLabel,

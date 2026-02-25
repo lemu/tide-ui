@@ -113,19 +113,19 @@ export const UserProfile: Story = {
           <div className="border-t border-[var(--color-border-primary-subtle)] pt-4">
             <div className="space-y-2">
               <Button variant="ghost" className="w-full justify-start">
-                <Icon name="user" size="sm" className="mr-2" />
+                <Icon name="user" size="s" className="mr-2" />
                 View Profile
               </Button>
               <Button variant="ghost" className="w-full justify-start">
-                <Icon name="settings" size="sm" className="mr-2" />
+                <Icon name="settings" size="s" className="mr-2" />
                 Account Settings
               </Button>
               <Button variant="ghost" className="w-full justify-start">
-                <Icon name="help-circle" size="sm" className="mr-2" />
+                <Icon name="help-circle" size="s" className="mr-2" />
                 Help & Support
               </Button>
               <Button variant="ghost" className="w-full justify-start text-[var(--color-text-error-bold)]">
-                <Icon name="log-out" size="sm" className="mr-2" />
+                <Icon name="log-out" size="s" className="mr-2" />
                 Sign Out
               </Button>
             </div>
@@ -198,8 +198,8 @@ export const ColorPicker: Story = {
             </div>
             
             <div className="flex justify-end gap-2">
-              <Button variant="ghost" size="sm">Cancel</Button>
-              <Button size="sm">Apply</Button>
+              <Button variant="ghost" size="s">Cancel</Button>
+              <Button size="s">Apply</Button>
             </div>
           </div>
         </PopoverContent>
@@ -214,7 +214,7 @@ export const QuickActions: Story = {
     <Popover>
       <PopoverTrigger asChild>
         <Button>
-          <Icon name="plus" size="sm" className="mr-2" />
+          <Icon name="plus" size="s" className="mr-2" />
           Quick Actions
         </Button>
       </PopoverTrigger>
@@ -223,30 +223,30 @@ export const QuickActions: Story = {
           <h4 className="font-medium mb-3">Create New</h4>
           <div className="space-y-1">
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="file-text" size="sm" className="mr-2" />
+              <Icon name="file-text" size="s" className="mr-2" />
               Document
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="folder" size="sm" className="mr-2" />
+              <Icon name="folder" size="s" className="mr-2" />
               Folder
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="image" size="sm" className="mr-2" />
+              <Icon name="image" size="s" className="mr-2" />
               Image
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="video" size="sm" className="mr-2" />
+              <Icon name="video" size="s" className="mr-2" />
               Video
             </Button>
           </div>
           
           <div className="border-t border-[var(--color-border-primary-subtle)] pt-2 mt-3">
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="upload" size="sm" className="mr-2" />
+              <Icon name="upload" size="s" className="mr-2" />
               Upload File
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="link" size="sm" className="mr-2" />
+              <Icon name="link" size="s" className="mr-2" />
               Import from URL
             </Button>
           </div>
@@ -304,7 +304,7 @@ export const Notifications: Story = {
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="ghost" className="relative">
-            <Icon name="bell" size="sm" />
+            <Icon name="bell" size="s" />
             {unreadCount > 0 && (
               <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs">
                 {unreadCount}
@@ -316,7 +316,7 @@ export const Notifications: Story = {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h4 className="font-medium">Notifications</h4>
-              <Button variant="ghost" size="sm" className="text-xs">
+              <Button variant="ghost" size="s" className="text-xs">
                 Mark all read
               </Button>
             </div>
@@ -325,14 +325,14 @@ export const Notifications: Story = {
               {notifications.map((notification) => (
                 <div 
                   key={notification.id}
-                  className={`flex gap-3 p-3 rounded-md transition-colors cursor-pointer ${
+                  className={`flex gap-3 p-3 rounded-m transition-colors cursor-pointer ${
                     !notification.read 
                       ? 'bg-[var(--color-background-blue-subtle-selected)] hover:bg-[var(--color-background-blue-subtle-selected-hovered)]' 
                       : 'hover:bg-[var(--color-background-neutral-subtlest-hovered)]'
                   }`}
                 >
                   <div className={`mt-1 ${notification.iconColor}`}>
-                    <Icon name={notification.icon as any} size="sm" />
+                    <Icon name={notification.icon as any} size="s" />
                   </div>
                   <div className="flex-1 space-y-1">
                     <div className="flex items-start justify-between">
@@ -394,7 +394,7 @@ export const SearchPopover: Story = {
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="ghost">
-            <Icon name="search" size="sm" className="mr-2" />
+            <Icon name="search" size="s" className="mr-2" />
             Search
           </Button>
         </PopoverTrigger>
@@ -403,7 +403,7 @@ export const SearchPopover: Story = {
             <div className="space-y-2">
               <Label>Quick Search</Label>
               <div className="relative">
-                <Icon name="search" size="sm" className="absolute left-3 top-2.5 text-[var(--color-text-secondary)]" />
+                <Icon name="search" size="s" className="absolute left-3 top-2.5 text-[var(--color-text-secondary)]" />
                 <Input
                   placeholder="Search files, folders, and contacts..."
                   value={searchQuery}
@@ -425,7 +425,7 @@ export const SearchPopover: Story = {
                 <div className="space-y-1 max-h-60 overflow-y-auto">
                   {searchResults.length === 0 ? (
                     <div className="text-center py-8">
-                      <Icon name="search" size="lg" className="mx-auto text-[var(--color-text-tertiary)] mb-2" />
+                      <Icon name="search" size="l" className="mx-auto text-[var(--color-text-tertiary)] mb-2" />
                       <p className="text-body-sm text-[var(--color-text-secondary)]">No results found</p>
                       <p className="text-caption-sm text-[var(--color-text-tertiary)]">Try a different search term</p>
                     </div>
@@ -433,9 +433,9 @@ export const SearchPopover: Story = {
                     searchResults.map((item, index) => (
                       <div
                         key={index}
-                        className="flex items-center gap-3 p-2 rounded-md hover:bg-[var(--color-background-neutral-subtlest-hovered)] cursor-pointer"
+                        className="flex items-center gap-3 p-2 rounded-m hover:bg-[var(--color-background-neutral-subtlest-hovered)] cursor-pointer"
                       >
-                        <Icon name={getItemIcon(item.type) as any} size="sm" className="text-[var(--color-text-secondary)]" />
+                        <Icon name={getItemIcon(item.type) as any} size="s" className="text-[var(--color-text-secondary)]" />
                         <div className="flex-1">
                           <p className="text-body-sm font-medium">{item.name}</p>
                           <p className="text-caption-sm text-[var(--color-text-secondary)]">
@@ -463,7 +463,7 @@ export const SearchPopover: Story = {
                       className="w-full justify-start"
                       onClick={() => setSearchQuery(term)}
                     >
-                      <Icon name="clock" size="sm" className="mr-2 text-[var(--color-text-secondary)]" />
+                      <Icon name="clock" size="s" className="mr-2 text-[var(--color-text-secondary)]" />
                       {term}
                     </Button>
                   ))}
@@ -493,7 +493,7 @@ export const SharePopover: Story = {
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="ghost">
-            <Icon name="share" size="sm" className="mr-2" />
+            <Icon name="share" size="s" className="mr-2" />
             Share
           </Button>
         </PopoverTrigger>
@@ -514,11 +514,11 @@ export const SharePopover: Story = {
                   readOnly
                   className="flex-1"
                 />
-                <Button size="sm" onClick={copyLink}>
+                <Button size="s" onClick={copyLink}>
                   {linkCopied ? (
-                    <Icon name="check" size="sm" />
+                    <Icon name="check" size="s" />
                   ) : (
-                    <Icon name="copy" size="sm" />
+                    <Icon name="copy" size="s" />
                   )}
                 </Button>
               </div>
@@ -533,19 +533,19 @@ export const SharePopover: Story = {
               <Label>Share via</Label>
               <div className="grid grid-cols-4 gap-2">
                 <Button variant="ghost" className="flex flex-col gap-1 h-auto py-3">
-                  <Icon name="mail" size="sm" />
+                  <Icon name="mail" size="s" />
                   <span className="text-xs">Email</span>
                 </Button>
                 <Button variant="ghost" className="flex flex-col gap-1 h-auto py-3">
-                  <Icon name="message-circle" size="sm" />
+                  <Icon name="message-circle" size="s" />
                   <span className="text-xs">Slack</span>
                 </Button>
                 <Button variant="ghost" className="flex flex-col gap-1 h-auto py-3">
-                  <Icon name="twitter" size="sm" />
+                  <Icon name="twitter" size="s" />
                   <span className="text-xs">Twitter</span>
                 </Button>
                 <Button variant="ghost" className="flex flex-col gap-1 h-auto py-3">
-                  <Icon name="linkedin" size="sm" />
+                  <Icon name="linkedin" size="s" />
                   <span className="text-xs">LinkedIn</span>
                 </Button>
               </div>
@@ -577,8 +577,8 @@ export const SharePopover: Story = {
                   </select>
                 </div>
               </div>
-              <Button variant="ghost" size="sm" className="w-full">
-                <Icon name="user-plus" size="sm" className="mr-2" />
+              <Button variant="ghost" size="s" className="w-full">
+                <Icon name="user-plus" size="s" className="mr-2" />
                 Invite people
               </Button>
             </div>
@@ -601,8 +601,8 @@ export const SettingsPopover: Story = {
     return (
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-            <Icon name="settings" size="sm" />
+          <Button variant="ghost" size="s" className="h-8 w-8 p-0">
+            <Icon name="settings" size="s" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-64">
@@ -651,8 +651,8 @@ export const SettingsPopover: Story = {
             </div>
 
             <div className="border-t border-[var(--color-border-primary-subtle)] pt-3">
-              <Button variant="ghost" size="sm" className="w-full">
-                <Icon name="settings" size="sm" className="mr-2" />
+              <Button variant="ghost" size="s" className="w-full">
+                <Icon name="settings" size="s" className="mr-2" />
                 All Settings
               </Button>
             </div>

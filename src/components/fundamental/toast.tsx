@@ -17,7 +17,7 @@ const ToastIcon = ({ name, color, blurColor }: { name: string; color?: string; b
         }}
       />
     )}
-    <Icon name={name} size="md" className={color} />
+    <Icon name={name} size="m" className={color} />
   </div>
 );
 
@@ -26,7 +26,7 @@ const Toaster = ({ className, ...props }: ToasterProps) => {
     <Sonner
       className={cn("toaster group", className)}
       icons={{
-        loading: <Spinner size="md" variant="primary" className="mt-1" />,
+        loading: <Spinner size="m" variant="primary" className="mt-1" />,
         success: <ToastIcon name="circle-check" color="text-[var(--color-icon-success-bold)]" blurColor="#1C741F" />,
         error: <ToastIcon name="triangle-alert" color="text-[var(--color-icon-error-bold)]" blurColor="#D9493E" />,
         warning: <ToastIcon name="circle-alert" color="text-[var(--color-icon-warning-bold)]" blurColor="#E57F19" />,
@@ -37,17 +37,17 @@ const Toaster = ({ className, ...props }: ToasterProps) => {
           toast: cn(
             "group toast",
             // Layout & dimensions
-            "w-[535px] max-w-[calc(100vw-2rem)] p-[var(--space-lg)]",
+            "w-[535px] max-w-[calc(100vw-2rem)] p-[var(--space-l)]",
             // Background & borders
             "bg-[var(--color-surface-primary)]",
             "!border !border-[var(--color-border-primary-medium)] !border-solid",
-            "rounded-md",
+            "rounded-m",
             // Shadow
             "shadow-lg",
             // Contain blur effect
             "overflow-hidden",
             // Flex layout
-            "flex items-start gap-[var(--space-lg)]",
+            "flex items-start gap-[var(--space-l)]",
             // Typography defaults
             "text-[var(--color-text-primary)]"
           ),
@@ -56,8 +56,8 @@ const Toaster = ({ className, ...props }: ToasterProps) => {
           icon: "self-start mt-1",
           actionButton: cn(
             // Base button styling
-            "h-[var(--size-md)] px-[var(--space-md)]",
-            "rounded-sm",
+            "h-[var(--size-m)] px-[var(--space-m)]",
+            "rounded-s",
             "text-label-md",
             // Primary action colors
             "bg-[var(--color-background-blue-bold)]",
@@ -69,8 +69,8 @@ const Toaster = ({ className, ...props }: ToasterProps) => {
           ),
           cancelButton: cn(
             // Base button styling
-            "h-[var(--size-md)] px-[var(--space-md)]",
-            "rounded-sm",
+            "h-[var(--size-m)] px-[var(--space-m)]",
+            "rounded-s",
             "text-label-md",
             // Secondary action colors
             "bg-[var(--color-background-neutral-subtlest)]",

@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
 const toggleVariants = cva(
-  "inline-flex items-center justify-center font-medium ring-offset-[var(--color-surface-primary)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:transition-colors gap-[var(--space-sm)] cursor-pointer",
+  "inline-flex items-center justify-center font-medium ring-offset-[var(--color-surface-primary)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:transition-colors gap-[var(--space-s)] cursor-pointer",
   {
     variants: {
       variant: {
@@ -26,14 +26,14 @@ const toggleVariants = cva(
         ],
       },
       size: {
-        sm: "text-label-sm rounded-sm px-[var(--space-sm)] py-[var(--space-xsm)]",
-        md: "text-label-md rounded-md px-[var(--space-md)] py-[var(--dimension-150)]",
-        lg: "text-label-md rounded-md px-[var(--space-lg)] py-[var(--space-md)]",
+        s: "text-label-sm rounded-s px-[var(--space-s)] py-[var(--space-xs)]",
+        m: "text-label-md rounded-m px-[var(--space-m)] py-[var(--dimension-150)]",
+        l: "text-label-md rounded-m px-[var(--space-l)] py-[var(--space-m)]",
       },
     },
     defaultVariants: {
       variant: "default",
-      size: "sm",
+      size: "s",
     },
   },
 );

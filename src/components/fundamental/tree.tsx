@@ -119,7 +119,7 @@ const TreeItem = React.forwardRef<HTMLDivElement, TreeItemProps>(
       <div ref={ref} className="relative">
         <div
           className={cn(
-            "flex items-center gap-1 rounded-sm py-1 pr-1 cursor-pointer transition-colors",
+            "flex items-center gap-1 rounded-s py-1 pr-1 cursor-pointer transition-colors",
             "hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
             showSelection && "bg-[var(--color-background-blue-subtle-selected)] hover:bg-[var(--color-background-blue-subtle-selected-hovered)]",
             item.disabled && "opacity-50 cursor-not-allowed"
@@ -130,7 +130,7 @@ const TreeItem = React.forwardRef<HTMLDivElement, TreeItemProps>(
           {hasChildren ? (
             <Button
               variant="ghost"
-              size="sm"
+              size="s"
               className="h-4 w-4 p-0 opacity-50 hover:opacity-100"
               onClick={handleChevronClick}
               disabled={item.disabled}

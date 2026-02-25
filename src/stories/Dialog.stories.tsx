@@ -182,7 +182,7 @@ export const FormDialog: Story = {
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <Button>
-            <Icon name="plus" size="sm" className="mr-2" />
+            <Icon name="plus" size="s" className="mr-2" />
             Create Task
           </Button>
         </DialogTrigger>
@@ -250,7 +250,7 @@ export const FormDialog: Story = {
                       priority: e.target.value,
                     }))
                   }
-                  className={`text-body-sm h-10 w-full rounded-md border bg-[var(--color-surface-primary)] px-3 ${
+                  className={`text-body-sm h-10 w-full rounded-m border bg-[var(--color-surface-primary)] px-3 ${
                     errors.priority
                       ? "border-[var(--color-border-error-bold)]"
                       : "border-[var(--color-interaction-border-input)]"
@@ -280,7 +280,7 @@ export const FormDialog: Story = {
                       assignee: e.target.value,
                     }))
                   }
-                  className="text-body-sm h-10 w-full rounded-md border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3"
+                  className="text-body-sm h-10 w-full rounded-m border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3"
                 >
                   <option value="">Unassigned</option>
                   <option value="john">John Doe</option>
@@ -295,7 +295,7 @@ export const FormDialog: Story = {
               <Button>Cancel</Button>
             </DialogClose>
             <Button variant="primary" onClick={handleSubmit}>
-              <Icon name="plus" size="sm" className="mr-2" />
+              <Icon name="plus" size="s" className="mr-2" />
               Create Task
             </Button>
           </DialogFooter>
@@ -311,7 +311,7 @@ export const AlertDialog: Story = {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="ghost" className="text-[var(--color-text-warning-bold)]">
-          <Icon name="alert-circle" size="sm" className="mr-2" />
+          <Icon name="alert-circle" size="s" className="mr-2" />
           Show Alert
         </Button>
       </DialogTrigger>
@@ -320,7 +320,7 @@ export const AlertDialog: Story = {
           <div className="flex items-center gap-3">
             <Icon
               name="alert-triangle"
-              size="lg"
+              size="l"
               className="text-[var(--color-text-warning-bold)]"
             />
             <div>
@@ -334,7 +334,7 @@ export const AlertDialog: Story = {
             to continue using all features.
           </p>
           <div className="space-y-4">
-            <div className="rounded-md border border-[var(--color-border-warning-bold)] bg-[var(--color-background-warning-subtle)] p-4">
+            <div className="rounded-m border border-[var(--color-border-warning-bold)] bg-[var(--color-background-warning-subtle)] p-4">
               <div className="mb-2 flex items-center justify-between">
                 <span className="text-body-sm font-medium">Storage Usage</span>
                 <span className="text-body-sm">4.75 GB / 5.00 GB</span>
@@ -362,7 +362,7 @@ export const AlertDialog: Story = {
             <Button>Remind Me Later</Button>
           </DialogClose>
           <Button variant="primary">
-            <Icon name="zap" size="sm" className="mr-2" />
+            <Icon name="zap" size="s" className="mr-2" />
             Upgrade Plan
           </Button>
         </DialogFooter>
@@ -412,7 +412,7 @@ export const ComplexContentDialog: Story = {
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="ghost">
-            <Icon name="users" size="sm" className="mr-2" />
+            <Icon name="users" size="s" className="mr-2" />
             Manage Team
           </Button>
         </DialogTrigger>
@@ -434,8 +434,8 @@ export const ComplexContentDialog: Story = {
                   {users.filter((u) => u.status === "online").length} online
                 </Badge>
               </div>
-              <Button size="sm">
-                <Icon name="user-plus" size="sm" className="mr-2" />
+              <Button size="s">
+                <Icon name="user-plus" size="s" className="mr-2" />
                 Invite Member
               </Button>
             </div>
@@ -490,7 +490,7 @@ export const ComplexContentDialog: Story = {
                           </div>
                         </div>
                       </div>
-                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                      <Button variant="ghost" size="s" className="h-8 w-8 p-0">
                         <Icon name="more-horizontal" className="h-4 w-4" />
                       </Button>
                     </div>
@@ -518,12 +518,12 @@ export const ComplexContentDialog: Story = {
                           </div>
                         </div>
                         <div className="mt-4 flex gap-2">
-                          <Button size="sm" variant="ghost" className="flex-1">
-                            <Icon name="mail" size="sm" className="mr-2" />
+                          <Button size="s" variant="ghost" className="flex-1">
+                            <Icon name="mail" size="s" className="mr-2" />
                             Message
                           </Button>
-                          <Button size="sm" variant="ghost" className="flex-1">
-                            <Icon name="settings" size="sm" className="mr-2" />
+                          <Button size="s" variant="ghost" className="flex-1">
+                            <Icon name="settings" size="s" className="mr-2" />
                             Settings
                           </Button>
                         </div>
@@ -663,7 +663,7 @@ export const LongContentDialog: Story = {
               <Button>Cancel</Button>
             </DialogClose>
             <Button variant="primary">
-              <Icon name="check" size="sm" className="mr-2" />
+              <Icon name="check" size="s" className="mr-2" />
               Got It
             </Button>
           </DialogFooter>
@@ -695,7 +695,7 @@ export const MultipleDialogs: Story = {
               </p>
               <div className="space-y-2">
                 <Label>Theme</Label>
-                <select className="text-body-sm h-10 w-full rounded-md border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3">
+                <select className="text-body-sm h-10 w-full rounded-m border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3">
                   <option>Light</option>
                   <option>Dark</option>
                   <option>System</option>
@@ -703,7 +703,7 @@ export const MultipleDialogs: Story = {
               </div>
               <div className="space-y-2">
                 <Label>Language</Label>
-                <select className="text-body-sm h-10 w-full rounded-md border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3">
+                <select className="text-body-sm h-10 w-full rounded-m border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3">
                   <option>English</option>
                   <option>Spanish</option>
                   <option>French</option>

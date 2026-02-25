@@ -2,20 +2,20 @@ import { cn } from "@/lib/utils";
 
 // Flag size variants matching Icon component sizes
 export const flagSizes = {
-  sm: {
-    width: "w-[var(--size-3xsm)]", // 12px
+  s: {
+    width: "w-[var(--size-3xs)]", // 12px
     height: "h-[9px]", // 12 * 0.75 = 9px for 4:3 aspect ratio
   },
-  md: {
-    width: "w-[var(--size-2xsm)]", // 16px
+  m: {
+    width: "w-[var(--size-2xs)]", // 16px
     height: "h-[12px]", // 16 * 0.75 = 12px for 4:3 aspect ratio
   },
-  lg: {
-    width: "w-[var(--size-xsm)]", // 20px
+  l: {
+    width: "w-[var(--size-xs)]", // 20px
     height: "h-[15px]", // 20 * 0.75 = 15px for 4:3 aspect ratio
   },
   xl: {
-    width: "w-[var(--size-sm)]", // 24px
+    width: "w-[var(--size-s)]", // 24px
     height: "h-[18px]", // 24 * 0.75 = 18px for 4:3 aspect ratio
   },
 } as const;
@@ -29,7 +29,7 @@ export interface FlagProps extends React.HTMLAttributes<HTMLDivElement> {
   country: string;
   /**
    * Size variant matching Icon component sizes
-   * @default "md"
+   * @default "m"
    */
   size?: FlagSize;
   /**
@@ -45,13 +45,13 @@ export interface FlagProps extends React.HTMLAttributes<HTMLDivElement> {
  *
  * @example
  * ```tsx
- * <Flag country="us" size="md" />
- * <Flag country="gb" size="lg" aria-label="United Kingdom flag" />
+ * <Flag country="us" size="m" />
+ * <Flag country="gb" size="l" aria-label="United Kingdom flag" />
  * ```
  */
 export function Flag({
   country,
-  size = "md",
+  size = "m",
   className,
   "aria-label": ariaLabel,
   ...props

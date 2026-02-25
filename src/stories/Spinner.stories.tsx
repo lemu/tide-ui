@@ -20,7 +20,7 @@ const meta: Meta<typeof Spinner> = {
   argTypes: {
     size: {
       control: { type: 'select' },
-      options: ['xs', 'sm', 'md', 'lg', 'xl', '2xl'],
+      options: ['xs', 's', 'm', 'l', 'xl', '2xl'],
       description: 'Size of the spinner',
     },
     variant: {
@@ -76,15 +76,15 @@ export const Sizes: Story = {
               <p className="mt-2 text-caption-sm text-[var(--color-text-secondary)]">xs</p>
             </div>
             <div className="text-center">
-              <Spinner size="sm" />
+              <Spinner size="s" />
               <p className="mt-2 text-caption-sm text-[var(--color-text-secondary)]">sm</p>
             </div>
             <div className="text-center">
-              <Spinner size="md" />
+              <Spinner size="m" />
               <p className="mt-2 text-caption-sm text-[var(--color-text-secondary)]">md</p>
             </div>
             <div className="text-center">
-              <Spinner size="lg" />
+              <Spinner size="l" />
               <p className="mt-2 text-caption-sm text-[var(--color-text-secondary)]">lg</p>
             </div>
             <div className="text-center">
@@ -111,27 +111,27 @@ export const Variants: Story = {
           <h3 className="text-heading-sm mb-4">Spinner Variants</h3>
           <div className="grid grid-cols-3 gap-6">
             <div className="text-center">
-              <Spinner size="lg" />
+              <Spinner size="l" />
               <p className="mt-2 text-caption-sm text-[var(--color-text-secondary)]">Default</p>
             </div>
             <div className="text-center">
-              <Spinner variant="primary" size="lg" />
+              <Spinner variant="primary" size="l" />
               <p className="mt-2 text-caption-sm text-[var(--color-text-secondary)]">Primary</p>
             </div>
             <div className="text-center">
-              <Spinner size="lg" />
+              <Spinner size="l" />
               <p className="mt-2 text-caption-sm text-[var(--color-text-secondary)]">Secondary</p>
             </div>
             <div className="text-center">
-              <Spinner variant="success" size="lg" />
+              <Spinner variant="success" size="l" />
               <p className="mt-2 text-caption-sm text-[var(--color-text-secondary)]">Success</p>
             </div>
             <div className="text-center">
-              <Spinner variant="warning" size="lg" />
+              <Spinner variant="warning" size="l" />
               <p className="mt-2 text-caption-sm text-[var(--color-text-secondary)]">Warning</p>
             </div>
             <div className="text-center">
-              <Spinner variant="error" size="lg" />
+              <Spinner variant="error" size="l" />
               <p className="mt-2 text-caption-sm text-[var(--color-text-secondary)]">Error</p>
             </div>
           </div>
@@ -140,12 +140,12 @@ export const Variants: Story = {
         <div>
           <h3 className="text-heading-sm mb-4">On Different Backgrounds</h3>
           <div className="grid grid-cols-2 gap-4">
-            <div className="p-4 bg-[var(--color-background-neutral-default)] rounded-lg text-center">
-              <Spinner variant="inverse" size="lg" />
+            <div className="p-4 bg-[var(--color-background-neutral-default)] rounded-l text-center">
+              <Spinner variant="inverse" size="l" />
               <p className="mt-2 text-caption-sm text-white">Inverse variant</p>
             </div>
-            <div className="p-4 bg-[var(--color-background-blue-bold)] rounded-lg text-center">
-              <Spinner variant="inverse" size="lg" />
+            <div className="p-4 bg-[var(--color-background-blue-bold)] rounded-l text-center">
+              <Spinner variant="inverse" size="l" />
               <p className="mt-2 text-caption-sm text-white">On brand background</p>
             </div>
           </div>
@@ -164,15 +164,15 @@ export const Speeds: Story = {
           <h3 className="text-heading-sm mb-4">Spinner Speeds</h3>
           <div className="flex items-center gap-8">
             <div className="text-center">
-              <Spinner speed="slow" size="lg" />
+              <Spinner speed="slow" size="l" />
               <p className="mt-2 text-caption-sm text-[var(--color-text-secondary)]">Slow (2s)</p>
             </div>
             <div className="text-center">
-              <Spinner speed="normal" size="lg" />
+              <Spinner speed="normal" size="l" />
               <p className="mt-2 text-caption-sm text-[var(--color-text-secondary)]">Normal (1s)</p>
             </div>
             <div className="text-center">
-              <Spinner speed="fast" size="lg" />
+              <Spinner speed="fast" size="l" />
               <p className="mt-2 text-caption-sm text-[var(--color-text-secondary)]">Fast (0.5s)</p>
             </div>
           </div>
@@ -218,7 +218,7 @@ export const InButtons: Story = {
           >
             {loading === 'save' ? (
               <>
-                <Spinner size="sm" variant="inverse" className="mr-2" />
+                <Spinner size="s" variant="inverse" className="mr-2" />
                 Saving...
               </>
             ) : (
@@ -234,12 +234,12 @@ export const InButtons: Story = {
           >
             {loading === 'upload' ? (
               <>
-                <Spinner size="sm" className="mr-2" />
+                <Spinner size="s" className="mr-2" />
                 Uploading...
               </>
             ) : (
               <>
-                <Icon name="upload" size="sm" className="mr-2" />
+                <Icon name="upload" size="s" className="mr-2" />
                 Upload File
               </>
             )}
@@ -253,12 +253,12 @@ export const InButtons: Story = {
           >
             {loading === 'delete' ? (
               <>
-                <Spinner size="sm" variant="error" className="mr-2" />
+                <Spinner size="s" variant="error" className="mr-2" />
                 Deleting...
               </>
             ) : (
               <>
-                <Icon name="trash-2" size="sm" className="mr-2" />
+                <Icon name="trash-2" size="s" className="mr-2" />
                 Delete Item
               </>
             )}
@@ -386,8 +386,8 @@ export const SkeletonLoaders: Story = {
                 </p>
                 
                 <div className="flex gap-2">
-                  <Button size="sm">Follow</Button>
-                  <Button variant="ghost" size="sm">Message</Button>
+                  <Button size="s">Follow</Button>
+                  <Button variant="ghost" size="s">Message</Button>
                 </div>
               </>
             )}
@@ -429,15 +429,15 @@ export const PulseIndicators: Story = {
           <h3 className="text-heading-sm mb-4">Different Sizes</h3>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
-              <Pulse size="sm" variant="primary" />
+              <Pulse size="s" variant="primary" />
               <span className="text-caption-sm">Small</span>
             </div>
             <div className="flex items-center gap-2">
-              <Pulse size="md" variant="primary" />
+              <Pulse size="m" variant="primary" />
               <span className="text-caption-sm">Medium</span>
             </div>
             <div className="flex items-center gap-2">
-              <Pulse size="lg" variant="primary" />
+              <Pulse size="l" variant="primary" />
               <span className="text-caption-sm">Large</span>
             </div>
           </div>
@@ -468,7 +468,7 @@ export const ProgressDotsExample: Story = {
           <Card>
             <CardContent className="pt-6">
               <div className="text-center space-y-4">
-                <div className="p-8 bg-[var(--color-background-neutral-subtlest)] rounded-lg">
+                <div className="p-8 bg-[var(--color-background-neutral-subtlest)] rounded-l">
                   <p className="text-heading-md">Step {currentStep + 1}</p>
                   <p className="text-body-sm text-[var(--color-text-secondary)] mt-2">
                     {['Welcome', 'Profile Setup', 'Preferences', 'Payment', 'Complete'][currentStep]}
@@ -495,15 +495,15 @@ export const ProgressDotsExample: Story = {
           <div className="space-y-4">
             <div>
               <p className="text-caption-sm text-[var(--color-text-secondary)] mb-2">Small</p>
-              <ProgressDots total={4} current={1} size="sm" />
+              <ProgressDots total={4} current={1} size="s" />
             </div>
             <div>
               <p className="text-caption-sm text-[var(--color-text-secondary)] mb-2">Medium</p>
-              <ProgressDots total={4} current={2} size="md" />
+              <ProgressDots total={4} current={2} size="m" />
             </div>
             <div>
               <p className="text-caption-sm text-[var(--color-text-secondary)] mb-2">Large</p>
-              <ProgressDots total={4} current={3} size="lg" />
+              <ProgressDots total={4} current={3} size="l" />
             </div>
           </div>
         </div>
@@ -547,10 +547,10 @@ export const LoadingDashboard: Story = {
               <CardTitle>Analytics</CardTitle>
               <Button 
                 variant="ghost" 
-                size="sm"
+                size="s"
                 onClick={() => toggleLoading('analytics')}
               >
-                <Icon name="refresh-cw" size="sm" />
+                <Icon name="refresh-cw" size="s" />
               </Button>
             </div>
           </CardHeader>
@@ -566,7 +566,7 @@ export const LoadingDashboard: Story = {
             ) : (
               <div className="space-y-3">
                 <div className="h-32 bg-gradient-to-r from-blue-100 to-purple-100 rounded flex items-center justify-center">
-                  <Icon name="trending-up" size="lg" className="text-blue-600" />
+                  <Icon name="trending-up" size="l" className="text-blue-600" />
                 </div>
                 <div className="flex justify-between">
                   <span className="text-body-sm">Total Views</span>
@@ -583,10 +583,10 @@ export const LoadingDashboard: Story = {
               <CardTitle>Users</CardTitle>
               <Button 
                 variant="ghost" 
-                size="sm"
+                size="s"
                 onClick={() => toggleLoading('users')}
               >
-                <Icon name="refresh-cw" size="sm" />
+                <Icon name="refresh-cw" size="s" />
               </Button>
             </div>
           </CardHeader>
@@ -627,17 +627,17 @@ export const LoadingDashboard: Story = {
               <CardTitle>Revenue</CardTitle>
               <Button 
                 variant="ghost" 
-                size="sm"
+                size="s"
                 onClick={() => toggleLoading('revenue')}
               >
-                <Icon name="refresh-cw" size="sm" />
+                <Icon name="refresh-cw" size="s" />
               </Button>
             </div>
           </CardHeader>
           <CardContent>
             {loadingStates.revenue ? (
               <div className="flex items-center justify-center h-24">
-                <Spinner size="lg" variant="success" showLabel loadingText="Calculating..." />
+                <Spinner size="l" variant="success" showLabel loadingText="Calculating..." />
               </div>
             ) : (
               <div className="text-center">
@@ -655,10 +655,10 @@ export const LoadingDashboard: Story = {
               <CardTitle>Orders</CardTitle>
               <Button 
                 variant="ghost" 
-                size="sm"
+                size="s"
                 onClick={() => toggleLoading('orders')}
               >
-                <Icon name="refresh-cw" size="sm" />
+                <Icon name="refresh-cw" size="s" />
               </Button>
             </div>
           </CardHeader>
@@ -685,7 +685,7 @@ export const LoadingDashboard: Story = {
                     <Badge 
                       intent={order.status === 'Completed' ? 'success' : order.status === 'Pending' ? 'warning' : 'brand'}
                       appearance="subtle"
-                      size="sm"
+                      size="s"
                     >
                       {order.status}
                     </Badge>
@@ -758,7 +758,7 @@ export const InteractiveLoadingStates: Story = {
 
             {currentDemo === 'form' && (
               <div className="text-center space-y-4">
-                <Spinner size="lg" variant="primary" />
+                <Spinner size="l" variant="primary" />
                 <div>
                   <p className="text-body-sm font-medium">Submitting form...</p>
                   <p className="text-caption-sm text-[var(--color-text-secondary)]">
@@ -771,7 +771,7 @@ export const InteractiveLoadingStates: Story = {
             {currentDemo === 'upload' && (
               <div className="space-y-4">
                 <div className="text-center">
-                  <Spinner size="lg" variant="success" />
+                  <Spinner size="l" variant="success" />
                   <p className="text-body-sm font-medium mt-2">Uploading file...</p>
                 </div>
                 <div className="space-y-2">
@@ -792,7 +792,7 @@ export const InteractiveLoadingStates: Story = {
             {currentDemo === 'search' && (
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <Spinner size="md" />
+                  <Spinner size="m" />
                   <span className="text-body-sm">Searching...</span>
                 </div>
                 <div className="space-y-2">

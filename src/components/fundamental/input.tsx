@@ -4,7 +4,7 @@ import { cn } from "../../lib/utils";
 import { Icon } from "./icon";
 
 const inputVariants = cva(
-  "flex w-full rounded-md border transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:shadow-[0px_0px_0px_2px_rgba(0,95,133,0.2),0px_3px_4px_0px_rgba(0,14,20,0.03)] disabled:cursor-not-allowed disabled:opacity-50",
+  "flex w-full rounded-m border transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:shadow-[0px_0px_0px_2px_rgba(0,95,133,0.2),0px_3px_4px_0px_rgba(0,14,20,0.03)] disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -21,14 +21,14 @@ const inputVariants = cva(
         ],
       },
       size: {
-        sm: "h-[var(--size-sm)] px-[var(--space-sm)] py-[var(--space-xsm)] text-body-sm",
-        md: "h-[var(--size-md)] px-[var(--space-md)] py-[var(--space-sm)] text-body-md",
-        lg: "h-[var(--size-lg)] px-[var(--space-lg)] py-[var(--space-md)] text-body-md",
+        s: "h-[var(--size-s)] px-[var(--space-s)] py-[var(--space-xs)] text-body-sm",
+        m: "h-[var(--size-m)] px-[var(--space-m)] py-[var(--space-s)] text-body-md",
+        l: "h-[var(--size-l)] px-[var(--space-l)] py-[var(--space-m)] text-body-md",
       },
     },
     defaultVariants: {
       variant: "default",
-      size: "md",
+      size: "m",
     },
   },
 );
@@ -45,10 +45,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       // Calculate left padding: icon_position + icon_width + spacing
       // For sm: 12px + 12px + 8px = 32px
       // For md/lg: 12px + 16px + 8px = 36px
-      const iconSize = size === "sm" ? "sm" : "md";
-      const leftPadding = size === "sm"
-        ? "pl-[calc(var(--space-md)+var(--size-3xsm)+var(--space-sm))]"
-        : "pl-[calc(var(--space-md)+var(--size-2xsm)+var(--space-sm))]";
+      const iconSize = size === "s" ? "s" : "m";
+      const leftPadding = size === "s"
+        ? "pl-[calc(var(--space-m)+var(--size-3xs)+var(--space-s))]"
+        : "pl-[calc(var(--space-m)+var(--size-2xs)+var(--space-s))]";
 
       return (
         <div className="relative">
@@ -56,7 +56,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             name="search"
             size={iconSize}
             color="tertiary"
-            className="absolute left-[var(--space-md)] top-1/2 -translate-y-1/2 pointer-events-none"
+            className="absolute left-[var(--space-m)] top-1/2 -translate-y-1/2 pointer-events-none"
           />
           <input
             type={type}

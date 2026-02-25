@@ -52,10 +52,10 @@ export const Default: Story = {
       }
       headerTabs={
         <Tabs defaultValue="overview">
-          <TabsList variant="pilled" size="sm">
-            <TabsTrigger value="overview" variant="pilled" size="sm">Overview</TabsTrigger>
-            <TabsTrigger value="analytics" variant="pilled" size="sm">Analytics</TabsTrigger>
-            <TabsTrigger value="history" variant="pilled" size="sm">History</TabsTrigger>
+          <TabsList variant="pilled" size="s">
+            <TabsTrigger value="overview" variant="pilled" size="s">Overview</TabsTrigger>
+            <TabsTrigger value="analytics" variant="pilled" size="s">Analytics</TabsTrigger>
+            <TabsTrigger value="history" variant="pilled" size="s">History</TabsTrigger>
           </TabsList>
         </Tabs>
       }
@@ -78,7 +78,7 @@ export const Default: Story = {
           </div>
 
           <div className="grid gap-4">
-            <div className="rounded-lg border border-[var(--color-border-primary-subtle)] p-4">
+            <div className="rounded-l border border-[var(--color-border-primary-subtle)] p-4">
               <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-2">
                 New Features to Try
               </h3>
@@ -93,7 +93,7 @@ export const Default: Story = {
               </ul>
             </div>
 
-            <div className="rounded-lg bg-[var(--color-surface-secondary)] p-8">
+            <div className="rounded-l bg-[var(--color-surface-secondary)] p-8">
               <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-4">Content Area</h3>
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="h-32 rounded bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)]" />
@@ -323,10 +323,10 @@ export const WithWideDataTable: Story = {
         </>
       }
     >
-      <div className="p-[var(--space-lg)]">
-        <div className="mb-[var(--space-lg)]">
+      <div className="p-[var(--space-l)]">
+        <div className="mb-[var(--space-l)]">
           <h1 className="text-heading-lg text-[var(--color-text-primary)]">Wide Table Layout Test</h1>
-          <p className="text-body-md text-[var(--color-text-secondary)] mt-[var(--space-sm)]">
+          <p className="text-body-md text-[var(--color-text-secondary)] mt-[var(--space-s)]">
             This table has 15 columns to test horizontal scrolling and layout overflow behavior within AppFrame.
           </p>
         </div>

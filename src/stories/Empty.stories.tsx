@@ -81,13 +81,13 @@ export const WithMultipleActions: Story = {
 // Size Variants
 export const SizeSmall: Story = {
   render: () => (
-    <Empty size="sm">
+    <Empty size="s">
       <EmptyHeader>
-        <EmptyMedia size="sm">
+        <EmptyMedia size="s">
           <Icon name="search" className="h-6 w-6" />
         </EmptyMedia>
-        <EmptyTitle size="sm">No results</EmptyTitle>
-        <EmptyDescription size="sm">
+        <EmptyTitle size="s">No results</EmptyTitle>
+        <EmptyDescription size="s">
           Try different keywords
         </EmptyDescription>
       </EmptyHeader>
@@ -97,13 +97,13 @@ export const SizeSmall: Story = {
 
 export const SizeMedium: Story = {
   render: () => (
-    <Empty size="md">
+    <Empty size="m">
       <EmptyHeader>
-        <EmptyMedia size="md">
+        <EmptyMedia size="m">
           <Icon name="search" className="h-8 w-8" />
         </EmptyMedia>
-        <EmptyTitle size="md">No results found</EmptyTitle>
-        <EmptyDescription size="md">
+        <EmptyTitle size="m">No results found</EmptyTitle>
+        <EmptyDescription size="m">
           Try adjusting your search or filter
         </EmptyDescription>
       </EmptyHeader>
@@ -113,13 +113,13 @@ export const SizeMedium: Story = {
 
 export const SizeLarge: Story = {
   render: () => (
-    <Empty size="lg">
+    <Empty size="l">
       <EmptyHeader>
-        <EmptyMedia size="lg">
+        <EmptyMedia size="l">
           <Icon name="search" className="h-10 w-10" />
         </EmptyMedia>
-        <EmptyTitle size="lg">No results found</EmptyTitle>
-        <EmptyDescription size="lg">
+        <EmptyTitle size="l">No results found</EmptyTitle>
+        <EmptyDescription size="l">
           Try adjusting your search or filter to find what you're looking for.
         </EmptyDescription>
       </EmptyHeader>

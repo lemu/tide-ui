@@ -29,7 +29,7 @@ const meta: Meta<typeof Table> = {
   argTypes: {
     size: {
       control: 'select',
-      options: ['sm', 'md', 'lg'],
+      options: ['s', 'm', 'l'],
       description: 'Size of the table cells and text',
     },
   },
@@ -84,7 +84,7 @@ export const NumericColumnsWithFormatting: Story = {
           </TableBody>
         </Table>
 
-        <div className="mt-4 p-4 bg-[var(--color-background-neutral-subtlest)] rounded-md">
+        <div className="mt-4 p-4 bg-[var(--color-background-neutral-subtlest)] rounded-m">
           <h4 className="text-body-md font-medium mb-2">Features Demonstrated:</h4>
           <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-1">
             <li>• <strong>numeric prop</strong>: Right-aligns content and uses tabular numerals</li>
@@ -150,7 +150,7 @@ export const Sizes: Story = {
     <div className="space-y-8">
       <div>
         <h3 className="text-heading-sm font-medium mb-4">Small Table</h3>
-        <Table size="sm">
+        <Table size="s">
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
@@ -175,7 +175,7 @@ export const Sizes: Story = {
 
       <div>
         <h3 className="text-heading-sm font-medium mb-4">Medium Table (Default)</h3>
-        <Table size="md">
+        <Table size="m">
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
@@ -200,7 +200,7 @@ export const Sizes: Story = {
 
       <div>
         <h3 className="text-heading-sm font-medium mb-4">Large Table</h3>
-        <Table size="lg">
+        <Table size="l">
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
@@ -258,12 +258,12 @@ export const WithSelection: Story = {
     return (
       <div className="space-y-4">
         {selectedRows.size > 0 && (
-          <div className="flex items-center gap-2 p-2 bg-[var(--color-background-blue-subtle-selected)] rounded-md">
+          <div className="flex items-center gap-2 p-2 bg-[var(--color-background-blue-subtle-selected)] rounded-m">
             <span className="text-body-sm font-medium">
               {selectedRows.size} row{selectedRows.size > 1 ? 's' : ''} selected
             </span>
-            <Button size="sm" variant="ghost">Delete</Button>
-            <Button size="sm" variant="ghost">Export</Button>
+            <Button size="s" variant="ghost">Delete</Button>
+            <Button size="s" variant="ghost">Export</Button>
           </div>
         )}
         
@@ -302,7 +302,7 @@ export const WithSelection: Story = {
                   <Badge>{row.role}</Badge>
                 </TableCell>
                 <TableCell>
-                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                  <Button variant="ghost" size="s" className="h-8 w-8 p-0">
                     <Icon name="more-horizontal" className="h-4 w-4" />
                   </Button>
                 </TableCell>
@@ -470,11 +470,11 @@ export const UserManagement: Story = {
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-heading-md font-semibold">User Management</h3>
           <div className="flex gap-2">
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="s">
               <Icon name="filter" className="mr-2 h-4 w-4" />
               Filter
             </Button>
-            <Button size="sm">
+            <Button size="s">
               <Icon name="plus" className="mr-2 h-4 w-4" />
               Add User
             </Button>
@@ -521,10 +521,10 @@ export const UserManagement: Story = {
                 </TableCell>
                 <TableCell className="text-right">
                   <div className="flex items-center justify-end gap-2">
-                    <Button variant="ghost" size="sm">
+                    <Button variant="ghost" size="s">
                       <Icon name="edit" className="h-4 w-4" />
                     </Button>
-                    <Button variant="ghost" size="sm">
+                    <Button variant="ghost" size="s">
                       <Icon name="more-horizontal" className="h-4 w-4" />
                     </Button>
                   </div>
@@ -598,7 +598,7 @@ export const WithPagination: Story = {
         <div className="flex items-center justify-between mt-4">
           <Button
             variant="ghost"
-            size="sm"
+            size="s"
             onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
             disabled={currentPage === 1}
           >
@@ -620,7 +620,7 @@ export const WithPagination: Story = {
                   )}
                   <Button
                     variant={page === currentPage ? 'default' : 'ghost'}
-                    size="sm"
+                    size="s"
                     onClick={() => setCurrentPage(page)}
                     className="w-8 h-8 p-0"
                   >
@@ -632,7 +632,7 @@ export const WithPagination: Story = {
 
           <Button
             variant="ghost"
-            size="sm"
+            size="s"
             onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
           >
@@ -769,7 +769,7 @@ export const EmptyState: Story = {
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-heading-md font-semibold">Projects</h3>
-        <Button size="sm">
+        <Button size="s">
           <Icon name="plus" className="mr-2 h-4 w-4" />
           New Project
         </Button>
@@ -795,7 +795,7 @@ export const EmptyState: Story = {
                     Get started by creating your first project
                   </p>
                 </div>
-                <Button size="sm">
+                <Button size="s">
                   <Icon name="plus" className="mr-2 h-4 w-4" />
                   Create Project
                 </Button>
@@ -950,7 +950,7 @@ export const BorderControl: Story = {
           </div>
         </div>
 
-        <div className="p-6 bg-[var(--color-background-neutral-subtlest)] rounded-lg space-y-4">
+        <div className="p-6 bg-[var(--color-background-neutral-subtlest)] rounded-l space-y-4">
           <h3 className="text-heading-md font-medium">Border Implementation Details</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-body-sm">
             <div>

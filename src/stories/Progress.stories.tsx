@@ -24,7 +24,7 @@ const meta: Meta<typeof Progress> = {
     },
     size: {
       control: { type: 'select' },
-      options: ['sm', 'md', 'lg'],
+      options: ['s', 'm', 'l'],
     },
     showLabel: {
       control: 'boolean',
@@ -66,15 +66,15 @@ export const Sizes: Story = {
     <div className="w-80 space-y-4">
       <div>
         <p className="text-body-sm font-medium mb-2">Small</p>
-        <Progress value={65} size="sm" showLabel />
+        <Progress value={65} size="s" showLabel />
       </div>
       <div>
         <p className="text-body-sm font-medium mb-2">Medium (Default)</p>
-        <Progress value={65} size="md" showLabel />
+        <Progress value={65} size="m" showLabel />
       </div>
       <div>
         <p className="text-body-sm font-medium mb-2">Large</p>
-        <Progress value={65} size="lg" showLabel />
+        <Progress value={65} size="l" showLabel />
       </div>
     </div>
   ),
@@ -135,14 +135,14 @@ export const Interactive: Story = {
               formatLabel={(value) => `${Math.round(value)}% completed`}
             />
             <div className="flex gap-2">
-              <Button onClick={startProgress} size="sm">
-                <Icon name="play" size="sm" className="mr-1" />
+              <Button onClick={startProgress} size="s">
+                <Icon name="play" size="s" className="mr-1" />
                 Start Upload
               </Button>
               <Button 
                 onClick={() => setProgress(0)} 
                 variant="ghost" 
-                size="sm"
+                size="s"
               >
                 Reset
               </Button>
@@ -279,14 +279,14 @@ export const MultiStepProcess: Story = {
                 onClick={() => setCurrentStep(Math.max(1, currentStep - 1))}
                 disabled={currentStep === 1}
                 variant="ghost"
-                size="sm"
+                size="s"
               >
                 Previous
               </Button>
               <Button 
                 onClick={() => setCurrentStep(Math.min(totalSteps, currentStep + 1))}
                 disabled={currentStep === totalSteps}
-                size="sm"
+                size="s"
                 className="flex-1"
               >
                 {currentStep === totalSteps ? 'Finish' : 'Next'}
@@ -334,10 +334,10 @@ export const LoadingStates: Story = {
                 <span className="text-body-sm">Download</span>
                 <Button 
                   onClick={() => simulateProgress('download')}
-                  size="sm"
+                  size="s"
                   variant="ghost"
                 >
-                  <Icon name="download" size="sm" />
+                  <Icon name="download" size="s" />
                 </Button>
               </div>
               <Progress value={loadingStates.download} showLabel />
@@ -348,10 +348,10 @@ export const LoadingStates: Story = {
                 <span className="text-body-sm">Upload</span>
                 <Button 
                   onClick={() => simulateProgress('upload')}
-                  size="sm"
+                  size="s"
                   variant="ghost"
                 >
-                  <Icon name="upload" size="sm" />
+                  <Icon name="upload" size="s" />
                 </Button>
               </div>
               <Progress value={loadingStates.upload} variant="success" showLabel />
@@ -362,10 +362,10 @@ export const LoadingStates: Story = {
                 <span className="text-body-sm">Processing</span>
                 <Button 
                   onClick={() => simulateProgress('processing')}
-                  size="sm"
+                  size="s"
                   variant="ghost"
                 >
-                  <Icon name="cpu" size="sm" />
+                  <Icon name="cpu" size="s" />
                 </Button>
               </div>
               <Progress value={loadingStates.processing} variant="warning" showLabel />

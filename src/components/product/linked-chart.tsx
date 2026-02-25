@@ -172,10 +172,10 @@ export function LinkedChart({
   }, [chartHighlightIndex, displayData, data]);
 
   return (
-    <div className={cn("space-y-[var(--space-lg)]", className)}>
+    <div className={cn("space-y-[var(--space-l)]", className)}>
       {/* Header */}
       {(title || description) && (
-        <div className="space-y-[var(--space-sm)]">
+        <div className="space-y-[var(--space-s)]">
           {title && <h3 className="text-heading-md">{title}</h3>}
           {description && (
             <p className="text-body-md text-[var(--color-text-secondary)]">{description}</p>
@@ -185,36 +185,36 @@ export function LinkedChart({
 
       {/* Controls */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-[var(--space-sm)]">
+        <div className="flex items-center gap-[var(--space-s)]">
           {selectedRows.size > 0 && (
-            <Badge intent="neutral" appearance="subtle" size="sm">
+            <Badge intent="neutral" appearance="subtle" size="s">
               {selectedRows.size} selected
               {isRowFilterActive ? " (filtered)" : ""}
             </Badge>
           )}
           {filteredIndices.size > 0 && (
-            <Badge intent="brand" appearance="subtle" size="sm">
+            <Badge intent="brand" appearance="subtle" size="s">
               {filteredIndices.size} chart filtered
             </Badge>
           )}
         </div>
 
-        <div className="flex items-center gap-[var(--space-sm)]">
+        <div className="flex items-center gap-[var(--space-s)]">
           {/* Row filter toggle */}
           {enableRowFiltering && selectedRows.size > 0 && (
             <Button
-              size="sm"
+              size="s"
               variant={isRowFilterActive ? "default" : "ghost"}
               onClick={() => setIsRowFilterActive(!isRowFilterActive)}
             >
-              <Icon name="filter" size="sm" className="mr-[var(--space-xsm)]" />
+              <Icon name="filter" size="s" className="mr-[var(--space-xs)]" />
               Filter selected
             </Button>
           )}
 
           {(selectedRows.size > 0 || filteredIndices.size > 0 || isRowFilterActive) && (
-            <Button variant="ghost" size="sm" onClick={clearAll}>
-              <Icon name="x" size="sm" className="mr-[var(--space-sm)]" />
+            <Button variant="ghost" size="s" onClick={clearAll}>
+              <Icon name="x" size="s" className="mr-[var(--space-s)]" />
               Clear all
             </Button>
           )}
@@ -223,7 +223,7 @@ export function LinkedChart({
 
       {/* Chart */}
       <Card>
-        <CardContent className="p-[var(--space-lg)]">
+        <CardContent className="p-[var(--space-l)]">
           <Chart
             {...chartProps}
             type={type}
@@ -243,13 +243,13 @@ export function LinkedChart({
           <CardHeader>
             <CardTitle className="text-heading-sm flex items-center justify-between">
               Data Table
-              <Badge intent="neutral" appearance="subtle" size="sm">
+              <Badge intent="neutral" appearance="subtle" size="s">
                 {displayData.length} rows
               </Badge>
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className={cn("rounded-md border border-[var(--color-border-primary-subtle)]", tableClassName)}>
+            <div className={cn("rounded-m border border-[var(--color-border-primary-subtle)]", tableClassName)}>
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -295,14 +295,14 @@ export function LinkedChart({
       {/* Instructions */}
       {enableFiltering && (
         <Card className="border-[var(--color-border-info-bold)]">
-          <CardContent className="p-[var(--space-md)]">
-            <div className="flex items-start gap-[var(--space-sm)]">
-              <Icon name="info" size="sm" color="information" className="mt-1" />
-              <div className="space-y-[var(--space-xsm)] text-body-sm text-[var(--color-text-secondary)]">
+          <CardContent className="p-[var(--space-m)]">
+            <div className="flex items-start gap-[var(--space-s)]">
+              <Icon name="info" size="s" color="information" className="mt-1" />
+              <div className="space-y-[var(--space-xs)] text-body-sm text-[var(--color-text-secondary)]">
                 <p>
                   <strong>Interactive Features:</strong>
                 </p>
-                <ul className="list-disc list-inside space-y-[var(--space-xsm)]">
+                <ul className="list-disc list-inside space-y-[var(--space-xs)]">
                   <li>Click chart data points to filter the table</li>
                   {enableRowSelection && (
                     <li>Click table rows to select/deselect them</li>

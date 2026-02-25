@@ -38,26 +38,26 @@ const monthPickerVariants = cva('', {
 // Size-specific class configurations
 const sizeConfig = {
   default: {
-    container: 'gap-[var(--space-md)]',
-    navButton: 'h-[var(--size-md)] w-[var(--size-md)]',
-    navIcon: 'h-[var(--size-xsm)] w-[var(--size-xsm)]',
-    yearGridGap: 'gap-[var(--space-md)]',
-    yearSectionGap: 'gap-[var(--space-sm)]',
+    container: 'gap-[var(--space-m)]',
+    navButton: 'h-[var(--size-m)] w-[var(--size-m)]',
+    navIcon: 'h-[var(--size-xs)] w-[var(--size-xs)]',
+    yearGridGap: 'gap-[var(--space-m)]',
+    yearSectionGap: 'gap-[var(--space-s)]',
     yearHeader: 'text-label-sm',
-    monthGridGap: 'gap-[var(--space-xsm)]',
-    monthButton: 'px-[var(--space-xsm)] py-[var(--space-sm)] text-body-sm',
-    monthBorderRadius: 'rounded-md',
+    monthGridGap: 'gap-[var(--space-xs)]',
+    monthButton: 'px-[var(--space-xs)] py-[var(--space-s)] text-body-sm',
+    monthBorderRadius: 'rounded-m',
   },
   small: {
-    container: 'gap-[var(--space-sm)]',
-    navButton: 'h-[var(--size-sm)] w-[var(--size-sm)]',
+    container: 'gap-[var(--space-s)]',
+    navButton: 'h-[var(--size-s)] w-[var(--size-s)]',
     navIcon: 'h-4 w-4',
-    yearGridGap: 'gap-[var(--space-sm)]',
-    yearSectionGap: 'gap-[var(--space-xsm)]',
-    yearHeader: '[&]:text-caption-medium-sm [&]:font-medium py-[var(--space-sm)]',
+    yearGridGap: 'gap-[var(--space-s)]',
+    yearSectionGap: 'gap-[var(--space-xs)]',
+    yearHeader: '[&]:text-caption-medium-sm [&]:font-medium py-[var(--space-s)]',
     monthGridGap: 'gap-1',
-    monthButton: 'px-1 py-[var(--space-xsm)] [&]:text-caption-sm',
-    monthBorderRadius: 'rounded-sm',
+    monthButton: 'px-1 py-[var(--space-xs)] [&]:text-caption-sm',
+    monthBorderRadius: 'rounded-s',
   },
 } as const
 
@@ -239,7 +239,7 @@ export const MonthPicker = React.forwardRef<HTMLDivElement, MonthPickerProps>(
           {enableNavigation && (
             <Button
               variant="default"
-              size="sm"
+              size="s"
               onClick={handlePreviousYear}
               className={cn(sizeClasses.navButton, "p-0 shrink-0")}
             >
@@ -297,7 +297,7 @@ export const MonthPicker = React.forwardRef<HTMLDivElement, MonthPickerProps>(
           {enableNavigation && (
             <Button
               variant="default"
-              size="sm"
+              size="s"
               onClick={handleNextYear}
               className={cn(sizeClasses.navButton, "p-0 shrink-0")}
             >

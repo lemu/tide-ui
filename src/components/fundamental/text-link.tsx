@@ -4,13 +4,13 @@ import { cn } from "../../lib/utils";
 import { Icon, IconType } from "./icon";
 
 const textLinkVariants = cva(
-  "inline-flex items-center gap-[var(--space-xsm)] min-w-0 max-w-full transition-colors underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2",
+  "inline-flex items-center gap-[var(--space-xs)] min-w-0 max-w-full transition-colors underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focused)] focus-visible:ring-offset-2",
   {
     variants: {
       size: {
-        sm: "[&]:text-body-sm",
-        md: "[&]:text-body-md",
-        lg: "[&]:text-body-lg",
+        s: "[&]:text-body-sm",
+        m: "[&]:text-body-md",
+        l: "[&]:text-body-lg",
       },
       variant: {
         default:
@@ -20,7 +20,7 @@ const textLinkVariants = cva(
       },
     },
     defaultVariants: {
-      size: "md",
+      size: "m",
       variant: "default",
     },
   },
@@ -41,7 +41,7 @@ const TextLink = React.forwardRef<HTMLAnchorElement, TextLinkProps>(
   (
     {
       className,
-      size = "md",
+      size = "m",
       variant = "default",
       icon,
       iconPosition = "right",
@@ -57,14 +57,14 @@ const TextLink = React.forwardRef<HTMLAnchorElement, TextLinkProps>(
     // Map text size to icon size
     const iconSize = React.useMemo(() => {
       switch (size) {
-        case "sm":
-          return "sm" as const;
-        case "md":
-          return "sm" as const;
-        case "lg":
-          return "md" as const;
+        case "s":
+          return "s" as const;
+        case "m":
+          return "s" as const;
+        case "l":
+          return "m" as const;
         default:
-          return "sm" as const;
+          return "s" as const;
       }
     }, [size]);
 

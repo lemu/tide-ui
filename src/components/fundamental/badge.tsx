@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center w-fit max-w-full shrink-0 rounded-sm px-[var(--space-sm)] py-[var(--space-xsm)] text-caption-medium-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-1 cursor-default",
+  "inline-flex items-center w-fit max-w-full shrink-0 rounded-s px-[var(--space-s)] py-[var(--space-xs)] text-caption-medium-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-1 cursor-default",
   {
     variants: {
       intent: {
@@ -21,10 +21,10 @@ const badgeVariants = cva(
         subtle: "",
       },
       size: {
-        xsm: "px-[var(--space-xsm)] h-4 [&]:text-body-medium-xsm min-w-[16px] justify-center",
-        sm: "px-[var(--space-xsm)] h-5 [&]:text-body-medium-xsm min-w-[20px] justify-center",
-        md: "px-[var(--space-sm)] h-6 [&]:text-body-medium-sm",
-        lg: "px-[var(--space-md)] h-7 [&]:text-body-medium-md",
+        xs: "px-[var(--space-xs)] h-4 [&]:text-body-medium-xsm min-w-[16px] justify-center",
+        s: "px-[var(--space-xs)] h-5 [&]:text-body-medium-xsm min-w-[20px] justify-center",
+        m: "px-[var(--space-s)] h-6 [&]:text-body-medium-sm",
+        l: "px-[var(--space-m)] h-7 [&]:text-body-medium-md",
       },
     },
     compoundVariants: [
@@ -136,17 +136,17 @@ const badgeVariants = cva(
     defaultVariants: {
       intent: "neutral",
       appearance: "subtle",
-      size: "md",
+      size: "m",
     },
   },
 );
 
 // Icon size classes based on badge size
 const iconSizeClasses = {
-  xsm: "w-3 h-3",
-  sm: "w-3.5 h-3.5",
-  md: "w-4 h-4",
-  lg: "w-[18px] h-[18px]",
+  xs: "w-3 h-3",
+  s: "w-3.5 h-3.5",
+  m: "w-4 h-4",
+  l: "w-[18px] h-[18px]",
 } as const;
 
 export interface BadgeProps
@@ -158,15 +158,15 @@ export interface BadgeProps
 }
 
 const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
-  ({ className, intent, appearance, size = "md", icon, truncate = true, children, ...props }, ref) => {
-    const iconSize = iconSizeClasses[size as keyof typeof iconSizeClasses] ?? iconSizeClasses.md;
+  ({ className, intent, appearance, size = "m", icon, truncate = true, children, ...props }, ref) => {
+    const iconSize = iconSizeClasses[size as keyof typeof iconSizeClasses] ?? iconSizeClasses.m;
 
     return (
       <div
         ref={ref}
         className={cn(
           badgeVariants({ intent, appearance, size }),
-          icon && "gap-[var(--space-xsm)]",
+          icon && "gap-[var(--space-xs)]",
           className,
         )}
         {...props}

@@ -20,7 +20,7 @@ const meta: Meta<typeof Badge> = {
     },
     size: {
       control: { type: 'select' },
-      options: ['xsm', 'sm', 'md', 'lg'],
+      options: ['xs', 's', 'm', 'l'],
     },
   },
 } satisfies Meta<typeof Badge>
@@ -40,11 +40,11 @@ export const AllVariants: Story = {
   },
   render: () => {
     return (
-      <div className="flex flex-col gap-[var(--space-xlg)]">
+      <div className="flex flex-col gap-[var(--space-2xl)]">
         {/* Subtle Variants */}
         <div>
-          <h3 className="text-heading-sm mb-[var(--space-md)]">Subtle Appearance</h3>
-          <div className="flex flex-wrap gap-[var(--space-md)]">
+          <h3 className="text-heading-sm mb-[var(--space-m)]">Subtle Appearance</h3>
+          <div className="flex flex-wrap gap-[var(--space-m)]">
             <Badge intent="neutral" appearance="subtle">Neutral</Badge>
             <Badge intent="brand" appearance="subtle">Brand</Badge>
             <Badge intent="success" appearance="subtle">Success</Badge>
@@ -58,8 +58,8 @@ export const AllVariants: Story = {
 
         {/* Bold Variants */}
         <div>
-          <h3 className="text-heading-sm mb-[var(--space-md)]">Bold Appearance</h3>
-          <div className="flex flex-wrap gap-[var(--space-md)]">
+          <h3 className="text-heading-sm mb-[var(--space-m)]">Bold Appearance</h3>
+          <div className="flex flex-wrap gap-[var(--space-m)]">
             <Badge intent="neutral" appearance="bold">Neutral</Badge>
             <Badge intent="brand" appearance="bold">Brand</Badge>
             <Badge intent="success" appearance="bold">Success</Badge>
@@ -73,8 +73,8 @@ export const AllVariants: Story = {
 
         {/* With Icons - Subtle */}
         <div>
-          <h3 className="text-heading-sm mb-[var(--space-md)]">With Icons - Subtle</h3>
-          <div className="flex flex-wrap gap-[var(--space-md)]">
+          <h3 className="text-heading-sm mb-[var(--space-m)]">With Icons - Subtle</h3>
+          <div className="flex flex-wrap gap-[var(--space-m)]">
             <Badge intent="neutral" appearance="subtle" icon={<CircleHelp />}>Neutral</Badge>
             <Badge intent="brand" appearance="subtle" icon={<CircleHelp />}>Brand</Badge>
             <Badge intent="success" appearance="subtle" icon={<CircleHelp />}>Success</Badge>
@@ -88,8 +88,8 @@ export const AllVariants: Story = {
 
         {/* With Icons - Bold */}
         <div>
-          <h3 className="text-heading-sm mb-[var(--space-md)]">With Icons - Bold</h3>
-          <div className="flex flex-wrap gap-[var(--space-md)]">
+          <h3 className="text-heading-sm mb-[var(--space-m)]">With Icons - Bold</h3>
+          <div className="flex flex-wrap gap-[var(--space-m)]">
             <Badge intent="neutral" appearance="bold" icon={<CircleHelp />}>Neutral</Badge>
             <Badge intent="brand" appearance="bold" icon={<CircleHelp />}>Brand</Badge>
             <Badge intent="success" appearance="bold" icon={<CircleHelp />}>Success</Badge>
@@ -103,23 +103,23 @@ export const AllVariants: Story = {
 
         {/* Sizes */}
         <div>
-          <h3 className="text-heading-sm mb-[var(--space-md)]">Sizes</h3>
-          <div className="flex items-center gap-[var(--space-md)]">
-            <Badge size="xsm">XSmall</Badge>
-            <Badge size="sm">Small</Badge>
-            <Badge size="md">Medium</Badge>
-            <Badge size="lg">Large</Badge>
+          <h3 className="text-heading-sm mb-[var(--space-m)]">Sizes</h3>
+          <div className="flex items-center gap-[var(--space-m)]">
+            <Badge size="xs">XSmall</Badge>
+            <Badge size="s">Small</Badge>
+            <Badge size="m">Medium</Badge>
+            <Badge size="l">Large</Badge>
           </div>
         </div>
 
         {/* Sizes with Icons */}
         <div>
-          <h3 className="text-heading-sm mb-[var(--space-md)]">Sizes with Icons</h3>
-          <div className="flex items-center gap-[var(--space-md)]">
-            <Badge size="xsm" icon={<CircleHelp />}>XSmall</Badge>
-            <Badge size="sm" icon={<CircleHelp />}>Small</Badge>
-            <Badge size="md" icon={<CircleHelp />}>Medium</Badge>
-            <Badge size="lg" icon={<CircleHelp />}>Large</Badge>
+          <h3 className="text-heading-sm mb-[var(--space-m)]">Sizes with Icons</h3>
+          <div className="flex items-center gap-[var(--space-m)]">
+            <Badge size="xs" icon={<CircleHelp />}>XSmall</Badge>
+            <Badge size="s" icon={<CircleHelp />}>Small</Badge>
+            <Badge size="m" icon={<CircleHelp />}>Medium</Badge>
+            <Badge size="l" icon={<CircleHelp />}>Large</Badge>
           </div>
         </div>
       </div>

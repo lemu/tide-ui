@@ -39,16 +39,16 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
 const sheetVariants = cva(
-  "fixed z-50 gap-[var(--space-lg)] bg-[var(--color-surface-primary)] p-[var(--space-2xlg)] shadow-xl transition ease-in-out overflow-hidden data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
+  "fixed z-50 gap-[var(--space-l)] bg-[var(--color-surface-primary)] p-[var(--space-3xl)] shadow-xl transition ease-in-out overflow-hidden data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
   {
     variants: {
       side: {
-        top: "inset-x-[var(--space-sm)] top-[var(--space-sm)] rounded-md border-b border-[var(--color-border-primary-subtle)] data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
+        top: "inset-x-[var(--space-s)] top-[var(--space-s)] rounded-m border-b border-[var(--color-border-primary-subtle)] data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
         bottom:
-          "inset-x-[var(--space-sm)] bottom-[var(--space-sm)] rounded-md border-t border-[var(--color-border-primary-subtle)] data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
-        left: "inset-y-[var(--space-sm)] left-[var(--space-sm)] rounded-md w-3/4 border-r border-[var(--color-border-primary-subtle)] data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
+          "inset-x-[var(--space-s)] bottom-[var(--space-s)] rounded-m border-t border-[var(--color-border-primary-subtle)] data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
+        left: "inset-y-[var(--space-s)] left-[var(--space-s)] rounded-m w-3/4 border-r border-[var(--color-border-primary-subtle)] data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
         right:
-          "inset-y-[var(--space-sm)] right-[var(--space-sm)] rounded-md w-3/4 border-l border-[var(--color-border-primary-subtle)] data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
+          "inset-y-[var(--space-s)] right-[var(--space-s)] rounded-m w-3/4 border-l border-[var(--color-border-primary-subtle)] data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
       },
     },
     defaultVariants: {
@@ -97,10 +97,10 @@ const SheetContent = React.forwardRef<
         <SheetPrimitive.Close asChild>
           <Button
             variant="default"
-            size="md"
+            size="m"
             icon="x"
             iconPosition="only"
-            className="absolute right-[var(--space-lg)] top-[var(--space-lg)]"
+            className="absolute right-[var(--space-l)] top-[var(--space-l)]"
           >
             <span className="sr-only">Close</span>
           </Button>
@@ -118,7 +118,7 @@ const SheetHeader = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col space-y-[var(--space-sm)] text-center sm:text-left",
+      "flex flex-col space-y-[var(--space-s)] text-center sm:text-left",
       className
     )}
     {...props}
@@ -132,7 +132,7 @@ const SheetFooter = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-[var(--space-sm)]",
+      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-[var(--space-s)]",
       className
     )}
     {...props}

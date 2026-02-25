@@ -16,7 +16,7 @@ const meta: Meta<typeof Icon> = {
     },
     size: {
       control: { type: 'select' },
-      options: ['sm', 'md', 'lg', 'xl'] as IconSize[],
+      options: ['s', 'm', 'l', 'xl'] as IconSize[],
     },
     color: {
       control: { type: 'select' },
@@ -45,9 +45,9 @@ export const Default: Story = {
 // All sizes showcase
 export const AllSizes: Story = {
   render: () => (
-    <div className="flex items-center gap-[var(--space-lg)]">
-      {(['sm', 'md', 'lg', 'xl'] as IconSize[]).map((size) => (
-        <div key={size} className="flex flex-col items-center gap-[var(--space-sm)]">
+    <div className="flex items-center gap-[var(--space-l)]">
+      {(['s', 'm', 'l', 'xl'] as IconSize[]).map((size) => (
+        <div key={size} className="flex flex-col items-center gap-[var(--space-s)]">
           <Icon name="star" size={size} />
           <span className="text-caption-sm text-[var(--color-text-tertiary)]">
             {size}
@@ -68,10 +68,10 @@ export const AllColors: Story = {
     ];
 
     return (
-      <div className="grid grid-cols-7 gap-[var(--space-md)]">
+      <div className="grid grid-cols-7 gap-[var(--space-m)]">
         {colors.map((color) => (
-          <div key={color} className="flex flex-col items-center gap-[var(--space-sm)]">
-            <div className={`flex h-[var(--size-xlg)] w-[var(--size-xlg)] items-center justify-center rounded-sm ${
+          <div key={color} className="flex flex-col items-center gap-[var(--space-s)]">
+            <div className={`flex h-[var(--size-xl)] w-[var(--size-xl)] items-center justify-center rounded-s ${
               color === 'on-action' || color === 'inverse' ? 'bg-[var(--grey-900)]' : 'bg-[var(--color-surface-secondary)]'
             }`}>
               <Icon name="star" color={color} />
@@ -118,15 +118,15 @@ export const AllLucideIcons: Story = {
       .sort();
 
     return (
-      <div className="space-y-[var(--space-md)]">
+      <div className="space-y-[var(--space-m)]">
         <div className="text-body-md text-[var(--color-text-secondary)]">
           {lucideIconNames.length} Lucide icons available
         </div>
-        <div className="grid grid-cols-12 gap-[var(--space-md)]">
+        <div className="grid grid-cols-12 gap-[var(--space-m)]">
           {lucideIconNames.map((iconName) => (
-            <div key={iconName} className="flex flex-col items-center gap-[var(--space-xsm)]">
-              <div className="flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center rounded-sm bg-[var(--color-surface-secondary)]">
-                <Icon name={iconName} size="md" />
+            <div key={iconName} className="flex flex-col items-center gap-[var(--space-xs)]">
+              <div className="flex h-[var(--size-l)] w-[var(--size-l)] items-center justify-center rounded-s bg-[var(--color-surface-secondary)]">
+                <Icon name={iconName} size="m" />
               </div>
               <span className="text-caption-xsm text-center text-[var(--color-text-tertiary)] break-all">
                 {iconName}
@@ -156,11 +156,11 @@ export const CustomIcons: Story = {
     ];
 
     return (
-      <div className="grid grid-cols-8 gap-[var(--space-lg)]">
+      <div className="grid grid-cols-8 gap-[var(--space-l)]">
         {customIcons.map((iconName) => (
-          <div key={iconName} className="flex flex-col items-center gap-[var(--space-sm)]">
-            <div className="flex h-[var(--size-xlg)] w-[var(--size-xlg)] items-center justify-center rounded-sm bg-[var(--color-surface-secondary)]">
-              <Icon name={iconName} size="lg" />
+          <div key={iconName} className="flex flex-col items-center gap-[var(--space-s)]">
+            <div className="flex h-[var(--size-xl)] w-[var(--size-xl)] items-center justify-center rounded-s bg-[var(--color-surface-secondary)]">
+              <Icon name={iconName} size="l" />
             </div>
             <span className="text-caption-xsm text-center text-[var(--color-text-tertiary)]">
               {iconName}
@@ -175,63 +175,63 @@ export const CustomIcons: Story = {
 // Usage examples with code
 export const UsageExamples: Story = {
   render: () => (
-    <div className="space-y-[var(--space-lg)] max-w-4xl">
-      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
-        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+    <div className="space-y-[var(--space-l)] max-w-4xl">
+      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Basic Usage
         </h3>
-        <div className="flex items-center gap-[var(--space-md)]">
+        <div className="flex items-center gap-[var(--space-m)]">
           <Icon name="star" />
-          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm text-[var(--color-text-primary)]">
+          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
             {`<Icon name="star" />`}
           </code>
         </div>
       </div>
 
-      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
-        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           With Size and Color
         </h3>
-        <div className="flex items-center gap-[var(--space-md)]">
-          <Icon name="heart" size="lg" color="error" />
-          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm text-[var(--color-text-primary)]">
-            {`<Icon name="heart" size="lg" color="error" />`}
+        <div className="flex items-center gap-[var(--space-m)]">
+          <Icon name="heart" size="l" color="error" />
+          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
+            {`<Icon name="heart" size="l" color="error" />`}
           </code>
         </div>
       </div>
 
-      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
-        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Accessible Icon with Label
         </h3>
-        <div className="flex items-center gap-[var(--space-md)]">
+        <div className="flex items-center gap-[var(--space-m)]">
           <Icon name="star" aria-label="Favorite item" />
-          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm text-[var(--color-text-primary)]">
+          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
             {`<Icon name="star" aria-label="Favorite item" />`}
           </code>
         </div>
       </div>
 
-      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
-        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Custom Icon
         </h3>
-        <div className="flex items-center gap-[var(--space-md)]">
+        <div className="flex items-center gap-[var(--space-m)]">
           <Icon name="dot" color="brand" />
-          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm text-[var(--color-text-primary)]">
+          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
             {`<Icon name="dot" color="brand" />`}
           </code>
         </div>
       </div>
 
-      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
-        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Dynamic Lucide Icon
         </h3>
-        <div className="flex items-center gap-[var(--space-md)]">
-          <Icon name="microscope" size="lg" color="information" />
-          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm text-[var(--color-text-primary)]">
-            {`<Icon name="microscope" size="lg" color="information" />`}
+        <div className="flex items-center gap-[var(--space-m)]">
+          <Icon name="microscope" size="l" color="information" />
+          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
+            {`<Icon name="microscope" size="l" color="information" />`}
           </code>
         </div>
       </div>

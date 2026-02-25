@@ -519,7 +519,7 @@ export const ContactForm: Story = {
       <Card className="w-full max-w-lg">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Icon name="mail" size="md" />
+            <Icon name="mail" size="m" />
             Contact Us
           </CardTitle>
         </CardHeader>
@@ -659,12 +659,12 @@ export const ContactForm: Story = {
             >
               {isSubmitting ? (
                 <>
-                  <Icon name="loader-2" size="sm" className="mr-2 animate-spin" />
+                  <Icon name="loader-2" size="s" className="mr-2 animate-spin" />
                   Sending Message...
                 </>
               ) : (
                 <>
-                  <Icon name="send" size="sm" className="mr-2" />
+                  <Icon name="send" size="s" className="mr-2" />
                   Send Message
                 </>
               )}

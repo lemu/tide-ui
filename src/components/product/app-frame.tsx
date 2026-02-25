@@ -159,7 +159,7 @@ const defaultNavigationData: AppFrameNavigationData = {
   ],
   operations: [
     {
-      title: 'Freight planner',
+      title: 'Voyage economics',
       icon: 'ship',
       url: '/freight-planner',
       isActive: false,
@@ -213,7 +213,6 @@ const defaultNavigationData: AppFrameNavigationData = {
         { title: 'Supply', url: '/global-market/supply', isActive: false },
         { title: 'Commodities', url: '/global-market/commodities', isActive: false },
         { title: 'Freight', url: '/global-market/freight', isActive: false },
-        { title: 'Routes', url: '/global-market/routes', isActive: false },
       ],
     },
     {
@@ -396,23 +395,23 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
           data-sidebar="content"
         >
           {/* Search Section */}
-          <div className="p-[var(--space-md)] pt-[var(--space-sm)] group-data-[collapsible=icon]:px-2">
+          <div className="p-[var(--space-m)] pt-[var(--space-s)] group-data-[collapsible=icon]:px-2">
             <div className="relative">
               <div className="absolute top-1/2 left-2 -translate-y-1/2 group-data-[collapsible=icon]:hidden">
-                <Icon name="search" size="md" color="tertiary" />
+                <Icon name="search" size="m" color="tertiary" />
               </div>
 
               {/* Full search button in expanded state */}
               <div className="group-data-[collapsible=icon]:hidden">
                 <button
                   onClick={() => setCommandOpen(true)}
-                  className="text-body-md flex h-8 w-full cursor-pointer items-center rounded-md border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-3 py-1 pr-20 pl-8 text-left text-[var(--color-text-tertiary)] transition-colors hover:border-[var(--color-border-primary-medium)] hover:!bg-[var(--color-background-neutral-subtlest-hovered)] focus:border-[var(--color-border-brand-bold)] focus:ring-2 focus:ring-[var(--color-border-brand-bold)]/20 focus:ring-offset-0 focus:outline-none active:border-[var(--color-border-primary-medium)]"
+                  className="text-body-md flex h-8 w-full cursor-pointer items-center rounded-m border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-3 py-1 pr-20 pl-8 text-left text-[var(--color-text-tertiary)] transition-colors hover:border-[var(--color-border-primary-medium)] hover:!bg-[var(--color-background-neutral-subtlest-hovered)] focus:border-[var(--color-border-brand-bold)] focus:ring-2 focus:ring-[var(--color-border-brand-bold)]/20 focus:ring-offset-0 focus:outline-none active:border-[var(--color-border-primary-medium)]"
                 >
                   Search
                 </button>
                 <div className="absolute top-1/2 right-2 flex -translate-y-1/2 gap-1">
-                  <Kbd size="sm">{isMacOS() ? '⌘' : 'Ctrl'}</Kbd>
-                  <Kbd size="sm">K</Kbd>
+                  <Kbd size="s">{isMacOS() ? '⌘' : 'Ctrl'}</Kbd>
+                  <Kbd size="s">K</Kbd>
                 </div>
               </div>
 
@@ -424,17 +423,17 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                     className="hidden h-8 w-8 cursor-pointer items-center justify-center rounded border border-[var(--color-border-primary-subtle)] bg-transparent transition-all duration-200 group-data-[collapsible=icon]:flex hover:border-[var(--color-border-primary-medium)] hover:!bg-[var(--color-background-neutral-subtlest-hovered)] focus:border-[var(--color-border-brand-bold)] focus:ring-2 focus:ring-[var(--color-border-brand-bold)]/20 focus:ring-offset-0 focus:outline-none active:border-[var(--color-border-primary-medium)]"
                     aria-label="Search"
                   >
-                    <Icon name="search" size="md" color="tertiary" />
+                    <Icon name="search" size="m" color="tertiary" />
                   </button>
                 </TooltipTrigger>
                 <TooltipContent side="right" className="hidden group-data-[collapsible=icon]:block">
                   <div className="flex items-center gap-2">
                     <span>Search</span>
                     <div className="flex gap-1">
-                      <Kbd size="sm" variant="dark">
+                      <Kbd size="s" variant="dark">
                         {isMacOS() ? '⌘' : 'Ctrl'}
                       </Kbd>
-                      <Kbd size="sm" variant="dark">
+                      <Kbd size="s" variant="dark">
                         K
                       </Kbd>
                     </div>
@@ -445,7 +444,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
           </div>
 
           {/* Main Navigation */}
-          <SidebarGroup className="pb-1 mt-1 p-[var(--space-sm)]">
+          <SidebarGroup className="pb-1 mt-1 p-[var(--space-s)]">
             <SidebarGroupContent>
               <SidebarMenu>
                 {navigationData.main.map((item) => (
@@ -461,7 +460,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                             }
                           }}
                         >
-                          <Icon name={item.icon} size="sm" />
+                          <Icon name={item.icon} size="s" />
                           <span>{item.title}</span>
                         </SidebarMenuButton>
                       </TooltipTrigger>
@@ -481,7 +480,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
           </div>
 
           {/* Operations Section */}
-          <SidebarGroup className="mt-1 p-[var(--space-sm)]">
+          <SidebarGroup className="mt-1 p-[var(--space-s)]">
             <SidebarGroupLabel className="py-1 pb-1.5 group-data-[collapsible=icon]:hidden">
               Operations
             </SidebarGroupLabel>
@@ -497,11 +496,11 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                             isActive={item.isActive && !item.items?.length}
                             onClick={() => toggleExpanded(item.title)}
                           >
-                            <Icon name={item.icon} size="sm" />
+                            <Icon name={item.icon} size="s" />
                             <span>{item.title}</span>
                             <Icon
                               name="chevron-right"
-                              size="sm"
+                              size="s"
                               className={`ml-auto transition-transform ${
                                 expandedItems[item.title] ? 'rotate-90' : ''
                               }`}
@@ -540,7 +539,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                                     isActive={hasActiveChild(item)}
                                     className="w-full justify-center"
                                   >
-                                    <Icon name={item.icon} size="sm" />
+                                    <Icon name={item.icon} size="s" />
                                   </SidebarMenuButton>
                                 </TooltipTrigger>
                               </DropdownMenuTrigger>
@@ -586,7 +585,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                               }
                             }}
                           >
-                            <Icon name={item.icon} size="sm" />
+                            <Icon name={item.icon} size="s" />
                             <span>{item.title}</span>
                           </SidebarMenuButton>
                         </TooltipTrigger>
@@ -607,7 +606,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
           </div>
 
           {/* Intelligence Section */}
-          <SidebarGroup className="mt-1 p-[var(--space-sm)]">
+          <SidebarGroup className="mt-1 p-[var(--space-s)]">
             <SidebarGroupLabel className="py-1 pb-1.5 group-data-[collapsible=icon]:hidden">
               Intelligence
             </SidebarGroupLabel>
@@ -623,11 +622,11 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                             isActive={item.isActive && !item.items?.length}
                             onClick={() => toggleExpanded(item.title)}
                           >
-                            <Icon name={item.icon} size="sm" />
+                            <Icon name={item.icon} size="s" />
                             <span>{item.title}</span>
                             <Icon
                               name="chevron-right"
-                              size="sm"
+                              size="s"
                               className={`ml-auto transition-transform ${
                                 expandedItems[item.title] ? 'rotate-90' : ''
                               }`}
@@ -666,7 +665,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                                     isActive={hasActiveChild(item)}
                                     className="w-full justify-center"
                                   >
-                                    <Icon name={item.icon} size="sm" />
+                                    <Icon name={item.icon} size="s" />
                                   </SidebarMenuButton>
                                 </TooltipTrigger>
                               </DropdownMenuTrigger>
@@ -712,7 +711,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                               }
                             }}
                           >
-                            <Icon name={item.icon} size="sm" />
+                            <Icon name={item.icon} size="s" />
                             <span>{item.title}</span>
                           </SidebarMenuButton>
                         </TooltipTrigger>
@@ -728,7 +727,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
           </SidebarGroup>
 
           {/* Support Section */}
-          <SidebarGroup className="pb-2 p-[var(--space-sm)] mt-auto">
+          <SidebarGroup className="pb-2 p-[var(--space-s)] mt-auto">
             <SidebarGroupContent>
               <SidebarMenu>
                 {navigationData.support.map((item) => (
@@ -744,7 +743,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                             }
                           }}
                         >
-                          <Icon name={item.icon} size="sm" />
+                          <Icon name={item.icon} size="s" />
                           <span>{item.title}</span>
                         </SidebarMenuButton>
                       </TooltipTrigger>
@@ -761,19 +760,19 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
 
         {/* Footer with User/Team Switcher */}
         <SidebarFooter className="sticky bottom-0 z-10 border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:py-2">
-          <div className="group/user-menu rounded-md border border-[var(--color-border-primary-subtle)] transition-colors hover:border-[var(--color-border-primary-medium)] group-data-[collapsible=icon]:rounded-none group-data-[collapsible=icon]:border-none">
+          <div className="group/user-menu rounded-m border border-[var(--color-border-primary-subtle)] transition-colors hover:border-[var(--color-border-primary-medium)] group-data-[collapsible=icon]:rounded-none group-data-[collapsible=icon]:border-none">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="h-auto min-h-[56px] w-full justify-start rounded-md px-3 py-2 hover:!bg-[var(--color-background-neutral-subtlest-hovered)] group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:min-h-0 group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:p-0"
+                  className="h-auto min-h-[56px] w-full justify-start rounded-m px-3 py-2 hover:!bg-[var(--color-background-neutral-subtlest-hovered)] group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:min-h-0 group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:p-0"
                 >
                   {/* Expanded state */}
                   <div className="flex w-full items-center gap-3 group-data-[collapsible=icon]:hidden">
                     <div className="relative flex-shrink-0">
-                      <Avatar size="md" type="user">
+                      <Avatar size="m" type="user">
                         <AvatarImage src={user.avatarUrl} alt={user.name} />
-                        <AvatarFallback size="md" type="user">{getUserInitials(user.name)}</AvatarFallback>
+                        <AvatarFallback size="m" type="user">{getUserInitials(user.name)}</AvatarFallback>
                       </Avatar>
                       <div className="absolute -right-1 -bottom-1 rounded-[4px] border-2 border-white p-0">
                         <Avatar size="xxs" type="organization">
@@ -790,14 +789,14 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                         {activeTeam.role} at {activeTeam.name}
                       </div>
                     </div>
-                    <Icon name="chevron-down" size="md" className="opacity-50" />
+                    <Icon name="chevron-down" size="m" className="opacity-50" />
                   </div>
 
                   {/* Collapsed state */}
                   <div className="relative hidden group-data-[collapsible=icon]:block">
-                    <Avatar size="sm" type="user">
+                    <Avatar size="s" type="user">
                       <AvatarImage src={user.avatarUrl} alt={user.name} />
-                      <AvatarFallback size="sm" type="user">{getUserInitials(user.name)}</AvatarFallback>
+                      <AvatarFallback size="s" type="user">{getUserInitials(user.name)}</AvatarFallback>
                     </Avatar>
                     <div className="absolute -right-1 -bottom-1 rounded-[2px] border-2 border-white bg-[var(--color-surface-primary)]">
                       <Avatar size="xxs" type="organization">
@@ -817,9 +816,9 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                 {/* User Section */}
                 <DropdownMenuLabel className="p-0 font-normal">
                   <div className="flex items-center gap-3 px-2 py-2">
-                    <Avatar size="sm" type="user">
+                    <Avatar size="s" type="user">
                       <AvatarImage src={user.avatarUrl} alt={user.name} />
-                      <AvatarFallback size="sm" type="user">{getUserInitials(user.name)}</AvatarFallback>
+                      <AvatarFallback size="s" type="user">{getUserInitials(user.name)}</AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left">
                       <span className="text-body-medium-sm truncate font-semibold text-[var(--color-text-primary)]">
@@ -844,9 +843,9 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                     onSelect={() => setActiveTeam(team)}
                     className="mx-1 mb-1 h-10 cursor-pointer gap-2 px-1 pr-2 pl-1"
                   >
-                    <Avatar size="sm" type="organization">
+                    <Avatar size="s" type="organization">
                       <AvatarImage src={team.avatarUrl} alt={team.name} />
-                      <AvatarFallback size="sm" type="organization">{getTeamInitials(team.name)}</AvatarFallback>
+                      <AvatarFallback size="s" type="organization">{getTeamInitials(team.name)}</AvatarFallback>
                     </Avatar>
                     <div className="flex flex-1 flex-col text-left">
                       <span className="text-body-medium-sm truncate font-semibold text-[var(--color-text-primary)]">
@@ -856,7 +855,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                         {team.role} • {team.plan} plan
                       </span>
                     </div>
-                    {activeTeam.name === team.name && <Icon name="check" size="md" className="text-[var(--color-icon-brand-bold)]" />}
+                    {activeTeam.name === team.name && <Icon name="check" size="m" className="text-[var(--color-icon-brand-bold)]" />}
                   </DropdownMenuItem>
                 ))}
 
@@ -871,14 +870,14 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                   onSelect={() => onNavigationModeChange('sidebar')}
                 >
                   <span className="flex-1">New sidebar navigation</span>
-                  {navigationMode === 'sidebar' && <Icon name="check" size="md" className="text-[var(--color-icon-brand-bold)]" />}
+                  {navigationMode === 'sidebar' && <Icon name="check" size="m" className="text-[var(--color-icon-brand-bold)]" />}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="mx-1 mb-1 cursor-pointer gap-2 px-2"
                   onSelect={() => onNavigationModeChange('horizontal')}
                 >
                   <span className="flex-1">Old horizontal menu</span>
-                  {navigationMode === 'horizontal' && <Icon name="check" size="md" className="text-[var(--color-icon-brand-bold)]" />}
+                  {navigationMode === 'horizontal' && <Icon name="check" size="m" className="text-[var(--color-icon-brand-bold)]" />}
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator />
@@ -942,14 +941,14 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
 
           <CommandGroup heading="Quick actions">
             <CommandItem onSelect={() => console.log('Reload')}>
-              <Icon name="rotate-ccw" size="sm" className="mr-2" />
+              <Icon name="rotate-ccw" size="s" className="mr-2" />
               <span>Reload Page</span>
               <span className="text-caption-sm ml-auto text-[var(--color-text-tertiary)]">
                 {isMacOS() ? '⌘' : 'Ctrl'}R
               </span>
             </CommandItem>
             <CommandItem onSelect={() => setCommandOpen(false)}>
-              <Icon name="search" size="sm" className="mr-2" />
+              <Icon name="search" size="s" className="mr-2" />
               <span>Search</span>
               <span className="text-caption-sm ml-auto text-[var(--color-text-tertiary)]">
                 {isMacOS() ? '⌘' : 'Ctrl'}K
@@ -960,19 +959,19 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
           <CommandGroup heading="Navigation">
             {navigationData.main.map((item) => (
               <CommandItem key={item.title} onSelect={() => setCommandOpen(false)}>
-                <Icon name={item.icon} size="sm" className="mr-2" />
+                <Icon name={item.icon} size="s" className="mr-2" />
                 <span>{item.title}</span>
               </CommandItem>
             ))}
             {navigationData.operations.map((item) => (
               <CommandItem key={item.title} onSelect={() => setCommandOpen(false)}>
-                <Icon name={item.icon} size="sm" className="mr-2" />
+                <Icon name={item.icon} size="s" className="mr-2" />
                 <span>{item.title}</span>
               </CommandItem>
             ))}
             {navigationData.intelligence.map((item) => (
               <CommandItem key={item.title} onSelect={() => setCommandOpen(false)}>
-                <Icon name={item.icon} size="sm" className="mr-2" />
+                <Icon name={item.icon} size="s" className="mr-2" />
                 <span>{item.title}</span>
               </CommandItem>
             ))}
@@ -981,7 +980,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
           <CommandGroup heading="Settings">
             {navigationData.support.map((item) => (
               <CommandItem key={item.title} onSelect={() => setCommandOpen(false)}>
-                <Icon name={item.icon} size="sm" className="mr-2" />
+                <Icon name={item.icon} size="s" className="mr-2" />
                 <span>{item.title}</span>
               </CommandItem>
             ))}
@@ -990,9 +989,9 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
           <CommandGroup heading="Switch team">
             {teams.map((team) => (
               <CommandItem key={team.name} onSelect={() => setCommandOpen(false)}>
-                <Avatar size="sm" className="mr-2" type="organization">
+                <Avatar size="s" className="mr-2" type="organization">
                   <AvatarImage src={team.avatarUrl} alt={team.name} />
-                  <AvatarFallback size="sm" type="organization">{getTeamInitials(team.name)}</AvatarFallback>
+                  <AvatarFallback size="s" type="organization">{getTeamInitials(team.name)}</AvatarFallback>
                 </Avatar>
                 <span>{team.name}</span>
               </CommandItem>
@@ -1313,7 +1312,7 @@ function SidebarToggleWithTooltip() {
       <TooltipContent side="bottom">
         <div className="flex items-center gap-2">
           <span>{isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}</span>
-          <Kbd size="sm" variant="dark">
+          <Kbd size="s" variant="dark">
             [
           </Kbd>
         </div>
@@ -1371,7 +1370,7 @@ export function AppFrame({
         />
         <SidebarInset>
           {(headerContent || headerActions || headerTabs) && (
-            <header className="flex h-12 shrink-0 items-center gap-2 border-b border-[var(--color-border-primary-subtle)] transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 box-border px-[var(--space-md)]">
+            <header className="flex h-12 shrink-0 items-center gap-2 border-b border-[var(--color-border-primary-subtle)] transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 box-border px-[var(--space-m)]">
               <SidebarToggleWithTooltip />
               <Separator layout="horizontal" className="mr-2 h-4" />
 

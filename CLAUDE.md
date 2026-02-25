@@ -105,11 +105,11 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 #### 2. Border Radius & Shadows
 
 - **ALWAYS use theme utilities** for border radius and shadows
-- Use `rounded-sm`, `rounded-md`, `shadow-xs`, `shadow-lg`, etc.
+- Use `rounded-s`, `rounded-m`, `shadow-xs`, `shadow-lg`, etc.
 
 ```tsx
 // ✅ CORRECT - Theme utilities
-<div className="rounded-lg shadow-md">Card</div>
+<div className="rounded-l shadow-md">Card</div>
 
 // ❌ AVOID - Arbitrary values
 <div className="rounded-[6px] shadow-[0_4px_6px_-1px_rgb(0_0_0_/_0.1)]">Card</div>
@@ -137,12 +137,12 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 #### 4. Spacing & Sizing
 
 - **ALWAYS use CSS variables with Tailwind utilities** for spacing and sizing
-- Use semantic spacing tokens: `p-[var(--space-lg)]`, `m-[var(--space-md)]`, `gap-[var(--space-sm)]`
-- Use semantic sizing tokens: `w-[var(--size-md)]`, `h-[var(--size-lg)]`
+- Use semantic spacing tokens: `p-[var(--space-l)]`, `m-[var(--space-m)]`, `gap-[var(--space-s)]`
+- Use semantic sizing tokens: `w-[var(--size-m)]`, `h-[var(--size-l)]`
 
 ```tsx
 // ✅ CORRECT - Semantic spacing/sizing
-<div className="p-[var(--space-lg)] m-[var(--space-md)] w-[var(--size-xlg)]">
+<div className="p-[var(--space-l)] m-[var(--space-m)] w-[var(--size-xl)]">
   Content
 </div>
 
@@ -153,11 +153,11 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 #### 5. Borders
 
 - **ALWAYS use CSS variables** for border colors and widths
-- Use `border-[var(--color-border-input)]`, `border-[var(--border-width-sm)]`
+- Use `border-[var(--color-border-input)]`, `border-[var(--border-width-s)]`
 
 ```tsx
 // ✅ CORRECT - Semantic border tokens
-<input className="border border-[var(--color-border-input)] border-[var(--border-width-sm)]" />
+<input className="border border-[var(--color-border-input)] border-[var(--border-width-s)]" />
 
 // ❌ AVOID - Generic border classes
 <input className="border border-gray-200 border-2" />
@@ -168,7 +168,7 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 **Button Component:**
 
 ```tsx
-<button className="text-heading-sm rounded-md shadow-sm bg-[var(--color-background-brand)] text-[var(--color-text-on-action)] px-[var(--space-lg)] py-[var(--space-md)]">
+<button className="text-heading-sm rounded-m shadow-sm bg-[var(--color-background-brand)] text-[var(--color-text-on-action)] px-[var(--space-l)] py-[var(--space-m)]">
   Submit
 </button>
 ```
@@ -176,8 +176,8 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 **Card Component:**
 
 ```tsx
-<div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-lg p-[var(--space-lg)] shadow-md">
-  <h2 className="text-heading-md mb-[var(--space-md)]">Card Title</h2>
+<div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-l p-[var(--space-l)] shadow-md">
+  <h2 className="text-heading-md mb-[var(--space-m)]">Card Title</h2>
   <p className="text-body-md text-[var(--color-text-secondary)]">
     Card content
   </p>
@@ -188,7 +188,7 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 
 **Typography:** `text-heading-2xlg`, `text-heading-xlg`, `text-heading-lg`, `text-heading-md`, `text-heading-sm`, `text-heading-xsm`, `text-body-lg`, `text-body-medium-lg`, `text-body-strong-lg`, `text-body-md`, `text-body-medium-md`, `text-body-strong-md`, `text-body-sm`, `text-body-medium-sm`, `text-body-strong-sm`, `text-body-xsm`, `text-body-medium-xsm`, `text-body-strong-xsm`, `text-label-md`, `text-label-sm`, `text-caption-sm`, `text-caption-medium-sm`, `text-caption-strong-sm`, `text-caption-xsm`, `text-caption-medium-xsm`, `text-caption-strong-xsm`
 
-**Border Radius:** `rounded-null`, `rounded-xsm`, `rounded-sm`, `rounded-md`, `rounded-lg`, `rounded-xlg`, `rounded-full`
+**Border Radius:** `rounded-null`, `rounded-xs`, `rounded-s`, `rounded-m`, `rounded-l`, `rounded-xl`, `rounded-full`
 
 **Shadows:** `shadow-xs`, `shadow-sm`, `shadow-md`, `shadow-lg`, `shadow-xl`
 
@@ -247,12 +247,12 @@ Use `cva` from `class-variance-authority` for all variant-based styling:
 const componentVariants = cva("base classes", {
   variants: {
     variant: { default: "...", primary: "..." },
-    size: { sm: "...", md: "...", lg: "..." },
+    size: { s: "...", m: "...", l: "..." },
   },
   compoundVariants: [
-    { variant: "primary", size: "lg", className: "..." },
+    { variant: "primary", size: "l", className: "..." },
   ],
-  defaultVariants: { variant: "default", size: "md" },
+  defaultVariants: { variant: "default", size: "m" },
 });
 ```
 
@@ -424,16 +424,16 @@ export type { ComponentNameProps, RelatedType } from './path/component-name'
 
 ```tsx
 // ❌ WRONG - Custom styling in story
-<Separator type="line" layout="horizontal" className="h-[var(--size-md)]" />
+<Separator type="line" layout="horizontal" className="h-[var(--size-m)]" />
 
 // ✅ CORRECT - Use component props
-<Separator type="line" layout="horizontal" size="md" />
+<Separator type="line" layout="horizontal" size="m" />
 // (If size prop doesn't exist, add it to the component!)
 ```
 
 ```tsx
 // ❌ WRONG - Custom layout wrapper
-<div className="flex gap-[var(--space-md)] items-center">
+<div className="flex gap-[var(--space-m)] items-center">
   <Bookmarks {...props} />
   <Separator {...props} />
   <Filters {...props} />

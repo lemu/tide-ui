@@ -9,9 +9,9 @@ const spinnerVariants = cva(
     variants: {
       size: {
         xs: "h-3 w-3",
-        sm: "h-4 w-4", 
-        md: "h-5 w-5",
-        lg: "h-6 w-6",
+        s: "h-4 w-4", 
+        m: "h-5 w-5",
+        l: "h-6 w-6",
         xl: "h-8 w-8",
         "2xl": "h-10 w-10",
       },
@@ -33,7 +33,7 @@ const spinnerVariants = cva(
       },
     },
     defaultVariants: {
-      size: "md",
+      size: "m",
       variant: "default",
       speed: "normal",
     },
@@ -117,7 +117,7 @@ const LoadingOverlay = React.forwardRef<HTMLDivElement, LoadingOverlayProps>(
     className,
     visible,
     message = "Loading...",
-    spinnerSize = "lg",
+    spinnerSize = "l",
     opacity = "medium",
     children,
     ...props 
@@ -164,7 +164,7 @@ export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Border radius variant
    */
-  radius?: "none" | "sm" | "md" | "lg" | "full"
+  radius?: "none" | "s" | "m" | "l" | "full"
   /**
    * Whether to animate the skeleton
    */
@@ -176,15 +176,15 @@ const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
     className,
     width,
     height = "1rem",
-    radius = "md",
+    radius = "m",
     animate = true,
     ...props 
   }, ref) => {
     const radiusClass = {
       none: "rounded-none",
-      sm: "rounded-sm",
-      md: "rounded",
-      lg: "rounded-lg",
+      s: "rounded-s",
+      m: "rounded",
+      l: "rounded-l",
       full: "rounded-full",
     }[radius]
 
@@ -218,14 +218,14 @@ export interface PulseProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Size of the pulse dot
    */
-  size?: "sm" | "md" | "lg"
+  size?: "s" | "m" | "l"
 }
 
 const Pulse = React.forwardRef<HTMLDivElement, PulseProps>(
   ({ 
     className,
     variant = "primary",
-    size = "md",
+    size = "m",
     ...props 
   }, ref) => {
     const variantClass = {
@@ -237,9 +237,9 @@ const Pulse = React.forwardRef<HTMLDivElement, PulseProps>(
     }[variant]
 
     const sizeClass = {
-      sm: "h-2 w-2",
-      md: "h-3 w-3",
-      lg: "h-4 w-4",
+      s: "h-2 w-2",
+      m: "h-3 w-3",
+      l: "h-4 w-4",
     }[size]
 
     return (
@@ -271,7 +271,7 @@ export interface ProgressDotsProps extends React.HTMLAttributes<HTMLDivElement> 
   /**
    * Size of the dots
    */
-  size?: "sm" | "md" | "lg"
+  size?: "s" | "m" | "l"
   /**
    * Whether to animate the transition
    */
@@ -283,14 +283,14 @@ const ProgressDots = React.forwardRef<HTMLDivElement, ProgressDotsProps>(
     className,
     total,
     current,
-    size = "md",
+    size = "m",
     animate = true,
     ...props 
   }, ref) => {
     const sizeClass = {
-      sm: "h-1.5 w-1.5",
-      md: "h-2 w-2",
-      lg: "h-3 w-3",
+      s: "h-1.5 w-1.5",
+      m: "h-2 w-2",
+      l: "h-3 w-3",
     }[size]
 
     return (

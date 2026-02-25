@@ -50,7 +50,7 @@ const meta: Meta<typeof FixtureStatus> = {
     },
     size: {
       control: { type: 'select' },
-      options: ['xsm', 'sm', 'md', 'lg'],
+      options: ['xs', 's', 'm', 'l'],
     },
     showObject: {
       control: { type: 'boolean' },
@@ -73,7 +73,7 @@ export const Default: Story = {
 export const AllStatuses: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '48px', padding: '24px' }}>
-      {(['xsm', 'sm', 'md', 'lg'] as const).map((size) => (
+      {(['xs', 's', 'm', 'l'] as const).map((size) => (
         <div key={size}>
           <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: 600 }}>
             Size: {size}
@@ -153,19 +153,19 @@ export const Sizes: Story = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '24px' }}>
       <div>
         <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Extra Small</h3>
-        <FixtureStatus value="negotiation-firm-offer" size="xsm" />
+        <FixtureStatus value="negotiation-firm-offer" size="xs" />
       </div>
       <div>
         <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Small</h3>
-        <FixtureStatus value="negotiation-firm-offer" size="sm" />
+        <FixtureStatus value="negotiation-firm-offer" size="s" />
       </div>
       <div>
         <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Medium (Default)</h3>
-        <FixtureStatus value="negotiation-firm-offer" size="md" />
+        <FixtureStatus value="negotiation-firm-offer" size="m" />
       </div>
       <div>
         <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Large</h3>
-        <FixtureStatus value="negotiation-firm-offer" size="lg" />
+        <FixtureStatus value="negotiation-firm-offer" size="l" />
       </div>
     </div>
   ),
@@ -215,37 +215,37 @@ export const AsBadgeSizes: Story = {
       <div>
         <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Extra Small</h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-          <FixtureStatus value="order-draft" asBadge size="xsm" />
-          <FixtureStatus value="negotiation-firm-offer" asBadge size="xsm" />
-          <FixtureStatus value="contract-final" asBadge size="xsm" />
-          <FixtureStatus value="negotiation-on-subs" asBadge size="xsm" />
+          <FixtureStatus value="order-draft" asBadge size="xs" />
+          <FixtureStatus value="negotiation-firm-offer" asBadge size="xs" />
+          <FixtureStatus value="contract-final" asBadge size="xs" />
+          <FixtureStatus value="negotiation-on-subs" asBadge size="xs" />
         </div>
       </div>
       <div>
         <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Small</h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-          <FixtureStatus value="order-draft" asBadge size="sm" />
-          <FixtureStatus value="negotiation-firm-offer" asBadge size="sm" />
-          <FixtureStatus value="contract-final" asBadge size="sm" />
-          <FixtureStatus value="negotiation-on-subs" asBadge size="sm" />
+          <FixtureStatus value="order-draft" asBadge size="s" />
+          <FixtureStatus value="negotiation-firm-offer" asBadge size="s" />
+          <FixtureStatus value="contract-final" asBadge size="s" />
+          <FixtureStatus value="negotiation-on-subs" asBadge size="s" />
         </div>
       </div>
       <div>
         <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Medium</h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-          <FixtureStatus value="order-draft" asBadge size="md" />
-          <FixtureStatus value="negotiation-firm-offer" asBadge size="md" />
-          <FixtureStatus value="contract-final" asBadge size="md" />
-          <FixtureStatus value="negotiation-on-subs" asBadge size="md" />
+          <FixtureStatus value="order-draft" asBadge size="m" />
+          <FixtureStatus value="negotiation-firm-offer" asBadge size="m" />
+          <FixtureStatus value="contract-final" asBadge size="m" />
+          <FixtureStatus value="negotiation-on-subs" asBadge size="m" />
         </div>
       </div>
       <div>
         <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Large</h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-          <FixtureStatus value="order-draft" asBadge size="lg" />
-          <FixtureStatus value="negotiation-firm-offer" asBadge size="lg" />
-          <FixtureStatus value="contract-final" asBadge size="lg" />
-          <FixtureStatus value="negotiation-on-subs" asBadge size="lg" />
+          <FixtureStatus value="order-draft" asBadge size="l" />
+          <FixtureStatus value="negotiation-firm-offer" asBadge size="l" />
+          <FixtureStatus value="contract-final" asBadge size="l" />
+          <FixtureStatus value="negotiation-on-subs" asBadge size="l" />
         </div>
       </div>
     </div>
@@ -327,40 +327,40 @@ export const IconOnlySizes: Story = {
       <div>
         <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Extra Small</h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-          <FixtureStatus value="negotiation-firm-offer" size="xsm" iconOnly />
-          <FixtureStatus value="negotiation-firm" size="xsm" iconOnly />
-          <FixtureStatus value="negotiation-fixed" size="xsm" iconOnly />
-          <FixtureStatus value="contract-final" size="xsm" iconOnly />
+          <FixtureStatus value="negotiation-firm-offer" size="xs" iconOnly />
+          <FixtureStatus value="negotiation-firm" size="xs" iconOnly />
+          <FixtureStatus value="negotiation-fixed" size="xs" iconOnly />
+          <FixtureStatus value="contract-final" size="xs" iconOnly />
         </div>
       </div>
 
       <div>
         <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Small</h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-          <FixtureStatus value="negotiation-firm-offer" size="sm" iconOnly />
-          <FixtureStatus value="negotiation-firm" size="sm" iconOnly />
-          <FixtureStatus value="negotiation-fixed" size="sm" iconOnly />
-          <FixtureStatus value="contract-final" size="sm" iconOnly />
+          <FixtureStatus value="negotiation-firm-offer" size="s" iconOnly />
+          <FixtureStatus value="negotiation-firm" size="s" iconOnly />
+          <FixtureStatus value="negotiation-fixed" size="s" iconOnly />
+          <FixtureStatus value="contract-final" size="s" iconOnly />
         </div>
       </div>
 
       <div>
         <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Medium (Default)</h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-          <FixtureStatus value="negotiation-firm-offer" size="md" iconOnly />
-          <FixtureStatus value="negotiation-firm" size="md" iconOnly />
-          <FixtureStatus value="negotiation-fixed" size="md" iconOnly />
-          <FixtureStatus value="contract-final" size="md" iconOnly />
+          <FixtureStatus value="negotiation-firm-offer" size="m" iconOnly />
+          <FixtureStatus value="negotiation-firm" size="m" iconOnly />
+          <FixtureStatus value="negotiation-fixed" size="m" iconOnly />
+          <FixtureStatus value="contract-final" size="m" iconOnly />
         </div>
       </div>
 
       <div>
         <h3 style={{ marginBottom: '12px', fontSize: '14px', fontWeight: 600 }}>Large</h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-          <FixtureStatus value="negotiation-firm-offer" size="lg" iconOnly />
-          <FixtureStatus value="negotiation-firm" size="lg" iconOnly />
-          <FixtureStatus value="negotiation-fixed" size="lg" iconOnly />
-          <FixtureStatus value="contract-final" size="lg" iconOnly />
+          <FixtureStatus value="negotiation-firm-offer" size="l" iconOnly />
+          <FixtureStatus value="negotiation-firm" size="l" iconOnly />
+          <FixtureStatus value="negotiation-fixed" size="l" iconOnly />
+          <FixtureStatus value="contract-final" size="l" iconOnly />
         </div>
       </div>
     </div>
@@ -399,7 +399,7 @@ const allStatusValues: StatusValue[] = [
 export const AllStatusesAsBadge: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '48px', padding: '24px' }}>
-      {(['xsm', 'sm', 'md', 'lg'] as const).map((size) => (
+      {(['xs', 's', 'm', 'l'] as const).map((size) => (
         <div key={size}>
           <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>
             Size: {size}

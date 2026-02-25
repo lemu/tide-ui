@@ -12,7 +12,7 @@ const meta: Meta<typeof TextLink> = {
   argTypes: {
     size: {
       control: 'select',
-      options: ['sm', 'md', 'lg'],
+      options: ['s', 'm', 'l'],
       description: 'Size of the text link',
     },
     variant: {
@@ -41,13 +41,13 @@ export const Default: Story = {
     <div className="space-y-4">
       <div className="space-y-2">
         <div>
-          <TextLink href="#" size="sm">Small link</TextLink>
+          <TextLink href="#" size="s">Small link</TextLink>
         </div>
         <div>
-          <TextLink href="#" size="md">Medium link (default)</TextLink>
+          <TextLink href="#" size="m">Medium link (default)</TextLink>
         </div>
         <div>
-          <TextLink href="#" size="lg">Large link</TextLink>
+          <TextLink href="#" size="l">Large link</TextLink>
         </div>
       </div>
     </div>
@@ -151,28 +151,28 @@ export const InlineLinks: Story = {
         <h3 className="text-heading-md font-semibold mb-4">Getting Started Guide</h3>
         <p className="text-body-md mb-4">
           Welcome to our platform! To get started, you'll need to{" "}
-          <TextLink href="#" size="md">create an account</TextLink> or{" "}
-          <TextLink href="#" size="md">sign in</TextLink> if you already have one.
+          <TextLink href="#" size="m">create an account</TextLink> or{" "}
+          <TextLink href="#" size="m">sign in</TextLink> if you already have one.
         </p>
         <p className="text-body-md mb-4">
           Once you're logged in, check out our{" "}
-          <TextLink href="#" icon="play" iconPosition="left" size="md">
+          <TextLink href="#" icon="play" iconPosition="left" size="m">
             video tutorial
           </TextLink>{" "}
           or browse the{" "}
-          <TextLink href="#" icon="book-open" iconPosition="right" size="md">
+          <TextLink href="#" icon="book-open" iconPosition="right" size="m">
             documentation
           </TextLink>{" "}
           to learn more about the features.
         </p>
         <p className="text-body-md">
           Need help? Visit our{" "}
-          <TextLink href="#" size="md">support center</TextLink> or{" "}
-          <TextLink href="#" icon="mail" iconPosition="left" size="md">
+          <TextLink href="#" size="m">support center</TextLink> or{" "}
+          <TextLink href="#" icon="mail" iconPosition="left" size="m">
             contact our team
           </TextLink>{" "}
           directly. You can also join our{" "}
-          <TextLink href="#" icon="external-link" iconPosition="right" target="_blank" size="md">
+          <TextLink href="#" icon="external-link" iconPosition="right" target="_blank" size="m">
             community forum
           </TextLink>{" "}
           to connect with other users.
@@ -191,27 +191,27 @@ export const ActionLinks: Story = {
           <CardTitle>File Actions</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <div className="flex items-center justify-between p-3 border border-[var(--color-border-primary-subtle)] rounded-md">
+          <div className="flex items-center justify-between p-3 border border-[var(--color-border-primary-subtle)] rounded-m">
             <div>
               <div className="font-medium">project-document.pdf</div>
               <div className="text-body-sm text-[var(--color-text-secondary)]">2.4 MB • Modified 2 hours ago</div>
             </div>
             <div className="flex gap-2">
-              <TextLink href="#" icon="eye" size="sm">View</TextLink>
-              <TextLink href="#" icon="download" size="sm">Download</TextLink>
-              <TextLink href="#" icon="share" size="sm">Share</TextLink>
+              <TextLink href="#" icon="eye" size="s">View</TextLink>
+              <TextLink href="#" icon="download" size="s">Download</TextLink>
+              <TextLink href="#" icon="share" size="s">Share</TextLink>
             </div>
           </div>
           
-          <div className="flex items-center justify-between p-3 border border-[var(--color-border-primary-subtle)] rounded-md">
+          <div className="flex items-center justify-between p-3 border border-[var(--color-border-primary-subtle)] rounded-m">
             <div>
               <div className="font-medium">design-assets.zip</div>
               <div className="text-body-sm text-[var(--color-text-secondary)]">15.8 MB • Modified 1 day ago</div>
             </div>
             <div className="flex gap-2">
-              <TextLink href="#" icon="download" size="sm">Download</TextLink>
-              <TextLink href="#" icon="folder-open" size="sm">Extract</TextLink>
-              <TextLink href="#" icon="share" size="sm">Share</TextLink>
+              <TextLink href="#" icon="download" size="s">Download</TextLink>
+              <TextLink href="#" icon="folder-open" size="s">Extract</TextLink>
+              <TextLink href="#" icon="share" size="s">Share</TextLink>
             </div>
           </div>
         </CardContent>
@@ -356,19 +356,19 @@ export const InDifferentContexts: Story = {
           <ul className="space-y-3">
             <li className="flex items-center justify-between">
               <span>John updated the project timeline</span>
-              <TextLink href="#" size="sm" variant="subtle">View changes</TextLink>
+              <TextLink href="#" size="s" variant="subtle">View changes</TextLink>
             </li>
             <li className="flex items-center justify-between">
               <span>New comment on design review</span>
-              <TextLink href="#" size="sm" variant="subtle">Read comment</TextLink>
+              <TextLink href="#" size="s" variant="subtle">Read comment</TextLink>
             </li>
             <li className="flex items-center justify-between">
               <span>Sarah shared 3 new files</span>
-              <TextLink href="#" size="sm" variant="subtle">View files</TextLink>
+              <TextLink href="#" size="s" variant="subtle">View files</TextLink>
             </li>
             <li className="flex items-center justify-between">
               <span>Weekly report is ready</span>
-              <TextLink href="#" size="sm" variant="subtle" icon="download" iconPosition="right">
+              <TextLink href="#" size="s" variant="subtle" icon="download" iconPosition="right">
                 Download
               </TextLink>
             </li>
@@ -384,37 +384,37 @@ export const InDifferentContexts: Story = {
               <div>
                 <h5 className="text-body-medium-sm font-medium mb-3">Product</h5>
                 <div className="space-y-2">
-                  <div><TextLink href="#" size="sm" variant="subtle">Features</TextLink></div>
-                  <div><TextLink href="#" size="sm" variant="subtle">Pricing</TextLink></div>
-                  <div><TextLink href="#" size="sm" variant="subtle">Security</TextLink></div>
-                  <div><TextLink href="#" size="sm" variant="subtle">Changelog</TextLink></div>
+                  <div><TextLink href="#" size="s" variant="subtle">Features</TextLink></div>
+                  <div><TextLink href="#" size="s" variant="subtle">Pricing</TextLink></div>
+                  <div><TextLink href="#" size="s" variant="subtle">Security</TextLink></div>
+                  <div><TextLink href="#" size="s" variant="subtle">Changelog</TextLink></div>
                 </div>
               </div>
               <div>
                 <h5 className="text-body-medium-sm font-medium mb-3">Resources</h5>
                 <div className="space-y-2">
-                  <div><TextLink href="#" size="sm" variant="subtle">Documentation</TextLink></div>
-                  <div><TextLink href="#" size="sm" variant="subtle">API Reference</TextLink></div>
-                  <div><TextLink href="#" size="sm" variant="subtle">Tutorials</TextLink></div>
-                  <div><TextLink href="#" size="sm" variant="subtle">Blog</TextLink></div>
+                  <div><TextLink href="#" size="s" variant="subtle">Documentation</TextLink></div>
+                  <div><TextLink href="#" size="s" variant="subtle">API Reference</TextLink></div>
+                  <div><TextLink href="#" size="s" variant="subtle">Tutorials</TextLink></div>
+                  <div><TextLink href="#" size="s" variant="subtle">Blog</TextLink></div>
                 </div>
               </div>
               <div>
                 <h5 className="text-body-medium-sm font-medium mb-3">Support</h5>
                 <div className="space-y-2">
-                  <div><TextLink href="#" size="sm" variant="subtle">Help Center</TextLink></div>
-                  <div><TextLink href="#" size="sm" variant="subtle">Contact Us</TextLink></div>
-                  <div><TextLink href="#" size="sm" variant="subtle">Status Page</TextLink></div>
-                  <div><TextLink href="#" size="sm" variant="subtle">Community</TextLink></div>
+                  <div><TextLink href="#" size="s" variant="subtle">Help Center</TextLink></div>
+                  <div><TextLink href="#" size="s" variant="subtle">Contact Us</TextLink></div>
+                  <div><TextLink href="#" size="s" variant="subtle">Status Page</TextLink></div>
+                  <div><TextLink href="#" size="s" variant="subtle">Community</TextLink></div>
                 </div>
               </div>
               <div>
                 <h5 className="text-body-medium-sm font-medium mb-3">Company</h5>
                 <div className="space-y-2">
-                  <div><TextLink href="#" size="sm" variant="subtle">About</TextLink></div>
-                  <div><TextLink href="#" size="sm" variant="subtle">Careers</TextLink></div>
-                  <div><TextLink href="#" size="sm" variant="subtle">Press</TextLink></div>
-                  <div><TextLink href="#" size="sm" variant="subtle">Partners</TextLink></div>
+                  <div><TextLink href="#" size="s" variant="subtle">About</TextLink></div>
+                  <div><TextLink href="#" size="s" variant="subtle">Careers</TextLink></div>
+                  <div><TextLink href="#" size="s" variant="subtle">Press</TextLink></div>
+                  <div><TextLink href="#" size="s" variant="subtle">Partners</TextLink></div>
                 </div>
               </div>
             </div>
@@ -423,15 +423,15 @@ export const InDifferentContexts: Story = {
       </Card>
 
       {/* In alerts or notices */}
-      <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-md">
+      <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m">
         <div className="flex items-start gap-3">
           <div className="text-[var(--color-text-info-bold)]">ⓘ</div>
           <div className="flex-1">
             <p className="text-body-sm">
               Your subscription will expire in 7 days.{" "}
-              <TextLink href="#" size="sm">Renew your subscription</TextLink>{" "}
+              <TextLink href="#" size="s">Renew your subscription</TextLink>{" "}
               to continue using all features, or{" "}
-              <TextLink href="#" size="sm" variant="subtle">learn about our new pricing</TextLink>.
+              <TextLink href="#" size="s" variant="subtle">learn about our new pricing</TextLink>.
             </p>
           </div>
         </div>

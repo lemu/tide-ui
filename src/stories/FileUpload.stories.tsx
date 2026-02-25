@@ -51,7 +51,7 @@ export const Default: Story = {
         >
           <FileUpload.Dropzone className="min-h-32">
             <div className="text-center">
-              <Icon name="upload" size="lg" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
+              <Icon name="upload" size="l" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
               <p className="text-body-sm font-medium mb-1">Drop files here or click to browse</p>
               <p className="text-caption-sm text-[var(--color-text-secondary)]">
                 Up to 5 files, max 10MB each
@@ -124,7 +124,7 @@ export const ImageUpload: Story = {
             >
               <FileUpload.Dropzone className="min-h-32">
                 <div className="text-center">
-                  <Icon name="image" size="lg" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
+                  <Icon name="image" size="l" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
                   <p className="text-body-sm font-medium mb-1">Upload your photos</p>
                   <p className="text-caption-sm text-[var(--color-text-secondary)]">
                     Images only, up to 5MB each
@@ -176,7 +176,7 @@ export const DocumentUpload: Story = {
             >
               <FileUpload.Dropzone className="min-h-32">
                 <div className="text-center">
-                  <Icon name="file-text" size="lg" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
+                  <Icon name="file-text" size="l" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
                   <p className="text-body-sm font-medium mb-1">Upload documents</p>
                   <p className="text-caption-sm text-[var(--color-text-secondary)]">
                     PDF, DOC, DOCX, TXT, RTF files only
@@ -195,7 +195,7 @@ export const DocumentUpload: Story = {
                     </span>
                     <Button 
                       variant="ghost" 
-                      size="sm"
+                      size="s"
                       onClick={() => setFiles([])}
                     >
                       Clear All
@@ -245,7 +245,7 @@ export const AvatarUpload: Story = {
                 <FileUpload.Dropzone className="aspect-square max-w-32 mx-auto">
                   <div className="text-center">
                     <div className="w-16 h-16 bg-[var(--color-background-neutral-subtlest)] rounded-full mx-auto mb-2 flex items-center justify-center">
-                      <Icon name="user" size="lg" className="text-[var(--color-text-tertiary)]" />
+                      <Icon name="user" size="l" className="text-[var(--color-text-tertiary)]" />
                     </div>
                     <p className="text-caption-sm font-medium mb-1">Upload avatar</p>
                     <p className="text-caption-sm text-[var(--color-text-secondary)]">
@@ -266,7 +266,7 @@ export const AvatarUpload: Story = {
                           />
                         ) : (
                           <div className="w-full h-full bg-[var(--color-background-neutral-subtlest)] flex items-center justify-center">
-                            <Icon name="user" size="lg" className="text-[var(--color-text-tertiary)]" />
+                            <Icon name="user" size="l" className="text-[var(--color-text-tertiary)]" />
                           </div>
                         )}
                       </div>
@@ -274,7 +274,7 @@ export const AvatarUpload: Story = {
                         file={file}
                         className="absolute -top-2 -right-2 rounded-full bg-[var(--color-background-error-subtle)] hover:bg-[var(--color-background-error-subtle-hovered)]"
                       >
-                        <Icon name="x" size="sm" className="text-white" />
+                        <Icon name="x" size="s" className="text-white" />
                       </FileUpload.ItemDelete>
                     </div>
                   ))}
@@ -335,8 +335,8 @@ export const BatchUpload: Story = {
             <div className="flex items-center justify-between">
               <CardTitle>Batch File Upload</CardTitle>
               <div className="flex gap-1">
-                <Badge size="sm">{successCount} done</Badge>
-                <Badge size="sm">{pendingCount} pending</Badge>
+                <Badge size="s">{successCount} done</Badge>
+                <Badge size="s">{pendingCount} pending</Badge>
               </div>
             </div>
           </CardHeader>
@@ -349,7 +349,7 @@ export const BatchUpload: Story = {
             >
               <FileUpload.Dropzone className="min-h-24">
                 <div className="text-center">
-                  <Icon name="upload-cloud" size="lg" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
+                  <Icon name="upload-cloud" size="l" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
                   <p className="text-body-sm font-medium">Add files to upload queue</p>
                 </div>
               </FileUpload.Dropzone>
@@ -363,25 +363,25 @@ export const BatchUpload: Story = {
                     <div className="flex gap-2">
                       <Button 
                         variant="ghost" 
-                        size="sm"
+                        size="s"
                         onClick={() => setFiles([])}
                         disabled={isUploading}
                       >
                         Clear All
                       </Button>
                       <Button 
-                        size="sm"
+                        size="s"
                         onClick={uploadAll}
                         disabled={pendingCount === 0 || isUploading}
                       >
                         {isUploading ? (
                           <>
-                            <Icon name="loader-2" size="sm" className="mr-1 animate-spin" />
+                            <Icon name="loader-2" size="s" className="mr-1 animate-spin" />
                             Uploading...
                           </>
                         ) : (
                           <>
-                            <Icon name="upload" size="sm" className="mr-1" />
+                            <Icon name="upload" size="s" className="mr-1" />
                             Upload All
                           </>
                         )}
@@ -445,7 +445,7 @@ export const ErrorStates: Story = {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="p-3 border border-[var(--color-border-error-bold)] bg-[var(--color-background-error-subtle)] rounded-lg">
+            <div className="p-3 border border-[var(--color-border-error-bold)] bg-[var(--color-background-error-subtle)] rounded-l">
               <p className="text-body-sm text-[var(--color-text-error-bold)]">
                 Some files could not be uploaded. Please check the errors below and try again.
               </p>
@@ -503,7 +503,7 @@ export const DisabledState: Story = {
             >
               <FileUpload.Dropzone className="min-h-32">
                 <div className="text-center">
-                  <Icon name="upload" size="lg" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
+                  <Icon name="upload" size="l" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
                   <p className="text-body-sm font-medium mb-1">Upload disabled</p>
                   <p className="text-caption-sm text-[var(--color-text-secondary)]">
                     File upload is temporarily unavailable
@@ -512,7 +512,7 @@ export const DisabledState: Story = {
               </FileUpload.Dropzone>
             </FileUpload.Root>
             
-            <div className="p-3 bg-[var(--color-background-neutral-subtlest)] rounded-lg">
+            <div className="p-3 bg-[var(--color-background-neutral-subtlest)] rounded-l">
               <p className="text-caption-sm text-[var(--color-text-secondary)]">
                 Upload functionality is disabled in this state.
               </p>
@@ -560,7 +560,7 @@ export const CompactFileList: Story = {
               </div>
               
               {files.length > 0 && (
-                <div className="border rounded-lg">
+                <div className="border rounded-l">
                   <div className="p-3 border-b bg-[var(--color-background-neutral-subtlest)]">
                     <div className="flex items-center justify-between">
                       <span className="text-body-sm font-medium">

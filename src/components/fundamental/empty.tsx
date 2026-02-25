@@ -8,13 +8,13 @@ const emptyVariants = cva(
   {
     variants: {
       size: {
-        sm: "gap-[var(--space-md)] py-[var(--space-3xl)] px-[var(--space-lg)]",
-        md: "gap-[var(--space-lg)] py-[var(--space-4xl)] px-[var(--space-xl)]",
-        lg: "gap-[var(--space-xl)] py-[var(--space-5xl)] px-[var(--space-2xl)]",
+        s: "gap-[var(--space-m)] py-[var(--space-3xl)] px-[var(--space-l)]",
+        m: "gap-[var(--space-l)] py-[var(--space-4xl)] px-[var(--space-xl)]",
+        l: "gap-[var(--space-xl)] py-[var(--space-5xl)] px-[var(--space-2xl)]",
       },
     },
     defaultVariants: {
-      size: "md",
+      size: "m",
     },
   }
 )
@@ -41,7 +41,7 @@ const EmptyHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-col items-center gap-[var(--space-md)]", className)}
+    className={cn("flex flex-col items-center gap-[var(--space-m)]", className)}
     {...props}
   />
 ))
@@ -65,15 +65,15 @@ const emptyMediaVariants = cva(
         info: "bg-[var(--color-background-info-subtle)] text-[var(--color-text-info-bold)]",
       },
       size: {
-        sm: "h-[var(--size-3xl)] w-[var(--size-3xl)]",
-        md: "h-[var(--size-4xl)] w-[var(--size-4xl)]",
-        lg: "h-[var(--size-5xl)] w-[var(--size-5xl)]",
+        s: "h-[var(--size-3xl)] w-[var(--size-3xl)]",
+        m: "h-[var(--size-4xl)] w-[var(--size-4xl)]",
+        l: "h-[var(--size-5xl)] w-[var(--size-5xl)]",
       },
     },
     defaultVariants: {
       variant: "icon",
       color: "default",
-      size: "md",
+      size: "m",
     },
   }
 )
@@ -105,13 +105,13 @@ const emptyTitleVariants = cva(
   {
     variants: {
       size: {
-        sm: "text-heading-sm",
-        md: "text-heading-md",
-        lg: "text-heading-lg",
+        s: "text-heading-sm",
+        m: "text-heading-md",
+        l: "text-heading-lg",
       },
     },
     defaultVariants: {
-      size: "md",
+      size: "m",
     },
   }
 )
@@ -137,13 +137,13 @@ const emptyDescriptionVariants = cva(
   {
     variants: {
       size: {
-        sm: "text-body-sm",
-        md: "text-body-md",
-        lg: "text-body-lg",
+        s: "text-body-sm",
+        m: "text-body-md",
+        l: "text-body-lg",
       },
     },
     defaultVariants: {
-      size: "md",
+      size: "m",
     },
   }
 )
@@ -170,7 +170,7 @@ const EmptyContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-col sm:flex-row items-center gap-[var(--space-md)]", className)}
+    className={cn("flex flex-col sm:flex-row items-center gap-[var(--space-m)]", className)}
     {...props}
   />
 ))

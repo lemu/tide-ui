@@ -4,20 +4,20 @@ import { cn } from "@/lib/utils";
 // Size-specific negative margins for avatar overlap
 const avatarGroupOverlapClasses = {
   xxs: "-ml-[6px]",
-  xs: "-ml-[var(--space-xsm)]",
-  sm: "-ml-[var(--space-sm)]",
-  md: "-ml-[var(--space-md)]",
-  lg: "-ml-[var(--space-lg)]",
-  xl: "-ml-[var(--space-lg)]",
+  xs: "-ml-[var(--space-xs)]",
+  s: "-ml-[var(--space-s)]",
+  m: "-ml-[var(--space-m)]",
+  l: "-ml-[var(--space-l)]",
+  xl: "-ml-[var(--space-l)]",
 } as const;
 
 // Size-specific border widths
 const avatarGroupBorderClasses = {
   xxs: "border",
   xs: "border",
-  sm: "border-2",
-  md: "border-2",
-  lg: "border-2",
+  s: "border-2",
+  m: "border-2",
+  l: "border-2",
   xl: "border-2",
 } as const;
 
@@ -29,7 +29,7 @@ export interface AvatarGroupProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const AvatarGroup = React.forwardRef<HTMLDivElement, AvatarGroupProps>(
-  ({ className, children, size = "md", ...props }, ref) => {
+  ({ className, children, size = "m", ...props }, ref) => {
     const childrenArray = React.Children.toArray(children);
     const totalChildren = childrenArray.length;
 

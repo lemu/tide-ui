@@ -14,8 +14,8 @@ const labelVariants = cva(
   {
     variants: {
       size: {
-        sm: "[&]:text-body-sm",
-        md: "[&]:text-body-md",
+        s: "[&]:text-body-sm",
+        m: "[&]:text-body-md",
       },
       color: {
         primary: "text-[var(--color-text-primary)]",
@@ -23,7 +23,7 @@ const labelVariants = cva(
       },
     },
     defaultVariants: {
-      size: "md",
+      size: "m",
       color: "primary",
     },
   },
@@ -49,7 +49,7 @@ const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
         className={cn(labelVariants({ size, color }), className)}
         {...props}
       >
-        <span className="inline-flex items-center gap-[var(--space-xsm)]">
+        <span className="inline-flex items-center gap-[var(--space-xs)]">
           {children}
           {required && (
             <span className="text-[var(--color-text-error-bold)]" aria-label="required">
@@ -63,7 +63,7 @@ const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
                   <span className="inline-flex cursor-help">
                     <Icon
                       name="info"
-                      size="sm"
+                      size="s"
                       color="secondary"
                       aria-label={info}
                     />

@@ -16,15 +16,15 @@ const InputGroup = React.forwardRef<HTMLDivElement, InputGroupProps>(
         data-slot="input-group"
         role="group"
         className={cn(
-          "group/input-group relative flex w-full items-center rounded-md border border-[var(--color-interaction-border-input)] bg-[var(--color-interaction-background-input-neutral)] outline-none transition-[color,box-shadow,border-color]",
+          "group/input-group relative flex w-full items-center rounded-m border border-[var(--color-interaction-border-input)] bg-[var(--color-interaction-background-input-neutral)] outline-none transition-[color,box-shadow,border-color]",
           // Default height for inputs
-          "h-[var(--size-md)] has-[>textarea]:h-auto",
+          "h-[var(--size-m)] has-[>textarea]:h-auto",
           // Adjust padding when inline addons are present
-          "has-[>[data-align=inline-start]]:[&>input]:pl-[var(--space-xsm)]",
-          "has-[>[data-align=inline-end]]:[&>input]:pr-[var(--space-xsm)]",
+          "has-[>[data-align=inline-start]]:[&>input]:pl-[var(--space-xs)]",
+          "has-[>[data-align=inline-end]]:[&>input]:pr-[var(--space-xs)]",
           // Block alignment for textareas
-          "has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>[data-align=block-start]]:[&>textarea]:pb-[var(--space-md)]",
-          "has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-end]]:[&>textarea]:pt-[var(--space-md)]",
+          "has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>[data-align=block-start]]:[&>textarea]:pb-[var(--space-m)]",
+          "has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-end]]:[&>textarea]:pt-[var(--space-m)]",
           // Hover state
           "hover:border-[var(--color-interaction-border-input-hovered)]",
           // Focus state
@@ -44,18 +44,18 @@ InputGroup.displayName = "InputGroup";
 
 // InputGroupAddon - Container for addons (icons, text, buttons)
 const inputGroupAddonVariants = cva(
-  "text-[var(--color-text-secondary)] flex h-auto cursor-text select-none items-center justify-center gap-[var(--space-xsm)] py-[var(--space-sm)] [&]:text-body-sm font-medium group-data-[disabled=true]/input-group:opacity-50 [&>kbd]:rounded-xsm [&>svg:not([class*='size-'])]:size-[var(--size-sm)]",
+  "text-[var(--color-text-secondary)] flex h-auto cursor-text select-none items-center justify-center gap-[var(--space-xs)] py-[var(--space-s)] [&]:text-body-sm font-medium group-data-[disabled=true]/input-group:opacity-50 [&>kbd]:rounded-xs [&>svg:not([class*='size-'])]:size-[var(--size-s)]",
   {
     variants: {
       align: {
         "inline-start":
-          "order-first pl-[var(--space-sm)] has-[>button]:pl-[var(--space-xsm)] has-[>.inline-flex]:pl-[var(--space-xsm)] has-[>kbd]:ml-[-var(--space-xsm)]",
+          "order-first pl-[var(--space-s)] has-[>button]:pl-[var(--space-xs)] has-[>.inline-flex]:pl-[var(--space-xs)] has-[>kbd]:ml-[-var(--space-xs)]",
         "inline-end":
-          "order-last pr-[var(--space-sm)] has-[>button]:pr-[var(--space-xsm)] has-[>.inline-flex]:pr-[var(--space-xsm)] has-[>kbd]:mr-[-var(--space-xsm)]",
+          "order-last pr-[var(--space-s)] has-[>button]:pr-[var(--space-xs)] has-[>.inline-flex]:pr-[var(--space-xs)] has-[>kbd]:mr-[-var(--space-xs)]",
         "block-start":
-          "order-first w-full justify-start px-[var(--space-md)] pt-[var(--space-md)] group-has-[>input]/input-group:pt-[var(--space-sm)]",
+          "order-first w-full justify-start px-[var(--space-m)] pt-[var(--space-m)] group-has-[>input]/input-group:pt-[var(--space-s)]",
         "block-end":
-          "order-last w-full justify-start px-[var(--space-md)] pb-[var(--space-md)] group-has-[>input]/input-group:pb-[var(--space-sm)]",
+          "order-last w-full justify-start px-[var(--space-m)] pb-[var(--space-m)] group-has-[>input]/input-group:pb-[var(--space-s)]",
       },
     },
     defaultVariants: {
@@ -99,7 +99,7 @@ export interface InputGroupButtonProps
 const InputGroupButton = React.forwardRef<
   React.ElementRef<typeof Button>,
   InputGroupButtonProps
->(({ className, type = "button", variant = "ghost", size = "sm", ...props }, ref) => {
+>(({ className, type = "button", variant = "ghost", size = "s", ...props }, ref) => {
   return (
     <Button
       ref={ref}
@@ -122,7 +122,7 @@ const InputGroupText = React.forwardRef<HTMLSpanElement, InputGroupTextProps>(
       <span
         ref={ref}
         className={cn(
-          "text-[var(--color-text-secondary)] flex items-center gap-[var(--space-xsm)] [&]:text-body-sm [&_svg:not([class*='size-'])]:size-[var(--size-sm)] [&_svg]:pointer-events-none",
+          "text-[var(--color-text-secondary)] flex items-center gap-[var(--space-xs)] [&]:text-body-sm [&_svg:not([class*='size-'])]:size-[var(--size-s)] [&_svg]:pointer-events-none",
           className
         )}
         {...props}
@@ -134,7 +134,7 @@ InputGroupText.displayName = "InputGroupText";
 
 // InputGroupInput - Replacement for standard Input with input group styling
 export interface InputGroupInputProps extends Omit<React.ComponentProps<"input">, 'size'> {
-  size?: "sm" | "md" | "lg";
+  size?: "s" | "m" | "l";
 }
 
 const InputGroupInput = React.forwardRef<HTMLInputElement, InputGroupInputProps>(
@@ -167,7 +167,7 @@ const InputGroupTextarea = React.forwardRef<
       ref={ref}
       data-slot="input-group-control"
       className={cn(
-        "flex-1 resize-none rounded-none border-0 bg-transparent py-[var(--space-md)] shadow-none focus-visible:ring-0 focus-visible:shadow-none",
+        "flex-1 resize-none rounded-none border-0 bg-transparent py-[var(--space-m)] shadow-none focus-visible:ring-0 focus-visible:shadow-none",
         className
       )}
       {...props}

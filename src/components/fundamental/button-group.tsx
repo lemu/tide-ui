@@ -5,7 +5,7 @@ import { Separator } from "./separator";
 
 // ButtonGroup - Main container with orientation support
 const buttonGroupVariants = cva(
-  "flex w-fit items-stretch has-[>[data-slot=button-group]]:gap-[var(--space-xsm)] [&>*]:focus-visible:relative [&>*]:focus-visible:z-10",
+  "flex w-fit items-stretch has-[>[data-slot=button-group]]:gap-[var(--space-xs)] [&>*]:focus-visible:relative [&>*]:focus-visible:z-10",
   {
     variants: {
       orientation: {
@@ -24,7 +24,7 @@ const buttonGroupVariants = cva(
 export interface ButtonGroupProps
   extends React.ComponentProps<"div">,
     VariantProps<typeof buttonGroupVariants> {
-  size?: "sm" | "md" | "lg";
+  size?: "s" | "m" | "l";
   variant?: "default" | "primary" | "destructive" | "success" | "ghost";
 }
 
@@ -77,7 +77,7 @@ const ButtonGroupText = React.forwardRef<HTMLDivElement, ButtonGroupTextProps>(
     if (asChild && React.isValidElement(children)) {
       return React.cloneElement(children as React.ReactElement<any>, {
         className: cn(
-          "bg-[var(--color-background-neutral-subtlest)] shadow-xs flex items-center gap-[var(--space-xsm)] rounded-md border border-[var(--color-border-primary-subtle)] px-[var(--space-lg)] [&]:text-body-sm font-medium [&_svg:not([class*='size-'])]:size-[var(--size-sm)] [&_svg]:pointer-events-none",
+          "bg-[var(--color-background-neutral-subtlest)] shadow-xs flex items-center gap-[var(--space-xs)] rounded-m border border-[var(--color-border-primary-subtle)] px-[var(--space-l)] [&]:text-body-sm font-medium [&_svg:not([class*='size-'])]:size-[var(--size-s)] [&_svg]:pointer-events-none",
           (children as React.ReactElement<any>).props.className,
           className
         ),
@@ -89,7 +89,7 @@ const ButtonGroupText = React.forwardRef<HTMLDivElement, ButtonGroupTextProps>(
       <div
         ref={ref}
         className={cn(
-          "bg-[var(--color-background-neutral-subtlest)] shadow-xs flex items-center gap-[var(--space-xsm)] rounded-md border border-[var(--color-border-primary-subtle)] px-[var(--space-lg)] [&]:text-body-sm font-medium [&_svg:not([class*='size-'])]:size-[var(--size-sm)] [&_svg]:pointer-events-none",
+          "bg-[var(--color-background-neutral-subtlest)] shadow-xs flex items-center gap-[var(--space-xs)] rounded-m border border-[var(--color-border-primary-subtle)] px-[var(--space-l)] [&]:text-body-sm font-medium [&_svg:not([class*='size-'])]:size-[var(--size-s)] [&_svg]:pointer-events-none",
           className
         )}
         {...props}

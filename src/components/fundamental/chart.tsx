@@ -279,11 +279,11 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
 
   return (
     <div
-      className={`rounded-sm border border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] p-[var(--space-md)] shadow-md min-w-[120px] ${tooltipMaxWidth} z-[9999]`}
+      className={`rounded-s border border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] p-[var(--space-m)] shadow-md min-w-[120px] ${tooltipMaxWidth} z-[9999]`}
       role="tooltip"
       aria-label="Chart data tooltip"
     >
-      <p className="text-label-sm mb-[var(--space-xsm)] text-[var(--color-text-primary)]">
+      <p className="text-label-sm mb-[var(--space-xs)] text-[var(--color-text-primary)]">
         {label}
       </p>
       {payload.map((entry: any, index: number) => {
@@ -394,7 +394,7 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
         };
 
         return (
-          <div key={index} className="flex items-center gap-[var(--space-xsm)]">
+          <div key={index} className="flex items-center gap-[var(--space-xs)]">
             {getTooltipMarkerElement()}
             <span className="text-body-sm text-[var(--color-text-primary)] min-w-0 break-words">
               {configEntry?.label || entry.dataKey}:
@@ -408,16 +408,16 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
       {/* Display reference marker data if available at this X position */}
       {markersAtThisPoint.length > 0 && (
         <>
-          <div className="my-[var(--space-md)]" />
+          <div className="my-[var(--space-m)]" />
           {markersAtThisPoint.map((marker: ReferenceMarker, markerIdx: number) => (
             <React.Fragment key={`marker-section-${markerIdx}`}>
               {marker.tooltipLabel && (
-                <p className="text-label-sm mb-[var(--space-xsm)] text-[var(--color-text-primary)]">
+                <p className="text-label-sm mb-[var(--space-xs)] text-[var(--color-text-primary)]">
                   {marker.tooltipLabel}
                 </p>
               )}
               {!marker.tooltipLabel && markerIdx === 0 && (
-                <p className="text-label-sm mb-[var(--space-xsm)] text-[var(--color-text-primary)]">
+                <p className="text-label-sm mb-[var(--space-xs)] text-[var(--color-text-primary)]">
                   Reference Markers:
                 </p>
               )}
@@ -466,7 +466,7 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
                 };
 
                 return (
-                  <div key={`marker-${markerIdx}-point-${pointIdx}`} className="flex items-center gap-[var(--space-xsm)]">
+                  <div key={`marker-${markerIdx}-point-${pointIdx}`} className="flex items-center gap-[var(--space-xs)]">
                     {shapeIcon()}
                     <span className="text-body-sm text-[var(--color-text-primary)] min-w-0 break-words">
                       {point.label || `Marker ${pointIdx + 1}`}:
@@ -712,7 +712,7 @@ export function Chart({
           paddingRight: '16px'
         }}
       >
-        <div className="flex flex-wrap justify-start items-start gap-x-[var(--space-md)] gap-y-[var(--space-sm)]">
+        <div className="flex flex-wrap justify-start items-start gap-x-[var(--space-m)] gap-y-[var(--space-s)]">
         {sortedPayload.map((entry: any, index: number) => {
           const getMarkerElement = () => {
             switch (type) {
@@ -799,7 +799,7 @@ export function Chart({
           };
 
           return (
-            <div key={index} className="flex items-center justify-center gap-[var(--space-xsm)]">
+            <div key={index} className="flex items-center justify-center gap-[var(--space-xs)]">
               {getMarkerElement()}
               <span className="[&]:text-body-medium-xsm [&]:text-[var(--color-text-secondary)] leading-none whitespace-nowrap">
                 {entry.value}

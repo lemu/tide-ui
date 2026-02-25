@@ -65,7 +65,7 @@ export const WithDescriptions: Story = {
         <div className="space-y-3">
           <Label className="text-body-md font-medium">Choose your plan</Label>
           <RadioGroup value={selectedPlan} onValueChange={setSelectedPlan} className="space-y-4">
-            <label htmlFor="free" className={`flex items-start space-x-3 p-4 rounded-lg transition-colors cursor-pointer ${
+            <label htmlFor="free" className={`flex items-start space-x-3 p-4 rounded-l transition-colors cursor-pointer ${
               selectedPlan === "free" 
                 ? "border-2 border-[var(--color-border-brand-bold)] bg-[var(--color-background-brand-subtle)]"
                 : "border border-[var(--color-border-primary-subtle)] hover:border-[var(--color-border-primary-medium)]"
@@ -80,7 +80,7 @@ export const WithDescriptions: Story = {
               </div>
             </label>
             
-            <label htmlFor="pro" className={`flex items-start space-x-3 p-4 rounded-lg cursor-pointer ${
+            <label htmlFor="pro" className={`flex items-start space-x-3 p-4 rounded-l cursor-pointer ${
               selectedPlan === "pro"
                 ? "border-2 border-[var(--color-border-brand-bold)] bg-[var(--color-background-brand-subtle)]"
                 : "border border-[var(--color-border-primary-subtle)] hover:border-[var(--color-border-primary-medium)] transition-colors"
@@ -100,7 +100,7 @@ export const WithDescriptions: Story = {
               </div>
             </label>
             
-            <label htmlFor="enterprise" className={`flex items-start space-x-3 p-4 rounded-lg transition-colors cursor-pointer ${
+            <label htmlFor="enterprise" className={`flex items-start space-x-3 p-4 rounded-l transition-colors cursor-pointer ${
               selectedPlan === "enterprise"
                 ? "border-2 border-[var(--color-border-brand-bold)] bg-[var(--color-background-brand-subtle)]"
                 : "border border-[var(--color-border-primary-subtle)] hover:border-[var(--color-border-primary-medium)]"
@@ -171,7 +171,7 @@ export const ErrorState: Story = {
         </div>
       </RadioGroup>
       <div className="flex items-start gap-2 text-body-sm text-[var(--color-text-error-bold)]">
-        <Icon name="circle-alert" size="sm" className="mt-0.5 flex-shrink-0" />
+        <Icon name="circle-alert" size="s" className="mt-0.5 flex-shrink-0" />
         <span>Please select a payment method to continue.</span>
       </div>
     </div>
@@ -216,9 +216,9 @@ export const WithIcons: Story = {
     <div className="w-80 space-y-3">
       <Label className="text-body-md font-medium">Theme preference</Label>
       <RadioGroup defaultValue="light" className="space-y-3">
-        <label htmlFor="theme-light" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-medium)] transition-colors cursor-pointer">
+        <label htmlFor="theme-light" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-l hover:border-[var(--color-border-primary-medium)] transition-colors cursor-pointer">
           <RadioGroupItem value="light" id="theme-light" />
-          <Icon name="sun" size="sm" />
+          <Icon name="sun" size="s" />
           <div>
             <span className="font-medium block">Light</span>
             <p className="text-body-sm text-[var(--color-text-secondary)]">
@@ -227,9 +227,9 @@ export const WithIcons: Story = {
           </div>
         </label>
         
-        <label htmlFor="theme-dark" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-medium)] transition-colors cursor-pointer">
+        <label htmlFor="theme-dark" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-l hover:border-[var(--color-border-primary-medium)] transition-colors cursor-pointer">
           <RadioGroupItem value="dark" id="theme-dark" />
-          <Icon name="moon" size="sm" />
+          <Icon name="moon" size="s" />
           <div>
             <span className="font-medium block">Dark</span>
             <p className="text-body-sm text-[var(--color-text-secondary)]">
@@ -238,9 +238,9 @@ export const WithIcons: Story = {
           </div>
         </label>
         
-        <label htmlFor="theme-system" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-lg hover:border-[var(--color-border-primary-medium)] transition-colors cursor-pointer">
+        <label htmlFor="theme-system" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-l hover:border-[var(--color-border-primary-medium)] transition-colors cursor-pointer">
           <RadioGroupItem value="system" id="theme-system" />
-          <Icon name="monitor" size="sm" />
+          <Icon name="monitor" size="s" />
           <div>
             <span className="font-medium block">System</span>
             <p className="text-body-sm text-[var(--color-text-secondary)]">
@@ -288,7 +288,7 @@ export const InForm: Story = {
                 />
                 <Label 
                   htmlFor={`size-${size.toLowerCase()}`}
-                  className="flex h-10 w-full items-center justify-center rounded-md border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3 py-2 text-body-sm font-medium cursor-pointer hover:border-[var(--color-interaction-border-input-hovered)] peer-data-[state=checked]:border-[var(--color-border-brand-bold)] peer-data-[state=checked]:bg-[var(--color-background-blue-subtle-selected)] peer-data-[state=checked]:text-[var(--color-text-brand-bold)]"
+                  className="flex h-10 w-full items-center justify-center rounded-m border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3 py-2 text-body-sm font-medium cursor-pointer hover:border-[var(--color-interaction-border-input-hovered)] peer-data-[state=checked]:border-[var(--color-border-brand-bold)] peer-data-[state=checked]:bg-[var(--color-background-blue-subtle-selected)] peer-data-[state=checked]:text-[var(--color-text-brand-bold)]"
                 >
                   {size}
                 </Label>

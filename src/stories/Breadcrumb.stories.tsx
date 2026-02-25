@@ -47,7 +47,7 @@ export const Default: Story = {
 
 export const Simple: Story = {
   render: () => (
-    <div className="space-y-[var(--space-md)]">
+    <div className="space-y-[var(--space-m)]">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -82,7 +82,7 @@ export const Simple: Story = {
 // Custom separators
 export const CustomSeparators: Story = {
   render: () => (
-    <div className="space-y-[var(--space-md)]">
+    <div className="space-y-[var(--space-m)]">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -107,7 +107,7 @@ export const CustomSeparators: Story = {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink href="/">
-              <Icon name="home" size="sm" />
+              <Icon name="home" size="s" />
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -127,7 +127,7 @@ export const CustomSeparators: Story = {
 // With ellipsis for collapsed paths
 export const WithEllipsis: Story = {
   render: () => (
-    <div className="space-y-[var(--space-md)]">
+    <div className="space-y-[var(--space-m)]">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -170,19 +170,19 @@ export const WithEllipsis: Story = {
 // With icons
 export const WithIcons: Story = {
   render: () => (
-    <div className="space-y-[var(--space-md)]">
+    <div className="space-y-[var(--space-m)]">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/" className="flex items-center gap-[var(--space-xsm)]">
-              <Icon name="home" size="sm" />
+            <BreadcrumbLink href="/" className="flex items-center gap-[var(--space-xs)]">
+              <Icon name="home" size="s" />
               Home
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink href="/products" className="flex items-center gap-[var(--space-xsm)]">
-              <Icon name="package" size="sm" />
+            <BreadcrumbLink href="/products" className="flex items-center gap-[var(--space-xs)]">
+              <Icon name="package" size="s" />
               Products
             </BreadcrumbLink>
           </BreadcrumbItem>
@@ -196,15 +196,15 @@ export const WithIcons: Story = {
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/admin" className="flex items-center gap-[var(--space-xsm)]">
-              <Icon name="settings" size="sm" />
+            <BreadcrumbLink href="/admin" className="flex items-center gap-[var(--space-xs)]">
+              <Icon name="settings" size="s" />
               Admin
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink href="/admin/users" className="flex items-center gap-[var(--space-xsm)]">
-              <Icon name="user" size="sm" />
+            <BreadcrumbLink href="/admin/users" className="flex items-center gap-[var(--space-xs)]">
+              <Icon name="user" size="s" />
               Users
             </BreadcrumbLink>
           </BreadcrumbItem>
@@ -250,9 +250,9 @@ export const WithCustomLinks: Story = {
 // E-commerce example
 export const ECommerceExample: Story = {
   render: () => (
-    <div className="space-y-[var(--space-md)]">
+    <div className="space-y-[var(--space-m)]">
       <div>
-        <h4 className="text-body-medium-md mb-[var(--space-sm)]">E-commerce Navigation</h4>
+        <h4 className="text-body-medium-md mb-[var(--space-s)]">E-commerce Navigation</h4>
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -275,12 +275,12 @@ export const ECommerceExample: Story = {
       </div>
 
       <div>
-        <h4 className="text-body-medium-md mb-[var(--space-sm)]">Category Deep Dive</h4>
+        <h4 className="text-body-medium-md mb-[var(--space-s)]">Category Deep Dive</h4>
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/" className="flex items-center gap-[var(--space-xsm)]">
-                <Icon name="home" size="sm" />
+              <BreadcrumbLink href="/" className="flex items-center gap-[var(--space-xs)]">
+                <Icon name="home" size="s" />
                 Home
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -308,14 +308,14 @@ export const ECommerceExample: Story = {
 // Admin dashboard example
 export const AdminDashboardExample: Story = {
   render: () => (
-    <div className="space-y-[var(--space-md)]">
+    <div className="space-y-[var(--space-m)]">
       <div>
-        <h4 className="text-body-medium-md mb-[var(--space-sm)]">Admin Dashboard</h4>
+        <h4 className="text-body-medium-md mb-[var(--space-s)]">Admin Dashboard</h4>
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="/admin">
-                <Icon name="layout-dashboard" size="sm" />
+                <Icon name="layout-dashboard" size="s" />
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
@@ -331,12 +331,12 @@ export const AdminDashboardExample: Story = {
       </div>
 
       <div>
-        <h4 className="text-body-medium-md mb-[var(--space-sm)]">Content Management</h4>
+        <h4 className="text-body-medium-md mb-[var(--space-s)]">Content Management</h4>
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/admin" className="flex items-center gap-[var(--space-xsm)]">
-                <Icon name="settings" size="sm" />
+              <BreadcrumbLink href="/admin" className="flex items-center gap-[var(--space-xs)]">
+                <Icon name="settings" size="s" />
                 Admin
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -362,14 +362,14 @@ export const AdminDashboardExample: Story = {
 // File system navigation
 export const FileSystemExample: Story = {
   render: () => (
-    <div className="space-y-[var(--space-md)]">
+    <div className="space-y-[var(--space-m)]">
       <div>
-        <h4 className="text-body-medium-md mb-[var(--space-sm)]">File Manager</h4>
+        <h4 className="text-body-medium-md mb-[var(--space-s)]">File Manager</h4>
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/files" className="flex items-center gap-[var(--space-xsm)]">
-                <Icon name="home" size="sm" />
+              <BreadcrumbLink href="/files" className="flex items-center gap-[var(--space-xs)]">
+                <Icon name="home" size="s" />
                 Root
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -396,12 +396,12 @@ export const FileSystemExample: Story = {
       </div>
 
       <div>
-        <h4 className="text-body-medium-md mb-[var(--space-sm)]">Deep Folder Structure</h4>
+        <h4 className="text-body-medium-md mb-[var(--space-s)]">Deep Folder Structure</h4>
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="/files">
-                <Icon name="folder" size="sm" />
+                <Icon name="folder" size="s" />
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator>
@@ -430,10 +430,10 @@ export const FileSystemExample: Story = {
 // Long path examples
 export const LongPathExamples: Story = {
   render: () => (
-    <div className="space-y-[var(--space-lg)]">
+    <div className="space-y-[var(--space-l)]">
       <div>
-        <h4 className="text-body-medium-md mb-[var(--space-sm)]">Full Path (Not Recommended)</h4>
-        <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+        <h4 className="text-body-medium-md mb-[var(--space-s)]">Full Path (Not Recommended)</h4>
+        <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-s)]">
           This shows why ellipsis is useful for very long paths:
         </p>
         <Breadcrumb>
@@ -470,8 +470,8 @@ export const LongPathExamples: Story = {
       </div>
 
       <div>
-        <h4 className="text-body-medium-md mb-[var(--space-sm)]">Collapsed Path (Recommended)</h4>
-        <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-sm)]">
+        <h4 className="text-body-medium-md mb-[var(--space-s)]">Collapsed Path (Recommended)</h4>
+        <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-s)]">
           Much cleaner with ellipsis:
         </p>
         <Breadcrumb>

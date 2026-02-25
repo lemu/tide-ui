@@ -86,32 +86,32 @@ export const Vertical: Story = {
 // Layout explanation
 export const LayoutExplanation: Story = {
   render: () => (
-    <div className="space-y-[var(--space-lg)] max-w-4xl">
-      <div className="bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-lg p-[var(--space-lg)]">
-        <h3 className="text-heading-sm mb-[var(--space-md)]">Layout-Based API</h3>
-        <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+    <div className="space-y-[var(--space-l)] max-w-4xl">
+      <div className="bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-l p-[var(--space-l)]">
+        <h3 className="text-heading-sm mb-[var(--space-m)]">Layout-Based API</h3>
+        <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
           The layout prop describes the layout context, making it more intuitive than orientation.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-md)]">
-          <div className="space-y-[var(--space-sm)]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-m)]">
+          <div className="space-y-[var(--space-s)]">
             <h4 className="text-heading-xsm">Horizontal Layout</h4>
             <p className="text-body-sm text-[var(--color-text-secondary)]">
-              <code className="bg-[var(--color-surface-primary)] px-[var(--space-xsm)] rounded-xsm">layout="horizontal"</code><br/>
+              <code className="bg-[var(--color-surface-primary)] px-[var(--space-xs)] rounded-xs">layout="horizontal"</code><br/>
               For side-by-side elements → creates vertical line
             </p>
-            <div className="flex items-center space-x-[var(--space-md)]">
+            <div className="flex items-center space-x-[var(--space-m)]">
               <span className="text-body-sm">Left</span>
               <Separator layout="horizontal" />
               <span className="text-body-sm">Right</span>
             </div>
           </div>
-          <div className="space-y-[var(--space-sm)]">
+          <div className="space-y-[var(--space-s)]">
             <h4 className="text-heading-xsm">Vertical Layout</h4>
             <p className="text-body-sm text-[var(--color-text-secondary)]">
-              <code className="bg-[var(--color-surface-primary)] px-[var(--space-xsm)] rounded-xsm">layout="vertical"</code><br/>
+              <code className="bg-[var(--color-surface-primary)] px-[var(--space-xs)] rounded-xs">layout="vertical"</code><br/>
               For stacked elements → creates horizontal line
             </p>
-            <div className="space-y-[var(--space-md)] max-w-32">
+            <div className="space-y-[var(--space-m)] max-w-32">
               <span className="text-body-sm">Top</span>
               <Separator layout="vertical" />
               <span className="text-body-sm">Bottom</span>
@@ -126,16 +126,16 @@ export const LayoutExplanation: Story = {
 // Navigation example
 export const Navigation: Story = {
   render: () => (
-    <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-lg p-[var(--space-lg)]">
-      <h4 className="text-heading-sm mb-[var(--space-md)]">Navigation Menu</h4>
-      <div className="flex items-center space-x-[var(--space-md)]">
-        <Button variant="ghost" size="sm">Home</Button>
+    <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-l p-[var(--space-l)]">
+      <h4 className="text-heading-sm mb-[var(--space-m)]">Navigation Menu</h4>
+      <div className="flex items-center space-x-[var(--space-m)]">
+        <Button variant="ghost" size="s">Home</Button>
         <Separator layout="horizontal" />
-        <Button variant="ghost" size="sm">About</Button>
+        <Button variant="ghost" size="s">About</Button>
         <Separator layout="horizontal" />
-        <Button variant="ghost" size="sm">Contact</Button>
+        <Button variant="ghost" size="s">Contact</Button>
         <Separator layout="horizontal" />
-        <Button variant="ghost" size="sm">Help</Button>
+        <Button variant="ghost" size="s">Help</Button>
       </div>
     </div>
   ),
@@ -144,9 +144,9 @@ export const Navigation: Story = {
 // Breadcrumb example
 export const Breadcrumb: Story = {
   render: () => (
-    <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-lg p-[var(--space-lg)]">
-      <h4 className="text-heading-sm mb-[var(--space-md)]">Breadcrumb Navigation</h4>
-      <div className="flex items-center space-x-[var(--space-sm)]">
+    <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-l p-[var(--space-l)]">
+      <h4 className="text-heading-sm mb-[var(--space-m)]">Breadcrumb Navigation</h4>
+      <div className="flex items-center space-x-[var(--space-s)]">
         <span className="text-body-sm text-[var(--color-text-brand-bold)] hover:underline cursor-pointer">Home</span>
         <Separator layout="horizontal" />
         <span className="text-body-sm text-[var(--color-text-brand-bold)] hover:underline cursor-pointer">Products</span>
@@ -161,18 +161,18 @@ export const Breadcrumb: Story = {
 
 export const InMenu: Story = {
   render: () => (
-    <div className="w-48 border rounded-md p-2">
-      <div className="px-2 py-1.5 text-sm hover:bg-accent rounded-sm cursor-pointer">
+    <div className="w-48 border rounded-m p-2">
+      <div className="px-2 py-1.5 text-sm hover:bg-accent rounded-s cursor-pointer">
         Profile
       </div>
-      <div className="px-2 py-1.5 text-sm hover:bg-accent rounded-sm cursor-pointer">
+      <div className="px-2 py-1.5 text-sm hover:bg-accent rounded-s cursor-pointer">
         Settings
       </div>
       <Separator className="my-1" />
-      <div className="px-2 py-1.5 text-sm hover:bg-accent rounded-sm cursor-pointer">
+      <div className="px-2 py-1.5 text-sm hover:bg-accent rounded-s cursor-pointer">
         Help
       </div>
-      <div className="px-2 py-1.5 text-sm hover:bg-accent rounded-sm cursor-pointer">
+      <div className="px-2 py-1.5 text-sm hover:bg-accent rounded-s cursor-pointer">
         Sign out
       </div>
     </div>
@@ -182,26 +182,26 @@ export const InMenu: Story = {
 // Enhanced vertical list
 export const VerticalList: Story = {
   render: () => (
-    <div className="max-w-md bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-lg p-[var(--space-lg)]">
-      <h4 className="text-heading-sm mb-[var(--space-md)]">Menu Items</h4>
-      <div className="space-y-[var(--space-md)]">
-        <div className="flex items-center gap-[var(--space-sm)]">
-          <Icon name="user" size="sm" />
+    <div className="max-w-md bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-l p-[var(--space-l)]">
+      <h4 className="text-heading-sm mb-[var(--space-m)]">Menu Items</h4>
+      <div className="space-y-[var(--space-m)]">
+        <div className="flex items-center gap-[var(--space-s)]">
+          <Icon name="user" size="s" />
           <span className="text-body-sm">Profile Settings</span>
         </div>
         <Separator layout="vertical" />
-        <div className="flex items-center gap-[var(--space-sm)]">
-          <Icon name="settings" size="sm" />
+        <div className="flex items-center gap-[var(--space-s)]">
+          <Icon name="settings" size="s" />
           <span className="text-body-sm">Preferences</span>
         </div>
         <Separator layout="vertical" />
-        <div className="flex items-center gap-[var(--space-sm)]">
-          <Icon name="circle-help" size="sm" />
+        <div className="flex items-center gap-[var(--space-s)]">
+          <Icon name="circle-help" size="s" />
           <span className="text-body-sm">Help & Support</span>
         </div>
         <Separator layout="vertical" />
-        <div className="flex items-center gap-[var(--space-sm)]">
-          <Icon name="log-out" size="sm" />
+        <div className="flex items-center gap-[var(--space-s)]">
+          <Icon name="log-out" size="s" />
           <span className="text-body-sm">Sign Out</span>
         </div>
       </div>
@@ -211,7 +211,7 @@ export const VerticalList: Story = {
 
 export const InCard: Story = {
   render: () => (
-    <div className="w-80 border rounded-lg p-6">
+    <div className="w-80 border rounded-l p-6">
       <div className="space-y-1">
         <h3 className="font-semibold">Account Information</h3>
         <p className="text-sm text-muted-foreground">
@@ -236,10 +236,10 @@ export const InCard: Story = {
 // Dot separators
 export const DotSeparators: Story = {
   render: () => (
-    <div className="space-y-[var(--space-lg)]">
+    <div className="space-y-[var(--space-l)]">
       <div>
-        <h3 className="text-heading-sm mb-[var(--space-md)]">Basic Dot Separators</h3>
-        <div className="flex items-center space-x-[var(--space-sm)]">
+        <h3 className="text-heading-sm mb-[var(--space-m)]">Basic Dot Separators</h3>
+        <div className="flex items-center space-x-[var(--space-s)]">
           <span className="text-body-md">Item One</span>
           <Separator type="dot" layout="horizontal" />
           <span className="text-body-md">Item Two</span>
@@ -256,9 +256,9 @@ export const DotSeparators: Story = {
 // Article metadata
 export const ArticleMetadata: Story = {
   render: () => (
-    <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-lg p-[var(--space-lg)]">
-      <h4 className="text-heading-sm mb-[var(--space-md)]">Article Metadata</h4>
-      <div className="flex items-center space-x-[var(--space-sm)]">
+    <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-l p-[var(--space-l)]">
+      <h4 className="text-heading-sm mb-[var(--space-m)]">Article Metadata</h4>
+      <div className="flex items-center space-x-[var(--space-s)]">
         <span className="text-body-sm text-[var(--color-text-secondary)]">Aug 15, 2025</span>
         <Separator type="dot" layout="horizontal" />
         <span className="text-body-sm text-[var(--color-text-secondary)]">5 min read</span>
@@ -274,16 +274,16 @@ export const ArticleMetadata: Story = {
 // Tags example
 export const TagsExample: Story = {
   render: () => (
-    <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-lg p-[var(--space-lg)]">
-      <h4 className="text-heading-sm mb-[var(--space-md)]">Tags</h4>
-      <div className="flex items-center space-x-[var(--space-sm)] flex-wrap">
-        <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand-bold)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm">React</span>
+    <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-l p-[var(--space-l)]">
+      <h4 className="text-heading-sm mb-[var(--space-m)]">Tags</h4>
+      <div className="flex items-center space-x-[var(--space-s)] flex-wrap">
+        <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand-bold)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s">React</span>
         <Separator type="dot" layout="horizontal" />
-        <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand-bold)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm">TypeScript</span>
+        <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand-bold)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s">TypeScript</span>
         <Separator type="dot" layout="horizontal" />
-        <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand-bold)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm">UI Components</span>
+        <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand-bold)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s">UI Components</span>
         <Separator type="dot" layout="horizontal" />
-        <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand-bold)] px-[var(--space-sm)] py-[var(--space-xsm)] rounded-sm">Design System</span>
+        <span className="text-label-sm bg-[var(--color-background-brand-subtle)] text-[var(--color-text-brand-bold)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s">Design System</span>
       </div>
     </div>
   ),
@@ -292,12 +292,12 @@ export const TagsExample: Story = {
 // User profile
 export const UserProfile: Story = {
   render: () => (
-    <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-lg p-[var(--space-lg)]">
-      <h4 className="text-heading-sm mb-[var(--space-md)]">User Profile</h4>
-      <div className="flex items-center space-x-[var(--space-sm)]">
-        <div className="flex items-center space-x-[var(--space-sm)]">
-          <div className="w-[var(--size-md)] h-[var(--size-md)] bg-[var(--color-background-blue-bold)] rounded-full flex items-center justify-center">
-            <Icon name="user" size="sm" color="inverse" />
+    <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-l p-[var(--space-l)]">
+      <h4 className="text-heading-sm mb-[var(--space-m)]">User Profile</h4>
+      <div className="flex items-center space-x-[var(--space-s)]">
+        <div className="flex items-center space-x-[var(--space-s)]">
+          <div className="w-[var(--size-m)] h-[var(--size-m)] bg-[var(--color-background-blue-bold)] rounded-full flex items-center justify-center">
+            <Icon name="user" size="s" color="inverse" />
           </div>
           <span className="text-body-medium-md">John Doe</span>
         </div>
@@ -315,13 +315,13 @@ export const UserProfile: Story = {
 // Comparison: Line vs Dot
 export const LineVsDot: Story = {
   render: () => (
-    <div className="space-y-[var(--space-lg)] max-w-2xl">
-      <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-lg p-[var(--space-lg)]">
-        <h4 className="text-heading-sm mb-[var(--space-md)]">Line Separators</h4>
-        <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+    <div className="space-y-[var(--space-l)] max-w-2xl">
+      <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-l p-[var(--space-l)]">
+        <h4 className="text-heading-sm mb-[var(--space-m)]">Line Separators</h4>
+        <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
           Strong visual division for distinct sections
         </p>
-        <div className="flex items-center space-x-[var(--space-md)]">
+        <div className="flex items-center space-x-[var(--space-m)]">
           <span className="text-body-md">Section A</span>
           <Separator layout="horizontal" />
           <span className="text-body-md">Section B</span>
@@ -330,12 +330,12 @@ export const LineVsDot: Story = {
         </div>
       </div>
       
-      <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-lg p-[var(--space-lg)]">
-        <h4 className="text-heading-sm mb-[var(--space-md)]">Dot Separators</h4>
-        <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-md)]">
+      <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-l p-[var(--space-l)]">
+        <h4 className="text-heading-sm mb-[var(--space-m)]">Dot Separators</h4>
+        <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
           Subtle division for related content
         </p>
-        <div className="flex items-center space-x-[var(--space-sm)]">
+        <div className="flex items-center space-x-[var(--space-s)]">
           <span className="text-body-md">Related A</span>
           <Separator type="dot" layout="horizontal" />
           <span className="text-body-md">Related B</span>

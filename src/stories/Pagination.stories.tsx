@@ -138,7 +138,7 @@ export const Interactive: Story = {
             </div>
 
             {/* Simulated content */}
-            <div className="border rounded-lg p-4 space-y-2">
+            <div className="border rounded-l p-4 space-y-2">
               {Array.from({ length: Math.min(pageSize, totalItems - startItem + 1) }, (_, i) => {
                 const itemNumber = startItem + i;
                 return (

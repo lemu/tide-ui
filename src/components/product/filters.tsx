@@ -500,21 +500,21 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
   }
 
   return (
-    <div className="flex flex-col gap-[var(--space-2xlg)]">
+    <div className="flex flex-col gap-[var(--space-3xl)]">
       {/* Search Input - conditionally rendered */}
       {shouldShowSearch && (
         <div className="relative">
           <Icon
             name="search"
-            className="absolute left-[var(--space-md)] top-1/2 -translate-y-1/2 h-[var(--size-xsm)] w-[var(--size-xsm)] text-[var(--color-text-tertiary)] pointer-events-none"
+            className="absolute left-[var(--space-m)] top-1/2 -translate-y-1/2 h-[var(--size-xs)] w-[var(--size-xs)] text-[var(--color-text-tertiary)] pointer-events-none"
           />
           <Input
             type="text"
-            size="lg"
+            size="l"
             placeholder={filter.searchPlaceholder || `Search for a ${filter.label.toLowerCase()}`}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-[calc(var(--space-md)+var(--size-xsm)+var(--space-sm))]"
+            className="pl-[calc(var(--space-m)+var(--size-xs)+var(--space-s))]"
             autoFocus={autoFocusSearch}
           />
         </div>
@@ -522,30 +522,30 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
 
       {/* Number Range UI */}
       {filter.type === 'number' && filter.rangeMode && (
-        <div className="flex flex-col gap-[var(--space-sm)]">
+        <div className="flex flex-col gap-[var(--space-s)]">
           {/* Filter Label */}
           <div className="text-body-medium-sm text-[var(--color-text-tertiary)]">
             {filter.label}
           </div>
           {/* Separator */}
-          <div className="h-px w-full mb-[var(--space-sm)]">
+          <div className="h-px w-full mb-[var(--space-s)]">
             <div aria-hidden="true" className="border-[var(--color-border-primary-subtle)] border-[0px_0px_1px] border-solid h-px" />
           </div>
           {/* Min Input */}
-          <div className="flex flex-col gap-[var(--space-sm)]">
+          <div className="flex flex-col gap-[var(--space-s)]">
             <label className="text-label-md text-[var(--color-text-primary)]">
               At least...
             </label>
             <div className="relative">
               {filter.numberConfig?.prefix && (
-                <span className="absolute left-[var(--space-md)] top-1/2 -translate-y-1/2 text-body-md text-[var(--color-text-tertiary)] pointer-events-none">
+                <span className="absolute left-[var(--space-m)] top-1/2 -translate-y-1/2 text-body-md text-[var(--color-text-tertiary)] pointer-events-none">
                   {filter.numberConfig.prefix}
                 </span>
               )}
               <Input
                 type="text"
                 inputMode="numeric"
-                size="lg"
+                size="l"
                 variant={minError ? 'error' : 'default'}
                 value={minInput}
                 onChange={(e) => {
@@ -560,12 +560,12 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
                 }}
                 placeholder={filter.numberConfig?.min?.toString() || '0.00'}
                 className={cn(
-                  filter.numberConfig?.prefix && 'pl-[calc(var(--space-lg)+var(--space-md))]',
-                  filter.numberConfig?.suffix && 'pr-[calc(var(--space-lg)+var(--space-md))]'
+                  filter.numberConfig?.prefix && 'pl-[calc(var(--space-l)+var(--space-m))]',
+                  filter.numberConfig?.suffix && 'pr-[calc(var(--space-l)+var(--space-m))]'
                 )}
               />
               {filter.numberConfig?.suffix && (
-                <span className="absolute right-[var(--space-md)] top-1/2 -translate-y-1/2 text-body-md text-[var(--color-text-tertiary)] pointer-events-none">
+                <span className="absolute right-[var(--space-m)] top-1/2 -translate-y-1/2 text-body-md text-[var(--color-text-tertiary)] pointer-events-none">
                   {filter.numberConfig.suffix}
                 </span>
               )}
@@ -578,20 +578,20 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
           </div>
 
           {/* Max Input */}
-          <div className="flex flex-col gap-[var(--space-sm)]">
+          <div className="flex flex-col gap-[var(--space-s)]">
             <label className="text-label-md text-[var(--color-text-primary)]">
               No more than...
             </label>
             <div className="relative">
               {filter.numberConfig?.prefix && (
-                <span className="absolute left-[var(--space-md)] top-1/2 -translate-y-1/2 text-body-md text-[var(--color-text-tertiary)] pointer-events-none">
+                <span className="absolute left-[var(--space-m)] top-1/2 -translate-y-1/2 text-body-md text-[var(--color-text-tertiary)] pointer-events-none">
                   {filter.numberConfig.prefix}
                 </span>
               )}
               <Input
                 type="text"
                 inputMode="numeric"
-                size="lg"
+                size="l"
                 variant={maxError ? 'error' : 'default'}
                 value={maxInput}
                 onChange={(e) => {
@@ -606,12 +606,12 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
                 }}
                 placeholder={filter.numberConfig?.max?.toString() || '0.00'}
                 className={cn(
-                  filter.numberConfig?.prefix && 'pl-[calc(var(--space-lg)+var(--space-md))]',
-                  filter.numberConfig?.suffix && 'pr-[calc(var(--space-lg)+var(--space-md))]'
+                  filter.numberConfig?.prefix && 'pl-[calc(var(--space-l)+var(--space-m))]',
+                  filter.numberConfig?.suffix && 'pr-[calc(var(--space-l)+var(--space-m))]'
                 )}
               />
               {filter.numberConfig?.suffix && (
-                <span className="absolute right-[var(--space-md)] top-1/2 -translate-y-1/2 text-body-md text-[var(--color-text-tertiary)] pointer-events-none">
+                <span className="absolute right-[var(--space-m)] top-1/2 -translate-y-1/2 text-body-md text-[var(--color-text-tertiary)] pointer-events-none">
                   {filter.numberConfig.suffix}
                 </span>
               )}
@@ -644,22 +644,22 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
 
       {/* Date Range UI */}
       {filter.type === 'date' && filter.rangeMode && (
-        <div className="flex flex-col gap-[var(--space-sm)]">
+        <div className="flex flex-col gap-[var(--space-s)]">
           {/* Filter Label */}
           <div className="text-body-medium-sm text-[var(--color-text-tertiary)]">
             {filter.label}
           </div>
           {/* Separator */}
-          <div className="h-px w-full mb-[var(--space-sm)]">
+          <div className="h-px w-full mb-[var(--space-s)]">
             <div aria-hidden="true" className="border-[var(--color-border-primary-subtle)] border-[0px_0px_1px] border-solid h-px" />
           </div>
           {/* Select for preset selection (always visible) */}
-          <div className="flex flex-col gap-[var(--space-sm)]">
+          <div className="flex flex-col gap-[var(--space-s)]">
             <label className="text-label-md text-[var(--color-text-primary)]">
               Date range
             </label>
             <Select value={getSelectedPreset()} onValueChange={handlePresetSelect}>
-              <SelectTrigger size="lg">
+              <SelectTrigger size="l">
                 <SelectValue placeholder="Select date range..." />
               </SelectTrigger>
               <SelectContent>
@@ -749,10 +749,10 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
           key={group.label}
           role="group"
           aria-labelledby={groupId}
-          className="flex flex-col gap-[var(--space-sm)]"
+          className="flex flex-col gap-[var(--space-s)]"
         >
           {/* Group Header */}
-          <div className="flex gap-[var(--space-sm)] items-start justify-start w-full">
+          <div className="flex gap-[var(--space-s)] items-start justify-start w-full">
             <div
               id={groupId}
               className="flex-1 text-body-medium-sm text-[var(--color-text-tertiary)]"
@@ -760,7 +760,7 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
               {group.label}
             </div>
             {onReset && filter.type === 'multiselect' && (
-              <div className="flex gap-[var(--space-xsm)] items-center text-body-medium-sm text-[var(--color-text-brand-bold)]">
+              <div className="flex gap-[var(--space-xs)] items-center text-body-medium-sm text-[var(--color-text-brand-bold)]">
                 <button
                   onClick={() => handleSelectAllInGroup(group)}
                   aria-label={`Select all ${group.label} options`}
@@ -795,11 +795,11 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
 
           {/* Options */}
           {filter.type === 'multiselect' ? (
-            <div className="flex flex-col gap-[var(--space-sm)]">
+            <div className="flex flex-col gap-[var(--space-s)]">
               {group.options.map((option) => (
                 <React.Fragment key={option.value}>
                   {/* Parent Option */}
-                  <div className="flex gap-[var(--space-sm)] h-[20px] items-center">
+                  <div className="flex gap-[var(--space-s)] h-[20px] items-center">
                     <Checkbox
                       id={`checkbox-${filter.id}-${option.value}`}
                       checked={selectedValues.includes(option.value)}
@@ -815,7 +815,7 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
 
                   {/* Child Options (Indented) */}
                   {option.children && option.children.map((child: FilterOption) => (
-                    <div key={child.value} className="flex gap-[var(--space-sm)] h-[20px] items-center pl-[var(--space-2xlg)]">
+                    <div key={child.value} className="flex gap-[var(--space-s)] h-[20px] items-center pl-[var(--space-3xl)]">
                       <Checkbox
                         id={`checkbox-${filter.id}-${child.value}`}
                         checked={selectedValues.includes(child.value)}
@@ -834,11 +834,11 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
             </div>
           ) : (
             <RadioGroup value={selectedValues[0] || ''} onValueChange={handleToggleOption} aria-label={group.label}>
-              <div className="flex flex-col gap-[var(--space-sm)]">
+              <div className="flex flex-col gap-[var(--space-s)]">
                 {group.options.map((option) => (
                   <React.Fragment key={option.value}>
                     {/* Parent Option */}
-                    <div className="flex gap-[var(--space-sm)] h-[20px] items-center">
+                    <div className="flex gap-[var(--space-s)] h-[20px] items-center">
                       <RadioGroupItem id={`radio-${filter.id}-${option.value}`} value={option.value} />
                       <label
                         htmlFor={`radio-${filter.id}-${option.value}`}
@@ -850,7 +850,7 @@ export const FilterPanelContent = React.memo(function FilterPanelContent({ filte
 
                     {/* Child Options (Indented) */}
                     {option.children && option.children.map((child: FilterOption) => (
-                      <div key={child.value} className="flex gap-[var(--space-sm)] h-[20px] items-center pl-[var(--space-2xlg)]">
+                      <div key={child.value} className="flex gap-[var(--space-s)] h-[20px] items-center pl-[var(--space-3xl)]">
                         <RadioGroupItem id={`radio-${filter.id}-${child.value}`} value={child.value} />
                         <label
                           htmlFor={`radio-${filter.id}-${child.value}`}
@@ -910,15 +910,15 @@ const FilterSidebarItem = React.memo(function FilterSidebarItem({ filter, isSele
       }}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "group/item box-border flex gap-[var(--space-md)] h-[var(--size-md)] items-center justify-start px-[var(--space-lg)] py-[var(--space-sm)] relative rounded-md shrink-0 w-full cursor-pointer transition-colors",
+        "group/item box-border flex gap-[var(--space-m)] h-[var(--size-m)] items-center justify-start px-[var(--space-l)] py-[var(--space-s)] relative rounded-m shrink-0 w-full cursor-pointer transition-colors",
         "hover:bg-[var(--color-background-neutral-hovered)]",
         isSelected && "bg-[var(--color-background-blue-subtle-selected)] hover:bg-[var(--color-background-blue-subtle-selected-hovered)] group-focus-visible/listbox:ring-2 group-focus-visible/listbox:ring-[var(--ring-color)] group-focus-visible/listbox:ring-inset"
       )}
       onClick={onSelect}
     >
-      <div className="flex-1 flex gap-[var(--space-sm)] items-center justify-start min-w-0">
+      <div className="flex-1 flex gap-[var(--space-s)] items-center justify-start min-w-0">
         <IconComponent className={cn(
-          "h-[var(--size-2xsm)] w-[var(--size-2xsm)] shrink-0",
+          "h-[var(--size-2xs)] w-[var(--size-2xs)] shrink-0",
           isSelected ? "text-[var(--color-text-brand-bold)]" : "text-[var(--color-text-primary)]"
         )} />
         <div className={cn(
@@ -929,7 +929,7 @@ const FilterSidebarItem = React.memo(function FilterSidebarItem({ filter, isSele
         </div>
         {valueCount !== undefined && valueCount > 0 && (
           <Badge
-            size="sm"
+            size="s"
             intent={isSelected ? "brand" : "neutral"}
             appearance={isSelected || isHovered ? "bold" : "subtle"}
           >
@@ -938,11 +938,11 @@ const FilterSidebarItem = React.memo(function FilterSidebarItem({ filter, isSele
         )}
       </div>
 
-      <div className="flex items-center gap-[var(--space-sm)] shrink-0">
+      <div className="flex items-center gap-[var(--space-s)] shrink-0">
         {/* Pin Toggle */}
         <Button
           variant="ghost"
-          size="sm"
+          size="s"
           tabIndex={-1}
           aria-label={isPinned ? `Unpin ${filter.label} filter` : `Pin ${filter.label} filter`}
           aria-pressed={isPinned}
@@ -951,7 +951,7 @@ const FilterSidebarItem = React.memo(function FilterSidebarItem({ filter, isSele
             onTogglePin()
           }}
           className={cn(
-            "group/pin h-auto w-auto p-[var(--space-xsm)] transition-opacity",
+            "group/pin h-auto w-auto p-[var(--space-xs)] transition-opacity",
             isPinned ? "opacity-100" : "opacity-0 group-hover/item:opacity-100"
           )}
         >
@@ -1019,7 +1019,7 @@ function GlobalSearchInput({ placeholder = "Search for keyword...", onAddSearchT
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}
-        size="md"
+        size="m"
       />
     </div>
   )
@@ -1170,8 +1170,8 @@ export function FilterDropdownMenu({
   }, [filters])
 
   return (
-    <div className="bg-[var(--color-surface-primary)] relative rounded-md max-h-[480px] flex flex-col">
-      <div className="flex items-stretch justify-start min-h-0 overflow-hidden rounded-md flex-1">
+    <div className="bg-[var(--color-surface-primary)] relative rounded-m max-h-[480px] flex flex-col">
+      <div className="flex items-stretch justify-start min-h-0 overflow-hidden rounded-m flex-1">
         {/* Left Sidebar */}
         <div
           className="bg-[var(--color-background-neutral-default)] relative shrink-0 border-r border-[var(--color-border-primary-subtle)] flex flex-col"
@@ -1185,7 +1185,7 @@ export function FilterDropdownMenu({
             aria-activedescendant={selectedFilterId ? `filter-option-${selectedFilterId}` : undefined}
             tabIndex={0}
             onKeyDown={handleListboxKeyDown}
-            className="group/listbox box-border flex flex-col gap-[var(--space-sm)] p-[var(--space-sm)] overflow-y-auto focus-visible:outline-none"
+            className="group/listbox box-border flex flex-col gap-[var(--space-s)] p-[var(--space-s)] overflow-y-auto focus-visible:outline-none"
           >
             {/* Render ungrouped filters first */}
             {groupedFilters.ungrouped.map((filter) => {
@@ -1213,11 +1213,11 @@ export function FilterDropdownMenu({
               const groupFilters = groupedFilters.grouped[groupName]
 
               return (
-                <div key={groupName} className="flex flex-col gap-[var(--space-sm)]">
+                <div key={groupName} className="flex flex-col gap-[var(--space-s)]">
                   {/* Group Header */}
                   <div className={cn(
-                    "px-[var(--space-md)] pb-[var(--space-xsm)]",
-                    groupIndex === 0 && groupedFilters.ungrouped.length === 0 ? "pt-0" : "pt-[var(--space-md)]"
+                    "px-[var(--space-m)] pb-[var(--space-xs)]",
+                    groupIndex === 0 && groupedFilters.ungrouped.length === 0 ? "pt-0" : "pt-[var(--space-m)]"
                   )}>
                     <div className="text-caption-sm text-[var(--color-text-tertiary)] tracking-[0.1px]">
                       {groupName}
@@ -1251,7 +1251,7 @@ export function FilterDropdownMenu({
         </div>
 
         {/* Right Panel */}
-        <div className="flex-1 box-border p-[var(--space-lg)] overflow-y-auto">
+        <div className="flex-1 box-border p-[var(--space-l)] overflow-y-auto">
           {selectedFilter && (
             <FilterPanelContent
               filter={selectedFilter}
@@ -1670,15 +1670,15 @@ export function Filters({
         <Popover open={isFilterMenuOpen} onOpenChange={setIsFilterMenuOpen}>
           <PopoverTrigger asChild>
             <Button
-              className="h-[var(--size-md)] gap-[var(--space-xsm)]"
+              className="h-[var(--size-m)] gap-[var(--space-xs)]"
               aria-label={`Filters${activeFilterCount > 0 ? `, ${activeFilterCount} active` : ''}`}
               aria-expanded={isFilterMenuOpen}
               aria-haspopup="dialog"
             >
-              <Icon name="list-filter" className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]" aria-hidden="true" />
+              <Icon name="list-filter" className="h-[var(--size-2xs)] w-[var(--size-2xs)]" aria-hidden="true" />
               <span className="text-label-md">Filters</span>
               {activeFilterCount > 0 && (
-                <Badge size="sm" intent="neutral" appearance="subtle" aria-hidden="true">
+                <Badge size="s" intent="neutral" appearance="subtle" aria-hidden="true">
                   {activeFilterCount}
                 </Badge>
               )}
@@ -1739,16 +1739,16 @@ export function Filters({
                   }
                 }}
                 className={cn(
-                  "group/slot h-[var(--size-md)] rounded-lg flex items-center justify-center gap-[var(--space-sm)] transition-colors cursor-pointer flex-shrink-0",
+                  "group/slot h-[var(--size-m)] rounded-l flex items-center justify-center gap-[var(--space-s)] transition-colors cursor-pointer flex-shrink-0",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
                   isActive
-                    ? "bg-[var(--color-background-neutral-selected)] hover:bg-[var(--color-background-neutral-hovered)] px-[var(--space-md)] pr-[4px]"
-                    : "border border-dashed border-[var(--color-border-primary-strong)] px-[var(--space-md)] pr-[var(--space-sm)] hover:border-[var(--grey-400)] active:bg-[var(--grey-25)]"
+                    ? "bg-[var(--color-background-neutral-selected)] hover:bg-[var(--color-background-neutral-hovered)] px-[var(--space-m)] pr-[4px]"
+                    : "border border-dashed border-[var(--color-border-primary-strong)] px-[var(--space-m)] pr-[var(--space-s)] hover:border-[var(--grey-400)] active:bg-[var(--grey-25)]"
                 )}
               >
                 {/* Icon (always shown) */}
                 <IconComponent className={cn(
-                  "h-[var(--size-2xsm)] w-[var(--size-2xsm)]",
+                  "h-[var(--size-2xs)] w-[var(--size-2xs)]",
                   isActive ? "text-[var(--color-icon-primary)]" : "text-[var(--grey-400)] group-hover/slot:text-[var(--grey-500)]"
                 )} />
 
@@ -1758,7 +1758,7 @@ export function Filters({
                     <span className="whitespace-nowrap [&]:text-label-md text-[var(--color-text-primary)]">
                       {slotContent.label}
                     </span>
-                    <Badge size="sm" intent="neutral" appearance="bold">
+                    <Badge size="s" intent="neutral" appearance="bold">
                       {slotContent.count}
                     </Badge>
                   </>
@@ -1775,7 +1775,7 @@ export function Filters({
                 {isActive && (
                   <Button
                     variant="ghost"
-                    size="sm"
+                    size="s"
                     aria-label={`Clear ${filter.label} filter`}
                     onClick={(e) => {
                       e.stopPropagation()
@@ -1788,16 +1788,16 @@ export function Filters({
                         onFilterClear(filter.id)
                       }
                     }}
-                    className="h-auto w-auto p-[var(--space-xsm)]"
+                    className="h-auto w-auto p-[var(--space-xs)]"
                   >
-                    <Icon name="x" className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]" aria-hidden="true" />
+                    <Icon name="x" className="h-[var(--size-2xs)] w-[var(--size-2xs)]" aria-hidden="true" />
                   </Button>
                 )}
               </div>
             </PopoverTrigger>
             <PopoverContent
               className={cn(
-                "p-[var(--space-lg)]",
+                "p-[var(--space-l)]",
                 filter.type === 'date' ? "w-[600px]" : "w-[320px]",
                 "max-h-[var(--radix-popover-content-available-height)] overflow-y-auto"
               )}
@@ -1819,7 +1819,7 @@ export function Filters({
 
       {/* Vertical Line Separator (before global search) */}
       {enableGlobalSearch && (isFiltersButtonVisible || pinnedFilterObjects.length > 0) && (
-        <Separator type="line" layout="horizontal" className="mx-[var(--space-sm)]" />
+        <Separator type="line" layout="horizontal" className="mx-[var(--space-s)]" />
       )}
 
       {/* Global Search Input */}
@@ -1852,11 +1852,11 @@ export function Filters({
         return (
           <div
             key={searchTerm.value}
-            className="h-[var(--size-md)] rounded-lg bg-[var(--color-background-neutral-selected)] hover:bg-[var(--color-background-neutral-hovered)] px-[var(--space-md)] pr-[4px] flex items-center gap-[var(--space-sm)] transition-colors"
+            className="h-[var(--size-m)] rounded-l bg-[var(--color-background-neutral-selected)] hover:bg-[var(--color-background-neutral-hovered)] px-[var(--space-m)] pr-[4px] flex items-center gap-[var(--space-s)] transition-colors"
           >
             {/* Optional Icon */}
             {IconComponent && (
-              <IconComponent className="h-[var(--size-2xsm)] w-[var(--size-2xsm)] text-[var(--color-icon-primary)]" />
+              <IconComponent className="h-[var(--size-2xs)] w-[var(--size-2xs)] text-[var(--color-icon-primary)]" />
             )}
 
             {/* Search Term Text */}
@@ -1867,12 +1867,12 @@ export function Filters({
             {/* Remove Button */}
             <Button
               variant="ghost"
-              size="sm"
+              size="s"
               aria-label={`Remove search term: ${displayValue}`}
               onClick={() => handleRemoveSearchTerm(searchTerm.value)}
-              className="h-auto w-auto p-[var(--space-xsm)]"
+              className="h-auto w-auto p-[var(--space-xs)]"
             >
-              <Icon name="x" className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]" aria-hidden="true" />
+              <Icon name="x" className="h-[var(--size-2xs)] w-[var(--size-2xs)]" aria-hidden="true" />
             </Button>
           </div>
         )
@@ -1889,7 +1889,7 @@ export function Filters({
           variant="ghost"
           onClick={handleReset}
           aria-label="Reset all filters and search terms"
-          className="h-[var(--size-md)] rounded-sm px-[var(--space-md)]"
+          className="h-[var(--size-m)] rounded-s px-[var(--space-m)]"
         >
           <span className="text-label-md">Clear all</span>
         </Button>

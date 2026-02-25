@@ -9,11 +9,11 @@ const avatarVariants = cva(
     variants: {
       size: {
         xxs: "h-4 w-4", // 16px
-        xs: "h-[var(--size-sm)] w-[var(--size-sm)]", // 20px
-        sm: "h-[var(--size-md)] w-[var(--size-md)]", // 24px
-        md: "h-[var(--size-lg)] w-[var(--size-lg)]", // 32px
-        lg: "h-[var(--size-xlg)] w-[var(--size-xlg)]", // 48px
-        xl: "h-[var(--size-2xlg)] w-[var(--size-2xlg)]", // 64px
+        xs: "h-[var(--size-s)] w-[var(--size-s)]", // 20px
+        s: "h-[var(--size-m)] w-[var(--size-m)]", // 24px
+        m: "h-[var(--size-l)] w-[var(--size-l)]", // 32px
+        l: "h-[var(--size-xl)] w-[var(--size-xl)]", // 48px
+        xl: "h-[var(--size-2xl)] w-[var(--size-2xl)]", // 64px
       },
       type: {
         user: "rounded-full",
@@ -33,27 +33,27 @@ const avatarVariants = cva(
       },
       {
         type: "organization",
-        size: "sm",
-        className: "rounded-sm",
+        size: "s",
+        className: "rounded-s",
       },
       {
         type: "organization",
-        size: "md",
-        className: "rounded-md",
+        size: "m",
+        className: "rounded-m",
       },
       {
         type: "organization",
-        size: "lg",
-        className: "rounded-md",
+        size: "l",
+        className: "rounded-m",
       },
       {
         type: "organization",
         size: "xl",
-        className: "rounded-lg",
+        className: "rounded-l",
       },
     ],
     defaultVariants: {
-      size: "md",
+      size: "m",
       type: "user",
     },
   }
@@ -66,9 +66,9 @@ const avatarFallbackVariants = cva(
       size: {
         xxs: "text-[7px] leading-none",
         xs: "text-[9px] leading-none",
-        sm: "text-caption-sm",
-        md: "text-label-sm",
-        lg: "text-label-md",
+        s: "text-caption-sm",
+        m: "text-label-sm",
+        l: "text-label-md",
         xl: "text-heading-sm",
       },
       type: {
@@ -97,27 +97,27 @@ const avatarFallbackVariants = cva(
       },
       {
         type: "organization",
-        size: "sm",
-        className: "rounded-sm",
+        size: "s",
+        className: "rounded-s",
       },
       {
         type: "organization",
-        size: "md",
-        className: "rounded-md",
+        size: "m",
+        className: "rounded-m",
       },
       {
         type: "organization",
-        size: "lg",
-        className: "rounded-md",
+        size: "l",
+        className: "rounded-m",
       },
       {
         type: "organization",
         size: "xl",
-        className: "rounded-lg",
+        className: "rounded-l",
       },
     ],
     defaultVariants: {
-      size: "md",
+      size: "m",
       type: "user",
       variant: "information",
     },

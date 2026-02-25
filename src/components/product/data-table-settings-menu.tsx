@@ -162,7 +162,7 @@ export function DataTableSettingsMenu({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          size="md"
+          size="m"
           icon="settings"
           aria-label="Table settings"
           className={triggerClassName}
@@ -180,7 +180,7 @@ export function DataTableSettingsMenu({
                   </h4>
                   <div className="flex flex-col gap-2">
                     <Select value={selectedSortColumn} onValueChange={handleSortChange}>
-                      <SelectTrigger size="sm">
+                      <SelectTrigger size="s">
                         <SelectValue placeholder="Select column to sort" />
                       </SelectTrigger>
                       <SelectContent>
@@ -196,19 +196,19 @@ export function DataTableSettingsMenu({
                         value={sortDirection}
                         onValueChange={(value) => handleSortDirectionChange(value as 'asc' | 'desc')}
                       >
-                        <SelectTrigger size="sm">
+                        <SelectTrigger size="s">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="asc">
                             <div className="flex items-center gap-2">
-                              <Icon name="arrow-down-narrow-wide" size="sm" />
+                              <Icon name="arrow-down-narrow-wide" size="s" />
                               <span>{directionLabels.asc}</span>
                             </div>
                           </SelectItem>
                           <SelectItem value="desc">
                             <div className="flex items-center gap-2">
-                              <Icon name="arrow-down-wide-narrow" size="sm" />
+                              <Icon name="arrow-down-wide-narrow" size="s" />
                               <span>{directionLabels.desc}</span>
                             </div>
                           </SelectItem>
@@ -226,7 +226,7 @@ export function DataTableSettingsMenu({
                     Grouping
                   </h4>
                   <Select value={selectedGroupColumn || 'none'} onValueChange={handleGroupChange}>
-                    <SelectTrigger size="sm">
+                    <SelectTrigger size="s">
                       <SelectValue placeholder="Select column to group by" />
                     </SelectTrigger>
                     <SelectContent>
@@ -257,7 +257,7 @@ export function DataTableSettingsMenu({
               {showSearch && (
                 <Input
                   type="search"
-                  size="sm"
+                  size="s"
                   placeholder="Search columns..."
                   aria-label="Search columns"
                   value={columnSearch}
@@ -265,7 +265,7 @@ export function DataTableSettingsMenu({
                 />
               )}
               <div
-                className="flex flex-wrap items-start justify-start gap-1 max-h-[190px] overflow-y-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-sm"
+                className="flex flex-wrap items-start justify-start gap-1 max-h-[190px] overflow-y-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-s"
                 role={filteredColumns.length > 15 ? "region" : undefined}
                 aria-label={filteredColumns.length > 15 ? "Column visibility toggles, scrollable" : undefined}
                 tabIndex={filteredColumns.length > 15 ? 0 : undefined}
@@ -276,7 +276,7 @@ export function DataTableSettingsMenu({
                     <Toggle
                       key={col.id}
                       variant="outline"
-                      size="sm"
+                      size="s"
                       pressed={isVisible}
                       aria-label={isVisible ? `Hide ${col.label} column` : `Show ${col.label} column`}
                       onPressedChange={(pressed) => {

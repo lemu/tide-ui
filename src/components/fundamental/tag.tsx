@@ -125,23 +125,23 @@ const TagShapeSm = ({ width, interactive = false, className }: TagShapeProps) =>
 
 // Size configurations
 const TAG_SIZES = {
-  sm: {
+  s: {
     height: 20,
     typography: "[&]:text-label-sm",
     dotSize: "w-1.5 h-1.5",
     dotMargin: "mr-1",
     closeSize: "w-3.5 h-3.5",
     closeMargin: "ml-0.5",
-    paddingX: "px-[var(--space-sm)]",
+    paddingX: "px-[var(--space-s)]",
   },
-  md: {
+  m: {
     height: 24,
     typography: "[&]:text-label-sm",
     dotSize: "w-2 h-2",
     dotMargin: "mr-1.5",
     closeSize: "w-4 h-4",
     closeMargin: "ml-1",
-    paddingX: "px-[var(--space-sm)]",
+    paddingX: "px-[var(--space-s)]",
   },
 } as const
 
@@ -171,7 +171,7 @@ const Tag = React.forwardRef<HTMLDivElement, TagProps>(
   (
     {
       className,
-      size = "md",
+      size = "m",
       variant = "triangular",
       children,
       intent,
@@ -235,7 +235,7 @@ const Tag = React.forwardRef<HTMLDivElement, TagProps>(
     const dotColor = effectiveColor ? DOT_COLORS[effectiveColor] : undefined
     const shouldShowDot = showDot ?? (effectiveColor !== undefined)
 
-    const ShapeComponent = size === "sm" ? TagShapeSm : TagShapeMd
+    const ShapeComponent = size === "s" ? TagShapeSm : TagShapeMd
 
     return (
       <div
@@ -272,7 +272,7 @@ const Tag = React.forwardRef<HTMLDivElement, TagProps>(
             "text-[var(--color-text-primary)]",
             isTriangular && "pl-[12px]", // notch width clearance
             !isTriangular && [
-              "border border-[var(--grey-100)] rounded-md",
+              "border border-[var(--grey-100)] rounded-m",
               "bg-[var(--neutral-white)]",
               interactive && "group-hover:bg-[var(--grey-25)]",
               "transition-[background-color]",
@@ -297,7 +297,7 @@ const Tag = React.forwardRef<HTMLDivElement, TagProps>(
             <button
               type="button"
               className={cn(
-                "inline-flex items-center justify-center shrink-0 hover:bg-[var(--grey-alpha-50)] rounded-xsm transition-colors",
+                "inline-flex items-center justify-center shrink-0 hover:bg-[var(--grey-alpha-50)] rounded-xs transition-colors",
                 sizeConfig.closeMargin,
                 sizeConfig.closeSize
               )}
@@ -307,7 +307,7 @@ const Tag = React.forwardRef<HTMLDivElement, TagProps>(
             >
               <Icon
                 name="x"
-                size="sm"
+                size="s"
                 color={disabled ? "disabled" : "secondary"}
               />
             </button>
@@ -349,7 +349,7 @@ const TagGroup = React.forwardRef<HTMLDivElement, TagGroupProps>(
       onTagClick,
       closable = false,
       interactive = false,
-      size = "md",
+      size = "m",
       variant,
       intent,
       color,
@@ -370,7 +370,7 @@ const TagGroup = React.forwardRef<HTMLDivElement, TagGroupProps>(
     return (
       <div
         ref={ref}
-        className={cn("flex flex-wrap items-center gap-[var(--space-sm)]", className)}
+        className={cn("flex flex-wrap items-center gap-[var(--space-s)]", className)}
         {...props}
       >
         {visibleTags.map((tag) => (

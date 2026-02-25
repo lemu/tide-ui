@@ -150,7 +150,7 @@ export const WithKeyboardShortcut: Story = {
     <InputGroup className="w-80">
       <InputGroupInput placeholder="Search..." />
       <InputGroupAddon align="inline-end">
-        <Kbd variant="light" size="sm">
+        <Kbd variant="light" size="s">
           ⌘K
         </Kbd>
       </InputGroupAddon>

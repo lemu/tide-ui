@@ -23,7 +23,7 @@ const meta: Meta<typeof Button> = {
     },
     size: {
       control: { type: 'select' },
-      options: ['sm', 'md', 'lg'],
+      options: ['s', 'm', 'l'],
     },
     disabled: {
       control: { type: 'boolean' },
@@ -84,21 +84,21 @@ export const Ghost: Story = {
 
 export const Large: Story = {
   args: {
-    size: 'lg',
+    size: 'l',
     children: 'Large Button',
   },
 }
 
 export const Medium: Story = {
   args: {
-    size: 'md',
+    size: 'm',
     children: 'Medium Button',
   },
 }
 
 export const Small: Story = {
   args: {
-    size: 'sm',
+    size: 's',
     children: 'Small Button',
   },
 }
@@ -155,7 +155,7 @@ export const WithIconRight: Story = {
 export const IconOnly: Story = {
   args: {
     icon: 'settings',
-    size: 'md',
+    size: 'm',
   },
 }
 
@@ -163,7 +163,7 @@ export const IconOnly: Story = {
 export const DisabledIconOnly: Story = {
   args: {
     icon: 'settings',
-    size: 'md',
+    size: 'm',
     disabled: true,
   },
 }
@@ -172,7 +172,7 @@ export const DisabledIconOnly: Story = {
 export const IconOnlySmall: Story = {
   args: {
     icon: 'arrow-left',
-    size: 'sm',
+    size: 's',
   },
 }
 
@@ -185,16 +185,16 @@ export const WithDropdown: Story = {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem>
-          <Icon name="edit" size="sm" className="mr-2" />
+          <Icon name="edit" size="s" className="mr-2" />
           Edit
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Icon name="copy" size="sm" className="mr-2" />
+          <Icon name="copy" size="s" className="mr-2" />
           Duplicate
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Icon name="trash-2" size="sm" className="mr-2" />
+          <Icon name="trash-2" size="s" className="mr-2" />
           Delete
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -205,64 +205,64 @@ export const WithDropdown: Story = {
 // Usage Examples with Code
 export const UsageExamples: Story = {
   render: () => (
-    <div className="space-y-[var(--space-lg)] max-w-4xl">
-      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
-        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+    <div className="space-y-[var(--space-l)] max-w-4xl">
+      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Basic Button
         </h3>
-        <div className="flex items-center gap-[var(--space-md)]">
+        <div className="flex items-center gap-[var(--space-m)]">
           <Button>Click me</Button>
-          <code className="text-body-sm rounded-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] text-[var(--color-text-primary)]">
+          <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
             {`<Button>Click me</Button>`}
           </code>
         </div>
       </div>
 
-      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
-        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Primary with Icon
         </h3>
-        <div className="flex items-center gap-[var(--space-md)]">
+        <div className="flex items-center gap-[var(--space-m)]">
           <Button variant="primary" icon="plus" iconPosition="left">
             Add Item
           </Button>
-          <code className="text-body-sm rounded-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] text-[var(--color-text-primary)]">
+          <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
             {`<Button variant="primary" icon="plus" iconPosition="left">Add Item</Button>`}
           </code>
         </div>
       </div>
 
-      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
-        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Icon Only Button
         </h3>
-        <div className="flex items-center gap-[var(--space-md)]">
-          <Button icon="settings" size="md" />
-          <code className="text-body-sm rounded-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] text-[var(--color-text-primary)]">
-            {`<Button icon="settings" size="md" />`}
+        <div className="flex items-center gap-[var(--space-m)]">
+          <Button icon="settings" size="m" />
+          <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
+            {`<Button icon="settings" size="m" />`}
           </code>
         </div>
       </div>
 
-      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
-        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Loading Button
         </h3>
-        <div className="flex items-center gap-[var(--space-md)]">
+        <div className="flex items-center gap-[var(--space-m)]">
           <Button variant="primary" icon="save" iconPosition="left" loading>
             Saving...
           </Button>
-          <code className="text-body-sm rounded-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] text-[var(--color-text-primary)]">
+          <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
             {`<Button variant="primary" icon="save" iconPosition="left" loading>Saving...</Button>`}
           </code>
         </div>
       </div>
 
-      <div className="rounded-lg border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-lg)]">
-        <h3 className="text-heading-sm mb-[var(--space-sm)] text-[var(--color-text-primary)]">
+      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Dropdown Button
         </h3>
-        <div className="flex flex-col gap-[var(--space-md)]">
+        <div className="flex flex-col gap-[var(--space-m)]">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button dropdown>More Options</Button>
@@ -273,7 +273,7 @@ export const UsageExamples: Story = {
               <DropdownMenuItem>Option 3</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <code className="text-body-sm rounded-sm bg-[var(--color-surface-secondary)] px-[var(--space-sm)] py-[var(--space-xsm)] text-[var(--color-text-primary)]">
+          <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
             {`<DropdownMenu>
   <DropdownMenuTrigger asChild>
     <Button dropdown>More Options</Button>
@@ -305,9 +305,9 @@ export const AllVariants: Story = {
       <div className="space-y-2">
         <h4 className="text-sm font-medium">Button Sizes</h4>
         <div className="flex items-center space-x-2">
-          <Button size="sm">Small</Button>
-          <Button size="md">Medium</Button>
-          <Button size="lg">Large</Button>
+          <Button size="s">Small</Button>
+          <Button size="m">Medium</Button>
+          <Button size="l">Large</Button>
         </div>
       </div>
       <div className="space-y-2">

@@ -167,7 +167,7 @@ function BookmarkNameDialog({
           </DialogTitle>
         </DialogHeader>
         <DialogBody>
-          <div className="flex flex-col gap-[var(--space-sm)]">
+          <div className="flex flex-col gap-[var(--space-s)]">
             <Label htmlFor="bookmark-name">Bookmark name</Label>
             <Input
               id="bookmark-name"
@@ -249,13 +249,13 @@ function BookmarkSplitButton({
       >
         <SelectTrigger
           className={cn(
-            "!text-label-md relative z-0 h-[var(--size-md)] w-auto gap-[var(--space-xsm)] border border-[var(--color-border-action-outline)] bg-[var(--color-background-neutral-subtlest)] pr-[var(--space-md)] pl-[var(--space-sm)] text-[var(--color-text-primary)] hover:border-[var(--color-border-action-outline-hovered)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:shadow-sm focus:border-[var(--color-border-action-outline)] focus:ring-0 focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 active:translate-y-px active:bg-[var(--grey-alpha-50)] active:shadow-xs data-[state=open]:ring-0",
+            "!text-label-md relative z-0 h-[var(--size-m)] w-auto gap-[var(--space-xs)] border border-[var(--color-border-action-outline)] bg-[var(--color-background-neutral-subtlest)] pr-[var(--space-m)] pl-[var(--space-s)] text-[var(--color-text-primary)] hover:border-[var(--color-border-action-outline-hovered)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:shadow-sm focus:border-[var(--color-border-action-outline)] focus:ring-0 focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 active:translate-y-px active:bg-[var(--grey-alpha-50)] active:shadow-xs data-[state=open]:ring-0",
             isSystemBookmark
-              ? "rounded-md"
-              : "rounded-l-md !rounded-r-none !border-r-0",
+              ? "rounded-m"
+              : "rounded-l-m !rounded-r-none !border-r-0",
           )}
         >
-          <Icon name="bookmark" size="md" color="primary" />
+          <Icon name="bookmark" size="m" color="primary" />
           {activeBookmark?.name || "Bookmarks"}
         </SelectTrigger>
         <SelectContent align="start" position="popper" className="min-w-[200px]">
@@ -264,7 +264,7 @@ function BookmarkSplitButton({
             <>
               {systemBookmarks.map((bookmark) => (
                 <SelectItem key={bookmark.id} value={bookmark.id}>
-                  <div className="flex items-center gap-[var(--space-sm)] pr-6">
+                  <div className="flex items-center gap-[var(--space-s)] pr-6">
                     <span>{bookmark.name}</span>
                   </div>
                 </SelectItem>
@@ -283,16 +283,16 @@ function BookmarkSplitButton({
               <SelectLabel>Custom Bookmarks</SelectLabel>
               {bookmarks.map((bookmark) => (
                 <SelectItem key={bookmark.id} value={bookmark.id}>
-                  <div className="flex items-center gap-[var(--space-sm)] pr-6">
+                  <div className="flex items-center gap-[var(--space-s)] pr-6">
                     <Icon
                       name="bookmark"
-                      className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]"
+                      className="h-[var(--size-2xs)] w-[var(--size-2xs)]"
                     />
                     <span className="truncate">{bookmark.name}</span>
                     {bookmark.isDefault && (
                       <Icon
                         name="star"
-                        className="h-[var(--size-2xsm)] w-[var(--size-2xsm)] flex-shrink-0 text-[var(--color-icon-warning-bold)]"
+                        className="h-[var(--size-2xs)] w-[var(--size-2xs)] flex-shrink-0 text-[var(--color-icon-warning-bold)]"
                       />
                     )}
                   </div>
@@ -382,12 +382,12 @@ function SaveDropdown({ onUpdate, onCreate }: SaveDropdownProps) {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="h-[var(--size-md)] gap-[var(--space-xsm)] px-[var(--space-md)] data-[state=open]:ring-0"
+          className="h-[var(--size-m)] gap-[var(--space-xs)] px-[var(--space-m)] data-[state=open]:ring-0"
         >
           <span className="text-label-md">Save</span>
           <Icon
             name="chevron-down"
-            className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]"
+            className="h-[var(--size-2xs)] w-[var(--size-2xs)]"
           />
         </Button>
       </DropdownMenuTrigger>
@@ -511,7 +511,7 @@ const BookmarkTab = React.memo(
           onKeyDown={handleKeyDown}
           onMouseEnter={handleMouseEnter}
           className={cn(
-            "group relative flex min-w-[160px] flex-shrink-0 cursor-pointer flex-col gap-[var(--space-xsm)] rounded-lg p-[var(--space-lg)] transition-colors",
+            "group relative flex min-w-[160px] flex-shrink-0 cursor-pointer flex-col gap-[var(--space-xs)] rounded-l p-[var(--space-l)] transition-colors",
             "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-brand-bold)] focus-visible:ring-offset-2",
             isActive
               ? "bg-[var(--blue-50)] hover:bg-[var(--blue-50)]"
@@ -520,12 +520,12 @@ const BookmarkTab = React.memo(
           )}
         >
           {/* Top row: icon, name, and three-dot menu */}
-          <div className="flex min-h-[var(--size-sm)] items-center justify-between gap-[var(--space-xsm)]">
-            <div className="flex items-center gap-[var(--space-xsm)]">
+          <div className="flex min-h-[var(--size-s)] items-center justify-between gap-[var(--space-xs)]">
+            <div className="flex items-center gap-[var(--space-xs)]">
               {isUserBookmark && (
                 <Icon
                   name="bookmark"
-                  size="sm"
+                  size="s"
                   color="secondary"
                   className="flex-shrink-0"
                 />
@@ -541,15 +541,15 @@ const BookmarkTab = React.memo(
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
-                    size="sm"
+                    size="s"
                     aria-label={`Options for ${bookmark.name}`}
-                    className="p-[var(--space-xsm)] opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
+                    className="p-[var(--space-xs)] opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
                     tabIndex={-1}
                     onClick={(e) => e.stopPropagation()}
                   >
                     <Icon
                       name="more-horizontal"
-                      className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]"
+                      className="h-[var(--size-2xs)] w-[var(--size-2xs)]"
                     />
                   </Button>
                 </DropdownMenuTrigger>
@@ -687,7 +687,7 @@ function BookmarkTabs({
           }
         });
 
-        const gap = 8; // var(--space-sm)
+        const gap = 8; // var(--space-s)
         const separatorWidth = 32; // Approximate width of separator between system and user bookmarks
         const overflowButtonWidth = 52; // Approximate width of overflow button (chevron-down only)
 
@@ -888,7 +888,7 @@ function BookmarkTabs({
       ref={containerRef}
       role="tablist"
       aria-label={ariaLabel}
-      className="flex items-center gap-[var(--space-sm)]"
+      className="flex items-center gap-[var(--space-s)]"
     >
       {/* Render all bookmarks - visible ones first, then hidden ones for measurement */}
       {renderOrderedBookmarks.map((bookmark, index) => {
@@ -941,21 +941,21 @@ function BookmarkTabs({
               aria-label={`Show ${overflowBookmarks.length} more bookmarks`}
               aria-expanded={showOverflow}
               className={cn(
-                "flex cursor-pointer flex-shrink-0 items-center justify-center rounded-lg border border-[var(--color-border-action-outline)] bg-transparent px-[var(--space-md)] transition-colors hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
+                "flex cursor-pointer flex-shrink-0 items-center justify-center rounded-l border border-[var(--color-border-action-outline)] bg-transparent px-[var(--space-m)] transition-colors hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
                 "min-h-[88px]", // Match the height of bookmark tabs (padding + content + padding)
                 "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-brand-bold)] focus-visible:ring-offset-2",
               )}
             >
               <Icon
                 name="chevron-down"
-                className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]"
+                className="h-[var(--size-2xs)] w-[var(--size-2xs)]"
               />
             </button>
           </PopoverTrigger>
           <PopoverContent
             align="end"
             side="bottom"
-            className="w-[280px] p-[var(--space-sm)]"
+            className="w-[280px] p-[var(--space-s)]"
             role="menu"
             aria-label="More bookmarks"
           >
@@ -970,7 +970,7 @@ function BookmarkTabs({
                     aria-label={`Select ${bookmark.name} bookmark${isActive ? " (currently selected)" : ""}`}
                     onClick={() => handleOverflowSelect(bookmark)}
                     className={cn(
-                      "text-body-md flex cursor-pointer items-center gap-[var(--space-sm)] rounded-md px-[var(--space-md)] py-[var(--space-sm)] text-left transition-colors",
+                      "text-body-md flex cursor-pointer items-center gap-[var(--space-s)] rounded-m px-[var(--space-m)] py-[var(--space-s)] text-left transition-colors",
                       "hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
                       "focus:outline-none focus-visible:bg-[var(--color-background-neutral-subtlest-hovered)]",
                     )}
@@ -978,17 +978,17 @@ function BookmarkTabs({
                     {isUserBookmark && (
                       <Icon
                         name="bookmark"
-                        className="h-[var(--size-2xsm)] w-[var(--size-2xsm)]"
+                        className="h-[var(--size-2xs)] w-[var(--size-2xs)]"
                         aria-hidden="true"
                       />
                     )}
                     {!isUserBookmark && (
-                      <div className="w-[var(--size-2xsm)]" aria-hidden="true" />
+                      <div className="w-[var(--size-2xs)]" aria-hidden="true" />
                     )}
-                    <div className="flex flex-1 items-center gap-[var(--space-xsm)]">
+                    <div className="flex flex-1 items-center gap-[var(--space-xs)]">
                       <span className="truncate">{bookmark.name}</span>
                       {(bookmark.count !== undefined || bookmark.isLoadingCount) && (
-                        <Badge size="sm" intent="neutral" appearance="subtle">
+                        <Badge size="s" intent="neutral" appearance="subtle">
                           {bookmark.isLoadingCount ? (
                             <Skeleton height={16} width={24} />
                           ) : (
@@ -1000,14 +1000,14 @@ function BookmarkTabs({
                     {bookmark.isDefault && (
                       <Icon
                         name="star"
-                        className="h-[var(--size-2xsm)] w-[var(--size-2xsm)] text-[var(--color-icon-warning-bold)]"
+                        className="h-[var(--size-2xs)] w-[var(--size-2xs)] text-[var(--color-icon-warning-bold)]"
                         aria-hidden="true"
                       />
                     )}
                     {isActive && (
                       <Icon
                         name="check"
-                        className="h-[var(--size-2xsm)] w-[var(--size-2xsm)] text-[var(--color-icon-primary)]"
+                        className="h-[var(--size-2xs)] w-[var(--size-2xs)] text-[var(--color-icon-primary)]"
                         aria-hidden="true"
                       />
                     )}
@@ -1046,7 +1046,7 @@ export function BookmarksRevertButton() {
   if (!isDirty) return null;
 
   return (
-    <Button variant="ghost" onClick={handleRevert} className="h-[var(--size-md)]">
+    <Button variant="ghost" onClick={handleRevert} className="h-[var(--size-m)]">
       Revert changes
     </Button>
   );
@@ -1057,7 +1057,7 @@ export function BookmarksCreateButton() {
   if (!isDirty || !isSystemBookmark) return null;
 
   return (
-    <Button variant="ghost" onClick={openCreateDialog} className="h-[var(--size-md)]">
+    <Button variant="ghost" onClick={openCreateDialog} className="h-[var(--size-m)]">
       Create bookmark
     </Button>
   );
@@ -1068,7 +1068,7 @@ export function BookmarksSaveButton() {
   if (!isDirty || isSystemBookmark) return null;
 
   return (
-    <Button variant="ghost" onClick={handleUpdate} className="h-[var(--size-md)]">
+    <Button variant="ghost" onClick={handleUpdate} className="h-[var(--size-m)]">
       Update bookmark
     </Button>
   );
@@ -1079,7 +1079,7 @@ export function BookmarksResetButton() {
   if (!isDirty || !isSystemBookmark) return null;
 
   return (
-    <Button variant="ghost" onClick={handleRevert} className="h-[var(--size-md)]">
+    <Button variant="ghost" onClick={handleRevert} className="h-[var(--size-m)]">
       Reset
     </Button>
   );
@@ -1313,7 +1313,7 @@ export function Bookmarks({
             {/* Settings slot (separated, always right-aligned) */}
             {settingsSlot && (
               <>
-                <div className="w-[var(--space-md)]" />
+                <div className="w-[var(--space-m)]" />
                 <div className="flex-shrink-0">
                   {settingsSlot}
                 </div>
@@ -1343,7 +1343,7 @@ export function Bookmarks({
   // List variant
   return (
     <BookmarksContext.Provider value={contextValue}>
-      <div className="flex items-center gap-[var(--space-md)]">
+      <div className="flex items-center gap-[var(--space-m)]">
         {/* Split button */}
         <BookmarkSplitButton
           bookmarks={bookmarks}

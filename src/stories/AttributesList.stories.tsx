@@ -23,10 +23,10 @@ const meta: Meta<typeof AttributesList> = {
   argTypes: {
     size: {
       control: 'radio',
-      options: ['sm', 'xsm'],
+      options: ['s', 'xs'],
       description: 'Size variant for typography and spacing',
       table: {
-        defaultValue: { summary: 'sm' },
+        defaultValue: { summary: 's' },
       },
     },
   },
@@ -38,11 +38,11 @@ type Story = StoryObj<typeof meta>
 // Story 1: Size Variants - Demonstrates both size options
 export const SizeVariants: Story = {
   render: () => (
-    <div className="flex gap-[var(--space-xlg)] items-start">
-      <div className="space-y-[var(--space-md)]">
-        <h3 className="text-heading-sm text-[var(--color-text-primary)]">Size: sm (default)</h3>
+    <div className="flex gap-[var(--space-2xl)] items-start">
+      <div className="space-y-[var(--space-m)]">
+        <h3 className="text-heading-sm text-[var(--color-text-primary)]">Size: s (default)</h3>
         <div className="w-full max-w-md">
-          <AttributesList size="sm">
+          <AttributesList size="s">
             <AttributesItem>
               <AttributesRow>
                 <AttributesLabel>Charterer</AttributesLabel>
@@ -74,10 +74,10 @@ export const SizeVariants: Story = {
         </div>
       </div>
 
-      <div className="space-y-[var(--space-md)]">
-        <h3 className="text-heading-sm text-[var(--color-text-primary)]">Size: xsm (compact)</h3>
+      <div className="space-y-[var(--space-m)]">
+        <h3 className="text-heading-sm text-[var(--color-text-primary)]">Size: xs (compact)</h3>
         <div className="w-full max-w-md">
-          <AttributesList size="xsm">
+          <AttributesList size="xs">
             <AttributesItem>
               <AttributesRow>
                 <AttributesLabel>Charterer</AttributesLabel>
@@ -267,7 +267,7 @@ export const CollapsibleItems: Story = {
           </AttributesRow>
           <AttributesContent>
             <Card>
-              <CardContent className="p-[var(--space-md)]">
+              <CardContent className="p-[var(--space-m)]">
                 <div className="space-y-2 text-body-xsm">
                   <div className="flex justify-between">
                     <span className="text-[var(--color-text-secondary)]">Email:</span>
@@ -297,7 +297,7 @@ export const CollapsibleItems: Story = {
           </AttributesRow>
           <AttributesContent>
             <Card>
-              <CardContent className="p-[var(--space-md)]">
+              <CardContent className="p-[var(--space-m)]">
                 <div className="space-y-2 text-body-xsm">
                   <div className="flex justify-between">
                     <span className="text-[var(--color-text-secondary)]">Flag:</span>
@@ -331,7 +331,7 @@ export const CollapsibleItems: Story = {
           </AttributesRow>
           <AttributesContent>
             <Card>
-              <CardContent className="p-[var(--space-md)]">
+              <CardContent className="p-[var(--space-m)]">
                 <div className="space-y-2 text-body-xsm">
                   <div className="flex justify-between">
                     <span className="text-[var(--color-text-secondary)]">Registration:</span>
@@ -361,7 +361,7 @@ export const CollapsibleItems: Story = {
           </AttributesRow>
           <AttributesContent>
             <Card>
-              <CardContent className="p-[var(--space-md)]">
+              <CardContent className="p-[var(--space-m)]">
                 <div className="space-y-2 text-body-xsm">
                   <div className="flex justify-between">
                     <span className="text-[var(--color-text-secondary)]">Type:</span>
@@ -682,7 +682,7 @@ export const MixedFeatures: Story = {
             </AttributesRow>
             <AttributesContent>
               <Card>
-                <CardContent className="p-[var(--space-md)]">
+                <CardContent className="p-[var(--space-m)]">
                   <div className="space-y-2 text-body-xsm">
                     <div className="flex justify-between">
                       <span className="text-[var(--color-text-secondary)]">Type:</span>
@@ -694,7 +694,7 @@ export const MixedFeatures: Story = {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-[var(--color-text-secondary)]">Status:</span>
-                      <Badge intent="success" size="sm">Active</Badge>
+                      <Badge intent="success" size="s">Active</Badge>
                     </div>
                   </div>
                 </CardContent>
@@ -743,7 +743,7 @@ export const MixedFeatures: Story = {
               </AttributesValue>
             </AttributesRow>
             <AttributesContent>
-              <div className="pl-[var(--space-md)] text-body-xsm text-[var(--color-text-secondary)]">
+              <div className="pl-[var(--space-m)] text-body-xsm text-[var(--color-text-secondary)]">
                 Free In and Out, Stowed and Trimmed - Charterer bears all cargo handling costs
               </div>
             </AttributesContent>
@@ -770,7 +770,7 @@ export const CustomValues: Story = {
           <AttributesRow>
             <AttributesLabel>Status</AttributesLabel>
             <AttributesValue>
-              <Badge intent="success" size="sm">Active</Badge>
+              <Badge intent="success" size="s">Active</Badge>
             </AttributesValue>
           </AttributesRow>
         </AttributesItem>
@@ -779,7 +779,7 @@ export const CustomValues: Story = {
           <AttributesRow>
             <AttributesLabel>Priority</AttributesLabel>
             <AttributesValue>
-              <Badge size="sm">High</Badge>
+              <Badge size="s">High</Badge>
             </AttributesValue>
           </AttributesRow>
         </AttributesItem>
@@ -788,10 +788,10 @@ export const CustomValues: Story = {
           <AttributesRow>
             <AttributesLabel>Tags</AttributesLabel>
             <AttributesValue>
-              <div className="flex gap-[var(--space-xsm)] flex-wrap">
-                <Badge size="sm">Urgent</Badge>
-                <Badge size="sm">Verified</Badge>
-                <Badge size="sm">Premium</Badge>
+              <div className="flex gap-[var(--space-xs)] flex-wrap">
+                <Badge size="s">Urgent</Badge>
+                <Badge size="s">Verified</Badge>
+                <Badge size="s">Premium</Badge>
               </div>
             </AttributesValue>
           </AttributesRow>
@@ -801,7 +801,7 @@ export const CustomValues: Story = {
           <AttributesRow>
             <AttributesLabel>Compliance</AttributesLabel>
             <AttributesValue>
-              <Badge intent="success" size="sm">Compliant</Badge>
+              <Badge intent="success" size="s">Compliant</Badge>
             </AttributesValue>
           </AttributesRow>
         </AttributesItem>
@@ -825,7 +825,7 @@ export const ExternalLinks: Story = {
             >
               <AttributesLabel>Negotiation</AttributesLabel>
               <AttributesValue>
-                <Badge intent="success" size="sm">Fixed</Badge>
+                <Badge intent="success" size="s">Fixed</Badge>
               </AttributesValue>
             </AttributesRow>
           </AttributesItem>
@@ -839,7 +839,7 @@ export const ExternalLinks: Story = {
             >
               <AttributesLabel>Contract</AttributesLabel>
               <AttributesValue>
-                <Badge size="sm">Working copy</Badge>
+                <Badge size="s">Working copy</Badge>
               </AttributesValue>
             </AttributesRow>
           </AttributesItem>

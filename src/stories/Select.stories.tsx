@@ -52,7 +52,7 @@ export const Sizes: Story = {
       <div>
         <Label className="text-body-sm font-medium mb-2 block">Small</Label>
         <Select>
-          <SelectTrigger size="sm">
+          <SelectTrigger size="s">
             <SelectValue placeholder="Select option" />
           </SelectTrigger>
           <SelectContent>
@@ -66,7 +66,7 @@ export const Sizes: Story = {
       <div>
         <Label className="text-body-sm font-medium mb-2 block">Medium (Default)</Label>
         <Select>
-          <SelectTrigger size="md">
+          <SelectTrigger size="m">
             <SelectValue placeholder="Select option" />
           </SelectTrigger>
           <SelectContent>
@@ -80,7 +80,7 @@ export const Sizes: Story = {
       <div>
         <Label className="text-body-sm font-medium mb-2 block">Large</Label>
         <Select>
-          <SelectTrigger size="lg">
+          <SelectTrigger size="l">
             <SelectValue placeholder="Select option" />
           </SelectTrigger>
           <SelectContent>
@@ -173,7 +173,7 @@ export const ErrorState: Story = {
         </SelectContent>
       </Select>
       <div className="flex items-start gap-2 text-body-sm text-[var(--color-text-error-bold)]">
-        <Icon name="circle-alert" size="sm" className="mt-0.5 flex-shrink-0" />
+        <Icon name="circle-alert" size="s" className="mt-0.5 flex-shrink-0" />
         <span>Please select a payment method to continue.</span>
       </div>
     </div>
@@ -293,13 +293,13 @@ export const ControlledSelect: Story = {
         </div>
         
         {value && (
-          <div className="p-3 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-md">
+          <div className="p-3 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m">
             <p className="text-body-sm">
               Selected: <strong>{value}</strong>
             </p>
             <Button
               variant="ghost"
-              size="sm"
+              size="s"
               onClick={() => setValue('')}
               className="mt-2 h-6 px-2 text-xs"
             >
@@ -377,7 +377,7 @@ export const InForm: Story = {
               </Select>
               {errors.category && (
                 <div className="flex items-start gap-2 text-body-sm text-[var(--color-text-error-bold)]">
-                  <Icon name="circle-alert" size="sm" className="mt-0.5 flex-shrink-0" />
+                  <Icon name="circle-alert" size="s" className="mt-0.5 flex-shrink-0" />
                   <span>{errors.category}</span>
                 </div>
               )}
@@ -404,7 +404,7 @@ export const InForm: Story = {
               </Select>
               {errors.priority && (
                 <div className="flex items-start gap-2 text-body-sm text-[var(--color-text-error-bold)]">
-                  <Icon name="circle-alert" size="sm" className="mt-0.5 flex-shrink-0" />
+                  <Icon name="circle-alert" size="s" className="mt-0.5 flex-shrink-0" />
                   <span>{errors.priority}</span>
                 </div>
               )}
@@ -444,7 +444,7 @@ export const InForm: Story = {
               </Select>
               {errors.assignee && (
                 <div className="flex items-start gap-2 text-body-sm text-[var(--color-text-error-bold)]">
-                  <Icon name="circle-alert" size="sm" className="mt-0.5 flex-shrink-0" />
+                  <Icon name="circle-alert" size="s" className="mt-0.5 flex-shrink-0" />
                   <span>{errors.assignee}</span>
                 </div>
               )}

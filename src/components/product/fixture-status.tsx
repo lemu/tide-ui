@@ -91,33 +91,33 @@ const statusConfig: Record<StatusValue, StatusConfig> = {
 
 // Size configuration
 const textSizeClasses = {
-  xsm: "text-body-medium-xsm",
-  sm: "text-body-medium-sm",
-  md: "text-body-medium-md",
-  lg: "text-body-medium-lg",
+  xs: "text-body-medium-xsm",
+  s: "text-body-medium-sm",
+  m: "text-body-medium-md",
+  l: "text-body-medium-lg",
 } as const;
 
 const iconSizeMapping = {
-  xsm: "sm",
-  sm: "sm",
-  md: "md",
-  lg: "lg",
+  xs: "s",
+  s: "s",
+  m: "m",
+  l: "l",
 } as const;
 
 // Size-specific vertical alignment adjustments for icon
 const iconTranslateClasses = {
-  xsm: "translate-y-[0.5px]",
-  sm: "translate-y-[0px]",
-  md: "translate-y-[0.5px]",
-  lg: "translate-y-[0.5px]",
+  xs: "translate-y-[0.5px]",
+  s: "translate-y-[0px]",
+  m: "translate-y-[0.5px]",
+  l: "translate-y-[0.5px]",
 } as const;
 
 // Size-specific gap between icon and label
 const gapClasses = {
-  xsm: "gap-[var(--space-xsm)]",
-  sm: "gap-[var(--space-xsm)]",
-  md: "gap-[var(--space-sm)]",
-  lg: "gap-[var(--space-sm)]",
+  xs: "gap-[var(--space-xs)]",
+  s: "gap-[var(--space-xs)]",
+  m: "gap-[var(--space-s)]",
+  l: "gap-[var(--space-s)]",
 } as const;
 
 // Color mapping for text to match icon colors
@@ -149,10 +149,10 @@ const colorToIntent: Partial<Record<IconColor, BadgeIntent>> = {
 
 // Size mapping for Badge component
 const badgeSizeMapping = {
-  xsm: "xsm",
-  sm: "sm",
-  md: "md",
-  lg: "lg",
+  xs: "xs",
+  s: "s",
+  m: "m",
+  l: "l",
 } as const;
 
 type StatusSize = keyof typeof textSizeClasses;
@@ -176,7 +176,7 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
   (
     {
       value,
-      size = "sm",
+      size = "s",
       showObject = false,
       iconOnly = false,
       lowercase = false,

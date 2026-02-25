@@ -5,7 +5,7 @@ import { cn } from "../../lib/utils";
 import { Icon } from "./icon";
 
 const selectTriggerVariants = cva(
-  "flex w-full items-center justify-between gap-[var(--space-xsm)] rounded-sm border bg-[var(--color-surface-primary)] text-[var(--color-text-primary)] transition-all duration-150 ease-in-out placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-100 disabled:bg-[var(--color-background-disabled)] disabled:text-[var(--color-text-disabled)]",
+  "flex w-full items-center justify-between gap-[var(--space-xs)] rounded-s border bg-[var(--color-surface-primary)] text-[var(--color-text-primary)] transition-all duration-150 ease-in-out placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-100 disabled:bg-[var(--color-background-disabled)] disabled:text-[var(--color-text-disabled)]",
   {
     variants: {
       variant: {
@@ -24,24 +24,24 @@ const selectTriggerVariants = cva(
         ],
       },
       size: {
-        sm: "h-[var(--size-sm)] px-[var(--space-md)] py-[var(--space-xsm)] text-body-sm",
-        md: "h-[var(--size-md)] px-[var(--space-md)] py-[var(--space-sm)] text-body-md",
-        lg: "h-[var(--size-lg)] px-[var(--space-lg)] py-[var(--space-md)] text-body-lg",
+        s: "h-[var(--size-s)] px-[var(--space-m)] py-[var(--space-xs)] text-body-sm",
+        m: "h-[var(--size-m)] px-[var(--space-m)] py-[var(--space-s)] text-body-md",
+        l: "h-[var(--size-l)] px-[var(--space-l)] py-[var(--space-m)] text-body-lg",
       },
     },
     defaultVariants: {
       variant: "default",
-      size: "md",
+      size: "m",
     },
   },
 );
 
 const selectContentVariants = cva(
-  "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] text-[var(--color-text-primary)] shadow-[0px_0px_12px_-2px_rgba(0,14,20,0.08),0px_16px_24px_-8px_rgba(0,14,20,0.08),0px_4px_8px_-4px_rgba(0,14,20,0.04),0px_1px_1px_0px_rgba(0,14,20,0.02)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+  "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-m border border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] text-[var(--color-text-primary)] shadow-[0px_0px_12px_-2px_rgba(0,14,20,0.08),0px_16px_24px_-8px_rgba(0,14,20,0.08),0px_4px_8px_-4px_rgba(0,14,20,0.04),0px_1px_1px_0px_rgba(0,14,20,0.02)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
 );
 
 const selectItemVariants = cva(
-  "relative flex w-full cursor-default select-none items-center h-8 rounded-sm outline-none focus:bg-[var(--color-background-neutral-subtlest-hovered)] focus:text-[var(--color-text-primary)] data-[disabled]:pointer-events-none data-[disabled]:opacity-50 px-2 py-1 text-body-md",
+  "relative flex w-full cursor-default select-none items-center h-8 rounded-s outline-none focus:bg-[var(--color-background-neutral-subtlest-hovered)] focus:text-[var(--color-text-primary)] data-[disabled]:pointer-events-none data-[disabled]:opacity-50 px-2 py-1 text-body-md",
   {
     variants: {},
     defaultVariants: {},
@@ -53,7 +53,7 @@ const selectLabelVariants = cva(
 );
 
 const selectSeparatorVariants = cva(
-  "h-px bg-[var(--color-border-primary-subtle)] my-[var(--space-xsm)]",
+  "h-px bg-[var(--color-border-primary-subtle)] my-[var(--space-xs)]",
 );
 
 const Select = SelectPrimitive.Root;
@@ -71,7 +71,7 @@ const SelectTrigger = React.forwardRef<
   SelectTriggerProps
 >(({ className, variant, size, children, ...props }, ref) => {
   // Icon size matches trigger size directly (same as Button pattern)
-  const iconSize = size || "md";
+  const iconSize = size || "m";
 
   return (
     <SelectPrimitive.Trigger
@@ -110,7 +110,7 @@ const SelectContent = React.forwardRef<
       {...props}
     >
       <SelectPrimitive.ScrollUpButton className="flex cursor-default items-center justify-center py-1">
-        <Icon name="chevron-up" size="sm" />
+        <Icon name="chevron-up" size="s" />
       </SelectPrimitive.ScrollUpButton>
       <SelectPrimitive.Viewport
         className={cn(
@@ -122,7 +122,7 @@ const SelectContent = React.forwardRef<
         <div className="flex flex-col gap-1">{children}</div>
       </SelectPrimitive.Viewport>
       <SelectPrimitive.ScrollDownButton className="flex cursor-default items-center justify-center py-1">
-        <Icon name="chevron-down" size="sm" />
+        <Icon name="chevron-down" size="s" />
       </SelectPrimitive.ScrollDownButton>
     </SelectPrimitive.Content>
   </SelectPrimitive.Portal>
@@ -145,7 +145,7 @@ const SelectItem = React.forwardRef<
 
     <span className="absolute right-2 flex h-4 w-4 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <Icon name="check" size="sm" color="brand" />
+        <Icon name="check" size="s" color="brand" />
       </SelectPrimitive.ItemIndicator>
     </span>
   </SelectPrimitive.Item>

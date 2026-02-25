@@ -42,7 +42,7 @@ const Separator = React.forwardRef<
           )}
           {...props}
         >
-          <Icon name="dot" size="lg" color="tertiary" />
+          <Icon name="dot" size="l" color="tertiary" />
         </div>
       );
     }
