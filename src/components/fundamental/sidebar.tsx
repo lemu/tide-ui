@@ -583,6 +583,7 @@ const SidebarMenuButton = React.forwardRef<
       onMouseLeave,
       onFocus,
       onBlur,
+      onMouseDown,
       ...props
     },
     ref
@@ -593,6 +594,7 @@ const SidebarMenuButton = React.forwardRef<
     // Enhanced hover/focus state management
     const [isHovered, setIsHovered] = React.useState(false)
     const [isFocused, setIsFocused] = React.useState(false)
+    const isMouseDownRef = React.useRef(false)
 
     // Event handlers for enhanced behavior
     const handleMouseEnter = React.useCallback(
@@ -615,11 +617,20 @@ const SidebarMenuButton = React.forwardRef<
       [enhancedHover, onMouseLeave]
     )
 
+    const handleMouseDown = React.useCallback(
+      (e: React.MouseEvent<HTMLButtonElement>) => {
+        isMouseDownRef.current = true
+        onMouseDown?.(e)
+      },
+      [onMouseDown]
+    )
+
     const handleFocus = React.useCallback(
       (e: React.FocusEvent<HTMLButtonElement>) => {
-        if (enhancedHover) {
+        if (enhancedHover && !isMouseDownRef.current) {
           setIsFocused(true)
         }
+        isMouseDownRef.current = false
         onFocus?.(e)
       },
       [enhancedHover, onFocus]
@@ -699,6 +710,7 @@ const SidebarMenuButton = React.forwardRef<
         className={cn(enhancedClasses, className)}
         onMouseEnter={enhancedHover ? handleMouseEnter : onMouseEnter}
         onMouseLeave={enhancedHover ? handleMouseLeave : onMouseLeave}
+        onMouseDown={enhancedHover ? handleMouseDown : onMouseDown}
         onFocus={enhancedHover ? handleFocus : onFocus}
         onBlur={enhancedHover ? handleBlur : onBlur}
         {...props}
@@ -884,6 +896,7 @@ const SidebarMenuSubButton = React.forwardRef<
   onMouseLeave,
   onFocus,
   onBlur,
+  onMouseDown,
   ...props
 }, ref) => {
   const Comp = asChild ? "span" : "button"
@@ -891,6 +904,7 @@ const SidebarMenuSubButton = React.forwardRef<
   // Enhanced hover/focus state management
   const [isHovered, setIsHovered] = React.useState(false)
   const [isFocused, setIsFocused] = React.useState(false)
+  const isMouseDownRef = React.useRef(false)
 
   // Event handlers for enhanced behavior
   const handleMouseEnter = React.useCallback(
@@ -913,11 +927,20 @@ const SidebarMenuSubButton = React.forwardRef<
     [enhancedHover, onMouseLeave]
   )
 
+  const handleMouseDown = React.useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      isMouseDownRef.current = true
+      onMouseDown?.(e)
+    },
+    [onMouseDown]
+  )
+
   const handleFocus = React.useCallback(
     (e: React.FocusEvent<HTMLButtonElement>) => {
-      if (enhancedHover) {
+      if (enhancedHover && !isMouseDownRef.current) {
         setIsFocused(true)
       }
+      isMouseDownRef.current = false
       onFocus?.(e)
     },
     [enhancedHover, onFocus]
@@ -987,6 +1010,7 @@ const SidebarMenuSubButton = React.forwardRef<
       type={asChild ? undefined : "button"}
       onMouseEnter={enhancedHover ? handleMouseEnter : onMouseEnter}
       onMouseLeave={enhancedHover ? handleMouseLeave : onMouseLeave}
+      onMouseDown={enhancedHover ? handleMouseDown : onMouseDown}
       onFocus={enhancedHover ? handleFocus : onFocus}
       onBlur={enhancedHover ? handleBlur : onBlur}
       {...props}
