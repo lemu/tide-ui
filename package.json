@@ -17,7 +17,11 @@
         "default": "./dist/cjs/lib/index.cjs"
       }
     },
-    "./styles": "./dist/es/style.css",
+    "./styles": {
+      "import": "./dist/es/style.css",
+      "require": "./dist/es/style.css",
+      "default": "./dist/es/style.css"
+    },
     "./package.json": "./package.json"
   },
   "files": [
@@ -43,7 +47,7 @@
     "storybook": "npx storybook dev -p 6006",
     "build-storybook": "npx storybook build --quiet",
     "check:publint": "publint",
-    "check:types": "attw --pack .",
+    "check:types": "attw --pack . --ignore-rules=no-resolution",
     "size": "size-limit",
     "prepublishOnly": "npm run build:lib && npm run check:publint && npm run check:types",
     "release:patch": "npm version patch && git push && git push --tags",
