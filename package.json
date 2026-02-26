@@ -3,19 +3,29 @@
   "version": "0.83.0",
   "description": "A comprehensive React component library built with Tailwind CSS and Radix UI primitives",
   "type": "module",
-  "main": "./dist/index.cjs.js",
-  "module": "./dist/index.es.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/cjs/lib/index.cjs",
+  "module": "./dist/es/lib/index.js",
+  "types": "./dist/types/lib/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.cjs.js"
+      "import": {
+        "types": "./dist/types/lib/index.d.ts",
+        "default": "./dist/es/lib/index.js"
+      },
+      "require": {
+        "types": "./dist/types/lib/index.d.cts",
+        "default": "./dist/cjs/lib/index.cjs"
+      }
     },
-    "./styles": "./dist/style.css"
+    "./styles": "./dist/es/style.css",
+    "./package.json": "./package.json"
   },
   "files": [
-    "dist"
+    "dist/es",
+    "dist/cjs",
+    "dist/types",
+    "!dist/**/*.map",
+    "!dist/cjs/*.css"
   ],
   "sideEffects": [
     "**/*.css"
@@ -23,7 +33,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:lib": "vite build --config vite.config.lib.ts",
+    "build:lib": "rm -rf dist && vite build --config vite.config.lib.ts && node scripts/fix-cjs-types.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
@@ -32,7 +42,10 @@
     "test:coverage": "vitest --coverage",
     "storybook": "npx storybook dev -p 6006",
     "build-storybook": "npx storybook build --quiet",
-    "prepublishOnly": "npm run build:lib",
+    "check:publint": "publint",
+    "check:types": "attw --pack .",
+    "size": "size-limit",
+    "prepublishOnly": "npm run build:lib && npm run check:publint && npm run check:types",
     "release:patch": "npm version patch && git push && git push --tags",
     "release:minor": "npm version minor && git push && git push --tags",
     "release:major": "npm version major && git push && git push --tags"
@@ -50,12 +63,70 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lemu/tide-ui"
+    "url": "git+https://github.com/lemu/tide-ui.git"
   },
   "homepage": "https://tide-ui-storybook.vercel.app",
   "peerDependencies": {
+    "@dnd-kit/core": ">=6.0.0",
+    "@dnd-kit/sortable": ">=10.0.0",
+    "@dnd-kit/utilities": ">=3.0.0",
+    "@hookform/resolvers": ">=5.0.0",
+    "@tanstack/react-table": ">=8.0.0",
+    "@tanstack/react-virtual": ">=3.0.0",
+    "cmdk": ">=1.0.0",
+    "country-data-list": ">=1.0.0",
     "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
+    "react-day-picker": ">=9.0.0",
+    "react-dom": ">=18.0.0",
+    "react-hook-form": ">=7.0.0",
+    "react-resizable-panels": ">=3.0.0",
+    "recharts": ">=3.0.0",
+    "vaul": ">=1.0.0",
+    "zod": ">=4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "recharts": {
+      "optional": true
+    },
+    "@tanstack/react-table": {
+      "optional": true
+    },
+    "@tanstack/react-virtual": {
+      "optional": true
+    },
+    "@dnd-kit/core": {
+      "optional": true
+    },
+    "@dnd-kit/sortable": {
+      "optional": true
+    },
+    "@dnd-kit/utilities": {
+      "optional": true
+    },
+    "react-hook-form": {
+      "optional": true
+    },
+    "@hookform/resolvers": {
+      "optional": true
+    },
+    "zod": {
+      "optional": true
+    },
+    "react-day-picker": {
+      "optional": true
+    },
+    "cmdk": {
+      "optional": true
+    },
+    "vaul": {
+      "optional": true
+    },
+    "react-resizable-panels": {
+      "optional": true
+    },
+    "country-data-list": {
+      "optional": true
+    }
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.46.2",
@@ -63,11 +134,7 @@
     "lightningcss-linux-x64-gnu": "^1.30.1"
   },
   "dependencies": {
-    "@dnd-kit/core": "^6.3.1",
-    "@dnd-kit/sortable": "^10.0.0",
-    "@dnd-kit/utilities": "^3.2.2",
-    "@fontsource/inter": "^5.2.6",
-    "@hookform/resolvers": "^5.2.1",
+    "@fontsource-variable/inter": "^5.2.5",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-alert-dialog": "^1.1.14",
     "@radix-ui/react-avatar": "^1.1.10",
@@ -89,30 +156,20 @@
     "@radix-ui/react-toggle": "^1.1.9",
     "@radix-ui/react-toggle-group": "^1.1.10",
     "@radix-ui/react-tooltip": "^1.2.7",
-    "@tanstack/react-table": "^8.21.3",
-    "@tanstack/react-virtual": "^3.13.12",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "cmdk": "^1.1.1",
-    "country-data-list": "^1.5.4",
     "date-fns": "^4.1.0",
-    "flag-icons": "^7.5.0",
     "lucide-react": "^0.534.0",
-    "react": ">=18.0.0",
-    "react-day-picker": "^9.8.1",
-    "react-dom": ">=18.0.0",
-    "react-hook-form": "^7.62.0",
     "react-is": "^19.2.0",
-    "react-resizable-panels": "^3.0.6",
-    "recharts": "^3.1.2",
     "sonner": "^2.0.7",
-    "tailwind-merge": "^3.3.1",
-    "vaul": "^1.1.2",
-    "zod": "^4.0.16"
+    "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.17.4",
     "@chromatic-com/storybook": "^4.1.0",
     "@eslint/js": "^9.30.1",
+    "@size-limit/esbuild": "^11.2.0",
+    "@size-limit/file": "^11.2.0",
     "@storybook/addon-a11y": "^9.1.2",
     "@storybook/addon-docs": "^9.1.2",
     "@storybook/addon-onboarding": "^9.1.2",
@@ -136,6 +193,9 @@
     "globals": "^16.3.0",
     "jsdom": "^27.2.0",
     "playwright": "^1.54.2",
+    "publint": "^0.3.17",
+    "rollup-plugin-visualizer": "^7.0.0",
+    "size-limit": "^11.2.0",
     "storybook": "^9.1.2",
     "tailwindcss": "^4.1.11",
     "typescript": "^5.6.0",

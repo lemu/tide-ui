@@ -1,0 +1,7 @@
+[
+  { "name": "Button", "path": "dist/es/components/fundamental/button.js", "limit": "150 KB" },
+  { "name": "Input",  "path": "dist/es/components/fundamental/input.js",  "limit": "150 KB" },
+  { "name": "Badge",  "path": "dist/es/components/fundamental/badge.js",  "limit": "10 KB" },
+  { "name": "Full library (import *)", "path": "dist/es/lib/index.js", "limit": "300 KB" },
+  { "name": "CSS bundle", "path": "dist/es/style.css", "limit": "500 KB" }
+]

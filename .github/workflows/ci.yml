@@ -28,3 +28,6 @@ jobs:
 
     - name: Build library
       run: npm run build:lib
+
+    - name: Check bundle size
+      run: npm run size
