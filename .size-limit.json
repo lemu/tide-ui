@@ -1,7 +1,30 @@
 [
-  { "name": "Button", "path": "dist/es/components/fundamental/button.js", "limit": "150 KB" },
-  { "name": "Input",  "path": "dist/es/components/fundamental/input.js",  "limit": "150 KB" },
-  { "name": "Badge",  "path": "dist/es/components/fundamental/badge.js",  "limit": "10 KB" },
-  { "name": "Full library (import *)", "path": "dist/es/lib/index.js", "limit": "300 KB" },
-  { "name": "CSS bundle", "path": "dist/es/style.css", "limit": "500 KB" }
+  {
+    "name": "Button (tree-shaken import)",
+    "import": "{ Button }",
+    "path": "dist/es/lib/index.js",
+    "limit": "50 kB"
+  },
+  {
+    "name": "Badge (tree-shaken import)",
+    "import": "{ Badge }",
+    "path": "dist/es/lib/index.js",
+    "limit": "30 kB"
+  },
+  {
+    "name": "Input (tree-shaken import)",
+    "import": "{ Input }",
+    "path": "dist/es/lib/index.js",
+    "limit": "30 kB"
+  },
+  {
+    "name": "Full library (import *)",
+    "path": "dist/es/lib/index.js",
+    "limit": "300 kB"
+  },
+  {
+    "name": "CSS bundle",
+    "path": "dist/es/style.css",
+    "limit": "500 kB"
+  }
 ]

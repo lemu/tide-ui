@@ -1,9 +1,9 @@
 import React from "react";
-import { LucideProps } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // Import commonly used Lucide icons directly for better tree-shaking
 import {
+  AlertCircle,
   Anchor,
   Archive,
   ArrowDown,
@@ -11,11 +11,15 @@ import {
   ArrowDown10,
   ArrowDownAZ,
   ArrowDownNarrowWide,
+  ArrowDownToLine,
   ArrowDownWideNarrow,
   ArrowDownZA,
   ArrowLeft,
+  ArrowLeftToLine,
   ArrowRight,
+  ArrowRightToLine,
   ArrowUp,
+  ArrowUpToLine,
   Bookmark,
   CalendarDays,
   Check,
@@ -32,11 +36,14 @@ import {
   Code,
   Copy,
   CreditCard,
+  Dot,
   Download,
   Edit,
   Ellipsis,
+  ExternalLink,
   Eye,
   FileText,
+  Filter,
   Grid2X2Plus,
   Handshake,
   Info,
@@ -54,6 +61,7 @@ import {
   Package,
   PanelLeft,
   PanelRightClose,
+  Pencil,
   Plus,
   PlusCircle,
   RefreshCw,
@@ -81,9 +89,6 @@ import {
   Weight,
   X,
 } from "lucide-react";
-
-// Import all lucide icons for dynamic fallback (only used when needed)
-import * as LucideIcons from "lucide-react";
 
 // Import custom icons from separate file for better maintainability
 import { customIcons, type CustomIconName } from "./custom-icons";
@@ -121,16 +126,9 @@ export type IconSize = keyof typeof iconSizes;
 // Re-export CustomIconName type
 export type { CustomIconName };
 
-// Helper function to convert kebab-case to PascalCase for Lucide icons
-function kebabToPascal(str: string): string {
-  return str
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join("");
-}
-
 // Map of commonly used icons for better tree-shaking (optimized imports)
 const commonLucideIcons = {
+  "alert-circle": AlertCircle,
   anchor: Anchor,
   archive: Archive,
   "arrow-down": ArrowDown,
@@ -138,11 +136,15 @@ const commonLucideIcons = {
   "arrow-down-1-0": ArrowDown10,
   "arrow-down-a-z": ArrowDownAZ,
   "arrow-down-narrow-wide": ArrowDownNarrowWide,
+  "arrow-down-to-line": ArrowDownToLine,
   "arrow-down-wide-narrow": ArrowDownWideNarrow,
   "arrow-down-z-a": ArrowDownZA,
   "arrow-left": ArrowLeft,
+  "arrow-left-to-line": ArrowLeftToLine,
   "arrow-right": ArrowRight,
+  "arrow-right-to-line": ArrowRightToLine,
   "arrow-up": ArrowUp,
+  "arrow-up-to-line": ArrowUpToLine,
   bookmark: Bookmark,
   "calendar-days": CalendarDays,
   check: Check,
@@ -159,11 +161,14 @@ const commonLucideIcons = {
   code: Code,
   copy: Copy,
   "credit-card": CreditCard,
+  dot: Dot,
   download: Download,
   edit: Edit,
   ellipsis: Ellipsis,
+  "external-link": ExternalLink,
   eye: Eye,
   "file-text": FileText,
+  filter: Filter,
   "grid-2x2-plus": Grid2X2Plus,
   handshake: Handshake,
   info: Info,
@@ -181,6 +186,7 @@ const commonLucideIcons = {
   package: Package,
   "panel-left": PanelLeft,
   "panel-right-close": PanelRightClose,
+  pencil: Pencil,
   plus: Plus,
   "plus-circle": PlusCircle,
   "refresh-cw": RefreshCw,
@@ -276,25 +282,9 @@ const Icon = React.forwardRef<SVGSVGElement, IconProps>(
       );
     }
 
-    // For uncommon icons not in the optimized set, use dynamic lookup from all Lucide icons
-    const pascalName = kebabToPascal(name);
-    const LucideIcon = (LucideIcons as any)[
-      pascalName
-    ] as React.ComponentType<LucideProps>;
-
-    if (LucideIcon) {
-      return (
-        <LucideIcon
-          ref={ref}
-          className={cn("shrink-0", iconSizeClass, iconColorClass, className)}
-          {...accessibilityProps}
-          {...props}
-        />
-      );
-    }
-
-    // Fallback for unknown icons
-    console.warn(`Icon "${name}" not found in custom icons or Lucide icons`);
+    // Fallback for icon names not in the optimized set
+    // To support additional icons, add them to the commonLucideIcons map above
+    console.warn(`Icon "${name}" not found. Add it to the commonLucideIcons map in icon.tsx for tree-shaking support.`);
     return (
       <svg
         ref={ref}
