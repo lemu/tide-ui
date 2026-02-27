@@ -1,29 +1,19 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 
-// Import commonly used Lucide icons directly for better tree-shaking
+// Import only the icons required to render tide-ui's own components
 import {
   AlertCircle,
-  Anchor,
-  Archive,
-  ArrowDown,
-  ArrowDown01,
-  ArrowDown10,
-  ArrowDownAZ,
   ArrowDownNarrowWide,
   ArrowDownToLine,
   ArrowDownWideNarrow,
-  ArrowDownZA,
   ArrowLeft,
   ArrowLeftToLine,
   ArrowRight,
   ArrowRightToLine,
-  ArrowUp,
   ArrowUpToLine,
   Bookmark,
-  CalendarDays,
   Check,
-  CheckCircle,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
@@ -31,63 +21,21 @@ import {
   Circle,
   CircleAlert,
   CircleCheck,
-  CircleCheckBig,
-  CircleDollarSign,
   CircleHelp,
-  Code,
-  Copy,
-  CreditCard,
-  Dot,
-  Download,
-  Edit,
-  Ellipsis,
   ExternalLink,
-  Eye,
-  FileText,
   Filter,
-  Grid2X2Plus,
-  Handshake,
   Info,
-  LayoutDashboard,
-  Link,
   ListFilter,
   Loader2,
-  LogOut,
-  Mail,
-  MapPin,
-  MessageCircle,
-  MessageSquare,
   MoreHorizontal,
-  Navigation,
-  Package,
   PanelLeft,
-  PanelRightClose,
   Pencil,
-  Plus,
   PlusCircle,
-  RefreshCw,
   RotateCcw,
-  Route,
   Search,
-  Send,
-  Settings,
-  Share,
-  Share2,
-  ShieldCheck,
-  Ship,
-  Sparkles,
-  SquarePlus,
   Star,
-  Table2,
-  TextCursorInput,
-  Trash,
   Trash2,
   TriangleAlert,
-  Truck,
-  Upload,
-  User,
-  Users,
-  Weight,
   X,
 } from "lucide-react";
 
@@ -123,29 +71,20 @@ const iconSizes = {
 export type IconColor = keyof typeof iconColors;
 export type IconSize = keyof typeof iconSizes;
 
-// Map of commonly used icons for better tree-shaking (optimized imports)
-const commonLucideIcons = {
+// Icons required to render tide-ui's own components.
+// Consumers who need other Lucide icons should pass component refs: <Icon name={Settings} />
+const libraryUsedLucideIcons = {
   "alert-circle": AlertCircle,
-  anchor: Anchor,
-  archive: Archive,
-  "arrow-down": ArrowDown,
-  "arrow-down-0-1": ArrowDown01,
-  "arrow-down-1-0": ArrowDown10,
-  "arrow-down-a-z": ArrowDownAZ,
   "arrow-down-narrow-wide": ArrowDownNarrowWide,
   "arrow-down-to-line": ArrowDownToLine,
   "arrow-down-wide-narrow": ArrowDownWideNarrow,
-  "arrow-down-z-a": ArrowDownZA,
   "arrow-left": ArrowLeft,
   "arrow-left-to-line": ArrowLeftToLine,
   "arrow-right": ArrowRight,
   "arrow-right-to-line": ArrowRightToLine,
-  "arrow-up": ArrowUp,
   "arrow-up-to-line": ArrowUpToLine,
   bookmark: Bookmark,
-  "calendar-days": CalendarDays,
   check: Check,
-  "check-circle": CheckCircle,
   "chevron-down": ChevronDown,
   "chevron-left": ChevronLeft,
   "chevron-right": ChevronRight,
@@ -153,63 +92,21 @@ const commonLucideIcons = {
   circle: Circle,
   "circle-alert": CircleAlert,
   "circle-check": CircleCheck,
-  "circle-check-big": CircleCheckBig,
-  "circle-dollar-sign": CircleDollarSign,
   "circle-help": CircleHelp,
-  code: Code,
-  copy: Copy,
-  "credit-card": CreditCard,
-  dot: Dot,
-  download: Download,
-  edit: Edit,
-  ellipsis: Ellipsis,
   "external-link": ExternalLink,
-  eye: Eye,
-  "file-text": FileText,
   filter: Filter,
-  "grid-2x2-plus": Grid2X2Plus,
-  handshake: Handshake,
   info: Info,
-  "layout-dashboard": LayoutDashboard,
-  link: Link,
   "list-filter": ListFilter,
   "loader-2": Loader2,
-  "log-out": LogOut,
-  mail: Mail,
-  "map-pin": MapPin,
-  "message-circle": MessageCircle,
-  "message-square": MessageSquare,
   "more-horizontal": MoreHorizontal,
-  navigation: Navigation,
-  package: Package,
   "panel-left": PanelLeft,
-  "panel-right-close": PanelRightClose,
   pencil: Pencil,
-  plus: Plus,
   "plus-circle": PlusCircle,
-  "refresh-cw": RefreshCw,
   "rotate-ccw": RotateCcw,
-  route: Route,
   search: Search,
-  send: Send,
-  settings: Settings,
-  share: Share,
-  "share-2": Share2,
-  "shield-check": ShieldCheck,
-  ship: Ship,
-  sparkles: Sparkles,
-  "square-plus": SquarePlus,
   star: Star,
-  "table-2": Table2,
-  "text-cursor-input": TextCursorInput,
-  trash: Trash,
   "trash-2": Trash2,
   "triangle-alert": TriangleAlert,
-  truck: Truck,
-  upload: Upload,
-  user: User,
-  users: Users,
-  weight: Weight,
   x: X,
 } as const;
 
@@ -261,10 +158,10 @@ const Icon = React.forwardRef<SVGSVGElement, IconProps>(
       );
     }
 
-    // Check for common Lucide icons first (optimized bundle)
-    if (name in commonLucideIcons) {
+    // Check for library-used Lucide icons first (optimized bundle)
+    if (name in libraryUsedLucideIcons) {
       const LucideIcon =
-        commonLucideIcons[name as keyof typeof commonLucideIcons];
+        libraryUsedLucideIcons[name as keyof typeof libraryUsedLucideIcons];
       return (
         <LucideIcon
           ref={ref}
@@ -276,7 +173,7 @@ const Icon = React.forwardRef<SVGSVGElement, IconProps>(
     }
 
     // Unknown string — not in static map
-    console.warn(`Icon "${name}" not found in the static icon map. Use a component reference for tree-shaking or add to commonLucideIcons.`);
+    console.warn(`Icon "${name}" not found in the static icon map. Use a component reference instead: <Icon name={YourIcon} />`);
     return (
       <svg
         ref={ref}

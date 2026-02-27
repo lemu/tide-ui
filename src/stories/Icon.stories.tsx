@@ -99,47 +99,34 @@ export const AllColors: Story = {
 // Lucide Icons - ALL Lucide icons from the library
 export const AllLucideIcons: Story = {
   render: () => {
-    // Get all Lucide icon names by converting PascalCase to kebab-case
-    const pascalToKebab = (str: string): string => {
-      return str
-        .replace(/([A-Z])/g, '-$1')
-        .toLowerCase()
-        .replace(/^-/, '');
-    };
-
-    // Get all icon names from lucide-react, excluding non-icon exports
-    const lucideIconNames = Object.keys(LucideIcons)
-      .filter((key) => {
-        // Filter out known non-icon exports and duplicates
+    // Get all Lucide icon entries (PascalCase name + component ref)
+    const lucideIconEntries = Object.entries(LucideIcons)
+      .filter(([key, val]) => {
         if (key === 'createLucideIcon' ||
             key === 'default' ||
             key === 'icons' ||
-            key.endsWith('Icon') ||  // Filter out XxxIcon aliases (keep Xxx only)
+            key.endsWith('Icon') ||
             key.startsWith('Lucide') ||
             key.startsWith('_')) {
           return false;
         }
-
-        // Verify the value exists (components can be functions or objects in different build contexts)
-        const component = (LucideIcons as any)[key];
-        return component && (typeof component === 'function' || typeof component === 'object');
+        return val && (typeof val === 'function' || typeof val === 'object');
       })
-      .map(pascalToKebab)
-      .sort();
+      .sort(([a], [b]) => a.localeCompare(b)) as [string, React.ComponentType<any>][];
 
     return (
       <div className="space-y-[var(--space-m)]">
         <div className="text-body-md text-[var(--color-text-secondary)]">
-          {lucideIconNames.length} Lucide icons available
+          {lucideIconEntries.length} Lucide icons available
         </div>
         <div className="grid grid-cols-12 gap-[var(--space-m)]">
-          {lucideIconNames.map((iconName) => (
-            <div key={iconName} className="flex flex-col items-center gap-[var(--space-xs)]">
+          {lucideIconEntries.map(([name, component]) => (
+            <div key={name} className="flex flex-col items-center gap-[var(--space-xs)]">
               <div className="flex h-[var(--size-l)] w-[var(--size-l)] items-center justify-center rounded-s bg-[var(--color-surface-secondary)]">
-                <Icon name={iconName} size="m" />
+                <Icon name={component} size="m" />
               </div>
               <span className="text-caption-xsm text-center text-[var(--color-text-tertiary)] break-all">
-                {iconName}
+                {name}
               </span>
             </div>
           ))}
@@ -209,14 +196,14 @@ export const ComponentIcons: Story = {
     <div className="space-y-[var(--space-xl)]">
 
       <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)] space-y-[var(--space-m)]">
-        <h3 className="text-heading-sm text-[var(--color-text-primary)]">String name — static map, ~60 built-in icons</h3>
+        <h3 className="text-heading-sm text-[var(--color-text-primary)]">String name — static map, 34 icons (library internals only)</h3>
         <p className="text-body-sm text-[var(--color-text-secondary)]">
-          Passing a string looks up the icon in a static map of ~60 commonly-used Lucide icons. These are already bundled with the library. Strings not in the map render a placeholder — use a component reference instead.
+          Passing a string looks up the icon in a static map of 34 Lucide icons used internally by tide-ui components. These are already bundled with the library. Strings not in the map render a placeholder — use a component reference instead.
         </p>
         <div className="flex items-center gap-[var(--space-m)]">
-          <Icon name="settings" size="m" />
+          <Icon name="star" size="m" />
           <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
-            {`<Icon name="settings" size="m" />`}
+            {`<Icon name="star" size="m" />`}
           </code>
         </div>
       </div>
@@ -247,9 +234,9 @@ export const ComponentIcons: Story = {
           <div className="text-[var(--color-text-tertiary)]">Bundle cost</div>
           <div className="text-[var(--color-text-tertiary)]">When to use</div>
 
-          <code className="text-[var(--color-text-primary)]">{`name="settings"`}</code>
-          <div className="text-[var(--color-text-secondary)]">~60 icons from static map (already in bundle)</div>
-          <div className="text-[var(--color-text-secondary)]">Quick use of built-in icons; unknown strings show placeholder</div>
+          <code className="text-[var(--color-text-primary)]">{`name="star"`}</code>
+          <div className="text-[var(--color-text-secondary)]">34 icons (library internals only, already in bundle)</div>
+          <div className="text-[var(--color-text-secondary)]">Quick use of library-internal icons; unknown strings show placeholder</div>
 
           <code className="text-[var(--color-text-primary)]">{`name={Settings}`}</code>
           <div className="text-[var(--color-text-secondary)]">Only the imported icon</div>
