@@ -1,9 +1,43 @@
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve, isAbsolute } from 'path'
 import dts from 'vite-plugin-dts'
 import tailwindcss from '@tailwindcss/vite'
 import { visualizer } from 'rollup-plugin-visualizer'
+
+/**
+ * Injects `/* @__PURE__ *​/` annotations before React.forwardRef() and
+ * React.memo() calls so bundlers can tree-shake unused components.
+ *
+ * rollup-plugin-pure only handles bare Identifier callees — it cannot
+ * match MemberExpression callees like `React.forwardRef(...)`, which is
+ * the pattern used throughout this codebase. This plugin fills that gap.
+ */
+function pureAnnotations(): Plugin {
+  return {
+    name: 'pure-annotations',
+    transform: {
+      order: 'post',
+      handler(code, id) {
+        if (!/\.[jt]sx?$/.test(id)) return
+        if (!code.includes('forwardRef') && !code.includes('memo')) return
+
+        const result = code
+          .replace(
+            /(?<!\w)(?<!\*\/\s*)React\.forwardRef\s*[(<]/g,
+            (match) => `/* @__PURE__ */ ${match}`,
+          )
+          .replace(
+            /(?<!\w)(?<!\*\/\s*)React\.memo\s*[(<]/g,
+            (match) => `/* @__PURE__ */ ${match}`,
+          )
+
+        if (result === code) return
+        return { code: result, map: null }
+      },
+    },
+  }
+}
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -16,6 +50,7 @@ export default defineConfig({
       insertTypesEntry: true,
       outDir: 'dist/types',
     }),
+    pureAnnotations(),
     process.env.ANALYZE && visualizer({ open: true, filename: 'bundle-stats.html', gzipSize: true }),
   ],
   resolve: {
