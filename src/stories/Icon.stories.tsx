@@ -269,9 +269,9 @@ export const UsageExamples: Story = {
           With Size and Color
         </h3>
         <div className="flex items-center gap-[var(--space-m)]">
-          <Icon name="heart" size="l" color="error" />
+          <Icon name="circle-alert" size="l" color="error" />
           <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
-            {`<Icon name="heart" size="l" color="error" />`}
+            {`<Icon name="circle-alert" size="l" color="error" />`}
           </code>
         </div>
       </div>
