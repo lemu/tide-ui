@@ -1,5 +1,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
+import { LucideProps } from "lucide-react";
 
 // Import commonly used Lucide icons directly for better tree-shaking
 import {
@@ -30,6 +31,7 @@ import {
   ChevronUp,
   Circle,
   CircleAlert,
+  CircleCheck,
   CircleCheckBig,
   CircleDollarSign,
   CircleHelp,
@@ -89,6 +91,12 @@ import {
   Weight,
   X,
 } from "lucide-react";
+
+// Barrel import for dynamic fallback — required for string-based icon name API.
+// Any consumer importing Icon (or AppFrame/Toast/DropdownMenu) will include
+// all of lucide-react (~212 KB ESM) in their bundle. This is unavoidable with
+// a synchronous string→component lookup. See: AppFrameNavItem.icon: string.
+import * as LucideIcons from "lucide-react";
 
 // Import custom icons from separate file for better maintainability
 import { customIcons, type CustomIconName } from "./custom-icons";
@@ -155,6 +163,7 @@ const commonLucideIcons = {
   "chevron-up": ChevronUp,
   circle: Circle,
   "circle-alert": CircleAlert,
+  "circle-check": CircleCheck,
   "circle-check-big": CircleCheckBig,
   "circle-dollar-sign": CircleDollarSign,
   "circle-help": CircleHelp,
@@ -282,9 +291,22 @@ const Icon = React.forwardRef<SVGSVGElement, IconProps>(
       );
     }
 
-    // Fallback for icon names not in the optimized set
-    // To support additional icons, add them to the commonLucideIcons map above
-    console.warn(`Icon "${name}" not found. Add it to the commonLucideIcons map in icon.tsx for tree-shaking support.`);
+    // Dynamic fallback: handles any valid Lucide icon name not in the static map
+    const pascalName = name.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join("");
+    const LucideIcon = (LucideIcons as any)[pascalName] as React.ComponentType<LucideProps>;
+    if (LucideIcon) {
+      return (
+        <LucideIcon
+          ref={ref}
+          className={cn("shrink-0", iconSizeClass, iconColorClass, className)}
+          {...accessibilityProps}
+          {...props}
+        />
+      );
+    }
+
+    // Truly unknown icon
+    console.warn(`Icon "${name}" not found in custom icons or Lucide icons`);
     return (
       <svg
         ref={ref}
