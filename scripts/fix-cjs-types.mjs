@@ -29,5 +29,21 @@ function fixDtsExtensions(dir) {
 
 fixDtsExtensions('dist/types')
 
-// 2. Copy ESM types as CJS types
-copyFileSync('dist/types/lib/index.d.ts', 'dist/types/lib/index.d.cts')
+// 2. Copy ESM types as CJS types for main entry and subpath exports
+const cjsTypeSources = [
+  'dist/types/lib/index.d.ts',
+  'dist/types/components/core-index.d.ts',
+  'dist/types/components/fundamental/chart.d.ts',
+  'dist/types/components/fundamental/calendar.d.ts',
+  'dist/types/components/fundamental/date-picker.d.ts',
+  'dist/types/components/fundamental/country-dropdown.d.ts',
+  'dist/types/components/fundamental/resizable.d.ts',
+  'dist/types/components/product/data-table.d.ts',
+  'dist/types/components/product/filters.d.ts',
+  'dist/types/components/product/bookmarks.d.ts',
+  'dist/types/components/product/linked-chart.d.ts',
+]
+
+for (const src of cjsTypeSources) {
+  copyFileSync(src, src.replace('.d.ts', '.d.cts'))
+}

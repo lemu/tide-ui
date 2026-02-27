@@ -2,8 +2,10 @@
 // @ts-ignore - CSS import handled by build system
 import '../index.css'
 
-// Export all components from the components index
-export * from '../components/index'
+// Export core components (excludes components requiring optional peer deps)
+// Components with optional deps are available via subpath imports:
+//   @rafal.lemieszewski/tide-ui/chart, /calendar, /date-picker, etc.
+export * from '../components/core-index'
 
 // Export utility hooks
 export * from './hooks'

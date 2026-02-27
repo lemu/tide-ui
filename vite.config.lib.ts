@@ -25,7 +25,19 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/lib/index.ts'),
+      entry: [
+        resolve(__dirname, 'src/lib/index.ts'),
+        // Subpath entries for components with optional peer deps
+        resolve(__dirname, 'src/components/fundamental/chart.tsx'),
+        resolve(__dirname, 'src/components/fundamental/calendar.tsx'),
+        resolve(__dirname, 'src/components/fundamental/date-picker.tsx'),
+        resolve(__dirname, 'src/components/fundamental/country-dropdown.tsx'),
+        resolve(__dirname, 'src/components/fundamental/resizable.tsx'),
+        resolve(__dirname, 'src/components/product/data-table.tsx'),
+        resolve(__dirname, 'src/components/product/filters.tsx'),
+        resolve(__dirname, 'src/components/product/bookmarks.tsx'),
+        resolve(__dirname, 'src/components/product/linked-chart.tsx'),
+      ],
       name: 'TideUI',
     },
     rollupOptions: {
