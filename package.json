@@ -1,6 +1,6 @@
 {
   "name": "@rafal.lemieszewski/tide-ui",
-  "version": "0.84.4",
+  "version": "0.85.0",
   "description": "A comprehensive React component library built with Tailwind CSS and Radix UI primitives",
   "type": "module",
   "main": "./dist/cjs/lib/index.cjs",
