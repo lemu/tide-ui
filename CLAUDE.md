@@ -224,6 +224,30 @@ fix(DataTable): use rendered order for child row border detection
 refactor(Badge): simplify variant class structure
 ```
 
+## Icon Usage in Components
+
+### Adding a new Lucide icon to a tide-ui component
+
+When a component uses a Lucide icon internally (i.e. the icon is rendered by the component itself, not passed in by the consumer), **you must add it to the `libraryUsedLucideIcons` map** in `src/components/fundamental/icon.tsx`.
+
+**Steps:**
+
+1. Add the named import to the lucide-react import block at the top of `icon.tsx`
+2. Add the kebab-case entry to `libraryUsedLucideIcons`
+
+```tsx
+// 1. Add import
+import { MyNewIcon } from "lucide-react";
+
+// 2. Add to map
+const libraryUsedLucideIcons = {
+  // ...existing entries...
+  "my-new-icon": MyNewIcon,
+} as const;
+```
+
+**Why:** The map is intentionally trimmed to only the icons tide-ui components need. Any icon used by a library component that is missing from this map will fall through to the `?` placeholder at runtime.
+
 ## Component Authoring Patterns
 
 ### forwardRef + displayName
