@@ -276,7 +276,7 @@ export type { Country, CountryDropdownProps, CountryDropdownTriggerProps } from 
 
 // Icon component
 export { Icon } from './fundamental/icon'
-export type { IconColor, IconSize, CustomIconName } from './fundamental/icon'
+export type { IconColor, IconSize, CustomIconName, IconComponent, IconType } from './fundamental/icon'
 
 // Kbd components
 export { Kbd, KbdGroup } from './fundamental/kbd'

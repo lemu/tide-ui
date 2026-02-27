@@ -50,7 +50,7 @@ import { Dialog, DialogContent, DialogHeader, DialogBody, DialogFooter, DialogTi
 
 export interface AppFrameNavItem {
   title: string
-  icon: string
+  icon: string | React.ComponentType<{ className?: string }>
   url: string
   isActive: boolean
   items?: Array<{

@@ -227,10 +227,11 @@ const commonLucideIcons = {
 // Allow any string for Lucide icon names (since we'll convert kebab-case to PascalCase)
 export type LucideIconName = string;
 
-export type IconType = CustomIconName | LucideIconName;
+export type IconComponent = React.ComponentType<{ className?: string }>;
+export type IconType = CustomIconName | LucideIconName | IconComponent;
 
 export interface IconProps
-  extends Omit<React.SVGAttributes<SVGElement>, "color"> {
+  extends Omit<React.SVGAttributes<SVGElement>, "color" | "name"> {
   name: IconType;
   size?: IconSize;
   color?: IconColor;
@@ -259,6 +260,18 @@ const Icon = React.forwardRef<SVGSVGElement, IconProps>(
     const accessibilityProps = ariaLabel
       ? { "aria-label": ariaLabel, role: "img" }
       : { "aria-hidden": true };
+
+    // Check 0: If name is a React component, render it directly (enables tree-shaking)
+    if (typeof name !== 'string') {
+      const NamedComponent = name as React.ComponentType<any>;
+      return (
+        <NamedComponent
+          className={cn("shrink-0", iconSizeClass, iconColorClass, className)}
+          {...accessibilityProps}
+          {...props}
+        />
+      );
+    }
 
     // Check if it's a custom icon first
     if (name in customIcons) {

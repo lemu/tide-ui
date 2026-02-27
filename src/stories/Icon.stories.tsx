@@ -172,6 +172,24 @@ export const CustomIcons: Story = {
   },
 }
 
+export const ComponentIcons: Story = {
+  render: () => (
+    <div className="space-y-[var(--space-l)]">
+      <div className="flex items-center gap-[var(--space-l)]">
+        <Icon name={LucideIcons.Settings} size="m" />
+        <Icon name={LucideIcons.Bell} size="m" />
+        <Icon name={LucideIcons.Building2} size="m" />
+      </div>
+      <div className="flex items-center gap-[var(--space-l)]">
+        <Icon name={LucideIcons.Settings} size="s" color="tertiary" />
+        <Icon name={LucideIcons.Settings} size="m" color="brand" />
+        <Icon name={LucideIcons.Settings} size="l" color="primary" />
+        <Icon name={LucideIcons.Settings} size="xl" color="information" />
+      </div>
+    </div>
+  ),
+}
+
 // Usage examples with code
 export const UsageExamples: Story = {
   render: () => (
