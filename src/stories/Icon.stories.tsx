@@ -12,7 +12,7 @@ const meta: Meta<typeof Icon> = {
   argTypes: {
     name: {
       control: { type: 'text' },
-      description: 'Icon name from Lucide or custom icons',
+      description: 'Icon name (string) or a Lucide component reference. Pass a string like `"settings"` for convenience, or pass the component directly (e.g. `Settings` imported from `lucide-react`) to enable tree-shaking in consumer bundles.',
     },
     size: {
       control: { type: 'select' },
@@ -174,18 +174,57 @@ export const CustomIcons: Story = {
 
 export const ComponentIcons: Story = {
   render: () => (
-    <div className="space-y-[var(--space-l)]">
-      <div className="flex items-center gap-[var(--space-l)]">
-        <Icon name={LucideIcons.Settings} size="m" />
-        <Icon name={LucideIcons.Bell} size="m" />
-        <Icon name={LucideIcons.Building2} size="m" />
+    <div className="space-y-[var(--space-xl)]">
+
+      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)] space-y-[var(--space-m)]">
+        <h3 className="text-heading-sm text-[var(--color-text-primary)]">String name — simple, includes full Lucide bundle</h3>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">
+          Passing a string is the easiest API. Internally the component does a runtime lookup (kebab-case → component), which requires importing all of lucide-react (~212 KB ESM). Any consumer that imports <code>Icon</code> will include the full Lucide barrel in their bundle, even if they only use two or three icons.
+        </p>
+        <div className="flex items-center gap-[var(--space-m)]">
+          <Icon name="settings" size="m" />
+          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
+            {`<Icon name="settings" size="m" />`}
+          </code>
+        </div>
       </div>
-      <div className="flex items-center gap-[var(--space-l)]">
-        <Icon name={LucideIcons.Settings} size="s" color="tertiary" />
-        <Icon name={LucideIcons.Settings} size="m" color="brand" />
-        <Icon name={LucideIcons.Settings} size="l" color="primary" />
-        <Icon name={LucideIcons.Settings} size="xl" color="information" />
+
+      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)] space-y-[var(--space-m)]">
+        <h3 className="text-heading-sm text-[var(--color-text-primary)]">Component reference — tree-shakeable</h3>
+        <p className="text-body-sm text-[var(--color-text-secondary)]">
+          Passing a Lucide component directly bypasses the runtime lookup entirely. The bundler sees the explicit import and can eliminate every other Lucide icon from the output. Use this in performance-sensitive apps where bundle size matters.
+        </p>
+        <div className="flex items-center gap-[var(--space-m)]">
+          <Icon name={LucideIcons.Settings} size="m" />
+          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
+            {`import { Settings } from 'lucide-react'\n<Icon name={Settings} size="m" />`}
+          </code>
+        </div>
+        <div className="flex items-center gap-[var(--space-l)]">
+          <Icon name={LucideIcons.Settings} size="s" color="tertiary" />
+          <Icon name={LucideIcons.Settings} size="m" color="brand" />
+          <Icon name={LucideIcons.Settings} size="l" color="primary" />
+          <Icon name={LucideIcons.Settings} size="xl" color="information" />
+        </div>
       </div>
+
+      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)] space-y-[var(--space-m)]">
+        <h3 className="text-heading-sm text-[var(--color-text-primary)]">Summary</h3>
+        <div className="grid grid-cols-3 gap-[var(--space-m)] text-body-sm">
+          <div className="text-[var(--color-text-tertiary)]">Usage</div>
+          <div className="text-[var(--color-text-tertiary)]">Bundle cost</div>
+          <div className="text-[var(--color-text-tertiary)]">When to use</div>
+
+          <code className="text-[var(--color-text-primary)]">{`name="settings"`}</code>
+          <div className="text-[var(--color-text-secondary)]">Full Lucide barrel (~212 KB)</div>
+          <div className="text-[var(--color-text-secondary)]">Prototyping, internal tools, bundle size not a concern</div>
+
+          <code className="text-[var(--color-text-primary)]">{`name={Settings}`}</code>
+          <div className="text-[var(--color-text-secondary)]">Only the imported icon</div>
+          <div className="text-[var(--color-text-secondary)]">Production apps where bundle size matters</div>
+        </div>
+      </div>
+
     </div>
   ),
 }
