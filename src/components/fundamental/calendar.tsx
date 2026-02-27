@@ -2,6 +2,7 @@ import * as React from "react";
 import { DayPicker, type DayPickerProps, type Modifiers } from "react-day-picker";
 import { cn } from "../../lib/utils";
 import { Icon } from "../fundamental/icon";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export type CalendarProps = DayPickerProps;
 
@@ -196,9 +197,9 @@ function Calendar(calendarProps: CalendarProps) {
     },
     components: {
       Chevron: ({ orientation, ...props }: any) => {
-        const iconName = orientation === "left" ? "chevron-left" : "chevron-right";
+        const LucideIcon = orientation === "left" ? ChevronLeft : ChevronRight;
         const { size, ...iconProps } = props;
-        return <Icon name={iconName} size="s" {...iconProps} />;
+        return <Icon name={LucideIcon} size="s" {...iconProps} />;
       },
     },
     ...props,

@@ -21,6 +21,7 @@ import {
 } from '../fundamental/sidebar'
 import { Button } from '../fundamental/button'
 import { Icon } from '../fundamental/icon'
+import { Search, ChevronDown, Check, RotateCcw, ChevronRight } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '../fundamental/avatar'
 import { Separator } from '../fundamental/separator'
 import { Kbd } from '../fundamental/kbd'
@@ -398,7 +399,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
           <div className="p-[var(--space-m)] pt-[var(--space-s)] group-data-[collapsible=icon]:px-2">
             <div className="relative">
               <div className="absolute top-1/2 left-2 -translate-y-1/2 group-data-[collapsible=icon]:hidden">
-                <Icon name="search" size="m" color="tertiary" />
+                <Icon name={Search} size="m" color="tertiary" />
               </div>
 
               {/* Full search button in expanded state */}
@@ -423,7 +424,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                     className="hidden h-8 w-8 cursor-pointer items-center justify-center rounded border border-[var(--color-border-primary-subtle)] bg-transparent transition-all duration-200 group-data-[collapsible=icon]:flex hover:border-[var(--color-border-primary-medium)] hover:!bg-[var(--color-background-neutral-subtlest-hovered)] focus:border-[var(--color-border-brand-bold)] focus:ring-2 focus:ring-[var(--color-border-brand-bold)]/20 focus:ring-offset-0 focus:outline-none active:border-[var(--color-border-primary-medium)]"
                     aria-label="Search"
                   >
-                    <Icon name="search" size="m" color="tertiary" />
+                    <Icon name={Search} size="m" color="tertiary" />
                   </button>
                 </TooltipTrigger>
                 <TooltipContent side="right" className="hidden group-data-[collapsible=icon]:block">
@@ -499,7 +500,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                             <Icon name={item.icon} size="s" />
                             <span>{item.title}</span>
                             <Icon
-                              name="chevron-right"
+                              name={ChevronRight}
                               size="s"
                               className={`ml-auto transition-transform ${
                                 expandedItems[item.title] ? 'rotate-90' : ''
@@ -625,7 +626,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                             <Icon name={item.icon} size="s" />
                             <span>{item.title}</span>
                             <Icon
-                              name="chevron-right"
+                              name={ChevronRight}
                               size="s"
                               className={`ml-auto transition-transform ${
                                 expandedItems[item.title] ? 'rotate-90' : ''
@@ -789,7 +790,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                         {activeTeam.role} at {activeTeam.name}
                       </div>
                     </div>
-                    <Icon name="chevron-down" size="m" className="opacity-50" />
+                    <Icon name={ChevronDown} size="m" className="opacity-50" />
                   </div>
 
                   {/* Collapsed state */}
@@ -855,7 +856,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                         {team.role} • {team.plan} plan
                       </span>
                     </div>
-                    {activeTeam.name === team.name && <Icon name="check" size="m" className="text-[var(--color-icon-brand-bold)]" />}
+                    {activeTeam.name === team.name && <Icon name={Check} size="m" className="text-[var(--color-icon-brand-bold)]" />}
                   </DropdownMenuItem>
                 ))}
 
@@ -870,14 +871,14 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                   onSelect={() => onNavigationModeChange('sidebar')}
                 >
                   <span className="flex-1">New sidebar navigation</span>
-                  {navigationMode === 'sidebar' && <Icon name="check" size="m" className="text-[var(--color-icon-brand-bold)]" />}
+                  {navigationMode === 'sidebar' && <Icon name={Check} size="m" className="text-[var(--color-icon-brand-bold)]" />}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="mx-1 mb-1 cursor-pointer gap-2 px-2"
                   onSelect={() => onNavigationModeChange('horizontal')}
                 >
                   <span className="flex-1">Old horizontal menu</span>
-                  {navigationMode === 'horizontal' && <Icon name="check" size="m" className="text-[var(--color-icon-brand-bold)]" />}
+                  {navigationMode === 'horizontal' && <Icon name={Check} size="m" className="text-[var(--color-icon-brand-bold)]" />}
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator />
@@ -941,14 +942,14 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
 
           <CommandGroup heading="Quick actions">
             <CommandItem onSelect={() => console.log('Reload')}>
-              <Icon name="rotate-ccw" size="s" className="mr-2" />
+              <Icon name={RotateCcw} size="s" className="mr-2" />
               <span>Reload Page</span>
               <span className="text-caption-sm ml-auto text-[var(--color-text-tertiary)]">
                 {isMacOS() ? '⌘' : 'Ctrl'}R
               </span>
             </CommandItem>
             <CommandItem onSelect={() => setCommandOpen(false)}>
-              <Icon name="search" size="s" className="mr-2" />
+              <Icon name={Search} size="s" className="mr-2" />
               <span>Search</span>
               <span className="text-caption-sm ml-auto text-[var(--color-text-tertiary)]">
                 {isMacOS() ? '⌘' : 'Ctrl'}K

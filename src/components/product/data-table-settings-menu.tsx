@@ -15,6 +15,7 @@ import {
 } from "../fundamental/select";
 import { Toggle } from "../fundamental/toggle";
 import { Icon } from "../fundamental/icon";
+import { ArrowDownNarrowWide, ArrowDownWideNarrow } from "lucide-react";
 import { Input } from "../fundamental/input";
 
 export type ColumnDataType = 'text' | 'number' | 'date' | 'boolean';
@@ -202,13 +203,13 @@ export function DataTableSettingsMenu({
                         <SelectContent>
                           <SelectItem value="asc">
                             <div className="flex items-center gap-2">
-                              <Icon name="arrow-down-narrow-wide" size="s" />
+                              <Icon name={ArrowDownNarrowWide} size="s" />
                               <span>{directionLabels.asc}</span>
                             </div>
                           </SelectItem>
                           <SelectItem value="desc">
                             <div className="flex items-center gap-2">
-                              <Icon name="arrow-down-wide-narrow" size="s" />
+                              <Icon name={ArrowDownWideNarrow} size="s" />
                               <span>{directionLabels.desc}</span>
                             </div>
                           </SelectItem>

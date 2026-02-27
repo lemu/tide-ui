@@ -3,6 +3,7 @@ import { cn } from "../../lib/utils";
 import { Button } from "./button";
 import { ButtonGroup } from "./button-group";
 import { Icon } from "./icon";
+import { ArrowLeftToLine, ArrowLeft, ArrowRight, ArrowRightToLine, ChevronDown, Check } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -77,7 +78,7 @@ const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
               aria-label="Go to first page"
               className="px-[var(--space-s)] aspect-square"
             >
-              <Icon name="arrow-left-to-line" className="w-4 h-4" />
+              <Icon name={ArrowLeftToLine} className="w-4 h-4" />
             </Button>
           )}
           <Button
@@ -87,7 +88,7 @@ const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
             className="px-[var(--space-s)] aspect-square"
             onMouseEnter={!isFirstPage ? onPreviousPageHover : undefined}
           >
-            <Icon name="arrow-left" className="w-4 h-4" />
+            <Icon name={ArrowLeft} className="w-4 h-4" />
           </Button>
           <Button
             onClick={goToNextPage}
@@ -96,7 +97,7 @@ const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
             className="px-[var(--space-s)] aspect-square"
             onMouseEnter={!isLastPage ? onNextPageHover : undefined}
           >
-            <Icon name="arrow-right" className="w-4 h-4" />
+            <Icon name={ArrowRight} className="w-4 h-4" />
           </Button>
           {variant === "full" && (
             <Button
@@ -105,7 +106,7 @@ const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
               aria-label="Go to last page"
               className="px-[var(--space-s)] aspect-square"
             >
-              <Icon name="arrow-right-to-line" className="w-4 h-4" />
+              <Icon name={ArrowRightToLine} className="w-4 h-4" />
             </Button>
           )}
         </ButtonGroup>
@@ -120,7 +121,7 @@ const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
                   : `${startItem}-${endItem} of ${totalItems}`
                 }
               </span>
-              <Icon name="chevron-down" className="w-4 h-4" />
+              <Icon name={ChevronDown} className="w-4 h-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="min-w-[80px]">
@@ -136,7 +137,7 @@ const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
               >
                 {option}
                 {option === pageSize && (
-                  <Icon name="check" className="w-4 h-4 ml-auto text-[var(--color-icon-brand-bold)]" />
+                  <Icon name={Check} className="w-4 h-4 ml-auto text-[var(--color-icon-brand-bold)]" />
                 )}
               </DropdownMenuItem>
             ))}

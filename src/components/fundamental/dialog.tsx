@@ -2,6 +2,7 @@ import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { cn } from "../../lib/utils";
 import { Icon } from "./icon";
+import { X } from "lucide-react";
 import { Button } from "./button";
 
 const Dialog = DialogPrimitive.Root;
@@ -49,7 +50,7 @@ const DialogContent = React.forwardRef<
           size="s"
           className="absolute top-3 right-3 h-8 w-8 p-0"
         >
-          <Icon name="x" size="m" />
+          <Icon name={X} size="m" />
           <span className="sr-only">Close</span>
         </Button>
       </DialogPrimitive.Close>

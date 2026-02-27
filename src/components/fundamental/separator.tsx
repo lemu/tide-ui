@@ -3,6 +3,7 @@ import * as SeparatorPrimitive from "@radix-ui/react-separator";
 
 import { cn } from "../../lib/utils";
 import { Icon } from "./icon";
+import { Dot } from "./custom-icons";
 
 export interface SeparatorProps
   extends React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root> {
@@ -42,7 +43,7 @@ const Separator = React.forwardRef<
           )}
           {...props}
         >
-          <Icon name="dot" size="l" color="tertiary" />
+          <Icon name={Dot} size="l" color="tertiary" />
         </div>
       );
     }

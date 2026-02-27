@@ -276,7 +276,43 @@ export type { Country, CountryDropdownProps, CountryDropdownTriggerProps } from 
 
 // Icon component
 export { Icon } from './fundamental/icon'
-export type { IconColor, IconSize, CustomIconName, IconComponent, IconType } from './fundamental/icon'
+export type { IconColor, IconSize, IconComponent, IconType } from './fundamental/icon'
+
+// Custom icon components
+export {
+  Dot,
+  ShipLoad,
+  ShipUnload,
+  StarFull,
+  InfoFilled,
+  ChartMarkerBar,
+  ChartMarkerLine,
+  ChartMarkerDashline,
+  ChartMarkerDashline2,
+  ChartMarkerDotline,
+  ChartMarkerDot,
+  BubbleSize,
+  BrokenScale,
+  UserCreatedBy,
+  UserOwner,
+  UserCharterer,
+  UserBroker,
+  HexagonDashed,
+  HexagonAsterisk,
+  HexagonMinus,
+  CircleDashedArrowDown,
+  CircleDashedArrowUp,
+  CircleDiamond,
+  CircleDot2,
+  CircleCheck2,
+  SquareCornerCheck,
+  SquareCornerPlus,
+  SquareDashedChartGantt,
+  SquareDashedCornerPlus,
+  SquareDiamond,
+  Approved,
+  PendingApproval,
+} from './fundamental/custom-icons'
 
 // Kbd components
 export { Kbd, KbdGroup } from './fundamental/kbd'

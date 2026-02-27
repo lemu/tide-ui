@@ -1,12 +1,13 @@
 import { Toaster as Sonner } from "sonner";
 import { cn } from "../../lib/utils";
 import { Spinner } from "./spinner";
-import { Icon } from "./icon";
+import { Icon, type IconType } from "./icon";
+import { CircleCheck, TriangleAlert, CircleAlert } from "lucide-react";
 
 type ToasterProps = React.ComponentProps<typeof Sonner>;
 
 // Icon wrapper with blur glow effect
-const ToastIcon = ({ name, color, blurColor }: { name: string; color?: string; blurColor?: string }) => (
+const ToastIcon = ({ name, color, blurColor }: { name: IconType; color?: string; blurColor?: string }) => (
   <div className="relative">
     {blurColor && (
       <div
@@ -27,9 +28,9 @@ const Toaster = ({ className, ...props }: ToasterProps) => {
       className={cn("toaster group", className)}
       icons={{
         loading: <Spinner size="m" variant="primary" className="mt-1" />,
-        success: <ToastIcon name="circle-check" color="text-[var(--color-icon-success-bold)]" blurColor="#1C741F" />,
-        error: <ToastIcon name="triangle-alert" color="text-[var(--color-icon-error-bold)]" blurColor="#D9493E" />,
-        warning: <ToastIcon name="circle-alert" color="text-[var(--color-icon-warning-bold)]" blurColor="#E57F19" />,
+        success: <ToastIcon name={CircleCheck} color="text-[var(--color-icon-success-bold)]" blurColor="#1C741F" />,
+        error: <ToastIcon name={TriangleAlert} color="text-[var(--color-icon-error-bold)]" blurColor="#D9493E" />,
+        warning: <ToastIcon name={CircleAlert} color="text-[var(--color-icon-warning-bold)]" blurColor="#E57F19" />,
         info: null,
       }}
       toastOptions={{

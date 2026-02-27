@@ -1,6 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import * as LucideIcons from 'lucide-react'
 import { Icon, IconColor, IconSize } from '../components/fundamental/icon'
+import {
+  Dot, ShipLoad, ShipUnload, StarFull, InfoFilled,
+  ChartMarkerBar, ChartMarkerLine, ChartMarkerDashline, ChartMarkerDashline2,
+  ChartMarkerDotline, ChartMarkerDot, BubbleSize, BrokenScale,
+  UserCreatedBy, UserOwner, UserCharterer, UserBroker,
+  HexagonDashed, HexagonAsterisk, HexagonMinus,
+  CircleDashedArrowDown, CircleDashedArrowUp, CircleDiamond, CircleDot2, CircleCheck2,
+  SquareCornerCheck, SquareCornerPlus, SquareDashedChartGantt, SquareDashedCornerPlus, SquareDiamond,
+  Approved, PendingApproval,
+} from '../components/fundamental/custom-icons'
 
 const meta: Meta<typeof Icon> = {
   title: 'NPM • Fundamental/Icon',
@@ -142,28 +152,50 @@ export const AllLucideIcons: Story = {
 // Custom Icons - All custom icons available in the library
 export const CustomIcons: Story = {
   render: () => {
-    const customIcons = [
-      'chart-marker-bar', 'chart-marker-line', 'chart-marker-dashline', 'chart-marker-dashline2',
-      'chart-marker-dotline', 'chart-marker-dot', 'dot', 'bubble-size', 'broken-scale',
-      'ship-unload', 'ship-load', 'star-full', 'user-created-by', 'user-owner', 'user-charterer',
-      'user-broker', 'order-distributed', 'order-withdrawn', 'order-draft', 'negotiation-indicative-bid',
-      'negotiation-indicative-offer', 'negotiation-firm-bid', 'negotiation-firm-offer', 'negotiation-expired',
-      'negotiation-withdrawn', 'negotiation-subs-failed', 'negotiation-firm', 'on-subs',
-      'negotiation-on-subs-amendment', 'negotiation-fixed', 'contract-draft', 'addenda-draft',
-      'contract-working-copy', 'addenda-working-copy', 'contract-final', 'contract-rejected',
-      'addenda-final', 'contract-on-subs', 'contract-canceled', 'contract-failed', 'approved',
-      'pending-approval', 'info-filled'
+    const customIconComponents = [
+      { name: 'Dot', component: Dot },
+      { name: 'ShipLoad', component: ShipLoad },
+      { name: 'ShipUnload', component: ShipUnload },
+      { name: 'StarFull', component: StarFull },
+      { name: 'InfoFilled', component: InfoFilled },
+      { name: 'ChartMarkerBar', component: ChartMarkerBar },
+      { name: 'ChartMarkerLine', component: ChartMarkerLine },
+      { name: 'ChartMarkerDashline', component: ChartMarkerDashline },
+      { name: 'ChartMarkerDashline2', component: ChartMarkerDashline2 },
+      { name: 'ChartMarkerDotline', component: ChartMarkerDotline },
+      { name: 'ChartMarkerDot', component: ChartMarkerDot },
+      { name: 'BubbleSize', component: BubbleSize },
+      { name: 'BrokenScale', component: BrokenScale },
+      { name: 'UserCreatedBy', component: UserCreatedBy },
+      { name: 'UserOwner', component: UserOwner },
+      { name: 'UserCharterer', component: UserCharterer },
+      { name: 'UserBroker', component: UserBroker },
+      { name: 'HexagonDashed', component: HexagonDashed },
+      { name: 'HexagonAsterisk', component: HexagonAsterisk },
+      { name: 'HexagonMinus', component: HexagonMinus },
+      { name: 'CircleDashedArrowDown', component: CircleDashedArrowDown },
+      { name: 'CircleDashedArrowUp', component: CircleDashedArrowUp },
+      { name: 'CircleDiamond', component: CircleDiamond },
+      { name: 'CircleDot2', component: CircleDot2 },
+      { name: 'CircleCheck2', component: CircleCheck2 },
+      { name: 'SquareCornerCheck', component: SquareCornerCheck },
+      { name: 'SquareCornerPlus', component: SquareCornerPlus },
+      { name: 'SquareDashedChartGantt', component: SquareDashedChartGantt },
+      { name: 'SquareDashedCornerPlus', component: SquareDashedCornerPlus },
+      { name: 'SquareDiamond', component: SquareDiamond },
+      { name: 'Approved', component: Approved },
+      { name: 'PendingApproval', component: PendingApproval },
     ];
 
     return (
       <div className="grid grid-cols-8 gap-[var(--space-l)]">
-        {customIcons.map((iconName) => (
-          <div key={iconName} className="flex flex-col items-center gap-[var(--space-s)]">
+        {customIconComponents.map(({ name, component }) => (
+          <div key={name} className="flex flex-col items-center gap-[var(--space-s)]">
             <div className="flex h-[var(--size-xl)] w-[var(--size-xl)] items-center justify-center rounded-s bg-[var(--color-surface-secondary)]">
-              <Icon name={iconName} size="l" />
+              <Icon name={component} size="l" />
             </div>
             <span className="text-caption-xsm text-center text-[var(--color-text-tertiary)]">
-              {iconName}
+              {name}
             </span>
           </div>
         ))}
@@ -177,9 +209,9 @@ export const ComponentIcons: Story = {
     <div className="space-y-[var(--space-xl)]">
 
       <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)] space-y-[var(--space-m)]">
-        <h3 className="text-heading-sm text-[var(--color-text-primary)]">String name — simple, includes full Lucide bundle</h3>
+        <h3 className="text-heading-sm text-[var(--color-text-primary)]">String name — static map, ~60 built-in icons</h3>
         <p className="text-body-sm text-[var(--color-text-secondary)]">
-          Passing a string is the easiest API. Internally the component does a runtime lookup (kebab-case → component), which requires importing all of lucide-react (~212 KB ESM). Any consumer that imports <code>Icon</code> will include the full Lucide barrel in their bundle, even if they only use two or three icons.
+          Passing a string looks up the icon in a static map of ~60 commonly-used Lucide icons. These are already bundled with the library. Strings not in the map render a placeholder — use a component reference instead.
         </p>
         <div className="flex items-center gap-[var(--space-m)]">
           <Icon name="settings" size="m" />
@@ -216,8 +248,8 @@ export const ComponentIcons: Story = {
           <div className="text-[var(--color-text-tertiary)]">When to use</div>
 
           <code className="text-[var(--color-text-primary)]">{`name="settings"`}</code>
-          <div className="text-[var(--color-text-secondary)]">Full Lucide barrel (~212 KB)</div>
-          <div className="text-[var(--color-text-secondary)]">Prototyping, internal tools, bundle size not a concern</div>
+          <div className="text-[var(--color-text-secondary)]">~60 icons from static map (already in bundle)</div>
+          <div className="text-[var(--color-text-secondary)]">Quick use of built-in icons; unknown strings show placeholder</div>
 
           <code className="text-[var(--color-text-primary)]">{`name={Settings}`}</code>
           <div className="text-[var(--color-text-secondary)]">Only the imported icon</div>
@@ -271,24 +303,12 @@ export const UsageExamples: Story = {
 
       <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
         <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
-          Custom Icon
+          Custom Icon (component reference)
         </h3>
         <div className="flex items-center gap-[var(--space-m)]">
-          <Icon name="dot" color="brand" />
+          <Icon name={Dot} color="brand" />
           <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
-            {`<Icon name="dot" color="brand" />`}
-          </code>
-        </div>
-      </div>
-
-      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
-        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
-          Dynamic Lucide Icon
-        </h3>
-        <div className="flex items-center gap-[var(--space-m)]">
-          <Icon name="microscope" size="l" color="information" />
-          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
-            {`<Icon name="microscope" size="l" color="information" />`}
+            {`import { Dot } from '@rafal.lemieszewski/tide-ui'\n<Icon name={Dot} color="brand" />`}
           </code>
         </div>
       </div>

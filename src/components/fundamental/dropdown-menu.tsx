@@ -3,6 +3,7 @@ import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
 import { Check, ChevronLeft, ChevronRight, Circle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useIsDesktop } from "@/lib/hooks"
+import type { IconComponent } from "./icon"
 import {
   Drawer,
   DrawerContent,
@@ -83,7 +84,7 @@ const DropdownMenuDesktopItem = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
     inset?: boolean
     destructive?: boolean
-    icon?: string
+    icon?: string | IconComponent
   }
 >(({ className, inset, destructive, icon, children, ...props }, ref) => (
   <DropdownMenuPrimitive.Item
@@ -201,7 +202,7 @@ const MobileDropdownItem = React.forwardRef<
   Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
     inset?: boolean
     destructive?: boolean
-    icon?: string
+    icon?: string | IconComponent
     autoClose?: boolean
     onSelect?: (e: Event) => void
   }
@@ -286,7 +287,7 @@ const MobileDropdownRadioItem = React.forwardRef<
   Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
     value: string
     checked?: boolean
-    icon?: string
+    icon?: string | IconComponent
     autoClose?: boolean
     onRadioSelect?: (value: string) => void
   }

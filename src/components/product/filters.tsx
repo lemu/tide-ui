@@ -4,6 +4,7 @@ import { Button } from "../fundamental/button"
 import { Input } from "../fundamental/input"
 import { AutocompleteSearch, AutocompleteSuggestion } from "../fundamental/autocomplete-search"
 import { Icon } from "../fundamental/icon"
+import { ListFilter, X, Pin, PinOff } from "lucide-react"
 import { Checkbox } from "../fundamental/checkbox"
 import { RadioGroup, RadioGroupItem } from "../fundamental/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../fundamental/select"
@@ -958,7 +959,7 @@ const FilterSidebarItem = React.memo(function FilterSidebarItem({ filter, isSele
           {isPinned ? (
             <>
               <Icon
-                name="pin"
+                name={Pin}
                 aria-hidden="true"
                 className={cn(
                   "h-[12px] w-[12px] group-hover/pin:hidden",
@@ -966,7 +967,7 @@ const FilterSidebarItem = React.memo(function FilterSidebarItem({ filter, isSele
                 )}
               />
               <Icon
-                name="pin-off"
+                name={PinOff}
                 aria-hidden="true"
                 className={cn(
                   "h-[12px] w-[12px] hidden group-hover/pin:block",
@@ -976,7 +977,7 @@ const FilterSidebarItem = React.memo(function FilterSidebarItem({ filter, isSele
             </>
           ) : (
             <Icon
-              name="pin"
+              name={Pin}
               aria-hidden="true"
               className={cn(
                 "h-[12px] w-[12px]",
@@ -1675,7 +1676,7 @@ export function Filters({
               aria-expanded={isFilterMenuOpen}
               aria-haspopup="dialog"
             >
-              <Icon name="list-filter" className="h-[var(--size-2xs)] w-[var(--size-2xs)]" aria-hidden="true" />
+              <Icon name={ListFilter} className="h-[var(--size-2xs)] w-[var(--size-2xs)]" aria-hidden="true" />
               <span className="text-label-md">Filters</span>
               {activeFilterCount > 0 && (
                 <Badge size="s" intent="neutral" appearance="subtle" aria-hidden="true">
@@ -1790,7 +1791,7 @@ export function Filters({
                     }}
                     className="h-auto w-auto p-[var(--space-xs)]"
                   >
-                    <Icon name="x" className="h-[var(--size-2xs)] w-[var(--size-2xs)]" aria-hidden="true" />
+                    <Icon name={X} className="h-[var(--size-2xs)] w-[var(--size-2xs)]" aria-hidden="true" />
                   </Button>
                 )}
               </div>
@@ -1872,7 +1873,7 @@ export function Filters({
               onClick={() => handleRemoveSearchTerm(searchTerm.value)}
               className="h-auto w-auto p-[var(--space-xs)]"
             >
-              <Icon name="x" className="h-[var(--size-2xs)] w-[var(--size-2xs)]" aria-hidden="true" />
+              <Icon name={X} className="h-[var(--size-2xs)] w-[var(--size-2xs)]" aria-hidden="true" />
             </Button>
           </div>
         )

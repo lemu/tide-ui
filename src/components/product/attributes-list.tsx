@@ -6,6 +6,7 @@ import {
   CollapsibleContent,
 } from "../fundamental/collapsible";
 import { Icon } from "../fundamental/icon";
+import { ExternalLink, ChevronDown } from "lucide-react";
 
 // Size context to share size state across all sub-components
 type AttributesListSize = 's' | 'xs';
@@ -420,7 +421,7 @@ const AttributesRow = React.forwardRef<HTMLDivElement, AttributesRowProps>(
               aria-label={`${externalLink.label} (opens in new tab)`}
             >
               {externalLink.label}
-              <Icon name="external-link" size="s" aria-hidden="true" />
+              <Icon name={ExternalLink} size="s" aria-hidden="true" />
             </a>
           </div>,
           ...rest,

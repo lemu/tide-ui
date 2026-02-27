@@ -1,12 +1,41 @@
 import React from "react";
-import { Icon, IconColor } from "../fundamental/icon";
+import {
+  CircleArrowDown,
+  CircleArrowUp,
+  CircleHelp,
+  CircleMinus,
+  CirclePlus,
+  CircleSlash,
+  ClockAlert,
+  SquareChartGantt,
+  SquareCheck,
+  SquareMinus,
+  SquareSlash,
+  SquareX,
+} from "lucide-react";
+import {
+  CircleCheck2,
+  CircleDashedArrowDown,
+  CircleDashedArrowUp,
+  CircleDiamond,
+  CircleDot2,
+  HexagonAsterisk,
+  HexagonDashed,
+  HexagonMinus,
+  SquareCornerCheck,
+  SquareCornerPlus,
+  SquareDashedChartGantt,
+  SquareDashedCornerPlus,
+  SquareDiamond,
+} from "../fundamental/custom-icons";
+import { Icon, IconColor, IconComponent } from "../fundamental/icon";
 import { Badge } from "../fundamental/badge";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../fundamental/tooltip";
 
 // Status configuration with combined object-status keys
 type StatusConfig = {
-  icon: string;
+  icon: IconComponent;
   color: IconColor;
   objectLabel: string;
   statusLabel: string;
@@ -51,42 +80,42 @@ export type StatusValue =
 // Comprehensive status mapping based on Figma design
 const statusConfig: Record<StatusValue, StatusConfig> = {
   // Order statuses
-  "order-draft": { icon: "hexagon-dashed", color: "tertiary", objectLabel: "Order", statusLabel: "Draft" },
-  "order-distributed": { icon: "hexagon-asterisk", color: "information", objectLabel: "Order", statusLabel: "Distributed" },
-  "order-withdrawn": { icon: "hexagon-minus", color: "error", objectLabel: "Order", statusLabel: "Withdrawn" },
+  "order-draft": { icon: HexagonDashed, color: "tertiary", objectLabel: "Order", statusLabel: "Draft" },
+  "order-distributed": { icon: HexagonAsterisk, color: "information", objectLabel: "Order", statusLabel: "Distributed" },
+  "order-withdrawn": { icon: HexagonMinus, color: "error", objectLabel: "Order", statusLabel: "Withdrawn" },
 
   // Negotiation statuses
-  "negotiation-indicative-offer": { icon: "circle-dashed-arrow-down", color: "information", objectLabel: "Negotiation", statusLabel: "Indicative offer" },
-  "negotiation-indicative-bid": { icon: "circle-dashed-arrow-up", color: "information", objectLabel: "Negotiation", statusLabel: "Indicative bid" },
-  "negotiation-firm-offer": { icon: "circle-arrow-down", color: "information", objectLabel: "Negotiation", statusLabel: "Firm offer" },
-  "negotiation-firm-bid": { icon: "circle-arrow-up", color: "information", objectLabel: "Negotiation", statusLabel: "Firm bid" },
-  "negotiation-firm": { icon: "circle-dot-2", color: "violet", objectLabel: "Negotiation", statusLabel: "Firm" },
-  "negotiation-on-subs": { icon: "circle-diamond", color: "warning", objectLabel: "Negotiation", statusLabel: "On subs" },
-  "negotiation-fixed": { icon: "circle-check-2", color: "success", objectLabel: "Negotiation", statusLabel: "Fixed" },
-  "negotiation-firm-offer-expired": { icon: "clock-alert", color: "error", objectLabel: "Negotiation", statusLabel: "(Firm offer) Expired" },
-  "negotiation-withdrawn": { icon: "circle-minus", color: "error", objectLabel: "Negotiation", statusLabel: "Withdrawn" },
-  "negotiation-firm-amendment": { icon: "circle-plus", color: "violet", objectLabel: "Negotiation", statusLabel: "Firm (Amendment)" },
-  "negotiation-subs-expired": { icon: "clock-alert", color: "error", objectLabel: "Negotiation", statusLabel: "Subs expired" },
-  "negotiation-subs-failed": { icon: "circle-slash", color: "error", objectLabel: "Negotiation", statusLabel: "Subs failed" },
-  "negotiation-on-subs-amendment": { icon: "circle-plus", color: "warning", objectLabel: "Negotiation", statusLabel: "On subs (amendment)" },
+  "negotiation-indicative-offer": { icon: CircleDashedArrowDown, color: "information", objectLabel: "Negotiation", statusLabel: "Indicative offer" },
+  "negotiation-indicative-bid": { icon: CircleDashedArrowUp, color: "information", objectLabel: "Negotiation", statusLabel: "Indicative bid" },
+  "negotiation-firm-offer": { icon: CircleArrowDown, color: "information", objectLabel: "Negotiation", statusLabel: "Firm offer" },
+  "negotiation-firm-bid": { icon: CircleArrowUp, color: "information", objectLabel: "Negotiation", statusLabel: "Firm bid" },
+  "negotiation-firm": { icon: CircleDot2, color: "violet", objectLabel: "Negotiation", statusLabel: "Firm" },
+  "negotiation-on-subs": { icon: CircleDiamond, color: "warning", objectLabel: "Negotiation", statusLabel: "On subs" },
+  "negotiation-fixed": { icon: CircleCheck2, color: "success", objectLabel: "Negotiation", statusLabel: "Fixed" },
+  "negotiation-firm-offer-expired": { icon: ClockAlert, color: "error", objectLabel: "Negotiation", statusLabel: "(Firm offer) Expired" },
+  "negotiation-withdrawn": { icon: CircleMinus, color: "error", objectLabel: "Negotiation", statusLabel: "Withdrawn" },
+  "negotiation-firm-amendment": { icon: CirclePlus, color: "violet", objectLabel: "Negotiation", statusLabel: "Firm (Amendment)" },
+  "negotiation-subs-expired": { icon: ClockAlert, color: "error", objectLabel: "Negotiation", statusLabel: "Subs expired" },
+  "negotiation-subs-failed": { icon: CircleSlash, color: "error", objectLabel: "Negotiation", statusLabel: "Subs failed" },
+  "negotiation-on-subs-amendment": { icon: CirclePlus, color: "warning", objectLabel: "Negotiation", statusLabel: "On subs (amendment)" },
 
   // Contract statuses
-  "contract-draft": { icon: "square-dashed-chart-gantt", color: "tertiary", objectLabel: "Contract", statusLabel: "Draft" },
-  "contract-working-copy": { icon: "square-chart-gantt", color: "information", objectLabel: "Contract", statusLabel: "Working copy" },
-  "contract-final": { icon: "square-check", color: "success", objectLabel: "Contract", statusLabel: "Final" },
-  "contract-rejected": { icon: "square-x", color: "error", objectLabel: "Contract", statusLabel: "Rejected" },
+  "contract-draft": { icon: SquareDashedChartGantt, color: "tertiary", objectLabel: "Contract", statusLabel: "Draft" },
+  "contract-working-copy": { icon: SquareChartGantt, color: "information", objectLabel: "Contract", statusLabel: "Working copy" },
+  "contract-final": { icon: SquareCheck, color: "success", objectLabel: "Contract", statusLabel: "Final" },
+  "contract-rejected": { icon: SquareX, color: "error", objectLabel: "Contract", statusLabel: "Rejected" },
 
   // Addenda statuses
-  "addenda-draft": { icon: "square-dashed-corner-plus", color: "tertiary", objectLabel: "Addenda", statusLabel: "Draft" },
-  "addenda-working-copy": { icon: "square-corner-plus", color: "information", objectLabel: "Addenda", statusLabel: "Working copy" },
-  "addenda-final": { icon: "square-corner-check", color: "success", objectLabel: "Addenda", statusLabel: "Final" },
+  "addenda-draft": { icon: SquareDashedCornerPlus, color: "tertiary", objectLabel: "Addenda", statusLabel: "Draft" },
+  "addenda-working-copy": { icon: SquareCornerPlus, color: "information", objectLabel: "Addenda", statusLabel: "Working copy" },
+  "addenda-final": { icon: SquareCornerCheck, color: "success", objectLabel: "Addenda", statusLabel: "Final" },
 
   // Recap Manager statuses
-  "recap-manager-draft": { icon: "square-dashed-chart-gantt", color: "tertiary", objectLabel: "Recap manager", statusLabel: "Draft" },
-  "recap-manager-on-subs": { icon: "square-diamond", color: "warning", objectLabel: "Recap manager", statusLabel: "On subs" },
-  "recap-manager-fully-fixed": { icon: "square-check", color: "success", objectLabel: "Recap manager", statusLabel: "Fully fixed" },
-  "recap-manager-canceled": { icon: "square-minus", color: "error", objectLabel: "Recap manager", statusLabel: "Canceled" },
-  "recap-manager-failed": { icon: "square-slash", color: "error", objectLabel: "Recap manager", statusLabel: "Failed" },
+  "recap-manager-draft": { icon: SquareDashedChartGantt, color: "tertiary", objectLabel: "Recap manager", statusLabel: "Draft" },
+  "recap-manager-on-subs": { icon: SquareDiamond, color: "warning", objectLabel: "Recap manager", statusLabel: "On subs" },
+  "recap-manager-fully-fixed": { icon: SquareCheck, color: "success", objectLabel: "Recap manager", statusLabel: "Fully fixed" },
+  "recap-manager-canceled": { icon: SquareMinus, color: "error", objectLabel: "Recap manager", statusLabel: "Canceled" },
+  "recap-manager-failed": { icon: SquareSlash, color: "error", objectLabel: "Recap manager", statusLabel: "Failed" },
 };
 
 // Size configuration
@@ -207,7 +236,7 @@ const FixtureStatus = React.forwardRef<HTMLDivElement, FixtureStatusProps>(
           {...props}
         >
           <span className={cn("flex-shrink-0", iconTranslateClasses[size])}>
-            <Icon name="circle-help" size={iconSizeMapping[size]} color="secondary" />
+            <Icon name={CircleHelp} size={iconSizeMapping[size]} color="secondary" />
           </span>
           <span className={textColorClasses.secondary}>
             Unknown status

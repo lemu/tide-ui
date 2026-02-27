@@ -276,7 +276,7 @@ export type { TreeProps, TreeDataItem } from '../components/core-index'
 
 // Icon
 export { Icon } from '../components/core-index'
-export type { IconColor, IconSize, CustomIconName } from '../components/core-index'
+export type { IconColor, IconSize, IconComponent, IconType } from '../components/core-index'
 
 // Kbd
 export { Kbd, KbdGroup } from '../components/core-index'

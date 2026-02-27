@@ -3,6 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '../../lib/utils'
 import { Button } from './button'
 import { Icon } from './icon'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 // Type Definitions
 export interface MonthPickerProps {
@@ -243,7 +244,7 @@ export const MonthPicker = React.forwardRef<HTMLDivElement, MonthPickerProps>(
               onClick={handlePreviousYear}
               className={cn(sizeClasses.navButton, "p-0 shrink-0")}
             >
-              <Icon name="chevron-left" className={sizeClasses.navIcon} />
+              <Icon name={ChevronLeft} className={sizeClasses.navIcon} />
             </Button>
           )}
 
@@ -301,7 +302,7 @@ export const MonthPicker = React.forwardRef<HTMLDivElement, MonthPickerProps>(
               onClick={handleNextYear}
               className={cn(sizeClasses.navButton, "p-0 shrink-0")}
             >
-              <Icon name="chevron-right" className={sizeClasses.navIcon} />
+              <Icon name={ChevronRight} className={sizeClasses.navIcon} />
             </Button>
           )}
         </div>

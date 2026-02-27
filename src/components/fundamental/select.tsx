@@ -3,6 +3,7 @@ import * as SelectPrimitive from "@radix-ui/react-select";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 import { Icon } from "./icon";
+import { ChevronDown, ChevronUp, Check } from "lucide-react";
 
 const selectTriggerVariants = cva(
   "flex w-full items-center justify-between gap-[var(--space-xs)] rounded-s border bg-[var(--color-surface-primary)] text-[var(--color-text-primary)] transition-all duration-150 ease-in-out placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-100 disabled:bg-[var(--color-background-disabled)] disabled:text-[var(--color-text-disabled)]",
@@ -81,7 +82,7 @@ const SelectTrigger = React.forwardRef<
     >
       {children}
       <SelectPrimitive.Icon asChild>
-        <Icon name="chevron-down" size={iconSize} />
+        <Icon name={ChevronDown} size={iconSize} />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   );
@@ -110,7 +111,7 @@ const SelectContent = React.forwardRef<
       {...props}
     >
       <SelectPrimitive.ScrollUpButton className="flex cursor-default items-center justify-center py-1">
-        <Icon name="chevron-up" size="s" />
+        <Icon name={ChevronUp} size="s" />
       </SelectPrimitive.ScrollUpButton>
       <SelectPrimitive.Viewport
         className={cn(
@@ -122,7 +123,7 @@ const SelectContent = React.forwardRef<
         <div className="flex flex-col gap-1">{children}</div>
       </SelectPrimitive.Viewport>
       <SelectPrimitive.ScrollDownButton className="flex cursor-default items-center justify-center py-1">
-        <Icon name="chevron-down" size="s" />
+        <Icon name={ChevronDown} size="s" />
       </SelectPrimitive.ScrollDownButton>
     </SelectPrimitive.Content>
   </SelectPrimitive.Portal>
@@ -145,7 +146,7 @@ const SelectItem = React.forwardRef<
 
     <span className="absolute right-2 flex h-4 w-4 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <Icon name="check" size="s" color="brand" />
+        <Icon name={Check} size="s" color="brand" />
       </SelectPrimitive.ItemIndicator>
     </span>
   </SelectPrimitive.Item>

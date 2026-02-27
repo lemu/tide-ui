@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "./button"
 import { Separator } from "./separator"
 import { Icon } from "./icon"
+import { PanelLeft } from "lucide-react"
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -250,7 +251,7 @@ const SidebarTrigger = React.forwardRef<
       }}
       {...props}
     >
-      <Icon name="panel-left" size="s" />
+      <Icon name={PanelLeft} size="s" />
       <span className="sr-only">Toggle sidebar</span>
     </Button>
   )

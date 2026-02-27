@@ -1,5 +1,6 @@
 import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import { Loader2, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Icon, IconType, IconSize } from "./icon";
 
@@ -176,7 +177,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const renderSpinner = () => {
       if (!loading) return null;
-      return <Icon name="loader-2" size={iconSize} color={iconColor} className="animate-spin" />;
+      return <Icon name={Loader2} size={iconSize} color={iconColor} className="animate-spin" />;
     };
 
     const renderIcon = () => {
@@ -187,7 +188,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const renderDropdown = () => {
       if (!dropdown) return null;
-      return <Icon name="chevron-down" size={iconSize} color={iconColor} />;
+      return <Icon name={ChevronDown} size={iconSize} color={iconColor} />;
     };
 
     const actualIconPosition =

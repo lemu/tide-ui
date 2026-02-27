@@ -280,7 +280,7 @@ export type { TreeProps, TreeDataItem } from './fundamental/tree'
 
 // Icon component
 export { Icon } from './fundamental/icon'
-export type { IconColor, IconSize, CustomIconName } from './fundamental/icon'
+export type { IconColor, IconSize, IconComponent, IconType } from './fundamental/icon'
 
 // Kbd components
 export { Kbd, KbdGroup } from './fundamental/kbd'

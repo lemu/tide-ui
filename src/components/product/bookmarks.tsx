@@ -3,6 +3,7 @@ import { cn } from "../../lib/utils";
 import { Button } from "../fundamental/button";
 import { ButtonGroup } from "../fundamental/button-group";
 import { Icon } from "../fundamental/icon";
+import { Bookmark as BookmarkIcon, Pencil, Trash2, Star, MoreHorizontal, Check, ChevronDown } from "lucide-react";
 import { Separator } from "../fundamental/separator";
 import {
   Select,
@@ -255,7 +256,7 @@ function BookmarkSplitButton({
               : "rounded-l-m !rounded-r-none !border-r-0",
           )}
         >
-          <Icon name="bookmark" size="m" color="primary" />
+          <Icon name={BookmarkIcon} size="m" color="primary" />
           {activeBookmark?.name || "Bookmarks"}
         </SelectTrigger>
         <SelectContent align="start" position="popper" className="min-w-[200px]">
@@ -285,13 +286,13 @@ function BookmarkSplitButton({
                 <SelectItem key={bookmark.id} value={bookmark.id}>
                   <div className="flex items-center gap-[var(--space-s)] pr-6">
                     <Icon
-                      name="bookmark"
+                      name={BookmarkIcon}
                       className="h-[var(--size-2xs)] w-[var(--size-2xs)]"
                     />
                     <span className="truncate">{bookmark.name}</span>
                     {bookmark.isDefault && (
                       <Icon
-                        name="star"
+                        name={Star}
                         className="h-[var(--size-2xs)] w-[var(--size-2xs)] flex-shrink-0 text-[var(--color-icon-warning-bold)]"
                       />
                     )}
@@ -324,7 +325,7 @@ function BookmarkSplitButton({
             }}
             disabled={isSystemBookmark}
           >
-            <Icon name="pencil" className="mr-2 h-4 w-4" />
+            <Icon name={Pencil} className="mr-2 h-4 w-4" />
             Rename
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -338,7 +339,7 @@ function BookmarkSplitButton({
             disabled={isSystemBookmark}
             destructive
           >
-            <Icon name="trash-2" className="mr-2 h-4 w-4" />
+            <Icon name={Trash2} className="mr-2 h-4 w-4" />
             Delete
           </DropdownMenuItem>
           {!isSystemBookmark && (
@@ -386,7 +387,7 @@ function SaveDropdown({ onUpdate, onCreate }: SaveDropdownProps) {
         >
           <span className="text-label-md">Save</span>
           <Icon
-            name="chevron-down"
+            name={ChevronDown}
             className="h-[var(--size-2xs)] w-[var(--size-2xs)]"
           />
         </Button>
@@ -524,7 +525,7 @@ const BookmarkTab = React.memo(
             <div className="flex items-center gap-[var(--space-xs)]">
               {isUserBookmark && (
                 <Icon
-                  name="bookmark"
+                  name={BookmarkIcon}
                   size="s"
                   color="secondary"
                   className="flex-shrink-0"
@@ -548,7 +549,7 @@ const BookmarkTab = React.memo(
                     onClick={(e) => e.stopPropagation()}
                   >
                     <Icon
-                      name="more-horizontal"
+                      name={MoreHorizontal}
                       className="h-[var(--size-2xs)] w-[var(--size-2xs)]"
                     />
                   </Button>
@@ -560,7 +561,7 @@ const BookmarkTab = React.memo(
                       handleRename();
                     }}
                   >
-                    <Icon name="pencil" className="mr-2 h-4 w-4" />
+                    <Icon name={Pencil} className="mr-2 h-4 w-4" />
                     Rename
                   </DropdownMenuItem>
                   <DropdownMenuItem
@@ -570,7 +571,7 @@ const BookmarkTab = React.memo(
                     }}
                     destructive
                   >
-                    <Icon name="trash-2" className="mr-2 h-4 w-4" />
+                    <Icon name={Trash2} className="mr-2 h-4 w-4" />
                     Delete
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -947,7 +948,7 @@ function BookmarkTabs({
               )}
             >
               <Icon
-                name="chevron-down"
+                name={ChevronDown}
                 className="h-[var(--size-2xs)] w-[var(--size-2xs)]"
               />
             </button>
@@ -977,7 +978,7 @@ function BookmarkTabs({
                   >
                     {isUserBookmark && (
                       <Icon
-                        name="bookmark"
+                        name={BookmarkIcon}
                         className="h-[var(--size-2xs)] w-[var(--size-2xs)]"
                         aria-hidden="true"
                       />
@@ -999,14 +1000,14 @@ function BookmarkTabs({
                     </div>
                     {bookmark.isDefault && (
                       <Icon
-                        name="star"
+                        name={Star}
                         className="h-[var(--size-2xs)] w-[var(--size-2xs)] text-[var(--color-icon-warning-bold)]"
                         aria-hidden="true"
                       />
                     )}
                     {isActive && (
                       <Icon
-                        name="check"
+                        name={Check}
                         className="h-[var(--size-2xs)] w-[var(--size-2xs)] text-[var(--color-icon-primary)]"
                         aria-hidden="true"
                       />

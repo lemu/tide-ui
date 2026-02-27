@@ -11,6 +11,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "../fundamental/card";
 import { Button } from "../fundamental/button";
 import { Icon } from "../fundamental/icon";
+import { Filter, X, Info } from "lucide-react";
 import { Badge } from "../fundamental/badge";
 import { cn } from "@/lib/utils";
 
@@ -207,14 +208,14 @@ export function LinkedChart({
               variant={isRowFilterActive ? "default" : "ghost"}
               onClick={() => setIsRowFilterActive(!isRowFilterActive)}
             >
-              <Icon name="filter" size="s" className="mr-[var(--space-xs)]" />
+              <Icon name={Filter} size="s" className="mr-[var(--space-xs)]" />
               Filter selected
             </Button>
           )}
 
           {(selectedRows.size > 0 || filteredIndices.size > 0 || isRowFilterActive) && (
             <Button variant="ghost" size="s" onClick={clearAll}>
-              <Icon name="x" size="s" className="mr-[var(--space-s)]" />
+              <Icon name={X} size="s" className="mr-[var(--space-s)]" />
               Clear all
             </Button>
           )}
@@ -297,7 +298,7 @@ export function LinkedChart({
         <Card className="border-[var(--color-border-info-bold)]">
           <CardContent className="p-[var(--space-m)]">
             <div className="flex items-start gap-[var(--space-s)]">
-              <Icon name="info" size="s" color="information" className="mt-1" />
+              <Icon name={Info} size="s" color="information" className="mt-1" />
               <div className="space-y-[var(--space-xs)] text-body-sm text-[var(--color-text-secondary)]">
                 <p>
                   <strong>Interactive Features:</strong>

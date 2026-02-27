@@ -19,6 +19,7 @@ import { Switch } from "../fundamental/switch";
 import { Label } from "../fundamental/label";
 import { Separator } from "../fundamental/separator";
 import { Icon } from "../fundamental/icon";
+import { ArrowDownNarrowWide, ArrowDownWideNarrow } from "lucide-react";
 import { Input } from "../fundamental/input";
 
 export type ViewMode = 'table' | 'folders' | 'columns';
@@ -399,13 +400,13 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                               <>
                                 <SelectItem value="asc">
                                   <div className="flex items-center gap-2">
-                                    <Icon name="arrow-down-narrow-wide" size="s" />
+                                    <Icon name={ArrowDownNarrowWide} size="s" />
                                     <span>{directionLabels.asc}</span>
                                   </div>
                                 </SelectItem>
                                 <SelectItem value="desc">
                                   <div className="flex items-center gap-2">
-                                    <Icon name="arrow-down-wide-narrow" size="s" />
+                                    <Icon name={ArrowDownWideNarrow} size="s" />
                                     <span>{directionLabels.desc}</span>
                                   </div>
                                 </SelectItem>
@@ -516,13 +517,13 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                             <>
                               <SelectItem value="asc">
                                 <div className="flex items-center gap-2">
-                                  <Icon name="arrow-down-narrow-wide" size="s" />
+                                  <Icon name={ArrowDownNarrowWide} size="s" />
                                   <span>{directionLabels.asc}</span>
                                 </div>
                               </SelectItem>
                               <SelectItem value="desc">
                                 <div className="flex items-center gap-2">
-                                  <Icon name="arrow-down-wide-narrow" size="s" />
+                                  <Icon name={ArrowDownWideNarrow} size="s" />
                                   <span>{directionLabels.desc}</span>
                                 </div>
                               </SelectItem>
@@ -596,13 +597,13 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
                               <>
                                 <SelectItem value="asc">
                                   <div className="flex items-center gap-2">
-                                    <Icon name="arrow-down-narrow-wide" size="s" />
+                                    <Icon name={ArrowDownNarrowWide} size="s" />
                                     <span>{directionLabels.asc}</span>
                                   </div>
                                 </SelectItem>
                                 <SelectItem value="desc">
                                   <div className="flex items-center gap-2">
-                                    <Icon name="arrow-down-wide-narrow" size="s" />
+                                    <Icon name={ArrowDownWideNarrow} size="s" />
                                     <span>{directionLabels.desc}</span>
                                   </div>
                                 </SelectItem>

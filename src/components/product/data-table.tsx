@@ -52,6 +52,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../fundamental/select"
 import { Checkbox } from "../fundamental/checkbox"
 import { Icon } from "../fundamental/icon"
+import { X, Filter, PlusCircle, ArrowUpToLine, ArrowDownToLine, AlertCircle, GripVertical } from "lucide-react";
 import { Badge } from "../fundamental/badge"
 import { Popover, PopoverContent, PopoverTrigger } from "../fundamental/popover"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../fundamental/command"
@@ -772,7 +773,7 @@ const DataTableToolbar = React.memo(function DataTableToolbar<TData>({
             className="h-8 px-2 lg:px-3"
           >
             Reset
-            <Icon name="x" className="ml-2 h-4 w-4" />
+            <Icon name={X} className="ml-2 h-4 w-4" />
           </Button>
         )}
       </div>
@@ -864,7 +865,7 @@ const DataTableGlobalFaceting = React.memo(function DataTableGlobalFaceting({ ta
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="ghost" size="s" className="h-8 border-dashed">
-          <Icon name="filter" className="mr-2 h-4 w-4" />
+          <Icon name={Filter} className="mr-2 h-4 w-4" />
           Global Faceting
           {selectedValues.length > 0 && (
             <>
@@ -968,7 +969,7 @@ const DataTableFilter = React.memo(function DataTableFilter({ column }: DataTabl
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="ghost" size="s" className="h-8 border-dashed">
-            <Icon name="plus-circle" className="mr-2 h-4 w-4" />
+            <Icon name={PlusCircle} className="mr-2 h-4 w-4" />
             {label}
             {selectedValues.length > 0 && (
               <>
@@ -1109,7 +1110,7 @@ const DraggableColumnHeader = React.memo(function DraggableColumnHeader({ header
           {...listeners}
         >
           <Icon
-            name="grip-vertical"
+            name={GripVertical}
             className="h-3 w-3 text-[var(--color-text-tertiary)]"
           />
         </div>
@@ -4668,7 +4669,7 @@ export function DataTable<TData, TValue>({
                                         className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                         title="Pin to top"
                                       >
-                                        <Icon name="arrow-up-to-line" className="h-3 w-3" />
+                                        <Icon name={ArrowUpToLine} className="h-3 w-3" />
                                       </button>
                                     )}
                                     {row.getIsPinned() !== 'bottom' && (
@@ -4678,7 +4679,7 @@ export function DataTable<TData, TValue>({
                                         className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                         title="Pin to bottom"
                                       >
-                                        <Icon name="arrow-down-to-line" className="h-3 w-3" />
+                                        <Icon name={ArrowDownToLine} className="h-3 w-3" />
                                       </button>
                                     )}
                                     {row.getIsPinned() && (
@@ -4688,7 +4689,7 @@ export function DataTable<TData, TValue>({
                                         className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                         title="Unpin row"
                                       >
-                                        <Icon name="x" className="h-3 w-3" />
+                                        <Icon name={X} className="h-3 w-3" />
                                       </button>
                                     )}
                                   </div>
@@ -4753,7 +4754,7 @@ export function DataTable<TData, TValue>({
                           {subComponentError?.[row.id] ? (
                             <div className="flex flex-col items-center justify-center py-[var(--space-l)] gap-[var(--space-s)]">
                               <div className="flex items-center gap-[var(--space-s)] text-[var(--color-text-danger)]">
-                                <Icon name="alert-circle" className="h-4 w-4" />
+                                <Icon name={AlertCircle} className="h-4 w-4" />
                                 <span className="text-body-sm">
                                   {subComponentError[row.id]?.message || 'Failed to load details'}
                                 </span>
@@ -5123,7 +5124,7 @@ export function DataTable<TData, TValue>({
                                       className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                       title="Pin to top"
                                     >
-                                      <Icon name="arrow-up-to-line" className="h-3 w-3" />
+                                      <Icon name={ArrowUpToLine} className="h-3 w-3" />
                                     </button>
                                   )}
                                   {row.getIsPinned() !== 'bottom' && (
@@ -5132,7 +5133,7 @@ export function DataTable<TData, TValue>({
                                       className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                       title="Pin to bottom"
                                     >
-                                      <Icon name="arrow-down-to-line" className="h-3 w-3" />
+                                      <Icon name={ArrowDownToLine} className="h-3 w-3" />
                                     </button>
                                   )}
                                   {row.getIsPinned() && (
@@ -5141,7 +5142,7 @@ export function DataTable<TData, TValue>({
                                       className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                       title="Unpin row"
                                     >
-                                      <Icon name="x" className="h-3 w-3" />
+                                      <Icon name={X} className="h-3 w-3" />
                                     </button>
                                   )}
                                 </div>

@@ -4,6 +4,7 @@ import { cva } from "class-variance-authority";
 import { Button } from "../fundamental/button";
 import { Progress } from "../fundamental/progress";
 import { Icon } from "../fundamental/icon";
+import { X } from "lucide-react";
 import { Badge } from "../fundamental/badge";
 
 // File upload context
@@ -469,7 +470,7 @@ const FileUploadItemDelete = React.forwardRef<
       aria-label={`Remove ${file.file.name}`}
       {...props}
     >
-      <Icon name="x" className="h-4 w-4" />
+      <Icon name={X} className="h-4 w-4" />
     </Button>
   );
 });
