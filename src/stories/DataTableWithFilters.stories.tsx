@@ -10,7 +10,6 @@ import { formatDecimal } from '../lib/utils'
 import {
   CheckCircle,
   FileText,
-  IconName,
   Package,
   Ship,
 } from 'lucide-react'
@@ -47,7 +46,7 @@ const filters: FilterDefinition[] = [
   {
     id: 'fieldName',           // Must match data property
     label: 'Display Name',
-    icon: ({ className }) => <Icon name={IconName} className={className} />,
+    icon: ({ className }) => <Icon name="icon-name" className={className} />,
     type: 'multiselect',
 
     // Option 1: Simple flat array (recommended for single list)
