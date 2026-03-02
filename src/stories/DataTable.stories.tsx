@@ -21,6 +21,26 @@ import { ColumnDef, SortingState, VisibilityState, GroupingState, ColumnOrderSta
 import { formatNumber, formatCurrency, formatDecimal, cn } from '../lib/utils'
 import { SkeletonTable, Skeleton } from '../components/fundamental/skeleton'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/fundamental/table'
+import {
+  Building,
+  Clock,
+  Download,
+  Edit,
+  Eye,
+  HandMetal,
+  Lightbulb,
+  Link,
+  MessageSquare,
+  MousePointerClick,
+  Move,
+  Paperclip,
+  RefreshCw,
+  Ship,
+  Trash,
+  TrendingDown,
+  TrendingUp,
+  User,
+} from 'lucide-react'
 
 
 const meta: Meta<typeof DataTable> = {
@@ -1748,7 +1768,7 @@ export const ColumnVisibility: Story = {
             </p>
             <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
               <div className="flex items-center gap-[var(--space-s)]">
-                <Icon name="eye" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <Icon name={Eye} className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
                   Try hiding some columns (like Trader, Status, or Notional) to see how the table adapts.
                   Column visibility state is managed automatically.
@@ -1910,7 +1930,7 @@ export const ColumnResizing: Story = {
               </div>
               <div className="bg-[var(--blue-25)] border border-[var(--blue-100)] rounded-m p-[var(--space-m)]">
                 <div className="flex items-start gap-[var(--space-s)]">
-                  <Icon name="lightbulb" className="h-4 w-4 text-[var(--blue-700)] mt-0.5" />
+                  <Icon name={Lightbulb} className="h-4 w-4 text-[var(--blue-700)] mt-0.5" />
                   <div className="flex-1">
                     <p className="text-body-sm text-[var(--blue-900)] font-medium mb-1">Text Truncation:</p>
                     <p className="text-body-sm text-[var(--blue-800)]">
@@ -1984,7 +2004,7 @@ export const ColumnResizing: Story = {
             <div className="space-y-[var(--space-s)] mb-[var(--space-m)]">
               <div className="bg-[var(--blue-25)] border border-[var(--blue-100)] rounded-m p-[var(--space-m)]">
                 <div className="flex items-start gap-[var(--space-s)]">
-                  <Icon name="lightbulb" className="h-4 w-4 text-[var(--blue-700)] mt-0.5" />
+                  <Icon name={Lightbulb} className="h-4 w-4 text-[var(--blue-700)] mt-0.5" />
                   <div className="flex-1">
                     <p className="text-body-sm text-[var(--blue-900)] font-medium mb-1">Per-Column Control:</p>
                     <ul className="text-body-sm text-[var(--blue-800)] space-y-1 ml-4 list-disc">
@@ -2159,7 +2179,7 @@ export const ColumnResizing: Story = {
                   cell: ({ row }) => (
                     <TextLink
                       href="#"
-                      icon="paperclip"
+                      icon={Paperclip}
                       iconPosition="left"
                       size="s"
                     >
@@ -2183,7 +2203,7 @@ export const ColumnResizing: Story = {
                           <TextLink
                             key={index}
                             href={link.href}
-                            icon="link"
+                            icon={Link}
                             iconPosition="left"
                             size="s"
                           >
@@ -2343,7 +2363,7 @@ export const ColumnReordering: Story = {
             </p>
             <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
               <div className="flex items-center gap-[var(--space-s)]">
-                <Icon name="move" className="h-4 w-4 text-[var(--color-text-accent)]" />
+                <Icon name={Move} className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
                   Try dragging the "Status" column to the beginning, or reorder numeric columns to group them together.
                   The grip icon appears on hover.
@@ -2479,8 +2499,8 @@ export const RowActions: Story = {
           return (
             <div className="flex items-center justify-end gap-2">
               <span className="tabular-nums">{rate}%</span>
-              {rate > 40 && <Icon name="trending-up" size="s" className="text-[var(--color-text-error-bold)]" />}
-              {rate <= 20 && <Icon name="trending-down" size="s" className="text-[var(--color-text-success-bold)]" />}
+              {rate > 40 && <Icon name={TrendingUp} size="s" className="text-[var(--color-text-error-bold)]" />}
+              {rate <= 20 && <Icon name={TrendingDown} size="s" className="text-[var(--color-text-success-bold)]" />}
             </div>
           )
         },
@@ -2501,7 +2521,7 @@ export const RowActions: Story = {
         cell: ({ row }) => {
           return (
             <div className="flex items-center justify-end gap-1">
-              <Button size="s" variant="ghost" icon="edit" />
+              <Button size="s" variant="ghost" icon={Edit} />
               <Button size="s" variant="ghost" icon="trash-2" />
               <Button size="s" variant="ghost" icon="more-horizontal" />
             </div>
@@ -2545,8 +2565,8 @@ export const RowActions: Story = {
           return (
             <div className="flex items-center justify-end gap-2">
               <span className="tabular-nums">{rate}%</span>
-              {rate > 40 && <Icon name="trending-up" size="s" className="text-[var(--color-text-error-bold)]" />}
-              {rate <= 20 && <Icon name="trending-down" size="s" className="text-[var(--color-text-success-bold)]" />}
+              {rate > 40 && <Icon name={TrendingUp} size="s" className="text-[var(--color-text-error-bold)]" />}
+              {rate <= 20 && <Icon name={TrendingDown} size="s" className="text-[var(--color-text-success-bold)]" />}
             </div>
           )
         },
@@ -2568,7 +2588,7 @@ export const RowActions: Story = {
         cell: ({ row }) => {
           return (
             <div className="flex items-center justify-end gap-1">
-              <Button size="s" variant="ghost" icon="edit" />
+              <Button size="s" variant="ghost" icon={Edit} />
               <Button size="s" variant="ghost" icon="trash-2" />
               <Button size="s" variant="ghost" icon="more-horizontal" />
             </div>
@@ -3020,7 +3040,7 @@ Enable row selection by setting \`enableRowSelection={true}\`.
                 disabled={selectedCount === 0}
                 onClick={handleBulkExport}
               >
-                <Icon name="download" className="mr-[var(--space-s)]" />
+                <Icon name={Download} className="mr-[var(--space-s)]" />
                 Export Selected
               </Button>
               <Button
@@ -3028,7 +3048,7 @@ Enable row selection by setting \`enableRowSelection={true}\`.
                 disabled={selectedCount === 0}
                 onClick={handleBulkDelete}
               >
-                <Icon name="trash" className="mr-[var(--space-s)]" />
+                <Icon name={Trash} className="mr-[var(--space-s)]" />
                 Delete Selected
               </Button>
             </div>
@@ -4490,17 +4510,17 @@ const CheckCard = ({
       </div>
       <div className="space-y-[var(--space-s)]">
         <div className="flex items-center gap-[var(--space-s)] text-body-sm text-[var(--color-text-secondary)]">
-          <Icon name="clock" className="h-4 w-4" />
+          <Icon name={Clock} className="h-4 w-4" />
           <span>{date}</span>
         </div>
         {assignedTo && (
           <div className="flex items-center gap-[var(--space-s)] text-body-sm text-[var(--color-text-secondary)]">
-            <Icon name="user" className="h-4 w-4" />
+            <Icon name={User} className="h-4 w-4" />
             <span>{assignedTo}</span>
           </div>
         )}
         <div className="flex items-center gap-[var(--space-s)] text-body-sm text-[var(--color-text-secondary)]">
-          <Icon name="message-square" className="h-4 w-4" />
+          <Icon name={MessageSquare} className="h-4 w-4" />
           <span>{comments} {comments === 1 ? 'comment' : 'comments'}</span>
         </div>
       </div>
@@ -4551,7 +4571,7 @@ const requestColumns: ColumnDef<RequestData>[] = [
       const count = row.getValue('attachments') as number
       return (
         <div className="flex items-center gap-[var(--space-s)] text-body-sm">
-          <Icon name="paperclip" className="h-4 w-4" />
+          <Icon name={Paperclip} className="h-4 w-4" />
           <span>{count}</span>
         </div>
       )
@@ -4564,7 +4584,7 @@ const requestColumns: ColumnDef<RequestData>[] = [
       const count = row.getValue('comments') as number
       return (
         <div className="flex items-center gap-[var(--space-s)] text-body-sm">
-          <Icon name="message-square" className="h-4 w-4" />
+          <Icon name={MessageSquare} className="h-4 w-4" />
           <span>{count}</span>
         </div>
       )
@@ -4928,7 +4948,7 @@ This feature is useful for:
                   title="Export all items in this group"
                   className="h-[var(--size-m)] px-[var(--space-s)]"
                 >
-                  <Icon name="download" className="h-3 w-3" />
+                  <Icon name={Download} className="h-3 w-3" />
                 </Button>
                 <Button
                   variant="ghost"
@@ -4984,7 +5004,7 @@ This feature is useful for:
                   title="Export this item"
                   className="h-[var(--size-m)] px-[var(--space-s)]"
                 >
-                  <Icon name="download" className="h-3 w-3" />
+                  <Icon name={Download} className="h-3 w-3" />
                 </Button>
                 <Button
                   variant="ghost"
@@ -5206,7 +5226,7 @@ Notice how the entire group stays visible and expands automatically, with matche
             </div>
             <div className="bg-[var(--color-background-warning-subtle)] border border-[var(--color-border-warning-subtle)] rounded-m p-[var(--space-m)]">
               <div className="flex items-center gap-[var(--space-s)]">
-                <Icon name="lightbulb" className="h-4 w-4 text-[var(--color-text-warning-bold)]" />
+                <Icon name={Lightbulb} className="h-4 w-4 text-[var(--color-text-warning-bold)]" />
                 <span className="text-body-sm text-[var(--color-text-warning-bold)]">
                   <strong>Tip:</strong> Use the settings menu (gear icon) to try different grouping options
                   (Instrument, Counterparty, Trader, Status, Side) and see how the search preserves the group structure.
@@ -5641,7 +5661,7 @@ Same fixture lifecycle scenarios as GroupingWithCustomDisplay:
       {
         id: 'vessel',
         label: 'Vessel',
-        icon: 'ship',
+        icon: Ship,
         options: uniqueVessels.map(vessel => ({
           value: vessel,
           label: vessel,
@@ -5650,7 +5670,7 @@ Same fixture lifecycle scenarios as GroupingWithCustomDisplay:
       {
         id: 'counterparty',
         label: 'Counterparty',
-        icon: 'building',
+        icon: Building,
         options: uniqueCounterparties.map(counterparty => ({
           value: counterparty,
           label: counterparty,
@@ -6458,7 +6478,7 @@ const [activeRowId, setActiveRowId] = useState<string | undefined>(undefined)
       {
         id: 'vessel',
         label: 'Vessel',
-        icon: 'ship',
+        icon: Ship,
         options: uniqueVessels.map(vessel => ({
           value: vessel,
           label: vessel,
@@ -6467,7 +6487,7 @@ const [activeRowId, setActiveRowId] = useState<string | undefined>(undefined)
       {
         id: 'counterparty',
         label: 'Counterparty',
-        icon: 'building',
+        icon: Building,
         options: uniqueCounterparties.map(counterparty => ({
           value: counterparty,
           label: counterparty,
@@ -7536,7 +7556,7 @@ This example demonstrates a complex cell layout pattern where the last 4 columns
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-m)] mb-[var(--space-l)]">
               <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info-subtle)] rounded-m p-[var(--space-m)]">
                 <div className="flex items-start gap-[var(--space-s)]">
-                  <Icon name="mouse-pointer-click" className="h-5 w-5 text-[var(--color-text-info)] mt-[2px]" />
+                  <Icon name={MousePointerClick} className="h-5 w-5 text-[var(--color-text-info)] mt-[2px]" />
                   <div>
                     <div className="text-body-strong-sm text-[var(--color-text-info)] mb-[var(--space-xs)]">
                       Main row clicks
@@ -7558,7 +7578,7 @@ This example demonstrates a complex cell layout pattern where the last 4 columns
 
               <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-subtle)] rounded-m p-[var(--space-m)]">
                 <div className="flex items-start gap-[var(--space-s)]">
-                  <Icon name="hand-metal" className="h-5 w-5 text-[var(--color-text-success)] mt-[2px]" />
+                  <Icon name={HandMetal} className="h-5 w-5 text-[var(--color-text-success)] mt-[2px]" />
                   <div>
                     <div className="text-body-strong-sm text-[var(--color-text-success)] mb-[var(--space-xs)]">
                       Inner row clicks
@@ -8224,7 +8244,7 @@ export const RefetchingState: Story = {
             <div className="flex justify-between items-center">
               <CardTitle>Refetching State - Background Update</CardTitle>
               <Button variant="default" onClick={handleRefetch} disabled={isRefetching}>
-                <Icon name="refresh-cw" className={cn("mr-[var(--space-s)] h-4 w-4", isRefetching && "animate-spin")} />
+                <Icon name={RefreshCw} className={cn("mr-[var(--space-s)] h-4 w-4", isRefetching && "animate-spin")} />
                 {isRefetching ? 'Refreshing...' : 'Refresh Data'}
               </Button>
             </div>
