@@ -112,6 +112,16 @@
         "default": "./dist/cjs/components/product/linked-chart.cjs"
       }
     },
+    "./custom-icons": {
+      "import": {
+        "types": "./dist/types/components/fundamental/custom-icons.d.ts",
+        "default": "./dist/es/components/fundamental/custom-icons.js"
+      },
+      "require": {
+        "types": "./dist/types/components/fundamental/custom-icons.d.cts",
+        "default": "./dist/cjs/components/fundamental/custom-icons.cjs"
+      }
+    },
     "./package.json": "./package.json"
   },
   "files": [

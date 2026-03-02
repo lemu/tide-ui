@@ -42,6 +42,7 @@ const cjsTypeSources = [
   'dist/types/components/product/filters.d.ts',
   'dist/types/components/product/bookmarks.d.ts',
   'dist/types/components/product/linked-chart.d.ts',
+  'dist/types/components/fundamental/custom-icons.d.ts',
 ]
 
 for (const src of cjsTypeSources) {
