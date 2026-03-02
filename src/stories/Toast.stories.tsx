@@ -4,6 +4,10 @@ import { Button } from '../components/fundamental/button'
 import { Icon } from '../components/fundamental/icon'
 import { Progress } from '../components/fundamental/progress'
 
+import {
+  Bell,
+  Download,
+} from 'lucide-react'
 const meta: Meta<typeof Toaster> = {
   title: 'NPM • Fundamental/Toast',
   component: Toaster,
@@ -333,7 +337,7 @@ export const RichContent: Story = {
       toast(
         <div className="flex items-start gap-[var(--space-m)]">
           <div className="w-[40px] h-[40px] rounded-full bg-[var(--color-background-blue-bold)] flex items-center justify-center shrink-0">
-            <Icon name="bell" size="s" className="text-[var(--color-text-on-action)]" />
+            <Icon name={Bell} size="s" className="text-[var(--color-text-on-action)]" />
           </div>
           <div className="flex-1 flex flex-col gap-[var(--space-m)]">
             <div>
@@ -367,7 +371,7 @@ export const RichContent: Story = {
       toast(
         <div className="flex items-start gap-[var(--space-m)]">
           <div className="w-[40px] h-[40px] rounded-l bg-[var(--color-background-success-subtle)] flex items-center justify-center shrink-0">
-            <Icon name="download" size="s" className="text-[var(--color-icon-success-bold)]" />
+            <Icon name={Download} size="s" className="text-[var(--color-icon-success-bold)]" />
           </div>
           <div className="flex-1 flex flex-col gap-[var(--space-m)]">
             <div>

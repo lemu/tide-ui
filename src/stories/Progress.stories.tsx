@@ -6,6 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamen
 import { Badge } from '../components/fundamental/badge'
 import { Icon } from '../components/fundamental/icon'
 
+import {
+  Cpu,
+  Download,
+  Play,
+  Upload,
+} from 'lucide-react'
 const meta: Meta<typeof Progress> = {
   title: 'NPM • Fundamental/Progress',
   component: Progress,
@@ -136,7 +142,7 @@ export const Interactive: Story = {
             />
             <div className="flex gap-2">
               <Button onClick={startProgress} size="s">
-                <Icon name="play" size="s" className="mr-1" />
+                <Icon name={Play} size="s" className="mr-1" />
                 Start Upload
               </Button>
               <Button 
@@ -337,7 +343,7 @@ export const LoadingStates: Story = {
                   size="s"
                   variant="ghost"
                 >
-                  <Icon name="download" size="s" />
+                  <Icon name={Download} size="s" />
                 </Button>
               </div>
               <Progress value={loadingStates.download} showLabel />
@@ -351,7 +357,7 @@ export const LoadingStates: Story = {
                   size="s"
                   variant="ghost"
                 >
-                  <Icon name="upload" size="s" />
+                  <Icon name={Upload} size="s" />
                 </Button>
               </div>
               <Progress value={loadingStates.upload} variant="success" showLabel />
@@ -365,7 +371,7 @@ export const LoadingStates: Story = {
                   size="s"
                   variant="ghost"
                 >
-                  <Icon name="cpu" size="s" />
+                  <Icon name={Cpu} size="s" />
                 </Button>
               </div>
               <Progress value={loadingStates.processing} variant="warning" showLabel />

@@ -6,6 +6,11 @@ import { Input } from '../components/fundamental/input'
 import { Label } from '../components/fundamental/label'
 import { Icon } from '../components/fundamental/icon'
 
+import {
+  Bell,
+  Home,
+  Settings,
+} from 'lucide-react'
 const meta: Meta<typeof Tabs> = {
   title: 'NPM • Fundamental/Tabs',
   component: Tabs,
@@ -378,21 +383,21 @@ export const PilledTabsWithIcons: Story = {
         <TabsTrigger
           variant="pilled"
           value="home"
-          icon={<Icon name="home" size="s" />}
+          icon={<Icon name={Home} size="s" />}
         >
           Home
         </TabsTrigger>
         <TabsTrigger
           variant="pilled"
           value="notifications"
-          icon={<Icon name="bell" size="s" />}
+          icon={<Icon name={Bell} size="s" />}
         >
           Notifications
         </TabsTrigger>
         <TabsTrigger
           variant="pilled"
           value="settings"
-          icon={<Icon name="settings" size="s" />}
+          icon={<Icon name={Settings} size="s" />}
         >
           Settings
         </TabsTrigger>

@@ -17,6 +17,18 @@ import {
   DropdownMenuTrigger,
 } from '../components/fundamental/dropdown-menu'
 
+import {
+  Copy,
+  Eye,
+  Lock,
+  Mail,
+  MessageSquare,
+  Paperclip,
+  Settings2,
+  SortAsc,
+  Upload,
+  User,
+} from 'lucide-react'
 const meta: Meta<typeof InputGroup> = {
   title: 'NPM • Fundamental/InputGroup',
   component: InputGroup,
@@ -96,7 +108,7 @@ export const WithButtonPrefix: Story = {
   render: () => (
     <InputGroup className="w-80">
       <InputGroupAddon align="inline-start">
-        <InputGroupButton variant="default" icon="upload" />
+        <InputGroupButton variant="default" icon={Upload} />
       </InputGroupAddon>
       <InputGroupInput placeholder="Upload file..." />
     </InputGroup>
@@ -108,7 +120,7 @@ export const MultipleAddons: Story = {
   render: () => (
     <InputGroup className="w-80">
       <InputGroupAddon align="inline-start">
-        <Icon name="user" />
+        <Icon name={User} />
       </InputGroupAddon>
       <InputGroupInput placeholder="Username" />
       <InputGroupAddon align="inline-end">
@@ -126,7 +138,7 @@ export const WithDropdownMenu: Story = {
       <InputGroupAddon align="inline-end">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <InputGroupButton icon="settings-2" />
+            <InputGroupButton icon={Settings2} />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem>
@@ -134,7 +146,7 @@ export const WithDropdownMenu: Story = {
               Add Filter
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Icon name="sort-asc" className="mr-2" />
+              <Icon name={SortAsc} className="mr-2" />
               Sort Results
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -178,11 +190,11 @@ export const PasswordWithToggle: Story = {
   render: () => (
     <InputGroup className="w-80">
       <InputGroupAddon align="inline-start">
-        <Icon name="lock" />
+        <Icon name={Lock} />
       </InputGroupAddon>
       <InputGroupInput type="password" placeholder="Enter password" />
       <InputGroupAddon align="inline-end">
-        <InputGroupButton variant="ghost" icon="eye" />
+        <InputGroupButton variant="ghost" icon={Eye} />
       </InputGroupAddon>
     </InputGroup>
   ),
@@ -205,7 +217,7 @@ export const TextareaBlockStart: Story = {
   render: () => (
     <InputGroup className="w-80">
       <InputGroupAddon align="block-start">
-        <Icon name="message-square" />
+        <Icon name={MessageSquare} />
         <InputGroupText>Message</InputGroupText>
       </InputGroupAddon>
       <InputGroupTextarea
@@ -241,7 +253,7 @@ export const TextareaBothAddons: Story = {
   render: () => (
     <InputGroup className="w-96">
       <InputGroupAddon align="block-start">
-        <Icon name="message-square" />
+        <Icon name={MessageSquare} />
         <InputGroupText>Compose Message</InputGroupText>
       </InputGroupAddon>
       <InputGroupTextarea
@@ -251,7 +263,7 @@ export const TextareaBothAddons: Story = {
       <InputGroupAddon align="block-end">
         <div className="flex items-center justify-between w-full">
           <InputGroupText>
-            <Icon name="paperclip" />
+            <Icon name={Paperclip} />
             <span className="text-[var(--color-text-tertiary)]">Attach file</span>
           </InputGroupText>
           <div className="flex items-center gap-2">
@@ -317,7 +329,7 @@ export const URLInput: Story = {
       </InputGroupAddon>
       <InputGroupInput placeholder="example.com" />
       <InputGroupAddon align="inline-end">
-        <InputGroupButton variant="ghost" icon="copy" />
+        <InputGroupButton variant="ghost" icon={Copy} />
       </InputGroupAddon>
     </InputGroup>
   ),
@@ -328,7 +340,7 @@ export const InvalidState: Story = {
   render: () => (
     <InputGroup className="w-80">
       <InputGroupAddon align="inline-start">
-        <Icon name="mail" />
+        <Icon name={Mail} />
       </InputGroupAddon>
       <InputGroupInput
         placeholder="Enter email"
@@ -347,7 +359,7 @@ export const DisabledState: Story = {
   render: () => (
     <InputGroup className="w-80" data-disabled="true">
       <InputGroupAddon align="inline-start">
-        <Icon name="lock" />
+        <Icon name={Lock} />
       </InputGroupAddon>
       <InputGroupInput placeholder="Disabled input" disabled />
     </InputGroup>
@@ -359,7 +371,7 @@ export const FileUpload: Story = {
   render: () => (
     <InputGroup className="w-80">
       <InputGroupAddon align="inline-start">
-        <Icon name="paperclip" />
+        <Icon name={Paperclip} />
       </InputGroupAddon>
       <InputGroupInput placeholder="No file chosen" readOnly />
       <InputGroupAddon align="inline-end">

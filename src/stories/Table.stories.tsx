@@ -19,6 +19,12 @@ import { Checkbox } from '../components/fundamental/checkbox'
 import { Avatar, AvatarFallback, AvatarImage } from '../components/fundamental/avatar'
 import { formatNumber, formatCurrency, formatDecimal } from '../lib/utils'
 
+import {
+  Calendar,
+  Edit,
+  FolderOpen,
+  Plus,
+} from 'lucide-react'
 const meta: Meta<typeof Table> = {
   title: 'NPM • Fundamental/Table',
   component: Table,
@@ -475,7 +481,7 @@ export const UserManagement: Story = {
               Filter
             </Button>
             <Button size="s">
-              <Icon name="plus" className="mr-2 h-4 w-4" />
+              <Icon name={Plus} className="mr-2 h-4 w-4" />
               Add User
             </Button>
           </div>
@@ -522,7 +528,7 @@ export const UserManagement: Story = {
                 <TableCell className="text-right">
                   <div className="flex items-center justify-end gap-2">
                     <Button variant="ghost" size="s">
-                      <Icon name="edit" className="h-4 w-4" />
+                      <Icon name={Edit} className="h-4 w-4" />
                     </Button>
                     <Button variant="ghost" size="s">
                       <Icon name="more-horizontal" className="h-4 w-4" />
@@ -680,7 +686,7 @@ export const WithGroupedRows: Story = {
             <React.Fragment key={year}>
               <TableGroupHeader colSpan={4}>
                 <div className="flex items-center gap-2">
-                  <Icon name="calendar" className="h-4 w-4" />
+                  <Icon name={Calendar} className="h-4 w-4" />
                   {year}
                 </div>
               </TableGroupHeader>
@@ -770,7 +776,7 @@ export const EmptyState: Story = {
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-heading-md font-semibold">Projects</h3>
         <Button size="s">
-          <Icon name="plus" className="mr-2 h-4 w-4" />
+          <Icon name={Plus} className="mr-2 h-4 w-4" />
           New Project
         </Button>
       </div>
@@ -788,7 +794,7 @@ export const EmptyState: Story = {
           <TableRow>
             <TableCell colSpan={4} className="h-32 text-center">
               <div className="flex flex-col items-center justify-center space-y-3">
-                <Icon name="folder-open" className="h-12 w-12 text-[var(--color-text-tertiary)]" />
+                <Icon name={FolderOpen} className="h-12 w-12 text-[var(--color-text-tertiary)]" />
                 <div>
                   <p className="text-body-md font-medium">No projects found</p>
                   <p className="text-body-sm text-[var(--color-text-secondary)]">
@@ -796,7 +802,7 @@ export const EmptyState: Story = {
                   </p>
                 </div>
                 <Button size="s">
-                  <Icon name="plus" className="mr-2 h-4 w-4" />
+                  <Icon name={Plus} className="mr-2 h-4 w-4" />
                   Create Project
                 </Button>
               </div>

@@ -13,6 +13,14 @@ import {
 import { Icon } from '../components/fundamental/icon'
 import { TextLink } from '../components/fundamental/text-link'
 
+import {
+  Folder,
+  Home,
+  LayoutDashboard,
+  Package,
+  Settings,
+  User,
+} from 'lucide-react'
 const meta: Meta<typeof Breadcrumb> = {
   title: 'NPM • Fundamental/Breadcrumb',
   component: Breadcrumb,
@@ -107,7 +115,7 @@ export const CustomSeparators: Story = {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink href="/">
-              <Icon name="home" size="s" />
+              <Icon name={Home} size="s" />
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -175,14 +183,14 @@ export const WithIcons: Story = {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink href="/" className="flex items-center gap-[var(--space-xs)]">
-              <Icon name="home" size="s" />
+              <Icon name={Home} size="s" />
               Home
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink href="/products" className="flex items-center gap-[var(--space-xs)]">
-              <Icon name="package" size="s" />
+              <Icon name={Package} size="s" />
               Products
             </BreadcrumbLink>
           </BreadcrumbItem>
@@ -197,14 +205,14 @@ export const WithIcons: Story = {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink href="/admin" className="flex items-center gap-[var(--space-xs)]">
-              <Icon name="settings" size="s" />
+              <Icon name={Settings} size="s" />
               Admin
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink href="/admin/users" className="flex items-center gap-[var(--space-xs)]">
-              <Icon name="user" size="s" />
+              <Icon name={User} size="s" />
               Users
             </BreadcrumbLink>
           </BreadcrumbItem>
@@ -225,7 +233,7 @@ export const WithCustomLinks: Story = {
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <TextLink href="/" icon="home">
+            <TextLink href="/" icon={Home}>
               Home
             </TextLink>
           </BreadcrumbLink>
@@ -280,7 +288,7 @@ export const ECommerceExample: Story = {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="/" className="flex items-center gap-[var(--space-xs)]">
-                <Icon name="home" size="s" />
+                <Icon name={Home} size="s" />
                 Home
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -315,7 +323,7 @@ export const AdminDashboardExample: Story = {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="/admin">
-                <Icon name="layout-dashboard" size="s" />
+                <Icon name={LayoutDashboard} size="s" />
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
@@ -336,7 +344,7 @@ export const AdminDashboardExample: Story = {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="/admin" className="flex items-center gap-[var(--space-xs)]">
-                <Icon name="settings" size="s" />
+                <Icon name={Settings} size="s" />
                 Admin
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -369,7 +377,7 @@ export const FileSystemExample: Story = {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="/files" className="flex items-center gap-[var(--space-xs)]">
-                <Icon name="home" size="s" />
+                <Icon name={Home} size="s" />
                 Root
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -401,7 +409,7 @@ export const FileSystemExample: Story = {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="/files">
-                <Icon name="folder" size="s" />
+                <Icon name={Folder} size="s" />
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator>

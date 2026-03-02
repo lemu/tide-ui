@@ -7,6 +7,22 @@ import { Icon } from '../components/fundamental/icon'
 import { Badge } from '../components/fundamental/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 
+import {
+  AlertTriangle,
+  Award,
+  Bell,
+  Calendar,
+  CheckCircle,
+  DollarSign,
+  Download,
+  FileText,
+  Lightbulb,
+  Mail,
+  Phone,
+  Plus,
+  Share,
+  TrendingUp,
+} from 'lucide-react'
 const meta: Meta<typeof LinkedChart> = {
   title: 'NPM • Product Components/LinkedChart',
   component: LinkedChart,
@@ -143,18 +159,18 @@ export const SalesPerformance: Story = {
                 {selectedRows.length > 0 && (
                   <>
                     <Button size="s">
-                      <Icon name="mail" size="s" className="mr-1" />
+                      <Icon name={Mail} size="s" className="mr-1" />
                       Email Selected ({selectedRows.length})
                     </Button>
                     <Button size="s" variant="ghost">
-                      <Icon name="calendar" size="s" className="mr-1" />
+                      <Icon name={Calendar} size="s" className="mr-1" />
                       Schedule Review
                     </Button>
                   </>
                 )}
                 {filteredData.length > 0 && (
                   <Button size="s" variant="ghost">
-                    <Icon name="download" size="s" className="mr-1" />
+                    <Icon name={Download} size="s" className="mr-1" />
                     Export Filtered Data
                   </Button>
                 )}
@@ -286,15 +302,15 @@ export const RevenueAnalytics: Story = {
             </CardHeader>
             <CardContent className="space-y-2">
               <Button size="s" variant="ghost" className="w-full justify-start">
-                <Icon name="download" size="s" className="mr-2" />
+                <Icon name={Download} size="s" className="mr-2" />
                 Export to CSV
               </Button>
               <Button size="s" variant="ghost" className="w-full justify-start">
-                <Icon name="file-text" size="s" className="mr-2" />
+                <Icon name={FileText} size="s" className="mr-2" />
                 Generate Report
               </Button>
               <Button size="s" variant="ghost" className="w-full justify-start">
-                <Icon name="share" size="s" className="mr-2" />
+                <Icon name={Share} size="s" className="mr-2" />
                 Share Dashboard
               </Button>
             </CardContent>
@@ -547,7 +563,7 @@ export const TrafficAnalytics: Story = {
             <CardContent>
               <div className="space-y-3">
                 <div className="flex items-start gap-2 p-3 bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] rounded-m">
-                  <Icon name="check-circle" size="s" color="success" />
+                  <Icon name={CheckCircle} size="s" color="success" />
                   <div>
                     <p className="text-body-sm font-medium">High Engagement</p>
                     <p className="text-caption-sm text-[var(--color-text-secondary)]">
@@ -557,7 +573,7 @@ export const TrafficAnalytics: Story = {
                 </div>
                 
                 <div className="flex items-start gap-2 p-3 bg-[var(--color-background-warning-subtle)] border border-[var(--color-border-warning-bold)] rounded-m">
-                  <Icon name="alert-triangle" size="s" color="warning" />
+                  <Icon name={AlertTriangle} size="s" color="warning" />
                   <div>
                     <p className="text-body-sm font-medium">Higher Bounce Rate</p>
                     <p className="text-caption-sm text-[var(--color-text-secondary)]">
@@ -661,7 +677,7 @@ export const MultiChartDashboard: Story = {
                 variant={activeChart === 'sales' ? 'default' : 'ghost'}
                 onClick={() => setActiveChart('sales')}
               >
-                <Icon name="dollar-sign" size="s" className="mr-1" />
+                <Icon name={DollarSign} size="s" className="mr-1" />
                 Sales Revenue
               </Button>
               <Button
@@ -669,7 +685,7 @@ export const MultiChartDashboard: Story = {
                 variant={activeChart === 'performance' ? 'default' : 'ghost'}
                 onClick={() => setActiveChart('performance')}
               >
-                <Icon name="trending-up" size="s" className="mr-1" />
+                <Icon name={TrendingUp} size="s" className="mr-1" />
                 Performance
               </Button>
               <Button
@@ -677,7 +693,7 @@ export const MultiChartDashboard: Story = {
                 variant={activeChart === 'activity' ? 'default' : 'ghost'}
                 onClick={() => setActiveChart('activity')}
               >
-                <Icon name="phone" size="s" className="mr-1" />
+                <Icon name={Phone} size="s" className="mr-1" />
                 Activity
               </Button>
             </div>
@@ -753,22 +769,22 @@ export const MultiChartDashboard: Story = {
                 {selectedRows.length > 0 && (
                   <>
                     <Button size="s">
-                      <Icon name="mail" size="s" className="mr-1" />
+                      <Icon name={Mail} size="s" className="mr-1" />
                       Message Selected ({selectedRows.length})
                     </Button>
                     <Button size="s" variant="ghost">
-                      <Icon name="calendar" size="s" className="mr-1" />
+                      <Icon name={Calendar} size="s" className="mr-1" />
                       Schedule Team Meeting
                     </Button>
                     <Button size="s" variant="ghost">
-                      <Icon name="award" size="s" className="mr-1" />
+                      <Icon name={Award} size="s" className="mr-1" />
                       Performance Review
                     </Button>
                   </>
                 )}
                 {filteredData.length > 0 && (
                   <Button size="s" variant="ghost">
-                    <Icon name="download" size="s" className="mr-1" />
+                    <Icon name={Download} size="s" className="mr-1" />
                     Export Filtered Data
                   </Button>
                 )}
@@ -781,7 +797,7 @@ export const MultiChartDashboard: Story = {
         <Card className="border-[var(--color-border-success-bold)]">
           <CardContent className="p-4">
             <div className="flex items-start gap-3">
-              <Icon name="lightbulb" size="s" color="success" className="mt-1" />
+              <Icon name={Lightbulb} size="s" color="success" className="mt-1" />
               <div className="space-y-2 text-body-sm">
                 <p className="font-medium text-[var(--color-text-primary)]">Multi-Chart Features:</p>
                 <ul className="list-disc list-inside space-y-1 text-[var(--color-text-secondary)]">
@@ -928,7 +944,7 @@ export const ExpenseTracking: Story = {
                 .filter(item => (item.spent / item.budget) > 0.95)
                 .map((item, index) => (
                   <div key={index} className="flex items-start gap-2 p-3 bg-[var(--color-background-warning-subtle)] border border-[var(--color-border-warning-bold)] rounded-m">
-                    <Icon name="alert-triangle" size="s" color="warning" />
+                    <Icon name={AlertTriangle} size="s" color="warning" />
                     <div>
                       <p className="text-body-sm font-medium">{item.name} - Near Budget Limit</p>
                       <p className="text-caption-sm text-[var(--color-text-secondary)]">
@@ -960,19 +976,19 @@ export const ExpenseTracking: Story = {
             </CardHeader>
             <CardContent className="space-y-2">
               <Button size="s" variant="ghost" className="w-full justify-start">
-                <Icon name="download" size="s" className="mr-2" />
+                <Icon name={Download} size="s" className="mr-2" />
                 Export Expense Report
               </Button>
               <Button size="s" variant="ghost" className="w-full justify-start">
-                <Icon name="plus" size="s" className="mr-2" />
+                <Icon name={Plus} size="s" className="mr-2" />
                 Request Budget Adjustment
               </Button>
               <Button size="s" variant="ghost" className="w-full justify-start">
-                <Icon name="bell" size="s" className="mr-2" />
+                <Icon name={Bell} size="s" className="mr-2" />
                 Set Budget Alerts
               </Button>
               <Button size="s" variant="ghost" className="w-full justify-start">
-                <Icon name="calendar" size="s" className="mr-2" />
+                <Icon name={Calendar} size="s" className="mr-2" />
                 Schedule Budget Review
               </Button>
             </CardContent>

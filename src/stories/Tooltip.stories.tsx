@@ -10,6 +10,14 @@ import { Icon } from '../components/fundamental/icon'
 import { TextLink } from '../components/fundamental/text-link'
 import { Kbd } from '../components/fundamental/kbd'
 
+import {
+  LayoutDashboard,
+  Link,
+  Plus,
+  Settings,
+  Share,
+  Table2,
+} from 'lucide-react'
 const meta: Meta<typeof Tooltip> = {
   title: 'NPM • Fundamental/Tooltip',
   component: Tooltip,
@@ -101,7 +109,7 @@ export const IconTooltips: Story = {
     <div className="flex flex-wrap items-center gap-[var(--space-m)]">
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="s" icon="settings" />
+          <Button variant="ghost" size="s" icon={Settings} />
         </TooltipTrigger>
         <TooltipContent>
           <p>Settings</p>
@@ -110,7 +118,7 @@ export const IconTooltips: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="s" icon="share" />
+          <Button variant="ghost" size="s" icon={Share} />
         </TooltipTrigger>
         <TooltipContent>
           <p>Share this item</p>
@@ -232,7 +240,7 @@ export const WithLinks: Story = {
         For more information, please{" "}
         <Tooltip>
           <TooltipTrigger asChild>
-            <TextLink href="#" icon="link">
+            <TextLink href="#" icon={Link}>
               visit our documentation
             </TextLink>
           </TooltipTrigger>
@@ -296,7 +304,7 @@ export const ToolbarExample: Story = {
     <div className="flex items-center space-x-[var(--space-s)] rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-m)]">
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="s" icon="plus" />
+          <Button variant="ghost" size="s" icon={Plus} />
         </TooltipTrigger>
         <TooltipContent>
           <p>Create new item</p>
@@ -325,7 +333,7 @@ export const ToolbarExample: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="s" icon="layout-dashboard" />
+          <Button variant="ghost" size="s" icon={LayoutDashboard} />
         </TooltipTrigger>
         <TooltipContent>
           <p>Dashboard view</p>
@@ -334,7 +342,7 @@ export const ToolbarExample: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="s" icon="table-2" />
+          <Button variant="ghost" size="s" icon={Table2} />
         </TooltipTrigger>
         <TooltipContent>
           <p>Table view</p>
@@ -405,7 +413,7 @@ export const KeyboardShortcuts: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="s" icon="plus" />
+          <Button variant="ghost" size="s" icon={Plus} />
         </TooltipTrigger>
         <TooltipContent>
           <div className="flex items-center gap-[var(--space-xs)]">
@@ -417,7 +425,7 @@ export const KeyboardShortcuts: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="s" icon="settings" />
+          <Button variant="ghost" size="s" icon={Settings} />
         </TooltipTrigger>
         <TooltipContent>
           <div className="flex items-center gap-[var(--space-xs)]">

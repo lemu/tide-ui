@@ -15,6 +15,15 @@ import { Tabs, TabsList, TabsTrigger } from '../components/fundamental/tabs'
 import { DataTable } from '../components/product/data-table'
 import { ColumnDef } from '@tanstack/react-table'
 
+import {
+  BarChart,
+  FileText,
+  Folder,
+  LayoutDashboard,
+  Plus,
+  Settings,
+  Users,
+} from 'lucide-react'
 const meta: Meta<typeof AppFrame> = {
   title: 'NPM • Product Components/AppFrame',
   component: AppFrame,
@@ -62,7 +71,7 @@ export const Default: Story = {
       headerActions={
         <>
           <Button variant="default">Export</Button>
-          <Button variant="primary" icon="plus" iconPosition="left">
+          <Button variant="primary" icon={Plus} iconPosition="left">
             New order
           </Button>
         </>
@@ -112,7 +121,7 @@ const customNavigationData: AppFrameNavigationData = {
   main: [
     {
       title: 'Dashboard',
-      icon: 'layout-dashboard',
+      icon: LayoutDashboard,
       url: '/dashboard',
       isActive: true,
     },
@@ -120,7 +129,7 @@ const customNavigationData: AppFrameNavigationData = {
   operations: [
     {
       title: 'Projects',
-      icon: 'folder',
+      icon: Folder,
       url: '/projects',
       isActive: false,
       items: [
@@ -138,7 +147,7 @@ const customNavigationData: AppFrameNavigationData = {
     },
     {
       title: 'Team',
-      icon: 'users',
+      icon: Users,
       url: '/team',
       isActive: false,
       items: [],
@@ -147,13 +156,13 @@ const customNavigationData: AppFrameNavigationData = {
   intelligence: [
     {
       title: 'Analytics',
-      icon: 'bar-chart',
+      icon: BarChart,
       url: '/analytics',
       isActive: false,
     },
     {
       title: 'Reports',
-      icon: 'file-text',
+      icon: FileText,
       url: '/reports',
       isActive: false,
     },
@@ -165,7 +174,7 @@ const customNavigationData: AppFrameNavigationData = {
   support: [
     {
       title: 'Settings',
-      icon: 'settings',
+      icon: Settings,
       url: '/settings',
       isActive: false,
     },
@@ -317,7 +326,7 @@ export const WithWideDataTable: Story = {
       headerActions={
         <>
           <Button variant="default">Export</Button>
-          <Button variant="primary" icon="plus" iconPosition="left">
+          <Button variant="primary" icon={Plus} iconPosition="left">
             Add Row
           </Button>
         </>

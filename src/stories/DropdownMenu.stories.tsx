@@ -19,6 +19,46 @@ import {
 import { Button } from '../components/fundamental/button'
 import { Icon } from '../components/fundamental/icon'
 
+import {
+  Archive,
+  Bell,
+  Copy,
+  CreditCard,
+  Crop,
+  Database,
+  Download,
+  Edit,
+  Eye,
+  FilePlus,
+  FileSpreadsheet,
+  FileText,
+  Folder,
+  FolderOpen,
+  FolderPlus,
+  HelpCircle,
+  Home,
+  Image,
+  Key,
+  LifeBuoy,
+  LogOut,
+  Mail,
+  MessageSquare,
+  Monitor,
+  Moon,
+  Plus,
+  Printer,
+  Save,
+  SaveAll,
+  Settings,
+  Share,
+  Share2,
+  Shield,
+  Sun,
+  Upload,
+  User,
+  UserCircle,
+  Users,
+} from 'lucide-react'
 const meta: Meta<typeof DropdownMenu> = {
   title: 'NPM • Fundamental/DropdownMenu',
   component: DropdownMenu,
@@ -62,20 +102,20 @@ export const SimpleMenu: Story = {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuItem icon="user">
+        <DropdownMenuItem icon={User}>
           <span>Profile</span>
           <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
         </DropdownMenuItem>
-        <DropdownMenuItem icon="credit-card">
+        <DropdownMenuItem icon={CreditCard}>
           <span>Billing</span>
           <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
         </DropdownMenuItem>
-        <DropdownMenuItem icon="settings">
+        <DropdownMenuItem icon={Settings}>
           <span>Settings</span>
           <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem icon="log-out">
+        <DropdownMenuItem icon={LogOut}>
           <span>Log out</span>
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
@@ -163,24 +203,24 @@ export const WithSubmenu: Story = {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuItem icon="plus">
+        <DropdownMenuItem icon={Plus}>
           <span>New Tab</span>
           <DropdownMenuShortcut>⌘T</DropdownMenuShortcut>
         </DropdownMenuItem>
-        <DropdownMenuItem icon="download">
+        <DropdownMenuItem icon={Download}>
           <span>Download</span>
           <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger icon="share-2">
+          <DropdownMenuSubTrigger icon={Share2}>
             <span>Share</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
-            <DropdownMenuItem icon="mail">
+            <DropdownMenuItem icon={Mail}>
               <span>Email</span>
             </DropdownMenuItem>
-            <DropdownMenuItem icon="message-square">
+            <DropdownMenuItem icon={MessageSquare}>
               <span>Message</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
@@ -235,14 +275,14 @@ export const TextLinkTrigger: Story = {
       <DropdownMenuContent align="start" className="w-56">
         <DropdownMenuLabel>Signed in as</DropdownMenuLabel>
         <DropdownMenuItem disabled>john.doe@example.com</DropdownMenuItem>
-        <DropdownMenuItem icon="user">
+        <DropdownMenuItem icon={User}>
           Your Profile
         </DropdownMenuItem>
-        <DropdownMenuItem icon="settings">
+        <DropdownMenuItem icon={Settings}>
           Settings
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem icon="log-out">
+        <DropdownMenuItem icon={LogOut}>
           Sign out
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -273,15 +313,15 @@ export const AvatarTrigger: Story = {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuItem icon="user">
+          <DropdownMenuItem icon={User}>
             Profile
           </DropdownMenuItem>
-          <DropdownMenuItem icon="settings">
+          <DropdownMenuItem icon={Settings}>
             Settings
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem icon="log-out">
+        <DropdownMenuItem icon={LogOut}>
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -306,17 +346,17 @@ export const TableRowActions: Story = {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem icon="eye">
+            <DropdownMenuItem icon={Eye}>
               View
             </DropdownMenuItem>
-            <DropdownMenuItem icon="edit">
+            <DropdownMenuItem icon={Edit}>
               Edit
             </DropdownMenuItem>
-            <DropdownMenuItem icon="copy">
+            <DropdownMenuItem icon={Copy}>
               Duplicate
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem icon="archive">
+            <DropdownMenuItem icon={Archive}>
               Archive
             </DropdownMenuItem>
             <DropdownMenuItem icon="trash-2" destructive>
@@ -350,21 +390,21 @@ export const NavigationUserMenu: Story = {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end">
           <DropdownMenuLabel>Account</DropdownMenuLabel>
-          <DropdownMenuItem icon="user">
+          <DropdownMenuItem icon={User}>
             Profile
           </DropdownMenuItem>
-          <DropdownMenuItem icon="credit-card">
+          <DropdownMenuItem icon={CreditCard}>
             Billing
           </DropdownMenuItem>
-          <DropdownMenuItem icon="settings">
+          <DropdownMenuItem icon={Settings}>
             Settings
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem icon="life-buoy">
+          <DropdownMenuItem icon={LifeBuoy}>
             Support
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem icon="log-out">
+          <DropdownMenuItem icon={LogOut}>
             Log out
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -386,49 +426,49 @@ export const ComplexMenuWithGroups: Story = {
       <DropdownMenuContent className="w-64">
         <DropdownMenuLabel>File Operations</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuItem icon="file-plus">
+          <DropdownMenuItem icon={FilePlus}>
             <span>New File</span>
             <DropdownMenuShortcut>⌘N</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem icon="folder-plus">
+          <DropdownMenuItem icon={FolderPlus}>
             <span>New Folder</span>
             <DropdownMenuShortcut>⇧⌘N</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem icon="file-text">
+          <DropdownMenuItem icon={FileText}>
             <span>Open File</span>
             <DropdownMenuShortcut>⌘O</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem icon="save">
+          <DropdownMenuItem icon={Save}>
             <span>Save</span>
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem icon="save-all">
+          <DropdownMenuItem icon={SaveAll}>
             <span>Save As...</span>
             <DropdownMenuShortcut>⇧⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger icon="upload">
+          <DropdownMenuSubTrigger icon={Upload}>
             <span>Import</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
-            <DropdownMenuItem icon="image">
+            <DropdownMenuItem icon={Image}>
               <span>Import Images</span>
             </DropdownMenuItem>
-            <DropdownMenuItem icon="file-spreadsheet">
+            <DropdownMenuItem icon={FileSpreadsheet}>
               <span>Import CSV</span>
             </DropdownMenuItem>
-            <DropdownMenuItem icon="database">
+            <DropdownMenuItem icon={Database}>
               <span>Import Database</span>
             </DropdownMenuItem>
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem icon="printer">
+        <DropdownMenuItem icon={Printer}>
           <span>Print</span>
           <DropdownMenuShortcut>⌘P</DropdownMenuShortcut>
         </DropdownMenuItem>
@@ -448,7 +488,7 @@ export const ContextualActionsMenu: Story = {
         {/* Image context menu */}
         <div className="border border-[var(--color-border-primary-subtle)] rounded-m p-[var(--space-m)] relative">
           <div className="w-16 h-12 bg-[var(--color-background-secondary)] rounded flex items-center justify-center mb-[var(--space-s)]">
-            <Icon name="image" size="s" />
+            <Icon name={Image} size="s" />
           </div>
           <p className="text-body-sm">image.jpg</p>
           <DropdownMenu>
@@ -458,17 +498,17 @@ export const ContextualActionsMenu: Story = {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem icon="eye">
+              <DropdownMenuItem icon={Eye}>
                 Preview
               </DropdownMenuItem>
-              <DropdownMenuItem icon="download">
+              <DropdownMenuItem icon={Download}>
                 Download
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem icon="edit">
+              <DropdownMenuItem icon={Edit}>
                 Edit
               </DropdownMenuItem>
-              <DropdownMenuItem icon="crop">
+              <DropdownMenuItem icon={Crop}>
                 Crop
               </DropdownMenuItem>
               <DropdownMenuSeparator />
@@ -482,7 +522,7 @@ export const ContextualActionsMenu: Story = {
         {/* Document context menu */}
         <div className="border border-[var(--color-border-primary-subtle)] rounded-m p-[var(--space-m)] relative">
           <div className="w-16 h-12 bg-[var(--color-background-secondary)] rounded flex items-center justify-center mb-[var(--space-s)]">
-            <Icon name="file-text" size="s" />
+            <Icon name={FileText} size="s" />
           </div>
           <p className="text-body-sm">document.pdf</p>
           <DropdownMenu>
@@ -492,17 +532,17 @@ export const ContextualActionsMenu: Story = {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem icon="eye">
+              <DropdownMenuItem icon={Eye}>
                 View
               </DropdownMenuItem>
-              <DropdownMenuItem icon="download">
+              <DropdownMenuItem icon={Download}>
                 Download
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem icon="share">
+              <DropdownMenuItem icon={Share}>
                 Share
               </DropdownMenuItem>
-              <DropdownMenuItem icon="copy">
+              <DropdownMenuItem icon={Copy}>
                 Copy Link
               </DropdownMenuItem>
               <DropdownMenuSeparator />
@@ -569,14 +609,14 @@ export const ResponsivePreview: Story = {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuItem icon="user">
+                <DropdownMenuItem icon={User}>
                   Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem icon="settings">
+                <DropdownMenuItem icon={Settings}>
                   Settings
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem icon="log-out" destructive>
+                <DropdownMenuItem icon={LogOut} destructive>
                   Logout
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -621,13 +661,13 @@ export const ResponsivePreview: Story = {
               <DropdownMenuContent className="w-56">
                 <DropdownMenuLabel>Theme</DropdownMenuLabel>
                 <DropdownMenuRadioGroup value="light">
-                  <DropdownMenuRadioItem value="light" icon="sun">
+                  <DropdownMenuRadioItem value="light" icon={Sun}>
                     Light
                   </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="dark" icon="moon">
+                  <DropdownMenuRadioItem value="dark" icon={Moon}>
                     Dark
                   </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="system" icon="monitor">
+                  <DropdownMenuRadioItem value="system" icon={Monitor}>
                     System
                   </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
@@ -676,33 +716,33 @@ export const AutomaticIconIntegration: Story = {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
               <DropdownMenuLabel>Account</DropdownMenuLabel>
-              <DropdownMenuItem icon="user">Profile</DropdownMenuItem>
-              <DropdownMenuItem icon="settings">Settings</DropdownMenuItem>
-              <DropdownMenuItem icon="credit-card">Billing</DropdownMenuItem>
+              <DropdownMenuItem icon={User}>Profile</DropdownMenuItem>
+              <DropdownMenuItem icon={Settings}>Settings</DropdownMenuItem>
+              <DropdownMenuItem icon={CreditCard}>Billing</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuSub>
-                <DropdownMenuSubTrigger icon="share-2">
+                <DropdownMenuSubTrigger icon={Share2}>
                   Share
                 </DropdownMenuSubTrigger>
                 <DropdownMenuSubContent>
-                  <DropdownMenuItem icon="mail">Email</DropdownMenuItem>
-                  <DropdownMenuItem icon="message-square">Message</DropdownMenuItem>
-                  <DropdownMenuItem icon="copy">Copy Link</DropdownMenuItem>
+                  <DropdownMenuItem icon={Mail}>Email</DropdownMenuItem>
+                  <DropdownMenuItem icon={MessageSquare}>Message</DropdownMenuItem>
+                  <DropdownMenuItem icon={Copy}>Copy Link</DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuSub>
               <DropdownMenuSeparator />
-              <DropdownMenuItem icon="help-circle">Help</DropdownMenuItem>
-              <DropdownMenuItem icon="log-out" destructive>Logout</DropdownMenuItem>
+              <DropdownMenuItem icon={HelpCircle}>Help</DropdownMenuItem>
+              <DropdownMenuItem icon={LogOut} destructive>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
           <div className="bg-[var(--color-surface-secondary)] p-[var(--space-m)] rounded-m">
             <h5 className="text-heading-sm mb-[var(--space-s)]">Code Example:</h5>
             <pre className="text-caption-sm text-[var(--color-text-secondary)] overflow-x-auto">
-{`<DropdownMenuItem icon="user">
+{`<DropdownMenuItem icon={User}>
   Profile
 </DropdownMenuItem>
-<DropdownMenuItem icon="settings">
+<DropdownMenuItem icon={Settings}>
   Settings
 </DropdownMenuItem>`}
             </pre>
@@ -722,45 +762,45 @@ export const AutomaticIconIntegration: Story = {
             <DropdownMenuContent className="w-56">
               <DropdownMenuLabel>Account</DropdownMenuLabel>
               <DropdownMenuItem>
-                <Icon name="user" size="m" className="mr-2" />
+                <Icon name={User} size="m" className="mr-2" />
                 Profile
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Icon name="settings" size="m" className="mr-2" />
+                <Icon name={Settings} size="m" className="mr-2" />
                 Settings
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Icon name="credit-card" size="m" className="mr-2" />
+                <Icon name={CreditCard} size="m" className="mr-2" />
                 Billing
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
-                  <Icon name="share-2" size="m" className="mr-2" />
+                  <Icon name={Share2} size="m" className="mr-2" />
                   Share
                 </DropdownMenuSubTrigger>
                 <DropdownMenuSubContent>
                   <DropdownMenuItem>
-                    <Icon name="mail" size="m" className="mr-2" />
+                    <Icon name={Mail} size="m" className="mr-2" />
                     Email
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Icon name="message-square" size="m" className="mr-2" />
+                    <Icon name={MessageSquare} size="m" className="mr-2" />
                     Message
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Icon name="copy" size="m" className="mr-2" />
+                    <Icon name={Copy} size="m" className="mr-2" />
                     Copy Link
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuSub>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Icon name="help-circle" size="m" className="mr-2" />
+                <Icon name={HelpCircle} size="m" className="mr-2" />
                 Help
               </DropdownMenuItem>
               <DropdownMenuItem destructive>
-                <Icon name="log-out" size="m" className="mr-2" />
+                <Icon name={LogOut} size="m" className="mr-2" />
                 Logout
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -770,11 +810,11 @@ export const AutomaticIconIntegration: Story = {
             <h5 className="text-heading-sm mb-[var(--space-s)]">Code Example:</h5>
             <pre className="text-caption-sm text-[var(--color-text-secondary)] overflow-x-auto">
 {`<DropdownMenuItem>
-  <Icon name="user" size="m" className="mr-2" />
+  <Icon name={User} size="m" className="mr-2" />
   Profile
 </DropdownMenuItem>
 <DropdownMenuItem>
-  <Icon name="settings" size="m" className="mr-2" />
+  <Icon name={Settings} size="m" className="mr-2" />
   Settings
 </DropdownMenuItem>`}
             </pre>
@@ -848,17 +888,17 @@ export const MobileAutoDismissTest: Story = {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
               <DropdownMenuLabel>User Actions</DropdownMenuLabel>
-              <DropdownMenuItem icon="user">
+              <DropdownMenuItem icon={User}>
                 View Profile
               </DropdownMenuItem>
-              <DropdownMenuItem icon="edit">
+              <DropdownMenuItem icon={Edit}>
                 Edit Account
               </DropdownMenuItem>
-              <DropdownMenuItem icon="settings">
+              <DropdownMenuItem icon={Settings}>
                 Settings
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem icon="log-out" destructive>
+              <DropdownMenuItem icon={LogOut} destructive>
                 Sign Out
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -912,13 +952,13 @@ export const MobileAutoDismissTest: Story = {
             <DropdownMenuContent className="w-56">
               <DropdownMenuLabel>Choose Theme</DropdownMenuLabel>
               <DropdownMenuRadioGroup value="light">
-                <DropdownMenuRadioItem value="light" icon="sun">
+                <DropdownMenuRadioItem value="light" icon={Sun}>
                   Light Theme
                 </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="dark" icon="moon">
+                <DropdownMenuRadioItem value="dark" icon={Moon}>
                   Dark Theme
                 </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="system" icon="monitor">
+                <DropdownMenuRadioItem value="system" icon={Monitor}>
                   System Theme
                 </DropdownMenuRadioItem>
               </DropdownMenuRadioGroup>
@@ -941,7 +981,7 @@ export const MobileAutoDismissTest: Story = {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
               <DropdownMenuLabel>Mixed Menu</DropdownMenuLabel>
-              <DropdownMenuItem icon="download">
+              <DropdownMenuItem icon={Download}>
                 Download (Auto-Close)
               </DropdownMenuItem>
               <DropdownMenuItem icon="bookmark" autoClose={false}>
@@ -1005,71 +1045,71 @@ export const MultiLevelNavigation: Story = {
         <DropdownMenuContent className="w-64">
           <DropdownMenuLabel>Main Menu</DropdownMenuLabel>
           
-          <DropdownMenuItem icon="home">
+          <DropdownMenuItem icon={Home}>
             <span>Dashboard</span>
           </DropdownMenuItem>
           
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger icon="folder">
+            <DropdownMenuSubTrigger icon={Folder}>
               <span>Projects</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
               <DropdownMenuLabel>Project Actions</DropdownMenuLabel>
-              <DropdownMenuItem icon="plus">
+              <DropdownMenuItem icon={Plus}>
                 <span>New Project</span>
               </DropdownMenuItem>
-              <DropdownMenuItem icon="folder-open">
+              <DropdownMenuItem icon={FolderOpen}>
                 <span>Open Recent</span>
               </DropdownMenuItem>
               
               <DropdownMenuSub>
-                <DropdownMenuSubTrigger icon="settings">
+                <DropdownMenuSubTrigger icon={Settings}>
                   <span>Project Settings</span>
                 </DropdownMenuSubTrigger>
                 <DropdownMenuSubContent>
                   <DropdownMenuLabel>Settings</DropdownMenuLabel>
-                  <DropdownMenuItem icon="users">
+                  <DropdownMenuItem icon={Users}>
                     <span>Team Members</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem icon="shield">
+                  <DropdownMenuItem icon={Shield}>
                     <span>Permissions</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem icon="bell">
+                  <DropdownMenuItem icon={Bell}>
                     <span>Notifications</span>
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuSub>
               
               <DropdownMenuSeparator />
-              <DropdownMenuItem icon="archive">
+              <DropdownMenuItem icon={Archive}>
                 <span>Archive</span>
               </DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuSub>
           
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger icon="user">
+            <DropdownMenuSubTrigger icon={User}>
               <span>Account</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
               <DropdownMenuLabel>Account Settings</DropdownMenuLabel>
-              <DropdownMenuItem icon="user-circle">
+              <DropdownMenuItem icon={UserCircle}>
                 <span>Profile</span>
               </DropdownMenuItem>
-              <DropdownMenuItem icon="credit-card">
+              <DropdownMenuItem icon={CreditCard}>
                 <span>Billing</span>
               </DropdownMenuItem>
-              <DropdownMenuItem icon="key">
+              <DropdownMenuItem icon={Key}>
                 <span>Security</span>
               </DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuSub>
           
           <DropdownMenuSeparator />
-          <DropdownMenuItem icon="help-circle">
+          <DropdownMenuItem icon={HelpCircle}>
             <span>Help & Support</span>
           </DropdownMenuItem>
-          <DropdownMenuItem icon="log-out">
+          <DropdownMenuItem icon={LogOut}>
             <span>Sign Out</span>
           </DropdownMenuItem>
         </DropdownMenuContent>

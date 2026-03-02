@@ -17,6 +17,13 @@ import { FixtureStatus } from '../components/product/fixture-status'
 import { Card, CardContent } from '../components/fundamental/card'
 import { Badge } from '../components/fundamental/badge'
 
+import {
+  ArrowLeftRight,
+  CheckCircle,
+  GitPullRequest,
+  ShieldCheck,
+  Users,
+} from 'lucide-react'
 const meta: Meta<typeof ActivityLog> = {
   title: 'NPM • Product Components/ActivityLog',
   component: ActivityLog,
@@ -142,7 +149,7 @@ export const TimeBasedSeparators: Story = {
         {/* Separator auto-inserted here (4 days later) */}
         <ActivityLogItem timestamp={new Date('2025-07-10T14:28:00')}>
           <ActivityLogHeader>
-            <Icon name="shield-check" size="m" color="primary" />
+            <Icon name={ShieldCheck} size="m" color="primary" />
             <ActivityLogDescription>
               <span>Compliance check completed successfully</span>
               <ActivityLogTime dateTime="2025-07-10T14:28:00">Jul 10, 2025 at 14:28</ActivityLogTime>
@@ -375,7 +382,7 @@ export const RichContent: Story = {
               <AvatarFallback size="xxs">RL</AvatarFallback>
             </Avatar>
             <ActivityLogDescription>
-              <Icon name="arrow-left-right" size="s" color="tertiary" />
+              <Icon name={ArrowLeftRight} size="s" color="tertiary" />
               <AvatarGroup size="xxs">
                 <Avatar size="xxs">
                   <AvatarFallback size="xxs">IC</AvatarFallback>
@@ -400,7 +407,7 @@ export const RichContent: Story = {
               <AvatarFallback size="xxs">RL</AvatarFallback>
             </Avatar>
             <ActivityLogDescription>
-              <Icon name="arrow-left-right" size="s" color="tertiary" />
+              <Icon name={ArrowLeftRight} size="s" color="tertiary" />
               <AvatarGroup size="xxs">
                 <Avatar size="xxs">
                   <AvatarFallback size="xxs">IC</AvatarFallback>
@@ -421,7 +428,7 @@ export const RichContent: Story = {
 
         <ActivityLogItem>
           <ActivityLogHeader>
-            <Icon name="shield-check" size="m" color="primary" />
+            <Icon name={ShieldCheck} size="m" color="primary" />
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Compliance check has finished with the result</span>
               <Badge intent="success" size="s">Compliant</Badge>
@@ -438,7 +445,7 @@ export const RichContent: Story = {
               <AvatarFallback size="xxs">RL</AvatarFallback>
             </Avatar>
             <ActivityLogDescription>
-              <Icon name="arrow-left-right" size="s" color="tertiary" />
+              <Icon name={ArrowLeftRight} size="s" color="tertiary" />
               <AvatarGroup size="xxs">
                 <Avatar size="xxs">
                   <AvatarFallback size="xxs">IC</AvatarFallback>
@@ -522,7 +529,7 @@ export const ManualSeparators: Story = {
 
         <ActivityLogItem>
           <ActivityLogHeader>
-            <Icon name="check-circle" size="m" color="primary" />
+            <Icon name={CheckCircle} size="m" color="primary" />
             <ActivityLogDescription>
               <span>Project completed successfully</span>
               <ActivityLogTime dateTime="2025-07-12T07:02:00">Jul 12, 2025 at 7:02</ActivityLogTime>
@@ -632,7 +639,7 @@ export const CustomContent: Story = {
               <CardContent className="p-[var(--space-m)]">
                 <div className="space-y-2 text-body-sm">
                   <div className="flex items-center gap-2">
-                    <Icon name="git-pull-request" size="s" />
+                    <Icon name={GitPullRequest} size="s" />
                     <span className="text-body-medium-sm">Pull Request #456</span>
                   </div>
                   <p className="text-[var(--color-text-secondary)]">
@@ -700,7 +707,7 @@ export const MixedItems: Story = {
 
         <ActivityLogItem>
           <ActivityLogHeader>
-            <Icon name="users" size="m" color="primary" />
+            <Icon name={Users} size="m" color="primary" />
             <ActivityLogDescription>
               <span className="text-body-medium-sm">Ivy Chu</span>
               <span>was added as a collaborator</span>

@@ -6,6 +6,33 @@ import { Button } from '../components/fundamental/button'
 import { Icon } from '../components/fundamental/icon'
 import { Badge } from '../components/fundamental/badge'
 
+import {
+  BarChart,
+  Brain,
+  Code,
+  Cpu,
+  Crown,
+  Edit,
+  File,
+  FilePlus,
+  FileText,
+  Folder,
+  FolderOpen,
+  FolderPlus,
+  Image,
+  Key,
+  LayoutDashboard,
+  Mail,
+  Megaphone,
+  Settings,
+  Shield,
+  ShieldCheck,
+  Sliders,
+  Smartphone,
+  Target,
+  User,
+  Users,
+} from 'lucide-react'
 const meta: Meta<typeof Tree> = {
   title: 'NPM • Fundamental/Tree',
   component: Tree,
@@ -125,49 +152,49 @@ export const FileExplorer: Story = {
       {
         id: 'root',
         name: 'Project Files',
-        icon: ({ className }) => <Icon name="folder" className={className} />,
-        openIcon: ({ className }) => <Icon name="folder-open" className={className} />,
+        icon: ({ className }) => <Icon name={Folder} className={className} />,
+        openIcon: ({ className }) => <Icon name={FolderOpen} className={className} />,
         children: [
           {
             id: 'docs',
             name: 'Documentation',
-            icon: ({ className }) => <Icon name="folder" className={className} />,
-            openIcon: ({ className }) => <Icon name="folder-open" className={className} />,
+            icon: ({ className }) => <Icon name={Folder} className={className} />,
+            openIcon: ({ className }) => <Icon name={FolderOpen} className={className} />,
             children: [
               {
                 id: 'readme',
                 name: 'README.md',
-                icon: ({ className }) => <Icon name="file-text" className={className} />,
+                icon: ({ className }) => <Icon name={FileText} className={className} />,
               },
               {
                 id: 'guide',
                 name: 'USER_GUIDE.pdf',
-                icon: ({ className }) => <Icon name="file" className={className} />,
+                icon: ({ className }) => <Icon name={File} className={className} />,
               },
             ],
           },
           {
             id: 'images',
             name: 'Images',
-            icon: ({ className }) => <Icon name="folder" className={className} />,
-            openIcon: ({ className }) => <Icon name="folder-open" className={className} />,
+            icon: ({ className }) => <Icon name={Folder} className={className} />,
+            openIcon: ({ className }) => <Icon name={FolderOpen} className={className} />,
             children: [
               {
                 id: 'logo',
                 name: 'logo.png',
-                icon: ({ className }) => <Icon name="image" className={className} />,
+                icon: ({ className }) => <Icon name={Image} className={className} />,
               },
               {
                 id: 'banner',
                 name: 'banner.jpg',
-                icon: ({ className }) => <Icon name="image" className={className} />,
+                icon: ({ className }) => <Icon name={Image} className={className} />,
               },
             ],
           },
           {
             id: 'config',
             name: 'config.json',
-            icon: ({ className }) => <Icon name="settings" className={className} />,
+            icon: ({ className }) => <Icon name={Settings} className={className} />,
           },
         ],
       },
@@ -178,7 +205,7 @@ export const FileExplorer: Story = {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Icon name="folder" />
+              <Icon name={Folder} />
               File Explorer
             </CardTitle>
           </CardHeader>
@@ -214,7 +241,7 @@ export const WithActions: Story = {
                 actions: (
                   <div className="flex gap-1">
                     <Button size="s" variant="ghost">
-                      <Icon name="mail" size="s" />
+                      <Icon name={Mail} size="s" />
                     </Button>
                     <Button size="s" variant="ghost">
                       <Icon name="more-horizontal" size="s" />
@@ -229,7 +256,7 @@ export const WithActions: Story = {
                 actions: (
                   <div className="flex gap-1">
                     <Button size="s" variant="ghost">
-                      <Icon name="mail" size="s" />
+                      <Icon name={Mail} size="s" />
                     </Button>
                     <Button size="s" variant="ghost">
                       <Icon name="more-horizontal" size="s" />
@@ -250,7 +277,7 @@ export const WithActions: Story = {
                 actions: (
                   <div className="flex gap-1">
                     <Button size="s" variant="ghost">
-                      <Icon name="mail" size="s" />
+                      <Icon name={Mail} size="s" />
                     </Button>
                   </div>
                 ),
@@ -267,7 +294,7 @@ export const WithActions: Story = {
         name: 'New Member',
         actions: (
           <Button size="s" variant="ghost">
-            <Icon name="mail" size="s" />
+            <Icon name={Mail} size="s" />
           </Button>
         ),
       }
@@ -304,62 +331,62 @@ export const NavigationTree: Story = {
       {
         id: 'dashboard',
         name: 'Dashboard',
-        icon: ({ className }) => <Icon name="layout-dashboard" className={className} />,
+        icon: ({ className }) => <Icon name={LayoutDashboard} className={className} />,
         onClick: () => console.log('Navigate to dashboard'),
       },
       {
         id: 'users',
         name: 'User Management',
-        icon: ({ className }) => <Icon name="users" className={className} />,
+        icon: ({ className }) => <Icon name={Users} className={className} />,
         children: [
           {
             id: 'all-users',
             name: 'All Users',
-            icon: ({ className }) => <Icon name="user" className={className} />,
+            icon: ({ className }) => <Icon name={User} className={className} />,
           },
           {
             id: 'user-roles',
             name: 'User Roles',
-            icon: ({ className }) => <Icon name="shield" className={className} />,
+            icon: ({ className }) => <Icon name={Shield} className={className} />,
           },
           {
             id: 'permissions',
             name: 'Permissions',
-            icon: ({ className }) => <Icon name="key" className={className} />,
+            icon: ({ className }) => <Icon name={Key} className={className} />,
           },
         ],
       },
       {
         id: 'content',
         name: 'Content Management',
-        icon: ({ className }) => <Icon name="file-text" className={className} />,
+        icon: ({ className }) => <Icon name={FileText} className={className} />,
         children: [
           {
             id: 'posts',
             name: 'Posts',
-            icon: ({ className }) => <Icon name="edit" className={className} />,
+            icon: ({ className }) => <Icon name={Edit} className={className} />,
           },
           {
             id: 'media',
             name: 'Media Library',
-            icon: ({ className }) => <Icon name="image" className={className} />,
+            icon: ({ className }) => <Icon name={Image} className={className} />,
           },
         ],
       },
       {
         id: 'settings',
         name: 'Settings',
-        icon: ({ className }) => <Icon name="settings" className={className} />,
+        icon: ({ className }) => <Icon name={Settings} className={className} />,
         children: [
           {
             id: 'general',
             name: 'General',
-            icon: ({ className }) => <Icon name="sliders" className={className} />,
+            icon: ({ className }) => <Icon name={Sliders} className={className} />,
           },
           {
             id: 'security',
             name: 'Security',
-            icon: ({ className }) => <Icon name="shield-check" className={className} />,
+            icon: ({ className }) => <Icon name={ShieldCheck} className={className} />,
           },
         ],
       },
@@ -402,12 +429,12 @@ export const DisabledItems: Story = {
           {
             id: 'dashboard',
             name: 'Dashboard',
-            icon: ({ className }) => <Icon name="layout-dashboard" className={className} />,
+            icon: ({ className }) => <Icon name={LayoutDashboard} className={className} />,
           },
           {
             id: 'analytics',
             name: 'Analytics',
-            icon: ({ className }) => <Icon name="bar-chart" className={className} />,
+            icon: ({ className }) => <Icon name={BarChart} className={className} />,
             disabled: true,
             actions: <Badge>Premium</Badge>,
           },
@@ -422,13 +449,13 @@ export const DisabledItems: Story = {
             id: 'ai-features',
             name: 'AI Features',
             disabled: true,
-            icon: ({ className }) => <Icon name="brain" className={className} />,
+            icon: ({ className }) => <Icon name={Brain} className={className} />,
           },
           {
             id: 'mobile-app',
             name: 'Mobile App',
             disabled: true,
-            icon: ({ className }) => <Icon name="smartphone" className={className} />,
+            icon: ({ className }) => <Icon name={Smartphone} className={className} />,
           },
         ],
       },
@@ -460,13 +487,13 @@ export const OrganizationChart: Story = {
       {
         id: 'ceo',
         name: 'John Smith - CEO',
-        icon: ({ className }) => <Icon name="crown" className={className} />,
+        icon: ({ className }) => <Icon name={Crown} className={className} />,
         actions: <Badge intent="brand" appearance="solid">Executive</Badge>,
         children: [
           {
             id: 'cto',
             name: 'Alice Johnson - CTO',
-            icon: ({ className }) => <Icon name="cpu" className={className} />,
+            icon: ({ className }) => <Icon name={Cpu} className={className} />,
             actions: <Badge intent="success" appearance="solid">Tech Lead</Badge>,
             children: [
               {
@@ -476,12 +503,12 @@ export const OrganizationChart: Story = {
                   {
                     id: 'senior-dev',
                     name: 'Bob Wilson - Senior Developer',
-                    icon: ({ className }) => <Icon name="code" className={className} />,
+                    icon: ({ className }) => <Icon name={Code} className={className} />,
                   },
                   {
                     id: 'junior-dev',
                     name: 'Carol Brown - Junior Developer',
-                    icon: ({ className }) => <Icon name="code" className={className} />,
+                    icon: ({ className }) => <Icon name={Code} className={className} />,
                   },
                 ],
               },
@@ -490,7 +517,7 @@ export const OrganizationChart: Story = {
           {
             id: 'cmo',
             name: 'David Lee - CMO',
-            icon: ({ className }) => <Icon name="megaphone" className={className} />,
+            icon: ({ className }) => <Icon name={Megaphone} className={className} />,
             actions: <Badge intent="warning" appearance="solid">Marketing</Badge>,
             children: [
               {
@@ -500,7 +527,7 @@ export const OrganizationChart: Story = {
                   {
                     id: 'marketing-specialist',
                     name: 'Emma Davis - Specialist',
-                    icon: ({ className }) => <Icon name="target" className={className} />,
+                    icon: ({ className }) => <Icon name={Target} className={className} />,
                   },
                 ],
               },
@@ -583,7 +610,7 @@ export const Interactive: Story = {
             size="s"
             onClick={() => addItem('root', 'folder')}
           >
-            <Icon name="folder-plus" size="s" className="mr-1" />
+            <Icon name={FolderPlus} size="s" className="mr-1" />
             Add Folder
           </Button>
           <Button
@@ -591,7 +618,7 @@ export const Interactive: Story = {
             variant="ghost"
             onClick={() => addItem('root', 'file')}
           >
-            <Icon name="file-plus" size="s" className="mr-1" />
+            <Icon name={FilePlus} size="s" className="mr-1" />
             Add File
           </Button>
         </div>

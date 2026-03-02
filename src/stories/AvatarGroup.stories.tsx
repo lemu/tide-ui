@@ -3,6 +3,10 @@ import { AvatarGroup } from '../components/fundamental/avatar-group'
 import { Avatar, AvatarImage, AvatarFallback } from '../components/fundamental/avatar'
 import { Icon } from '../components/fundamental/icon'
 
+import {
+  Package,
+  User,
+} from 'lucide-react'
 const meta: Meta<typeof AvatarGroup> = {
   title: 'NPM • Fundamental/AvatarGroup',
   component: AvatarGroup,
@@ -288,12 +292,12 @@ export const WithIcons: Story = {
     <AvatarGroup size="m">
       <Avatar size="m">
         <AvatarFallback size="m" variant="information">
-          <Icon name="user" size="s" color="inverse" />
+          <Icon name={User} size="s" color="inverse" />
         </AvatarFallback>
       </Avatar>
       <Avatar size="m" type="organization">
         <AvatarFallback size="m" type="organization" variant="violet">
-          <Icon name="package" size="s" color="inverse" />
+          <Icon name={Package} size="s" color="inverse" />
         </AvatarFallback>
       </Avatar>
       <Avatar size="m">

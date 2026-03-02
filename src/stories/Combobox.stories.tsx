@@ -7,6 +7,10 @@ import { Badge } from '../components/fundamental/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 import { Label } from '../components/fundamental/label'
 
+import {
+  MapPin,
+  User,
+} from 'lucide-react'
 const meta: Meta<typeof Combobox> = {
   title: 'NPM • Fundamental/Combobox',
   component: Combobox,
@@ -149,7 +153,7 @@ export const TeamMemberSelection: Story = {
                 <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m">
                   <h4 className="text-body-sm font-medium mb-2">Selected Assignee:</h4>
                   <div className="flex items-center gap-2">
-                    <Icon name="user" size="s" />
+                    <Icon name={User} size="s" />
                     <span className="text-body-sm">{getMemberInfo(selectedMember)}</span>
                   </div>
                 </div>
@@ -458,7 +462,7 @@ export const LocationSelection: Story = {
                 <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m">
                   <h4 className="text-body-sm font-medium mb-2">Selected Location:</h4>
                   <div className="flex items-center gap-2">
-                    <Icon name="map-pin" size="s" />
+                    <Icon name={MapPin} size="s" />
                     <span className="text-body-sm">
                       {selectedCity ? `${locationInfo.city}, ${locationInfo.country}` : locationInfo.country}
                     </span>

@@ -8,6 +8,33 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../components/fundamental/dropdown-menu";
+import {
+  AlignCenter,
+  AlignLeft,
+  AlignRight,
+  ArrowUp,
+  Bold,
+  Copy,
+  Download,
+  Edit,
+  File,
+  Folder,
+  Grid2x2,
+  Home,
+  Italic,
+  Layout,
+  LayoutGrid,
+  List,
+  ListOrdered,
+  LogOut,
+  Printer,
+  Settings,
+  Share,
+  Sliders,
+  Strikethrough,
+  Underline,
+  User,
+} from 'lucide-react'
 
 const meta: Meta<typeof ButtonGroup> = {
   title: "NPM • Fundamental/ButtonGroup",
@@ -115,13 +142,13 @@ export const WithIcons: Story = {
         <p className="text-body-sm font-medium mb-2">View Options</p>
         <ButtonGroup>
           <Button>
-            <Icon name="list" className="w-4 h-4" />
+            <Icon name={List} className="w-4 h-4" />
           </Button>
           <Button>
-            <Icon name="grid-2x2" className="w-4 h-4" />
+            <Icon name={Grid2x2} className="w-4 h-4" />
           </Button>
           <Button>
-            <Icon name="layout-grid" className="w-4 h-4" />
+            <Icon name={LayoutGrid} className="w-4 h-4" />
           </Button>
         </ButtonGroup>
       </div>
@@ -130,16 +157,16 @@ export const WithIcons: Story = {
         <p className="text-body-sm font-medium mb-2">Text Formatting</p>
         <ButtonGroup variant="ghost" size="s">
           <Button>
-            <Icon name="bold" className="w-4 h-4" />
+            <Icon name={Bold} className="w-4 h-4" />
           </Button>
           <Button>
-            <Icon name="italic" className="w-4 h-4" />
+            <Icon name={Italic} className="w-4 h-4" />
           </Button>
           <Button>
-            <Icon name="underline" className="w-4 h-4" />
+            <Icon name={Underline} className="w-4 h-4" />
           </Button>
           <Button>
-            <Icon name="strikethrough" className="w-4 h-4" />
+            <Icon name={Strikethrough} className="w-4 h-4" />
           </Button>
         </ButtonGroup>
       </div>
@@ -148,15 +175,15 @@ export const WithIcons: Story = {
         <p className="text-body-sm font-medium mb-2">Alignment</p>
         <ButtonGroup>
           <Button>
-            <Icon name="align-left" className="w-4 h-4 mr-2" />
+            <Icon name={AlignLeft} className="w-4 h-4 mr-2" />
             Left
           </Button>
           <Button>
-            <Icon name="align-center" className="w-4 h-4 mr-2" />
+            <Icon name={AlignCenter} className="w-4 h-4 mr-2" />
             Center
           </Button>
           <Button>
-            <Icon name="align-right" className="w-4 h-4 mr-2" />
+            <Icon name={AlignRight} className="w-4 h-4 mr-2" />
             Right
           </Button>
         </ButtonGroup>
@@ -279,25 +306,25 @@ export const FilterExample: Story = {
           <div className="flex gap-4">
             <ButtonGroup>
               <Button>
-                <Icon name="download" className="w-4 h-4 mr-2" />
+                <Icon name={Download} className="w-4 h-4 mr-2" />
                 Export
               </Button>
               <Button>
-                <Icon name="printer" className="w-4 h-4 mr-2" />
+                <Icon name={Printer} className="w-4 h-4 mr-2" />
                 Print
               </Button>
               <Button>
-                <Icon name="share" className="w-4 h-4 mr-2" />
+                <Icon name={Share} className="w-4 h-4 mr-2" />
                 Share
               </Button>
             </ButtonGroup>
 
             <ButtonGroup variant="ghost" size="s">
               <Button>
-                <Icon name="copy" className="w-4 h-4" />
+                <Icon name={Copy} className="w-4 h-4" />
               </Button>
               <Button>
-                <Icon name="edit" className="w-4 h-4" />
+                <Icon name={Edit} className="w-4 h-4" />
               </Button>
               <Button>
                 <Icon name="trash-2" className="w-4 h-4" />
@@ -374,19 +401,19 @@ export const VerticalOrientation: Story = {
         <p className="text-body-sm font-medium mb-2">Vertical Button Group</p>
         <ButtonGroup orientation="vertical">
           <Button>
-            <Icon name="home" className="w-4 h-4 mr-2" />
+            <Icon name={Home} className="w-4 h-4 mr-2" />
             Home
           </Button>
           <Button>
-            <Icon name="settings" className="w-4 h-4 mr-2" />
+            <Icon name={Settings} className="w-4 h-4 mr-2" />
             Settings
           </Button>
           <Button>
-            <Icon name="user" className="w-4 h-4 mr-2" />
+            <Icon name={User} className="w-4 h-4 mr-2" />
             Profile
           </Button>
           <Button>
-            <Icon name="log-out" className="w-4 h-4 mr-2" />
+            <Icon name={LogOut} className="w-4 h-4 mr-2" />
             Logout
           </Button>
         </ButtonGroup>
@@ -396,13 +423,13 @@ export const VerticalOrientation: Story = {
         <p className="text-body-sm font-medium mb-2">Vertical Icon-Only Group</p>
         <ButtonGroup orientation="vertical" size="m">
           <Button>
-            <Icon name="bold" className="w-4 h-4" />
+            <Icon name={Bold} className="w-4 h-4" />
           </Button>
           <Button>
-            <Icon name="italic" className="w-4 h-4" />
+            <Icon name={Italic} className="w-4 h-4" />
           </Button>
           <Button>
-            <Icon name="underline" className="w-4 h-4" />
+            <Icon name={Underline} className="w-4 h-4" />
           </Button>
         </ButtonGroup>
       </div>
@@ -470,11 +497,11 @@ export const WithSeparator: Story = {
         <p className="text-body-sm font-medium mb-2">Action Group with Separators</p>
         <ButtonGroup>
           <Button size="s">
-            <Icon name="copy" className="w-4 h-4" />
+            <Icon name={Copy} className="w-4 h-4" />
           </Button>
           <ButtonGroupSeparator />
           <Button size="s">
-            <Icon name="edit" className="w-4 h-4" />
+            <Icon name={Edit} className="w-4 h-4" />
           </Button>
           <ButtonGroupSeparator />
           <Button size="s">
@@ -494,17 +521,17 @@ export const WithText: Story = {
         <p className="text-body-sm font-medium mb-2">Labeled Button Group</p>
         <ButtonGroup>
           <ButtonGroupText>
-            <Icon name="layout" />
+            <Icon name={Layout} />
             View:
           </ButtonGroupText>
           <Button variant="ghost" size="s">
-            <Icon name="list" className="w-4 h-4" />
+            <Icon name={List} className="w-4 h-4" />
           </Button>
           <Button variant="ghost" size="s">
-            <Icon name="grid-2x2" className="w-4 h-4" />
+            <Icon name={Grid2x2} className="w-4 h-4" />
           </Button>
           <Button variant="ghost" size="s">
-            <Icon name="layout-grid" className="w-4 h-4" />
+            <Icon name={LayoutGrid} className="w-4 h-4" />
           </Button>
         </ButtonGroup>
       </div>
@@ -524,7 +551,7 @@ export const WithText: Story = {
         <p className="text-body-sm font-medium mb-2">Mixed Text and Actions</p>
         <ButtonGroup>
           <ButtonGroupText>
-            <Icon name="sliders" />
+            <Icon name={Sliders} />
             Sort by:
           </ButtonGroupText>
           <Button variant="ghost" size="s">
@@ -533,7 +560,7 @@ export const WithText: Story = {
           </Button>
           <ButtonGroupSeparator />
           <Button variant="ghost" size="s">
-            <Icon name="arrow-up" className="w-4 h-4" />
+            <Icon name={ArrowUp} className="w-4 h-4" />
           </Button>
         </ButtonGroup>
       </div>
@@ -550,27 +577,13 @@ export const ComplexLayouts: Story = {
         <div className="flex gap-[var(--space-s)]">
           <ButtonGroup>
             <Button size="s">
-              <Icon name="bold" className="w-4 h-4" />
+              <Icon name={Bold} className="w-4 h-4" />
             </Button>
             <Button size="s">
-              <Icon name="italic" className="w-4 h-4" />
+              <Icon name={Italic} className="w-4 h-4" />
             </Button>
             <Button size="s">
-              <Icon name="underline" className="w-4 h-4" />
-            </Button>
-          </ButtonGroup>
-
-          <ButtonGroupSeparator orientation="vertical" />
-
-          <ButtonGroup>
-            <Button size="s">
-              <Icon name="align-left" className="w-4 h-4" />
-            </Button>
-            <Button size="s">
-              <Icon name="align-center" className="w-4 h-4" />
-            </Button>
-            <Button size="s">
-              <Icon name="align-right" className="w-4 h-4" />
+              <Icon name={Underline} className="w-4 h-4" />
             </Button>
           </ButtonGroup>
 
@@ -578,10 +591,24 @@ export const ComplexLayouts: Story = {
 
           <ButtonGroup>
             <Button size="s">
-              <Icon name="list" className="w-4 h-4" />
+              <Icon name={AlignLeft} className="w-4 h-4" />
             </Button>
             <Button size="s">
-              <Icon name="list-ordered" className="w-4 h-4" />
+              <Icon name={AlignCenter} className="w-4 h-4" />
+            </Button>
+            <Button size="s">
+              <Icon name={AlignRight} className="w-4 h-4" />
+            </Button>
+          </ButtonGroup>
+
+          <ButtonGroupSeparator orientation="vertical" />
+
+          <ButtonGroup>
+            <Button size="s">
+              <Icon name={List} className="w-4 h-4" />
+            </Button>
+            <Button size="s">
+              <Icon name={ListOrdered} className="w-4 h-4" />
             </Button>
           </ButtonGroup>
         </div>
@@ -620,20 +647,20 @@ export const ComplexLayouts: Story = {
         <ButtonGroup orientation="vertical">
           <ButtonGroupText asChild>
             <div className="justify-start px-[var(--space-m)] py-[var(--space-s)]">
-              <Icon name="folder" />
+              <Icon name={Folder} />
               <span className="text-body-strong-sm">Projects</span>
             </div>
           </ButtonGroupText>
           <Button variant="ghost" className="justify-start">
-            <Icon name="file" className="w-4 h-4 mr-2" />
+            <Icon name={File} className="w-4 h-4 mr-2" />
             Project Alpha
           </Button>
           <Button variant="ghost" className="justify-start">
-            <Icon name="file" className="w-4 h-4 mr-2" />
+            <Icon name={File} className="w-4 h-4 mr-2" />
             Project Beta
           </Button>
           <Button variant="ghost" className="justify-start">
-            <Icon name="file" className="w-4 h-4 mr-2" />
+            <Icon name={File} className="w-4 h-4 mr-2" />
             Project Gamma
           </Button>
         </ButtonGroup>

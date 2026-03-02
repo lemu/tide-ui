@@ -10,6 +10,11 @@ import { Avatar, AvatarFallback, AvatarImage } from '../components/fundamental/a
 import { Icon } from '../components/fundamental/icon'
 import { Skeleton } from '../components/fundamental/skeleton'
 
+import {
+  RefreshCw,
+  TrendingUp,
+  Upload,
+} from 'lucide-react'
 const meta: Meta<typeof Spinner> = {
   title: 'NPM • fundamental/Spinner',
   component: Spinner,
@@ -239,7 +244,7 @@ export const InButtons: Story = {
               </>
             ) : (
               <>
-                <Icon name="upload" size="s" className="mr-2" />
+                <Icon name={Upload} size="s" className="mr-2" />
                 Upload File
               </>
             )}
@@ -550,7 +555,7 @@ export const LoadingDashboard: Story = {
                 size="s"
                 onClick={() => toggleLoading('analytics')}
               >
-                <Icon name="refresh-cw" size="s" />
+                <Icon name={RefreshCw} size="s" />
               </Button>
             </div>
           </CardHeader>
@@ -566,7 +571,7 @@ export const LoadingDashboard: Story = {
             ) : (
               <div className="space-y-3">
                 <div className="h-32 bg-gradient-to-r from-blue-100 to-purple-100 rounded flex items-center justify-center">
-                  <Icon name="trending-up" size="l" className="text-blue-600" />
+                  <Icon name={TrendingUp} size="l" className="text-blue-600" />
                 </div>
                 <div className="flex justify-between">
                   <span className="text-body-sm">Total Views</span>
@@ -586,7 +591,7 @@ export const LoadingDashboard: Story = {
                 size="s"
                 onClick={() => toggleLoading('users')}
               >
-                <Icon name="refresh-cw" size="s" />
+                <Icon name={RefreshCw} size="s" />
               </Button>
             </div>
           </CardHeader>
@@ -630,7 +635,7 @@ export const LoadingDashboard: Story = {
                 size="s"
                 onClick={() => toggleLoading('revenue')}
               >
-                <Icon name="refresh-cw" size="s" />
+                <Icon name={RefreshCw} size="s" />
               </Button>
             </div>
           </CardHeader>
@@ -658,7 +663,7 @@ export const LoadingDashboard: Story = {
                 size="s"
                 onClick={() => toggleLoading('orders')}
               >
-                <Icon name="refresh-cw" size="s" />
+                <Icon name={RefreshCw} size="s" />
               </Button>
             </div>
           </CardHeader>

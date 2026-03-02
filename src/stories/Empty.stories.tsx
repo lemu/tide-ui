@@ -10,6 +10,20 @@ import {
 import { Button } from '../components/fundamental/button'
 import { Icon } from '../components/fundamental/icon'
 
+import {
+  AlertTriangle,
+  Bell,
+  CheckCircle,
+  Construction,
+  Database,
+  FileQuestion,
+  Inbox,
+  Lock,
+  ShoppingCart,
+  Upload,
+  WifiOff,
+  XCircle,
+} from 'lucide-react'
 const meta = {
   title: 'NPM • fundamental/Empty',
   component: Empty,
@@ -28,7 +42,7 @@ export const Default: Story = {
     <Empty>
       <EmptyHeader>
         <EmptyMedia>
-          <Icon name="database" className="h-8 w-8" />
+          <Icon name={Database} className="h-8 w-8" />
         </EmptyMedia>
         <EmptyTitle>No data found</EmptyTitle>
         <EmptyDescription>
@@ -44,7 +58,7 @@ export const WithAction: Story = {
     <Empty>
       <EmptyHeader>
         <EmptyMedia color="primary">
-          <Icon name="inbox" className="h-8 w-8" />
+          <Icon name={Inbox} className="h-8 w-8" />
         </EmptyMedia>
         <EmptyTitle>Inbox is empty</EmptyTitle>
         <EmptyDescription>
@@ -63,7 +77,7 @@ export const WithMultipleActions: Story = {
     <Empty>
       <EmptyHeader>
         <EmptyMedia color="primary">
-          <Icon name="upload" className="h-8 w-8" />
+          <Icon name={Upload} className="h-8 w-8" />
         </EmptyMedia>
         <EmptyTitle>No files uploaded</EmptyTitle>
         <EmptyDescription>
@@ -133,7 +147,7 @@ export const ColorDefault: Story = {
     <Empty>
       <EmptyHeader>
         <EmptyMedia color="default">
-          <Icon name="database" className="h-8 w-8" />
+          <Icon name={Database} className="h-8 w-8" />
         </EmptyMedia>
         <EmptyTitle>Default color</EmptyTitle>
         <EmptyDescription>
@@ -149,7 +163,7 @@ export const ColorPrimary: Story = {
     <Empty>
       <EmptyHeader>
         <EmptyMedia color="primary">
-          <Icon name="inbox" className="h-8 w-8" />
+          <Icon name={Inbox} className="h-8 w-8" />
         </EmptyMedia>
         <EmptyTitle>Primary color</EmptyTitle>
         <EmptyDescription>
@@ -165,7 +179,7 @@ export const ColorSuccess: Story = {
     <Empty>
       <EmptyHeader>
         <EmptyMedia color="success">
-          <Icon name="check-circle" className="h-8 w-8" />
+          <Icon name={CheckCircle} className="h-8 w-8" />
         </EmptyMedia>
         <EmptyTitle>Success color</EmptyTitle>
         <EmptyDescription>
@@ -181,7 +195,7 @@ export const ColorWarning: Story = {
     <Empty>
       <EmptyHeader>
         <EmptyMedia color="warning">
-          <Icon name="alert-triangle" className="h-8 w-8" />
+          <Icon name={AlertTriangle} className="h-8 w-8" />
         </EmptyMedia>
         <EmptyTitle>Warning color</EmptyTitle>
         <EmptyDescription>
@@ -197,7 +211,7 @@ export const ColorError: Story = {
     <Empty>
       <EmptyHeader>
         <EmptyMedia color="error">
-          <Icon name="x-circle" className="h-8 w-8" />
+          <Icon name={XCircle} className="h-8 w-8" />
         </EmptyMedia>
         <EmptyTitle>Error color</EmptyTitle>
         <EmptyDescription>
@@ -249,7 +263,7 @@ export const EmptyCart: Story = {
     <Empty>
       <EmptyHeader>
         <EmptyMedia>
-          <Icon name="shopping-cart" className="h-8 w-8" />
+          <Icon name={ShoppingCart} className="h-8 w-8" />
         </EmptyMedia>
         <EmptyTitle>Your cart is empty</EmptyTitle>
         <EmptyDescription>
@@ -268,7 +282,7 @@ export const ConnectionError: Story = {
     <Empty>
       <EmptyHeader>
         <EmptyMedia color="error">
-          <Icon name="wifi-off" className="h-8 w-8" />
+          <Icon name={WifiOff} className="h-8 w-8" />
         </EmptyMedia>
         <EmptyTitle>Connection error</EmptyTitle>
         <EmptyDescription>
@@ -288,7 +302,7 @@ export const PageNotFound: Story = {
     <Empty>
       <EmptyHeader>
         <EmptyMedia color="warning">
-          <Icon name="file-question" className="h-8 w-8" />
+          <Icon name={FileQuestion} className="h-8 w-8" />
         </EmptyMedia>
         <EmptyTitle>Page not found</EmptyTitle>
         <EmptyDescription>
@@ -308,7 +322,7 @@ export const Unauthorized: Story = {
     <Empty>
       <EmptyHeader>
         <EmptyMedia color="error">
-          <Icon name="lock" className="h-8 w-8" />
+          <Icon name={Lock} className="h-8 w-8" />
         </EmptyMedia>
         <EmptyTitle>Access denied</EmptyTitle>
         <EmptyDescription>
@@ -328,7 +342,7 @@ export const ComingSoon: Story = {
     <Empty>
       <EmptyHeader>
         <EmptyMedia color="warning">
-          <Icon name="construction" className="h-8 w-8" />
+          <Icon name={Construction} className="h-8 w-8" />
         </EmptyMedia>
         <EmptyTitle>Coming soon</EmptyTitle>
         <EmptyDescription>
@@ -347,7 +361,7 @@ export const NoNotifications: Story = {
     <Empty>
       <EmptyHeader>
         <EmptyMedia color="success">
-          <Icon name="bell" className="h-8 w-8" />
+          <Icon name={Bell} className="h-8 w-8" />
         </EmptyMedia>
         <EmptyTitle>No new notifications</EmptyTitle>
         <EmptyDescription>

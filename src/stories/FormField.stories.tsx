@@ -31,6 +31,10 @@ import { Icon } from '../components/fundamental/icon'
 import { Badge } from '../components/fundamental/badge'
 import { Label } from '../components/fundamental/label'
 
+import {
+  Mail,
+  Send,
+} from 'lucide-react'
 const meta: Meta<typeof FormField> = {
   title: 'NPM • Fundamental/FormField',
   component: FormField,
@@ -519,7 +523,7 @@ export const ContactForm: Story = {
       <Card className="w-full max-w-lg">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Icon name="mail" size="m" />
+            <Icon name={Mail} size="m" />
             Contact Us
           </CardTitle>
         </CardHeader>
@@ -664,7 +668,7 @@ export const ContactForm: Story = {
                 </>
               ) : (
                 <>
-                  <Icon name="send" size="s" className="mr-2" />
+                  <Icon name={Send} size="s" className="mr-2" />
                   Send Message
                 </>
               )}

@@ -4,6 +4,15 @@ import { Bookmarks, Bookmark } from '../components/product/bookmarks'
 import { Filters, FilterDefinition, FilterValue } from '../components/product/filters'
 import { Icon } from '../components/fundamental/icon'
 
+import {
+  Anchor,
+  Calendar,
+  CircleCheckBig,
+  Package,
+  Tag,
+  User,
+} from 'lucide-react'
+import { ShipLoad, ShipUnload } from '../components/fundamental/custom-icons'
 const meta: Meta<typeof Bookmarks> = {
   title: 'NPM • Product Components/Bookmarks',
   component: Bookmarks,
@@ -620,12 +629,12 @@ export const LoadingCountsListVariant: Story = {
 }
 
 // Helper to create icon components for filters
-const CalendarIcon = ({ className }: { className?: string }) => <Icon name="calendar" className={className} />
-const CheckIcon = ({ className }: { className?: string }) => <Icon name="circle-check-big" className={className} />
-const PackageIcon = ({ className }: { className?: string }) => <Icon name="package" className={className} />
-const UserIcon = ({ className }: { className?: string }) => <Icon name="user" className={className} />
-const AnchorIcon = ({ className }: { className?: string }) => <Icon name="anchor" className={className} />
-const TagIcon = ({ className }: { className?: string }) => <Icon name="tag" className={className} />
+const CalendarIcon = ({ className }: { className?: string }) => <Icon name={Calendar} className={className} />
+const CheckIcon = ({ className }: { className?: string }) => <Icon name={CircleCheckBig} className={className} />
+const PackageIcon = ({ className }: { className?: string }) => <Icon name={Package} className={className} />
+const UserIcon = ({ className }: { className?: string }) => <Icon name={User} className={className} />
+const AnchorIcon = ({ className }: { className?: string }) => <Icon name={Anchor} className={className} />
+const TagIcon = ({ className }: { className?: string }) => <Icon name={Tag} className={className} />
 
 // Sample filter definitions for testing horizontal scroll
 const manyFilters: FilterDefinition[] = [
@@ -665,7 +674,7 @@ const manyFilters: FilterDefinition[] = [
   {
     id: 'loadPort',
     label: 'Load port',
-    icon: ({ className }: { className?: string }) => <Icon name="ship-load" className={className} />,
+    icon: ({ className }: { className?: string }) => <Icon name={ShipLoad} className={className} />,
     type: 'multiselect',
     options: [
       { value: 'rotterdam', label: 'Rotterdam' },
@@ -676,7 +685,7 @@ const manyFilters: FilterDefinition[] = [
   {
     id: 'dischargePort',
     label: 'Discharge port',
-    icon: ({ className }: { className?: string }) => <Icon name="ship-unload" className={className} />,
+    icon: ({ className }: { className?: string }) => <Icon name={ShipUnload} className={className} />,
     type: 'multiselect',
     options: [
       { value: 'houston', label: 'Houston' },

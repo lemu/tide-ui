@@ -6,6 +6,27 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamen
 import { Label } from '../components/fundamental/label'
 import { formatDateRange } from '../lib/date-utils'
 
+import {
+  Briefcase,
+  Calendar,
+  CalendarDays,
+  CheckCircle,
+  CircleCheckBig,
+  Container,
+  DollarSign,
+  Eye,
+  EyeOff,
+  GitBranch,
+  Layers,
+  List,
+  MapPin,
+  Package,
+  Ship,
+  Square,
+  User,
+  Users,
+} from 'lucide-react'
+import { ShipLoad, ShipUnload } from '../components/fundamental/custom-icons'
 const meta: Meta<typeof Filters> = {
   title: 'NPM • Product Components/Filters',
   component: Filters,
@@ -124,11 +145,11 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 // Helper to create icon components
-const CalendarIcon = ({ className }: { className?: string }) => <Icon name="calendar" className={className} />
-const CheckIcon = ({ className }: { className?: string }) => <Icon name="circle-check-big" className={className} />
-const PackageIcon = ({ className }: { className?: string }) => <Icon name="package" className={className} />
-const ShipIcon = ({ className }: { className?: string }) => <Icon name="ship" className={className} />
-const UserIcon = ({ className }: { className?: string }) => <Icon name="user" className={className} />
+const CalendarIcon = ({ className }: { className?: string }) => <Icon name={Calendar} className={className} />
+const CheckIcon = ({ className }: { className?: string }) => <Icon name={CircleCheckBig} className={className} />
+const PackageIcon = ({ className }: { className?: string }) => <Icon name={Package} className={className} />
+const ShipIcon = ({ className }: { className?: string }) => <Icon name={Ship} className={className} />
+const UserIcon = ({ className }: { className?: string }) => <Icon name={User} className={className} />
 
 // Sample filter definitions
 const sampleFilters: FilterDefinition[] = [
@@ -207,7 +228,7 @@ const sampleFilters: FilterDefinition[] = [
   {
     id: 'loadPort',
     label: 'Load port',
-    icon: ({ className }: { className?: string }) => <Icon name="ship-load" className={className} />,
+    icon: ({ className }: { className?: string }) => <Icon name={ShipLoad} className={className} />,
     type: 'multiselect',
     group: 'Location',
     searchPlaceholder: 'Search for a port...',
@@ -252,7 +273,7 @@ const sampleFilters: FilterDefinition[] = [
   {
     id: 'dischargePort',
     label: 'Discharge port',
-    icon: ({ className }: { className?: string }) => <Icon name="ship-unload" className={className} />,
+    icon: ({ className }: { className?: string }) => <Icon name={ShipUnload} className={className} />,
     type: 'multiselect',
     group: 'Location',
     searchPlaceholder: 'Search for a port...',
@@ -898,7 +919,7 @@ export const SingleSelectVsMultiselect: Story = {
       {
         id: 'country',
         label: 'Country',
-        icon: (props) => <Icon name="map-pin" {...props} />,
+        icon: (props) => <Icon name={MapPin} {...props} />,
         type: 'select', // Single-select with auto search (10 options >= 8 threshold)
         // showSearch: 'auto' (default) - Shows search (10 options >= 8)
         options: [
@@ -917,7 +938,7 @@ export const SingleSelectVsMultiselect: Story = {
       {
         id: 'department',
         label: 'Department',
-        icon: (props) => <Icon name="briefcase" {...props} />,
+        icon: (props) => <Icon name={Briefcase} {...props} />,
         type: 'multiselect', // Multi-select with forced search
         showSearch: true, // Force search even with few options
         options: [
@@ -967,7 +988,7 @@ export const SingleSelectVsMultiselect: Story = {
                   </div>
                 </div>
                 <div className="flex items-start gap-[var(--space-s)]">
-                  <Icon name="square" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
+                  <Icon name={Square} className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Multi-Select (Checkboxes):</span>
                     <span className="text-body-sm text-[var(--color-text-accent)]"> Status, Department - Choose multiple options</span>
@@ -987,14 +1008,14 @@ export const SingleSelectVsMultiselect: Story = {
                   </div>
                 </div>
                 <div className="flex items-start gap-[var(--space-s)]">
-                  <Icon name="eye-off" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
+                  <Icon name={EyeOff} className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Hidden:</span>
                     <span className="text-body-sm text-[var(--color-text-accent)]"> Priority (showSearch: false) - Search always hidden</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-[var(--space-s)]">
-                  <Icon name="eye" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
+                  <Icon name={Eye} className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Forced:</span>
                     <span className="text-body-sm text-[var(--color-text-accent)]"> Department (showSearch: true) - Search always shown</span>
@@ -1094,7 +1115,7 @@ export const GroupedVsUngroupedFilters: Story = {
       {
         id: 'team',
         label: 'Team',
-        icon: (props) => <Icon name="users" {...props} />,
+        icon: (props) => <Icon name={Users} {...props} />,
         type: 'select',
         showSearch: false,
         options: [
@@ -1112,7 +1133,7 @@ export const GroupedVsUngroupedFilters: Story = {
       {
         id: 'country',
         label: 'Country',
-        icon: (props) => <Icon name="map-pin" {...props} />,
+        icon: (props) => <Icon name={MapPin} {...props} />,
         type: 'select',
         groups: [
           {
@@ -1147,7 +1168,7 @@ export const GroupedVsUngroupedFilters: Story = {
       {
         id: 'department',
         label: 'Department',
-        icon: (props) => <Icon name="briefcase" {...props} />,
+        icon: (props) => <Icon name={Briefcase} {...props} />,
         type: 'multiselect',
         groups: [
           {
@@ -1180,7 +1201,7 @@ export const GroupedVsUngroupedFilters: Story = {
       {
         id: 'cargo',
         label: 'Cargo Type',
-        icon: (props) => <Icon name="package" {...props} />,
+        icon: (props) => <Icon name={Package} {...props} />,
         type: 'multiselect',
         groups: [
           {
@@ -1249,7 +1270,7 @@ export const GroupedVsUngroupedFilters: Story = {
               <div className="flex flex-col gap-[var(--space-s)]">
                 <div className="text-body-sm font-medium text-[var(--color-text-accent)] mb-[var(--space-xs)]">Ungrouped Filters (using options array):</div>
                 <div className="flex items-start gap-[var(--space-s)]">
-                  <Icon name="list" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
+                  <Icon name={List} className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Priority, Status, Team:</span>
                     <span className="text-body-sm text-[var(--color-text-accent)]"> Simple flat lists without section headers. Best for 3-10 uncategorized options.</span>
@@ -1262,21 +1283,21 @@ export const GroupedVsUngroupedFilters: Story = {
               <div className="flex flex-col gap-[var(--space-s)]">
                 <div className="text-body-sm font-medium text-[var(--color-text-accent)] mb-[var(--space-xs)]">Grouped Filters (using groups array):</div>
                 <div className="flex items-start gap-[var(--space-s)]">
-                  <Icon name="layers" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
+                  <Icon name={Layers} className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Country:</span>
                     <span className="text-body-sm text-[var(--color-text-accent)]"> Grouped by continent (Europe, Asia, Americas). Best for 10+ options with logical categories.</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-[var(--space-s)]">
-                  <Icon name="layers" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
+                  <Icon name={Layers} className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Department:</span>
                     <span className="text-body-sm text-[var(--color-text-accent)]"> Grouped by division (Engineering, Business, Operations). Each group has a Reset button.</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-[var(--space-s)]">
-                  <Icon name="git-branch" className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
+                  <Icon name={GitBranch} className="h-4 w-4 text-[var(--color-text-accent)] mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-body-sm font-medium text-[var(--color-text-accent)]">Cargo Type:</span>
                     <span className="text-body-sm text-[var(--color-text-accent)]"> Grouped with nested children (Grain → Wheat, Corn, Barley). Shows hierarchical data structure.</span>
@@ -1349,7 +1370,7 @@ export const WithNumberRangeFilter: Story = {
       {
         id: 'price',
         label: 'Price',
-        icon: ({ className }) => <Icon name="dollar-sign" className={className} />,
+        icon: ({ className }) => <Icon name={DollarSign} className={className} />,
         type: 'number',
         rangeMode: true,
         numberConfig: {
@@ -1368,7 +1389,7 @@ export const WithNumberRangeFilter: Story = {
       {
         id: 'weight',
         label: 'Weight',
-        icon: ({ className }) => <Icon name="container" className={className} />,
+        icon: ({ className }) => <Icon name={Container} className={className} />,
         type: 'number',
         rangeMode: true,
         numberConfig: {
@@ -1461,7 +1482,7 @@ export const WithDateRangeFilter: Story = {
       {
         id: 'laycan',
         label: 'Laycan',
-        icon: ({ className }) => <Icon name="calendar" className={className} />,
+        icon: ({ className }) => <Icon name={Calendar} className={className} />,
         type: 'date',
         rangeMode: true,
         // granularity defaults to 'month' - uses MonthPicker
@@ -1473,7 +1494,7 @@ export const WithDateRangeFilter: Story = {
       {
         id: 'appointment',
         label: 'Appointment',
-        icon: ({ className }) => <Icon name="calendar-days" className={className} />,
+        icon: ({ className }) => <Icon name={CalendarDays} className={className} />,
         type: 'date',
         rangeMode: true,
         dateConfig: {
@@ -1488,7 +1509,7 @@ export const WithDateRangeFilter: Story = {
       {
         id: 'delivery',
         label: 'Delivery date',
-        icon: ({ className }) => <Icon name="calendar" className={className} />,
+        icon: ({ className }) => <Icon name={Calendar} className={className} />,
         type: 'date',
         rangeMode: true,
         dateConfig: {
@@ -1582,7 +1603,7 @@ export const WithMixedFilterTypes: Story = {
       {
         id: 'date',
         label: 'Laycan',
-        icon: ({ className }) => <Icon name="calendar" className={className} />,
+        icon: ({ className }) => <Icon name={Calendar} className={className} />,
         type: 'date',
         rangeMode: true,
         formatValue: (values: string[]) => {
@@ -1593,7 +1614,7 @@ export const WithMixedFilterTypes: Story = {
       {
         id: 'status',
         label: 'Status',
-        icon: ({ className }) => <Icon name="check-circle" className={className} />,
+        icon: ({ className }) => <Icon name={CheckCircle} className={className} />,
         type: 'multiselect',
         options: [
           { value: 'open', label: 'Open' },
@@ -1604,7 +1625,7 @@ export const WithMixedFilterTypes: Story = {
       {
         id: 'price',
         label: 'Price',
-        icon: ({ className }) => <Icon name="dollar-sign" className={className} />,
+        icon: ({ className }) => <Icon name={DollarSign} className={className} />,
         type: 'number',
         rangeMode: true,
         numberConfig: { prefix: '$' },
@@ -1619,7 +1640,7 @@ export const WithMixedFilterTypes: Story = {
       {
         id: 'vessel',
         label: 'Vessel type',
-        icon: ({ className }) => <Icon name="ship" className={className} />,
+        icon: ({ className }) => <Icon name={Ship} className={className} />,
         type: 'select',
         options: [
           { value: 'bulk', label: 'Bulk Carrier' },

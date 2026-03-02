@@ -6,6 +6,20 @@ import { Icon } from '../components/fundamental/icon'
 import { Badge } from '../components/fundamental/badge'
 import { Card, CardContent } from '../components/fundamental/card'
 
+import {
+  AlertTriangle,
+  Calendar,
+  CheckCircle,
+  Clock,
+  Gift,
+  ShieldAlert,
+  Sparkles,
+  Upload,
+  Users,
+  WifiOff,
+  XCircle,
+  Zap,
+} from 'lucide-react'
 const meta: Meta<typeof Alert> = {
   title: 'NPM • Fundamental/Alert',
   component: Alert,
@@ -46,7 +60,7 @@ export const Default: Story = {
       </Alert>
 
       <Alert variant="success">
-        <Icon name="check-circle" size="m" />
+        <Icon name={CheckCircle} size="m" />
         <AlertTitle>Success</AlertTitle>
         <AlertDescription>
           Your action was completed successfully!
@@ -54,7 +68,7 @@ export const Default: Story = {
       </Alert>
 
       <Alert variant="warning">
-        <Icon name="alert-triangle" size="m" />
+        <Icon name={AlertTriangle} size="m" />
         <AlertTitle>Warning</AlertTitle>
         <AlertDescription>
           Please review your settings before continuing.
@@ -91,14 +105,14 @@ export const WithoutTitles: Story = {
       </Alert>
 
       <Alert variant="warning">
-        <Icon name="alert-triangle" size="m" />
+        <Icon name={AlertTriangle} size="m" />
         <AlertDescription>
           Storage is almost full. Consider upgrading your plan.
         </AlertDescription>
       </Alert>
 
       <Alert variant="destructive">
-        <Icon name="x-circle" size="m" />
+        <Icon name={XCircle} size="m" />
         <AlertDescription>
           Failed to connect to the server. Check your internet connection.
         </AlertDescription>
@@ -112,7 +126,7 @@ export const SystemStatus: Story = {
   render: () => (
     <div className="w-full max-w-2xl space-y-4">
       <Alert variant="info">
-        <Icon name="clock" size="m" />
+        <Icon name={Clock} size="m" />
         <AlertTitle>Scheduled Maintenance</AlertTitle>
         <AlertDescription>
           <p className="mb-2">
@@ -126,7 +140,7 @@ export const SystemStatus: Story = {
       </Alert>
 
       <Alert variant="warning">
-        <Icon name="wifi-off" size="m" />
+        <Icon name={WifiOff} size="m" />
         <AlertTitle>Connectivity Issues</AlertTitle>
         <AlertDescription>
           <p className="mb-2">
@@ -142,7 +156,7 @@ export const SystemStatus: Story = {
       </Alert>
 
       <Alert variant="success">
-        <Icon name="check-circle" size="m" />
+        <Icon name={CheckCircle} size="m" />
         <AlertTitle>All Systems Operational</AlertTitle>
         <AlertDescription>
           <p className="mb-2">All systems are running normally.</p>
@@ -234,7 +248,7 @@ export const WithActions: Story = {
 
         {visibleAlerts.length === 0 && (
           <div className="text-center py-8 text-[var(--color-text-secondary)]">
-            <Icon name="check-circle" size="l" className="mx-auto mb-2" />
+            <Icon name={CheckCircle} size="l" className="mx-auto mb-2" />
             <p>All alerts have been dismissed</p>
             <Button 
               size="m" 
@@ -352,7 +366,7 @@ export const FormValidation: Story = {
 
         {success && (
           <Alert variant="success">
-            <Icon name="check-circle" size="m" />
+            <Icon name={CheckCircle} size="m" />
             <AlertTitle>Account Created Successfully!</AlertTitle>
             <AlertDescription>
               Welcome! Your account has been created and you're now logged in.
@@ -369,7 +383,7 @@ export const FeatureAnnouncements: Story = {
   render: () => (
     <div className="w-full max-w-2xl space-y-4">
       <Alert variant="info">
-        <Icon name="sparkles" size="m" />
+        <Icon name={Sparkles} size="m" />
         <AlertTitle>New Feature: Dark Mode</AlertTitle>
         <AlertDescription>
           <p className="mb-3">
@@ -383,7 +397,7 @@ export const FeatureAnnouncements: Story = {
       </Alert>
 
       <Alert variant="success">
-        <Icon name="zap" size="m" />
+        <Icon name={Zap} size="m" />
         <AlertTitle>Performance Improvements</AlertTitle>
         <AlertDescription>
           <p className="mb-3">
@@ -407,7 +421,7 @@ export const FeatureAnnouncements: Story = {
       </Alert>
 
       <Alert>
-        <Icon name="calendar" size="m" />
+        <Icon name={Calendar} size="m" />
         <AlertTitle>Upcoming Webinar</AlertTitle>
         <AlertDescription>
           <p className="mb-3">
@@ -437,7 +451,7 @@ export const ProgressAlerts: Story = {
     return (
       <div className="w-full max-w-lg space-y-4">
         <Alert variant="info">
-          <Icon name="upload" size="m" />
+          <Icon name={Upload} size="m" />
           <AlertTitle>Uploading Files...</AlertTitle>
           <AlertDescription>
             <p className="mb-3">Uploading 5 files to your project folder.</p>
@@ -517,7 +531,7 @@ export const ContextualAlerts: Story = {
   render: () => (
     <div className="w-full max-w-2xl space-y-4">
       <Alert variant="warning">
-        <Icon name="shield-alert" size="m" />
+        <Icon name={ShieldAlert} size="m" />
         <AlertTitle>Security Recommendation</AlertTitle>
         <AlertDescription>
           <p className="mb-2">
@@ -535,7 +549,7 @@ export const ContextualAlerts: Story = {
       </Alert>
 
       <Alert variant="info">
-        <Icon name="users" size="m" />
+        <Icon name={Users} size="m" />
         <AlertTitle>Team Collaboration Tip</AlertTitle>
         <AlertDescription>
           <p className="mb-3">
@@ -549,7 +563,7 @@ export const ContextualAlerts: Story = {
       </Alert>
 
       <Alert>
-        <Icon name="gift" size="m" />
+        <Icon name={Gift} size="m" />
         <AlertTitle>Free Trial Ending Soon</AlertTitle>
         <AlertDescription>
           <p className="mb-2">

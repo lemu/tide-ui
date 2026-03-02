@@ -25,6 +25,15 @@ import { Textarea } from "../components/fundamental/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/fundamental/avatar";
 import { Checkbox } from "../components/fundamental/checkbox";
 import { Alert, AlertDescription } from "../components/fundamental/alert";
+import {
+  AlertTriangle,
+  Mail,
+  Plus,
+  Settings,
+  UserPlus,
+  Users,
+  Zap,
+} from 'lucide-react'
 
 const meta: Meta<typeof Dialog> = {
   title: "NPM • Fundamental/Dialog",
@@ -182,7 +191,7 @@ export const FormDialog: Story = {
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <Button>
-            <Icon name="plus" size="s" className="mr-2" />
+            <Icon name={Plus} size="s" className="mr-2" />
             Create Task
           </Button>
         </DialogTrigger>
@@ -295,7 +304,7 @@ export const FormDialog: Story = {
               <Button>Cancel</Button>
             </DialogClose>
             <Button variant="primary" onClick={handleSubmit}>
-              <Icon name="plus" size="s" className="mr-2" />
+              <Icon name={Plus} size="s" className="mr-2" />
               Create Task
             </Button>
           </DialogFooter>
@@ -319,7 +328,7 @@ export const AlertDialog: Story = {
         <DialogHeader>
           <div className="flex items-center gap-3">
             <Icon
-              name="alert-triangle"
+              name={AlertTriangle}
               size="l"
               className="text-[var(--color-text-warning-bold)]"
             />
@@ -362,7 +371,7 @@ export const AlertDialog: Story = {
             <Button>Remind Me Later</Button>
           </DialogClose>
           <Button variant="primary">
-            <Icon name="zap" size="s" className="mr-2" />
+            <Icon name={Zap} size="s" className="mr-2" />
             Upgrade Plan
           </Button>
         </DialogFooter>
@@ -412,7 +421,7 @@ export const ComplexContentDialog: Story = {
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="ghost">
-            <Icon name="users" size="s" className="mr-2" />
+            <Icon name={Users} size="s" className="mr-2" />
             Manage Team
           </Button>
         </DialogTrigger>
@@ -435,7 +444,7 @@ export const ComplexContentDialog: Story = {
                 </Badge>
               </div>
               <Button size="s">
-                <Icon name="user-plus" size="s" className="mr-2" />
+                <Icon name={UserPlus} size="s" className="mr-2" />
                 Invite Member
               </Button>
             </div>
@@ -519,11 +528,11 @@ export const ComplexContentDialog: Story = {
                         </div>
                         <div className="mt-4 flex gap-2">
                           <Button size="s" variant="ghost" className="flex-1">
-                            <Icon name="mail" size="s" className="mr-2" />
+                            <Icon name={Mail} size="s" className="mr-2" />
                             Message
                           </Button>
                           <Button size="s" variant="ghost" className="flex-1">
-                            <Icon name="settings" size="s" className="mr-2" />
+                            <Icon name={Settings} size="s" className="mr-2" />
                             Settings
                           </Button>
                         </div>

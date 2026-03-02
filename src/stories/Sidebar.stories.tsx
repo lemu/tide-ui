@@ -56,6 +56,36 @@ import {
   BreadcrumbSeparator,
 } from '../components/fundamental/breadcrumb'
 
+import {
+  Archive,
+  Bell,
+  BookOpen,
+  Bot,
+  Building,
+  Calendar,
+  CreditCard,
+  File,
+  FileText,
+  Folder,
+  HelpCircle,
+  Home,
+  Inbox,
+  LayoutDashboard,
+  LifeBuoy,
+  LogOut,
+  Mail,
+  Package,
+  Play,
+  Plus,
+  Send,
+  Settings,
+  Share2,
+  Sparkles,
+  Upload,
+  User,
+  Users,
+  Zap,
+} from 'lucide-react'
 const meta: Meta<typeof Sidebar> = {
   title: 'NPM • Fundamental/Sidebar',
   component: Sidebar,
@@ -85,7 +115,7 @@ export const Default: Story = {
           <div className="flex items-center gap-2 px-2">
             <Avatar className="h-8 w-8 rounded-m">
               <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-m">
-                <Icon name="sparkles" size="s" color="inverse" />
+                <Icon name={Sparkles} size="s" color="inverse" />
               </AvatarFallback>
             </Avatar>
             <span className="font-semibold">Acme Corp</span>
@@ -98,19 +128,19 @@ export const Default: Story = {
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="home" />
+                    <Icon name={Home} />
                     <span>Home</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton isActive>
-                    <Icon name="inbox" />
+                    <Icon name={Inbox} />
                     <span>Inbox</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="calendar" />
+                    <Icon name={Calendar} />
                     <span>Calendar</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -128,7 +158,7 @@ export const Default: Story = {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton>
-                <Icon name="user" />
+                <Icon name={User} />
                 <span>Account</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -158,7 +188,7 @@ export const WithSubmenus: Story = {
           <div className="flex items-center gap-2 px-2">
             <Avatar className="h-8 w-8 rounded-m">
               <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-m">
-                <Icon name="package" size="s" color="inverse" />
+                <Icon name={Package} size="s" color="inverse" />
               </AvatarFallback>
             </Avatar>
             <span className="font-semibold">Project Hub</span>
@@ -171,13 +201,13 @@ export const WithSubmenus: Story = {
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="layout-dashboard" />
+                    <Icon name={LayoutDashboard} />
                     <span>Dashboard</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="folder" />
+                    <Icon name={Folder} />
                     <span>Projects</span>
                   </SidebarMenuButton>
                   <SidebarMenuSub>
@@ -200,7 +230,7 @@ export const WithSubmenus: Story = {
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="users" />
+                    <Icon name={Users} />
                     <span>Team</span>
                   </SidebarMenuButton>
                   <SidebarMenuSub>
@@ -226,13 +256,13 @@ export const WithSubmenus: Story = {
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="settings" />
+                    <Icon name={Settings} />
                     <span>Settings</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="life-buoy" />
+                    <Icon name={LifeBuoy} />
                     <span>Support</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -258,16 +288,16 @@ export const WithSubmenus: Story = {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <Icon name="user" className="mr-2 h-4 w-4" />
+                    <Icon name={User} className="mr-2 h-4 w-4" />
                     Profile
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Icon name="settings" className="mr-2 h-4 w-4" />
+                    <Icon name={Settings} className="mr-2 h-4 w-4" />
                     Settings
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <Icon name="log-out" className="mr-2 h-4 w-4" />
+                    <Icon name={LogOut} className="mr-2 h-4 w-4" />
                     Log out
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -303,7 +333,7 @@ export const WithBadgesAndActions: Story = {
           <div className="flex items-center gap-2 px-2">
             <Avatar className="h-8 w-8 rounded-m">
               <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-m">
-                <Icon name="mail" size="s" color="inverse" />
+                <Icon name={Mail} size="s" color="inverse" />
               </AvatarFallback>
             </Avatar>
             <span className="font-semibold">Mail App</span>
@@ -314,14 +344,14 @@ export const WithBadgesAndActions: Story = {
             <SidebarGroupLabel>
               Folders
               <SidebarGroupAction>
-                <Icon name="plus" size="s" />
+                <Icon name={Plus} size="s" />
               </SidebarGroupAction>
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton isActive>
-                    <Icon name="inbox" />
+                    <Icon name={Inbox} />
                     <span>Inbox</span>
                     <SidebarMenuBadge className="bg-[var(--color-background-blue-bold)]">
                       12
@@ -330,13 +360,13 @@ export const WithBadgesAndActions: Story = {
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="send" />
+                    <Icon name={Send} />
                     <span>Sent</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="file" />
+                    <Icon name={File} />
                     <span>Drafts</span>
                     <SidebarMenuBadge className="bg-[var(--color-background-warning-subtle)]">
                       3
@@ -392,7 +422,7 @@ export const WithBadgesAndActions: Story = {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton>
-                <Icon name="settings" />
+                <Icon name={Settings} />
                 <span>Settings</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -425,7 +455,7 @@ export const WithSearch: Story = {
           <div className="flex items-center gap-2 px-2">
             <Avatar className="h-8 w-8 rounded-m">
               <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-m">
-                <Icon name="file-text" size="s" color="inverse" />
+                <Icon name={FileText} size="s" color="inverse" />
               </AvatarFallback>
             </Avatar>
             <span className="font-semibold">Docs</span>
@@ -439,19 +469,19 @@ export const WithSearch: Story = {
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="file-text" />
+                    <Icon name={FileText} />
                     <span>Project Requirements</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton isActive>
-                    <Icon name="file-text" />
+                    <Icon name={FileText} />
                     <span>API Documentation</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="file-text" />
+                    <Icon name={FileText} />
                     <span>User Guide</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -465,7 +495,7 @@ export const WithSearch: Story = {
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="folder" />
+                    <Icon name={Folder} />
                     <span>Product</span>
                   </SidebarMenuButton>
                   <SidebarMenuSub>
@@ -483,7 +513,7 @@ export const WithSearch: Story = {
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="folder" />
+                    <Icon name={Folder} />
                     <span>Engineering</span>
                   </SidebarMenuButton>
                   <SidebarMenuSub>
@@ -507,7 +537,7 @@ export const WithSearch: Story = {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton>
-                <Icon name="plus" />
+                <Icon name={Plus} />
                 <span>New Document</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -539,7 +569,7 @@ export const FloatingVariant: Story = {
           <div className="flex items-center gap-2 px-2">
             <Avatar className="h-8 w-8 rounded-m">
               <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-m">
-                <Icon name="zap" size="s" color="inverse" />
+                <Icon name={Zap} size="s" color="inverse" />
               </AvatarFallback>
             </Avatar>
             <span className="font-semibold">Quick Actions</span>
@@ -551,19 +581,19 @@ export const FloatingVariant: Story = {
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="plus" />
+                    <Icon name={Plus} />
                     <span>Create</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="upload" />
+                    <Icon name={Upload} />
                     <span>Upload</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="share-2" />
+                    <Icon name={Share2} />
                     <span>Share</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -646,7 +676,7 @@ export const EnhancedHoverFocus: Story = {
           <div className="flex items-center gap-2 px-2">
             <Avatar className="h-8 w-8 rounded-m">
               <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-m">
-                <Icon name="zap" size="s" color="inverse" />
+                <Icon name={Zap} size="s" color="inverse" />
               </AvatarFallback>
             </Avatar>
             <span className="font-semibold">Enhanced UI</span>
@@ -659,7 +689,7 @@ export const EnhancedHoverFocus: Story = {
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="home" />
+                    <Icon name={Home} />
                     <span>Hover me (enhanced)</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -671,7 +701,7 @@ export const EnhancedHoverFocus: Story = {
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="settings" />
+                    <Icon name={Settings} />
                     <span>Try keyboard navigation</span>
                   </SidebarMenuButton>
                   <SidebarMenuAction showOnHover>
@@ -680,13 +710,13 @@ export const EnhancedHoverFocus: Story = {
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton enhancedHover={false}>
-                    <Icon name="archive" />
+                    <Icon name={Archive} />
                     <span>Legacy behavior (enhancedHover=false)</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="folder" />
+                    <Icon name={Folder} />
                     <span>Submenu with enhanced behavior</span>
                   </SidebarMenuButton>
                   <SidebarMenuSub>
@@ -727,7 +757,7 @@ export const EnhancedHoverFocus: Story = {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton>
-                <Icon name="help-circle" />
+                <Icon name={HelpCircle} />
                 <span>Help & Support</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -770,7 +800,7 @@ export const ComplexSidebar: Story = {
                   <SidebarMenuButton size="l">
                     <Avatar className="size-8 rounded-m">
                       <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-m">
-                        <Icon name="sparkles" size="s" color="inverse" />
+                        <Icon name={Sparkles} size="s" color="inverse" />
                       </AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
@@ -785,7 +815,7 @@ export const ComplexSidebar: Story = {
                   <DropdownMenuItem>
                     <div className="flex items-center gap-2 [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--color-text-secondary)]">
                       <div className="flex size-6 items-center justify-center rounded-s border border-[var(--color-border-primary-subtle)]">
-                        <Icon name="sparkles" size="s" />
+                        <Icon name={Sparkles} size="s" />
                       </div>
                       Acme Inc
                     </div>
@@ -793,7 +823,7 @@ export const ComplexSidebar: Story = {
                   <DropdownMenuItem>
                     <div className="flex items-center gap-2 [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--color-text-secondary)]">
                       <div className="flex size-6 items-center justify-center rounded-s border border-[var(--color-border-primary-subtle)]">
-                        <Icon name="building" size="s" />
+                        <Icon name={Building} size="s" />
                       </div>
                       Evil Corp
                     </div>
@@ -811,25 +841,25 @@ export const ComplexSidebar: Story = {
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton tooltip="Playground">
-                    <Icon name="play" />
+                    <Icon name={Play} />
                     <span>Playground</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton isActive tooltip="Models">
-                    <Icon name="bot" />
+                    <Icon name={Bot} />
                     <span>Models</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton tooltip="Documentation">
-                    <Icon name="book-open" />
+                    <Icon name={BookOpen} />
                     <span>Documentation</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton tooltip="Settings">
-                    <Icon name="settings" />
+                    <Icon name={Settings} />
                     <span>Settings</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -843,31 +873,31 @@ export const ComplexSidebar: Story = {
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="folder" />
+                    <Icon name={Folder} />
                     <span>Design Engineering</span>
                   </SidebarMenuButton>
                   <SidebarMenuAction showOnHover>
-                    <Icon name="plus" />
+                    <Icon name={Plus} />
                     <span className="sr-only">Add Project</span>
                   </SidebarMenuAction>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="folder" />
+                    <Icon name={Folder} />
                     <span>Sales & Marketing</span>
                   </SidebarMenuButton>
                   <SidebarMenuAction showOnHover>
-                    <Icon name="plus" />
+                    <Icon name={Plus} />
                     <span className="sr-only">Add Project</span>
                   </SidebarMenuAction>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton>
-                    <Icon name="folder" />
+                    <Icon name={Folder} />
                     <span>Travel</span>
                   </SidebarMenuButton>
                   <SidebarMenuAction showOnHover>
-                    <Icon name="plus" />
+                    <Icon name={Plus} />
                     <span className="sr-only">Add Project</span>
                   </SidebarMenuAction>
                 </SidebarMenuItem>
@@ -916,25 +946,25 @@ export const ComplexSidebar: Story = {
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <Icon name="sparkles" />
+                    <Icon name={Sparkles} />
                     Upgrade to Pro
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <Icon name="user" />
+                    <Icon name={User} />
                     Account
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Icon name="credit-card" />
+                    <Icon name={CreditCard} />
                     Billing
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Icon name="bell" />
+                    <Icon name={Bell} />
                     Notifications
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <Icon name="log-out" />
+                    <Icon name={LogOut} />
                     Log out
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -949,7 +979,7 @@ export const ComplexSidebar: Story = {
           <SidebarTrigger className="-ml-1" />
           <div className="ml-auto px-3">
             <Button variant="ghost" size="s">
-              <Icon name="plus" />
+              <Icon name={Plus} />
               New Chat
             </Button>
           </div>

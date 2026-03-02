@@ -13,6 +13,30 @@ import { Input } from '../components/fundamental/input'
 import { Label } from '../components/fundamental/label'
 import { Avatar, AvatarFallback, AvatarImage } from '../components/fundamental/avatar'
 
+import {
+  AlertTriangle,
+  Bell,
+  CheckCircle,
+  Clock,
+  Copy,
+  FileText,
+  Folder,
+  HelpCircle,
+  Image,
+  Link,
+  Linkedin,
+  LogOut,
+  Mail,
+  MessageCircle,
+  Plus,
+  Settings,
+  Share,
+  Twitter,
+  Upload,
+  User,
+  UserPlus,
+  Video,
+} from 'lucide-react'
 const meta: Meta<typeof Popover> = {
   title: 'NPM • Fundamental/Popover',
   component: Popover,
@@ -113,19 +137,19 @@ export const UserProfile: Story = {
           <div className="border-t border-[var(--color-border-primary-subtle)] pt-4">
             <div className="space-y-2">
               <Button variant="ghost" className="w-full justify-start">
-                <Icon name="user" size="s" className="mr-2" />
+                <Icon name={User} size="s" className="mr-2" />
                 View Profile
               </Button>
               <Button variant="ghost" className="w-full justify-start">
-                <Icon name="settings" size="s" className="mr-2" />
+                <Icon name={Settings} size="s" className="mr-2" />
                 Account Settings
               </Button>
               <Button variant="ghost" className="w-full justify-start">
-                <Icon name="help-circle" size="s" className="mr-2" />
+                <Icon name={HelpCircle} size="s" className="mr-2" />
                 Help & Support
               </Button>
               <Button variant="ghost" className="w-full justify-start text-[var(--color-text-error-bold)]">
-                <Icon name="log-out" size="s" className="mr-2" />
+                <Icon name={LogOut} size="s" className="mr-2" />
                 Sign Out
               </Button>
             </div>
@@ -214,7 +238,7 @@ export const QuickActions: Story = {
     <Popover>
       <PopoverTrigger asChild>
         <Button>
-          <Icon name="plus" size="s" className="mr-2" />
+          <Icon name={Plus} size="s" className="mr-2" />
           Quick Actions
         </Button>
       </PopoverTrigger>
@@ -223,30 +247,30 @@ export const QuickActions: Story = {
           <h4 className="font-medium mb-3">Create New</h4>
           <div className="space-y-1">
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="file-text" size="s" className="mr-2" />
+              <Icon name={FileText} size="s" className="mr-2" />
               Document
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="folder" size="s" className="mr-2" />
+              <Icon name={Folder} size="s" className="mr-2" />
               Folder
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="image" size="s" className="mr-2" />
+              <Icon name={Image} size="s" className="mr-2" />
               Image
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="video" size="s" className="mr-2" />
+              <Icon name={Video} size="s" className="mr-2" />
               Video
             </Button>
           </div>
           
           <div className="border-t border-[var(--color-border-primary-subtle)] pt-2 mt-3">
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="upload" size="s" className="mr-2" />
+              <Icon name={Upload} size="s" className="mr-2" />
               Upload File
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="link" size="s" className="mr-2" />
+              <Icon name={Link} size="s" className="mr-2" />
               Import from URL
             </Button>
           </div>
@@ -266,7 +290,7 @@ export const Notifications: Story = {
         message: 'John Doe commented on "Project Update"',
         time: '2 minutes ago',
         read: false,
-        icon: 'message-circle',
+        icon: MessageCircle,
         iconColor: 'text-[var(--color-text-info-bold)]'
       },
       {
@@ -275,7 +299,7 @@ export const Notifications: Story = {
         message: 'Website redesign has been completed',
         time: '1 hour ago',
         read: false,
-        icon: 'check-circle',
+        icon: CheckCircle,
         iconColor: 'text-[var(--color-text-success-bold)]'
       },
       {
@@ -284,7 +308,7 @@ export const Notifications: Story = {
         message: 'Scheduled maintenance tonight at 2 AM',
         time: '3 hours ago',
         read: true,
-        icon: 'alert-triangle',
+        icon: AlertTriangle,
         iconColor: 'text-[var(--color-text-warning-bold)]'
       },
       {
@@ -293,7 +317,7 @@ export const Notifications: Story = {
         message: 'Jane Smith joined your team',
         time: '1 day ago',
         read: true,
-        icon: 'user-plus',
+        icon: UserPlus,
         iconColor: 'text-[var(--color-text-brand-bold)]'
       }
     ]
@@ -304,7 +328,7 @@ export const Notifications: Story = {
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="ghost" className="relative">
-            <Icon name="bell" size="s" />
+            <Icon name={Bell} size="s" />
             {unreadCount > 0 && (
               <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs">
                 {unreadCount}
@@ -463,7 +487,7 @@ export const SearchPopover: Story = {
                       className="w-full justify-start"
                       onClick={() => setSearchQuery(term)}
                     >
-                      <Icon name="clock" size="s" className="mr-2 text-[var(--color-text-secondary)]" />
+                      <Icon name={Clock} size="s" className="mr-2 text-[var(--color-text-secondary)]" />
                       {term}
                     </Button>
                   ))}
@@ -493,7 +517,7 @@ export const SharePopover: Story = {
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="ghost">
-            <Icon name="share" size="s" className="mr-2" />
+            <Icon name={Share} size="s" className="mr-2" />
             Share
           </Button>
         </PopoverTrigger>
@@ -518,7 +542,7 @@ export const SharePopover: Story = {
                   {linkCopied ? (
                     <Icon name="check" size="s" />
                   ) : (
-                    <Icon name="copy" size="s" />
+                    <Icon name={Copy} size="s" />
                   )}
                 </Button>
               </div>
@@ -533,19 +557,19 @@ export const SharePopover: Story = {
               <Label>Share via</Label>
               <div className="grid grid-cols-4 gap-2">
                 <Button variant="ghost" className="flex flex-col gap-1 h-auto py-3">
-                  <Icon name="mail" size="s" />
+                  <Icon name={Mail} size="s" />
                   <span className="text-xs">Email</span>
                 </Button>
                 <Button variant="ghost" className="flex flex-col gap-1 h-auto py-3">
-                  <Icon name="message-circle" size="s" />
+                  <Icon name={MessageCircle} size="s" />
                   <span className="text-xs">Slack</span>
                 </Button>
                 <Button variant="ghost" className="flex flex-col gap-1 h-auto py-3">
-                  <Icon name="twitter" size="s" />
+                  <Icon name={Twitter} size="s" />
                   <span className="text-xs">Twitter</span>
                 </Button>
                 <Button variant="ghost" className="flex flex-col gap-1 h-auto py-3">
-                  <Icon name="linkedin" size="s" />
+                  <Icon name={Linkedin} size="s" />
                   <span className="text-xs">LinkedIn</span>
                 </Button>
               </div>
@@ -578,7 +602,7 @@ export const SharePopover: Story = {
                 </div>
               </div>
               <Button variant="ghost" size="s" className="w-full">
-                <Icon name="user-plus" size="s" className="mr-2" />
+                <Icon name={UserPlus} size="s" className="mr-2" />
                 Invite people
               </Button>
             </div>
@@ -602,7 +626,7 @@ export const SettingsPopover: Story = {
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="ghost" size="s" className="h-8 w-8 p-0">
-            <Icon name="settings" size="s" />
+            <Icon name={Settings} size="s" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-64">
@@ -652,7 +676,7 @@ export const SettingsPopover: Story = {
 
             <div className="border-t border-[var(--color-border-primary-subtle)] pt-3">
               <Button variant="ghost" size="s" className="w-full">
-                <Icon name="settings" size="s" className="mr-2" />
+                <Icon name={Settings} size="s" className="mr-2" />
                 All Settings
               </Button>
             </div>

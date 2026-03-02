@@ -54,7 +54,7 @@ export const CodeSnippet: Story = {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Icon name="code" size="s" />
+              <Icon name={Code} size="s" />
               Example Implementation
             </CardTitle>
           </CardHeader>
@@ -69,6 +69,25 @@ export const CodeSnippet: Story = {
 {`import { Button } from '@/components/fundamental/button'
 import { Card } from '@/components/fundamental/card'
 
+import {
+  BarChart,
+  Briefcase,
+  Code,
+  Copy,
+  Folder,
+  Github,
+  HelpCircle,
+  LayoutDashboard,
+  Linkedin,
+  Plus,
+  Settings,
+  Share2,
+  Shield,
+  Twitter,
+  User,
+  Users,
+  Zap,
+} from 'lucide-react'
 export function Example() {
   return (
     <Card>
@@ -80,7 +99,7 @@ export function Example() {
                 </div>
                 <div className="mt-3 flex gap-2">
                   <Button size="s" variant="ghost">
-                    <Icon name="copy" size="s" className="mr-2" />
+                    <Icon name={Copy} size="s" className="mr-2" />
                     Copy
                   </Button>
                   <Button size="s" variant="ghost">
@@ -224,7 +243,7 @@ export const NavigationSidebar: Story = {
                 <CollapsibleTrigger asChild>
                   <Button variant="ghost" className="flex w-full items-center justify-between px-2 py-1.5">
                     <div className="flex items-center gap-2">
-                      <Icon name="layout-dashboard" size="s" />
+                      <Icon name={LayoutDashboard} size="s" />
                       <span className="text-body-sm">Dashboard</span>
                     </div>
                     <Icon
@@ -257,7 +276,7 @@ export const NavigationSidebar: Story = {
                 <CollapsibleTrigger asChild>
                   <Button variant="ghost" className="flex w-full items-center justify-between px-2 py-1.5">
                     <div className="flex items-center gap-2">
-                      <Icon name="folder" size="s" />
+                      <Icon name={Folder} size="s" />
                       <span className="text-body-sm">Projects</span>
                       <Badge className="text-xs">3</Badge>
                     </div>
@@ -282,7 +301,7 @@ export const NavigationSidebar: Story = {
                     </Button>
                     <div className="pt-1 border-t border-[var(--color-border-primary-subtle)] mt-2">
                       <Button variant="ghost" className="w-full justify-start px-2 py-1 h-auto text-body-sm text-[var(--color-text-secondary)]">
-                        <Icon name="plus" size="s" className="mr-2" />
+                        <Icon name={Plus} size="s" className="mr-2" />
                         New Project
                       </Button>
                     </div>
@@ -297,7 +316,7 @@ export const NavigationSidebar: Story = {
                 <CollapsibleTrigger asChild>
                   <Button variant="ghost" className="flex w-full items-center justify-between px-2 py-1.5">
                     <div className="flex items-center gap-2">
-                      <Icon name="settings" size="s" />
+                      <Icon name={Settings} size="s" />
                       <span className="text-body-sm">Settings</span>
                     </div>
                     <Icon
@@ -329,11 +348,11 @@ export const NavigationSidebar: Story = {
 
             {/* Single Items */}
             <Button variant="ghost" className="flex w-full items-center gap-2 px-2 py-1.5 justify-start">
-              <Icon name="users" size="s" />
+              <Icon name={Users} size="s" />
               <span className="text-body-sm">Team</span>
             </Button>
             <Button variant="ghost" className="flex w-full items-center gap-2 px-2 py-1.5 justify-start">
-              <Icon name="help-circle" size="s" />
+              <Icon name={HelpCircle} size="s" />
               <span className="text-body-sm">Help</span>
             </Button>
           </div>
@@ -356,7 +375,7 @@ export const FeatureList: Story = {
       {
         id: 'analytics',
         title: 'Advanced Analytics',
-        icon: 'bar-chart',
+        icon: BarChart,
         description: 'Get deep insights into your data with powerful analytics tools.',
         details: [
           'Real-time dashboard with customizable widgets',
@@ -369,7 +388,7 @@ export const FeatureList: Story = {
       {
         id: 'collaboration',
         title: 'Team Collaboration',
-        icon: 'users',
+        icon: Users,
         description: 'Work together seamlessly with advanced collaboration features.',
         details: [
           'Real-time collaborative editing',
@@ -382,7 +401,7 @@ export const FeatureList: Story = {
       {
         id: 'automation',
         title: 'Workflow Automation',
-        icon: 'zap',
+        icon: Zap,
         description: 'Automate repetitive tasks and streamline your workflow.',
         details: [
           'Visual workflow builder with drag-and-drop interface',
@@ -395,7 +414,7 @@ export const FeatureList: Story = {
       {
         id: 'security',
         title: 'Enterprise Security',
-        icon: 'shield',
+        icon: Shield,
         description: 'Keep your data safe with enterprise-grade security features.',
         details: [
           'End-to-end encryption for all data transmission',
@@ -514,7 +533,7 @@ export const MultipleControlled: Story = {
               <CardHeader className="cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Icon name="user" size="s" />
+                    <Icon name={User} size="s" />
                     <span className="text-body-md font-medium">Personal Information</span>
                   </div>
                   <Icon
@@ -545,7 +564,7 @@ export const MultipleControlled: Story = {
               <CardHeader className="cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Icon name="briefcase" size="s" />
+                    <Icon name={Briefcase} size="s" />
                     <span className="text-body-md font-medium">Work Information</span>
                   </div>
                   <Icon
@@ -574,7 +593,7 @@ export const MultipleControlled: Story = {
               <CardHeader className="cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Icon name="share-2" size="s" />
+                    <Icon name={Share2} size="s" />
                     <span className="text-body-md font-medium">Social Links</span>
                   </div>
                   <Icon
@@ -589,15 +608,15 @@ export const MultipleControlled: Story = {
             <CollapsibleContent>
               <CardContent className="pt-0 space-y-3">
                 <div className="flex items-center gap-2">
-                  <Icon name="twitter" size="s" />
+                  <Icon name={Twitter} size="s" />
                   <input placeholder="Twitter username" className="flex-1 px-3 py-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm" />
                 </div>
                 <div className="flex items-center gap-2">
-                  <Icon name="github" size="s" />
+                  <Icon name={Github} size="s" />
                   <input placeholder="GitHub username" className="flex-1 px-3 py-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm" />
                 </div>
                 <div className="flex items-center gap-2">
-                  <Icon name="linkedin" size="s" />
+                  <Icon name={Linkedin} size="s" />
                   <input placeholder="LinkedIn profile" className="flex-1 px-3 py-2 border border-[var(--color-interaction-border-input)] rounded text-body-sm" />
                 </div>
               </CardContent>

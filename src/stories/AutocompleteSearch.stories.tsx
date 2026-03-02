@@ -3,6 +3,12 @@ import { AutocompleteSearch, AutocompleteSuggestion } from '../components/fundam
 import { Icon } from '../components/fundamental/icon'
 import { useState } from 'react'
 
+import {
+  Building,
+  Mail,
+  MapPin,
+  User,
+} from 'lucide-react'
 const meta = {
   title: 'NPM • Fundamental/AutocompleteSearch',
   component: AutocompleteSearch,
@@ -282,20 +288,20 @@ export const EnrichedWithFilterContext: Story = {
     // Enriched suggestions with filter context
     const enrichedSuggestions: AutocompleteSuggestion[] = [
       // Companies
-      { label: 'Apple Inc.', value: 'Apple Inc.', filterLabel: 'Company', filterIcon: ({ className }: { className?: string }) => <Icon name="building" className={className} /> },
-      { label: 'Microsoft Corporation', value: 'Microsoft Corporation', filterLabel: 'Company', filterIcon: ({ className }: { className?: string }) => <Icon name="building" className={className} /> },
-      { label: 'Amazon.com Inc.', value: 'Amazon.com Inc.', filterLabel: 'Company', filterIcon: ({ className }: { className?: string }) => <Icon name="building" className={className} /> },
+      { label: 'Apple Inc.', value: 'Apple Inc.', filterLabel: 'Company', filterIcon: ({ className }: { className?: string }) => <Icon name={Building} className={className} /> },
+      { label: 'Microsoft Corporation', value: 'Microsoft Corporation', filterLabel: 'Company', filterIcon: ({ className }: { className?: string }) => <Icon name={Building} className={className} /> },
+      { label: 'Amazon.com Inc.', value: 'Amazon.com Inc.', filterLabel: 'Company', filterIcon: ({ className }: { className?: string }) => <Icon name={Building} className={className} /> },
       // People
-      { label: 'John Smith', value: 'John Smith', filterLabel: 'Contact', filterIcon: ({ className }: { className?: string }) => <Icon name="user" className={className} /> },
-      { label: 'Jane Doe', value: 'Jane Doe', filterLabel: 'Contact', filterIcon: ({ className }: { className?: string }) => <Icon name="user" className={className} /> },
-      { label: 'Michael Johnson', value: 'Michael Johnson', filterLabel: 'Contact', filterIcon: ({ className }: { className?: string }) => <Icon name="user" className={className} /> },
+      { label: 'John Smith', value: 'John Smith', filterLabel: 'Contact', filterIcon: ({ className }: { className?: string }) => <Icon name={User} className={className} /> },
+      { label: 'Jane Doe', value: 'Jane Doe', filterLabel: 'Contact', filterIcon: ({ className }: { className?: string }) => <Icon name={User} className={className} /> },
+      { label: 'Michael Johnson', value: 'Michael Johnson', filterLabel: 'Contact', filterIcon: ({ className }: { className?: string }) => <Icon name={User} className={className} /> },
       // Emails
-      { label: 'john.smith@example.com', value: 'john.smith@example.com', filterLabel: 'Email', filterIcon: ({ className }: { className?: string }) => <Icon name="mail" className={className} /> },
-      { label: 'jane.doe@company.com', value: 'jane.doe@company.com', filterLabel: 'Email', filterIcon: ({ className }: { className?: string }) => <Icon name="mail" className={className} /> },
+      { label: 'john.smith@example.com', value: 'john.smith@example.com', filterLabel: 'Email', filterIcon: ({ className }: { className?: string }) => <Icon name={Mail} className={className} /> },
+      { label: 'jane.doe@company.com', value: 'jane.doe@company.com', filterLabel: 'Email', filterIcon: ({ className }: { className?: string }) => <Icon name={Mail} className={className} /> },
       // Locations
-      { label: 'New York, NY', value: 'New York, NY', filterLabel: 'Location', filterIcon: ({ className }: { className?: string }) => <Icon name="map-pin" className={className} /> },
-      { label: 'San Francisco, CA', value: 'San Francisco, CA', filterLabel: 'Location', filterIcon: ({ className }: { className?: string }) => <Icon name="map-pin" className={className} /> },
-      { label: 'London, UK', value: 'London, UK', filterLabel: 'Location', filterIcon: ({ className }: { className?: string }) => <Icon name="map-pin" className={className} /> },
+      { label: 'New York, NY', value: 'New York, NY', filterLabel: 'Location', filterIcon: ({ className }: { className?: string }) => <Icon name={MapPin} className={className} /> },
+      { label: 'San Francisco, CA', value: 'San Francisco, CA', filterLabel: 'Location', filterIcon: ({ className }: { className?: string }) => <Icon name={MapPin} className={className} /> },
+      { label: 'London, UK', value: 'London, UK', filterLabel: 'Location', filterIcon: ({ className }: { className?: string }) => <Icon name={MapPin} className={className} /> },
     ]
 
     return (

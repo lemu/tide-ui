@@ -5,6 +5,13 @@ import { Icon } from '../components/fundamental/icon'
 import { Badge } from '../components/fundamental/badge'
 import { Separator } from '../components/fundamental/separator'
 
+import {
+  CircleCheckBig,
+  Handshake,
+  Package,
+  Ship,
+  User,
+} from 'lucide-react'
 const meta: Meta<typeof Avatar> = {
   title: 'NPM • Fundamental/Avatar',
   component: Avatar,
@@ -210,7 +217,7 @@ export const IconFallbacks: Story = {
     <div className="flex items-center gap-[var(--space-m)]">
       <Avatar>
         <AvatarFallback variant="information">
-          <Icon name="user" size="s" color="inverse" />
+          <Icon name={User} size="s" color="inverse" />
         </AvatarFallback>
       </Avatar>
       <Avatar>
@@ -225,7 +232,7 @@ export const IconFallbacks: Story = {
       </Avatar>
       <Avatar>
         <AvatarFallback variant="warning">
-          <Icon name="package" size="s" color="inverse" />
+          <Icon name={Package} size="s" color="inverse" />
         </AvatarFallback>
       </Avatar>
     </div>
@@ -248,7 +255,7 @@ export const Types: Story = {
           </Avatar>
           <Avatar type="user">
             <AvatarFallback type="user" variant="magenta">
-              <Icon name="user" size="s" color="inverse" />
+              <Icon name={User} size="s" color="inverse" />
             </AvatarFallback>
           </Avatar>
         </div>
@@ -265,7 +272,7 @@ export const Types: Story = {
           </Avatar>
           <Avatar type="organization">
             <AvatarFallback type="organization" variant="success">
-              <Icon name="circle-check-big" size="s" color="inverse" />
+              <Icon name={CircleCheckBig} size="s" color="inverse" />
             </AvatarFallback>
           </Avatar>
         </div>
@@ -462,12 +469,12 @@ export const CompanyAvatars: Story = {
         <div className="flex items-center gap-[var(--space-m)]">
           <Avatar type="organization">
             <AvatarFallback type="organization" variant="information">
-              <Icon name="package" size="s" color="inverse" />
+              <Icon name={Package} size="s" color="inverse" />
             </AvatarFallback>
           </Avatar>
           <Avatar type="organization">
             <AvatarFallback type="organization" variant="magenta">
-              <Icon name="ship" size="s" color="inverse" />
+              <Icon name={Ship} size="s" color="inverse" />
             </AvatarFallback>
           </Avatar>
           <Avatar type="organization">
@@ -477,7 +484,7 @@ export const CompanyAvatars: Story = {
           </Avatar>
           <Avatar type="organization">
             <AvatarFallback type="organization" variant="warning">
-              <Icon name="handshake" size="s" color="inverse" />
+              <Icon name={Handshake} size="s" color="inverse" />
             </AvatarFallback>
           </Avatar>
         </div>

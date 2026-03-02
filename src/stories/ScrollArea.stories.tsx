@@ -102,7 +102,7 @@ export const CodePreview: Story = {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Icon name="code" size="s" />
+            <Icon name={Code} size="s" />
             Code Preview
           </CardTitle>
         </CardHeader>
@@ -112,6 +112,24 @@ export const CodePreview: Story = {
 {`import React from 'react'
 import { ScrollArea } from './components/ui/scroll-area'
 
+import {
+  Archive,
+  BarChart,
+  Bell,
+  Calendar,
+  Code,
+  CreditCard,
+  Download,
+  FileText,
+  Folder,
+  HelpCircle,
+  Home,
+  MessageCircle,
+  Settings,
+  Shield,
+  User,
+  Users,
+} from 'lucide-react'
 export function MyComponent() {
   return (
     <ScrollArea className="h-48 w-full rounded-m border p-4">
@@ -168,21 +186,21 @@ export const SidebarNavigation: Story = {
           <ScrollArea className="h-80">
             <div className="p-4 space-y-1">
               {[
-                { icon: 'home', label: 'Dashboard', count: null },
-                { icon: 'users', label: 'Team Members', count: 12 },
-                { icon: 'folder', label: 'Projects', count: 8 },
-                { icon: 'file-text', label: 'Documents', count: 24 },
-                { icon: 'calendar', label: 'Calendar', count: 3 },
-                { icon: 'message-circle', label: 'Messages', count: 7 },
-                { icon: 'bell', label: 'Notifications', count: 15 },
-                { icon: 'settings', label: 'Settings', count: null },
-                { icon: 'bar-chart', label: 'Analytics', count: null },
-                { icon: 'help-circle', label: 'Help & Support', count: null },
-                { icon: 'user', label: 'Profile', count: null },
-                { icon: 'shield', label: 'Security', count: 2 },
-                { icon: 'credit-card', label: 'Billing', count: null },
-                { icon: 'download', label: 'Downloads', count: 5 },
-                { icon: 'archive', label: 'Archive', count: 18 },
+                { icon: Home, label: 'Dashboard', count: null },
+                { icon: Users, label: 'Team Members', count: 12 },
+                { icon: Folder, label: 'Projects', count: 8 },
+                { icon: FileText, label: 'Documents', count: 24 },
+                { icon: Calendar, label: 'Calendar', count: 3 },
+                { icon: MessageCircle, label: 'Messages', count: 7 },
+                { icon: Bell, label: 'Notifications', count: 15 },
+                { icon: Settings, label: 'Settings', count: null },
+                { icon: BarChart, label: 'Analytics', count: null },
+                { icon: HelpCircle, label: 'Help & Support', count: null },
+                { icon: User, label: 'Profile', count: null },
+                { icon: Shield, label: 'Security', count: 2 },
+                { icon: CreditCard, label: 'Billing', count: null },
+                { icon: Download, label: 'Downloads', count: 5 },
+                { icon: Archive, label: 'Archive', count: 18 },
                 { icon: 'trash-2', label: 'Trash', count: 3 },
               ].map((item, i) => (
                 <Button

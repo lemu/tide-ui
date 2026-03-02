@@ -9,6 +9,13 @@ import {
 } from '../components/fundamental/dropdown-menu'
 import { Icon } from '../components/fundamental/icon'
 
+import {
+  Copy,
+  Edit,
+  Plus,
+  Save,
+  Settings,
+} from 'lucide-react'
 const meta: Meta<typeof Button> = {
   title: 'NPM • Fundamental/Button',
   component: Button,
@@ -138,7 +145,7 @@ export const LoadingPrimary: Story = {
 // Icon buttons
 export const WithIconLeft: Story = {
   args: {
-    icon: 'plus',
+    icon: Plus,
     iconPosition: 'left',
     children: 'Add Item',
   },
@@ -154,7 +161,7 @@ export const WithIconRight: Story = {
 
 export const IconOnly: Story = {
   args: {
-    icon: 'settings',
+    icon: Settings,
     size: 'm',
   },
 }
@@ -162,7 +169,7 @@ export const IconOnly: Story = {
 // Disabled icon button
 export const DisabledIconOnly: Story = {
   args: {
-    icon: 'settings',
+    icon: Settings,
     size: 'm',
     disabled: true,
   },
@@ -185,11 +192,11 @@ export const WithDropdown: Story = {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem>
-          <Icon name="edit" size="s" className="mr-2" />
+          <Icon name={Edit} size="s" className="mr-2" />
           Edit
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Icon name="copy" size="s" className="mr-2" />
+          <Icon name={Copy} size="s" className="mr-2" />
           Duplicate
         </DropdownMenuItem>
         <DropdownMenuSeparator />
@@ -223,11 +230,11 @@ export const UsageExamples: Story = {
           Primary with Icon
         </h3>
         <div className="flex items-center gap-[var(--space-m)]">
-          <Button variant="primary" icon="plus" iconPosition="left">
+          <Button variant="primary" icon={Plus} iconPosition="left">
             Add Item
           </Button>
           <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
-            {`<Button variant="primary" icon="plus" iconPosition="left">Add Item</Button>`}
+            {`<Button variant="primary" icon={Plus} iconPosition="left">Add Item</Button>`}
           </code>
         </div>
       </div>
@@ -237,9 +244,9 @@ export const UsageExamples: Story = {
           Icon Only Button
         </h3>
         <div className="flex items-center gap-[var(--space-m)]">
-          <Button icon="settings" size="m" />
+          <Button icon={Settings} size="m" />
           <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
-            {`<Button icon="settings" size="m" />`}
+            {`<Button icon={Settings} size="m" />`}
           </code>
         </div>
       </div>
@@ -249,11 +256,11 @@ export const UsageExamples: Story = {
           Loading Button
         </h3>
         <div className="flex items-center gap-[var(--space-m)]">
-          <Button variant="primary" icon="save" iconPosition="left" loading>
+          <Button variant="primary" icon={Save} iconPosition="left" loading>
             Saving...
           </Button>
           <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
-            {`<Button variant="primary" icon="save" iconPosition="left" loading>Saving...</Button>`}
+            {`<Button variant="primary" icon={Save} iconPosition="left" loading>Saving...</Button>`}
           </code>
         </div>
       </div>
@@ -313,9 +320,9 @@ export const AllVariants: Story = {
       <div className="space-y-2">
         <h4 className="text-sm font-medium">With Icons</h4>
         <div className="flex items-center space-x-2">
-          <Button icon="plus" iconPosition="left">Add</Button>
+          <Button icon={Plus} iconPosition="left">Add</Button>
           <Button icon="arrow-right" iconPosition="right">Next</Button>
-          <Button icon="settings" />
+          <Button icon={Settings} />
           <Button icon="star" variant="primary" />
         </div>
       </div>

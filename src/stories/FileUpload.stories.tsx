@@ -6,6 +6,14 @@ import { Button } from '../components/fundamental/button'
 import { Icon } from '../components/fundamental/icon'
 import { Badge } from '../components/fundamental/badge'
 
+import {
+  AlertTriangle,
+  FileText,
+  Image,
+  Upload,
+  UploadCloud,
+  User,
+} from 'lucide-react'
 const meta: Meta<typeof FileUpload.Root> = {
   title: 'NPM • Fundamental/FileUpload',
   component: FileUpload.Root,
@@ -51,7 +59,7 @@ export const Default: Story = {
         >
           <FileUpload.Dropzone className="min-h-32">
             <div className="text-center">
-              <Icon name="upload" size="l" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
+              <Icon name={Upload} size="l" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
               <p className="text-body-sm font-medium mb-1">Drop files here or click to browse</p>
               <p className="text-caption-sm text-[var(--color-text-secondary)]">
                 Up to 5 files, max 10MB each
@@ -124,7 +132,7 @@ export const ImageUpload: Story = {
             >
               <FileUpload.Dropzone className="min-h-32">
                 <div className="text-center">
-                  <Icon name="image" size="l" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
+                  <Icon name={Image} size="l" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
                   <p className="text-body-sm font-medium mb-1">Upload your photos</p>
                   <p className="text-caption-sm text-[var(--color-text-secondary)]">
                     Images only, up to 5MB each
@@ -176,7 +184,7 @@ export const DocumentUpload: Story = {
             >
               <FileUpload.Dropzone className="min-h-32">
                 <div className="text-center">
-                  <Icon name="file-text" size="l" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
+                  <Icon name={FileText} size="l" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
                   <p className="text-body-sm font-medium mb-1">Upload documents</p>
                   <p className="text-caption-sm text-[var(--color-text-secondary)]">
                     PDF, DOC, DOCX, TXT, RTF files only
@@ -245,7 +253,7 @@ export const AvatarUpload: Story = {
                 <FileUpload.Dropzone className="aspect-square max-w-32 mx-auto">
                   <div className="text-center">
                     <div className="w-16 h-16 bg-[var(--color-background-neutral-subtlest)] rounded-full mx-auto mb-2 flex items-center justify-center">
-                      <Icon name="user" size="l" className="text-[var(--color-text-tertiary)]" />
+                      <Icon name={User} size="l" className="text-[var(--color-text-tertiary)]" />
                     </div>
                     <p className="text-caption-sm font-medium mb-1">Upload avatar</p>
                     <p className="text-caption-sm text-[var(--color-text-secondary)]">
@@ -266,7 +274,7 @@ export const AvatarUpload: Story = {
                           />
                         ) : (
                           <div className="w-full h-full bg-[var(--color-background-neutral-subtlest)] flex items-center justify-center">
-                            <Icon name="user" size="l" className="text-[var(--color-text-tertiary)]" />
+                            <Icon name={User} size="l" className="text-[var(--color-text-tertiary)]" />
                           </div>
                         )}
                       </div>
@@ -349,7 +357,7 @@ export const BatchUpload: Story = {
             >
               <FileUpload.Dropzone className="min-h-24">
                 <div className="text-center">
-                  <Icon name="upload-cloud" size="l" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
+                  <Icon name={UploadCloud} size="l" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
                   <p className="text-body-sm font-medium">Add files to upload queue</p>
                 </div>
               </FileUpload.Dropzone>
@@ -381,7 +389,7 @@ export const BatchUpload: Story = {
                           </>
                         ) : (
                           <>
-                            <Icon name="upload" size="s" className="mr-1" />
+                            <Icon name={Upload} size="s" className="mr-1" />
                             Upload All
                           </>
                         )}
@@ -440,7 +448,7 @@ export const ErrorStates: Story = {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Icon name="alert-triangle" className="text-[var(--color-text-error-bold)]" />
+              <Icon name={AlertTriangle} className="text-[var(--color-text-error-bold)]" />
               Upload Errors
             </CardTitle>
           </CardHeader>
@@ -503,7 +511,7 @@ export const DisabledState: Story = {
             >
               <FileUpload.Dropzone className="min-h-32">
                 <div className="text-center">
-                  <Icon name="upload" size="l" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
+                  <Icon name={Upload} size="l" className="mx-auto mb-2 text-[var(--color-text-tertiary)]" />
                   <p className="text-body-sm font-medium mb-1">Upload disabled</p>
                   <p className="text-caption-sm text-[var(--color-text-secondary)]">
                     File upload is temporarily unavailable
@@ -544,7 +552,7 @@ export const CompactFileList: Story = {
               <div className="flex gap-4">
                 <FileUpload.Dropzone className="flex-1 min-h-20">
                   <div className="text-center">
-                    <Icon name="upload" className="mx-auto mb-1" />
+                    <Icon name={Upload} className="mx-auto mb-1" />
                     <p className="text-body-sm">Drop files or click to browse</p>
                   </div>
                 </FileUpload.Dropzone>

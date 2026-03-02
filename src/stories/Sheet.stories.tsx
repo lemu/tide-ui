@@ -19,6 +19,34 @@ import { Label } from '../components/fundamental/label'
 import { Textarea } from '../components/fundamental/textarea'
 import { Avatar, AvatarFallback, AvatarImage } from '../components/fundamental/avatar'
 
+import {
+  BarChart,
+  Bell,
+  CreditCard,
+  Download,
+  File,
+  FileText,
+  Folder,
+  FolderOpen,
+  FolderPlus,
+  Home,
+  Link,
+  LogOut,
+  Mail,
+  Menu,
+  MessageCircle,
+  Minus,
+  Plus,
+  Send,
+  Settings,
+  Share,
+  Share2,
+  Shield,
+  ShoppingCart as ShoppingCartIcon,
+  Upload,
+  User,
+  Users,
+} from 'lucide-react'
 const meta: Meta<typeof Sheet> = {
   title: 'NPM • Fundamental/Sheet',
   component: Sheet,
@@ -90,7 +118,7 @@ export const FromLeft: Story = {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost">
-          <Icon name="menu" size="s" className="mr-2" />
+          <Icon name={Menu} size="s" className="mr-2" />
           Navigation
         </Button>
       </SheetTrigger>
@@ -104,23 +132,23 @@ export const FromLeft: Story = {
         <div className="py-4">
           <nav className="space-y-2">
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="home" size="s" className="mr-2" />
+              <Icon name={Home} size="s" className="mr-2" />
               Dashboard
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="folder" size="s" className="mr-2" />
+              <Icon name={Folder} size="s" className="mr-2" />
               Projects
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="users" size="s" className="mr-2" />
+              <Icon name={Users} size="s" className="mr-2" />
               Team
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="bar-chart" size="s" className="mr-2" />
+              <Icon name={BarChart} size="s" className="mr-2" />
               Analytics
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Icon name="settings" size="s" className="mr-2" />
+              <Icon name={Settings} size="s" className="mr-2" />
               Settings
             </Button>
           </nav>
@@ -143,7 +171,7 @@ export const FromTop: Story = {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost">
-          <Icon name="bell" size="s" className="mr-2" />
+          <Icon name={Bell} size="s" className="mr-2" />
           Notifications
         </Button>
       </SheetTrigger>
@@ -184,7 +212,7 @@ export const FromBottom: Story = {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost">
-          <Icon name="share" size="s" className="mr-2" />
+          <Icon name={Share} size="s" className="mr-2" />
           Share Options
         </Button>
       </SheetTrigger>
@@ -198,19 +226,19 @@ export const FromBottom: Story = {
         <div className="py-4">
           <div className="grid grid-cols-4 gap-4">
             <Button variant="ghost" className="flex flex-col gap-2 h-auto py-4">
-              <Icon name="mail" size="m" />
+              <Icon name={Mail} size="m" />
               <span className="text-sm">Email</span>
             </Button>
             <Button variant="ghost" className="flex flex-col gap-2 h-auto py-4">
-              <Icon name="link" size="m" />
+              <Icon name={Link} size="m" />
               <span className="text-sm">Copy Link</span>
             </Button>
             <Button variant="ghost" className="flex flex-col gap-2 h-auto py-4">
-              <Icon name="download" size="m" />
+              <Icon name={Download} size="m" />
               <span className="text-sm">Export</span>
             </Button>
             <Button variant="ghost" className="flex flex-col gap-2 h-auto py-4">
-              <Icon name="share-2" size="m" />
+              <Icon name={Share2} size="m" />
               <span className="text-sm">Social</span>
             </Button>
           </div>
@@ -247,7 +275,7 @@ export const ShoppingCart: Story = {
       <Sheet>
         <SheetTrigger asChild>
           <Button>
-            <Icon name="shopping-cart" size="s" className="mr-2" />
+            <Icon name={ShoppingCartIcon} size="s" className="mr-2" />
             Cart ({cartItems.reduce((sum, item) => sum + item.quantity, 0)})
           </Button>
         </SheetTrigger>
@@ -262,7 +290,7 @@ export const ShoppingCart: Story = {
           <div className="py-4 flex-1 overflow-auto">
             {cartItems.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full space-y-4">
-                <Icon name="shopping-cart" size="l" className="text-[var(--color-text-tertiary)]" />
+                <Icon name={ShoppingCartIcon} size="l" className="text-[var(--color-text-tertiary)]" />
                 <div className="text-center">
                   <p className="text-body-md font-medium">Your cart is empty</p>
                   <p className="text-body-sm text-[var(--color-text-secondary)]">Add some items to get started</p>
@@ -285,7 +313,7 @@ export const ShoppingCart: Story = {
                         className="h-8 w-8 p-0"
                         onClick={() => updateQuantity(item.id, item.quantity - 1)}
                       >
-                        <Icon name="minus" size="s" />
+                        <Icon name={Minus} size="s" />
                       </Button>
                       <span className="w-8 text-center">{item.quantity}</span>
                       <Button 
@@ -294,7 +322,7 @@ export const ShoppingCart: Story = {
                         className="h-8 w-8 p-0"
                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
                       >
-                        <Icon name="plus" size="s" />
+                        <Icon name={Plus} size="s" />
                       </Button>
                     </div>
                     <Button 
@@ -323,7 +351,7 @@ export const ShoppingCart: Story = {
                     <Button variant="ghost" className="flex-1">Continue Shopping</Button>
                   </SheetClose>
                   <Button className="flex-1">
-                    <Icon name="credit-card" size="s" className="mr-2" />
+                    <Icon name={CreditCard} size="s" className="mr-2" />
                     Checkout
                   </Button>
                 </div>
@@ -356,7 +384,7 @@ export const FormSheet: Story = {
       <Sheet>
         <SheetTrigger asChild>
           <Button>
-            <Icon name="message-circle" size="s" className="mr-2" />
+            <Icon name={MessageCircle} size="s" className="mr-2" />
             Contact Support
           </Button>
         </SheetTrigger>
@@ -437,7 +465,7 @@ export const FormSheet: Story = {
               <Button variant="ghost">Cancel</Button>
             </SheetClose>
             <Button onClick={handleSubmit}>
-              <Icon name="send" size="s" className="mr-2" />
+              <Icon name={Send} size="s" className="mr-2" />
               Send Message
             </Button>
           </SheetFooter>
@@ -454,12 +482,12 @@ export const FileBrowser: Story = {
     const [selectedFiles, setSelectedFiles] = useState<string[]>([])
 
     const files = [
-      { name: 'README.md', type: 'file', size: '2.4 KB', modified: '2 hours ago', icon: 'file-text' },
-      { name: 'src', type: 'folder', size: '—', modified: '1 day ago', icon: 'folder' },
-      { name: 'package.json', type: 'file', size: '1.8 KB', modified: '3 days ago', icon: 'file-text' },
-      { name: 'images', type: 'folder', size: '—', modified: '1 week ago', icon: 'folder' },
-      { name: 'design-specs.pdf', type: 'file', size: '5.2 MB', modified: '2 weeks ago', icon: 'file' },
-      { name: 'notes.txt', type: 'file', size: '892 B', modified: '1 month ago', icon: 'file-text' },
+      { name: 'README.md', type: 'file', size: '2.4 KB', modified: '2 hours ago', icon: FileText },
+      { name: 'src', type: 'folder', size: '—', modified: '1 day ago', icon: Folder },
+      { name: 'package.json', type: 'file', size: '1.8 KB', modified: '3 days ago', icon: FileText },
+      { name: 'images', type: 'folder', size: '—', modified: '1 week ago', icon: Folder },
+      { name: 'design-specs.pdf', type: 'file', size: '5.2 MB', modified: '2 weeks ago', icon: File },
+      { name: 'notes.txt', type: 'file', size: '892 B', modified: '1 month ago', icon: FileText },
     ]
 
     const toggleFileSelection = (fileName: string) => {
@@ -474,7 +502,7 @@ export const FileBrowser: Story = {
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="ghost">
-            <Icon name="folder-open" size="s" className="mr-2" />
+            <Icon name={FolderOpen} size="s" className="mr-2" />
             Browse Files
           </Button>
         </SheetTrigger>
@@ -490,7 +518,7 @@ export const FileBrowser: Story = {
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-body-sm">
               <Button variant="ghost" size="s" className="h-6 px-2">
-                <Icon name="home" size="s" />
+                <Icon name={Home} size="s" />
               </Button>
               {currentPath.map((folder, index) => (
                 <div key={index} className="flex items-center gap-2">
@@ -506,11 +534,11 @@ export const FileBrowser: Story = {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Button size="s" variant="ghost">
-                  <Icon name="upload" size="s" className="mr-2" />
+                  <Icon name={Upload} size="s" className="mr-2" />
                   Upload
                 </Button>
                 <Button size="s" variant="ghost">
-                  <Icon name="folder-plus" size="s" className="mr-2" />
+                  <Icon name={FolderPlus} size="s" className="mr-2" />
                   New Folder
                 </Button>
               </div>
@@ -519,7 +547,7 @@ export const FileBrowser: Story = {
                 <div className="flex items-center gap-2">
                   <span className="text-body-sm">{selectedFiles.length} selected</span>
                   <Button size="s" variant="ghost">
-                    <Icon name="download" size="s" className="mr-2" />
+                    <Icon name={Download} size="s" className="mr-2" />
                     Download
                   </Button>
                   <Button size="s" variant="ghost" className="text-[var(--color-text-error-bold)]">
@@ -603,7 +631,7 @@ export const SettingsPanel: Story = {
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="ghost">
-            <Icon name="settings" size="s" className="mr-2" />
+            <Icon name={Settings} size="s" className="mr-2" />
             Settings
           </Button>
         </SheetTrigger>
@@ -700,19 +728,19 @@ export const SettingsPanel: Story = {
               
               <div className="space-y-3">
                 <Button variant="ghost" className="w-full justify-start">
-                  <Icon name="user" size="s" className="mr-2" />
+                  <Icon name={User} size="s" className="mr-2" />
                   Edit Profile
                 </Button>
                 <Button variant="ghost" className="w-full justify-start">
-                  <Icon name="shield" size="s" className="mr-2" />
+                  <Icon name={Shield} size="s" className="mr-2" />
                   Security Settings
                 </Button>
                 <Button variant="ghost" className="w-full justify-start">
-                  <Icon name="credit-card" size="s" className="mr-2" />
+                  <Icon name={CreditCard} size="s" className="mr-2" />
                   Billing & Subscription
                 </Button>
                 <Button variant="ghost" className="w-full justify-start text-[var(--color-text-error-bold)]">
-                  <Icon name="log-out" size="s" className="mr-2" />
+                  <Icon name={LogOut} size="s" className="mr-2" />
                   Sign Out
                 </Button>
               </div>

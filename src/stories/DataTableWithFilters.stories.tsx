@@ -7,6 +7,14 @@ import { Filters, FilterDefinition, FilterValue } from '../components/product/fi
 import { ColumnDef } from '@tanstack/react-table'
 import { formatDecimal } from '../lib/utils'
 
+import {
+  CheckCircle,
+  FileText,
+  IconName,
+  Package,
+  Ship,
+} from 'lucide-react'
+import { ShipLoad, ShipUnload } from '../components/fundamental/custom-icons'
 const meta: Meta<typeof DataTable> = {
   title: 'NPM • Product Components/DataTable with Filters',
   component: DataTable,
@@ -39,7 +47,7 @@ const filters: FilterDefinition[] = [
   {
     id: 'fieldName',           // Must match data property
     label: 'Display Name',
-    icon: ({ className }) => <Icon name="icon-name" className={className} />,
+    icon: ({ className }) => <Icon name={IconName} className={className} />,
     type: 'multiselect',
 
     // Option 1: Simple flat array (recommended for single list)
@@ -324,7 +332,7 @@ const shippingFilterDefinitions: FilterDefinition[] = [
   {
     id: 'loadPort',
     label: 'Load port',
-    icon: ({ className }: { className?: string }) => <Icon name="ship-load" className={className} />,
+    icon: ({ className }: { className?: string }) => <Icon name={ShipLoad} className={className} />,
     type: 'multiselect',
     searchPlaceholder: 'Search for a port...',
     groups: [
@@ -359,7 +367,7 @@ const shippingFilterDefinitions: FilterDefinition[] = [
   {
     id: 'dischargePort',
     label: 'Discharge port',
-    icon: ({ className }: { className?: string }) => <Icon name="ship-unload" className={className} />,
+    icon: ({ className }: { className?: string }) => <Icon name={ShipUnload} className={className} />,
     type: 'multiselect',
     searchPlaceholder: 'Search for a port...',
     groups: [
@@ -391,7 +399,7 @@ const shippingFilterDefinitions: FilterDefinition[] = [
   {
     id: 'status',
     label: 'Status',
-    icon: ({ className }: { className?: string }) => <Icon name="check-circle" className={className} />,
+    icon: ({ className }: { className?: string }) => <Icon name={CheckCircle} className={className} />,
     type: 'multiselect',
     groups: [
       {
@@ -407,7 +415,7 @@ const shippingFilterDefinitions: FilterDefinition[] = [
   {
     id: 'cargo',
     label: 'Cargo type',
-    icon: ({ className }: { className?: string }) => <Icon name="package" className={className} />,
+    icon: ({ className }: { className?: string }) => <Icon name={Package} className={className} />,
     type: 'multiselect',
     searchPlaceholder: 'Search for cargo type...',
     groups: [
@@ -426,7 +434,7 @@ const shippingFilterDefinitions: FilterDefinition[] = [
   {
     id: 'vesselName',
     label: 'Vessel',
-    icon: ({ className }: { className?: string }) => <Icon name="ship" className={className} />,
+    icon: ({ className }: { className?: string }) => <Icon name={Ship} className={className} />,
     type: 'multiselect',
     searchPlaceholder: 'Search for vessel...',
     groups: [
@@ -450,7 +458,7 @@ const shippingFilterDefinitions: FilterDefinition[] = [
   {
     id: 'chartererType',
     label: 'Charter type',
-    icon: ({ className }: { className?: string }) => <Icon name="file-text" className={className} />,
+    icon: ({ className }: { className?: string }) => <Icon name={FileText} className={className} />,
     type: 'multiselect',
     groups: [
       {

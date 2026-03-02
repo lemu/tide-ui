@@ -3,6 +3,11 @@ import { Separator } from '../components/fundamental/separator'
 import { Button } from '../components/fundamental/button'
 import { Icon } from '../components/fundamental/icon'
 
+import {
+  LogOut,
+  Settings,
+  User,
+} from 'lucide-react'
 const meta: Meta<typeof Separator> = {
   title: 'NPM • Fundamental/Separator',
   component: Separator,
@@ -186,12 +191,12 @@ export const VerticalList: Story = {
       <h4 className="text-heading-sm mb-[var(--space-m)]">Menu Items</h4>
       <div className="space-y-[var(--space-m)]">
         <div className="flex items-center gap-[var(--space-s)]">
-          <Icon name="user" size="s" />
+          <Icon name={User} size="s" />
           <span className="text-body-sm">Profile Settings</span>
         </div>
         <Separator layout="vertical" />
         <div className="flex items-center gap-[var(--space-s)]">
-          <Icon name="settings" size="s" />
+          <Icon name={Settings} size="s" />
           <span className="text-body-sm">Preferences</span>
         </div>
         <Separator layout="vertical" />
@@ -201,7 +206,7 @@ export const VerticalList: Story = {
         </div>
         <Separator layout="vertical" />
         <div className="flex items-center gap-[var(--space-s)]">
-          <Icon name="log-out" size="s" />
+          <Icon name={LogOut} size="s" />
           <span className="text-body-sm">Sign Out</span>
         </div>
       </div>
@@ -297,7 +302,7 @@ export const UserProfile: Story = {
       <div className="flex items-center space-x-[var(--space-s)]">
         <div className="flex items-center space-x-[var(--space-s)]">
           <div className="w-[var(--size-m)] h-[var(--size-m)] bg-[var(--color-background-blue-bold)] rounded-full flex items-center justify-center">
-            <Icon name="user" size="s" color="inverse" />
+            <Icon name={User} size="s" color="inverse" />
           </div>
           <span className="text-body-medium-md">John Doe</span>
         </div>

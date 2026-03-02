@@ -6,6 +6,11 @@ import { Button } from '../components/fundamental/button'
 import { Icon } from '../components/fundamental/icon'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/fundamental/card'
 
+import {
+  Monitor,
+  Moon,
+  Sun,
+} from 'lucide-react'
 const meta: Meta<typeof RadioGroup> = {
   title: 'NPM • Fundamental/RadioGroup',
   component: RadioGroup,
@@ -218,7 +223,7 @@ export const WithIcons: Story = {
       <RadioGroup defaultValue="light" className="space-y-3">
         <label htmlFor="theme-light" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-l hover:border-[var(--color-border-primary-medium)] transition-colors cursor-pointer">
           <RadioGroupItem value="light" id="theme-light" />
-          <Icon name="sun" size="s" />
+          <Icon name={Sun} size="s" />
           <div>
             <span className="font-medium block">Light</span>
             <p className="text-body-sm text-[var(--color-text-secondary)]">
@@ -229,7 +234,7 @@ export const WithIcons: Story = {
         
         <label htmlFor="theme-dark" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-l hover:border-[var(--color-border-primary-medium)] transition-colors cursor-pointer">
           <RadioGroupItem value="dark" id="theme-dark" />
-          <Icon name="moon" size="s" />
+          <Icon name={Moon} size="s" />
           <div>
             <span className="font-medium block">Dark</span>
             <p className="text-body-sm text-[var(--color-text-secondary)]">
@@ -240,7 +245,7 @@ export const WithIcons: Story = {
         
         <label htmlFor="theme-system" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-l hover:border-[var(--color-border-primary-medium)] transition-colors cursor-pointer">
           <RadioGroupItem value="system" id="theme-system" />
-          <Icon name="monitor" size="s" />
+          <Icon name={Monitor} size="s" />
           <div>
             <span className="font-medium block">System</span>
             <p className="text-body-sm text-[var(--color-text-secondary)]">

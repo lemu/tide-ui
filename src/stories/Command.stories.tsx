@@ -16,6 +16,41 @@ import { Icon } from '../components/fundamental/icon'
 import { Badge } from '../components/fundamental/badge'
 import { Avatar, AvatarFallback } from '../components/fundamental/avatar'
 
+import {
+  BookOpen,
+  Calculator,
+  Calendar,
+  Clock,
+  Code,
+  CreditCard,
+  Download,
+  FileText,
+  Folder,
+  FolderOpen,
+  FolderPlus,
+  GitBranch,
+  GitCommit,
+  GitPullRequest,
+  Github,
+  Heart,
+  Home,
+  Image,
+  Inbox,
+  MessageCircle,
+  Package,
+  Palette,
+  Play,
+  PlayCircle,
+  Plus,
+  Puzzle,
+  Replace,
+  Settings,
+  Smile,
+  Terminal,
+  Upload,
+  User,
+  Zap,
+} from 'lucide-react'
 const meta: Meta<typeof Command> = {
   title: 'NPM • Fundamental/Command',
   component: Command,
@@ -46,32 +81,32 @@ export const Default: Story = {
           <CommandEmpty>No results found</CommandEmpty>
           <CommandGroup heading="Suggestions">
             <CommandItem>
-              <Icon name="calendar" className="mr-2 h-4 w-4" />
+              <Icon name={Calendar} className="mr-2 h-4 w-4" />
               <span>Calendar</span>
             </CommandItem>
             <CommandItem>
-              <Icon name="smile" className="mr-2 h-4 w-4" />
+              <Icon name={Smile} className="mr-2 h-4 w-4" />
               <span>Search Emoji</span>
             </CommandItem>
             <CommandItem>
-              <Icon name="calculator" className="mr-2 h-4 w-4" />
+              <Icon name={Calculator} className="mr-2 h-4 w-4" />
               <span>Calculator</span>
             </CommandItem>
           </CommandGroup>
           <CommandSeparator />
           <CommandGroup heading="Settings">
             <CommandItem>
-              <Icon name="user" className="mr-2 h-4 w-4" />
+              <Icon name={User} className="mr-2 h-4 w-4" />
               <span>Profile</span>
               <CommandShortcut>⌘P</CommandShortcut>
             </CommandItem>
             <CommandItem>
-              <Icon name="credit-card" className="mr-2 h-4 w-4" />
+              <Icon name={CreditCard} className="mr-2 h-4 w-4" />
               <span>Billing</span>
               <CommandShortcut>⌘B</CommandShortcut>
             </CommandItem>
             <CommandItem>
-              <Icon name="settings" className="mr-2 h-4 w-4" />
+              <Icon name={Settings} className="mr-2 h-4 w-4" />
               <span>Settings</span>
               <CommandShortcut>⌘S</CommandShortcut>
             </CommandItem>
@@ -112,17 +147,17 @@ export const DialogExample: Story = {
             <CommandEmpty>No results found</CommandEmpty>
             <CommandGroup heading="Quick Actions">
               <CommandItem onSelect={() => setOpen(false)}>
-                <Icon name="plus" className="mr-2 h-4 w-4" />
+                <Icon name={Plus} className="mr-2 h-4 w-4" />
                 <span>New File</span>
                 <CommandShortcut>⌘N</CommandShortcut>
               </CommandItem>
               <CommandItem onSelect={() => setOpen(false)}>
-                <Icon name="folder-plus" className="mr-2 h-4 w-4" />
+                <Icon name={FolderPlus} className="mr-2 h-4 w-4" />
                 <span>New Folder</span>
                 <CommandShortcut>⇧⌘N</CommandShortcut>
               </CommandItem>
               <CommandItem onSelect={() => setOpen(false)}>
-                <Icon name="download" className="mr-2 h-4 w-4" />
+                <Icon name={Download} className="mr-2 h-4 w-4" />
                 <span>Download</span>
                 <CommandShortcut>⌘D</CommandShortcut>
               </CommandItem>
@@ -130,22 +165,22 @@ export const DialogExample: Story = {
             <CommandSeparator />
             <CommandGroup heading="Navigation">
               <CommandItem onSelect={() => setOpen(false)}>
-                <Icon name="home" className="mr-2 h-4 w-4" />
+                <Icon name={Home} className="mr-2 h-4 w-4" />
                 <span>Home</span>
               </CommandItem>
               <CommandItem onSelect={() => setOpen(false)}>
-                <Icon name="inbox" className="mr-2 h-4 w-4" />
+                <Icon name={Inbox} className="mr-2 h-4 w-4" />
                 <span>Inbox</span>
                 <Badge className="ml-auto">
                   12
                 </Badge>
               </CommandItem>
               <CommandItem onSelect={() => setOpen(false)}>
-                <Icon name="calendar" className="mr-2 h-4 w-4" />
+                <Icon name={Calendar} className="mr-2 h-4 w-4" />
                 <span>Calendar</span>
               </CommandItem>
               <CommandItem onSelect={() => setOpen(false)}>
-                <Icon name="settings" className="mr-2 h-4 w-4" />
+                <Icon name={Settings} className="mr-2 h-4 w-4" />
                 <span>Settings</span>
               </CommandItem>
             </CommandGroup>
@@ -165,7 +200,7 @@ export const FileSearch: Story = {
         <CommandEmpty>No files found</CommandEmpty>
         <CommandGroup heading="Recent Files">
           <CommandItem>
-            <Icon name="file-text" className="mr-2 h-4 w-4" />
+            <Icon name={FileText} className="mr-2 h-4 w-4" />
             <div className="flex flex-col">
               <span>README.md</span>
               <span className="text-caption-xsm text-[var(--color-text-secondary)]">
@@ -174,7 +209,7 @@ export const FileSearch: Story = {
             </div>
           </CommandItem>
           <CommandItem>
-            <Icon name="code" className="mr-2 h-4 w-4" />
+            <Icon name={Code} className="mr-2 h-4 w-4" />
             <div className="flex flex-col">
               <span>app.tsx</span>
               <span className="text-caption-xsm text-[var(--color-text-secondary)]">
@@ -183,7 +218,7 @@ export const FileSearch: Story = {
             </div>
           </CommandItem>
           <CommandItem>
-            <Icon name="image" className="mr-2 h-4 w-4" />
+            <Icon name={Image} className="mr-2 h-4 w-4" />
             <div className="flex flex-col">
               <span>hero-image.png</span>
               <span className="text-caption-xsm text-[var(--color-text-secondary)]">
@@ -195,7 +230,7 @@ export const FileSearch: Story = {
         <CommandSeparator />
         <CommandGroup heading="Folders">
           <CommandItem>
-            <Icon name="folder" className="mr-2 h-4 w-4" />
+            <Icon name={Folder} className="mr-2 h-4 w-4" />
             <span>components</span>
             <div className="ml-auto flex items-center gap-1">
               <Badge appearance="outline" size="s">
@@ -204,7 +239,7 @@ export const FileSearch: Story = {
             </div>
           </CommandItem>
           <CommandItem>
-            <Icon name="folder" className="mr-2 h-4 w-4" />
+            <Icon name={Folder} className="mr-2 h-4 w-4" />
             <span>utils</span>
             <div className="ml-auto flex items-center gap-1">
               <Badge appearance="outline" size="s">
@@ -227,7 +262,7 @@ export const WithStatusIndicators: Story = {
         <CommandEmpty>No commands found</CommandEmpty>
         <CommandGroup heading="Git Operations">
           <CommandItem>
-            <Icon name="git-branch" className="mr-2 h-4 w-4" />
+            <Icon name={GitBranch} className="mr-2 h-4 w-4" />
             <span>Create Branch</span>
             <div className="ml-auto flex items-center gap-2">
               <Badge size="s">
@@ -237,7 +272,7 @@ export const WithStatusIndicators: Story = {
             </div>
           </CommandItem>
           <CommandItem>
-            <Icon name="git-commit" className="mr-2 h-4 w-4" />
+            <Icon name={GitCommit} className="mr-2 h-4 w-4" />
             <span>Commit Changes</span>
             <div className="ml-auto flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-[var(--color-background-success-subtle)]" />
@@ -245,7 +280,7 @@ export const WithStatusIndicators: Story = {
             </div>
           </CommandItem>
           <CommandItem disabled>
-            <Icon name="git-pull-request" className="mr-2 h-4 w-4" />
+            <Icon name={GitPullRequest} className="mr-2 h-4 w-4" />
             <span>Create Pull Request</span>
             <div className="ml-auto flex items-center gap-2">
               <Badge appearance="outline" size="s">
@@ -257,7 +292,7 @@ export const WithStatusIndicators: Story = {
         <CommandSeparator />
         <CommandGroup heading="Build & Deploy">
           <CommandItem>
-            <Icon name="play" className="mr-2 h-4 w-4" />
+            <Icon name={Play} className="mr-2 h-4 w-4" />
             <span>Start Development</span>
             <div className="ml-auto flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-[var(--color-background-warning-subtle)]" />
@@ -265,12 +300,12 @@ export const WithStatusIndicators: Story = {
             </div>
           </CommandItem>
           <CommandItem>
-            <Icon name="package" className="mr-2 h-4 w-4" />
+            <Icon name={Package} className="mr-2 h-4 w-4" />
             <span>Build Production</span>
             <CommandShortcut>⇧⌘B</CommandShortcut>
           </CommandItem>
           <CommandItem>
-            <Icon name="upload" className="mr-2 h-4 w-4" />
+            <Icon name={Upload} className="mr-2 h-4 w-4" />
             <span>Deploy to Staging</span>
             <div className="ml-auto flex items-center gap-2">
               <Badge appearance="outline" size="s" className="text-[var(--color-text-info-bold)]">
@@ -356,11 +391,11 @@ export const TeamSwitcher: Story = {
         <CommandSeparator />
         <CommandGroup heading="Actions">
           <CommandItem>
-            <Icon name="plus" className="mr-2 h-4 w-4" />
+            <Icon name={Plus} className="mr-2 h-4 w-4" />
             <span>Invite Team Member</span>
           </CommandItem>
           <CommandItem>
-            <Icon name="settings" className="mr-2 h-4 w-4" />
+            <Icon name={Settings} className="mr-2 h-4 w-4" />
             <span>Team Settings</span>
           </CommandItem>
         </CommandGroup>
@@ -383,17 +418,17 @@ export const IDECommands: Story = {
             <CommandShortcut>⇧⌘F</CommandShortcut>
           </CommandItem>
           <CommandItem>
-            <Icon name="replace" className="mr-2 h-4 w-4" />
+            <Icon name={Replace} className="mr-2 h-4 w-4" />
             <span>Replace in Files</span>
             <CommandShortcut>⇧⌘H</CommandShortcut>
           </CommandItem>
           <CommandItem>
-            <Icon name="file-text" className="mr-2 h-4 w-4" />
+            <Icon name={FileText} className="mr-2 h-4 w-4" />
             <span>Go to Line</span>
             <CommandShortcut>⌘G</CommandShortcut>
           </CommandItem>
           <CommandItem>
-            <Icon name="code" className="mr-2 h-4 w-4" />
+            <Icon name={Code} className="mr-2 h-4 w-4" />
             <span>Go to Symbol</span>
             <CommandShortcut>⌘T</CommandShortcut>
           </CommandItem>
@@ -401,17 +436,17 @@ export const IDECommands: Story = {
         <CommandSeparator />
         <CommandGroup heading="Workspace">
           <CommandItem>
-            <Icon name="folder-open" className="mr-2 h-4 w-4" />
+            <Icon name={FolderOpen} className="mr-2 h-4 w-4" />
             <span>Open Folder</span>
             <CommandShortcut>⌘O</CommandShortcut>
           </CommandItem>
           <CommandItem>
-            <Icon name="folder-plus" className="mr-2 h-4 w-4" />
+            <Icon name={FolderPlus} className="mr-2 h-4 w-4" />
             <span>New Window</span>
             <CommandShortcut>⇧⌘N</CommandShortcut>
           </CommandItem>
           <CommandItem>
-            <Icon name="terminal" className="mr-2 h-4 w-4" />
+            <Icon name={Terminal} className="mr-2 h-4 w-4" />
             <span>New Terminal</span>
             <CommandShortcut>⌃⇧`</CommandShortcut>
           </CommandItem>
@@ -419,7 +454,7 @@ export const IDECommands: Story = {
         <CommandSeparator />
         <CommandGroup heading="Recent Files">
           <CommandItem>
-            <Icon name="clock" className="mr-2 h-4 w-4 text-[var(--color-text-tertiary)]" />
+            <Icon name={Clock} className="mr-2 h-4 w-4 text-[var(--color-text-tertiary)]" />
             <div className="flex flex-col flex-1">
               <span>components/Button.tsx</span>
               <span className="text-caption-xsm text-[var(--color-text-secondary)]">
@@ -428,7 +463,7 @@ export const IDECommands: Story = {
             </div>
           </CommandItem>
           <CommandItem>
-            <Icon name="clock" className="mr-2 h-4 w-4 text-[var(--color-text-tertiary)]" />
+            <Icon name={Clock} className="mr-2 h-4 w-4 text-[var(--color-text-tertiary)]" />
             <div className="flex flex-col flex-1">
               <span>pages/Dashboard.tsx</span>
               <span className="text-caption-xsm text-[var(--color-text-secondary)]">
@@ -469,12 +504,12 @@ export const WithClearButton: Story = {
                 <CommandShortcut>⌘K</CommandShortcut>
               </CommandItem>
               <CommandItem>
-                <Icon name="plus" className="mr-2 h-4 w-4" />
+                <Icon name={Plus} className="mr-2 h-4 w-4" />
                 <span>Create New</span>
                 <CommandShortcut>⌘N</CommandShortcut>
               </CommandItem>
               <CommandItem>
-                <Icon name="settings" className="mr-2 h-4 w-4" />
+                <Icon name={Settings} className="mr-2 h-4 w-4" />
                 <span>Settings</span>
                 <CommandShortcut>⌘,</CommandShortcut>
               </CommandItem>
@@ -503,7 +538,7 @@ export const HelpSearch: Story = {
         </CommandEmpty>
         <CommandGroup heading="Getting Started">
           <CommandItem>
-            <Icon name="play-circle" className="mr-2 h-4 w-4" />
+            <Icon name={PlayCircle} className="mr-2 h-4 w-4" />
             <div className="flex flex-col flex-1">
               <span>Quick Start Guide</span>
               <span className="text-caption-xsm text-[var(--color-text-secondary)]">
@@ -515,18 +550,18 @@ export const HelpSearch: Story = {
             </Badge>
           </CommandItem>
           <CommandItem>
-            <Icon name="book-open" className="mr-2 h-4 w-4" />
+            <Icon name={BookOpen} className="mr-2 h-4 w-4" />
             <span>Installation Guide</span>
           </CommandItem>
           <CommandItem>
-            <Icon name="settings" className="mr-2 h-4 w-4" />
+            <Icon name={Settings} className="mr-2 h-4 w-4" />
             <span>Configuration Options</span>
           </CommandItem>
         </CommandGroup>
         <CommandSeparator />
         <CommandGroup heading="Features">
           <CommandItem>
-            <Icon name="zap" className="mr-2 h-4 w-4" />
+            <Icon name={Zap} className="mr-2 h-4 w-4" />
             <div className="flex flex-col flex-1">
               <span>Keyboard Shortcuts</span>
               <span className="text-caption-xsm text-[var(--color-text-secondary)]">
@@ -535,26 +570,26 @@ export const HelpSearch: Story = {
             </div>
           </CommandItem>
           <CommandItem>
-            <Icon name="palette" className="mr-2 h-4 w-4" />
+            <Icon name={Palette} className="mr-2 h-4 w-4" />
             <span>Themes and Customization</span>
           </CommandItem>
           <CommandItem>
-            <Icon name="puzzle" className="mr-2 h-4 w-4" />
+            <Icon name={Puzzle} className="mr-2 h-4 w-4" />
             <span>Extensions and Plugins</span>
           </CommandItem>
         </CommandGroup>
         <CommandSeparator />
         <CommandGroup heading="Support">
           <CommandItem>
-            <Icon name="message-circle" className="mr-2 h-4 w-4" />
+            <Icon name={MessageCircle} className="mr-2 h-4 w-4" />
             <span>Contact Support</span>
           </CommandItem>
           <CommandItem>
-            <Icon name="github" className="mr-2 h-4 w-4" />
+            <Icon name={Github} className="mr-2 h-4 w-4" />
             <span>Report an Issue</span>
           </CommandItem>
           <CommandItem>
-            <Icon name="heart" className="mr-2 h-4 w-4" />
+            <Icon name={Heart} className="mr-2 h-4 w-4" />
             <span>Feature Requests</span>
           </CommandItem>
         </CommandGroup>

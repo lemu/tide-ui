@@ -15,6 +15,10 @@ import { Button } from '../components/fundamental/button'
 import { Icon } from '../components/fundamental/icon'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 
+import {
+  CountrySelect,
+  ErrorSelect,
+} from 'lucide-react'
 const meta: Meta<typeof Select> = {
   title: 'NPM • Fundamental/Select',
   component: Select,
@@ -99,7 +103,7 @@ export const WithLabel: Story = {
   render: () => (
     <div className="w-80 space-y-2">
       <Label htmlFor="country-select">Country</Label>
-      <Select name="country-select">
+      <Select name={CountrySelect}>
         <SelectTrigger id="country-select">
           <SelectValue placeholder="Select your country" />
         </SelectTrigger>
@@ -160,7 +164,7 @@ export const ErrorState: Story = {
         Payment method
         <span className="text-[var(--color-text-error-bold)] ml-1">*</span>
       </Label>
-      <Select name="error-select">
+      <Select name={ErrorSelect}>
         <SelectTrigger id="error-select" variant="error">
           <SelectValue placeholder="Select payment method" />
         </SelectTrigger>

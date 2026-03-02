@@ -93,7 +93,13 @@ export default defineSchema({
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
 import { useAuth } from "@clerk/clerk-react";
+import {
+  CheckCircle,
+  FileText,
+  Package,
+} from 'lucide-react'
 
+import { ShipLoad, ShipUnload } from '../components/fundamental/custom-icons'
 export function MyDataTablePage() {
   const { userId } = useAuth();
 
@@ -504,7 +510,7 @@ const shippingFilterDefinitions: FilterDefinition[] = [
   {
     id: 'loadPort',
     label: 'Load port',
-    icon: ({ className }: { className?: string }) => <Icon name="ship-load" className={className} />,
+    icon: ({ className }: { className?: string }) => <Icon name={ShipLoad} className={className} />,
     type: 'multiselect',
     searchPlaceholder: 'Search for a port...',
     groups: [
@@ -539,7 +545,7 @@ const shippingFilterDefinitions: FilterDefinition[] = [
   {
     id: 'dischargePort',
     label: 'Discharge port',
-    icon: ({ className }: { className?: string }) => <Icon name="ship-unload" className={className} />,
+    icon: ({ className }: { className?: string }) => <Icon name={ShipUnload} className={className} />,
     type: 'multiselect',
     searchPlaceholder: 'Search for a port...',
     groups: [
@@ -571,7 +577,7 @@ const shippingFilterDefinitions: FilterDefinition[] = [
   {
     id: 'status',
     label: 'Status',
-    icon: ({ className }: { className?: string }) => <Icon name="check-circle" className={className} />,
+    icon: ({ className }: { className?: string }) => <Icon name={CheckCircle} className={className} />,
     type: 'multiselect',
     groups: [
       {
@@ -587,7 +593,7 @@ const shippingFilterDefinitions: FilterDefinition[] = [
   {
     id: 'cargo',
     label: 'Cargo type',
-    icon: ({ className }: { className?: string }) => <Icon name="package" className={className} />,
+    icon: ({ className }: { className?: string }) => <Icon name={Package} className={className} />,
     type: 'multiselect',
     searchPlaceholder: 'Search for cargo type...',
     groups: [
@@ -606,7 +612,7 @@ const shippingFilterDefinitions: FilterDefinition[] = [
   {
     id: 'chartererType',
     label: 'Charter type',
-    icon: ({ className }: { className?: string }) => <Icon name="file-text" className={className} />,
+    icon: ({ className }: { className?: string }) => <Icon name={FileText} className={className} />,
     type: 'multiselect',
     groups: [
       {

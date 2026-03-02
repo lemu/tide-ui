@@ -6,6 +6,32 @@ import { Badge } from '../components/fundamental/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 import { Label } from '../components/fundamental/label'
 
+import {
+  Activity,
+  AlignCenter,
+  AlignJustify,
+  AlignLeft,
+  AlignRight,
+  BarChart,
+  Bold,
+  Calendar,
+  CheckCircle,
+  Clock,
+  CreditCard,
+  DollarSign,
+  Flag,
+  Grid3x3,
+  Italic,
+  List,
+  ListOrdered,
+  PieChart,
+  Strikethrough,
+  TrendingUp,
+  Type,
+  Underline,
+  Users,
+  XCircle,
+} from 'lucide-react'
 const meta: Meta<typeof ToggleGroup> = {
   title: 'NPM • Fundamental/ToggleGroup',
   component: ToggleGroup,
@@ -48,16 +74,16 @@ export const Default = {
         </div>
         <ToggleGroup type="single" value={value} onValueChange={setValue}>
           <ToggleGroupItem value="left">
-            <Icon name="align-left" size="s" />
+            <Icon name={AlignLeft} size="s" />
           </ToggleGroupItem>
           <ToggleGroupItem value="center">
-            <Icon name="align-center" size="s" />
+            <Icon name={AlignCenter} size="s" />
           </ToggleGroupItem>
           <ToggleGroupItem value="right">
-            <Icon name="align-right" size="s" />
+            <Icon name={AlignRight} size="s" />
           </ToggleGroupItem>
           <ToggleGroupItem value="justify">
-            <Icon name="align-justify" size="s" />
+            <Icon name={AlignJustify} size="s" />
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
@@ -80,16 +106,16 @@ export const MultipleSelection = {
         </div>
         <ToggleGroup type="multiple" value={values} onValueChange={setValues}>
           <ToggleGroupItem value="bold">
-            <Icon name="bold" size="s" />
+            <Icon name={Bold} size="s" />
           </ToggleGroupItem>
           <ToggleGroupItem value="italic">
-            <Icon name="italic" size="s" />
+            <Icon name={Italic} size="s" />
           </ToggleGroupItem>
           <ToggleGroupItem value="underline">
-            <Icon name="underline" size="s" />
+            <Icon name={Underline} size="s" />
           </ToggleGroupItem>
           <ToggleGroupItem value="strikethrough">
-            <Icon name="strikethrough" size="s" />
+            <Icon name={Strikethrough} size="s" />
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
@@ -188,13 +214,13 @@ export const TextEditorToolbar = {
                 <Label className="text-xs">Font Size</Label>
                 <ToggleGroup type="single" size="s" value={fontSize} onValueChange={setFontSize}>
                   <ToggleGroupItem value="small">
-                    <Icon name="type" size="s" className="scale-75" />
+                    <Icon name={Type} size="s" className="scale-75" />
                   </ToggleGroupItem>
                   <ToggleGroupItem value="medium">
-                    <Icon name="type" size="s" />
+                    <Icon name={Type} size="s" />
                   </ToggleGroupItem>
                   <ToggleGroupItem value="large">
-                    <Icon name="type" size="s" className="scale-125" />
+                    <Icon name={Type} size="s" className="scale-125" />
                   </ToggleGroupItem>
                 </ToggleGroup>
               </div>
@@ -204,13 +230,13 @@ export const TextEditorToolbar = {
                 <Label className="text-xs">Formatting</Label>
                 <ToggleGroup type="multiple" size="s" value={formatting} onValueChange={setFormatting}>
                   <ToggleGroupItem value="bold">
-                    <Icon name="bold" size="s" />
+                    <Icon name={Bold} size="s" />
                   </ToggleGroupItem>
                   <ToggleGroupItem value="italic">
-                    <Icon name="italic" size="s" />
+                    <Icon name={Italic} size="s" />
                   </ToggleGroupItem>
                   <ToggleGroupItem value="underline">
-                    <Icon name="underline" size="s" />
+                    <Icon name={Underline} size="s" />
                   </ToggleGroupItem>
                 </ToggleGroup>
               </div>
@@ -220,16 +246,16 @@ export const TextEditorToolbar = {
                 <Label className="text-xs">Alignment</Label>
                 <ToggleGroup type="single" size="s" value={alignment} onValueChange={setAlignment}>
                   <ToggleGroupItem value="left">
-                    <Icon name="align-left" size="s" />
+                    <Icon name={AlignLeft} size="s" />
                   </ToggleGroupItem>
                   <ToggleGroupItem value="center">
-                    <Icon name="align-center" size="s" />
+                    <Icon name={AlignCenter} size="s" />
                   </ToggleGroupItem>
                   <ToggleGroupItem value="right">
-                    <Icon name="align-right" size="s" />
+                    <Icon name={AlignRight} size="s" />
                   </ToggleGroupItem>
                   <ToggleGroupItem value="justify">
-                    <Icon name="align-justify" size="s" />
+                    <Icon name={AlignJustify} size="s" />
                   </ToggleGroupItem>
                 </ToggleGroup>
               </div>
@@ -239,10 +265,10 @@ export const TextEditorToolbar = {
                 <Label className="text-xs">Lists</Label>
                 <ToggleGroup type="single" size="s" value={listType} onValueChange={setListType}>
                   <ToggleGroupItem value="bullet">
-                    <Icon name="list" size="s" />
+                    <Icon name={List} size="s" />
                   </ToggleGroupItem>
                   <ToggleGroupItem value="numbered">
-                    <Icon name="list-ordered" size="s" />
+                    <Icon name={ListOrdered} size="s" />
                   </ToggleGroupItem>
                 </ToggleGroup>
               </div>
@@ -314,15 +340,15 @@ export const ViewModeSelector = {
               <Label>Display Mode</Label>
               <ToggleGroup type="single" value={viewMode} onValueChange={setViewMode}>
                 <ToggleGroupItem value="list">
-                  <Icon name="list" size="s" />
+                  <Icon name={List} size="s" />
                   <span className="ml-2">List</span>
                 </ToggleGroupItem>
                 <ToggleGroupItem value="grid">
-                  <Icon name="grid-3x3" size="s" />
+                  <Icon name={Grid3x3} size="s" />
                   <span className="ml-2">Grid</span>
                 </ToggleGroupItem>
                 <ToggleGroupItem value="card">
-                  <Icon name="credit-card" size="s" />
+                  <Icon name={CreditCard} size="s" />
                   <span className="ml-2">Cards</span>
                 </ToggleGroupItem>
               </ToggleGroup>
@@ -401,15 +427,15 @@ export const FilterOptions = {
               <Label>Status (Multiple)</Label>
               <ToggleGroup type="multiple" size="s" value={status} onValueChange={setStatus}>
                 <ToggleGroupItem value="active">
-                  <Icon name="check-circle" size="s" className="mr-2" />
+                  <Icon name={CheckCircle} size="s" className="mr-2" />
                   Active
                 </ToggleGroupItem>
                 <ToggleGroupItem value="pending">
-                  <Icon name="clock" size="s" className="mr-2" />
+                  <Icon name={Clock} size="s" className="mr-2" />
                   Pending
                 </ToggleGroupItem>
                 <ToggleGroupItem value="inactive">
-                  <Icon name="x-circle" size="s" className="mr-2" />
+                  <Icon name={XCircle} size="s" className="mr-2" />
                   Inactive
                 </ToggleGroupItem>
               </ToggleGroup>
@@ -429,15 +455,15 @@ export const FilterOptions = {
               <Label>Sort By</Label>
               <ToggleGroup type="single" size="s" value={sortBy} onValueChange={setSortBy}>
                 <ToggleGroupItem value="name">
-                  <Icon name="type" size="s" className="mr-2" />
+                  <Icon name={Type} size="s" className="mr-2" />
                   Name
                 </ToggleGroupItem>
                 <ToggleGroupItem value="date">
-                  <Icon name="calendar" size="s" className="mr-2" />
+                  <Icon name={Calendar} size="s" className="mr-2" />
                   Date
                 </ToggleGroupItem>
                 <ToggleGroupItem value="priority">
-                  <Icon name="flag" size="s" className="mr-2" />
+                  <Icon name={Flag} size="s" className="mr-2" />
                   Priority
                 </ToggleGroupItem>
               </ToggleGroup>
@@ -476,16 +502,16 @@ export const ChartTypeSelector = {
               <Label>Chart Type</Label>
               <ToggleGroup type="single" value={chartType} onValueChange={setChartType}>
                 <ToggleGroupItem value="line">
-                  <Icon name="trending-up" size="s" />
+                  <Icon name={TrendingUp} size="s" />
                 </ToggleGroupItem>
                 <ToggleGroupItem value="bar">
-                  <Icon name="bar-chart" size="s" />
+                  <Icon name={BarChart} size="s" />
                 </ToggleGroupItem>
                 <ToggleGroupItem value="pie">
-                  <Icon name="pie-chart" size="s" />
+                  <Icon name={PieChart} size="s" />
                 </ToggleGroupItem>
                 <ToggleGroupItem value="area">
-                  <Icon name="activity" size="s" />
+                  <Icon name={Activity} size="s" />
                 </ToggleGroupItem>
               </ToggleGroup>
             </div>
@@ -504,15 +530,15 @@ export const ChartTypeSelector = {
               <Label>Data Points</Label>
               <ToggleGroup type="multiple" size="s" value={dataPoints} onValueChange={setDataPoints}>
                 <ToggleGroupItem value="revenue">
-                  <Icon name="dollar-sign" size="s" className="mr-1" />
+                  <Icon name={DollarSign} size="s" className="mr-1" />
                   Revenue
                 </ToggleGroupItem>
                 <ToggleGroupItem value="users">
-                  <Icon name="users" size="s" className="mr-1" />
+                  <Icon name={Users} size="s" className="mr-1" />
                   Users
                 </ToggleGroupItem>
                 <ToggleGroupItem value="sessions">
-                  <Icon name="activity" size="s" className="mr-1" />
+                  <Icon name={Activity} size="s" className="mr-1" />
                   Sessions
                 </ToggleGroupItem>
               </ToggleGroup>

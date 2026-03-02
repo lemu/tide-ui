@@ -2,6 +2,31 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { TextLink } from '../components/fundamental/text-link'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 
+import {
+  BarChart,
+  BookOpen,
+  Calendar,
+  Crown,
+  Download,
+  Eye,
+  FolderOpen,
+  Github,
+  HelpCircle,
+  Home,
+  Linkedin,
+  Mail,
+  MessageCircle,
+  Play,
+  Plus,
+  Rss,
+  Settings,
+  Share,
+  Twitter,
+  Upload,
+  Users,
+  Youtube,
+  Zap,
+} from 'lucide-react'
 const meta: Meta<typeof TextLink> = {
   title: 'NPM • Fundamental/TextLink',
   component: TextLink,
@@ -79,7 +104,7 @@ export const WithIcons: Story = {
           </TextLink>
         </div>
         <div>
-          <TextLink href="#" icon="download" iconPosition="left">
+          <TextLink href="#" icon={Download} iconPosition="left">
             Download file
           </TextLink>
         </div>
@@ -89,12 +114,12 @@ export const WithIcons: Story = {
           </TextLink>
         </div>
         <div>
-          <TextLink href="#" icon="mail" iconPosition="left">
+          <TextLink href="#" icon={Mail} iconPosition="left">
             Send email
           </TextLink>
         </div>
         <div>
-          <TextLink href="#" icon="github" iconPosition="left">
+          <TextLink href="#" icon={Github} iconPosition="left">
             View on GitHub
           </TextLink>
         </div>
@@ -113,22 +138,22 @@ export const NavigationLinks: Story = {
         </CardHeader>
         <CardContent className="space-y-3">
           <div>
-            <TextLink href="#" icon="home" iconPosition="left">
+            <TextLink href="#" icon={Home} iconPosition="left">
               Back to Dashboard
             </TextLink>
           </div>
           <div>
-            <TextLink href="#" icon="settings" iconPosition="left">
+            <TextLink href="#" icon={Settings} iconPosition="left">
               Account Settings
             </TextLink>
           </div>
           <div>
-            <TextLink href="#" icon="help-circle" iconPosition="left">
+            <TextLink href="#" icon={HelpCircle} iconPosition="left">
               Help & Support
             </TextLink>
           </div>
           <div>
-            <TextLink href="#" icon="book-open" iconPosition="left">
+            <TextLink href="#" icon={BookOpen} iconPosition="left">
               Documentation
             </TextLink>
           </div>
@@ -156,11 +181,11 @@ export const InlineLinks: Story = {
         </p>
         <p className="text-body-md mb-4">
           Once you're logged in, check out our{" "}
-          <TextLink href="#" icon="play" iconPosition="left" size="m">
+          <TextLink href="#" icon={Play} iconPosition="left" size="m">
             video tutorial
           </TextLink>{" "}
           or browse the{" "}
-          <TextLink href="#" icon="book-open" iconPosition="right" size="m">
+          <TextLink href="#" icon={BookOpen} iconPosition="right" size="m">
             documentation
           </TextLink>{" "}
           to learn more about the features.
@@ -168,7 +193,7 @@ export const InlineLinks: Story = {
         <p className="text-body-md">
           Need help? Visit our{" "}
           <TextLink href="#" size="m">support center</TextLink> or{" "}
-          <TextLink href="#" icon="mail" iconPosition="left" size="m">
+          <TextLink href="#" icon={Mail} iconPosition="left" size="m">
             contact our team
           </TextLink>{" "}
           directly. You can also join our{" "}
@@ -197,9 +222,9 @@ export const ActionLinks: Story = {
               <div className="text-body-sm text-[var(--color-text-secondary)]">2.4 MB • Modified 2 hours ago</div>
             </div>
             <div className="flex gap-2">
-              <TextLink href="#" icon="eye" size="s">View</TextLink>
-              <TextLink href="#" icon="download" size="s">Download</TextLink>
-              <TextLink href="#" icon="share" size="s">Share</TextLink>
+              <TextLink href="#" icon={Eye} size="s">View</TextLink>
+              <TextLink href="#" icon={Download} size="s">Download</TextLink>
+              <TextLink href="#" icon={Share} size="s">Share</TextLink>
             </div>
           </div>
           
@@ -209,9 +234,9 @@ export const ActionLinks: Story = {
               <div className="text-body-sm text-[var(--color-text-secondary)]">15.8 MB • Modified 1 day ago</div>
             </div>
             <div className="flex gap-2">
-              <TextLink href="#" icon="download" size="s">Download</TextLink>
-              <TextLink href="#" icon="folder-open" size="s">Extract</TextLink>
-              <TextLink href="#" icon="share" size="s">Share</TextLink>
+              <TextLink href="#" icon={Download} size="s">Download</TextLink>
+              <TextLink href="#" icon={FolderOpen} size="s">Extract</TextLink>
+              <TextLink href="#" icon={Share} size="s">Share</TextLink>
             </div>
           </div>
         </CardContent>
@@ -223,27 +248,27 @@ export const ActionLinks: Story = {
         </CardHeader>
         <CardContent className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <TextLink href="#" icon="plus" iconPosition="left">
+            <TextLink href="#" icon={Plus} iconPosition="left">
               Create new project
             </TextLink>
-            <TextLink href="#" icon="upload" iconPosition="left">
+            <TextLink href="#" icon={Upload} iconPosition="left">
               Upload files
             </TextLink>
-            <TextLink href="#" icon="users" iconPosition="left">
+            <TextLink href="#" icon={Users} iconPosition="left">
               Invite team members
             </TextLink>
-            <TextLink href="#" icon="settings" iconPosition="left">
+            <TextLink href="#" icon={Settings} iconPosition="left">
               Project settings
             </TextLink>
           </div>
           <div className="space-y-2">
-            <TextLink href="#" icon="bar-chart" iconPosition="left">
+            <TextLink href="#" icon={BarChart} iconPosition="left">
               View analytics
             </TextLink>
-            <TextLink href="#" icon="calendar" iconPosition="left">
+            <TextLink href="#" icon={Calendar} iconPosition="left">
               Schedule meeting
             </TextLink>
-            <TextLink href="#" icon="message-circle" iconPosition="left">
+            <TextLink href="#" icon={MessageCircle} iconPosition="left">
               Send feedback
             </TextLink>
             <TextLink href="#" icon="external-link" iconPosition="right" target="_blank">
@@ -266,28 +291,28 @@ export const SocialLinks: Story = {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-3">
-            <TextLink href="#" icon="twitter" iconPosition="left" target="_blank">
+            <TextLink href="#" icon={Twitter} iconPosition="left" target="_blank">
               Follow us on Twitter
             </TextLink>
-            <TextLink href="#" icon="github" iconPosition="left" target="_blank">
+            <TextLink href="#" icon={Github} iconPosition="left" target="_blank">
               Star us on GitHub
             </TextLink>
-            <TextLink href="#" icon="linkedin" iconPosition="left" target="_blank">
+            <TextLink href="#" icon={Linkedin} iconPosition="left" target="_blank">
               Connect on LinkedIn
             </TextLink>
-            <TextLink href="#" icon="youtube" iconPosition="left" target="_blank">
+            <TextLink href="#" icon={Youtube} iconPosition="left" target="_blank">
               Subscribe on YouTube
             </TextLink>
           </div>
           
           <div className="border-t border-[var(--color-border-primary-subtle)] pt-4 space-y-3">
-            <TextLink href="#" icon="rss" iconPosition="left">
+            <TextLink href="#" icon={Rss} iconPosition="left">
               Subscribe to our blog
             </TextLink>
-            <TextLink href="#" icon="mail" iconPosition="left">
+            <TextLink href="#" icon={Mail} iconPosition="left">
               Join our newsletter
             </TextLink>
-            <TextLink href="#" icon="message-circle" iconPosition="left">
+            <TextLink href="#" icon={MessageCircle} iconPosition="left">
               Join our Discord
             </TextLink>
           </div>
@@ -330,12 +355,12 @@ export const DisabledState: Story = {
             Advanced analytics
           </TextLink>{" "}
           and{" "}
-          <TextLink href="#" icon="crown" iconPosition="left" disabled>
+          <TextLink href="#" icon={Crown} iconPosition="left" disabled>
             premium templates
           </TextLink>{" "}
           require an upgrade.
         </p>
-        <TextLink href="#" icon="zap" iconPosition="left">
+        <TextLink href="#" icon={Zap} iconPosition="left">
           Upgrade to Premium
         </TextLink>
       </div>
@@ -368,7 +393,7 @@ export const InDifferentContexts: Story = {
             </li>
             <li className="flex items-center justify-between">
               <span>Weekly report is ready</span>
-              <TextLink href="#" size="s" variant="subtle" icon="download" iconPosition="right">
+              <TextLink href="#" size="s" variant="subtle" icon={Download} iconPosition="right">
                 Download
               </TextLink>
             </li>

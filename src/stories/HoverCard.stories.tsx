@@ -9,6 +9,26 @@ import { Icon } from '../components/fundamental/icon'
 import { Badge } from '../components/fundamental/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '../components/fundamental/avatar'
 
+import {
+  BookOpen,
+  Calendar,
+  Clock,
+  Download,
+  Eye,
+  FileText,
+  Github,
+  Heart,
+  MapPin,
+  MessageCircle,
+  Package,
+  Palette,
+  Play,
+  ShoppingCart,
+  TrendingUp,
+  UserPlus,
+  Users,
+  Zap,
+} from 'lucide-react'
 const meta: Meta<typeof HoverCard> = {
   title: 'NPM • Fundamental/HoverCard',
   component: HoverCard,
@@ -40,7 +60,7 @@ export const Default: Story = {
               The React Framework – created and maintained by @vercel.
             </p>
             <div className="flex items-center pt-2">
-              <Icon name="calendar" className="mr-2 h-4 w-4 opacity-70" />{" "}
+              <Icon name={Calendar} className="mr-2 h-4 w-4 opacity-70" />{" "}
               <span className="text-xs text-muted-foreground">
                 Joined December 2021
               </span>
@@ -103,20 +123,20 @@ export const UserProfile: Story = {
               </div>
               
               <div className="flex items-center gap-2 text-caption-sm text-[var(--color-text-secondary)]">
-                <Icon name="map-pin" size="s" />
+                <Icon name={MapPin} size="s" />
                 <span>San Francisco, CA</span>
                 <span>•</span>
-                <Icon name="calendar" size="s" />
+                <Icon name={Calendar} size="s" />
                 <span>Joined March 2020</span>
               </div>
               
               <div className="flex gap-2">
                 <Button size="s" className="flex-1">
-                  <Icon name="user-plus" size="s" className="mr-2" />
+                  <Icon name={UserPlus} size="s" className="mr-2" />
                   Follow
                 </Button>
                 <Button size="s" variant="ghost" className="flex-1">
-                  <Icon name="message-circle" size="s" className="mr-2" />
+                  <Icon name={MessageCircle} size="s" className="mr-2" />
                   Message
                 </Button>
               </div>
@@ -169,20 +189,20 @@ export const UserProfile: Story = {
               </div>
               
               <div className="flex items-center gap-2 text-caption-sm text-[var(--color-text-secondary)]">
-                <Icon name="map-pin" size="s" />
+                <Icon name={MapPin} size="s" />
                 <span>New York, NY</span>
                 <span>•</span>
-                <Icon name="calendar" size="s" />
+                <Icon name={Calendar} size="s" />
                 <span>Joined June 2021</span>
               </div>
               
               <div className="flex gap-2">
                 <Button size="s" className="flex-1">
-                  <Icon name="user-plus" size="s" className="mr-2" />
+                  <Icon name={UserPlus} size="s" className="mr-2" />
                   Follow
                 </Button>
                 <Button size="s" variant="ghost" className="flex-1">
-                  <Icon name="message-circle" size="s" className="mr-2" />
+                  <Icon name={MessageCircle} size="s" className="mr-2" />
                   Message
                 </Button>
               </div>
@@ -234,20 +254,20 @@ export const UserProfile: Story = {
               </div>
               
               <div className="flex items-center gap-2 text-caption-sm text-[var(--color-text-secondary)]">
-                <Icon name="map-pin" size="s" />
+                <Icon name={MapPin} size="s" />
                 <span>Austin, TX</span>
                 <span>•</span>
-                <Icon name="calendar" size="s" />
+                <Icon name={Calendar} size="s" />
                 <span>Joined January 2019</span>
               </div>
               
               <div className="flex gap-2">
                 <Button size="s" className="flex-1">
-                  <Icon name="user-plus" size="s" className="mr-2" />
+                  <Icon name={UserPlus} size="s" className="mr-2" />
                   Follow
                 </Button>
                 <Button size="s" variant="ghost" className="flex-1">
-                  <Icon name="message-circle" size="s" className="mr-2" />
+                  <Icon name={MessageCircle} size="s" className="mr-2" />
                   Message
                 </Button>
               </div>
@@ -274,7 +294,7 @@ export const LinkPreview: Story = {
             <div className="space-y-3">
               <div className="flex items-start gap-3">
                 <div className="w-12 h-12 bg-[var(--color-background-info-subtle)] rounded-l flex items-center justify-center">
-                  <Icon name="book-open" size="m" className="text-[var(--color-text-on-action)]" />
+                  <Icon name={BookOpen} size="m" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">
                   <h4 className="text-body-md font-semibold">React Documentation</h4>
@@ -288,7 +308,7 @@ export const LinkPreview: Story = {
               
               <div className="flex items-center gap-4 text-caption-sm text-[var(--color-text-secondary)]">
                 <div className="flex items-center gap-1">
-                  <Icon name="eye" size="s" />
+                  <Icon name={Eye} size="s" />
                   <span>2.3M views</span>
                 </div>
                 <div className="flex items-center gap-1">
@@ -296,7 +316,7 @@ export const LinkPreview: Story = {
                   <span>4.9/5 rating</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Icon name="clock" size="s" />
+                  <Icon name={Clock} size="s" />
                   <span>Updated daily</span>
                 </div>
               </div>
@@ -323,7 +343,7 @@ export const LinkPreview: Story = {
             <div className="space-y-3">
               <div className="flex items-start gap-3">
                 <div className="w-12 h-12 bg-[var(--color-background-success-subtle)] rounded-l flex items-center justify-center">
-                  <Icon name="zap" size="m" className="text-[var(--color-text-on-action)]" />
+                  <Icon name={Zap} size="m" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">
                   <h4 className="text-body-md font-semibold">Next.js by Vercel</h4>
@@ -337,15 +357,15 @@ export const LinkPreview: Story = {
               
               <div className="flex items-center gap-4 text-caption-sm text-[var(--color-text-secondary)]">
                 <div className="flex items-center gap-1">
-                  <Icon name="download" size="s" />
+                  <Icon name={Download} size="s" />
                   <span>5M+ downloads</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Icon name="github" size="s" />
+                  <Icon name={Github} size="s" />
                   <span>115k stars</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Icon name="users" size="s" />
+                  <Icon name={Users} size="s" />
                   <span>Active community</span>
                 </div>
               </div>
@@ -356,7 +376,7 @@ export const LinkPreview: Story = {
                   Get Started
                 </Button>
                 <Button size="s" variant="ghost">
-                  <Icon name="github" size="s" className="mr-2" />
+                  <Icon name={Github} size="s" className="mr-2" />
                   GitHub
                 </Button>
               </div>
@@ -372,7 +392,7 @@ export const LinkPreview: Story = {
             <div className="space-y-3">
               <div className="flex items-start gap-3">
                 <div className="w-12 h-12 bg-[var(--color-background-blue-bold)] rounded-l flex items-center justify-center">
-                  <Icon name="palette" size="m" className="text-[var(--color-text-on-action)]" />
+                  <Icon name={Palette} size="m" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">
                   <h4 className="text-body-md font-semibold">Tailwind CSS</h4>
@@ -386,15 +406,15 @@ export const LinkPreview: Story = {
               
               <div className="flex items-center gap-4 text-caption-sm text-[var(--color-text-secondary)]">
                 <div className="flex items-center gap-1">
-                  <Icon name="package" size="s" />
+                  <Icon name={Package} size="s" />
                   <span>4M+ weekly downloads</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Icon name="heart" size="s" />
+                  <Icon name={Heart} size="s" />
                   <span>Loved by developers</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Icon name="trending-up" size="s" />
+                  <Icon name={TrendingUp} size="s" />
                   <span>Growing fast</span>
                 </div>
               </div>
@@ -405,7 +425,7 @@ export const LinkPreview: Story = {
                   Documentation
                 </Button>
                 <Button size="s" variant="ghost">
-                  <Icon name="play" size="s" className="mr-2" />
+                  <Icon name={Play} size="s" className="mr-2" />
                   Playground
                 </Button>
               </div>
@@ -480,11 +500,11 @@ export const ProductCard: Story = {
               
               <div className="flex gap-2">
                 <Button size="s" className="flex-1">
-                  <Icon name="shopping-cart" size="s" className="mr-2" />
+                  <Icon name={ShoppingCart} size="s" className="mr-2" />
                   Add to Cart
                 </Button>
                 <Button size="s" variant="ghost">
-                  <Icon name="heart" size="s" className="mr-2" />
+                  <Icon name={Heart} size="s" className="mr-2" />
                   Wishlist
                 </Button>
               </div>
@@ -547,11 +567,11 @@ export const ProductCard: Story = {
               
               <div className="flex gap-2">
                 <Button size="s" className="flex-1">
-                  <Icon name="shopping-cart" size="s" className="mr-2" />
+                  <Icon name={ShoppingCart} size="s" className="mr-2" />
                   Add to Cart
                 </Button>
                 <Button size="s" variant="ghost">
-                  <Icon name="heart" size="s" className="mr-2" />
+                  <Icon name={Heart} size="s" className="mr-2" />
                   Wishlist
                 </Button>
               </div>
@@ -578,7 +598,7 @@ export const FileInfo: Story = {
             <div className="space-y-3">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 bg-[var(--color-background-info-subtle)] rounded-l flex items-center justify-center">
-                  <Icon name="file-text" size="s" className="text-[var(--color-text-on-action)]" />
+                  <Icon name={FileText} size="s" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">
                   <h4 className="text-body-md font-semibold font-mono">README.md</h4>
@@ -631,7 +651,7 @@ export const FileInfo: Story = {
             <div className="space-y-3">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 bg-[var(--color-background-success-subtle)] rounded-l flex items-center justify-center">
-                  <Icon name="package" size="s" className="text-[var(--color-text-on-action)]" />
+                  <Icon name={Package} size="s" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">
                   <h4 className="text-body-md font-semibold font-mono">package.json</h4>

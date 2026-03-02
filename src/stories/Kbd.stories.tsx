@@ -9,6 +9,10 @@ import {
   TooltipTrigger,
 } from '../components/fundamental/tooltip'
 
+import {
+  Plus,
+  Settings,
+} from 'lucide-react'
 const meta: Meta<typeof Kbd> = {
   title: 'NPM • Fundamental/Kbd',
   component: Kbd,
@@ -187,7 +191,7 @@ export const InTooltips: Story = {
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button icon="plus" size="s"></Button>
+            <Button icon={Plus} size="s"></Button>
           </TooltipTrigger>
           <TooltipContent>
             <div className="flex items-center gap-[var(--space-xs)]">
@@ -219,7 +223,7 @@ export const InMenus: Story = {
     <div className="w-64 space-y-[var(--space-s)] border border-[var(--color-border-primary-subtle)] rounded-l p-[var(--space-s)] bg-[var(--color-surface-primary)]">
       <div className="flex items-center justify-between rounded-m p-[var(--space-s)] transition-colors hover:bg-[var(--color-background-neutral-subtlest)]">
         <div className="flex items-center gap-[var(--space-s)]">
-          <Icon name="plus" size="s" />
+          <Icon name={Plus} size="s" />
           <span className="text-body-sm">New File</span>
         </div>
         <KbdGroup>
@@ -230,7 +234,7 @@ export const InMenus: Story = {
 
       <div className="flex items-center justify-between rounded-m p-[var(--space-s)] transition-colors hover:bg-[var(--color-background-neutral-subtlest)]">
         <div className="flex items-center gap-[var(--space-s)]">
-          <Icon name="settings" size="s" />
+          <Icon name={Settings} size="s" />
           <span className="text-body-sm">Settings</span>
         </div>
         <KbdGroup>

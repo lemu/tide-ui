@@ -7,6 +7,11 @@ import { Badge } from '../components/fundamental/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/fundamental/card'
 import { Label } from '../components/fundamental/label'
 
+import {
+  Music,
+  SkipBack,
+  SkipForward,
+} from 'lucide-react'
 const meta: Meta<typeof Slider> = {
   title: 'NPM • Fundamental/Slider',
   component: Slider,
@@ -268,7 +273,7 @@ export const MediaPlayer: Story = {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Icon name="music" size="s" />
+              <Icon name={Music} size="s" />
               Now Playing
             </CardTitle>
           </CardHeader>
@@ -296,7 +301,7 @@ export const MediaPlayer: Story = {
             {/* Playback controls */}
             <div className="flex items-center justify-center gap-4">
               <Button variant="ghost" size="s">
-                <Icon name="skip-back" size="s" />
+                <Icon name={SkipBack} size="s" />
               </Button>
               <Button 
                 variant="ghost" 
@@ -306,7 +311,7 @@ export const MediaPlayer: Story = {
                 <Icon name={isPlaying ? "pause" : "play"} size="m" />
               </Button>
               <Button variant="ghost" size="s">
-                <Icon name="skip-forward" size="s" />
+                <Icon name={SkipForward} size="s" />
               </Button>
             </div>
 
