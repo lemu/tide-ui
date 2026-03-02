@@ -684,7 +684,7 @@ const MenuLevelContainer = ({ children }: MenuLevelContainerProps) => {
 interface ResponsiveDropdownMenuItemProps extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> {
   inset?: boolean
   destructive?: boolean
-  icon?: string
+  icon?: string | IconComponent
   autoClose?: boolean
 }
 
@@ -775,7 +775,7 @@ ResponsiveDropdownMenuCheckboxItem.displayName = "ResponsiveDropdownMenuCheckbox
 
 interface ResponsiveDropdownMenuRadioItemProps extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem> {
   value: string
-  icon?: string
+  icon?: string | IconComponent
   autoClose?: boolean
 }
 
@@ -958,7 +958,7 @@ const ResponsiveDropdownMenuSub = ({ children }: ResponsiveDropdownMenuSubProps)
 
 interface ResponsiveDropdownMenuSubTriggerProps extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> {
   inset?: boolean
-  icon?: string
+  icon?: string | IconComponent
 }
 
 const ResponsiveDropdownMenuSubTrigger = React.forwardRef<

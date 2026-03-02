@@ -19,7 +19,7 @@ import { Switch } from "../fundamental/switch";
 import { Label } from "../fundamental/label";
 import { Separator } from "../fundamental/separator";
 import { Icon } from "../fundamental/icon";
-import { ArrowDownNarrowWide, ArrowDownWideNarrow } from "lucide-react";
+import { ArrowDownNarrowWide, ArrowDownWideNarrow, Settings } from "lucide-react";
 import { Input } from "../fundamental/input";
 
 export type ViewMode = 'table' | 'folders' | 'columns';
@@ -326,7 +326,7 @@ export const ViewModeMenu = forwardRef<ViewModeMenuHandle, ViewModeMenuProps>(
       <DropdownMenuTrigger asChild>
         <Button
           size="m"
-          icon="settings"
+          icon={Settings}
           className={triggerClassName}
         />
       </DropdownMenuTrigger>

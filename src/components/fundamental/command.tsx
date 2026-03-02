@@ -6,6 +6,7 @@ import { type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 import { Icon } from "@/components/fundamental/icon";
 import { Button } from "@/components/fundamental/button";
+import { X } from "lucide-react";
 import { inputVariants } from "@/components/fundamental/input";
 
 const Command = React.forwardRef<
@@ -119,7 +120,7 @@ const CommandInput = React.forwardRef<
           type="button"
           variant="ghost"
           size="s"
-          icon="x"
+          icon={X}
           iconPosition="only"
           onClick={(e) => {
             e.preventDefault();

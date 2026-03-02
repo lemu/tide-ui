@@ -3,6 +3,7 @@ import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 import { Button } from "./button";
+import { X } from "lucide-react";
 
 export interface SheetProps extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Root> {
   overlay?: boolean;
@@ -98,7 +99,7 @@ const SheetContent = React.forwardRef<
           <Button
             variant="default"
             size="m"
-            icon="x"
+            icon={X}
             iconPosition="only"
             className="absolute right-[var(--space-l)] top-[var(--space-l)]"
           >

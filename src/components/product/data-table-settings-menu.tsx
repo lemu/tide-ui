@@ -15,7 +15,7 @@ import {
 } from "../fundamental/select";
 import { Toggle } from "../fundamental/toggle";
 import { Icon } from "../fundamental/icon";
-import { ArrowDownNarrowWide, ArrowDownWideNarrow } from "lucide-react";
+import { ArrowDownNarrowWide, ArrowDownWideNarrow, Settings } from "lucide-react";
 import { Input } from "../fundamental/input";
 
 export type ColumnDataType = 'text' | 'number' | 'date' | 'boolean';
@@ -164,7 +164,7 @@ export function DataTableSettingsMenu({
       <DropdownMenuTrigger asChild>
         <Button
           size="m"
-          icon="settings"
+          icon={Settings}
           aria-label="Table settings"
           className={triggerClassName}
         />

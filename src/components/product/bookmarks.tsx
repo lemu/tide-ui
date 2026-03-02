@@ -3,7 +3,7 @@ import { cn } from "../../lib/utils";
 import { Button } from "../fundamental/button";
 import { ButtonGroup } from "../fundamental/button-group";
 import { Icon } from "../fundamental/icon";
-import { Bookmark as BookmarkIcon, Pencil, Trash2, Star, MoreHorizontal, Check, ChevronDown } from "lucide-react";
+import { Bookmark as BookmarkIcon, Pencil, Trash2, Star, MoreHorizontal as MoreHorizontalIcon, Check, ChevronDown } from "lucide-react";
 import { Separator } from "../fundamental/separator";
 import {
   Select,
@@ -309,7 +309,7 @@ function BookmarkSplitButton({
         <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            icon="more-horizontal"
+            icon={MoreHorizontalIcon}
             aria-label="Bookmark options"
             className="!rounded-l-none rounded-r-md !border-l !border-l-[var(--color-border-action-outline)] focus:ring-0 data-[state=open]:ring-0"
           />
@@ -549,7 +549,7 @@ const BookmarkTab = React.memo(
                     onClick={(e) => e.stopPropagation()}
                   >
                     <Icon
-                      name={MoreHorizontal}
+                      name={MoreHorizontalIcon}
                       className="h-[var(--size-2xs)] w-[var(--size-2xs)]"
                     />
                   </Button>

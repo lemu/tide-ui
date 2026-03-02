@@ -21,7 +21,7 @@ import {
 } from '../fundamental/sidebar'
 import { Button } from '../fundamental/button'
 import { Icon } from '../fundamental/icon'
-import { Search, ChevronDown, Check, RotateCcw, ChevronRight } from 'lucide-react'
+import { Search, ChevronDown, Check, RotateCcw, ChevronRight, User, Settings, LogOut, House, LayoutDashboard, Ship, TrendingUp, ScrollText, ShieldCheck, Globe, Container, Anchor, Bell, CircleHelp } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '../fundamental/avatar'
 import { Separator } from '../fundamental/separator'
 import { Kbd } from '../fundamental/kbd'
@@ -147,13 +147,13 @@ const defaultNavigationData: AppFrameNavigationData = {
   main: [
     {
       title: 'Home',
-      icon: 'house',
+      icon: House,
       url: '/home',
       isActive: false,
     },
     {
       title: 'Boards',
-      icon: 'layout-dashboard',
+      icon: LayoutDashboard,
       url: '/boards',
       isActive: false,
     },
@@ -161,21 +161,21 @@ const defaultNavigationData: AppFrameNavigationData = {
   operations: [
     {
       title: 'Voyage economics',
-      icon: 'ship',
+      icon: Ship,
       url: '/freight-planner',
       isActive: false,
       items: [],
     },
     {
       title: 'Trade desk',
-      icon: 'trending-up',
+      icon: TrendingUp,
       url: '/trade-desk',
       isActive: false,
       items: [],
     },
     {
       title: 'Agreements',
-      icon: 'scroll-text',
+      icon: ScrollText,
       url: '/agreements',
       isActive: true,
       items: [
@@ -198,7 +198,7 @@ const defaultNavigationData: AppFrameNavigationData = {
     },
     {
       title: 'Compliance',
-      icon: 'shield-check',
+      icon: ShieldCheck,
       url: '/compliance',
       isActive: false,
       items: [],
@@ -207,7 +207,7 @@ const defaultNavigationData: AppFrameNavigationData = {
   intelligence: [
     {
       title: 'Global market',
-      icon: 'globe',
+      icon: Globe,
       url: '/global-market',
       isActive: false,
       items: [
@@ -218,7 +218,7 @@ const defaultNavigationData: AppFrameNavigationData = {
     },
     {
       title: 'Assets',
-      icon: 'container',
+      icon: Container,
       url: '/assets',
       isActive: false,
       items: [
@@ -230,7 +230,7 @@ const defaultNavigationData: AppFrameNavigationData = {
     },
     {
       title: 'Fixtures',
-      icon: 'anchor',
+      icon: Anchor,
       url: '/fixtures',
       isActive: false,
     },
@@ -238,13 +238,13 @@ const defaultNavigationData: AppFrameNavigationData = {
   support: [
     {
       title: 'Notifications',
-      icon: 'bell',
+      icon: Bell,
       url: '/notifications',
       isActive: false,
     },
     {
       title: 'Help & support',
-      icon: 'circle-help',
+      icon: CircleHelp,
       url: '/help-support',
       isActive: false,
     },
@@ -885,7 +885,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
 
                 {/* Action Items */}
                 <DropdownMenuItem
-                  icon="user"
+                  icon={User}
                   className="cursor-pointer"
                   onSelect={() => {
                     if (onNavigate) {
@@ -896,7 +896,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                   User profile
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  icon="settings"
+                  icon={Settings}
                   className="cursor-pointer"
                   onSelect={() => {
                     if (onNavigate) {
@@ -910,7 +910,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
                 <DropdownMenuSeparator />
 
                 <DropdownMenuItem
-                  icon="log-out"
+                  icon={LogOut}
                   destructive
                   className="cursor-pointer"
                   onSelect={() => {
