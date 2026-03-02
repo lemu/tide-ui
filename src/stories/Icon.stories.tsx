@@ -52,6 +52,137 @@ export const Default: Story = {
   },
 }
 
+export const HowToUse: Story = {
+  render: () => (
+    <div className="space-y-[var(--space-xl)] max-w-4xl">
+
+      {/* Section A — Usage patterns */}
+      <div>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Usage patterns</h2>
+
+        <div className="space-y-[var(--space-m)]">
+          <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)] space-y-[var(--space-m)]">
+            <h3 className="text-heading-sm text-[var(--color-text-primary)]">String name — static map, 34 icons (library internals only)</h3>
+            <p className="text-body-sm text-[var(--color-text-secondary)]">
+              Passing a string looks up the icon in a static map of 34 Lucide icons used internally by tide-ui components. These are already bundled with the library. Strings not in the map render a placeholder — use a component reference instead.
+            </p>
+            <div className="flex items-center gap-[var(--space-m)]">
+              <Icon name="star" size="m" />
+              <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
+                {`<Icon name="star" size="m" />`}
+              </code>
+            </div>
+          </div>
+
+          <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)] space-y-[var(--space-m)]">
+            <h3 className="text-heading-sm text-[var(--color-text-primary)]">Component reference — tree-shakeable</h3>
+            <p className="text-body-sm text-[var(--color-text-secondary)]">
+              Passing a Lucide component directly bypasses the runtime lookup entirely. The bundler sees the explicit import and can eliminate every other Lucide icon from the output. Use this in performance-sensitive apps where bundle size matters.
+            </p>
+            <div className="flex items-center gap-[var(--space-m)]">
+              <Icon name={LucideIcons.Settings} size="m" />
+              <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
+                {`import { Settings } from 'lucide-react'\n<Icon name={Settings} size="m" />`}
+              </code>
+            </div>
+            <div className="flex items-center gap-[var(--space-l)]">
+              <Icon name={LucideIcons.Settings} size="s" color="tertiary" />
+              <Icon name={LucideIcons.Settings} size="m" color="brand" />
+              <Icon name={LucideIcons.Settings} size="l" color="primary" />
+              <Icon name={LucideIcons.Settings} size="xl" color="information" />
+            </div>
+          </div>
+
+          <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)] space-y-[var(--space-m)]">
+            <h3 className="text-heading-sm text-[var(--color-text-primary)]">Summary</h3>
+            <div className="grid grid-cols-3 gap-[var(--space-m)] text-body-sm">
+              <div className="text-[var(--color-text-tertiary)]">Usage</div>
+              <div className="text-[var(--color-text-tertiary)]">Bundle cost</div>
+              <div className="text-[var(--color-text-tertiary)]">When to use</div>
+
+              <code className="text-[var(--color-text-primary)]">{`name="star"`}</code>
+              <div className="text-[var(--color-text-secondary)]">34 icons (library internals only, already in bundle)</div>
+              <div className="text-[var(--color-text-secondary)]">Quick use of library-internal icons; unknown strings show placeholder</div>
+
+              <code className="text-[var(--color-text-primary)]">{`name={Settings}`}</code>
+              <div className="text-[var(--color-text-secondary)]">Only the imported icon</div>
+              <div className="text-[var(--color-text-secondary)]">Production apps where bundle size matters</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Section B — Code examples */}
+      <div>
+        <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Code examples</h2>
+
+        <div className="space-y-[var(--space-m)]">
+          <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+            <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
+              Basic usage
+            </h3>
+            <div className="flex items-center gap-[var(--space-m)]">
+              <Icon name="star" />
+              <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
+                {`<Icon name="star" />`}
+              </code>
+            </div>
+          </div>
+
+          <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+            <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
+              With size and color
+            </h3>
+            <div className="flex items-center gap-[var(--space-m)]">
+              <Icon name="circle-alert" size="l" color="error" />
+              <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
+                {`<Icon name="circle-alert" size="l" color="error" />`}
+              </code>
+            </div>
+          </div>
+
+          <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+            <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
+              Accessible icon with label
+            </h3>
+            <div className="flex items-center gap-[var(--space-m)]">
+              <Icon name="star" aria-label="Favorite item" />
+              <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
+                {`<Icon name="star" aria-label="Favorite item" />`}
+              </code>
+            </div>
+          </div>
+
+          <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+            <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
+              Custom/tide-ui icon (component reference)
+            </h3>
+            <div className="flex items-center gap-[var(--space-m)]">
+              <Icon name={Dot} color="brand" />
+              <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
+                {`import { Dot } from '@rafal.lemieszewski/tide-ui'\n<Icon name={Dot} color="brand" />`}
+              </code>
+            </div>
+          </div>
+
+          <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+            <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
+              Lucide icon via direct import (component reference)
+            </h3>
+            <div className="flex items-center gap-[var(--space-m)]">
+              <Icon name={LucideIcons.Settings} size="m" />
+              <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
+                {`import { Settings } from 'lucide-react'\n<Icon name={Settings} size="m" />`}
+              </code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  ),
+}
+
 // All sizes showcase
 export const AllSizes: Story = {
   render: () => (
@@ -191,115 +322,4 @@ export const CustomIcons: Story = {
   },
 }
 
-export const ComponentIcons: Story = {
-  render: () => (
-    <div className="space-y-[var(--space-xl)]">
-
-      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)] space-y-[var(--space-m)]">
-        <h3 className="text-heading-sm text-[var(--color-text-primary)]">String name — static map, 34 icons (library internals only)</h3>
-        <p className="text-body-sm text-[var(--color-text-secondary)]">
-          Passing a string looks up the icon in a static map of 34 Lucide icons used internally by tide-ui components. These are already bundled with the library. Strings not in the map render a placeholder — use a component reference instead.
-        </p>
-        <div className="flex items-center gap-[var(--space-m)]">
-          <Icon name="star" size="m" />
-          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
-            {`<Icon name="star" size="m" />`}
-          </code>
-        </div>
-      </div>
-
-      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)] space-y-[var(--space-m)]">
-        <h3 className="text-heading-sm text-[var(--color-text-primary)]">Component reference — tree-shakeable</h3>
-        <p className="text-body-sm text-[var(--color-text-secondary)]">
-          Passing a Lucide component directly bypasses the runtime lookup entirely. The bundler sees the explicit import and can eliminate every other Lucide icon from the output. Use this in performance-sensitive apps where bundle size matters.
-        </p>
-        <div className="flex items-center gap-[var(--space-m)]">
-          <Icon name={LucideIcons.Settings} size="m" />
-          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
-            {`import { Settings } from 'lucide-react'\n<Icon name={Settings} size="m" />`}
-          </code>
-        </div>
-        <div className="flex items-center gap-[var(--space-l)]">
-          <Icon name={LucideIcons.Settings} size="s" color="tertiary" />
-          <Icon name={LucideIcons.Settings} size="m" color="brand" />
-          <Icon name={LucideIcons.Settings} size="l" color="primary" />
-          <Icon name={LucideIcons.Settings} size="xl" color="information" />
-        </div>
-      </div>
-
-      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)] space-y-[var(--space-m)]">
-        <h3 className="text-heading-sm text-[var(--color-text-primary)]">Summary</h3>
-        <div className="grid grid-cols-3 gap-[var(--space-m)] text-body-sm">
-          <div className="text-[var(--color-text-tertiary)]">Usage</div>
-          <div className="text-[var(--color-text-tertiary)]">Bundle cost</div>
-          <div className="text-[var(--color-text-tertiary)]">When to use</div>
-
-          <code className="text-[var(--color-text-primary)]">{`name="star"`}</code>
-          <div className="text-[var(--color-text-secondary)]">34 icons (library internals only, already in bundle)</div>
-          <div className="text-[var(--color-text-secondary)]">Quick use of library-internal icons; unknown strings show placeholder</div>
-
-          <code className="text-[var(--color-text-primary)]">{`name={Settings}`}</code>
-          <div className="text-[var(--color-text-secondary)]">Only the imported icon</div>
-          <div className="text-[var(--color-text-secondary)]">Production apps where bundle size matters</div>
-        </div>
-      </div>
-
-    </div>
-  ),
-}
-
-// Usage examples with code
-export const UsageExamples: Story = {
-  render: () => (
-    <div className="space-y-[var(--space-l)] max-w-4xl">
-      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
-        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
-          Basic Usage
-        </h3>
-        <div className="flex items-center gap-[var(--space-m)]">
-          <Icon name="star" />
-          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
-            {`<Icon name="star" />`}
-          </code>
-        </div>
-      </div>
-
-      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
-        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
-          With Size and Color
-        </h3>
-        <div className="flex items-center gap-[var(--space-m)]">
-          <Icon name="circle-alert" size="l" color="error" />
-          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
-            {`<Icon name="circle-alert" size="l" color="error" />`}
-          </code>
-        </div>
-      </div>
-
-      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
-        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
-          Accessible Icon with Label
-        </h3>
-        <div className="flex items-center gap-[var(--space-m)]">
-          <Icon name="star" aria-label="Favorite item" />
-          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
-            {`<Icon name="star" aria-label="Favorite item" />`}
-          </code>
-        </div>
-      </div>
-
-      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
-        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
-          Custom Icon (component reference)
-        </h3>
-        <div className="flex items-center gap-[var(--space-m)]">
-          <Icon name={Dot} color="brand" />
-          <code className="text-body-sm bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] rounded-s text-[var(--color-text-primary)]">
-            {`import { Dot } from '@rafal.lemieszewski/tide-ui'\n<Icon name={Dot} color="brand" />`}
-          </code>
-        </div>
-      </div>
-    </div>
-  ),
-}
 

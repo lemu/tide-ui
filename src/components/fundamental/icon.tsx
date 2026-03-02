@@ -173,7 +173,18 @@ const Icon = React.forwardRef<SVGSVGElement, IconProps>(
     }
 
     // Unknown string — not in static map
-    console.warn(`Icon "${name}" not found in the static icon map. Use a component reference instead: <Icon name={YourIcon} />`);
+    const pascalName = (name as string)
+      .split('-')
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join('')
+
+    console.warn(
+      `[Icon] "${name}" is not in the tide-ui icon set — a ? placeholder is shown instead. ` +
+      `To render a Lucide icon, import it directly and pass the component reference ` +
+      `(this avoids bundling all of lucide-react):\n` +
+      `  import { ${pascalName} } from 'lucide-react'\n` +
+      `  <Icon name={${pascalName}} />`
+    );
     return (
       <svg
         ref={ref}
