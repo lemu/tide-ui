@@ -81,6 +81,19 @@ export interface AppFrameNavigationData {
   support: AppFrameNavItem[]
 }
 
+export interface AppFrameSearchItem {
+  /** Unique key for React reconciliation */
+  id: string
+  /** Display label */
+  label: string
+  /** Optional group heading; items with the same group are rendered together */
+  group?: string
+  /** Optional icon — same value as <Icon name=…> */
+  icon?: React.ComponentType | string
+  /** Called when the item is selected */
+  onSelect?: () => void
+}
+
 export interface AppFrameProps {
   /** Navigation data for all sections. If not provided, default mock data will be used. */
   navigationData?: AppFrameNavigationData
@@ -115,6 +128,16 @@ export interface AppFrameProps {
    * @param url - The URL/path from the navigation item
    */
   onNavigate?: (url: string) => void
+  /** Fired whenever the search query changes. Use to trigger async fetching. */
+  onSearchChange?: (query: string) => void
+  /**
+   * Pre-filtered results to display in the command palette.
+   * Rendered in a dedicated group above the built-in nav groups.
+   * Automatically sets shouldFilter={false} on the underlying Command.
+   */
+  searchItems?: AppFrameSearchItem[]
+  /** Show a loading indicator while async results are being fetched. */
+  searchLoading?: boolean
 }
 
 // ============================================================================
@@ -279,6 +302,14 @@ const isMacOS = () => {
   return typeof navigator !== 'undefined' && /Mac|iPod|iPhone|iPad/.test(navigator.userAgent)
 }
 
+function groupBy<T>(arr: T[], key: (item: T) => string): Record<string, T[]> {
+  return arr.reduce<Record<string, T[]>>((acc, item) => {
+    const k = key(item)
+    ;(acc[k] ??= []).push(item)
+    return acc
+  }, {})
+}
+
 /**
  * Initializes expandedItems state for navigation sections with active children
  */
@@ -318,9 +349,12 @@ interface AppSidebarProps {
   onNavigate?: (url: string) => void
   navigationMode: 'sidebar' | 'horizontal'
   onNavigationModeChange: (mode: 'sidebar' | 'horizontal') => void
+  onSearchChange?: (query: string) => void
+  searchItems?: AppFrameSearchItem[]
+  searchLoading?: boolean
 }
 
-function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, onNavigationModeChange }: AppSidebarProps) {
+function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, onNavigationModeChange, onSearchChange, searchItems, searchLoading }: AppSidebarProps) {
   const [commandOpen, setCommandOpen] = React.useState(false)
   const [commandSearch, setCommandSearch] = React.useState('')
   const [expandedItems, setExpandedItems] = React.useState<Record<string, boolean>>(() =>
@@ -930,15 +964,39 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
       </Sidebar>
 
       {/* Command Palette Dialog */}
-      <CommandDialog open={commandOpen} onOpenChange={setCommandOpen}>
+      <CommandDialog open={commandOpen} onOpenChange={setCommandOpen} commandProps={searchItems ? { shouldFilter: false } : undefined}>
         <CommandInput
           placeholder="Type a command or search..."
           value={commandSearch}
-          onValueChange={setCommandSearch}
+          onValueChange={(v) => { setCommandSearch(v); onSearchChange?.(v) }}
           clearable={false}
         />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
+
+          {searchLoading && (
+            <div className="py-[var(--space-m)] text-center text-body-sm text-[var(--color-text-tertiary)]">
+              Searching…
+            </div>
+          )}
+
+          {searchItems && searchItems.length > 0 && (() => {
+            const grouped = groupBy(searchItems, (i) => i.group ?? 'Results')
+            return Object.entries(grouped).map(([heading, items]) => (
+              <CommandGroup key={heading} heading={heading}>
+                {items.map((item) => (
+                  <CommandItem
+                    key={item.id}
+                    value={item.id}
+                    onSelect={() => { item.onSelect?.(); setCommandOpen(false) }}
+                  >
+                    {item.icon && <Icon name={item.icon} size="s" className="mr-2" />}
+                    <span>{item.label}</span>
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            ))
+          })()}
 
           <CommandGroup heading="Quick actions">
             <CommandItem onSelect={() => console.log('Reload')}>
@@ -1391,6 +1449,9 @@ export function AppFrame({
   headerActions,
   children,
   onNavigate,
+  onSearchChange,
+  searchItems,
+  searchLoading,
 }: AppFrameProps) {
   const [navigationMode, setNavigationMode] = React.useState<'sidebar' | 'horizontal'>('sidebar')
   const [activeTeam, setActiveTeam] = React.useState(teams[0])
@@ -1423,6 +1484,9 @@ export function AppFrame({
           onNavigate={onNavigate}
           navigationMode={navigationMode}
           onNavigationModeChange={setNavigationMode}
+          onSearchChange={onSearchChange}
+          searchItems={searchItems}
+          searchLoading={searchLoading}
         />
         <SidebarInset>
           {(headerContent || headerActions || headerTabs) && (

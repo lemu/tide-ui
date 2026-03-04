@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import * as React from 'react'
 import { AppFrame } from '../components/product/app-frame'
-import type { AppFrameNavigationData } from '../components/product/app-frame'
+import type { AppFrameNavigationData, AppFrameSearchItem } from '../components/product/app-frame'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -299,6 +299,73 @@ const wideTableColumns: ColumnDef<WideTableData>[] = [
   { accessorKey: 'column14', header: 'Column 14', size: 180 },
   { accessorKey: 'column15', header: 'Column 15', size: 180 },
 ]
+
+// Story: AppFrame with async dynamic search results
+const MOCK_SEARCH_DATA = [
+  { id: 'vessel-1', label: 'MV Atlantic Star', group: 'Vessels', url: '/assets/vessels/1' },
+  { id: 'vessel-2', label: 'MV Pacific Dawn', group: 'Vessels', url: '/assets/vessels/2' },
+  { id: 'voyage-1', label: 'Voyage #VOY-2024-001', group: 'Voyages', url: '/operations/voyages/1' },
+  { id: 'voyage-2', label: 'Voyage #VOY-2024-002', group: 'Voyages', url: '/operations/voyages/2' },
+  { id: 'contract-1', label: 'Charter Party - Shell', group: 'Agreements', url: '/agreements/1' },
+]
+
+function AsyncSearchStory() {
+  const [searchItems, setSearchItems] = React.useState<AppFrameSearchItem[]>([])
+  const [searchLoading, setSearchLoading] = React.useState(false)
+  const timerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const handleSearchChange = React.useCallback((query: string) => {
+    if (timerRef.current) clearTimeout(timerRef.current)
+    if (!query) {
+      setSearchItems([])
+      setSearchLoading(false)
+      return
+    }
+    setSearchLoading(true)
+    timerRef.current = setTimeout(() => {
+      const q = query.toLowerCase()
+      const results = MOCK_SEARCH_DATA
+        .filter((r) => r.label.toLowerCase().includes(q))
+        .map((r) => ({
+          id: r.id,
+          label: r.label,
+          group: r.group,
+          onSelect: () => alert(`Navigate to: ${r.url}`),
+        }))
+      setSearchItems(results)
+      setSearchLoading(false)
+    }, 500)
+  }, [])
+
+  return (
+    <AppFrame
+      onSearchChange={handleSearchChange}
+      searchItems={searchItems}
+      searchLoading={searchLoading}
+      headerContent={
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbPage>Async Search Demo</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      }
+    >
+      <div className="p-6">
+        <h1 className="text-heading-lg text-[var(--color-text-primary)]">Async Search</h1>
+        <p className="text-body-md text-[var(--color-text-secondary)] mt-2">
+          Open the command palette (Cmd/Ctrl+K) and type to trigger a simulated 500ms async search.
+          Try typing "vessel", "voyage", or "charter".
+        </p>
+      </div>
+    </AppFrame>
+  )
+}
+
+export const AsyncSearch: Story = {
+  render: () => <AsyncSearchStory />,
+}
 
 // Story: AppFrame with wide DataTable to test horizontal scrolling
 export const WithWideDataTable: Story = {

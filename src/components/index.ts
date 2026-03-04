@@ -404,6 +404,7 @@ export type {
   AppFrameUser,
   AppFrameTeam,
   AppFrameNavigationData,
+  AppFrameSearchItem,
 } from './product/app-frame'
 
 // Drawer components  
