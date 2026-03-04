@@ -25,9 +25,11 @@ const Command = React.forwardRef<
 ));
 Command.displayName = CommandPrimitive.displayName;
 
-interface CommandDialogProps extends DialogProps {}
+interface CommandDialogProps extends DialogProps {
+  commandProps?: React.ComponentPropsWithoutRef<typeof Command>;
+}
 
-const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
+const CommandDialog = ({ children, commandProps, ...props }: CommandDialogProps) => {
   return (
     <DialogPrimitive.Root {...props}>
       <DialogPrimitive.Portal>
@@ -42,7 +44,10 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
           )}
           aria-describedby={undefined}
         >
-          <Command className="[&_[cmdk-group-heading]]:px-[var(--space-m)] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-[var(--color-text-tertiary)] [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-4 [&_[cmdk-input-wrapper]_svg]:w-4 [&_[cmdk-item]]:px-[var(--space-m)] [&_[cmdk-item]]:min-h-[var(--size-m)] [&_[cmdk-item]]:py-[var(--space-s)] [&_[cmdk-item]_svg]:h-4 [&_[cmdk-item]_svg]:w-4">
+          <Command
+            className="[&_[cmdk-group-heading]]:px-[var(--space-m)] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-[var(--color-text-tertiary)] [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-4 [&_[cmdk-input-wrapper]_svg]:w-4 [&_[cmdk-item]]:px-[var(--space-m)] [&_[cmdk-item]]:min-h-[var(--size-m)] [&_[cmdk-item]]:py-[var(--space-s)] [&_[cmdk-item]_svg]:h-4 [&_[cmdk-item]_svg]:w-4"
+            {...commandProps}
+          >
             {children}
           </Command>
         </DialogPrimitive.Content>

@@ -1047,6 +1047,15 @@ function OldHorizontalNav({
     ...navigationData.intelligence,
   ]
 
+  const initialSelected =
+    allItems.find((i) => i.isActive || i.items?.some((s) => s.isActive))?.title ?? null
+
+  const [selectedParentTitle, setSelectedParentTitle] =
+    React.useState<string | null>(initialSelected)
+
+  const subItems =
+    allItems.find((i) => i.title === selectedParentTitle)?.items ?? []
+
   const initials = getUserInitials(user.name)
 
   return (
@@ -1258,6 +1267,7 @@ function OldHorizontalNav({
               key={item.title}
               onClick={(e) => {
                 e.preventDefault()
+                setSelectedParentTitle(item.title)
                 onNavigate?.(item.url)
               }}
               style={{
@@ -1284,6 +1294,51 @@ function OldHorizontalNav({
           )
         })}
       </div>
+
+      {subItems.length > 0 && (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            height: 36,
+            backgroundColor: '#f0f5f8',
+            padding: '0 16px',
+            gap: 2,
+            borderBottom: '1px solid #d1dde6',
+            overflowX: 'auto',
+          }}
+        >
+          {subItems.map((sub) => (
+            <button
+              key={sub.title}
+              onClick={(e) => {
+                e.preventDefault()
+                onNavigate?.(sub.url)
+              }}
+              style={{
+                padding: '4px 12px',
+                borderRadius: 4,
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: 13,
+                fontWeight: sub.isActive ? 600 : 400,
+                color: sub.isActive ? '#005F85' : '#374151',
+                backgroundColor: sub.isActive ? '#dbeeff' : 'transparent',
+                whiteSpace: 'nowrap',
+                transition: 'background-color 0.15s',
+              }}
+              onMouseEnter={(e) => {
+                if (!sub.isActive) e.currentTarget.style.backgroundColor = '#e5eef4'
+              }}
+              onMouseLeave={(e) => {
+                if (!sub.isActive) e.currentTarget.style.backgroundColor = 'transparent'
+              }}
+            >
+              {sub.title}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
