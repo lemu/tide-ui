@@ -21,7 +21,7 @@ import {
 } from '../fundamental/sidebar'
 import { Button } from '../fundamental/button'
 import { Icon } from '../fundamental/icon'
-import { Search, ChevronDown, Check, RotateCcw, ChevronRight, User, Settings, LogOut, House, LayoutDashboard, Newspaper, Ship, TrendingUp, ScrollText, ShieldCheck, Globe, Container, Anchor, Bell, CircleHelp } from 'lucide-react'
+import { Search, ChevronDown, Check, ChevronRight, User, Settings, LogOut, House, LayoutDashboard, Newspaper, Ship, TrendingUp, ScrollText, ShieldCheck, Globe, Container, Anchor, Bell, CircleHelp } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '../fundamental/avatar'
 import { Separator } from '../fundamental/separator'
 import { Kbd } from '../fundamental/kbd'
@@ -1006,38 +1006,21 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
 
           {!searchItems?.length && (
             <>
-              <CommandGroup heading="Quick actions">
-                <CommandItem onSelect={() => console.log('Reload')}>
-                  <Icon name={RotateCcw} size="s" className="mr-2" />
-                  <span>Reload Page</span>
-                  <span className="text-caption-sm ml-auto text-[var(--color-text-tertiary)]">
-                    {isMacOS() ? '⌘' : 'Ctrl'}R
-                  </span>
-                </CommandItem>
-                <CommandItem onSelect={() => setCommandOpen(false)}>
-                  <Icon name={Search} size="s" className="mr-2" />
-                  <span>Search</span>
-                  <span className="text-caption-sm ml-auto text-[var(--color-text-tertiary)]">
-                    {isMacOS() ? '⌘' : 'Ctrl'}K
-                  </span>
-                </CommandItem>
-              </CommandGroup>
-
               <CommandGroup heading="Navigation">
                 {navigationData.main.map((item) => (
-                  <CommandItem key={item.title} onSelect={() => setCommandOpen(false)}>
+                  <CommandItem key={item.title} onSelect={() => { onNavigate?.(item.url); setCommandOpen(false) }}>
                     <Icon name={item.icon} size="s" className="mr-2" />
                     <span>{item.title}</span>
                   </CommandItem>
                 ))}
                 {navigationData.operations.map((item) => (
-                  <CommandItem key={item.title} onSelect={() => setCommandOpen(false)}>
+                  <CommandItem key={item.title} onSelect={() => { onNavigate?.(item.url); setCommandOpen(false) }}>
                     <Icon name={item.icon} size="s" className="mr-2" />
                     <span>{item.title}</span>
                   </CommandItem>
                 ))}
                 {navigationData.intelligence.map((item) => (
-                  <CommandItem key={item.title} onSelect={() => setCommandOpen(false)}>
+                  <CommandItem key={item.title} onSelect={() => { onNavigate?.(item.url); setCommandOpen(false) }}>
                     <Icon name={item.icon} size="s" className="mr-2" />
                     <span>{item.title}</span>
                   </CommandItem>
@@ -1046,7 +1029,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
 
               <CommandGroup heading="Settings">
                 {navigationData.support.map((item) => (
-                  <CommandItem key={item.title} onSelect={() => setCommandOpen(false)}>
+                  <CommandItem key={item.title} onSelect={() => { onNavigate?.(item.url); setCommandOpen(false) }}>
                     <Icon name={item.icon} size="s" className="mr-2" />
                     <span>{item.title}</span>
                   </CommandItem>
