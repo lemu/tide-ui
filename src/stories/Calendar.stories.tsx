@@ -41,7 +41,7 @@ export const Default: Story = {
           mode="single"
           selected={selected}
           onSelect={setSelected}
-          className="rounded-m border border-[var(--color-border-primary-subtle)]"
+          className="rounded-[var(--border-radius-m)] border border-[var(--color-border-primary-subtle)]"
         />
       </div>
     )
@@ -71,7 +71,7 @@ export const DateRange: Story = {
           selected={dateRange}
           onSelect={setDateRange}
           numberOfMonths={2}
-          className="rounded-m border border-[var(--color-border-primary-subtle)]"
+          className="rounded-[var(--border-radius-m)] border border-[var(--color-border-primary-subtle)]"
         />
       </div>
     )
@@ -103,7 +103,7 @@ export const MultipleSelection: Story = {
           mode="multiple"
           selected={selectedDates}
           onSelect={setSelectedDates}
-          className="rounded-m border border-[var(--color-border-primary-subtle)]"
+          className="rounded-[var(--border-radius-m)] border border-[var(--color-border-primary-subtle)]"
         />
       </div>
     )
@@ -163,7 +163,7 @@ export const EventScheduling: Story = {
                       fontWeight: 'bold'
                     }
                   }}
-                  className="rounded-m border border-[var(--color-border-primary-subtle)]"
+                  className="rounded-[var(--border-radius-m)] border border-[var(--color-border-primary-subtle)]"
                 />
                 <div className="mt-3 text-caption-sm text-[var(--color-text-secondary)]">
                   <div className="flex items-center gap-2">
@@ -182,7 +182,7 @@ export const EventScheduling: Story = {
                 {selectedDate ? (
                   <div className="space-y-4">
                     {getEventsForDate(selectedDate).length > 0 && (
-                      <div className="p-3 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m">
+                      <div className="p-3 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-[var(--border-radius-m)]">
                         <h4 className="text-body-sm font-medium mb-2">Existing Events:</h4>
                         {getEventsForDate(selectedDate).map((event, index) => (
                           <div key={index} className="flex items-center gap-2 text-body-sm">
@@ -213,7 +213,7 @@ export const EventScheduling: Story = {
                     </div>
 
                     {selectedTime && (
-                      <div className="p-4 bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] rounded-m">
+                      <div className="p-4 bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] rounded-[var(--border-radius-m)]">
                         <h4 className="text-body-sm font-medium mb-2">Selected Time Slot:</h4>
                         <p className="text-body-sm">
                           {selectedDate.toLocaleDateString()} at {selectedTime}
@@ -316,7 +316,7 @@ export const VacationBooking: Story = {
                     }
                   }}
                   numberOfMonths={2}
-                  className="rounded-m border border-[var(--color-border-primary-subtle)]"
+                  className="rounded-[var(--border-radius-m)] border border-[var(--color-border-primary-subtle)]"
                 />
                 
                 <div className="mt-4 space-y-2 text-caption-sm">
@@ -336,7 +336,7 @@ export const VacationBooking: Story = {
                 
                 {vacationDates?.from && vacationDates?.to ? (
                   <div className="space-y-4">
-                    <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m">
+                    <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-[var(--border-radius-m)]">
                       <h4 className="text-body-sm font-medium mb-3">Request Details:</h4>
                       <div className="space-y-2 text-body-sm">
                         <div className="flex justify-between">
@@ -365,7 +365,7 @@ export const VacationBooking: Story = {
                     <div className="space-y-2">
                       <Label>Reason for Leave:</Label>
                       <textarea 
-                        className="w-full p-3 border border-[var(--color-interaction-border-input)] rounded-m resize-none"
+                        className="w-full p-3 border border-[var(--color-interaction-border-input)] rounded-[var(--border-radius-m)] resize-none"
                         rows={3}
                         placeholder="Optional: Describe the reason for your vacation request"
                       />
@@ -375,7 +375,7 @@ export const VacationBooking: Story = {
                       <Label>Emergency Contact:</Label>
                       <input 
                         type="text"
-                        className="w-full p-2 border border-[var(--color-interaction-border-input)] rounded-m"
+                        className="w-full p-2 border border-[var(--color-interaction-border-input)] rounded-[var(--border-radius-m)]"
                         placeholder="Name and phone number"
                       />
                     </div>
@@ -482,7 +482,7 @@ export const ProjectDeadlines: Story = {
                       fontWeight: 'bold'
                     }
                   }}
-                  className="rounded-m border border-[var(--color-border-primary-subtle)]"
+                  className="rounded-[var(--border-radius-m)] border border-[var(--color-border-primary-subtle)]"
                 />
                 
                 <div className="mt-4 text-caption-sm text-[var(--color-text-secondary)]">
@@ -506,7 +506,7 @@ export const ProjectDeadlines: Story = {
                     ? getProjectsForDate(selectedDate) 
                     : projects
                   ).map((project, index) => (
-                    <div key={index} className="p-4 border border-[var(--color-border-primary-subtle)] rounded-m">
+                    <div key={index} className="p-4 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
                       <div className="flex items-start justify-between mb-2">
                         <h4 className="text-body-md font-medium">{project.name}</h4>
                         <Badge appearance={getStatusAppearance(project.status)} className="text-xs capitalize">
@@ -617,7 +617,7 @@ export const AvailabilityBooking: Story = {
                       fontWeight: 'bold'
                     }
                   }}
-                  className="rounded-m border border-[var(--color-border-primary-subtle)]"
+                  className="rounded-[var(--border-radius-m)] border border-[var(--color-border-primary-subtle)]"
                 />
                 
                 <div className="mt-4 space-y-2 text-caption-sm">
@@ -653,7 +653,7 @@ export const AvailabilityBooking: Story = {
                           ))}
                         </div>
                         
-                        <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m">
+                        <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-[var(--border-radius-m)]">
                           <h4 className="text-body-sm font-medium mb-2">Session Details:</h4>
                           <ul className="text-body-sm space-y-1">
                             <li>• Duration: 60 minutes</li>
@@ -751,7 +751,7 @@ export const CustomCalendar: Story = {
               fontWeight: 'bold'
             }
           }}
-          className="rounded-m border border-[var(--color-border-primary-subtle)]"
+          className="rounded-[var(--border-radius-m)] border border-[var(--color-border-primary-subtle)]"
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-caption-sm">

@@ -293,7 +293,7 @@ export const LinkPreview: Story = {
           <HoverCardContent className="w-96">
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="w-12 h-12 bg-[var(--color-background-info-subtle)] rounded-l flex items-center justify-center">
+                <div className="w-12 h-12 bg-[var(--color-background-info-subtle)] rounded-[var(--border-radius-l)] flex items-center justify-center">
                   <Icon name={BookOpen} size="m" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">
@@ -342,7 +342,7 @@ export const LinkPreview: Story = {
           <HoverCardContent className="w-96">
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="w-12 h-12 bg-[var(--color-background-success-subtle)] rounded-l flex items-center justify-center">
+                <div className="w-12 h-12 bg-[var(--color-background-success-subtle)] rounded-[var(--border-radius-l)] flex items-center justify-center">
                   <Icon name={Zap} size="m" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">
@@ -391,7 +391,7 @@ export const LinkPreview: Story = {
           <HoverCardContent className="w-96">
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="w-12 h-12 bg-[var(--color-background-blue-bold)] rounded-l flex items-center justify-center">
+                <div className="w-12 h-12 bg-[var(--color-background-blue-bold)] rounded-[var(--border-radius-l)] flex items-center justify-center">
                   <Icon name={Palette} size="m" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">
@@ -597,7 +597,7 @@ export const FileInfo: Story = {
           <HoverCardContent className="w-72">
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-[var(--color-background-info-subtle)] rounded-l flex items-center justify-center">
+                <div className="w-10 h-10 bg-[var(--color-background-info-subtle)] rounded-[var(--border-radius-l)] flex items-center justify-center">
                   <Icon name={FileText} size="s" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">
@@ -650,7 +650,7 @@ export const FileInfo: Story = {
           <HoverCardContent className="w-72">
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-[var(--color-background-success-subtle)] rounded-l flex items-center justify-center">
+                <div className="w-10 h-10 bg-[var(--color-background-success-subtle)] rounded-[var(--border-radius-l)] flex items-center justify-center">
                   <Icon name={Package} size="s" className="text-[var(--color-text-on-action)]" />
                 </div>
                 <div className="flex-1">

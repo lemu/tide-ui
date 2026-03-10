@@ -40,16 +40,16 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
 const sheetVariants = cva(
-  "fixed z-50 gap-[var(--space-l)] bg-[var(--color-surface-primary)] p-[var(--space-3xl)] shadow-xl transition ease-in-out overflow-hidden data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
+  "fixed z-50 gap-[var(--space-l)] bg-[var(--color-surface-primary)] p-[var(--space-3xl)] shadow-[var(--shadow-500)] transition ease-in-out overflow-hidden data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
   {
     variants: {
       side: {
-        top: "inset-x-[var(--space-s)] top-[var(--space-s)] rounded-m border-b border-[var(--color-border-primary-subtle)] data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
+        top: "inset-x-[var(--space-s)] top-[var(--space-s)] rounded-[var(--border-radius-m)] data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
         bottom:
-          "inset-x-[var(--space-s)] bottom-[var(--space-s)] rounded-m border-t border-[var(--color-border-primary-subtle)] data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
-        left: "inset-y-[var(--space-s)] left-[var(--space-s)] rounded-m w-3/4 border-r border-[var(--color-border-primary-subtle)] data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
+          "inset-x-[var(--space-s)] bottom-[var(--space-s)] rounded-[var(--border-radius-m)] data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
+        left: "inset-y-[var(--space-s)] left-[var(--space-s)] rounded-[var(--border-radius-m)] w-3/4 data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
         right:
-          "inset-y-[var(--space-s)] right-[var(--space-s)] rounded-m w-3/4 border-l border-[var(--color-border-primary-subtle)] data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
+          "inset-y-[var(--space-s)] right-[var(--space-s)] rounded-[var(--border-radius-m)] w-3/4 data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
       },
     },
     defaultVariants: {

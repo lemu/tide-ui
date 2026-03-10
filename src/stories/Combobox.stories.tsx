@@ -150,7 +150,7 @@ export const TeamMemberSelection: Story = {
 
             {selectedMember && (
               <div className="space-y-4">
-                <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m">
+                <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-[var(--border-radius-m)]">
                   <h4 className="text-body-sm font-medium mb-2">Selected Assignee:</h4>
                   <div className="flex items-center gap-2">
                     <Icon name={User} size="s" />
@@ -164,7 +164,7 @@ export const TeamMemberSelection: Story = {
                   </Label>
                   <div className="space-y-2">
                     {tasks.map((task, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 border border-[var(--color-border-primary-subtle)] rounded-m">
+                      <div key={index} className="flex items-center justify-between p-3 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
                         <span className="text-body-sm">{task}</span>
                         <Button
                           size="s"
@@ -185,7 +185,7 @@ export const TeamMemberSelection: Story = {
                 </div>
 
                 {assignedTasks.length > 0 && (
-                  <div className="p-4 bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] rounded-m">
+                  <div className="p-4 bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] rounded-[var(--border-radius-m)]">
                     <h4 className="text-body-sm font-medium mb-2">Tasks Assigned to {getMemberInfo(selectedMember)}:</h4>
                     <div className="flex flex-wrap gap-1">
                       {assignedTasks.map((task, index) => (
@@ -267,7 +267,7 @@ export const TagManagement: Story = {
                 type="text"
                 value={articleTitle}
                 onChange={(e) => setArticleTitle(e.target.value)}
-                className="w-full p-3 border border-[var(--color-interaction-border-input)] rounded-m text-body-md"
+                className="w-full p-3 border border-[var(--color-interaction-border-input)] rounded-[var(--border-radius-m)] text-body-md"
                 placeholder="Enter article title..."
               />
             </div>
@@ -294,7 +294,7 @@ export const TagManagement: Story = {
 
             {selectedTags.length > 0 && (
               <div className="space-y-4">
-                <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m">
+                <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-[var(--border-radius-m)]">
                   <h4 className="text-body-sm font-medium mb-3">Selected Tags & Stats:</h4>
                   <div className="space-y-2">
                     {selectedTags.map((tagValue) => {
@@ -316,7 +316,7 @@ export const TagManagement: Story = {
                   </div>
                 </div>
 
-                <div className="p-4 bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] rounded-m">
+                <div className="p-4 bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] rounded-[var(--border-radius-m)]">
                   <h4 className="text-body-sm font-medium mb-2">Article Preview:</h4>
                   <div className="space-y-2">
                     <h3 className="text-body-md font-medium">{articleTitle}</h3>
@@ -459,7 +459,7 @@ export const LocationSelection: Story = {
 
             {selectedCountry && (
               <div className="space-y-4">
-                <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m">
+                <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-[var(--border-radius-m)]">
                   <h4 className="text-body-sm font-medium mb-2">Selected Location:</h4>
                   <div className="flex items-center gap-2">
                     <Icon name={MapPin} size="s" />
@@ -622,7 +622,7 @@ export const SkillFiltering: Story = {
 
             {selectedSkills.length > 0 && (
               <div className="space-y-4">
-                <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m">
+                <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-[var(--border-radius-m)]">
                   <h4 className="text-body-sm font-medium mb-3">Skill Demand Analysis:</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {selectedSkills.slice(0, 6).map((skillValue) => {
@@ -862,14 +862,14 @@ export const FormIntegration: Story = {
                 Description
               </Label>
               <textarea
-                className="w-full p-3 border border-[var(--color-interaction-border-input)] rounded-m resize-none"
+                className="w-full p-3 border border-[var(--color-interaction-border-input)] rounded-[var(--border-radius-m)] resize-none"
                 rows={4}
                 placeholder="Describe the issue or request in detail..."
               />
             </div>
 
             {Object.values(formData).some(v => Array.isArray(v) ? v.length > 0 : v) && (
-              <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m">
+              <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-[var(--border-radius-m)]">
                 <h4 className="text-body-sm font-medium mb-3">Ticket Preview:</h4>
                 <div className="space-y-2 text-body-sm">
                   {formData.category && (

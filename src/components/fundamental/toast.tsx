@@ -42,9 +42,9 @@ const Toaster = ({ className, ...props }: ToasterProps) => {
             // Background & borders
             "bg-[var(--color-surface-primary)]",
             "!border !border-[var(--color-border-primary-medium)] !border-solid",
-            "rounded-m",
+            "rounded-[var(--border-radius-m)]",
             // Shadow
-            "shadow-lg",
+            "shadow-[var(--shadow-400)]",
             // Contain blur effect
             "overflow-hidden",
             // Flex layout
@@ -58,7 +58,7 @@ const Toaster = ({ className, ...props }: ToasterProps) => {
           actionButton: cn(
             // Base button styling
             "h-[var(--size-m)] px-[var(--space-m)]",
-            "rounded-s",
+            "rounded-[var(--border-radius-s)]",
             "text-label-md",
             // Primary action colors
             "bg-[var(--color-background-blue-bold)]",
@@ -71,7 +71,7 @@ const Toaster = ({ className, ...props }: ToasterProps) => {
           cancelButton: cn(
             // Base button styling
             "h-[var(--size-m)] px-[var(--space-m)]",
-            "rounded-s",
+            "rounded-[var(--border-radius-s)]",
             "text-label-md",
             // Secondary action colors
             "bg-[var(--color-background-neutral-subtlest)]",

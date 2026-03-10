@@ -370,7 +370,7 @@ export const RichContent: Story = {
     const showUpdateToast = () => {
       toast(
         <div className="flex items-start gap-[var(--space-m)]">
-          <div className="w-[40px] h-[40px] rounded-l bg-[var(--color-background-success-subtle)] flex items-center justify-center shrink-0">
+          <div className="w-[40px] h-[40px] rounded-[var(--border-radius-l)] bg-[var(--color-background-success-subtle)] flex items-center justify-center shrink-0">
             <Icon name={Download} size="s" className="text-[var(--color-icon-success-bold)]" />
           </div>
           <div className="flex-1 flex flex-col gap-[var(--space-m)]">

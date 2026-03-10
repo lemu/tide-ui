@@ -382,7 +382,7 @@ export const AreaCharts: Story = {
         {/* Single Area Chart */}
         <div>
           <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Single Area Series</h2>
-          <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
+          <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-[var(--border-radius-m)] mb-[var(--space-s)]">
             <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`<Chart
   type="composed"
@@ -396,7 +396,7 @@ export const AreaCharts: Story = {
 />`}
             </pre>
           </div>
-          <div className="h-80 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
+          <div className="h-80 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] overflow-hidden">
             <Chart
               type="composed"
               data={[
@@ -420,7 +420,7 @@ export const AreaCharts: Story = {
         {/* Multiple Area Charts */}
         <div>
           <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Multiple Overlapping Areas</h2>
-          <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
+          <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-[var(--border-radius-m)] mb-[var(--space-s)]">
             <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`config={{
   mobile: { label: 'Mobile', type: 'area' },
@@ -429,7 +429,7 @@ export const AreaCharts: Story = {
 }}`}
             </pre>
           </div>
-          <div className="h-80 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
+          <div className="h-80 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] overflow-hidden">
             <Chart
               type="composed"
               data={[
@@ -455,7 +455,7 @@ export const AreaCharts: Story = {
       {/* Mixed Chart Type */}
       <div>
         <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Mixed Chart: Area + Line + Bar</h2>
-        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
+        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-[var(--border-radius-m)] mb-[var(--space-s)]">
           <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`config={{
   background: { label: 'Market Size', type: 'area' },
@@ -464,7 +464,7 @@ export const AreaCharts: Story = {
 }}`}
           </pre>
         </div>
-        <div className="h-96 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
+        <div className="h-96 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] overflow-hidden">
           <Chart
             type="composed"
             data={[
@@ -488,7 +488,7 @@ export const AreaCharts: Story = {
       {/* Native AreaChart Example */}
       <div>
         <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Temperature Range Area Chart</h2>
-        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
+        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-[var(--border-radius-m)] mb-[var(--space-s)]">
           <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`// Temperature range area chart with array data
 const rangeData = [
@@ -513,7 +513,7 @@ const rangeData = [
 />`}
           </pre>
         </div>
-        <div className="h-80 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden p-4 bg-white">
+        <div className="h-80 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] overflow-hidden p-4 bg-white">
           <Chart
             type="composed"
             data={[
@@ -543,7 +543,7 @@ const rangeData = [
 
 
       {/* Benefits Info */}
-      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-l)] rounded-l">
+      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-l)] rounded-[var(--border-radius-l)]">
         <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">🎨 Area Chart Benefits</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -729,7 +729,7 @@ export const DataConfigurationGuide: Story = {
       <div className="prose max-w-none">
         <h1 className="text-heading-lg text-[var(--color-text-primary)] mb-[var(--space-l)]">Chart Data Configuration Guide</h1>
 
-        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-l)] rounded-l mb-[var(--space-l)]">
+        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-l)] rounded-[var(--border-radius-l)] mb-[var(--space-l)]">
           <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Quick Reference</h2>
           <div className="text-body-sm text-[var(--color-text-secondary)] space-y-2">
             <p><strong>Required Props:</strong> <code>type</code>, <code>data</code>, <code>config</code></p>
@@ -747,7 +747,7 @@ export const DataConfigurationGuide: Story = {
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-[var(--space-l)]">
           <div>
             <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Bar/Line Chart Data</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m">
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-[var(--border-radius-m)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`const data = [
   { name: 'Jan', revenue: 4000, sales: 240 },
@@ -775,7 +775,7 @@ export const DataConfigurationGuide: Story = {
 
           <div>
             <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Scatter Chart Data</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m">
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-[var(--border-radius-m)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`const data = [
   { x: 10, y: 30, performance: 85 },
@@ -809,7 +809,7 @@ export const DataConfigurationGuide: Story = {
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-[var(--space-l)]">
           <div>
             <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Manual Configuration</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-[var(--border-radius-m)] mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`const config = {
   revenue: {
@@ -827,7 +827,7 @@ export const DataConfigurationGuide: Story = {
 
           <div>
             <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Using createChartConfig Helper</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-[var(--border-radius-m)] mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`const config = createChartConfig({
   revenue: { label: 'Revenue ($)' },
@@ -847,7 +847,7 @@ export const DataConfigurationGuide: Story = {
           {/* Composed Chart Example */}
           <div>
             <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Composed Chart (Mixed Types)</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-[var(--border-radius-m)] mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`<Chart
   type="composed"
@@ -885,7 +885,7 @@ export const DataConfigurationGuide: Story = {
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
               <div>
                 <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-s)]">Custom Colors</h4>
-                <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
+                <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-[var(--border-radius-m)] mb-[var(--space-s)]">
                   <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`config={{
   series1: {
@@ -918,7 +918,7 @@ export const DataConfigurationGuide: Story = {
 
               <div>
                 <h4 className="text-body-md font-medium text-[var(--color-text-primary)] mb-[var(--space-s)]">Color Schemes</h4>
-                <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
+                <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-[var(--border-radius-m)] mb-[var(--space-s)]">
                   <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`<Chart
   colorScheme="accessible"
@@ -950,7 +950,7 @@ export const DataConfigurationGuide: Story = {
           {/* Complete Example */}
           <div>
             <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Complete Implementation Example</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-[var(--border-radius-m)] mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`import { Chart, createChartConfig } from '@rafal.lemieszewski/tide-ui'
 
@@ -975,14 +975,14 @@ const MyChart = () => {
       height={400}
       showGrid={true}
       showLegend={true}
-      className="border rounded-l p-4"
+      className="border rounded-[var(--border-radius-l)] p-4"
       onDataPointClick={(data, index) => console.log('Clicked:', data)}
     />
   )
 }`}
               </pre>
             </div>
-            <div className="h-96 border rounded-l p-4">
+            <div className="h-96 border rounded-[var(--border-radius-l)] p-4">
               <Chart
                 type="bar"
                 data={[
@@ -1007,7 +1007,7 @@ const MyChart = () => {
       </div>
 
       {/* 4. Tips and Best Practices */}
-      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-l)] rounded-l">
+      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-l)] rounded-[var(--border-radius-l)]">
         <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">💡 Tips & Best Practices</h3>
         <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
           <li><strong>Data Consistency:</strong> Ensure all data points have the same structure</li>
@@ -1028,7 +1028,7 @@ export const TickFormatting: Story = {
       <div className="prose max-w-none">
         <h1 className="text-heading-lg text-[var(--color-text-primary)] mb-[var(--space-l)]">Axis Formatting & Tooltip Behavior</h1>
 
-        <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-l)] rounded-l mb-[var(--space-l)]">
+        <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-l)] rounded-[var(--border-radius-l)] mb-[var(--space-l)]">
           <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Key Concept: Axis vs Tooltip</h2>
           <div className="text-body-sm text-[var(--color-text-secondary)] space-y-3">
             <p><strong>Axis tick formatters</strong> control how values appear on the chart axes (compact display).</p>
@@ -1045,7 +1045,7 @@ export const TickFormatting: Story = {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-[var(--space-l)]">
           <div>
             <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Thousands (1K-10K)</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-[var(--border-radius-m)] mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`yAxisTickFormatter={(v) =>
   v >= 1000 ? \`\${v/1000}K\` : v
@@ -1054,7 +1054,7 @@ export const TickFormatting: Story = {
 // Tooltip: "5 000"`}
               </pre>
             </div>
-            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
+            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] overflow-hidden">
               <Chart
                 type="bar"
                 data={[
@@ -1077,7 +1077,7 @@ export const TickFormatting: Story = {
 
           <div>
             <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Hundred Thousands (100K-1M)</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-[var(--border-radius-m)] mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`yAxisTickFormatter={(v) =>
   v >= 1000 ? \`\${v/1000}K\` : v
@@ -1086,7 +1086,7 @@ export const TickFormatting: Story = {
 // Tooltip: "450 000"`}
               </pre>
             </div>
-            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
+            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] overflow-hidden">
               <Chart
                 type="bar"
                 data={[
@@ -1109,7 +1109,7 @@ export const TickFormatting: Story = {
 
           <div>
             <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Millions (1M-10M)</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-[var(--border-radius-m)] mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`yAxisTickFormatter={(v) =>
   v >= 1e6 ? \`\${v/1e6}M\` :
@@ -1119,7 +1119,7 @@ export const TickFormatting: Story = {
 // Tooltip: "2 500 000"`}
               </pre>
             </div>
-            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
+            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] overflow-hidden">
               <Chart
                 type="bar"
                 data={[
@@ -1152,7 +1152,7 @@ export const TickFormatting: Story = {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-[var(--space-l)]">
           <div>
             <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Short Axis, Full Tooltip</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-[var(--border-radius-m)] mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`// Store full dates in data
 data: [{ name: 'January 2025', value: 450 }]
@@ -1167,7 +1167,7 @@ xAxisTickFormatter={(value) => {
 // Tooltip shows: "January 2025"`}
               </pre>
             </div>
-            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
+            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] overflow-hidden">
               <Chart
                 type="line"
                 data={[
@@ -1193,7 +1193,7 @@ xAxisTickFormatter={(value) => {
 
           <div>
             <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Best Practice</h3>
-            <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] p-[var(--space-m)] rounded-m">
+            <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] p-[var(--space-m)] rounded-[var(--border-radius-m)]">
               <div className="text-body-sm text-[var(--color-text-primary)] space-y-3">
                 <p className="font-medium">✅ Always store full values in your data</p>
                 <p>• Numbers: Store 1000000, not "1M"</p>
@@ -1212,7 +1212,7 @@ xAxisTickFormatter={(value) => {
       </div>
 
       {/* Code Examples */}
-      <div className="bg-[var(--color-background-neutral-subtlest)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+      <div className="bg-[var(--color-background-neutral-subtlest)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-[var(--border-radius-l)]">
         <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">Complete Code Example</h3>
         <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`import { Chart, createChartConfig } from '@rafal.lemieszewski/tide-ui';
@@ -1251,7 +1251,7 @@ export const AccessibilityFeatures: Story = {
       <div className="prose max-w-none">
         <h1 className="text-heading-lg text-[var(--color-text-primary)] mb-[var(--space-l)]">Chart Accessibility Features</h1>
 
-        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-l)] rounded-l mb-[var(--space-l)]">
+        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-l)] rounded-[var(--border-radius-l)] mb-[var(--space-l)]">
           <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Accessibility Props</h2>
           <div className="text-body-sm text-[var(--color-text-secondary)] space-y-2">
             <p><strong>title:</strong> Chart title for screen readers</p>
@@ -1269,13 +1269,13 @@ export const AccessibilityFeatures: Story = {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-[var(--space-l)]">
           <div>
             <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Basic Chart</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-[var(--border-radius-m)] mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`// Basic accessibility
 <Chart type="bar" data={data} config={config} />`}
               </pre>
             </div>
-            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
+            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] overflow-hidden">
               <Chart
                 type="bar"
                 data={[
@@ -1297,7 +1297,7 @@ export const AccessibilityFeatures: Story = {
 
           <div>
             <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Enhanced Accessibility</h3>
-            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-m mb-[var(--space-s)]">
+            <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] rounded-[var(--border-radius-m)] mb-[var(--space-s)]">
               <pre className="text-body-xsm font-mono text-[var(--color-text-primary)] overflow-x-auto">
 {`// Full accessibility features
 <Chart
@@ -1307,7 +1307,7 @@ export const AccessibilityFeatures: Story = {
 />`}
               </pre>
             </div>
-            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
+            <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] overflow-hidden">
               <Chart
                 type="bar"
                 data={[
@@ -1337,7 +1337,7 @@ export const AccessibilityFeatures: Story = {
       <div>
         <h2 className="text-heading-md text-[var(--color-text-primary)] mb-[var(--space-m)]">Screen Reader Support</h2>
 
-        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-l)] rounded-l mb-[var(--space-l)]">
+        <div className="bg-[var(--color-background-neutral-subtlest)] p-[var(--space-l)] rounded-[var(--border-radius-l)] mb-[var(--space-l)]">
           <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">What Screen Readers Get:</h3>
           <div className="space-y-4">
             <div>
@@ -1355,7 +1355,7 @@ export const AccessibilityFeatures: Story = {
           </div>
         </div>
 
-        <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-m overflow-hidden">
+        <div className="h-64 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] overflow-hidden">
           <Chart
             type="line"
             data={[
@@ -1379,7 +1379,7 @@ export const AccessibilityFeatures: Story = {
       </div>
 
       {/* Best Practices */}
-      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-l)] rounded-l mt-[var(--space-2xl)]">
+      <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info)] p-[var(--space-l)] rounded-[var(--border-radius-l)] mt-[var(--space-2xl)]">
         <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">♿ Accessibility Best Practices</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1420,7 +1420,7 @@ export const MultiMetricLegend: Story = {
         <div className="space-y-6">
           <div>
             <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">8 Metrics Bar Chart</h3>
-            <div className="bg-white border border-[var(--color-border-primary-subtle)] rounded-l p-4">
+            <div className="bg-white border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-l)] p-4">
               <Chart
                 type="bar"
                 data={[
@@ -1492,7 +1492,7 @@ export const MultiMetricLegend: Story = {
             <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               Testing legend wrapping in constrained width containers
             </p>
-            <div className="w-[400px] bg-white border border-[var(--color-border-primary-subtle)] rounded-l p-4">
+            <div className="w-[400px] bg-white border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-l)] p-4">
               <Chart
                 type="line"
                 data={[
@@ -1541,7 +1541,7 @@ export const MultiMetricLegend: Story = {
           </div>
         </div>
 
-        <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] p-[var(--space-l)] rounded-l mt-[var(--space-2xl)]">
+        <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] p-[var(--space-l)] rounded-[var(--border-radius-l)] mt-[var(--space-2xl)]">
           <h4 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">✅ Legend Behavior</h4>
           <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
             <li><strong>Multi-row wrapping</strong> - Legend items flow to multiple rows when needed</li>
@@ -1578,7 +1578,7 @@ export const DualYAxisCharts: Story = {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-2xl)]">
         {/* Line Chart with Dual Y-Axis */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-[var(--border-radius-l)]">
           <h3 className="text-heading-md mb-[var(--space-m)]">Line Chart - Revenue vs Growth Rate</h3>
           <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Revenue (left axis, $) and Growth Rate (right axis, %) on different scales.
@@ -1611,7 +1611,7 @@ export const DualYAxisCharts: Story = {
         </div>
 
         {/* Composed Chart with Dual Y-Axis - Temperature Line */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-[var(--border-radius-l)]">
           <h3 className="text-heading-md mb-[var(--space-m)]">Line Chart - Temperature vs Humidity</h3>
           <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Temperature (left axis, °C) and Humidity (right axis, %) on different scales.
@@ -1644,7 +1644,7 @@ export const DualYAxisCharts: Story = {
         </div>
 
         {/* Composed Chart with Dual Y-Axis */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-[var(--border-radius-l)]">
           <h3 className="text-heading-md mb-[var(--space-m)]">Composed Chart - Mixed Elements</h3>
           <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Revenue bars (left) with growth rate line (right) and temperature area.
@@ -1684,7 +1684,7 @@ export const DualYAxisCharts: Story = {
         </div>
 
         {/* Advanced Configuration */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-[var(--border-radius-l)]">
           <h3 className="text-heading-md mb-[var(--space-m)]">Advanced Configuration</h3>
           <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Multiple lines with different axis assignments, tick counts, and formatters.
@@ -1726,7 +1726,7 @@ export const DualYAxisCharts: Story = {
         </div>
       </div>
 
-      <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] p-[var(--space-l)] rounded-l">
+      <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] p-[var(--space-l)] rounded-[var(--border-radius-l)]">
         <h4 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">✅ Dual Y-Axis Features</h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-m)]">
           <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
@@ -1743,7 +1743,7 @@ export const DualYAxisCharts: Story = {
           </ul>
         </div>
 
-        <div className="mt-[var(--space-m)] p-[var(--space-m)] bg-[var(--color-background-info-subtle)] rounded-m">
+        <div className="mt-[var(--space-m)] p-[var(--space-m)] bg-[var(--color-background-info-subtle)] rounded-[var(--border-radius-m)]">
           <h5 className="text-body-medium-sm text-[var(--color-text-primary)] mb-[var(--space-s)]">Configuration Example:</h5>
           <pre className="text-caption-sm text-[var(--color-text-secondary)] font-mono">
 {`<Chart
@@ -1790,7 +1790,7 @@ export const LegendPositioning: Story = {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-2xl)]">
         {/* Bottom Legend (Default) - Shows overflow prevention */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-[var(--border-radius-l)]">
           <h3 className="text-heading-md mb-[var(--space-m)]">Bottom Legend (Overflow Protected)</h3>
           <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Automatic bottom margin calculation prevents legend from overlapping X-axis labels.
@@ -1817,7 +1817,7 @@ export const LegendPositioning: Story = {
         </div>
 
         {/* Right Legend */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-[var(--border-radius-l)]">
           <h3 className="text-heading-md mb-[var(--space-m)]">Right Legend (Vertical Layout)</h3>
           <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Vertical layout saves vertical space and provides clean side alignment.
@@ -1844,7 +1844,7 @@ export const LegendPositioning: Story = {
         </div>
 
         {/* Top Legend */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-[var(--border-radius-l)]">
           <h3 className="text-heading-md mb-[var(--space-m)]">Top Legend (Header Style)</h3>
           <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Top positioning places legend above chart for header-style layout.
@@ -1871,7 +1871,7 @@ export const LegendPositioning: Story = {
         </div>
 
         {/* Composed Chart with Bottom Legend */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-[var(--border-radius-l)]">
           <h3 className="text-heading-md mb-[var(--space-m)]">Composed Chart (Protected Layout)</h3>
           <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Combined bar and line elements with overflow-protected legend positioning.
@@ -1898,7 +1898,7 @@ export const LegendPositioning: Story = {
         </div>
       </div>
 
-      <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] p-[var(--space-l)] rounded-l">
+      <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] p-[var(--space-l)] rounded-[var(--border-radius-l)]">
         <h4 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">✅ Legend Layout Features</h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-m)]">
           <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-2 list-disc list-inside">
@@ -1945,7 +1945,7 @@ export const ReferenceMarkers: Story = {
 
       <div className="space-y-[var(--space-2xl)]">
         {/* Freight Rates with Negotiation Markers */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-[var(--border-radius-l)]">
           <h3 className="text-heading-md mb-[var(--space-m)]">Freight Rates with Order Negotiations</h3>
           <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             This chart shows freight rates over time with a reference marker at Sep 25 showing negotiation offers for a specific order.
@@ -2012,7 +2012,7 @@ export const ReferenceMarkers: Story = {
         </div>
 
         {/* Multiple Reference Markers */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-[var(--border-radius-l)]">
           <h3 className="text-heading-md mb-[var(--space-m)]">Multiple Events on Timeline</h3>
           <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Multiple reference markers can mark different events at different times. Each marker can have its own custom styling and tooltip label.
@@ -2080,7 +2080,7 @@ export const LegendHeightControl: Story = {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-2xl)]">
         {/* Standard Height (Default Behavior) */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-[var(--border-radius-l)]">
           <h3 className="text-heading-md mb-[var(--space-m)]">Standard Mode (no legendHeight)</h3>
           <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Total height = 200px fixed. Chart body and legend share this space. Charts with more legend items have smaller plotting areas.
@@ -2103,7 +2103,7 @@ export const LegendHeightControl: Story = {
         </div>
 
         {/* Legend Height Mode */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-[var(--border-radius-l)]">
           <h3 className="text-heading-md mb-[var(--space-m)]">Legend Height Mode (height=240, legendHeight=40)</h3>
           <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             Total = 240px. Chart body = 200px (240-40). Legend = 40px reserved.
@@ -2127,7 +2127,7 @@ export const LegendHeightControl: Story = {
         </div>
 
         {/* Legend Height with Many Legend Items */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l lg:col-span-2">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-[var(--border-radius-l)] lg:col-span-2">
           <h3 className="text-heading-md mb-[var(--space-m)]">Legend Height with Multi-Row Legend</h3>
           <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             With 6 metrics needing 2 rows. Total = 318px. Chart body = 250px (318-68). Legend = 68px reserved.
@@ -2159,7 +2159,7 @@ export const LegendHeightControl: Story = {
         </div>
 
         {/* Use Case: Dashboard Grid */}
-        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-l lg:col-span-2">
+        <div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] rounded-[var(--border-radius-l)] lg:col-span-2">
           <h3 className="text-heading-md mb-[var(--space-m)]">Use Case: Dashboard with Consistent Chart Bodies</h3>
           <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-m)]">
             All three charts: <code className="text-caption-sm px-1 py-0.5 bg-[var(--grey-100)] rounded">height=248</code> and <code className="text-caption-sm px-1 py-0.5 bg-[var(--grey-100)] rounded">legendHeight=68</code>.

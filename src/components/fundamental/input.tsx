@@ -4,7 +4,7 @@ import { cn } from "../../lib/utils";
 import { Icon } from "./icon";
 
 const inputVariants = cva(
-  "flex w-full rounded-m border transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:shadow-[0px_0px_0px_2px_rgba(0,95,133,0.2),0px_3px_4px_0px_rgba(0,14,20,0.03)] disabled:cursor-not-allowed disabled:opacity-50",
+  "flex w-full rounded-[var(--border-radius-m)] border transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:shadow-[0px_0px_0px_2px_rgba(0,95,133,0.2),0px_3px_4px_0px_rgba(0,14,20,0.03)] disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {

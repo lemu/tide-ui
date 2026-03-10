@@ -26,9 +26,9 @@ const toggleVariants = cva(
         ],
       },
       size: {
-        s: "text-label-sm rounded-s px-[var(--space-s)] py-[var(--space-xs)]",
-        m: "text-label-md rounded-m px-[var(--space-m)] py-[var(--dimension-150)]",
-        l: "text-label-md rounded-m px-[var(--space-l)] py-[var(--space-m)]",
+        s: "text-label-sm rounded-[var(--border-radius-s)] px-[var(--space-s)] py-[var(--space-xs)]",
+        m: "text-label-md rounded-[var(--border-radius-m)] px-[var(--space-m)] py-[var(--dimension-150)]",
+        l: "text-label-md rounded-[var(--border-radius-m)] px-[var(--space-l)] py-[var(--space-m)]",
       },
     },
     defaultVariants: {

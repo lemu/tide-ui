@@ -278,7 +278,7 @@ export const TextEditorToolbar = {
             <div className="border-t border-[var(--color-border-primary-subtle)] pt-4">
               <Label className="text-xs">Preview</Label>
               <div 
-                className={`mt-2 p-4 border border-[var(--color-border-primary-subtle)] rounded-m min-h-24 ${
+                className={`mt-2 p-4 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] min-h-24 ${
                   alignment === 'left' ? 'text-left' :
                   alignment === 'center' ? 'text-center' :
                   alignment === 'right' ? 'text-right' :
@@ -357,7 +357,7 @@ export const ViewModeSelector = {
             {/* Preview */}
             <div className="border-t border-[var(--color-border-primary-subtle)] pt-4">
               <Label className="text-xs mb-2 block">Preview</Label>
-              <div className="border border-[var(--color-border-primary-subtle)] rounded-m p-4 min-h-32">
+              <div className="border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] p-4 min-h-32">
                 {viewMode === 'list' && (
                   <div className="space-y-2">
                     {Array.from({ length: 3 }, (_, i) => (
@@ -547,7 +547,7 @@ export const ChartTypeSelector = {
             {/* Chart preview placeholder */}
             <div className="border-t border-[var(--color-border-primary-subtle)] pt-4">
               <Label className="text-xs mb-2 block">Chart Preview</Label>
-              <div className="border border-[var(--color-border-primary-subtle)] rounded-m p-4 h-32 flex items-center justify-center bg-[var(--color-background-neutral-subtlest)]">
+              <div className="border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] p-4 h-32 flex items-center justify-center bg-[var(--color-background-neutral-subtlest)]">
                 <div className="text-center text-[var(--color-text-secondary)]">
                   <Icon name={
                     chartType === 'line' ? 'trending-up' :

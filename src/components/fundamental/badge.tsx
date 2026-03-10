@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center w-fit max-w-full shrink-0 rounded-s px-[var(--space-s)] py-[var(--space-xs)] text-caption-medium-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-1 cursor-default",
+  "inline-flex items-center w-fit max-w-full shrink-0 rounded-[var(--border-radius-s)] px-[var(--space-s)] py-[var(--space-xs)] text-caption-medium-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-1 cursor-default",
   {
     variants: {
       intent: {

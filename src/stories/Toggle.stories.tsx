@@ -137,7 +137,7 @@ export const Favorites: Story = {
 
 export const ToolbarExample: Story = {
   render: () => (
-    <div className="border rounded-l p-2 inline-flex items-center space-x-1">
+    <div className="border rounded-[var(--border-radius-l)] p-2 inline-flex items-center space-x-1">
       <div className="flex space-x-1">
         <Toggle size="s" aria-label="Toggle bold">
           <Bold className="h-4 w-4" />

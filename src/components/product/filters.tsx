@@ -911,7 +911,7 @@ const FilterSidebarItem = React.memo(function FilterSidebarItem({ filter, isSele
       }}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "group/item box-border flex gap-[var(--space-m)] h-[var(--size-m)] items-center justify-start px-[var(--space-l)] py-[var(--space-s)] relative rounded-m shrink-0 w-full cursor-pointer transition-colors",
+        "group/item box-border flex gap-[var(--space-m)] h-[var(--size-m)] items-center justify-start px-[var(--space-l)] py-[var(--space-s)] relative rounded-[var(--border-radius-m)] shrink-0 w-full cursor-pointer transition-colors",
         "hover:bg-[var(--color-background-neutral-hovered)]",
         isSelected && "bg-[var(--color-background-blue-subtle-selected)] hover:bg-[var(--color-background-blue-subtle-selected-hovered)] group-focus-visible/listbox:ring-2 group-focus-visible/listbox:ring-[var(--ring-color)] group-focus-visible/listbox:ring-inset"
       )}
@@ -1171,8 +1171,8 @@ export function FilterDropdownMenu({
   }, [filters])
 
   return (
-    <div className="bg-[var(--color-surface-primary)] relative rounded-m max-h-[480px] flex flex-col">
-      <div className="flex items-stretch justify-start min-h-0 overflow-hidden rounded-m flex-1">
+    <div className="bg-[var(--color-surface-primary)] relative rounded-[var(--border-radius-m)] max-h-[480px] flex flex-col">
+      <div className="flex items-stretch justify-start min-h-0 overflow-hidden rounded-[var(--border-radius-m)] flex-1">
         {/* Left Sidebar */}
         <div
           className="bg-[var(--color-background-neutral-default)] relative shrink-0 border-r border-[var(--color-border-primary-subtle)] flex flex-col"
@@ -1740,7 +1740,7 @@ export function Filters({
                   }
                 }}
                 className={cn(
-                  "group/slot h-[var(--size-m)] rounded-l flex items-center justify-center gap-[var(--space-s)] transition-colors cursor-pointer flex-shrink-0",
+                  "group/slot h-[var(--size-m)] rounded-[var(--border-radius-l)] flex items-center justify-center gap-[var(--space-s)] transition-colors cursor-pointer flex-shrink-0",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
                   isActive
                     ? "bg-[var(--color-background-neutral-selected)] hover:bg-[var(--color-background-neutral-hovered)] px-[var(--space-m)] pr-[4px]"
@@ -1853,7 +1853,7 @@ export function Filters({
         return (
           <div
             key={searchTerm.value}
-            className="h-[var(--size-m)] rounded-l bg-[var(--color-background-neutral-selected)] hover:bg-[var(--color-background-neutral-hovered)] px-[var(--space-m)] pr-[4px] flex items-center gap-[var(--space-s)] transition-colors"
+            className="h-[var(--size-m)] rounded-[var(--border-radius-l)] bg-[var(--color-background-neutral-selected)] hover:bg-[var(--color-background-neutral-hovered)] px-[var(--space-m)] pr-[4px] flex items-center gap-[var(--space-s)] transition-colors"
           >
             {/* Optional Icon */}
             {IconComponent && (
@@ -1890,7 +1890,7 @@ export function Filters({
           variant="ghost"
           onClick={handleReset}
           aria-label="Reset all filters and search terms"
-          className="h-[var(--size-m)] rounded-s px-[var(--space-m)]"
+          className="h-[var(--size-m)] rounded-[var(--border-radius-s)] px-[var(--space-m)]"
         >
           <span className="text-label-md">Clear all</span>
         </Button>

@@ -70,7 +70,7 @@ export const WithDescriptions: Story = {
         <div className="space-y-3">
           <Label className="text-body-md font-medium">Choose your plan</Label>
           <RadioGroup value={selectedPlan} onValueChange={setSelectedPlan} className="space-y-4">
-            <label htmlFor="free" className={`flex items-start space-x-3 p-4 rounded-l transition-colors cursor-pointer ${
+            <label htmlFor="free" className={`flex items-start space-x-3 p-4 rounded-[var(--border-radius-l)] transition-colors cursor-pointer ${
               selectedPlan === "free" 
                 ? "border-2 border-[var(--color-border-brand-bold)] bg-[var(--color-background-brand-subtle)]"
                 : "border border-[var(--color-border-primary-subtle)] hover:border-[var(--color-border-primary-medium)]"
@@ -85,7 +85,7 @@ export const WithDescriptions: Story = {
               </div>
             </label>
             
-            <label htmlFor="pro" className={`flex items-start space-x-3 p-4 rounded-l cursor-pointer ${
+            <label htmlFor="pro" className={`flex items-start space-x-3 p-4 rounded-[var(--border-radius-l)] cursor-pointer ${
               selectedPlan === "pro"
                 ? "border-2 border-[var(--color-border-brand-bold)] bg-[var(--color-background-brand-subtle)]"
                 : "border border-[var(--color-border-primary-subtle)] hover:border-[var(--color-border-primary-medium)] transition-colors"
@@ -105,7 +105,7 @@ export const WithDescriptions: Story = {
               </div>
             </label>
             
-            <label htmlFor="enterprise" className={`flex items-start space-x-3 p-4 rounded-l transition-colors cursor-pointer ${
+            <label htmlFor="enterprise" className={`flex items-start space-x-3 p-4 rounded-[var(--border-radius-l)] transition-colors cursor-pointer ${
               selectedPlan === "enterprise"
                 ? "border-2 border-[var(--color-border-brand-bold)] bg-[var(--color-background-brand-subtle)]"
                 : "border border-[var(--color-border-primary-subtle)] hover:border-[var(--color-border-primary-medium)]"
@@ -221,7 +221,7 @@ export const WithIcons: Story = {
     <div className="w-80 space-y-3">
       <Label className="text-body-md font-medium">Theme preference</Label>
       <RadioGroup defaultValue="light" className="space-y-3">
-        <label htmlFor="theme-light" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-l hover:border-[var(--color-border-primary-medium)] transition-colors cursor-pointer">
+        <label htmlFor="theme-light" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-l)] hover:border-[var(--color-border-primary-medium)] transition-colors cursor-pointer">
           <RadioGroupItem value="light" id="theme-light" />
           <Icon name={Sun} size="s" />
           <div>
@@ -232,7 +232,7 @@ export const WithIcons: Story = {
           </div>
         </label>
         
-        <label htmlFor="theme-dark" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-l hover:border-[var(--color-border-primary-medium)] transition-colors cursor-pointer">
+        <label htmlFor="theme-dark" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-l)] hover:border-[var(--color-border-primary-medium)] transition-colors cursor-pointer">
           <RadioGroupItem value="dark" id="theme-dark" />
           <Icon name={Moon} size="s" />
           <div>
@@ -243,7 +243,7 @@ export const WithIcons: Story = {
           </div>
         </label>
         
-        <label htmlFor="theme-system" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-l hover:border-[var(--color-border-primary-medium)] transition-colors cursor-pointer">
+        <label htmlFor="theme-system" className="flex items-center space-x-3 p-3 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-l)] hover:border-[var(--color-border-primary-medium)] transition-colors cursor-pointer">
           <RadioGroupItem value="system" id="theme-system" />
           <Icon name={Monitor} size="s" />
           <div>
@@ -293,7 +293,7 @@ export const InForm: Story = {
                 />
                 <Label 
                   htmlFor={`size-${size.toLowerCase()}`}
-                  className="flex h-10 w-full items-center justify-center rounded-m border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3 py-2 text-body-sm font-medium cursor-pointer hover:border-[var(--color-interaction-border-input-hovered)] peer-data-[state=checked]:border-[var(--color-border-brand-bold)] peer-data-[state=checked]:bg-[var(--color-background-blue-subtle-selected)] peer-data-[state=checked]:text-[var(--color-text-brand-bold)]"
+                  className="flex h-10 w-full items-center justify-center rounded-[var(--border-radius-m)] border border-[var(--color-interaction-border-input)] bg-[var(--color-surface-primary)] px-3 py-2 text-body-sm font-medium cursor-pointer hover:border-[var(--color-interaction-border-input-hovered)] peer-data-[state=checked]:border-[var(--color-border-brand-bold)] peer-data-[state=checked]:bg-[var(--color-background-blue-subtle-selected)] peer-data-[state=checked]:text-[var(--color-text-brand-bold)]"
                 >
                   {size}
                 </Label>

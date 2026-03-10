@@ -6,7 +6,7 @@ import { Icon } from "./icon";
 import { ChevronDown, ChevronUp, Check } from "lucide-react";
 
 const selectTriggerVariants = cva(
-  "flex w-full items-center justify-between gap-[var(--space-xs)] rounded-s border bg-[var(--color-surface-primary)] text-[var(--color-text-primary)] transition-all duration-150 ease-in-out placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-100 disabled:bg-[var(--color-background-disabled)] disabled:text-[var(--color-text-disabled)]",
+  "flex w-full items-center justify-between gap-[var(--space-xs)] rounded-[var(--border-radius-s)] border bg-[var(--color-surface-primary)] text-[var(--color-text-primary)] transition-all duration-150 ease-in-out placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-100 disabled:bg-[var(--color-background-disabled)] disabled:text-[var(--color-text-disabled)]",
   {
     variants: {
       variant: {
@@ -14,13 +14,13 @@ const selectTriggerVariants = cva(
           "border-[var(--color-interaction-border-input)]",
           "enabled:hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
           "enabled:hover:border-[var(--color-interaction-border-input-hovered)]",
-          "enabled:hover:shadow-sm",
+          "enabled:hover:shadow-[var(--shadow-200)]",
         ],
         error: [
           "border-[var(--color-border-error-bold)]",
           "enabled:hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
           "enabled:hover:border-[var(--color-border-error-bold)]",
-          "enabled:hover:shadow-sm",
+          "enabled:hover:shadow-[var(--shadow-200)]",
           "focus-visible:border-[var(--color-border-error-bold)]",
         ],
       },
@@ -38,11 +38,11 @@ const selectTriggerVariants = cva(
 );
 
 const selectContentVariants = cva(
-  "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-m border border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] text-[var(--color-text-primary)] shadow-[0px_0px_12px_-2px_rgba(0,14,20,0.08),0px_16px_24px_-8px_rgba(0,14,20,0.08),0px_4px_8px_-4px_rgba(0,14,20,0.04),0px_1px_1px_0px_rgba(0,14,20,0.02)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+  "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-[var(--border-radius-m)] border border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] text-[var(--color-text-primary)] shadow-[0px_0px_12px_-2px_rgba(0,14,20,0.08),0px_16px_24px_-8px_rgba(0,14,20,0.08),0px_4px_8px_-4px_rgba(0,14,20,0.04),0px_1px_1px_0px_rgba(0,14,20,0.02)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
 );
 
 const selectItemVariants = cva(
-  "relative flex w-full cursor-default select-none items-center h-8 rounded-s outline-none focus:bg-[var(--color-background-neutral-subtlest-hovered)] focus:text-[var(--color-text-primary)] data-[disabled]:pointer-events-none data-[disabled]:opacity-50 px-2 py-1 text-body-md",
+  "relative flex w-full cursor-default select-none items-center h-8 rounded-[var(--border-radius-s)] outline-none focus:bg-[var(--color-background-neutral-subtlest-hovered)] focus:text-[var(--color-text-primary)] data-[disabled]:pointer-events-none data-[disabled]:opacity-50 px-2 py-1 text-body-md",
   {
     variants: {},
     defaultVariants: {},

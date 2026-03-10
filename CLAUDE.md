@@ -104,14 +104,16 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 
 #### 2. Border Radius & Shadows
 
-- **ALWAYS use theme utilities** for border radius and shadows
-- Use `rounded-s`, `rounded-m`, `shadow-xs`, `shadow-lg`, etc.
+- **ALWAYS use CSS variable arbitrary values** for both border radius and shadows
+- Use `rounded-[var(--border-radius-xs)]`, `rounded-[var(--border-radius-m)]`, etc.
+- Use `rounded-full` for fully circular elements (Tailwind built-in)
+- Use `shadow-[var(--shadow-100)]`, `shadow-[var(--shadow-200)]`, etc. for shadows
 
 ```tsx
-// ✅ CORRECT - Theme utilities
-<div className="rounded-l shadow-md">Card</div>
+// ✅ CORRECT - CSS variable arbitrary values for border radius and shadows
+<div className="rounded-[var(--border-radius-m)] shadow-[var(--shadow-300)]">Card</div>
 
-// ❌ AVOID - Arbitrary values
+// ❌ AVOID - Arbitrary pixel values
 <div className="rounded-[6px] shadow-[0_4px_6px_-1px_rgb(0_0_0_/_0.1)]">Card</div>
 ```
 
@@ -168,7 +170,7 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 **Button Component:**
 
 ```tsx
-<button className="text-heading-sm rounded-m shadow-sm bg-[var(--color-background-brand)] text-[var(--color-text-on-action)] px-[var(--space-l)] py-[var(--space-m)]">
+<button className="text-heading-sm rounded-[var(--border-radius-m)] shadow-[var(--shadow-200)] bg-[var(--color-background-brand)] text-[var(--color-text-on-action)] px-[var(--space-l)] py-[var(--space-m)]">
   Submit
 </button>
 ```
@@ -176,7 +178,7 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 **Card Component:**
 
 ```tsx
-<div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-l p-[var(--space-l)] shadow-md">
+<div className="bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-l)] p-[var(--space-l)] shadow-[var(--shadow-300)]">
   <h2 className="text-heading-md mb-[var(--space-m)]">Card Title</h2>
   <p className="text-body-md text-[var(--color-text-secondary)]">
     Card content
@@ -188,9 +190,9 @@ This project uses a comprehensive semantic design system with Tailwind CSS. **Al
 
 **Typography:** `text-heading-2xlg`, `text-heading-xlg`, `text-heading-lg`, `text-heading-md`, `text-heading-sm`, `text-heading-xsm`, `text-body-lg`, `text-body-medium-lg`, `text-body-strong-lg`, `text-body-md`, `text-body-medium-md`, `text-body-strong-md`, `text-body-sm`, `text-body-medium-sm`, `text-body-strong-sm`, `text-body-xsm`, `text-body-medium-xsm`, `text-body-strong-xsm`, `text-label-md`, `text-label-sm`, `text-caption-sm`, `text-caption-medium-sm`, `text-caption-strong-sm`, `text-caption-xsm`, `text-caption-medium-xsm`, `text-caption-strong-xsm`
 
-**Border Radius:** `rounded-null`, `rounded-xs`, `rounded-s`, `rounded-m`, `rounded-l`, `rounded-xl`, `rounded-full`
+**Border Radius:** `rounded-[var(--border-radius-xs)]`, `rounded-[var(--border-radius-s)]`, `rounded-[var(--border-radius-m)]`, `rounded-[var(--border-radius-l)]`, `rounded-[var(--border-radius-xl)]`, `rounded-full`
 
-**Shadows:** `shadow-xs`, `shadow-sm`, `shadow-md`, `shadow-lg`, `shadow-xl`
+**Shadows:** `shadow-[var(--shadow-100)]`, `shadow-[var(--shadow-200)]`, `shadow-[var(--shadow-300)]`, `shadow-[var(--shadow-400)]`, `shadow-[var(--shadow-500)]`
 
 ## Button Variants
 

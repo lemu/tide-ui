@@ -332,7 +332,7 @@ export const AvatarTrigger: Story = {
 // Table row actions
 export const TableRowActions: Story = {
   render: () => (
-    <div className="border border-[var(--color-border-primary-subtle)] rounded-m max-w-md">
+    <div className="border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] max-w-md">
       <div className="flex items-center justify-between p-[var(--space-m)]">
         <div>
           <h4 className="font-medium text-body-sm">Project Alpha</h4>
@@ -372,7 +372,7 @@ export const TableRowActions: Story = {
 // Navigation user menu
 export const NavigationUserMenu: Story = {
   render: () => (
-    <div className="flex items-center space-x-[var(--space-m)] p-[var(--space-m)] border border-[var(--color-border-primary-subtle)] rounded-m max-w-sm">
+    <div className="flex items-center space-x-[var(--space-m)] p-[var(--space-m)] border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] max-w-sm">
       <div className="h-10 w-10 rounded-full bg-[var(--color-background-blue-bold)] flex items-center justify-center">
         <span className="text-sm font-medium text-[var(--color-text-on-action)]">
           AB
@@ -486,7 +486,7 @@ export const ContextualActionsMenu: Story = {
       </p>
       <div className="flex gap-[var(--space-m)]">
         {/* Image context menu */}
-        <div className="border border-[var(--color-border-primary-subtle)] rounded-m p-[var(--space-m)] relative">
+        <div className="border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)] relative">
           <div className="w-16 h-12 bg-[var(--color-background-secondary)] rounded flex items-center justify-center mb-[var(--space-s)]">
             <Icon name={Image} size="s" />
           </div>
@@ -520,7 +520,7 @@ export const ContextualActionsMenu: Story = {
         </div>
 
         {/* Document context menu */}
-        <div className="border border-[var(--color-border-primary-subtle)] rounded-m p-[var(--space-m)] relative">
+        <div className="border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)] relative">
           <div className="w-16 h-12 bg-[var(--color-background-secondary)] rounded flex items-center justify-center mb-[var(--space-s)]">
             <Icon name={FileText} size="s" />
           </div>
@@ -676,7 +676,7 @@ export const ResponsivePreview: Story = {
           </div>
         </div>
 
-        <div className="mt-[var(--space-3xl)] p-[var(--space-l)] bg-[var(--color-surface-secondary)] rounded-l">
+        <div className="mt-[var(--space-3xl)] p-[var(--space-l)] bg-[var(--color-surface-secondary)] rounded-[var(--border-radius-l)]">
           <h3 className="text-heading-sm mb-[var(--space-m)]">Testing Instructions</h3>
           <div className="space-y-[var(--space-s)] text-body-sm">
             <p><strong>Desktop (≥768px):</strong> Shows traditional dropdown with positioning</p>
@@ -736,7 +736,7 @@ export const AutomaticIconIntegration: Story = {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <div className="bg-[var(--color-surface-secondary)] p-[var(--space-m)] rounded-m">
+          <div className="bg-[var(--color-surface-secondary)] p-[var(--space-m)] rounded-[var(--border-radius-m)]">
             <h5 className="text-heading-sm mb-[var(--space-s)]">Code Example:</h5>
             <pre className="text-caption-sm text-[var(--color-text-secondary)] overflow-x-auto">
 {`<DropdownMenuItem icon={User}>
@@ -806,7 +806,7 @@ export const AutomaticIconIntegration: Story = {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <div className="bg-[var(--color-surface-secondary)] p-[var(--space-m)] rounded-m">
+          <div className="bg-[var(--color-surface-secondary)] p-[var(--space-m)] rounded-[var(--border-radius-m)]">
             <h5 className="text-heading-sm mb-[var(--space-s)]">Code Example:</h5>
             <pre className="text-caption-sm text-[var(--color-text-secondary)] overflow-x-auto">
 {`<DropdownMenuItem>
@@ -822,7 +822,7 @@ export const AutomaticIconIntegration: Story = {
         </div>
       </div>
 
-      <div className="mt-[var(--space-3xl)] p-[var(--space-l)] bg-[var(--color-background-blue-bold)] bg-opacity-5 rounded-l border border-[var(--color-border-brand-bold)]">
+      <div className="mt-[var(--space-3xl)] p-[var(--space-l)] bg-[var(--color-background-blue-bold)] bg-opacity-5 rounded-[var(--border-radius-l)] border border-[var(--color-border-brand-bold)]">
         <h3 className="text-heading-sm mb-[var(--space-m)] text-[var(--color-text-brand-bold)]">Benefits of Automatic Icon Integration</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-m)] text-body-sm">
           <div>
@@ -1007,7 +1007,7 @@ export const MobileAutoDismissTest: Story = {
         </div>
       </div>
 
-      <div className="mt-[var(--space-3xl)] p-[var(--space-l)] bg-[var(--color-surface-secondary)] rounded-l">
+      <div className="mt-[var(--space-3xl)] p-[var(--space-l)] bg-[var(--color-surface-secondary)] rounded-[var(--border-radius-l)]">
         <h3 className="text-heading-sm mb-[var(--space-m)]">Testing Instructions</h3>
         <div className="space-y-[var(--space-s)] text-body-sm">
           <p><strong>Mobile (≤768px):</strong> Uses bottom sheet with auto-dismiss behavior</p>
@@ -1115,7 +1115,7 @@ export const MultiLevelNavigation: Story = {
         </DropdownMenuContent>
       </DropdownMenu>
       
-      <div className="mt-[var(--space-3xl)] p-[var(--space-l)] bg-[var(--color-surface-secondary)] rounded-l">
+      <div className="mt-[var(--space-3xl)] p-[var(--space-l)] bg-[var(--color-surface-secondary)] rounded-[var(--border-radius-l)]">
         <h3 className="text-heading-sm mb-[var(--space-m)]">Multi-Level Testing Instructions</h3>
         <div className="space-y-[var(--space-s)] text-body-sm">
           <p><strong>Desktop (≥768px):</strong> Traditional floating submenus with hover/click interactions</p>

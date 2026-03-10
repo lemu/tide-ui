@@ -203,7 +203,7 @@ export const ListVariantDefault: Story = {
         >
           <Bookmarks.DefaultActions />
         </Bookmarks>
-        <div className="mt-4 p-4 bg-[var(--color-background-neutral-default)] rounded-m">
+        <div className="mt-4 p-4 bg-[var(--color-background-neutral-default)] rounded-[var(--border-radius-m)]">
           <button
             onClick={() => setIsDirty(!isDirty)}
             className="text-body-sm text-[var(--color-text-brand-bold)] hover:underline"
@@ -224,7 +224,7 @@ export const ListVariantUserBookmarkDirty: Story = {
 
     return (
       <div className="p-4">
-        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-m">
+        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-[var(--border-radius-m)]">
           <strong>User Bookmark Dirty State:</strong> Shows "Revert Changes" and "Save" dropdown with Update/Create New options.
         </div>
         <Bookmarks
@@ -274,7 +274,7 @@ export const ListVariantSystemBookmarkDirty: Story = {
 
     return (
       <div className="p-4">
-        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-m">
+        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-[var(--border-radius-m)]">
           <strong>System Bookmark Dirty State:</strong> Shows "Reset" and "Create bookmark" buttons (no Update option since system bookmarks are read-only).
         </div>
         <Bookmarks
@@ -323,7 +323,7 @@ export const ListVariantSystemOnly: Story = {
 
     return (
       <div className="p-4">
-        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-m">
+        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-[var(--border-radius-m)]">
           No user bookmarks yet. Users can create their first bookmark by modifying filters.
         </div>
         <Bookmarks
@@ -399,7 +399,7 @@ export const TabsVariantDefault: Story = {
         >
           <Bookmarks.DefaultActions />
         </Bookmarks>
-        <div className="mt-4 p-4 bg-[var(--color-background-neutral-default)] rounded-m">
+        <div className="mt-4 p-4 bg-[var(--color-background-neutral-default)] rounded-[var(--border-radius-m)]">
           <button
             onClick={() => setIsDirty(!isDirty)}
             className="text-body-sm text-[var(--color-text-brand-bold)] hover:underline"
@@ -423,7 +423,7 @@ export const TabsVariantWithActions: Story = {
 
     return (
       <div className="p-4">
-        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-m">
+        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-[var(--border-radius-m)]">
           <strong>Tabs with Action Buttons:</strong> Shows action buttons below tabs when bookmark state is modified.
         </div>
         <Bookmarks
@@ -471,7 +471,7 @@ export const EmptyState: Story = {
 
     return (
       <div className="p-4">
-        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-m">
+        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-[var(--border-radius-m)]">
           <strong>Empty State:</strong> No bookmarks available yet.
         </div>
         <Bookmarks
@@ -547,7 +547,7 @@ export const LoadingCounts: Story = {
 
     return (
       <div className="p-4">
-        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-m">
+        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-[var(--border-radius-m)]">
           <strong>Loading State:</strong> Some bookmark counts show skeleton loaders while loading.
         </div>
         <Bookmarks
@@ -563,7 +563,7 @@ export const LoadingCounts: Story = {
           onDelete={async () => {}}
           onSetDefault={async () => {}}
         />
-        <div className="mt-4 p-4 bg-[var(--color-background-neutral-default)] rounded-m">
+        <div className="mt-4 p-4 bg-[var(--color-background-neutral-default)] rounded-[var(--border-radius-m)]">
           <button
             onClick={() => {
               setBookmarks(bookmarks.map(b => ({
@@ -607,7 +607,7 @@ export const LoadingCountsListVariant: Story = {
 
     return (
       <div className="p-4">
-        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-m">
+        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-[var(--border-radius-m)]">
           <strong>List Variant:</strong> Loading states also work in overflow menu badges.
         </div>
         <Bookmarks
@@ -741,7 +741,7 @@ export const WithFiltersScrollTest: Story = {
 
     return (
       <div className="p-4">
-        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-m">
+        <div className="mb-4 text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-[var(--border-radius-m)]">
           <strong>Horizontal Scroll Test:</strong> 8 pinned filters to test responsiveness. Resize browser window to see horizontal scrolling in action.
         </div>
         <Bookmarks
@@ -803,7 +803,7 @@ export const WithFiltersScrollTest: Story = {
           </Bookmarks.Content>
           <Bookmarks.DefaultActions />
         </Bookmarks>
-        <div className="mt-4 p-4 bg-[var(--color-background-neutral-default)] rounded-m">
+        <div className="mt-4 p-4 bg-[var(--color-background-neutral-default)] rounded-[var(--border-radius-m)]">
           <button
             onClick={() => setIsDirty(!isDirty)}
             className="text-body-sm text-[var(--color-text-brand-bold)] hover:underline"

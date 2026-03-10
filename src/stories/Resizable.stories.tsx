@@ -26,7 +26,7 @@ export const Horizontal: Story = {
     direction: 'horizontal',
   },
   render: (args) => (
-    <ResizablePanelGroup {...args} className="max-w-md rounded-l border border-[var(--color-border-primary-subtle)]">
+    <ResizablePanelGroup {...args} className="max-w-md rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)]">
       <ResizablePanel defaultSize={50}>
         <div className="flex h-[200px] items-center justify-center p-6">
           <span className="text-heading-sm">One</span>
@@ -48,7 +48,7 @@ export const Vertical: Story = {
     direction: 'vertical',
   },
   render: (args) => (
-    <ResizablePanelGroup {...args} className="min-h-[200px] max-w-md rounded-l border border-[var(--color-border-primary-subtle)]">
+    <ResizablePanelGroup {...args} className="min-h-[200px] max-w-md rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)]">
       <ResizablePanel defaultSize={25}>
         <div className="flex h-full items-center justify-center p-6">
           <span className="text-heading-sm">Header</span>
@@ -70,7 +70,7 @@ export const WithHandle: Story = {
     direction: 'horizontal',
   },
   render: (args) => (
-    <ResizablePanelGroup {...args} className="min-h-[200px] max-w-md rounded-l border border-[var(--color-border-primary-subtle)]">
+    <ResizablePanelGroup {...args} className="min-h-[200px] max-w-md rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)]">
       <ResizablePanel defaultSize={50}>
         <div className="flex h-full items-center justify-center p-6">
           <span className="text-heading-sm">One</span>
@@ -92,7 +92,7 @@ export const ThreePanels: Story = {
     direction: 'horizontal',
   },
   render: (args) => (
-    <ResizablePanelGroup {...args} className="min-h-[200px] max-w-md rounded-l border border-[var(--color-border-primary-subtle)]">
+    <ResizablePanelGroup {...args} className="min-h-[200px] max-w-md rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)]">
       <ResizablePanel defaultSize={25}>
         <div className="flex h-full items-center justify-center p-6">
           <span className="text-heading-sm">One</span>
@@ -119,7 +119,7 @@ export const NestedLayout: Story = {
   render: () => (
     <ResizablePanelGroup
       direction="horizontal"
-      className="min-h-[200px] max-w-md rounded-l border border-[var(--color-border-primary-subtle)]"
+      className="min-h-[200px] max-w-md rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)]"
     >
       <ResizablePanel defaultSize={25}>
         <div className="flex h-full items-center justify-center p-6">
@@ -152,19 +152,19 @@ export const DashboardLayout: Story = {
     <div className="h-[400px] w-full">
       <ResizablePanelGroup
         direction="horizontal"
-        className="h-full rounded-l border border-[var(--color-border-primary-subtle)]"
+        className="h-full rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)]"
       >
         <ResizablePanel defaultSize={20} minSize={15}>
           <div className="flex h-full flex-col gap-[var(--space-m)] p-[var(--space-l)]">
             <h3 className="text-heading-sm text-[var(--color-text-primary)]">Navigation</h3>
             <div className="space-y-[var(--space-s)]">
-              <div className="rounded-m bg-[var(--color-background-blue-bold)] p-[var(--space-s)] text-[var(--color-text-on-action)]">
+              <div className="rounded-[var(--border-radius-m)] bg-[var(--color-background-blue-bold)] p-[var(--space-s)] text-[var(--color-text-on-action)]">
                 <span className="text-body-sm">Dashboard</span>
               </div>
-              <div className="rounded-m p-[var(--space-s)] text-[var(--color-text-secondary)]">
+              <div className="rounded-[var(--border-radius-m)] p-[var(--space-s)] text-[var(--color-text-secondary)]">
                 <span className="text-body-sm">Analytics</span>
               </div>
-              <div className="rounded-m p-[var(--space-s)] text-[var(--color-text-secondary)]">
+              <div className="rounded-[var(--border-radius-m)] p-[var(--space-s)] text-[var(--color-text-secondary)]">
                 <span className="text-body-sm">Settings</span>
               </div>
             </div>
@@ -176,7 +176,7 @@ export const DashboardLayout: Story = {
             <ResizablePanel defaultSize={60} minSize={30}>
               <div className="flex h-full flex-col gap-[var(--space-m)] p-[var(--space-l)]">
                 <h3 className="text-heading-sm text-[var(--color-text-primary)]">Main Content</h3>
-                <div className="flex-1 rounded-l bg-[var(--color-background-neutral-subtlest)] p-[var(--space-l)]">
+                <div className="flex-1 rounded-[var(--border-radius-l)] bg-[var(--color-background-neutral-subtlest)] p-[var(--space-l)]">
                   <p className="text-body-md text-[var(--color-text-secondary)]">
                     Primary dashboard content goes here. This panel can be resized vertically
                     and horizontally to accommodate different amounts of content.
@@ -188,7 +188,7 @@ export const DashboardLayout: Story = {
             <ResizablePanel defaultSize={40} minSize={20}>
               <div className="flex h-full flex-col gap-[var(--space-m)] p-[var(--space-l)]">
                 <h3 className="text-heading-sm text-[var(--color-text-primary)]">Details Panel</h3>
-                <div className="flex-1 rounded-l bg-[var(--color-background-neutral-subtlest)] p-[var(--space-l)]">
+                <div className="flex-1 rounded-[var(--border-radius-l)] bg-[var(--color-background-neutral-subtlest)] p-[var(--space-l)]">
                   <p className="text-body-sm text-[var(--color-text-secondary)]">
                     Secondary information, logs, or detail views can be displayed here.
                   </p>
@@ -208,7 +208,7 @@ export const CodeEditorLayout: Story = {
     <div className="h-[400px] w-full">
       <ResizablePanelGroup
         direction="horizontal"
-        className="h-full rounded-l border border-[var(--color-border-primary-subtle)]"
+        className="h-full rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)]"
       >
         <ResizablePanel defaultSize={25} minSize={20}>
           <div className="flex h-full flex-col gap-[var(--space-s)] p-[var(--space-m)]">
@@ -229,7 +229,7 @@ export const CodeEditorLayout: Story = {
             <ResizablePanel defaultSize={70} minSize={50}>
               <div className="h-full p-[var(--space-m)]">
                 <h4 className="text-heading-xsm text-[var(--color-text-primary)] mb-[var(--space-s)]">Editor</h4>
-                <div className="h-full rounded-m bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] font-mono text-body-sm">
+                <div className="h-full rounded-[var(--border-radius-m)] bg-[var(--color-background-neutral-subtlest)] p-[var(--space-m)] font-mono text-body-sm">
                   <div className="text-[var(--color-text-secondary)]">
                     <span className="text-blue-500">import</span> React <span className="text-blue-500">from</span> <span className="text-green-500">'react'</span>
                   </div>
@@ -251,7 +251,7 @@ export const CodeEditorLayout: Story = {
             <ResizablePanel defaultSize={30} minSize={20}>
               <div className="h-full p-[var(--space-m)]">
                 <h4 className="text-heading-xsm text-[var(--color-text-primary)] mb-[var(--space-s)]">Terminal</h4>
-                <div className="h-full rounded-m bg-black p-[var(--space-m)] font-mono text-body-sm text-green-400">
+                <div className="h-full rounded-[var(--border-radius-m)] bg-black p-[var(--space-m)] font-mono text-body-sm text-green-400">
                   <div>$ npm run dev</div>
                   <div className="text-gray-400">Starting development server...</div>
                   <div className="text-blue-400">✓ Local: http://localhost:3000</div>
@@ -292,7 +292,7 @@ export const ConstrainedSizing: Story = {
   render: () => (
     <ResizablePanelGroup
       direction="horizontal"
-      className="min-h-[200px] max-w-md rounded-l border border-[var(--color-border-primary-subtle)]"
+      className="min-h-[200px] max-w-md rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)]"
     >
       <ResizablePanel defaultSize={30} minSize={20} maxSize={40}>
         <div className="flex h-full items-center justify-center p-6">

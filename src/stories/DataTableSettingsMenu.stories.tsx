@@ -60,7 +60,7 @@ function InteractiveWrapper() {
 
   return (
     <div className="flex flex-col gap-4 w-[400px]">
-      <div className="flex items-center justify-between p-4 bg-[var(--color-surface-secondary)] rounded-m">
+      <div className="flex items-center justify-between p-4 bg-[var(--color-surface-secondary)] rounded-[var(--border-radius-m)]">
         <div className="text-body-md">Data Table Settings</div>
         <DataTableSettingsMenu
           sortableColumns={sampleColumns}
@@ -75,7 +75,7 @@ function InteractiveWrapper() {
         />
       </div>
 
-      <div className="p-4 bg-[var(--color-surface-primary)] rounded-m border border-[var(--color-border-primary-subtle)]">
+      <div className="p-4 bg-[var(--color-surface-primary)] rounded-[var(--border-radius-m)] border border-[var(--color-border-primary-subtle)]">
         <h4 className="text-label-sm mb-2 text-[var(--color-text-tertiary)]">
           Current State
         </h4>

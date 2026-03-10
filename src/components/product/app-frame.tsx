@@ -446,7 +446,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
               <div className="group-data-[collapsible=icon]:hidden">
                 <button
                   onClick={() => setCommandOpen(true)}
-                  className="text-body-md flex h-8 w-full cursor-pointer items-center rounded-m border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-3 py-1 pr-20 pl-8 text-left text-[var(--color-text-tertiary)] transition-colors hover:border-[var(--color-border-primary-medium)] hover:!bg-[var(--color-background-neutral-subtlest-hovered)] focus:border-[var(--color-border-brand-bold)] focus:ring-2 focus:ring-[var(--color-border-brand-bold)]/20 focus:ring-offset-0 focus:outline-none active:border-[var(--color-border-primary-medium)]"
+                  className="text-body-md flex h-8 w-full cursor-pointer items-center rounded-[var(--border-radius-m)] border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] px-3 py-1 pr-20 pl-8 text-left text-[var(--color-text-tertiary)] transition-colors hover:border-[var(--color-border-primary-medium)] hover:!bg-[var(--color-background-neutral-subtlest-hovered)] focus:border-[var(--color-border-brand-bold)] focus:ring-2 focus:ring-[var(--color-border-brand-bold)]/20 focus:ring-offset-0 focus:outline-none active:border-[var(--color-border-primary-medium)]"
                 >
                   Search
                 </button>
@@ -801,12 +801,12 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
 
         {/* Footer with User/Team Switcher */}
         <SidebarFooter className="sticky bottom-0 z-10 border-t border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:py-2">
-          <div className="group/user-menu rounded-m border border-[var(--color-border-primary-subtle)] transition-colors hover:border-[var(--color-border-primary-medium)] group-data-[collapsible=icon]:rounded-none group-data-[collapsible=icon]:border-none">
+          <div className="group/user-menu rounded-[var(--border-radius-m)] border border-[var(--color-border-primary-subtle)] transition-colors hover:border-[var(--color-border-primary-medium)] group-data-[collapsible=icon]:rounded-none group-data-[collapsible=icon]:border-none">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="h-auto min-h-[56px] w-full justify-start rounded-m px-3 py-2 hover:!bg-[var(--color-background-neutral-subtlest-hovered)] group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:min-h-0 group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:p-0"
+                  className="h-auto min-h-[56px] w-full justify-start rounded-[var(--border-radius-m)] px-3 py-2 hover:!bg-[var(--color-background-neutral-subtlest-hovered)] group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:min-h-0 group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:p-0"
                 >
                   {/* Expanded state */}
                   <div className="flex w-full items-center gap-3 group-data-[collapsible=icon]:hidden">

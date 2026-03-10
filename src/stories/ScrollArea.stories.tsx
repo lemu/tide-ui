@@ -21,7 +21,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   render: () => (
     <div className="w-80">
-      <ScrollArea className="h-48 w-full rounded-m border p-4">
+      <ScrollArea className="h-48 w-full rounded-[var(--border-radius-m)] border p-4">
         <div className="space-y-2">
           {Array.from({ length: 30 }, (_, i) => (
             <div key={i} className="text-body-sm">
@@ -38,7 +38,7 @@ export const Default: Story = {
 export const Horizontal: Story = {
   render: () => (
     <div className="w-80">
-      <ScrollArea className="w-full whitespace-nowrap rounded-m border">
+      <ScrollArea className="w-full whitespace-nowrap rounded-[var(--border-radius-m)] border">
         <div className="flex w-max space-x-4 p-4">
           {Array.from({ length: 20 }, (_, i) => (
             <div
@@ -82,7 +82,7 @@ export const ChatMessages: Story = {
                     <span className="text-body-sm font-medium">{msg.user}</span>
                     <span className="text-caption-sm text-[var(--color-text-secondary)]">{msg.time}</span>
                   </div>
-                  <p className="text-body-sm bg-[var(--color-background-neutral-subtlest)] rounded-l p-3">
+                  <p className="text-body-sm bg-[var(--color-background-neutral-subtlest)] rounded-[var(--border-radius-l)] p-3">
                     {msg.message}
                   </p>
                 </div>
@@ -132,7 +132,7 @@ import {
 } from 'lucide-react'
 export function MyComponent() {
   return (
-    <ScrollArea className="h-48 w-full rounded-m border p-4">
+    <ScrollArea className="h-48 w-full rounded-[var(--border-radius-m)] border p-4">
       <div className="space-y-2">
         {data.map((item, index) => (
           <div key={index} className="p-2 border rounded">

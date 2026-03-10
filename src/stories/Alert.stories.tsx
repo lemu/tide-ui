@@ -316,7 +316,7 @@ export const FormValidation: Story = {
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                  className="w-full px-3 py-2 border border-[var(--color-interaction-border-input)] rounded-m"
+                  className="w-full px-3 py-2 border border-[var(--color-interaction-border-input)] rounded-[var(--border-radius-m)]"
                   placeholder="Enter your email"
                 />
               </div>
@@ -327,7 +327,7 @@ export const FormValidation: Story = {
                   type="password"
                   value={formData.password}
                   onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
-                  className="w-full px-3 py-2 border border-[var(--color-interaction-border-input)] rounded-m"
+                  className="w-full px-3 py-2 border border-[var(--color-interaction-border-input)] rounded-[var(--border-radius-m)]"
                   placeholder="Enter your password"
                 />
               </div>
@@ -338,7 +338,7 @@ export const FormValidation: Story = {
                   type="password"
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData(prev => ({ ...prev, confirmPassword: e.target.value }))}
-                  className="w-full px-3 py-2 border border-[var(--color-interaction-border-input)] rounded-m"
+                  className="w-full px-3 py-2 border border-[var(--color-interaction-border-input)] rounded-[var(--border-radius-m)]"
                   placeholder="Confirm your password"
                 />
               </div>

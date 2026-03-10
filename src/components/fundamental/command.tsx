@@ -17,7 +17,7 @@ const Command = React.forwardRef<
     ref={ref}
     loop
     className={cn(
-      "flex h-full w-full flex-col overflow-hidden rounded-m bg-[var(--color-surface-primary)] text-[var(--color-text-primary)]",
+      "flex h-full w-full flex-col overflow-hidden rounded-[var(--border-radius-m)] bg-[var(--color-surface-primary)] text-[var(--color-text-primary)]",
       className
     )}
     {...props}
@@ -40,7 +40,7 @@ const CommandDialog = ({ children, commandProps, ...props }: CommandDialogProps)
         />
         <DialogPrimitive.Content
           className={cn(
-            "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed top-[50%] left-[50%] z-50 grid w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] overflow-hidden rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-0 shadow-lg duration-200 max-w-[450px]"
+            "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed top-[50%] left-[50%] z-50 grid w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] overflow-hidden rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-0 shadow-[var(--shadow-400)] duration-200 max-w-[450px]"
           )}
           aria-describedby={undefined}
         >
@@ -203,7 +203,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      "[&]:text-body-md relative flex cursor-pointer select-none items-center rounded-m px-[var(--space-m)] min-h-[var(--size-m)] py-[var(--space-s)] outline-none transition-colors aria-selected:bg-[var(--color-background-neutral-subtlest-hovered)] aria-selected:text-[var(--color-text-primary)] data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
+      "[&]:text-body-md relative flex cursor-pointer select-none items-center rounded-[var(--border-radius-m)] px-[var(--space-m)] min-h-[var(--size-m)] py-[var(--space-s)] outline-none transition-colors aria-selected:bg-[var(--color-background-neutral-subtlest-hovered)] aria-selected:text-[var(--color-text-primary)] data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
       className
     )}
     {...props}

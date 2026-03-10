@@ -34,22 +34,22 @@ const avatarVariants = cva(
       {
         type: "organization",
         size: "s",
-        className: "rounded-s",
+        className: "rounded-[var(--border-radius-s)]",
       },
       {
         type: "organization",
         size: "m",
-        className: "rounded-m",
+        className: "rounded-[var(--border-radius-m)]",
       },
       {
         type: "organization",
         size: "l",
-        className: "rounded-m",
+        className: "rounded-[var(--border-radius-m)]",
       },
       {
         type: "organization",
         size: "xl",
-        className: "rounded-l",
+        className: "rounded-[var(--border-radius-l)]",
       },
     ],
     defaultVariants: {
@@ -98,22 +98,22 @@ const avatarFallbackVariants = cva(
       {
         type: "organization",
         size: "s",
-        className: "rounded-s",
+        className: "rounded-[var(--border-radius-s)]",
       },
       {
         type: "organization",
         size: "m",
-        className: "rounded-m",
+        className: "rounded-[var(--border-radius-m)]",
       },
       {
         type: "organization",
         size: "l",
-        className: "rounded-m",
+        className: "rounded-[var(--border-radius-m)]",
       },
       {
         type: "organization",
         size: "xl",
-        className: "rounded-l",
+        className: "rounded-[var(--border-radius-l)]",
       },
     ],
     defaultVariants: {

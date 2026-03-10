@@ -293,7 +293,7 @@ export const ControlledSelect: Story = {
         </div>
         
         {value && (
-          <div className="p-3 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m">
+          <div className="p-3 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-[var(--border-radius-m)]">
             <p className="text-body-sm">
               Selected: <strong>{value}</strong>
             </p>

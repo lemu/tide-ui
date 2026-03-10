@@ -453,7 +453,7 @@ export const ErrorStates: Story = {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="p-3 border border-[var(--color-border-error-bold)] bg-[var(--color-background-error-subtle)] rounded-l">
+            <div className="p-3 border border-[var(--color-border-error-bold)] bg-[var(--color-background-error-subtle)] rounded-[var(--border-radius-l)]">
               <p className="text-body-sm text-[var(--color-text-error-bold)]">
                 Some files could not be uploaded. Please check the errors below and try again.
               </p>
@@ -520,7 +520,7 @@ export const DisabledState: Story = {
               </FileUpload.Dropzone>
             </FileUpload.Root>
             
-            <div className="p-3 bg-[var(--color-background-neutral-subtlest)] rounded-l">
+            <div className="p-3 bg-[var(--color-background-neutral-subtlest)] rounded-[var(--border-radius-l)]">
               <p className="text-caption-sm text-[var(--color-text-secondary)]">
                 Upload functionality is disabled in this state.
               </p>
@@ -568,7 +568,7 @@ export const CompactFileList: Story = {
               </div>
               
               {files.length > 0 && (
-                <div className="border rounded-l">
+                <div className="border rounded-[var(--border-radius-l)]">
                   <div className="p-3 border-b bg-[var(--color-background-neutral-subtlest)]">
                     <div className="flex items-center justify-between">
                       <span className="text-body-sm font-medium">

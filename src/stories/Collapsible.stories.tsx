@@ -64,7 +64,7 @@ export const CodeSnippet: Story = {
                 View source code
               </CollapsibleTrigger>
               <CollapsibleContent className="mt-4">
-                <div className="rounded-m bg-[var(--color-surface-secondary)] p-4 font-mono text-sm">
+                <div className="rounded-[var(--border-radius-m)] bg-[var(--color-surface-secondary)] p-4 font-mono text-sm">
                   <pre className="text-[var(--color-text-primary)]">
 {`import { Button } from '@/components/fundamental/button'
 import { Card } from '@/components/fundamental/card'
@@ -131,7 +131,7 @@ export const SettingsSection: Story = {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <label className="text-body-sm font-medium">Theme</label>
-              <select className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-m bg-[var(--color-surface-primary)] text-body-sm">
+              <select className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-[var(--border-radius-m)] bg-[var(--color-surface-primary)] text-body-sm">
                 <option>Light</option>
                 <option>Dark</option>
                 <option>System</option>
@@ -140,7 +140,7 @@ export const SettingsSection: Story = {
 
             <div className="space-y-2">
               <label className="text-body-sm font-medium">Language</label>
-              <select className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-m bg-[var(--color-surface-primary)] text-body-sm">
+              <select className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-[var(--border-radius-m)] bg-[var(--color-surface-primary)] text-body-sm">
                 <option>English</option>
                 <option>Spanish</option>
                 <option>French</option>
@@ -158,7 +158,7 @@ export const SettingsSection: Story = {
                     <input 
                       type="number" 
                       defaultValue="256"
-                      className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-m bg-[var(--color-surface-primary)] text-body-sm"
+                      className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-[var(--border-radius-m)] bg-[var(--color-surface-primary)] text-body-sm"
                     />
                   </div>
                   <div className="space-y-2">
@@ -166,7 +166,7 @@ export const SettingsSection: Story = {
                     <input 
                       type="number" 
                       defaultValue="5000"
-                      className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-m bg-[var(--color-surface-primary)] text-body-sm"
+                      className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-[var(--border-radius-m)] bg-[var(--color-surface-primary)] text-body-sm"
                     />
                   </div>
                   <div className="flex items-center justify-between">
@@ -230,7 +230,7 @@ export const NavigationSidebar: Story = {
     }
 
     return (
-      <div className="w-64 border border-[var(--color-border-primary-subtle)] rounded-l bg-[var(--color-surface-primary)]">
+      <div className="w-64 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-l)] bg-[var(--color-surface-primary)]">
         <div className="p-4 border-b border-[var(--color-border-primary-subtle)]">
           <h2 className="text-heading-sm font-semibold">Navigation</h2>
         </div>
@@ -446,7 +446,7 @@ export const FeatureList: Story = {
                   <CardHeader className="cursor-pointer hover:bg-[var(--color-background-neutral-subtlest-hovered)] transition-colors">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-l bg-[var(--color-background-blue-bold)] flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-[var(--border-radius-l)] bg-[var(--color-background-blue-bold)] flex items-center justify-center">
                           <Icon name={feature.icon as any} size="s" className="text-[var(--color-text-on-action)]" />
                         </div>
                         <div className="text-left">

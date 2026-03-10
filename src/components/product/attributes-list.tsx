@@ -114,7 +114,7 @@ const AttributesList = React.forwardRef<HTMLDivElement, AttributesListProps>(
               onClick={() => setShowHidden(!showHidden)}
               aria-expanded={showHidden}
               className={cn(
-                "flex items-center text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] cursor-pointer mt-[var(--space-s)] bg-transparent border-none p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-s",
+                "flex items-center text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] cursor-pointer mt-[var(--space-s)] bg-transparent border-none p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-[var(--border-radius-s)]",
                 size === 's' ? 'gap-[var(--space-s)]' : 'gap-[var(--space-xs)]',
                 size === 's' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm'
               )}
@@ -273,7 +273,7 @@ const AttributesGroup = React.forwardRef<HTMLDivElement, AttributesGroupProps>(
             onClick={() => setShowHidden(!showHidden)}
             aria-expanded={showHidden}
             className={cn(
-              "flex items-center text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] cursor-pointer mt-[var(--space-s)] bg-transparent border-none p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-s",
+              "flex items-center text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] cursor-pointer mt-[var(--space-s)] bg-transparent border-none p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-[var(--border-radius-s)]",
               size === 's' ? 'gap-[var(--space-s)]' : 'gap-[var(--space-xs)]',
               size === 's' ? '[&]:text-body-medium-sm' : '[&]:text-body-medium-xsm'
             )}
@@ -412,7 +412,7 @@ const AttributesRow = React.forwardRef<HTMLDivElement, AttributesRowProps>(
             <a
               href={externalLink.href}
               className={cn(
-                "text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] inline-flex items-center no-underline shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-s",
+                "text-[var(--color-text-brand-bold)] hover:text-[var(--color-text-brand-bold-hovered)] inline-flex items-center no-underline shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-[var(--border-radius-s)]",
                 size === 's' ? 'gap-[var(--space-s)]' : 'gap-[var(--space-xs)]',
                 size === 's' ? '[&]:text-body-sm' : '[&]:text-body-xsm'
               )}
@@ -437,7 +437,7 @@ const AttributesRow = React.forwardRef<HTMLDivElement, AttributesRowProps>(
         className={cn(
           "grid items-center",
           asCollapsibleTrigger &&
-            "cursor-pointer hover:bg-[var(--color-surface-secondary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 transition-colors rounded-s px-[var(--space-s)] py-[var(--space-xs)] -mx-[var(--space-s)]",
+            "cursor-pointer hover:bg-[var(--color-surface-secondary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 transition-colors rounded-[var(--border-radius-s)] px-[var(--space-s)] py-[var(--space-xs)] -mx-[var(--space-s)]",
           className
         )}
         style={{

@@ -47,7 +47,7 @@ const sizeConfig = {
     yearHeader: 'text-label-sm',
     monthGridGap: 'gap-[var(--space-xs)]',
     monthButton: 'px-[var(--space-xs)] py-[var(--space-s)] text-body-sm',
-    monthBorderRadius: 'rounded-m',
+    monthBorderRadius: 'rounded-[var(--border-radius-m)]',
   },
   small: {
     container: 'gap-[var(--space-s)]',
@@ -58,7 +58,7 @@ const sizeConfig = {
     yearHeader: '[&]:text-caption-medium-sm [&]:font-medium py-[var(--space-s)]',
     monthGridGap: 'gap-1',
     monthButton: 'px-1 py-[var(--space-xs)] [&]:text-caption-sm',
-    monthBorderRadius: 'rounded-s',
+    monthBorderRadius: 'rounded-[var(--border-radius-s)]',
   },
 } as const
 

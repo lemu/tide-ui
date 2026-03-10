@@ -349,7 +349,7 @@ export const Notifications: Story = {
               {notifications.map((notification) => (
                 <div 
                   key={notification.id}
-                  className={`flex gap-3 p-3 rounded-m transition-colors cursor-pointer ${
+                  className={`flex gap-3 p-3 rounded-[var(--border-radius-m)] transition-colors cursor-pointer ${
                     !notification.read 
                       ? 'bg-[var(--color-background-blue-subtle-selected)] hover:bg-[var(--color-background-blue-subtle-selected-hovered)]' 
                       : 'hover:bg-[var(--color-background-neutral-subtlest-hovered)]'
@@ -457,7 +457,7 @@ export const SearchPopover: Story = {
                     searchResults.map((item, index) => (
                       <div
                         key={index}
-                        className="flex items-center gap-3 p-2 rounded-m hover:bg-[var(--color-background-neutral-subtlest-hovered)] cursor-pointer"
+                        className="flex items-center gap-3 p-2 rounded-[var(--border-radius-m)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] cursor-pointer"
                       >
                         <Icon name={getItemIcon(item.type) as any} size="s" className="text-[var(--color-text-secondary)]" />
                         <div className="flex-1">

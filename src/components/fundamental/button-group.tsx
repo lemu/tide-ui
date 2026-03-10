@@ -77,7 +77,7 @@ const ButtonGroupText = React.forwardRef<HTMLDivElement, ButtonGroupTextProps>(
     if (asChild && React.isValidElement(children)) {
       return React.cloneElement(children as React.ReactElement<any>, {
         className: cn(
-          "bg-[var(--color-background-neutral-subtlest)] shadow-xs flex items-center gap-[var(--space-xs)] rounded-m border border-[var(--color-border-primary-subtle)] px-[var(--space-l)] [&]:text-body-sm font-medium [&_svg:not([class*='size-'])]:size-[var(--size-s)] [&_svg]:pointer-events-none",
+          "bg-[var(--color-background-neutral-subtlest)] shadow-[var(--shadow-100)] flex items-center gap-[var(--space-xs)] rounded-[var(--border-radius-m)] border border-[var(--color-border-primary-subtle)] px-[var(--space-l)] [&]:text-body-sm font-medium [&_svg:not([class*='size-'])]:size-[var(--size-s)] [&_svg]:pointer-events-none",
           (children as React.ReactElement<any>).props.className,
           className
         ),
@@ -89,7 +89,7 @@ const ButtonGroupText = React.forwardRef<HTMLDivElement, ButtonGroupTextProps>(
       <div
         ref={ref}
         className={cn(
-          "bg-[var(--color-background-neutral-subtlest)] shadow-xs flex items-center gap-[var(--space-xs)] rounded-m border border-[var(--color-border-primary-subtle)] px-[var(--space-l)] [&]:text-body-sm font-medium [&_svg:not([class*='size-'])]:size-[var(--size-s)] [&_svg]:pointer-events-none",
+          "bg-[var(--color-background-neutral-subtlest)] shadow-[var(--shadow-100)] flex items-center gap-[var(--space-xs)] rounded-[var(--border-radius-m)] border border-[var(--color-border-primary-subtle)] px-[var(--space-l)] [&]:text-body-sm font-medium [&_svg:not([class*='size-'])]:size-[var(--size-s)] [&_svg]:pointer-events-none",
           className
         )}
         {...props}

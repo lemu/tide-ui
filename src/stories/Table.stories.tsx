@@ -90,7 +90,7 @@ export const NumericColumnsWithFormatting: Story = {
           </TableBody>
         </Table>
 
-        <div className="mt-4 p-4 bg-[var(--color-background-neutral-subtlest)] rounded-m">
+        <div className="mt-4 p-4 bg-[var(--color-background-neutral-subtlest)] rounded-[var(--border-radius-m)]">
           <h4 className="text-body-md font-medium mb-2">Features Demonstrated:</h4>
           <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-1">
             <li>• <strong>numeric prop</strong>: Right-aligns content and uses tabular numerals</li>
@@ -264,7 +264,7 @@ export const WithSelection: Story = {
     return (
       <div className="space-y-4">
         {selectedRows.size > 0 && (
-          <div className="flex items-center gap-2 p-2 bg-[var(--color-background-blue-subtle-selected)] rounded-m">
+          <div className="flex items-center gap-2 p-2 bg-[var(--color-background-blue-subtle-selected)] rounded-[var(--border-radius-m)]">
             <span className="text-body-sm font-medium">
               {selectedRows.size} row{selectedRows.size > 1 ? 's' : ''} selected
             </span>
@@ -956,7 +956,7 @@ export const BorderControl: Story = {
           </div>
         </div>
 
-        <div className="p-6 bg-[var(--color-background-neutral-subtlest)] rounded-l space-y-4">
+        <div className="p-6 bg-[var(--color-background-neutral-subtlest)] rounded-[var(--border-radius-l)] space-y-4">
           <h3 className="text-heading-md font-medium">Border Implementation Details</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-body-sm">
             <div>

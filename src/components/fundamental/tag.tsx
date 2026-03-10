@@ -272,7 +272,7 @@ const Tag = React.forwardRef<HTMLDivElement, TagProps>(
             "text-[var(--color-text-primary)]",
             isTriangular && "pl-[12px]", // notch width clearance
             !isTriangular && [
-              "border border-[var(--grey-100)] rounded-m",
+              "border border-[var(--grey-100)] rounded-[var(--border-radius-m)]",
               "bg-[var(--neutral-white)]",
               interactive && "group-hover:bg-[var(--grey-25)]",
               "transition-[background-color]",
@@ -297,7 +297,7 @@ const Tag = React.forwardRef<HTMLDivElement, TagProps>(
             <button
               type="button"
               className={cn(
-                "inline-flex items-center justify-center shrink-0 hover:bg-[var(--grey-alpha-50)] rounded-xs transition-colors",
+                "inline-flex items-center justify-center shrink-0 hover:bg-[var(--grey-alpha-50)] rounded-[var(--border-radius-xs)] transition-colors",
                 sizeConfig.closeMargin,
                 sizeConfig.closeSize
               )}

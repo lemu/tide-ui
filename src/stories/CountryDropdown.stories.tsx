@@ -157,7 +157,7 @@ export const DisabledEmpty: Story = {
 export const UsageExamples: Story = {
   render: () => (
     <div className="space-y-[var(--space-l)] max-w-4xl">
-      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+      <div className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
         <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Basic Country Dropdown
         </h3>
@@ -165,7 +165,7 @@ export const UsageExamples: Story = {
           <div className="w-64">
             <ControlledCountryDropdown />
           </div>
-          <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
+          <code className="text-body-sm rounded-[var(--border-radius-s)] bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
             {`<CountryDropdown
   value={selectedCountry}
   onValueChange={setSelectedCountry}
@@ -174,7 +174,7 @@ export const UsageExamples: Story = {
         </div>
       </div>
 
-      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+      <div className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
         <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Slim Variant (Flag Only)
         </h3>
@@ -183,7 +183,7 @@ export const UsageExamples: Story = {
             <span className="text-body-sm">Country:</span>
             <ControlledCountryDropdown variant="slim" value="US" />
           </div>
-          <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
+          <code className="text-body-sm rounded-[var(--border-radius-s)] bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
             {`<CountryDropdown
   variant="slim"
   value={selectedCountry}
@@ -193,7 +193,7 @@ export const UsageExamples: Story = {
         </div>
       </div>
 
-      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+      <div className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
         <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           With Country Codes
         </h3>
@@ -201,7 +201,7 @@ export const UsageExamples: Story = {
           <div className="w-64">
             <ControlledCountryDropdown showCode={true} />
           </div>
-          <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
+          <code className="text-body-sm rounded-[var(--border-radius-s)] bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
             {`<CountryDropdown
   showCode={true}
   value={selectedCountry}
@@ -211,7 +211,7 @@ export const UsageExamples: Story = {
         </div>
       </div>
 
-      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+      <div className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
         <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Custom Priority Countries
         </h3>
@@ -222,7 +222,7 @@ export const UsageExamples: Story = {
               placeholder="Americas priority..."
             />
           </div>
-          <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
+          <code className="text-body-sm rounded-[var(--border-radius-s)] bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
             {`<CountryDropdown
   priorityCountries={['CA', 'MX', 'BR', 'AR', 'CL']}
   value={selectedCountry}

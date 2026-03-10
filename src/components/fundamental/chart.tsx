@@ -279,7 +279,7 @@ const CustomTooltip = ({ active, payload, label, config, tooltipMaxWidth = 'max-
 
   return (
     <div
-      className={`rounded-s border border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] p-[var(--space-m)] shadow-md min-w-[120px] ${tooltipMaxWidth} z-[9999]`}
+      className={`rounded-[var(--border-radius-s)] border border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] p-[var(--space-m)] shadow-[var(--shadow-300)] min-w-[120px] ${tooltipMaxWidth} z-[9999]`}
       role="tooltip"
       aria-label="Chart data tooltip"
     >

@@ -301,7 +301,7 @@ export const FormElements: Story = {
 // Toolbar example
 export const ToolbarExample: Story = {
   render: () => (
-    <div className="flex items-center space-x-[var(--space-s)] rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-m)]">
+    <div className="flex items-center space-x-[var(--space-s)] rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-m)]">
       <Tooltip>
         <TooltipTrigger asChild>
           <Button variant="ghost" size="s" icon={Plus} />

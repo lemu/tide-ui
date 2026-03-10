@@ -16,7 +16,7 @@ const InputGroup = React.forwardRef<HTMLDivElement, InputGroupProps>(
         data-slot="input-group"
         role="group"
         className={cn(
-          "group/input-group relative flex w-full items-center rounded-m border border-[var(--color-interaction-border-input)] bg-[var(--color-interaction-background-input-neutral)] outline-none transition-[color,box-shadow,border-color]",
+          "group/input-group relative flex w-full items-center rounded-[var(--border-radius-m)] border border-[var(--color-interaction-border-input)] bg-[var(--color-interaction-background-input-neutral)] outline-none transition-[color,box-shadow,border-color]",
           // Default height for inputs
           "h-[var(--size-m)] has-[>textarea]:h-auto",
           // Adjust padding when inline addons are present
@@ -44,7 +44,7 @@ InputGroup.displayName = "InputGroup";
 
 // InputGroupAddon - Container for addons (icons, text, buttons)
 const inputGroupAddonVariants = cva(
-  "text-[var(--color-text-secondary)] flex h-auto cursor-text select-none items-center justify-center gap-[var(--space-xs)] py-[var(--space-s)] [&]:text-body-sm font-medium group-data-[disabled=true]/input-group:opacity-50 [&>kbd]:rounded-xs [&>svg:not([class*='size-'])]:size-[var(--size-s)]",
+  "text-[var(--color-text-secondary)] flex h-auto cursor-text select-none items-center justify-center gap-[var(--space-xs)] py-[var(--space-s)] [&]:text-body-sm font-medium group-data-[disabled=true]/input-group:opacity-50 [&>kbd]:rounded-[var(--border-radius-xs)] [&>svg:not([class*='size-'])]:size-[var(--size-s)]",
   {
     variants: {
       align: {

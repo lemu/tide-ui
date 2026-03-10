@@ -8,7 +8,7 @@ const tabsListVariants = cva(
   {
     variants: {
       variant: {
-        pilled: "bg-[var(--color-surface-deepest)] p-[4px] rounded-m gap-[var(--space-2xs)]",
+        pilled: "bg-[var(--color-surface-deepest)] p-[4px] rounded-[var(--border-radius-m)] gap-[var(--space-2xs)]",
         line: "border-b border-[var(--grey-100)] gap-[var(--space-s)] p-0",
       },
       size: {
@@ -56,8 +56,8 @@ const tabsTriggerVariants = cva(
     variants: {
       variant: {
         pilled: [
-          "rounded-s bg-transparent",
-          "data-[state=active]:bg-[var(--color-surface-primary)] data-[state=active]:text-[var(--color-text-brand-bold-selected)] data-[state=active]:[&_svg]:text-[var(--color-text-brand-bold-selected)] data-[state=active]:shadow-xs",
+          "rounded-[var(--border-radius-s)] bg-transparent",
+          "data-[state=active]:bg-[var(--color-surface-primary)] data-[state=active]:text-[var(--color-text-brand-bold-selected)] data-[state=active]:[&_svg]:text-[var(--color-text-brand-bold-selected)] data-[state=active]:shadow-[var(--shadow-100)]",
           "hover:bg-[var(--grey-alpha-50)] hover:text-[var(--color-text-primary)]",
           "disabled:opacity-50",
         ],

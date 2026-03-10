@@ -977,7 +977,7 @@ export const SingleSelectVsMultiselect: Story = {
               Single-select filters use radio buttons (one choice only), while multi-select filters use checkboxes (multiple choices).
             </p>
 
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)] mb-[var(--space-m)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)] mb-[var(--space-m)]">
               <div className="flex flex-col gap-[var(--space-s)]">
                 <div className="text-body-sm font-medium text-[var(--color-text-accent)] mb-[var(--space-xs)]">Selection Types:</div>
                 <div className="flex items-start gap-[var(--space-s)]">
@@ -997,7 +997,7 @@ export const SingleSelectVsMultiselect: Story = {
               </div>
             </div>
 
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)] mb-[var(--space-l)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)] mb-[var(--space-l)]">
               <div className="flex flex-col gap-[var(--space-s)]">
                 <div className="text-body-sm font-medium text-[var(--color-text-accent)] mb-[var(--space-xs)]">Search Visibility:</div>
                 <div className="flex items-start gap-[var(--space-s)]">
@@ -1266,7 +1266,7 @@ export const GroupedVsUngroupedFilters: Story = {
               This example demonstrates the difference between ungrouped filters (simple flat lists) and grouped filters (categorized with section headers).
             </p>
 
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)] mb-[var(--space-m)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)] mb-[var(--space-m)]">
               <div className="flex flex-col gap-[var(--space-s)]">
                 <div className="text-body-sm font-medium text-[var(--color-text-accent)] mb-[var(--space-xs)]">Ungrouped Filters (using options array):</div>
                 <div className="flex items-start gap-[var(--space-s)]">
@@ -1279,7 +1279,7 @@ export const GroupedVsUngroupedFilters: Story = {
               </div>
             </div>
 
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)] mb-[var(--space-l)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)] mb-[var(--space-l)]">
               <div className="flex flex-col gap-[var(--space-s)]">
                 <div className="text-body-sm font-medium text-[var(--color-text-accent)] mb-[var(--space-xs)]">Grouped Filters (using groups array):</div>
                 <div className="flex items-start gap-[var(--space-s)]">

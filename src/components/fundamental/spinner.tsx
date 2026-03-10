@@ -182,9 +182,9 @@ const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
   }, ref) => {
     const radiusClass = {
       none: "rounded-none",
-      s: "rounded-s",
+      s: "rounded-[var(--border-radius-s)]",
       m: "rounded",
-      l: "rounded-l",
+      l: "rounded-[var(--border-radius-l)]",
       full: "rounded-full",
     }[radius]
 

@@ -992,24 +992,6 @@
   --text-caption-strong-xsm--font-weight: var(--font-weight-semibold);
   --text-caption-strong-xsm--letter-spacing: var(--font-letter-spacing-light);
 
-  /* Tailwind Theme - Border Radius Setup  */
-  /* Example: rounded-s */
-  --radius-null: var(--border-radius-null);
-  --radius-xs: var(--border-radius-xs);
-  --radius-s: var(--border-radius-s);
-  --radius-m: var(--border-radius-m);
-  --radius-l: var(--border-radius-l);
-  --radius-xl: var(--border-radius-xl);
-  --radius-full: var(--border-radius-full);
-
-  /* Tailwind Theme - Shadows Setup  */
-  /* Example: shadow-sm */
-  --shadow-xs: var(--shadow-100);
-  --shadow-sm: var(--shadow-200);
-  --shadow-md: var(--shadow-300);
-  --shadow-lg: var(--shadow-400);
-  --shadow-xl: var(--shadow-500);
-
   /* Ring Colors for Focus States */
   --ring-color: var(--color-border-focused);
   --ring-offset-background: var(--color-surface-primary);

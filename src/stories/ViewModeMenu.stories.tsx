@@ -218,7 +218,7 @@ export const WithImperativeAPI: Story = {
 
     return (
       <div className="flex flex-col gap-4 w-[400px]">
-        <div className="p-4 bg-[var(--color-surface-secondary)] rounded-m">
+        <div className="p-4 bg-[var(--color-surface-secondary)] rounded-[var(--border-radius-m)]">
           <p className="text-body-sm mb-4 text-[var(--color-text-secondary)]">
             This story demonstrates the imperative API using ref. Click "Get Settings" to retrieve
             the current settings from the component.
@@ -244,7 +244,7 @@ export const WithImperativeAPI: Story = {
           </div>
         </div>
         {currentSettings && (
-          <div className="p-4 bg-[var(--color-surface-primary)] rounded-m border border-[var(--color-border-primary-subtle)]">
+          <div className="p-4 bg-[var(--color-surface-primary)] rounded-[var(--border-radius-m)] border border-[var(--color-border-primary-subtle)]">
             <h4 className="text-label-sm mb-2 text-[var(--color-text-tertiary)]">
               Current Settings
             </h4>

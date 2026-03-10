@@ -413,7 +413,7 @@ export const ProductComparison: Story = {
                 const avgRating = categoryProducts.reduce((sum, p) => sum + p.rating, 0) / categoryProducts.length
 
                 return (
-                  <div key={category} className="p-4 border border-[var(--color-border-primary-subtle)] rounded-m">
+                  <div key={category} className="p-4 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
                     <h4 className="text-body-medium-sm font-medium mb-3">{category}</h4>
                     <div className="space-y-2 text-body-sm">
                       <div className="flex justify-between">
@@ -562,7 +562,7 @@ export const TrafficAnalytics: Story = {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                <div className="flex items-start gap-2 p-3 bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] rounded-m">
+                <div className="flex items-start gap-2 p-3 bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-bold)] rounded-[var(--border-radius-m)]">
                   <Icon name={CheckCircle} size="s" color="success" />
                   <div>
                     <p className="text-body-sm font-medium">High Engagement</p>
@@ -572,7 +572,7 @@ export const TrafficAnalytics: Story = {
                   </div>
                 </div>
                 
-                <div className="flex items-start gap-2 p-3 bg-[var(--color-background-warning-subtle)] border border-[var(--color-border-warning-bold)] rounded-m">
+                <div className="flex items-start gap-2 p-3 bg-[var(--color-background-warning-subtle)] border border-[var(--color-border-warning-bold)] rounded-[var(--border-radius-m)]">
                   <Icon name={AlertTriangle} size="s" color="warning" />
                   <div>
                     <p className="text-body-sm font-medium">Higher Bounce Rate</p>
@@ -943,7 +943,7 @@ export const ExpenseTracking: Story = {
               {expenseData
                 .filter(item => (item.spent / item.budget) > 0.95)
                 .map((item, index) => (
-                  <div key={index} className="flex items-start gap-2 p-3 bg-[var(--color-background-warning-subtle)] border border-[var(--color-border-warning-bold)] rounded-m">
+                  <div key={index} className="flex items-start gap-2 p-3 bg-[var(--color-background-warning-subtle)] border border-[var(--color-border-warning-bold)] rounded-[var(--border-radius-m)]">
                     <Icon name={AlertTriangle} size="s" color="warning" />
                     <div>
                       <p className="text-body-sm font-medium">{item.name} - Near Budget Limit</p>
@@ -957,7 +957,7 @@ export const ExpenseTracking: Story = {
               {expenseData
                 .filter(item => item.remaining === 0)
                 .map((item, index) => (
-                  <div key={index} className="flex items-start gap-2 p-3 bg-[var(--color-background-error-subtle)] border border-[var(--color-border-error-bold)] rounded-m">
+                  <div key={index} className="flex items-start gap-2 p-3 bg-[var(--color-background-error-subtle)] border border-[var(--color-border-error-bold)] rounded-[var(--border-radius-m)]">
                     <Icon name="alert-circle" size="s" color="error" />
                     <div>
                       <p className="text-body-sm font-medium">{item.name} - Budget Exceeded</p>

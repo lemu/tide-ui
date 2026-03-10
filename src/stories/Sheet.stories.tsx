@@ -300,8 +300,8 @@ export const ShoppingCart: Story = {
             ) : (
               <div className="space-y-4">
                 {cartItems.map((item) => (
-                  <div key={item.id} className="flex items-center gap-4 p-4 border border-[var(--color-border-primary-subtle)] rounded-m">
-                    <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded-m" />
+                  <div key={item.id} className="flex items-center gap-4 p-4 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
+                    <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded-[var(--border-radius-m)]" />
                     <div className="flex-1">
                       <h4 className="font-medium">{item.name}</h4>
                       <p className="text-body-sm text-[var(--color-text-secondary)]">${item.price}</p>
@@ -424,7 +424,7 @@ export const FormSheet: Story = {
                 id="support-priority"
                 value={formData.priority}
                 onChange={(e) => setFormData(prev => ({ ...prev, priority: e.target.value }))}
-                className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-m bg-[var(--color-surface-primary)] text-body-sm"
+                className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-[var(--border-radius-m)] bg-[var(--color-surface-primary)] text-body-sm"
               >
                 <option value="low">Low - General inquiry</option>
                 <option value="medium">Medium - Need help</option>
@@ -444,7 +444,7 @@ export const FormSheet: Story = {
               />
             </div>
 
-            <div className="bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m p-4">
+            <div className="bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-[var(--border-radius-m)] p-4">
               <div className="flex items-start gap-2">
                 <Icon name="info" size="s" className="mt-0.5 text-[var(--color-text-info-bold)]" />
                 <div className="space-y-1">
@@ -559,7 +559,7 @@ export const FileBrowser: Story = {
             </div>
 
             {/* File list */}
-            <div className="border border-[var(--color-border-primary-subtle)] rounded-m">
+            <div className="border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
               <div className="grid grid-cols-12 gap-4 p-3 border-b border-[var(--color-border-primary-subtle)] bg-[var(--color-background-neutral-subtlest)] text-body-sm font-medium">
                 <div className="col-span-1"></div>
                 <div className="col-span-6">Name</div>
@@ -698,7 +698,7 @@ export const SettingsPanel: Story = {
                   <select
                     value={settings.language}
                     onChange={(e) => setSettings(prev => ({ ...prev, language: e.target.value }))}
-                    className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-m bg-[var(--color-surface-primary)] text-body-sm"
+                    className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-[var(--border-radius-m)] bg-[var(--color-surface-primary)] text-body-sm"
                   >
                     <option value="en">English</option>
                     <option value="es">Spanish</option>
@@ -712,7 +712,7 @@ export const SettingsPanel: Story = {
                   <select
                     value={settings.timezone}
                     onChange={(e) => setSettings(prev => ({ ...prev, timezone: e.target.value }))}
-                    className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-m bg-[var(--color-surface-primary)] text-body-sm"
+                    className="w-full h-10 px-3 border border-[var(--color-interaction-border-input)] rounded-[var(--border-radius-m)] bg-[var(--color-surface-primary)] text-body-sm"
                   >
                     <option value="UTC-8">Pacific Time (UTC-8)</option>
                     <option value="UTC-5">Eastern Time (UTC-5)</option>
@@ -780,7 +780,7 @@ export const NonDismissible: Story = {
     return (
       <div className="w-[700px]">
         <Sheet modal={false} open={!!selectedCompany} onOpenChange={(open) => { if (!open) setSelectedCompany(null) }}>
-          <div className="border border-[var(--color-border-primary-subtle)] rounded-m">
+          <div className="border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
             <div className="grid grid-cols-12 gap-4 p-3 border-b border-[var(--color-border-primary-subtle)] bg-[var(--color-background-neutral-subtlest)] text-body-sm font-medium">
               <div className="col-span-4">Company</div>
               <div className="col-span-3">Industry</div>

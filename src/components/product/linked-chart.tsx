@@ -250,7 +250,7 @@ export function LinkedChart({
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className={cn("rounded-m border border-[var(--color-border-primary-subtle)]", tableClassName)}>
+            <div className={cn("rounded-[var(--border-radius-m)] border border-[var(--color-border-primary-subtle)]", tableClassName)}>
               <Table>
                 <TableHeader>
                   <TableRow>

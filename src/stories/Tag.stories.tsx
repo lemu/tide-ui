@@ -418,7 +418,7 @@ export const StatusTags: Story = {
               {orders.map(order => {
                 const statusConfig = getStatusConfig(order.status)
                 return (
-                  <div key={order.id} className="flex items-center justify-between p-3 border rounded-l">
+                  <div key={order.id} className="flex items-center justify-between p-3 border rounded-[var(--border-radius-l)]">
                     <div className="flex items-center gap-3">
                       <span className="text-body-sm font-mono">{order.number}</span>
                       <Tag intent={statusConfig.intent} size="s">

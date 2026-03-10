@@ -714,7 +714,7 @@ export const WithExternalFiltersAndGlobalSearch: Story = {
     return (
       <div className="flex flex-col gap-[var(--space-l)] w-full">
         {/* Info Banner */}
-        <div className="text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-m">
+        <div className="text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-[var(--border-radius-m)]">
           <strong>Global Search Feature:</strong> Type keywords and press Enter to add search terms.
           Search terms that match filter options (like "Rotterdam", "Singapore", "Coal") will automatically
           show the corresponding filter icon. The search looks across all fields including vessel names,
@@ -862,7 +862,7 @@ export const WithExternalFiltersAndGlobalSearchAutocomplete: Story = {
     return (
       <div className="flex flex-col gap-[var(--space-l)] w-full">
         {/* Info Banner */}
-        <div className="text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-m">
+        <div className="text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-[var(--border-radius-m)]">
           <strong>Global Search with Autocomplete:</strong> Type at least 2 characters to see autocomplete suggestions from all filter options.
           Matched text is <strong className="bg-[#ffeb10]">highlighted in yellow</strong> with medium weight.
           Each suggestion displays its source filter (icon + label) on the right side.
@@ -979,7 +979,7 @@ export const WithGlobalSearchOnly: Story = {
     return (
       <div className="flex flex-col gap-[var(--space-l)] w-full">
         {/* Info Banner */}
-        <div className="text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-m">
+        <div className="text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-[var(--border-radius-m)]">
           <strong>Global Search Only:</strong> This variant demonstrates global search without pinned filters.
           The layout shows Filter button → vertical separator → global search. Users can still access all filters
           through the Filter dropdown menu, but no filters are pinned for quick access in the toolbar.
@@ -1104,7 +1104,7 @@ export const ServerSideFiltering: Story = {
     return (
       <div className="flex flex-col gap-[var(--space-l)] w-full">
         {/* Info Banner */}
-        <div className="text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-m">
+        <div className="text-caption-sm text-[var(--color-text-secondary)] bg-[var(--color-background-neutral-default)] p-[var(--space-l)] rounded-[var(--border-radius-m)]">
           <strong>Server-Side Filtering:</strong> Filter changes trigger a simulated server fetch with 800ms delay.
           The table uses <code>manualFiltering</code> to disable client-side filtering and shows <code>isRefetching</code> state
           during server requests. Watch the loading indicator when changing filters.

@@ -87,7 +87,7 @@ export const Default: Story = {
           </div>
 
           <div className="grid gap-4">
-            <div className="rounded-l border border-[var(--color-border-primary-subtle)] p-4">
+            <div className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] p-4">
               <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-2">
                 New Features to Try
               </h3>
@@ -102,7 +102,7 @@ export const Default: Story = {
               </ul>
             </div>
 
-            <div className="rounded-l bg-[var(--color-surface-secondary)] p-8">
+            <div className="rounded-[var(--border-radius-l)] bg-[var(--color-surface-secondary)] p-8">
               <h3 className="text-heading-sm text-[var(--color-text-primary)] mb-4">Content Area</h3>
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="h-32 rounded bg-[var(--color-surface-primary)] border border-[var(--color-border-primary-subtle)]" />

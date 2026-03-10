@@ -12,41 +12,41 @@ const buttonVariants = cva(
         default: [
           "bg-[var(--color-background-neutral-subtlest)] text-[var(--color-text-primary)]",
           "border border-[var(--color-border-action-outline)]",
-          "enabled:hover:bg-[var(--color-background-neutral-subtlest-hovered)] enabled:hover:border-[var(--color-border-action-outline-hovered)] enabled:hover:shadow-sm",
+          "enabled:hover:bg-[var(--color-background-neutral-subtlest-hovered)] enabled:hover:border-[var(--color-border-action-outline-hovered)] enabled:hover:shadow-[var(--shadow-200)]",
           "focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
-          "enabled:active:bg-[var(--grey-alpha-50)] enabled:active:translate-y-px enabled:active:shadow-xs",
+          "enabled:active:bg-[var(--grey-alpha-50)] enabled:active:translate-y-px enabled:active:shadow-[var(--shadow-100)]",
           "disabled:bg-[var(--color-background-disabled)] disabled:[&]:text-[var(--color-text-disabled)] disabled:border-[var(--color-border-action-outline)]",
         ],
         secondary: [
           "bg-[var(--color-background-neutral-subtlest)] text-[var(--color-text-primary)]",
           "border border-[var(--color-border-action-outline)]",
-          "enabled:hover:bg-[var(--color-background-neutral-subtlest-hovered)] enabled:hover:border-[var(--color-border-action-outline-hovered)] enabled:hover:shadow-sm",
+          "enabled:hover:bg-[var(--color-background-neutral-subtlest-hovered)] enabled:hover:border-[var(--color-border-action-outline-hovered)] enabled:hover:shadow-[var(--shadow-200)]",
           "focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
-          "enabled:active:bg-[var(--grey-alpha-50)] enabled:active:translate-y-px enabled:active:shadow-xs",
+          "enabled:active:bg-[var(--grey-alpha-50)] enabled:active:translate-y-px enabled:active:shadow-[var(--shadow-100)]",
           "disabled:bg-[var(--color-background-disabled)] disabled:[&]:text-[var(--color-text-disabled)] disabled:border-[var(--color-border-action-outline)]",
         ],
         primary: [
           "bg-[var(--color-background-blue-bold)] [&]:text-[var(--color-text-on-action)]",
           "border-none",
-          "enabled:hover:bg-[var(--color-background-blue-bold-hovered)] enabled:hover:shadow-sm",
+          "enabled:hover:bg-[var(--color-background-blue-bold-hovered)] enabled:hover:shadow-[var(--shadow-200)]",
           "focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
-          "enabled:active:bg-[var(--blue-700)] enabled:active:translate-y-px enabled:active:shadow-xs",
+          "enabled:active:bg-[var(--blue-700)] enabled:active:translate-y-px enabled:active:shadow-[var(--shadow-100)]",
           "disabled:bg-[var(--color-background-disabled)] disabled:[&]:text-[var(--color-text-disabled)]",
         ],
         destructive: [
           "bg-[var(--color-background-error-bold)] [&]:text-[var(--color-text-on-action)]",
           "border-none",
-          "enabled:hover:bg-[var(--color-background-error-bold-hovered)] enabled:hover:shadow-sm",
+          "enabled:hover:bg-[var(--color-background-error-bold-hovered)] enabled:hover:shadow-[var(--shadow-200)]",
           "focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
-          "enabled:active:bg-[var(--red-700)] enabled:active:translate-y-px enabled:active:shadow-xs",
+          "enabled:active:bg-[var(--red-700)] enabled:active:translate-y-px enabled:active:shadow-[var(--shadow-100)]",
           "disabled:bg-[var(--color-background-disabled)] disabled:[&]:text-[var(--color-text-disabled)]",
         ],
         success: [
           "bg-[var(--color-background-success-bold)] [&]:text-[var(--color-text-on-action)]",
           "border-none",
-          "enabled:hover:bg-[var(--color-background-success-bold-hovered)] enabled:hover:shadow-sm",
+          "enabled:hover:bg-[var(--color-background-success-bold-hovered)] enabled:hover:shadow-[var(--shadow-200)]",
           "focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
-          "enabled:active:bg-[var(--green-700)] enabled:active:translate-y-px enabled:active:shadow-xs",
+          "enabled:active:bg-[var(--green-700)] enabled:active:translate-y-px enabled:active:shadow-[var(--shadow-100)]",
           "disabled:bg-[var(--color-background-disabled)] disabled:[&]:text-[var(--color-text-disabled)]",
         ],
         ghost: [
@@ -60,13 +60,13 @@ const buttonVariants = cva(
       },
       size: {
         s: [
-          "text-label-sm h-[var(--size-s)] rounded-s px-[var(--space-m)]",
+          "text-label-sm h-[var(--size-s)] rounded-[var(--border-radius-s)] px-[var(--space-m)]",
         ],
         m: [
-          "text-label-md h-[var(--size-m)] rounded-s px-[var(--space-m)]",
+          "text-label-md h-[var(--size-m)] rounded-[var(--border-radius-s)] px-[var(--space-m)]",
         ],
         l: [
-          "text-label-md h-[var(--size-l)] rounded-s px-[var(--space-l)]",
+          "text-label-md h-[var(--size-l)] rounded-[var(--border-radius-s)] px-[var(--space-l)]",
         ],
       },
       iconPosition: {

@@ -9,7 +9,7 @@ const skeletonVariants = cva(
       variant: {
         default: "",
         circle: "rounded-full",
-        rectangular: "rounded-s",
+        rectangular: "rounded-[var(--border-radius-s)]",
       },
       size: {
         s: "h-4",
@@ -183,7 +183,7 @@ const SkeletonCard = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-l border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] space-y-[var(--space-m)]",
+      "rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] p-[var(--space-l)] space-y-[var(--space-m)]",
       className
     )}
     {...props}

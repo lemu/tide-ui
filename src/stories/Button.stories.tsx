@@ -213,19 +213,19 @@ export const WithDropdown: Story = {
 export const UsageExamples: Story = {
   render: () => (
     <div className="space-y-[var(--space-l)] max-w-4xl">
-      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+      <div className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
         <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Basic Button
         </h3>
         <div className="flex items-center gap-[var(--space-m)]">
           <Button>Click me</Button>
-          <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
+          <code className="text-body-sm rounded-[var(--border-radius-s)] bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
             {`<Button>Click me</Button>`}
           </code>
         </div>
       </div>
 
-      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+      <div className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
         <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Primary with Icon
         </h3>
@@ -233,25 +233,25 @@ export const UsageExamples: Story = {
           <Button variant="primary" icon={Plus} iconPosition="left">
             Add Item
           </Button>
-          <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
+          <code className="text-body-sm rounded-[var(--border-radius-s)] bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
             {`<Button variant="primary" icon={Plus} iconPosition="left">Add Item</Button>`}
           </code>
         </div>
       </div>
 
-      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+      <div className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
         <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Icon Only Button
         </h3>
         <div className="flex items-center gap-[var(--space-m)]">
           <Button icon={Settings} size="m" />
-          <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
+          <code className="text-body-sm rounded-[var(--border-radius-s)] bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
             {`<Button icon={Settings} size="m" />`}
           </code>
         </div>
       </div>
 
-      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+      <div className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
         <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Loading Button
         </h3>
@@ -259,13 +259,13 @@ export const UsageExamples: Story = {
           <Button variant="primary" icon={Save} iconPosition="left" loading>
             Saving...
           </Button>
-          <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
+          <code className="text-body-sm rounded-[var(--border-radius-s)] bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
             {`<Button variant="primary" icon={Save} iconPosition="left" loading>Saving...</Button>`}
           </code>
         </div>
       </div>
 
-      <div className="rounded-l border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
+      <div className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
         <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
           Dropdown Button
         </h3>
@@ -280,7 +280,7 @@ export const UsageExamples: Story = {
               <DropdownMenuItem>Option 3</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <code className="text-body-sm rounded-s bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
+          <code className="text-body-sm rounded-[var(--border-radius-s)] bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
             {`<DropdownMenu>
   <DropdownMenuTrigger asChild>
     <Button dropdown>More Options</Button>

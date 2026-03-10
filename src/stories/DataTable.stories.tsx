@@ -1200,7 +1200,7 @@ export const VerticalAlignment: Story = {
               layout. Notice how cells with varying content heights align differently based on their
               column configuration.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)] space-y-[var(--space-s)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)] space-y-[var(--space-s)]">
               <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm font-medium text-[var(--color-text-accent)]">
@@ -1316,7 +1316,7 @@ export const CustomColumnWidth: Story = {
               Set custom column widths using the <code>size</code>, <code>minSize</code>, and <code>maxSize</code> properties
               in your column definitions. These properties control the initial and constrained widths of each column.
             </p>
-            <div className="bg-[var(--blue-25)] border border-[var(--blue-100)] rounded-m p-[var(--space-m)] mb-[var(--space-m)]">
+            <div className="bg-[var(--blue-25)] border border-[var(--blue-100)] rounded-[var(--border-radius-m)] p-[var(--space-m)] mb-[var(--space-m)]">
               <div className="flex items-start gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--blue-700)] mt-0.5" />
                 <div className="flex-1">
@@ -1504,7 +1504,7 @@ export const NestedColumnHeaders: Story = {
               The header groups provide logical organization for complex datasets, commonly used in financial reports,
               dashboards, and analytical interfaces.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
               <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
@@ -1514,19 +1514,19 @@ export const NestedColumnHeaders: Story = {
             </div>
 
             <div className="mt-[var(--space-m)] grid grid-cols-1 md:grid-cols-3 gap-4 text-body-sm">
-              <div className="bg-[var(--color-surface-secondary)] rounded-m p-[var(--space-m)]">
+              <div className="bg-[var(--color-surface-secondary)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
                 <div className="text-heading-sm font-semibold text-[var(--color-text-primary)]">
                   {nestedHeaders.length}
                 </div>
                 <div className="text-[var(--color-text-secondary)]">Header Groups</div>
               </div>
-              <div className="bg-[var(--color-surface-secondary)] rounded-m p-[var(--space-m)]">
+              <div className="bg-[var(--color-surface-secondary)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
                 <div className="text-heading-sm font-semibold text-[var(--color-text-primary)]">
                   {flatColumns.length}
                 </div>
                 <div className="text-[var(--color-text-secondary)]">Total Columns</div>
               </div>
-              <div className="bg-[var(--color-surface-secondary)] rounded-m p-[var(--space-m)]">
+              <div className="bg-[var(--color-surface-secondary)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
                 <div className="text-heading-sm font-semibold text-[var(--color-text-primary)]">
                   2 Levels
                 </div>
@@ -1766,7 +1766,7 @@ export const ColumnVisibility: Story = {
               Users can show and hide columns using the view options dropdown. Click the three-dot menu in the
               table header to access column visibility controls. Toggle any column on or off to customize the view.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
               <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name={Eye} className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
@@ -1920,7 +1920,7 @@ export const ColumnResizing: Story = {
               Column sizes are automatically saved to localStorage and restored on page reload.
             </p>
             <div className="space-y-[var(--space-s)] mb-[var(--space-m)]">
-              <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+              <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
                 <div className="flex items-center gap-[var(--space-s)]">
                   <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                   <span className="text-body-sm text-[var(--color-text-accent)]">
@@ -1928,7 +1928,7 @@ export const ColumnResizing: Story = {
                   </span>
                 </div>
               </div>
-              <div className="bg-[var(--blue-25)] border border-[var(--blue-100)] rounded-m p-[var(--space-m)]">
+              <div className="bg-[var(--blue-25)] border border-[var(--blue-100)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
                 <div className="flex items-start gap-[var(--space-s)]">
                   <Icon name={Lightbulb} className="h-4 w-4 text-[var(--blue-700)] mt-0.5" />
                   <div className="flex-1">
@@ -2002,7 +2002,7 @@ export const ColumnResizing: Story = {
               Hover over truncated text to see the full content in a tooltip.
             </p>
             <div className="space-y-[var(--space-s)] mb-[var(--space-m)]">
-              <div className="bg-[var(--blue-25)] border border-[var(--blue-100)] rounded-m p-[var(--space-m)]">
+              <div className="bg-[var(--blue-25)] border border-[var(--blue-100)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
                 <div className="flex items-start gap-[var(--space-s)]">
                   <Icon name={Lightbulb} className="h-4 w-4 text-[var(--blue-700)] mt-0.5" />
                   <div className="flex-1">
@@ -2361,7 +2361,7 @@ export const ColumnReordering: Story = {
               Drag and drop column headers to reorder columns. Hover over column headers to see the grab cursor,
               then click and drag to move columns to your preferred position.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
               <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name={Move} className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
@@ -2814,7 +2814,7 @@ Use \`isRowClickable\` to customize which rows can be clicked.
               <CardTitle>With Grouping (Smart Default)</CardTitle>
             </CardHeader>
             <CardContent className="space-y-[var(--space-m)]">
-              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-m)] rounded-m">
+              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-m)] rounded-[var(--border-radius-m)]">
                 <strong>Try clicking:</strong> Notice that parent category rows with multiple items are NOT clickable (no cursor change),
                 but individual product rows are. This is the smart default behavior.
               </div>
@@ -2842,7 +2842,7 @@ Use \`isRowClickable\` to customize which rows can be clicked.
               <CardTitle>Custom Clickable Filter</CardTitle>
             </CardHeader>
             <CardContent className="space-y-[var(--space-m)]">
-              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-m)] rounded-m">
+              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-m)] rounded-[var(--border-radius-m)]">
                 <strong>Custom behavior:</strong> This example uses <code>isRowClickable</code> to allow ALL rows (including parent groups) to be clicked.
               </div>
               <DataTable
@@ -2875,7 +2875,7 @@ Use \`isRowClickable\` to customize which rows can be clicked.
               <CardTitle>Keyboard Navigation</CardTitle>
             </CardHeader>
             <CardContent className="space-y-[var(--space-m)]">
-              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-m)] rounded-m">
+              <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-m)] rounded-[var(--border-radius-m)]">
                 <strong>Accessibility:</strong> Press <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-medium)] rounded">Tab</kbd> to navigate between rows,
                 then press <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-medium)] rounded">Enter</kbd> or <kbd className="px-2 py-1 bg-white border border-[var(--color-border-primary-medium)] rounded">Space</kbd> to activate.
               </div>
@@ -3070,7 +3070,7 @@ Enable row selection by setting \`enableRowSelection={true}\`.
           </Card>
 
           {/* Info Box */}
-          <div className="bg-[var(--blue-25)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+          <div className="bg-[var(--blue-25)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
             <div className="flex items-start gap-[var(--space-s)]">
               <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)] mt-1" />
               <div className="text-body-sm text-[var(--color-text-accent)]">
@@ -3468,7 +3468,7 @@ The active row indicator provides clear visual feedback for keyboard-driven navi
         <Card>
           <CardHeader>
             <CardTitle>Keyboard Navigation</CardTitle>
-            <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-m)] rounded-m">
+            <div className="text-body-sm text-[var(--color-text-secondary)] bg-[var(--blue-25)] p-[var(--space-m)] rounded-[var(--border-radius-m)]">
               <strong>Keyboard shortcuts:</strong>
               <ul className="mt-[var(--space-s)] space-y-[var(--space-xs)] list-disc list-inside">
                 <li><kbd className="px-[var(--space-xs)] py-[1px] bg-[var(--color-surface-primary)] border border-[var(--color-border-primary)] rounded text-caption-sm">↑</kbd> / <kbd className="px-[var(--space-xs)] py-[1px] bg-[var(--color-surface-primary)] border border-[var(--color-border-primary)] rounded text-caption-sm">↓</kbd> - Navigate between rows</li>
@@ -3513,7 +3513,7 @@ export const RowPinning: Story = {
               Hover over rows to see pin controls (up arrow for top, down arrow for bottom, X to unpin).
               Test cross-page pinning by pinning rows on one page and navigating to other pages.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
               <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
@@ -3810,7 +3810,7 @@ export const ColumnFaceting: Story = {
               This example demonstrates enhanced column faceting where filter options show count badges indicating
               how many rows match each filter value. The counts update dynamically as you apply and remove filters.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
               <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
@@ -3990,7 +3990,7 @@ export const GlobalFaceting: Story = {
               The "Global Faceting" button aggregates values from all faceted columns (Counterparty, Side, Status, Trader, Instrument)
               and allows you to filter multiple columns at once with a unified interface.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
               <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
@@ -4046,7 +4046,7 @@ export const ExpandingRows: Story = {
               Click the chevron icons to expand and collapse rows to see child data.
               The nested rows are automatically indented to show the hierarchy.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
               <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
@@ -4198,7 +4198,7 @@ const orderColumns: ColumnDef<OrderData>[] = [
             {canExpand && (
               <button
                 onClick={row.getToggleExpandedHandler()}
-                className="flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--blue-100)] hover:text-[var(--color-text-primary)]"
+                className="flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-[var(--border-radius-s)] text-[var(--color-text-secondary)] hover:bg-[var(--blue-100)] hover:text-[var(--color-text-primary)]"
               >
                 <Icon
                   name={isExpanded ? "chevron-down" : "chevron-right"}
@@ -4331,7 +4331,7 @@ export const ExpandingRowsMultiLevelOrderTable: Story = {
               A 3-level hierarchical structure demonstrating order aggregation with collapsible broker groups and individual offers.
               Click chevron icons to expand/collapse levels. When you expand an order, all broker groups are automatically expanded.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
               <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
@@ -4678,7 +4678,7 @@ export const ExpandingRowsWithCards: Story = {
             <p className="text-body-md text-[var(--color-text-secondary)] mb-[var(--space-s)]">
               Expand any row to see detailed check information displayed as cards. Each expanded row shows three check cards with status, timestamps, comments, and actions.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
               <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
@@ -4757,7 +4757,7 @@ export const GroupingRows: Story = {
               This example shows dynamic row grouping functionality. Use the "Group by..." dropdown in the toolbar to select different columns to group by.
               Grouped rows show the group value and count, with expand/collapse controls to show/hide group members.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
               <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
@@ -5038,7 +5038,7 @@ This feature is useful for:
               This example shows dynamic row grouping with action buttons in a pinned right column.
               Grouped rows show bulk actions (Export, Approve), while individual rows show all actions (Edit, Delete, Export, Approve).
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)] mb-[var(--space-m)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)] mb-[var(--space-m)]">
               <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
@@ -5047,12 +5047,12 @@ This feature is useful for:
               </div>
             </div>
 
-            <div className="bg-[var(--color-background-neutral-subtlest)] border border-[var(--color-border-primary-subtle)] rounded-m p-[var(--space-m)]">
+            <div className="bg-[var(--color-background-neutral-subtlest)] border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
               <h3 className="text-heading-sm mb-[var(--space-s)]">Implementation: renderInGroupedRows</h3>
               <p className="text-body-sm text-[var(--color-text-secondary)] mb-[var(--space-s)]">
                 By default, grouped rows show empty cells (or aggregated data if configured) for all columns except the first. To render custom content in grouped rows, add the <code className="bg-[var(--color-background-neutral-subtlest)] px-[var(--space-xs)] py-[1px] rounded text-body-sm">renderInGroupedRows: true</code> flag to your column's meta:
               </p>
-              <pre className="bg-[var(--color-background-primary)] border border-[var(--color-border-primary-subtle)] rounded-m p-[var(--space-m)] overflow-x-auto">
+              <pre className="bg-[var(--color-background-primary)] border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)] overflow-x-auto">
                 <code className="text-caption-sm">{`{
   id: 'actions',
   header: 'Actions',
@@ -5215,7 +5215,7 @@ Notice how the entire group stays visible and expands automatically, with matche
               are preserved - if any row in a group matches, all rows in that group remain visible.
               Matching groups automatically expand and matched terms are highlighted.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)] mb-[var(--space-m)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)] mb-[var(--space-m)]">
               <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
@@ -5224,7 +5224,7 @@ Notice how the entire group stays visible and expands automatically, with matche
                 </span>
               </div>
             </div>
-            <div className="bg-[var(--color-background-warning-subtle)] border border-[var(--color-border-warning-subtle)] rounded-m p-[var(--space-m)]">
+            <div className="bg-[var(--color-background-warning-subtle)] border border-[var(--color-border-warning-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
               <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name={Lightbulb} className="h-4 w-4 text-[var(--color-text-warning-bold)]" />
                 <span className="text-body-sm text-[var(--color-text-warning-bold)]">
@@ -7270,7 +7270,7 @@ across page refreshes or browser sessions.
               pagination persistence. Try changing the page or page size, then refresh the browser
               to see your pagination preferences maintained.
             </p>
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
               <div className="flex items-center gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)]" />
                 <span className="text-body-sm text-[var(--color-text-accent)]">
@@ -7554,7 +7554,7 @@ This example demonstrates a complex cell layout pattern where the last 4 columns
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-m)] mb-[var(--space-l)]">
-              <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info-subtle)] rounded-m p-[var(--space-m)]">
+              <div className="bg-[var(--color-background-info-subtle)] border border-[var(--color-border-info-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
                 <div className="flex items-start gap-[var(--space-s)]">
                   <Icon name={MousePointerClick} className="h-5 w-5 text-[var(--color-text-info)] mt-[2px]" />
                   <div>
@@ -7576,7 +7576,7 @@ This example demonstrates a complex cell layout pattern where the last 4 columns
                 </div>
               </div>
 
-              <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-subtle)] rounded-m p-[var(--space-m)]">
+              <div className="bg-[var(--color-background-success-subtle)] border border-[var(--color-border-success-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
                 <div className="flex items-start gap-[var(--space-s)]">
                   <Icon name={HandMetal} className="h-5 w-5 text-[var(--color-text-success)] mt-[2px]" />
                   <div>
@@ -7599,7 +7599,7 @@ This example demonstrates a complex cell layout pattern where the last 4 columns
               </div>
             </div>
 
-            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-m p-[var(--space-m)]">
+            <div className="bg-[var(--color-background-accent-subtle)] border border-[var(--color-border-accent-subtle)] rounded-[var(--border-radius-m)] p-[var(--space-m)]">
               <div className="flex items-start gap-[var(--space-s)]">
                 <Icon name="info" className="h-4 w-4 text-[var(--color-text-accent)] mt-1" />
                 <div className="text-body-sm text-[var(--color-text-accent)]">
@@ -8761,7 +8761,7 @@ export const ServerSideFiltering: Story = {
             </p>
 
             {/* Filter controls */}
-            <div className="flex flex-wrap gap-[var(--space-m)] mb-[var(--space-l)] p-[var(--space-m)] bg-[var(--color-background-neutral-subtlest)] rounded-l">
+            <div className="flex flex-wrap gap-[var(--space-m)] mb-[var(--space-l)] p-[var(--space-m)] bg-[var(--color-background-neutral-subtlest)] rounded-[var(--border-radius-l)]">
               <div className="flex flex-col gap-[var(--space-xs)]">
                 <label className="text-label-sm">Search</label>
                 <Input

@@ -69,7 +69,7 @@ export const Default: Story = {
     const [search, setSearch] = useState('')
 
     return (
-      <Command className="rounded-l border border-[var(--color-border-primary-subtle)] shadow-md w-[450px]">
+      <Command className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] shadow-[var(--shadow-300)] w-[450px]">
         <CommandInput
           placeholder="Type a command or search..."
           value={search}
@@ -194,7 +194,7 @@ export const DialogExample: Story = {
 // File search command
 export const FileSearch: Story = {
   render: () => (
-    <Command className="rounded-l border border-[var(--color-border-primary-subtle)] shadow-md w-[500px]">
+    <Command className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] shadow-[var(--shadow-300)] w-[500px]">
       <CommandInput placeholder="Search files and folders..." />
       <CommandList>
         <CommandEmpty>No files found</CommandEmpty>
@@ -256,7 +256,7 @@ export const FileSearch: Story = {
 // Command palette with status indicators
 export const WithStatusIndicators: Story = {
   render: () => (
-    <Command className="rounded-l border border-[var(--color-border-primary-subtle)] shadow-md w-[450px]">
+    <Command className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] shadow-[var(--shadow-300)] w-[450px]">
       <CommandInput placeholder="Search commands..." />
       <CommandList>
         <CommandEmpty>No commands found</CommandEmpty>
@@ -322,7 +322,7 @@ export const WithStatusIndicators: Story = {
 // User and team switching
 export const TeamSwitcher: Story = {
   render: () => (
-    <Command className="rounded-l border border-[var(--color-border-primary-subtle)] shadow-md w-[400px]">
+    <Command className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] shadow-[var(--shadow-300)] w-[400px]">
       <CommandInput placeholder="Search teams and users..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
@@ -407,7 +407,7 @@ export const TeamSwitcher: Story = {
 // Command palette for IDE/Editor
 export const IDECommands: Story = {
   render: () => (
-    <Command className="rounded-l border border-[var(--color-border-primary-subtle)] shadow-md w-[520px]">
+    <Command className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] shadow-[var(--shadow-300)] w-[520px]">
       <CommandInput placeholder="Search commands, files, and symbols..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
@@ -487,7 +487,7 @@ export const WithClearButton: Story = {
         <p className="text-body-sm text-[var(--color-text-secondary)]">
           Type in the search box to see the clear button. Click X to clear.
         </p>
-        <Command className="rounded-l border border-[var(--color-border-primary-subtle)] shadow-md w-[450px]">
+        <Command className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] shadow-[var(--shadow-300)] w-[450px]">
           <CommandInput
             placeholder="Type a command or search..."
             value={search}
@@ -524,7 +524,7 @@ export const WithClearButton: Story = {
 // Help and documentation search
 export const HelpSearch: Story = {
   render: () => (
-    <Command className="rounded-l border border-[var(--color-border-primary-subtle)] shadow-md w-[480px]">
+    <Command className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] shadow-[var(--shadow-300)] w-[480px]">
       <CommandInput placeholder="Search documentation and help..." />
       <CommandList>
         <CommandEmpty>

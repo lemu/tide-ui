@@ -216,7 +216,7 @@ export const ActionLinks: Story = {
           <CardTitle>File Actions</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <div className="flex items-center justify-between p-3 border border-[var(--color-border-primary-subtle)] rounded-m">
+          <div className="flex items-center justify-between p-3 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
             <div>
               <div className="font-medium">project-document.pdf</div>
               <div className="text-body-sm text-[var(--color-text-secondary)]">2.4 MB • Modified 2 hours ago</div>
@@ -228,7 +228,7 @@ export const ActionLinks: Story = {
             </div>
           </div>
           
-          <div className="flex items-center justify-between p-3 border border-[var(--color-border-primary-subtle)] rounded-m">
+          <div className="flex items-center justify-between p-3 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
             <div>
               <div className="font-medium">design-assets.zip</div>
               <div className="text-body-sm text-[var(--color-text-secondary)]">15.8 MB • Modified 1 day ago</div>
@@ -448,7 +448,7 @@ export const InDifferentContexts: Story = {
       </Card>
 
       {/* In alerts or notices */}
-      <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m">
+      <div className="p-4 bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-[var(--border-radius-m)]">
         <div className="flex items-start gap-3">
           <div className="text-[var(--color-text-info-bold)]">ⓘ</div>
           <div className="flex-1">

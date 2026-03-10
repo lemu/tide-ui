@@ -259,19 +259,19 @@ export const FAQ: Story = {
             <div className="space-y-3">
               <p>Our billing system is designed to be simple and transparent:</p>
               <div className="space-y-3">
-                <div className="p-3 border border-[var(--color-border-primary-subtle)] rounded-m">
+                <div className="p-3 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
                   <h4 className="font-medium mb-1">Monthly Billing</h4>
                   <p className="text-body-sm text-[var(--color-text-secondary)]">
                     Pay month-to-month with no long-term commitment. Cancel anytime.
                   </p>
                 </div>
-                <div className="p-3 border border-[var(--color-border-primary-subtle)] rounded-m">
+                <div className="p-3 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
                   <h4 className="font-medium mb-1">Annual Billing</h4>
                   <p className="text-body-sm text-[var(--color-text-secondary)]">
                     Save 20% with annual billing. Billed once per year.
                   </p>
                 </div>
-                <div className="p-3 border border-[var(--color-border-primary-subtle)] rounded-m">
+                <div className="p-3 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
                   <h4 className="font-medium mb-1">Usage-Based</h4>
                   <p className="text-body-sm text-[var(--color-text-secondary)]">
                     Enterprise plans can be customized based on your specific usage needs.
@@ -287,7 +287,7 @@ export const FAQ: Story = {
           <AccordionContent>
             <div className="space-y-3">
               <p>Yes, you can cancel your subscription at any time with no questions asked.</p>
-              <div className="bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-m p-4">
+              <div className="bg-[var(--color-background-information-subtle)] border border-[var(--color-border-info-bold)] rounded-[var(--border-radius-m)] p-4">
                 <div className="flex items-start gap-3">
                   <Icon name="info" size="s" className="mt-0.5 text-[var(--color-text-info-bold)]" />
                   <div className="space-y-1">
@@ -418,7 +418,7 @@ export const SettingsAccordion: Story = {
               <div className="space-y-3">
                 <div>
                   <h4 className="text-body-sm font-medium mb-2">Two-Factor Authentication</h4>
-                  <div className="flex items-center justify-between p-3 border border-[var(--color-border-success-bold)] bg-[var(--color-background-success-subtle)] rounded-m">
+                  <div className="flex items-center justify-between p-3 border border-[var(--color-border-success-bold)] bg-[var(--color-background-success-subtle)] rounded-[var(--border-radius-m)]">
                     <div className="flex items-center gap-2">
                       <Icon name={ShieldCheck} size="s" className="text-[var(--color-text-success-bold)]" />
                       <span className="text-body-sm">Enabled</span>
@@ -459,7 +459,7 @@ export const SettingsAccordion: Story = {
           </AccordionTrigger>
           <AccordionContent>
             <div className="space-y-4">
-              <div className="p-3 border border-[var(--color-border-primary-subtle)] rounded-m">
+              <div className="p-3 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="text-body-sm font-medium">Current Plan</h4>
                   <Badge>Pro Plan</Badge>
@@ -500,7 +500,7 @@ export const WidthConsistency: Story = {
         </p>
       </div>
       
-      <Accordion type="single" collapsible className="border border-[var(--color-border-primary-subtle)] rounded-m">
+      <Accordion type="single" collapsible className="border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
         <AccordionItem value="short">
           <AccordionTrigger>Short</AccordionTrigger>
           <AccordionContent>
@@ -577,7 +577,7 @@ export const ProductShowcase: Story = {
                 </div>
               </div>
               
-              <div className="bg-[var(--color-background-neutral-subtlest)] p-4 rounded-m">
+              <div className="bg-[var(--color-background-neutral-subtlest)] p-4 rounded-[var(--border-radius-m)]">
                 <h4 className="font-medium mb-2">Performance Features:</h4>
                 <ul className="space-y-1 text-body-sm">
                   <li>• Global CDN with edge caching</li>
@@ -604,21 +604,21 @@ export const ProductShowcase: Story = {
               <p>Your data security is our top priority. We implement industry-leading security measures.</p>
               
               <div className="grid gap-3">
-                <div className="flex items-start gap-3 p-3 border border-[var(--color-border-success-bold)] bg-[var(--color-background-success-subtle)] rounded-m">
+                <div className="flex items-start gap-3 p-3 border border-[var(--color-border-success-bold)] bg-[var(--color-background-success-subtle)] rounded-[var(--border-radius-m)]">
                   <Icon name={CheckCircle} size="s" className="mt-0.5 text-[var(--color-text-success-bold)]" />
                   <div>
                     <p className="font-medium">SOC 2 Type II Compliant</p>
                     <p className="text-body-sm text-[var(--color-text-secondary)]">Independently audited security controls</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 p-3 border border-[var(--color-border-success-bold)] bg-[var(--color-background-success-subtle)] rounded-m">
+                <div className="flex items-start gap-3 p-3 border border-[var(--color-border-success-bold)] bg-[var(--color-background-success-subtle)] rounded-[var(--border-radius-m)]">
                   <Icon name={CheckCircle} size="s" className="mt-0.5 text-[var(--color-text-success-bold)]" />
                   <div>
                     <p className="font-medium">ISO 27001 Certified</p>
                     <p className="text-body-sm text-[var(--color-text-secondary)]">International security management standard</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 p-3 border border-[var(--color-border-success-bold)] bg-[var(--color-background-success-subtle)] rounded-m">
+                <div className="flex items-start gap-3 p-3 border border-[var(--color-border-success-bold)] bg-[var(--color-background-success-subtle)] rounded-[var(--border-radius-m)]">
                   <Icon name={CheckCircle} size="s" className="mt-0.5 text-[var(--color-text-success-bold)]" />
                   <div>
                     <p className="font-medium">GDPR Compliant</p>
@@ -644,7 +644,7 @@ export const ProductShowcase: Story = {
               <p>Grow without limits. Our infrastructure automatically scales with your needs.</p>
               
               <div className="space-y-3">
-                <div className="p-4 border border-[var(--color-border-primary-subtle)] rounded-m">
+                <div className="p-4 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium">Auto-scaling</span>
                     <Badge appearance="outline">Enabled</Badge>
@@ -653,7 +653,7 @@ export const ProductShowcase: Story = {
                     Resources automatically adjust based on demand
                   </p>
                 </div>
-                <div className="p-4 border border-[var(--color-border-primary-subtle)] rounded-m">
+                <div className="p-4 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium">Load Balancing</span>
                     <Badge appearance="outline">Active</Badge>
@@ -662,7 +662,7 @@ export const ProductShowcase: Story = {
                     Traffic distributed across multiple servers for optimal performance
                   </p>
                 </div>
-                <div className="p-4 border border-[var(--color-border-primary-subtle)] rounded-m">
+                <div className="p-4 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium">Database Clustering</span>
                     <Badge appearance="outline">Multi-region</Badge>
@@ -690,7 +690,7 @@ export const ProductShowcase: Story = {
               <p>Get help whenever you need it from our team of experienced professionals.</p>
               
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-3 border border-[var(--color-border-primary-subtle)] rounded-m">
+                <div className="p-3 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
                   <div className="flex items-center gap-2 mb-2">
                     <Icon name={MessageCircle} size="s" />
                     <span className="font-medium">Live Chat</span>
@@ -699,7 +699,7 @@ export const ProductShowcase: Story = {
                     Instant support via chat
                   </p>
                 </div>
-                <div className="p-3 border border-[var(--color-border-primary-subtle)] rounded-m">
+                <div className="p-3 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
                   <div className="flex items-center gap-2 mb-2">
                     <Icon name={Mail} size="s" />
                     <span className="font-medium">Email Support</span>
@@ -708,7 +708,7 @@ export const ProductShowcase: Story = {
                     Detailed technical assistance
                   </p>
                 </div>
-                <div className="p-3 border border-[var(--color-border-primary-subtle)] rounded-m">
+                <div className="p-3 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
                   <div className="flex items-center gap-2 mb-2">
                     <Icon name={Phone} size="s" />
                     <span className="font-medium">Phone Support</span>
@@ -717,7 +717,7 @@ export const ProductShowcase: Story = {
                     Direct line to experts
                   </p>
                 </div>
-                <div className="p-3 border border-[var(--color-border-primary-subtle)] rounded-m">
+                <div className="p-3 border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
                   <div className="flex items-center gap-2 mb-2">
                     <Icon name={BookOpen} size="s" />
                     <span className="font-medium">Documentation</span>

@@ -870,7 +870,7 @@ const DataTableGlobalFaceting = React.memo(function DataTableGlobalFaceting({ ta
           {selectedValues.length > 0 && (
             <>
               <div className="mx-2 h-4 w-px bg-[var(--color-border-primary)]" />
-              <Badge className="rounded-s px-1 font-normal">
+              <Badge className="rounded-[var(--border-radius-s)] px-1 font-normal">
                 {selectedValues.length} selected
               </Badge>
             </>
@@ -974,19 +974,19 @@ const DataTableFilter = React.memo(function DataTableFilter({ column }: DataTabl
             {selectedValues.length > 0 && (
               <>
                 <div className="mx-2 h-4 w-px bg-[var(--color-border-primary)]" />
-                <Badge className="rounded-s px-1 font-normal lg:hidden">
+                <Badge className="rounded-[var(--border-radius-s)] px-1 font-normal lg:hidden">
                   {selectedValues.length}
                 </Badge>
                 <div className="hidden space-x-1 lg:flex">
                   {selectedValues.length > 2 ? (
-                    <Badge className="rounded-s px-1 font-normal">
+                    <Badge className="rounded-[var(--border-radius-s)] px-1 font-normal">
                       {selectedValues.length} selected
                     </Badge>
                   ) : (
                     filterOptions
                       .filter(option => selectedValues.includes(option.value))
                       .map(option => (
-                        <Badge key={option.value} className="rounded-s px-1 font-normal">
+                        <Badge key={option.value} className="rounded-[var(--border-radius-s)] px-1 font-normal">
                           {option.label}
                         </Badge>
                       ))
@@ -1105,7 +1105,7 @@ const DraggableColumnHeader = React.memo(function DraggableColumnHeader({ header
       </div>
       {enableColumnOrdering && (
         <div
-          className="ml-2 p-1 !cursor-grab active:!cursor-grabbing hover:bg-[var(--color-background-neutral-subtlest-hovered)] rounded-s transition-colors"
+          className="ml-2 p-1 !cursor-grab active:!cursor-grabbing hover:bg-[var(--color-background-neutral-subtlest-hovered)] rounded-[var(--border-radius-s)] transition-colors"
           {...attributes}
           {...listeners}
         >
@@ -1620,7 +1620,7 @@ function renderGroupDisplayContent(
     <button
       tabIndex={-1}
       onClick={row.getToggleExpandedHandler()}
-      className="flex h-[var(--size-s)] w-[var(--size-s)] cursor-pointer items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+      className="flex h-[var(--size-s)] w-[var(--size-s)] cursor-pointer items-center justify-center rounded-[var(--border-radius-s)] text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
     >
       <Icon
         name={isExpanded ? "chevron-down" : "chevron-right"}
@@ -4087,7 +4087,7 @@ export function DataTable<TData, TValue>({
         onDragEnd={handleDragEnd}
       >
       <div className={cn(
-        "border border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] overflow-hidden rounded-l",
+        "border border-[var(--color-border-primary-medium)] bg-[var(--color-surface-primary)] overflow-hidden rounded-[var(--border-radius-l)]",
         // Remove bottom border when no pagination to avoid double border with last row
         !showPagination && "border-b-0",
         className
@@ -4213,8 +4213,8 @@ export function DataTable<TData, TValue>({
                         className={cn(
                           "text-center bg-[var(--color-background-neutral-subtlest)] font-medium border-b border-[var(--color-border-primary-medium)]",
                           stickyHeader && "z-20",
-                          !showHeader && index === 0 && "rounded-tl-l",
-                          !showHeader && index === nestedHeaders.length - 1 && "rounded-tr-l",
+                          !showHeader && index === 0 && "rounded-tl-[var(--border-radius-l)]",
+                          !showHeader && index === nestedHeaders.length - 1 && "rounded-tr-[var(--border-radius-l)]",
                           headerConfig.className
                         )}
                         style={{
@@ -4357,8 +4357,8 @@ export function DataTable<TData, TValue>({
                           (effectiveLeftSticky > 0 || effectiveRightSticky > 0) && "z-30",
                           enableColumnResizing && "relative overflow-visible group",
                           enableColumnOrdering && "group",
-                          !showHeader && index === 0 && "rounded-tl-l",
-                          !showHeader && index === headerGroup.headers.length - 1 && "rounded-tr-l",
+                          !showHeader && index === 0 && "rounded-tl-[var(--border-radius-l)]",
+                          !showHeader && index === headerGroup.headers.length - 1 && "rounded-tr-[var(--border-radius-l)]",
                           getResizeIndicatorClasses(header.column, isLastHeader),
                           // Focus ring for keyboard navigation
                           "focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--color-border-brand-bold)]"
@@ -4651,7 +4651,7 @@ export function DataTable<TData, TValue>({
                                   <button
                                     tabIndex={-1}
                                     onClick={row.getToggleExpandedHandler()}
-                                    className="flex h-[var(--size-s)] w-[var(--size-s)] cursor-pointer items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                                    className="flex h-[var(--size-s)] w-[var(--size-s)] cursor-pointer items-center justify-center rounded-[var(--border-radius-s)] text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                   >
                                     <Icon
                                       name={isExpanded ? "chevron-down" : "chevron-right"}
@@ -4666,7 +4666,7 @@ export function DataTable<TData, TValue>({
                                       <button
                                         tabIndex={-1}
                                         onClick={() => row.pin('top')}
-                                        className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                                        className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-[var(--border-radius-s)] text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                         title="Pin to top"
                                       >
                                         <Icon name={ArrowUpToLine} className="h-3 w-3" />
@@ -4676,7 +4676,7 @@ export function DataTable<TData, TValue>({
                                       <button
                                         tabIndex={-1}
                                         onClick={() => row.pin('bottom')}
-                                        className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                                        className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-[var(--border-radius-s)] text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                         title="Pin to bottom"
                                       >
                                         <Icon name={ArrowDownToLine} className="h-3 w-3" />
@@ -4686,7 +4686,7 @@ export function DataTable<TData, TValue>({
                                       <button
                                         tabIndex={-1}
                                         onClick={() => row.pin(false)}
-                                        className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                                        className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-[var(--border-radius-s)] text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                         title="Unpin row"
                                       >
                                         <Icon name={X} className="h-3 w-3" />
@@ -5107,7 +5107,7 @@ export function DataTable<TData, TValue>({
                               {isFirstCell && canExpand && (
                                 <button
                                   onClick={row.getToggleExpandedHandler()}
-                                  className="flex h-[var(--size-s)] w-[var(--size-s)] cursor-pointer items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                                  className="flex h-[var(--size-s)] w-[var(--size-s)] cursor-pointer items-center justify-center rounded-[var(--border-radius-s)] text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                 >
                                   <Icon
                                     name={isExpanded ? "chevron-down" : "chevron-right"}
@@ -5121,7 +5121,7 @@ export function DataTable<TData, TValue>({
                                   {row.getIsPinned() !== 'top' && (
                                     <button
                                       onClick={() => row.pin('top')}
-                                      className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                                      className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-[var(--border-radius-s)] text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                       title="Pin to top"
                                     >
                                       <Icon name={ArrowUpToLine} className="h-3 w-3" />
@@ -5130,7 +5130,7 @@ export function DataTable<TData, TValue>({
                                   {row.getIsPinned() !== 'bottom' && (
                                     <button
                                       onClick={() => row.pin('bottom')}
-                                      className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                                      className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-[var(--border-radius-s)] text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                       title="Pin to bottom"
                                     >
                                       <Icon name={ArrowDownToLine} className="h-3 w-3" />
@@ -5139,7 +5139,7 @@ export function DataTable<TData, TValue>({
                                   {row.getIsPinned() && (
                                     <button
                                       onClick={() => row.pin(false)}
-                                      className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-s text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
+                                      className="opacity-0 group-hover:opacity-100 flex h-[var(--size-s)] w-[var(--size-s)] items-center justify-center rounded-[var(--border-radius-s)] text-[var(--color-text-secondary)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:text-[var(--color-text-primary)]"
                                       title="Unpin row"
                                     >
                                       <Icon name={X} className="h-3 w-3" />

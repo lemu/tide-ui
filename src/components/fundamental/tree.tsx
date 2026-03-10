@@ -119,7 +119,7 @@ const TreeItem = React.forwardRef<HTMLDivElement, TreeItemProps>(
       <div ref={ref} className="relative">
         <div
           className={cn(
-            "flex items-center gap-1 rounded-s py-1 pr-1 cursor-pointer transition-colors",
+            "flex items-center gap-1 rounded-[var(--border-radius-s)] py-1 pr-1 cursor-pointer transition-colors",
             "hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
             showSelection && "bg-[var(--color-background-blue-subtle-selected)] hover:bg-[var(--color-background-blue-subtle-selected-hovered)]",
             item.disabled && "opacity-50 cursor-not-allowed"

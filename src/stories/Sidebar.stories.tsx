@@ -113,8 +113,8 @@ export const Default: Story = {
       <Sidebar>
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
-            <Avatar className="h-8 w-8 rounded-m">
-              <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-m">
+            <Avatar className="h-8 w-8 rounded-[var(--border-radius-m)]">
+              <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-[var(--border-radius-m)]">
                 <Icon name={Sparkles} size="s" color="inverse" />
               </AvatarFallback>
             </Avatar>
@@ -171,8 +171,8 @@ export const Default: Story = {
           <span className="text-lg font-semibold">Dashboard</span>
         </div>
         <div className="flex flex-1 flex-col gap-4 p-4">
-          <div className="h-24 rounded-l bg-[var(--color-surface-secondary)]" />
-          <div className="h-48 rounded-l bg-[var(--color-surface-secondary)]" />
+          <div className="h-24 rounded-[var(--border-radius-l)] bg-[var(--color-surface-secondary)]" />
+          <div className="h-48 rounded-[var(--border-radius-l)] bg-[var(--color-surface-secondary)]" />
         </div>
       </SidebarInset>
     </SidebarProvider>
@@ -186,8 +186,8 @@ export const WithSubmenus: Story = {
       <Sidebar>
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
-            <Avatar className="h-8 w-8 rounded-m">
-              <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-m">
+            <Avatar className="h-8 w-8 rounded-[var(--border-radius-m)]">
+              <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-[var(--border-radius-m)]">
                 <Icon name={Package} size="s" color="inverse" />
               </AvatarFallback>
             </Avatar>
@@ -313,11 +313,11 @@ export const WithSubmenus: Story = {
         </div>
         <div className="flex flex-1 flex-col gap-4 p-4">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <div className="h-32 rounded-l bg-[var(--color-surface-secondary)]" />
-            <div className="h-32 rounded-l bg-[var(--color-surface-secondary)]" />
-            <div className="h-32 rounded-l bg-[var(--color-surface-secondary)]" />
+            <div className="h-32 rounded-[var(--border-radius-l)] bg-[var(--color-surface-secondary)]" />
+            <div className="h-32 rounded-[var(--border-radius-l)] bg-[var(--color-surface-secondary)]" />
+            <div className="h-32 rounded-[var(--border-radius-l)] bg-[var(--color-surface-secondary)]" />
           </div>
-          <div className="h-64 rounded-l bg-[var(--color-surface-secondary)]" />
+          <div className="h-64 rounded-[var(--border-radius-l)] bg-[var(--color-surface-secondary)]" />
         </div>
       </SidebarInset>
     </SidebarProvider>
@@ -331,8 +331,8 @@ export const WithBadgesAndActions: Story = {
       <Sidebar>
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
-            <Avatar className="h-8 w-8 rounded-m">
-              <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-m">
+            <Avatar className="h-8 w-8 rounded-[var(--border-radius-m)]">
+              <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-[var(--border-radius-m)]">
                 <Icon name={Mail} size="s" color="inverse" />
               </AvatarFallback>
             </Avatar>
@@ -436,9 +436,9 @@ export const WithBadgesAndActions: Story = {
         </div>
         <div className="flex flex-1 flex-col gap-4 p-4">
           <div className="space-y-2">
-            <div className="h-16 rounded-l bg-[var(--color-surface-secondary)]" />
-            <div className="h-16 rounded-l bg-[var(--color-surface-secondary)]" />
-            <div className="h-16 rounded-l bg-[var(--color-surface-secondary)]" />
+            <div className="h-16 rounded-[var(--border-radius-l)] bg-[var(--color-surface-secondary)]" />
+            <div className="h-16 rounded-[var(--border-radius-l)] bg-[var(--color-surface-secondary)]" />
+            <div className="h-16 rounded-[var(--border-radius-l)] bg-[var(--color-surface-secondary)]" />
           </div>
         </div>
       </SidebarInset>
@@ -453,8 +453,8 @@ export const WithSearch: Story = {
       <Sidebar>
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
-            <Avatar className="h-8 w-8 rounded-m">
-              <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-m">
+            <Avatar className="h-8 w-8 rounded-[var(--border-radius-m)]">
+              <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-[var(--border-radius-m)]">
                 <Icon name={FileText} size="s" color="inverse" />
               </AvatarFallback>
             </Avatar>
@@ -553,7 +553,7 @@ export const WithSearch: Story = {
           <div className="h-8 w-1/3 rounded bg-[var(--color-surface-secondary)]" />
           <div className="h-4 w-2/3 rounded bg-[var(--color-surface-secondary)]" />
           <div className="h-4 w-1/2 rounded bg-[var(--color-surface-secondary)]" />
-          <div className="h-64 rounded-l bg-[var(--color-surface-secondary)]" />
+          <div className="h-64 rounded-[var(--border-radius-l)] bg-[var(--color-surface-secondary)]" />
         </div>
       </SidebarInset>
     </SidebarProvider>
@@ -567,8 +567,8 @@ export const FloatingVariant: Story = {
       <Sidebar variant="floating">
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
-            <Avatar className="h-8 w-8 rounded-m">
-              <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-m">
+            <Avatar className="h-8 w-8 rounded-[var(--border-radius-m)]">
+              <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-[var(--border-radius-m)]">
                 <Icon name={Zap} size="s" color="inverse" />
               </AvatarFallback>
             </Avatar>
@@ -608,8 +608,8 @@ export const FloatingVariant: Story = {
           <span className="text-lg font-semibold">Floating Sidebar Demo</span>
         </div>
         <div className="flex flex-1 flex-col gap-4 p-4">
-          <div className="h-32 rounded-l bg-[var(--color-surface-secondary)]" />
-          <div className="h-32 rounded-l bg-[var(--color-surface-secondary)]" />
+          <div className="h-32 rounded-[var(--border-radius-l)] bg-[var(--color-surface-secondary)]" />
+          <div className="h-32 rounded-[var(--border-radius-l)] bg-[var(--color-surface-secondary)]" />
         </div>
       </SidebarInset>
     </SidebarProvider>
@@ -659,8 +659,8 @@ export const WithSkeleton: Story = {
         </div>
         <div className="flex flex-1 flex-col gap-4 p-4">
           <div className="h-8 w-1/3 rounded bg-[var(--color-surface-secondary)] animate-pulse" />
-          <div className="h-32 rounded-l bg-[var(--color-surface-secondary)] animate-pulse" />
-          <div className="h-32 rounded-l bg-[var(--color-surface-secondary)] animate-pulse" />
+          <div className="h-32 rounded-[var(--border-radius-l)] bg-[var(--color-surface-secondary)] animate-pulse" />
+          <div className="h-32 rounded-[var(--border-radius-l)] bg-[var(--color-surface-secondary)] animate-pulse" />
         </div>
       </SidebarInset>
     </SidebarProvider>
@@ -674,8 +674,8 @@ export const EnhancedHoverFocus: Story = {
       <Sidebar>
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
-            <Avatar className="h-8 w-8 rounded-m">
-              <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-m">
+            <Avatar className="h-8 w-8 rounded-[var(--border-radius-m)]">
+              <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-[var(--border-radius-m)]">
                 <Icon name={Zap} size="s" color="inverse" />
               </AvatarFallback>
             </Avatar>
@@ -770,7 +770,7 @@ export const EnhancedHoverFocus: Story = {
           <span className="text-lg font-semibold">Enhanced Hover/Focus Demo</span>
         </div>
         <div className="flex flex-1 flex-col gap-4 p-4">
-          <div className="rounded-l bg-[var(--color-surface-secondary)] p-4">
+          <div className="rounded-[var(--border-radius-l)] bg-[var(--color-surface-secondary)] p-4">
             <h3 className="text-heading-sm mb-2">Enhanced Behavior Features</h3>
             <ul className="text-body-sm text-[var(--color-text-secondary)] space-y-1">
               <li>✅ Hover effects only appear when not keyboard-focused</li>
@@ -798,8 +798,8 @@ export const ComplexSidebar: Story = {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <SidebarMenuButton size="l">
-                    <Avatar className="size-8 rounded-m">
-                      <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-m">
+                    <Avatar className="size-8 rounded-[var(--border-radius-m)]">
+                      <AvatarFallback className="bg-[var(--color-background-blue-bold)] rounded-[var(--border-radius-m)]">
                         <Icon name={Sparkles} size="s" color="inverse" />
                       </AvatarFallback>
                     </Avatar>
@@ -814,7 +814,7 @@ export const ComplexSidebar: Story = {
                   <DropdownMenuLabel className="text-xs text-[var(--color-text-secondary)]">Teams</DropdownMenuLabel>
                   <DropdownMenuItem>
                     <div className="flex items-center gap-2 [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--color-text-secondary)]">
-                      <div className="flex size-6 items-center justify-center rounded-s border border-[var(--color-border-primary-subtle)]">
+                      <div className="flex size-6 items-center justify-center rounded-[var(--border-radius-s)] border border-[var(--color-border-primary-subtle)]">
                         <Icon name={Sparkles} size="s" />
                       </div>
                       Acme Inc
@@ -822,7 +822,7 @@ export const ComplexSidebar: Story = {
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <div className="flex items-center gap-2 [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-[var(--color-text-secondary)]">
-                      <div className="flex size-6 items-center justify-center rounded-s border border-[var(--color-border-primary-subtle)]">
+                      <div className="flex size-6 items-center justify-center rounded-[var(--border-radius-s)] border border-[var(--color-border-primary-subtle)]">
                         <Icon name={Building} size="s" />
                       </div>
                       Evil Corp
@@ -914,12 +914,12 @@ export const ComplexSidebar: Story = {
                     size="l"
                     className="data-[state=open]:bg-[var(--color-background-neutral-subtlest)] data-[state=open]:text-[var(--color-text-primary)]"
                   >
-                    <Avatar className="size-8 rounded-l">
+                    <Avatar className="size-8 rounded-[var(--border-radius-l)]">
                       <AvatarImage
                         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face"
                         alt="User"
                       />
-                      <AvatarFallback className="rounded-l">CN</AvatarFallback>
+                      <AvatarFallback className="rounded-[var(--border-radius-l)]">CN</AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
                       <span className="truncate font-semibold">John Doe</span>
@@ -931,12 +931,12 @@ export const ComplexSidebar: Story = {
                 <DropdownMenuContent className="w-56" align="end" side="top">
                   <DropdownMenuLabel className="p-0 font-normal">
                     <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                      <Avatar className="h-8 w-8 rounded-l">
+                      <Avatar className="h-8 w-8 rounded-[var(--border-radius-l)]">
                         <AvatarImage
                           src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face"
                           alt="User"
                         />
-                        <AvatarFallback className="rounded-l">CN</AvatarFallback>
+                        <AvatarFallback className="rounded-[var(--border-radius-l)]">CN</AvatarFallback>
                       </Avatar>
                       <div className="grid flex-1 text-left text-sm leading-tight">
                         <span className="truncate font-semibold">John Doe</span>
@@ -986,11 +986,11 @@ export const ComplexSidebar: Story = {
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-[var(--color-surface-secondary)]" />
-            <div className="aspect-video rounded-xl bg-[var(--color-surface-secondary)]" />
-            <div className="aspect-video rounded-xl bg-[var(--color-surface-secondary)]" />
+            <div className="aspect-video rounded-[var(--border-radius-xl)] bg-[var(--color-surface-secondary)]" />
+            <div className="aspect-video rounded-[var(--border-radius-xl)] bg-[var(--color-surface-secondary)]" />
+            <div className="aspect-video rounded-[var(--border-radius-xl)] bg-[var(--color-surface-secondary)]" />
           </div>
-          <div className="min-h-screen flex-1 rounded-xl bg-[var(--color-surface-secondary)] md:min-h-min" />
+          <div className="min-h-screen flex-1 rounded-[var(--border-radius-xl)] bg-[var(--color-surface-secondary)] md:min-h-min" />
         </div>
       </SidebarInset>
     </SidebarProvider>

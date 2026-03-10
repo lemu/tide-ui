@@ -167,7 +167,7 @@ export const ColorPicker: Story = {
           <CardContent className="space-y-4">
             <div className="space-y-4">
               <div 
-                className="w-full h-24 rounded-l border border-[var(--color-border-primary-subtle)]"
+                className="w-full h-24 rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)]"
                 style={{ backgroundColor: rgbaColor }}
               />
               

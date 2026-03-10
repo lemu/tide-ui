@@ -612,7 +612,7 @@ export const CustomContent: Story = {
                     Deprecated API usage detected in 3 files
                   </span>
                 </div>
-                <div className="text-caption-sm font-mono text-[var(--color-text-tertiary)] bg-[var(--color-surface-secondary)] p-2 rounded-s">
+                <div className="text-caption-sm font-mono text-[var(--color-text-tertiary)] bg-[var(--color-surface-secondary)] p-2 rounded-[var(--border-radius-s)]">
                   components/legacy-button.tsx:42
                 </div>
               </CardContent>

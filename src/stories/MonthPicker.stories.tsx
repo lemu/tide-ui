@@ -19,7 +19,7 @@ export const SingleMode: Story = {
   render: () => {
     const [value, setValue] = React.useState<Date | undefined>(new Date())
     return (
-      <div className="w-[600px] p-[var(--space-l)] bg-[var(--color-surface-primary)] rounded-l shadow-md">
+      <div className="w-[600px] p-[var(--space-l)] bg-[var(--color-surface-primary)] rounded-[var(--border-radius-l)] shadow-[var(--shadow-300)]">
         <MonthPicker
           value={value}
           onChange={(v) => setValue(v as Date)}
@@ -43,7 +43,7 @@ export const RangeMode: Story = {
   render: () => {
     const [value, setValue] = React.useState<[Date, Date] | undefined>()
     return (
-      <div className="w-[600px] p-[var(--space-l)] bg-[var(--color-surface-primary)] rounded-l shadow-md">
+      <div className="w-[600px] p-[var(--space-l)] bg-[var(--color-surface-primary)] rounded-[var(--border-radius-l)] shadow-[var(--shadow-300)]">
         <MonthPicker
           value={value}
           onChange={(v) => setValue(v as [Date, Date])}
@@ -78,8 +78,8 @@ export const WithConstraints: Story = {
     const maxDate = new Date(2027, 9, 1) // October 2027
 
     return (
-      <div className="w-[600px] p-[var(--space-l)] bg-[var(--color-surface-primary)] rounded-l shadow-md">
-        <div className="mb-[var(--space-l)] p-[var(--space-m)] bg-[var(--color-background-blue-subtle)] rounded-m">
+      <div className="w-[600px] p-[var(--space-l)] bg-[var(--color-surface-primary)] rounded-[var(--border-radius-l)] shadow-[var(--shadow-300)]">
+        <div className="mb-[var(--space-l)] p-[var(--space-m)] bg-[var(--color-background-blue-subtle)] rounded-[var(--border-radius-m)]">
           <div className="text-caption-medium-sm text-[var(--color-text-primary)]">
             Date Constraints: March 2026 - October 2027
           </div>
@@ -117,8 +117,8 @@ export const ThreeYears: Story = {
   render: () => {
     const [value, setValue] = React.useState<[Date, Date] | undefined>()
     return (
-      <div className="w-[900px] p-[var(--space-l)] bg-[var(--color-surface-primary)] rounded-l shadow-md">
-        <div className="mb-[var(--space-l)] p-[var(--space-m)] bg-[var(--color-background-blue-subtle)] rounded-m">
+      <div className="w-[900px] p-[var(--space-l)] bg-[var(--color-surface-primary)] rounded-[var(--border-radius-l)] shadow-[var(--shadow-300)]">
+        <div className="mb-[var(--space-l)] p-[var(--space-m)] bg-[var(--color-background-blue-subtle)] rounded-[var(--border-radius-m)]">
           <div className="text-caption-medium-sm text-[var(--color-text-primary)]">
             Displaying 3 years for longer-term planning
           </div>
@@ -160,8 +160,8 @@ export const WithDisabledDates: Story = {
     ]
 
     return (
-      <div className="w-[600px] p-[var(--space-l)] bg-[var(--color-surface-primary)] rounded-l shadow-md">
-        <div className="mb-[var(--space-l)] p-[var(--space-m)] bg-[var(--color-background-blue-subtle)] rounded-m">
+      <div className="w-[600px] p-[var(--space-l)] bg-[var(--color-surface-primary)] rounded-[var(--border-radius-l)] shadow-[var(--shadow-300)]">
+        <div className="mb-[var(--space-l)] p-[var(--space-m)] bg-[var(--color-background-blue-subtle)] rounded-[var(--border-radius-m)]">
           <div className="text-caption-medium-sm text-[var(--color-text-primary)]">
             Disabled Months: April 2026, August 2026, January 2027
           </div>
@@ -200,8 +200,8 @@ export const WithNavigation: Story = {
     const [currentYear, setCurrentYear] = React.useState<number>(new Date().getFullYear())
 
     return (
-      <div className="w-[700px] p-[var(--space-l)] bg-[var(--color-surface-primary)] rounded-l shadow-md">
-        <div className="mb-[var(--space-l)] p-[var(--space-m)] bg-[var(--color-background-blue-subtle)] rounded-m">
+      <div className="w-[700px] p-[var(--space-l)] bg-[var(--color-surface-primary)] rounded-[var(--border-radius-l)] shadow-[var(--shadow-300)]">
+        <div className="mb-[var(--space-l)] p-[var(--space-m)] bg-[var(--color-background-blue-subtle)] rounded-[var(--border-radius-m)]">
           <div className="text-caption-medium-sm text-[var(--color-text-primary)]">
             Navigate through years using the arrow buttons. Displays 2 years at a time.
           </div>
@@ -255,8 +255,8 @@ export const SmallSize: Story = {
     return (
       <div className="space-y-[var(--space-2xl)]">
         {/* Small variant with navigation */}
-        <div className="w-[500px] p-[var(--space-l)] bg-[var(--color-surface-primary)] rounded-l shadow-md">
-          <div className="mb-[var(--space-m)] p-[var(--space-s)] bg-[var(--color-background-blue-subtle)] rounded-m">
+        <div className="w-[500px] p-[var(--space-l)] bg-[var(--color-surface-primary)] rounded-[var(--border-radius-l)] shadow-[var(--shadow-300)]">
+          <div className="mb-[var(--space-m)] p-[var(--space-s)] bg-[var(--color-background-blue-subtle)] rounded-[var(--border-radius-m)]">
             <div className="text-caption-medium-sm text-[var(--color-text-primary)]">
               Small size variant - ideal for filter panels and modals
             </div>
@@ -285,8 +285,8 @@ export const SmallSize: Story = {
         </div>
 
         {/* Default size for comparison */}
-        <div className="w-[700px] p-[var(--space-l)] bg-[var(--color-surface-primary)] rounded-l shadow-md">
-          <div className="mb-[var(--space-m)] p-[var(--space-s)] bg-[var(--color-background-blue-subtle)] rounded-m">
+        <div className="w-[700px] p-[var(--space-l)] bg-[var(--color-surface-primary)] rounded-[var(--border-radius-l)] shadow-[var(--shadow-300)]">
+          <div className="mb-[var(--space-m)] p-[var(--space-s)] bg-[var(--color-background-blue-subtle)] rounded-[var(--border-radius-m)]">
             <div className="text-caption-medium-sm text-[var(--color-text-primary)]">
               Default size variant - original sizing
             </div>

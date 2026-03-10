@@ -145,11 +145,11 @@ export const Variants: Story = {
         <div>
           <h3 className="text-heading-sm mb-4">On Different Backgrounds</h3>
           <div className="grid grid-cols-2 gap-4">
-            <div className="p-4 bg-[var(--color-background-neutral-default)] rounded-l text-center">
+            <div className="p-4 bg-[var(--color-background-neutral-default)] rounded-[var(--border-radius-l)] text-center">
               <Spinner variant="inverse" size="l" />
               <p className="mt-2 text-caption-sm text-white">Inverse variant</p>
             </div>
-            <div className="p-4 bg-[var(--color-background-blue-bold)] rounded-l text-center">
+            <div className="p-4 bg-[var(--color-background-blue-bold)] rounded-[var(--border-radius-l)] text-center">
               <Spinner variant="inverse" size="l" />
               <p className="mt-2 text-caption-sm text-white">On brand background</p>
             </div>
@@ -473,7 +473,7 @@ export const ProgressDotsExample: Story = {
           <Card>
             <CardContent className="pt-6">
               <div className="text-center space-y-4">
-                <div className="p-8 bg-[var(--color-background-neutral-subtlest)] rounded-l">
+                <div className="p-8 bg-[var(--color-background-neutral-subtlest)] rounded-[var(--border-radius-l)]">
                   <p className="text-heading-md">Step {currentStep + 1}</p>
                   <p className="text-body-sm text-[var(--color-text-secondary)] mt-2">
                     {['Welcome', 'Profile Setup', 'Preferences', 'Payment', 'Complete'][currentStep]}

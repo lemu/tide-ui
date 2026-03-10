@@ -117,7 +117,7 @@ export const SingleKeys: Story = {
         </div>
       </div>
       
-      <div className="bg-[var(--color-background-inverse)] p-[var(--space-m)] rounded-l">
+      <div className="bg-[var(--color-background-inverse)] p-[var(--space-m)] rounded-[var(--border-radius-l)]">
         <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-inverse)]">Dark Variant</h3>
         <div className="flex flex-wrap items-center gap-[var(--space-s)]">
           <Kbd variant="dark" size="s">A</Kbd>
@@ -220,8 +220,8 @@ export const InTooltips: Story = {
 // In menus
 export const InMenus: Story = {
   render: () => (
-    <div className="w-64 space-y-[var(--space-s)] border border-[var(--color-border-primary-subtle)] rounded-l p-[var(--space-s)] bg-[var(--color-surface-primary)]">
-      <div className="flex items-center justify-between rounded-m p-[var(--space-s)] transition-colors hover:bg-[var(--color-background-neutral-subtlest)]">
+    <div className="w-64 space-y-[var(--space-s)] border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-l)] p-[var(--space-s)] bg-[var(--color-surface-primary)]">
+      <div className="flex items-center justify-between rounded-[var(--border-radius-m)] p-[var(--space-s)] transition-colors hover:bg-[var(--color-background-neutral-subtlest)]">
         <div className="flex items-center gap-[var(--space-s)]">
           <Icon name={Plus} size="s" />
           <span className="text-body-sm">New File</span>
@@ -232,7 +232,7 @@ export const InMenus: Story = {
         </KbdGroup>
       </div>
 
-      <div className="flex items-center justify-between rounded-m p-[var(--space-s)] transition-colors hover:bg-[var(--color-background-neutral-subtlest)]">
+      <div className="flex items-center justify-between rounded-[var(--border-radius-m)] p-[var(--space-s)] transition-colors hover:bg-[var(--color-background-neutral-subtlest)]">
         <div className="flex items-center gap-[var(--space-s)]">
           <Icon name={Settings} size="s" />
           <span className="text-body-sm">Settings</span>
@@ -243,7 +243,7 @@ export const InMenus: Story = {
         </KbdGroup>
       </div>
 
-      <div className="flex items-center justify-between rounded-m p-[var(--space-s)] transition-colors hover:bg-[var(--color-background-neutral-subtlest)]">
+      <div className="flex items-center justify-between rounded-[var(--border-radius-m)] p-[var(--space-s)] transition-colors hover:bg-[var(--color-background-neutral-subtlest)]">
         <div className="flex items-center gap-[var(--space-s)]">
           <Icon name="circle-help" size="s" />
           <span className="text-body-sm">Help</span>

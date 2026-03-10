@@ -113,10 +113,10 @@ export const Default: Story = {
         <Tree
           data={sampleData}
           onSelectChange={setSelectedItem}
-          className="border rounded-l p-4"
+          className="border rounded-[var(--border-radius-l)] p-4"
         />
         {selectedItem && (
-          <div className="p-3 bg-[var(--color-background-neutral-subtlest)] rounded-l">
+          <div className="p-3 bg-[var(--color-background-neutral-subtlest)] rounded-[var(--border-radius-l)]">
             <p className="text-body-sm">
               Selected: <strong>{selectedItem.name}</strong>
             </p>
@@ -138,7 +138,7 @@ export const ExpandedByDefault: Story = {
           data={sampleData}
           expandAll={true}
           onSelectChange={setSelectedItem}
-          className="border rounded-l p-4"
+          className="border rounded-[var(--border-radius-l)] p-4"
         />
       </div>
     )
@@ -405,7 +405,7 @@ export const NavigationTree: Story = {
               className="space-y-1"
             />
             {selectedItem && (
-              <div className="mt-4 p-3 bg-[var(--color-background-brand-subtle)] rounded-l">
+              <div className="mt-4 p-3 bg-[var(--color-background-brand-subtle)] rounded-[var(--border-radius-l)]">
                 <p className="text-body-sm text-[var(--color-text-brand-bold)]">
                   Active: {selectedItem.name}
                 </p>

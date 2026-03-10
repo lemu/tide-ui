@@ -235,7 +235,7 @@ const ActivityLogHeader = React.forwardRef<HTMLDivElement, ActivityLogHeaderProp
         className={cn(
           "flex gap-[var(--space-s)] items-start w-full [&>*:first-child]:translate-y-[1px]",
           asCollapsibleTrigger &&
-            "cursor-pointer rounded-s focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
+            "cursor-pointer rounded-[var(--border-radius-s)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
           className
         )}
         {...props}
@@ -384,7 +384,7 @@ const ActivityLogValue = React.memo(
         <div
           ref={ref}
           className={cn(
-            "inline-flex items-center gap-[var(--space-xs)] px-[4px] py-[2px] bg-[var(--color-background-neutral-subtlest)] border border-[var(--color-border-primary-medium)] rounded-xs shrink",
+            "inline-flex items-center gap-[var(--space-xs)] px-[4px] py-[2px] bg-[var(--color-background-neutral-subtlest)] border border-[var(--color-border-primary-medium)] rounded-[var(--border-radius-xs)] shrink",
             className
           )}
           {...props}

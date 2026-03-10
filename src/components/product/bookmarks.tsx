@@ -250,10 +250,10 @@ function BookmarkSplitButton({
       >
         <SelectTrigger
           className={cn(
-            "!text-label-md relative z-0 h-[var(--size-m)] w-auto gap-[var(--space-xs)] border border-[var(--color-border-action-outline)] bg-[var(--color-background-neutral-subtlest)] pr-[var(--space-m)] pl-[var(--space-s)] text-[var(--color-text-primary)] hover:border-[var(--color-border-action-outline-hovered)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:shadow-sm focus:border-[var(--color-border-action-outline)] focus:ring-0 focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 active:translate-y-px active:bg-[var(--grey-alpha-50)] active:shadow-xs data-[state=open]:ring-0",
+            "!text-label-md relative z-0 h-[var(--size-m)] w-auto gap-[var(--space-xs)] border border-[var(--color-border-action-outline)] bg-[var(--color-background-neutral-subtlest)] pr-[var(--space-m)] pl-[var(--space-s)] text-[var(--color-text-primary)] hover:border-[var(--color-border-action-outline-hovered)] hover:bg-[var(--color-background-neutral-subtlest-hovered)] hover:shadow-[var(--shadow-200)] focus:border-[var(--color-border-action-outline)] focus:ring-0 focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 active:translate-y-px active:bg-[var(--grey-alpha-50)] active:shadow-[var(--shadow-100)] data-[state=open]:ring-0",
             isSystemBookmark
-              ? "rounded-m"
-              : "rounded-l-m !rounded-r-none !border-r-0",
+              ? "rounded-[var(--border-radius-m)]"
+              : "rounded-l-[var(--border-radius-m)] !rounded-r-none !border-r-0",
           )}
         >
           <Icon name={BookmarkIcon} size="m" color="primary" />
@@ -512,7 +512,7 @@ const BookmarkTab = React.memo(
           onKeyDown={handleKeyDown}
           onMouseEnter={handleMouseEnter}
           className={cn(
-            "group relative flex min-w-[160px] flex-shrink-0 cursor-pointer flex-col gap-[var(--space-xs)] rounded-l p-[var(--space-l)] transition-colors",
+            "group relative flex min-w-[160px] flex-shrink-0 cursor-pointer flex-col gap-[var(--space-xs)] rounded-[var(--border-radius-l)] p-[var(--space-l)] transition-colors",
             "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-brand-bold)] focus-visible:ring-offset-2",
             isActive
               ? "bg-[var(--blue-50)] hover:bg-[var(--blue-50)]"
@@ -942,7 +942,7 @@ function BookmarkTabs({
               aria-label={`Show ${overflowBookmarks.length} more bookmarks`}
               aria-expanded={showOverflow}
               className={cn(
-                "flex cursor-pointer flex-shrink-0 items-center justify-center rounded-l border border-[var(--color-border-action-outline)] bg-transparent px-[var(--space-m)] transition-colors hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
+                "flex cursor-pointer flex-shrink-0 items-center justify-center rounded-[var(--border-radius-l)] border border-[var(--color-border-action-outline)] bg-transparent px-[var(--space-m)] transition-colors hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
                 "min-h-[88px]", // Match the height of bookmark tabs (padding + content + padding)
                 "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-brand-bold)] focus-visible:ring-offset-2",
               )}
@@ -971,7 +971,7 @@ function BookmarkTabs({
                     aria-label={`Select ${bookmark.name} bookmark${isActive ? " (currently selected)" : ""}`}
                     onClick={() => handleOverflowSelect(bookmark)}
                     className={cn(
-                      "text-body-md flex cursor-pointer items-center gap-[var(--space-s)] rounded-m px-[var(--space-m)] py-[var(--space-s)] text-left transition-colors",
+                      "text-body-md flex cursor-pointer items-center gap-[var(--space-s)] rounded-[var(--border-radius-m)] px-[var(--space-m)] py-[var(--space-s)] text-left transition-colors",
                       "hover:bg-[var(--color-background-neutral-subtlest-hovered)]",
                       "focus:outline-none focus-visible:bg-[var(--color-background-neutral-subtlest-hovered)]",
                     )}

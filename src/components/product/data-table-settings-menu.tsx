@@ -266,7 +266,7 @@ export function DataTableSettingsMenu({
                 />
               )}
               <div
-                className="flex flex-wrap items-start justify-start gap-1 max-h-[190px] overflow-y-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-s"
+                className="flex flex-wrap items-start justify-start gap-1 max-h-[190px] overflow-y-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 rounded-[var(--border-radius-s)]"
                 role={filteredColumns.length > 15 ? "region" : undefined}
                 aria-label={filteredColumns.length > 15 ? "Column visibility toggles, scrollable" : undefined}
                 tabIndex={filteredColumns.length > 15 ? 0 : undefined}
