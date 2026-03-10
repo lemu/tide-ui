@@ -2065,6 +2065,8 @@ export interface DataTableProps<TData, TValue> {
    * }}
    */
   onRowClick?: (row: any, event: React.MouseEvent<HTMLTableRowElement>) => void
+  onRowMouseEnter?: (row: TData, event: React.MouseEvent<HTMLTableRowElement>) => void
+  onRowMouseLeave?: (row: TData, event: React.MouseEvent<HTMLTableRowElement>) => void
   /**
    * Filter which rows should be clickable.
    * Return false to prevent row from being clickable.
@@ -2504,6 +2506,8 @@ export function DataTable<TData, TValue>({
   autoExpandChildren = false,
   // Row click props
   onRowClick,
+  onRowMouseEnter,
+  onRowMouseLeave,
   isRowClickable,
   clickableRowClassName,
   groupPreservingSearch = false,
@@ -4505,6 +4509,8 @@ export function DataTable<TData, TValue>({
                         height: resolveRowHeight(row.depth, nestedRowStyling)
                       }}
                       onClick={onRowClick && getRowClickableState(row) ? (e) => handleRowClick(row, e) : undefined}
+                      onMouseEnter={onRowMouseEnter ? (e) => onRowMouseEnter(row.original, e) : undefined}
+                      onMouseLeave={onRowMouseLeave ? (e) => onRowMouseLeave(row.original, e) : undefined}
                       role="row"
                       aria-label={onRowClick && getRowClickableState(row) ? `View details for row ${row.id}` : undefined}
                       aria-current={isActiveRow(row) ? "true" : undefined}
@@ -4925,6 +4931,8 @@ export function DataTable<TData, TValue>({
                       onRowClick && getRowClickableState(row) && (clickableRowClassName || "cursor-pointer hover:[background-image:linear-gradient(rgba(0,0,0,0.02),rgba(0,0,0,0.02))]")
                     )}
                     onClick={onRowClick && getRowClickableState(row) ? (e) => handleRowClick(row, e) : undefined}
+                    onMouseEnter={onRowMouseEnter ? (e) => onRowMouseEnter(row.original, e) : undefined}
+                    onMouseLeave={onRowMouseLeave ? (e) => onRowMouseLeave(row.original, e) : undefined}
                     role="row"
                     aria-label={onRowClick && getRowClickableState(row) ? `View details for row ${row.id}` : undefined}
                     aria-current={isActiveRow(row) ? "true" : undefined}
