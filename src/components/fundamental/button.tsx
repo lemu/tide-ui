@@ -14,7 +14,7 @@ const buttonVariants = cva(
           "border border-[var(--color-border-action-outline)]",
           "enabled:hover:bg-[var(--color-background-neutral-subtlest-hovered)] enabled:hover:border-[var(--color-border-action-outline-hovered)] enabled:hover:shadow-[var(--shadow-200)]",
           "focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
-          "enabled:active:bg-[var(--grey-alpha-50)] enabled:active:translate-y-px enabled:active:shadow-[var(--shadow-100)]",
+          "enabled:active:bg-[var(--grey-50)] enabled:active:translate-y-px enabled:active:shadow-[var(--shadow-100)]",
           "disabled:bg-[var(--color-background-disabled)] disabled:[&]:text-[var(--color-text-disabled)] disabled:border-[var(--color-border-action-outline)]",
         ],
         secondary: [
@@ -22,7 +22,7 @@ const buttonVariants = cva(
           "border border-[var(--color-border-action-outline)]",
           "enabled:hover:bg-[var(--color-background-neutral-subtlest-hovered)] enabled:hover:border-[var(--color-border-action-outline-hovered)] enabled:hover:shadow-[var(--shadow-200)]",
           "focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
-          "enabled:active:bg-[var(--grey-alpha-50)] enabled:active:translate-y-px enabled:active:shadow-[var(--shadow-100)]",
+          "enabled:active:bg-[var(--grey-50)] enabled:active:translate-y-px enabled:active:shadow-[var(--shadow-100)]",
           "disabled:bg-[var(--color-background-disabled)] disabled:[&]:text-[var(--color-text-disabled)] disabled:border-[var(--color-border-action-outline)]",
         ],
         primary: [
@@ -52,10 +52,10 @@ const buttonVariants = cva(
         ghost: [
           "bg-transparent text-[var(--color-text-primary)]",
           "border-none",
-          "enabled:hover:bg-[var(--color-background-neutral-hovered)]",
+          "enabled:hover:bg-[var(--color-background-neutral-hovered-opacity)]",
           "focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2",
-          "enabled:active:bg-[var(--grey-alpha-100)] enabled:active:translate-y-px",
-          "disabled:bg-[var(--color-background-neutral-subtlest)] disabled:[&]:text-[var(--color-text-disabled)]",
+          "enabled:active:bg-[var(--grey-alpha-200)] enabled:active:translate-y-px",
+          "disabled:bg-transparent disabled:[&]:text-[var(--color-text-disabled)]",
         ],
       },
       size: {
@@ -192,12 +192,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     };
 
     const actualIconPosition =
-      iconName && children 
-        ? iconPosition 
-        : iconName || loading 
-        ? "only" 
-        : loading && children 
-        ? "left" 
+      iconName && children
+        ? iconPosition
+        : loading && children
+        ? "left"
+        : iconName || loading
+        ? "only"
         : "none";
 
     // Add accessibility attributes for dropdown buttons

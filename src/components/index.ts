@@ -7,7 +7,7 @@ export type { AlertProps } from './fundamental/alert'
 
 // Chart components
 export { Chart, generateChartColors, createChartConfig, chartColorSchemes } from './fundamental/chart'
-export type { ChartProps, ChartConfig, ChartDataPoint, ChartType, ChartColorScheme } from './fundamental/chart'
+export type { ChartProps, ChartConfig, ChartDataPoint, ChartType, ChartColorScheme, ReferenceMarker, ReferenceMarkerDataPoint, TodayMarker } from './fundamental/chart'
 export { Avatar, AvatarImage, AvatarFallback, avatarVariants, avatarFallbackVariants } from './fundamental/avatar'
 export type { AvatarProps, AvatarFallbackProps } from './fundamental/avatar'
 export { AvatarGroup } from './fundamental/avatar-group'

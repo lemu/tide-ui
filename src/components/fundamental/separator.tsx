@@ -6,9 +6,8 @@ import { Icon } from "./icon";
 import { Dot } from "./custom-icons";
 
 export interface SeparatorProps
-  extends React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root> {
-  type?: "line" | "dot";
-  layout?: "horizontal" | "vertical";
+  extends Omit<React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>, "orientation"> {
+  type?: "horizontal-line" | "vertical-line" | "dot";
 }
 
 const Separator = React.forwardRef<
@@ -18,25 +17,18 @@ const Separator = React.forwardRef<
   (
     {
       className,
-      layout = "vertical",
       decorative = true,
-      type = "line",
+      type = "horizontal-line",
       ...props
     },
     ref,
   ) => {
-    // Use layout prop to determine separator orientation
-    // horizontal layout (side-by-side elements) -> vertical separator
-    // vertical layout (stacked elements) -> horizontal separator
-    const finalOrientation = layout === "horizontal" ? "vertical" : "horizontal";
-
-    // For dot separators - only for horizontal content layout (side-by-side content)
-    if (type === "dot" && layout === "horizontal") {
+    if (type === "dot") {
       return (
         <div
           ref={ref}
           role={decorative ? "presentation" : "separator"}
-          aria-orientation={finalOrientation}
+          aria-orientation="vertical"
           className={cn(
             "flex h-[1em] shrink-0 items-center justify-center",
             className,
@@ -48,16 +40,17 @@ const Separator = React.forwardRef<
       );
     }
 
-    // Default line separator (existing functionality)
+    const orientation = type === "vertical-line" ? "vertical" : "horizontal";
+
     // Not using semantic token here, cause it's better to have color with alpha channel so the line is better visible on gray backgrounds.
     return (
       <SeparatorPrimitive.Root
         ref={ref}
         decorative={decorative}
-        orientation={finalOrientation}
+        orientation={orientation}
         className={cn(
           "shrink-0 bg-[var(--grey-alpha-100)]",
-          finalOrientation === "horizontal" ? "h-px w-full" : "h-7 w-px",
+          orientation === "horizontal" ? "h-px w-full" : "h-7 w-px",
           className,
         )}
         {...props}

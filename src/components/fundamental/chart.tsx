@@ -148,6 +148,8 @@ export interface ReferenceMarkerDataPoint {
   fill?: string;                     // Fill color
   stroke?: string;                   // Border color
   strokeWidth?: number;              // Border width
+  yAxisId?: string;                  // Which y-axis this point belongs to (default "left")
+  pulsing?: boolean;                 // When true, renders SMIL-animated pulse dot
 }
 
 export interface ReferenceMarker {
@@ -158,8 +160,14 @@ export interface ReferenceMarker {
     strokeWidth?: number;            // Line thickness (default: 2)
     strokeDasharray?: string;        // Dashed pattern (e.g., "3 3")
   };
+  lineLabel?: string;                // Text rendered as a badge on the chart line
   tooltipLabel?: string;             // Custom label for tooltip section (default: "Reference Markers:")
-  dataPoints: ReferenceMarkerDataPoint[];  // Independent data points along the line
+  dataPoints?: ReferenceMarkerDataPoint[];  // Independent data points along the line
+}
+
+export interface TodayMarker {
+  xValue: string | number;  // Data point name that represents "today"
+  label?: string;           // Label shown at top of line (default: "Today")
 }
 
 export interface ChartProps {
@@ -202,6 +210,10 @@ export interface ChartProps {
   legendPosition?: 'bottom'; // Legend position (only bottom is supported)
   // Reference Markers
   referenceMarkers?: ReferenceMarker[]; // Array of reference markers (vertical lines with data points)
+  todayMarker?: TodayMarker; // Built-in preset marker for "today" — auto-computes dots for all series
+  // Scrollable mode
+  scrollable?: boolean;       // Enables horizontal drag-to-pan mode. Default: false
+  scrollableWidth?: number;   // Total inner chart width in px. Default: data.length * 60
 }
 
 // Helper function to convert strokeStyle to strokeDasharray values
@@ -521,12 +533,41 @@ export function Chart({
   legendOrder,
   legendPosition = 'bottom',
   referenceMarkers,
+  todayMarker,
   yAxisDomain,
+  scrollable = false,
+  scrollableWidth,
   ...props
 }: ChartProps) {
 
   // Track tooltip index for automatic direction reversal
   const [tooltipIndex, setTooltipIndex] = useState<number>(0);
+
+  // Drag-scroll refs for scrollable mode
+  const scrollContainerRef = React.useRef<HTMLDivElement>(null);
+  const isDragging = React.useRef(false);
+  const dragStartX = React.useRef(0);
+  const scrollLeftStart = React.useRef(0);
+
+  const handleDragStart = React.useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!scrollContainerRef.current) return;
+    isDragging.current = true;
+    dragStartX.current = e.pageX - scrollContainerRef.current.offsetLeft;
+    scrollLeftStart.current = scrollContainerRef.current.scrollLeft;
+    scrollContainerRef.current.style.cursor = 'grabbing';
+  }, []);
+
+  const handleDragMove = React.useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging.current || !scrollContainerRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    scrollContainerRef.current.scrollLeft = scrollLeftStart.current - (x - dragStartX.current);
+  }, []);
+
+  const handleDragEnd = React.useCallback(() => {
+    isDragging.current = false;
+    if (scrollContainerRef.current) scrollContainerRef.current.style.cursor = 'grab';
+  }, []);
 
   // Get color scheme based on chart type or custom scheme
   const activeColorScheme = useMemo(() => {
@@ -575,6 +616,34 @@ export function Chart({
     });
   }, [data, config, dataKeys]);
 
+  const computedTodayMarker = useMemo((): ReferenceMarker | null => {
+    if (!todayMarker) return null;
+    const dataPoint = processedData.find(d => d.name === todayMarker.xValue);
+    return {
+      xValue: todayMarker.xValue,
+      showLine: true,
+      lineLabel: todayMarker.label ?? 'Today',
+      lineStyle: {
+        stroke: 'var(--color-border-error-bold)',
+        strokeWidth: 2,
+      },
+      dataPoints: dataKeys
+        .filter(key => dataPoint && dataPoint[key] != null)
+        .map(key => ({
+          yValue: dataPoint![key] as number,
+          yAxisId: config[key].yAxisId || 'left',
+          fill: 'var(--color-background-error-bold)',
+          size: 4,
+          pulsing: true,
+        })),
+    };
+  }, [todayMarker, processedData, dataKeys, config]);
+
+  const allReferenceMarkers = useMemo(() => [
+    ...(referenceMarkers ?? []),
+    ...(computedTodayMarker ? [computedTodayMarker] : []),
+  ], [referenceMarkers, computedTodayMarker]);
+
   const handleMouseEnter = useCallback((data: any) => {
     const index = data?.activeTooltipIndex ?? 0;
     setTooltipIndex(index);
@@ -597,7 +666,7 @@ export function Chart({
 
   // Simple margin calculation with zero defaults
   const getMargins = (): ChartMargin => {
-    const defaultMargin = { top: 0, right: 0, left: 0, bottom: 0 };
+    const defaultMargin = { top: 8, right: 0, left: 0, bottom: 0 };
 
     return {
       top: margin?.top ?? defaultMargin.top,
@@ -612,6 +681,23 @@ export function Chart({
     if (yAxisWidth) return yAxisWidth; // Manual override takes precedence
     return calculateYAxisWidth(processedData, dataKeys, yAxisTickFormatter, 20);
   }, [yAxisWidth, processedData, dataKeys, yAxisTickFormatter]);
+
+  // Compute explicit domain shared between Y-axis pane and data pane in scrollable mode
+  const computedScrollDomain = useMemo(() => {
+    if (!scrollable) return yAxisDomain;
+    if (yAxisDomain) return yAxisDomain;
+    const allValues = processedData.flatMap(d =>
+      dataKeys.map(k => {
+        const v = d[k];
+        return Array.isArray(v) ? v : (typeof v === 'number' ? v : 0);
+      }).flat()
+    );
+    return [Math.min(0, ...allValues), Math.max(...allValues)] as [number, number];
+  }, [scrollable, yAxisDomain, processedData, dataKeys]);
+
+  const computedScrollableWidth = useMemo(() =>
+    scrollable ? (scrollableWidth ?? Math.max(processedData.length * 60, 600)) : undefined
+  , [scrollable, scrollableWidth, processedData.length]);
 
   // Calculate right Y-axis width for dual Y-axis charts
   const calculatedRightYAxisWidth = useMemo(() => {
@@ -688,8 +774,10 @@ export function Chart({
     if (!payload || !payload.length) return null;
 
     // Sort payload based on legendOrder if provided
+    const filteredPayload = payload.filter((entry: any) => config[entry.dataKey]);
+
     const sortedPayload = legendOrder
-      ? [...payload].sort((a, b) => {
+      ? [...filteredPayload].sort((a, b) => {
           const aIndex = legendOrder.indexOf(a.dataKey);
           const bIndex = legendOrder.indexOf(b.dataKey);
 
@@ -699,7 +787,7 @@ export function Chart({
 
           return aIndex - bIndex;
         })
-      : payload;
+      : filteredPayload;
 
     // Get dynamic left margin based on actual chart margins (not hardcoded)
     const actualMargins = getMargins();
@@ -812,20 +900,68 @@ export function Chart({
     );
   };
 
-  const renderChart = () => {
+  const renderStandaloneLegend = () => {
+    const keys = legendOrder
+      ? [...legendOrder, ...Object.keys(config).filter(k => !legendOrder.includes(k))]
+      : Object.keys(config);
+
+    const actualMargins = getMargins();
+    const legendLeftOffset = actualMargins.left + 5;
+
+    return (
+      <div style={{ paddingLeft: `${legendLeftOffset}px`, paddingRight: '16px' }}>
+        <div className="flex flex-wrap justify-start items-start gap-x-[var(--space-m)] gap-y-[var(--space-s)]">
+          {keys.map((key, index) => {
+            const item = config[key];
+            if (!item) return null;
+            const color = item.color ?? 'currentColor';
+            const strokePattern = getStrokeDashArray(item.strokeStyle);
+            const markerEl = (
+              <div className="w-[12px] h-[2px] flex-shrink-0 relative" aria-hidden="true">
+                <div
+                  className="w-full h-full"
+                  style={{
+                    background: strokePattern
+                      ? `linear-gradient(to right, ${color} 50%, transparent 50%)`
+                      : color,
+                    backgroundSize: strokePattern === '5 5' ? '8px 100%' : strokePattern === '2 2' ? '3px 100%' : '100% 100%',
+                  }}
+                />
+              </div>
+            );
+            return (
+              <div key={index} className="flex items-center justify-center gap-[var(--space-xs)]">
+                {markerEl}
+                <span className="[&]:text-body-medium-xsm [&]:text-[var(--color-text-secondary)] leading-none whitespace-nowrap">
+                  {item.label}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  const renderChart = (mode: 'full' | 'yaxis-only' | 'data-only' = 'full') => {
     switch (type) {
       case "bar":
         return (
-          <BarChart 
+          <BarChart
             {...commonProps}
             onMouseMove={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onClick={handleClick}
           >
-            {showGrid && <CartesianGrid {...gridProps} />}
-            <XAxis dataKey="name" {...xAxisProps} />
-            <YAxis {...yAxisProps} />
-            {showTooltip && <Tooltip
+            {mode !== 'yaxis-only' && showGrid && <CartesianGrid {...gridProps} />}
+            <XAxis dataKey="name" {...xAxisProps} {...(mode === 'yaxis-only' && { axisLine: false, tickLine: false, tick: false })} />
+            <YAxis
+              {...yAxisProps}
+              hide={mode === 'data-only'}
+              width={mode === 'data-only' ? 0 : yAxisProps.width}
+              {...(mode !== 'full' && computedScrollDomain ? { domain: computedScrollDomain } : {})}
+            />
+            {mode !== 'yaxis-only' && showTooltip && <Tooltip
               content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />}
               cursor={{
                 stroke: "var(--color-border-primary)",
@@ -840,7 +976,7 @@ export function Chart({
               reverseDirection={{ x: shouldReverseTooltip }}
               wrapperStyle={{ zIndex: 100 }}
             />}
-            {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
+            {mode === 'full' && showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
             {dataKeys.map((key, index) => {
               const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
 
@@ -850,6 +986,7 @@ export function Chart({
                   dataKey={key}
                   name={config[key].label}
                   fill={baseColor}
+                  fillOpacity={mode === 'yaxis-only' ? 0 : 1}
                   radius={[0, 0, 0, 0]}
                   className="cursor-pointer transition-colors"
                   isAnimationActive={false}
@@ -915,10 +1052,16 @@ export function Chart({
             onMouseLeave={handleMouseLeave}
             onClick={handleClick}
           >
-            {showGrid && <CartesianGrid {...gridProps} yAxisId={gridYAxisId} />}
-            <XAxis dataKey="name" {...xAxisProps} />
-            <YAxis yAxisId="left" {...yAxisProps} />
-            {showRightYAxis && (
+            {mode !== 'yaxis-only' && showGrid && <CartesianGrid {...gridProps} yAxisId={gridYAxisId} />}
+            <XAxis dataKey="name" {...xAxisProps} {...(mode === 'yaxis-only' && { axisLine: false, tickLine: false, tick: false })} />
+            <YAxis
+              yAxisId="left"
+              {...yAxisProps}
+              hide={mode === 'data-only'}
+              width={mode === 'data-only' ? 0 : yAxisProps.width}
+              {...(mode !== 'full' && computedScrollDomain ? { domain: computedScrollDomain } : {})}
+            />
+            {mode !== 'yaxis-only' && showRightYAxis && (
               <YAxis
                 yAxisId="right"
                 orientation="right"
@@ -935,21 +1078,8 @@ export function Chart({
                 {...(rightYAxisDomain && { domain: rightYAxisDomain })}
               />
             )}
-            {/* Reference lines - rendered BEFORE lines so tooltip activeDots appear on top */}
-            {referenceMarkers?.map((marker, markerIdx) =>
-              marker.showLine !== false ? (
-                <ReferenceLine
-                  key={`marker-line-${markerIdx}`}
-                  x={marker.xValue}
-                  yAxisId="left"
-                  stroke={marker.lineStyle?.stroke || '#000000'}
-                  strokeWidth={marker.lineStyle?.strokeWidth || 2}
-                  strokeDasharray={marker.lineStyle?.strokeDasharray}
-                />
-              ) : null
-            )}
-            {showTooltip && <Tooltip
-              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} referenceMarkers={referenceMarkers} />}
+            {mode !== 'yaxis-only' && showTooltip && <Tooltip
+              content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} referenceMarkers={allReferenceMarkers} />}
               cursor={{
                 stroke: "var(--color-border-primary)",
                 strokeWidth: 1,
@@ -963,7 +1093,7 @@ export function Chart({
               reverseDirection={{ x: shouldReverseTooltip }}
               wrapperStyle={{ zIndex: 100 }}
             />}
-            {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
+            {mode === 'full' && showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
             {dataKeys.map((key, index) => {
               const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
 
@@ -976,13 +1106,14 @@ export function Chart({
                   yAxisId={config[key].yAxisId || "left"}
                   stroke={baseColor}
                   strokeWidth={2}
+                  strokeOpacity={mode === 'yaxis-only' ? 0 : 1}
                   strokeDasharray={getStrokeDashArray(config[key].strokeStyle)}
-                  dot={config[key].showDots === true ? {
+                  dot={mode === 'yaxis-only' ? false : config[key].showDots === true ? {
                     fill: baseColor,
                     strokeWidth: 0,
                     r: 3
                   } : false}
-                  activeDot={{
+                  activeDot={mode === 'yaxis-only' ? false : {
                     r: 5,
                     fill: baseColor
                   }}
@@ -991,20 +1122,66 @@ export function Chart({
                 />
               );
             })}
-            {/* Reference marker dots - rendered AFTER lines to appear on top */}
-            {referenceMarkers?.map((marker, markerIdx) => (
+            {/* Reference lines - rendered AFTER data lines so they appear on top */}
+            {mode !== 'yaxis-only' && allReferenceMarkers.map((marker, markerIdx) =>
+              marker.showLine !== false ? (
+                <ReferenceLine
+                  key={`marker-line-${markerIdx}`}
+                  x={marker.xValue}
+                  yAxisId="left"
+                  stroke={marker.lineStyle?.stroke || '#000000'}
+                  strokeWidth={marker.lineStyle?.strokeWidth || 2}
+                  strokeDasharray={marker.lineStyle?.strokeDasharray}
+                  label={marker.lineLabel ? (props: { viewBox?: { x: number; y: number; width: number; height: number } }) => {
+                    const { viewBox } = props
+                    if (!viewBox) return null
+                    return (
+                      <text
+                        x={viewBox.x + 6}
+                        y={viewBox.y + 8}
+                        dominantBaseline="middle"
+                        fill="var(--color-text-error-bold)"
+                        fontSize={10}
+                        fontFamily="inherit"
+                        fontWeight={700}
+                      >
+                        {marker.lineLabel}
+                      </text>
+                    )
+                  } : undefined}
+                />
+              ) : null
+            )}
+            {/* Reference marker dots - rendered AFTER reference lines to appear on top */}
+            {mode !== 'yaxis-only' && allReferenceMarkers.map((marker, markerIdx) => (
               <React.Fragment key={`marker-dots-${markerIdx}`}>
-                {marker.dataPoints.map((point, pointIdx) => (
+                {marker.dataPoints?.map((point, pointIdx) => (
                   <ReferenceDot
                     key={`marker-${markerIdx}-point-${pointIdx}`}
                     x={marker.xValue}
                     y={point.yValue}
-                    yAxisId="left"
+                    yAxisId={point.yAxisId || "left"}
                     r={point.size || 4}
                     fill={point.fill || 'var(--color-chart-line-1)'}
                     stroke={point.stroke || 'transparent'}
                     strokeWidth={point.strokeWidth || 0}
-                    shape={renderMarkerShape(point.shape || 'circle')}
+                    shape={point.pulsing
+                      ? (props: any) => {
+                          const { cx, cy } = props
+                          const r = point.size || 4
+                          const fill = point.fill || 'var(--color-background-error-bold)'
+                          return (
+                            <g>
+                              <circle cx={cx} cy={cy} r={r + 1} fill={fill} opacity={0.3}>
+                                <animate attributeName="r" from={String(r + 1)} to={String(r + 8)} dur="1.5s" repeatCount="indefinite" />
+                                <animate attributeName="opacity" from="0.35" to="0" dur="1.5s" repeatCount="indefinite" />
+                              </circle>
+                              <circle cx={cx} cy={cy} r={r} fill={fill} />
+                            </g>
+                          )
+                        }
+                      : renderMarkerShape(point.shape || 'circle')
+                    }
                   />
                 ))}
               </React.Fragment>
@@ -1066,10 +1243,16 @@ export function Chart({
             onMouseLeave={handleMouseLeave}
             onClick={handleClick}
           >
-            {showGrid && <CartesianGrid {...gridProps} yAxisId={gridYAxisId} />}
-            <XAxis dataKey="name" {...xAxisProps} />
-            <YAxis yAxisId="left" {...yAxisProps} />
-            {showRightYAxis && (
+            {mode !== 'yaxis-only' && showGrid && <CartesianGrid {...gridProps} yAxisId={gridYAxisId} />}
+            <XAxis dataKey="name" {...xAxisProps} {...(mode === 'yaxis-only' && { axisLine: false, tickLine: false, tick: false })} />
+            <YAxis
+              yAxisId="left"
+              {...yAxisProps}
+              hide={mode === 'data-only'}
+              width={mode === 'data-only' ? 0 : yAxisProps.width}
+              {...(mode !== 'full' && computedScrollDomain ? { domain: computedScrollDomain } : {})}
+            />
+            {mode !== 'yaxis-only' && showRightYAxis && (
               <YAxis
                 yAxisId="right"
                 orientation="right"
@@ -1086,7 +1269,7 @@ export function Chart({
                 {...(rightYAxisDomain && { domain: rightYAxisDomain })}
               />
             )}
-            {showTooltip && <Tooltip
+            {mode !== 'yaxis-only' && showTooltip && <Tooltip
               content={(props) => <CustomTooltip {...props} config={config} tooltipMaxWidth={tooltipMaxWidth} chartType={type} />}
               cursor={{
                 stroke: "var(--color-border-primary)",
@@ -1101,7 +1284,7 @@ export function Chart({
               reverseDirection={{ x: shouldReverseTooltip }}
               wrapperStyle={{ zIndex: 100 }}
             />}
-            {showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
+            {mode === 'full' && showLegend && <Legend content={<CustomLegend />} {...legendProps} />}
             {/* Render in order: bars first, then areas, then lines (for proper z-index layering) */}
             {dataKeys.map((key, index) => {
               const baseColor = config[key].color || activeColorScheme[index % activeColorScheme.length];
@@ -1116,6 +1299,7 @@ export function Chart({
                     name={config[key].label}
                     yAxisId={config[key].yAxisId || "left"}
                     fill={baseColor}
+                    fillOpacity={mode === 'yaxis-only' ? 0 : 1}
                     radius={[0, 0, 0, 0]}
                     className="cursor-pointer transition-colors"
                     isAnimationActive={false}
@@ -1139,8 +1323,9 @@ export function Chart({
                     name={config[key].label}
                     yAxisId={config[key].yAxisId || "left"}
                     stroke={config[key].stroke ?? baseColor}
+                    strokeOpacity={mode === 'yaxis-only' ? 0 : 1}
                     fill={config[key].fill ?? baseColor}
-                    fillOpacity={0.3}
+                    fillOpacity={mode === 'yaxis-only' ? 0 : 0.3}
                     className="cursor-pointer transition-colors"
                     isAnimationActive={false}
                   />
@@ -1154,8 +1339,9 @@ export function Chart({
                     name={config[key].label}
                     yAxisId={config[key].yAxisId || "left"}
                     stroke={config[key].stroke ?? "none"}
+                    strokeOpacity={mode === 'yaxis-only' ? 0 : 1}
                     fill={config[key].fill ?? baseColor}
-                    fillOpacity={0.3}
+                    fillOpacity={mode === 'yaxis-only' ? 0 : 0.3}
                     className="cursor-pointer transition-colors"
                     isAnimationActive={false}
                   />
@@ -1178,13 +1364,14 @@ export function Chart({
                     yAxisId={config[key].yAxisId || "left"}
                     stroke={baseColor}
                     strokeWidth={2}
+                    strokeOpacity={mode === 'yaxis-only' ? 0 : 1}
                     strokeDasharray={getStrokeDashArray(config[key].strokeStyle)}
-                    dot={config[key].showDots === true ? {
+                    dot={mode === 'yaxis-only' ? false : config[key].showDots === true ? {
                       fill: baseColor,
                       strokeWidth: 0,
                       r: 3
                     } : false}
-                    activeDot={{
+                    activeDot={mode === 'yaxis-only' ? false : {
                       r: 5,
                       fill: baseColor
                     }}
@@ -1263,6 +1450,21 @@ export function Chart({
     return () => clearTimeout(timeoutId);
   }, [data, type]);
 
+  React.useEffect(() => {
+    if (!scrollable || !todayMarker || !scrollContainerRef.current || !computedScrollableWidth) return;
+    const todayIndex = processedData.findIndex(d => d.name === todayMarker.xValue);
+    if (todayIndex < 0) return;
+
+    const timeoutId = setTimeout(() => {
+      if (!scrollContainerRef.current) return;
+      const containerWidth = scrollContainerRef.current.offsetWidth;
+      const pointPosition = (todayIndex / (processedData.length - 1)) * computedScrollableWidth;
+      scrollContainerRef.current.scrollLeft = Math.max(0, pointPosition - containerWidth / 2);
+    }, 50);
+
+    return () => clearTimeout(timeoutId);
+  }, [scrollable, todayMarker, computedScrollableWidth, processedData]);
+
   return (
     <div
       ref={chartRef}
@@ -1288,6 +1490,41 @@ export function Chart({
         // When legendHeight is set: height = total container, chart gets (height - legendHeight)
         // Otherwise: height applies to entire chart (body + legend share the space)
         const chartHeight = legendHeight ? height - legendHeight : height;
+
+        // Scrollable two-pane layout (fixed Y-axis + drag-scrollable data pane)
+        if (scrollable && type !== 'horizontal-bar' && type !== 'scatter') {
+          const yPaneWidth = calculatedYAxisWidth + (getMargins().left ?? 0);
+          return (
+            <div style={{ height: showLegend && legendHeight ? height : chartHeight }}>
+              <div className="flex w-full" style={{ height: chartHeight }}>
+                {/* Fixed Y-axis pane */}
+                <div style={{ width: yPaneWidth, flexShrink: 0, overflow: 'hidden' }}>
+                  <ResponsiveContainer width={yPaneWidth} height={chartHeight}>
+                    {renderChart('yaxis-only') || <div>Chart error</div>}
+                  </ResponsiveContainer>
+                </div>
+
+                {/* Drag-scrollable content pane */}
+                <div
+                  ref={scrollContainerRef}
+                  className="flex-1 overflow-x-scroll overflow-y-hidden scrollbar-hide select-none"
+                  style={{ cursor: 'grab' }}
+                  onMouseDown={handleDragStart}
+                  onMouseMove={handleDragMove}
+                  onMouseUp={handleDragEnd}
+                  onMouseLeave={handleDragEnd}
+                >
+                  <div style={{ width: computedScrollableWidth, height: chartHeight }}>
+                    <ResponsiveContainer width={computedScrollableWidth} height={chartHeight}>
+                      {renderChart('data-only') || <div>Chart error</div>}
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              </div>
+              {showLegend && renderStandaloneLegend()}
+            </div>
+          );
+        }
 
         const chartContent = responsive ? (
           <ResponsiveContainer

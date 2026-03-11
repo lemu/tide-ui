@@ -1,21 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Button } from '../components/fundamental/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '../components/fundamental/dropdown-menu'
-import { Icon } from '../components/fundamental/icon'
+import { Plus, Settings } from 'lucide-react'
 
-import {
-  Copy,
-  Edit,
-  Plus,
-  Save,
-  Settings,
-} from 'lucide-react'
 const meta: Meta<typeof Button> = {
   title: 'NPM • Fundamental/Button',
   component: Button,
@@ -61,279 +47,125 @@ export const Default: Story = {
   },
 }
 
-export const Primary: Story = {
-  args: {
-    variant: 'primary',
-    children: 'Primary',
-  },
-}
-
-export const Destructive: Story = {
-  args: {
-    variant: 'destructive',
-    children: 'Destructive',
-  },
-}
-
-export const Success: Story = {
-  args: {
-    variant: 'success',
-    children: 'Success',
-  },
-}
-
-export const Ghost: Story = {
-  args: {
-    variant: 'ghost',
-    children: 'Ghost',
-  },
-}
-
-export const Large: Story = {
-  args: {
-    size: 'l',
-    children: 'Large Button',
-  },
-}
-
-export const Medium: Story = {
-  args: {
-    size: 'm',
-    children: 'Medium Button',
-  },
-}
-
-export const Small: Story = {
-  args: {
-    size: 's',
-    children: 'Small Button',
-  },
-}
-
-// Disabled states
-export const Disabled: Story = {
-  args: {
-    disabled: true,
-    children: 'Disabled Button',
-  },
-}
-
-export const DisabledPrimary: Story = {
-  args: {
-    variant: 'primary',
-    disabled: true,
-    children: 'Disabled Primary',
-  },
-}
-
-// Loading states
-export const Loading: Story = {
-  args: {
-    loading: true,
-    children: 'Loading...',
-  },
-}
-
-export const LoadingPrimary: Story = {
-  args: {
-    variant: 'primary',
-    loading: true,
-    children: 'Loading Primary',
-  },
-}
-
-// Icon buttons
-export const WithIconLeft: Story = {
-  args: {
-    icon: Plus,
-    iconPosition: 'left',
-    children: 'Add Item',
-  },
-}
-
-export const WithIconRight: Story = {
-  args: {
-    icon: 'arrow-right',
-    iconPosition: 'right',
-    children: 'Next',
-  },
-}
-
-export const IconOnly: Story = {
-  args: {
-    icon: Settings,
-    size: 'm',
-  },
-}
-
-// Disabled icon button
-export const DisabledIconOnly: Story = {
-  args: {
-    icon: Settings,
-    size: 'm',
-    disabled: true,
-  },
-}
-
-// Small icon button (like in Pagination)
-export const IconOnlySmall: Story = {
-  args: {
-    icon: 'arrow-left',
-    size: 's',
-  },
-}
-
-// Dropdown button
-export const WithDropdown: Story = {
+export const AllVariants: Story = {
   render: () => (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button dropdown>Actions</Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuItem>
-          <Icon name={Edit} size="s" className="mr-2" />
-          Edit
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Icon name={Copy} size="s" className="mr-2" />
-          Duplicate
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Icon name="trash-2" size="s" className="mr-2" />
-          Delete
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <div className="flex gap-[var(--space-m)] items-center flex-wrap">
+      <Button variant="default">Button</Button>
+      <Button variant="primary">Button</Button>
+      <Button variant="destructive">Button</Button>
+      <Button variant="success">Button</Button>
+      <Button variant="ghost">Button</Button>
+    </div>
   ),
 }
 
-// Usage Examples with Code
-export const UsageExamples: Story = {
+export const Sizes: Story = {
   render: () => (
-    <div className="space-y-[var(--space-l)] max-w-4xl">
-      <div className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
-        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
-          Basic Button
-        </h3>
-        <div className="flex items-center gap-[var(--space-m)]">
-          <Button>Click me</Button>
-          <code className="text-body-sm rounded-[var(--border-radius-s)] bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
-            {`<Button>Click me</Button>`}
-          </code>
-        </div>
+    <div className="flex flex-col gap-[var(--space-m)]">
+      <div className="flex gap-[var(--space-m)] items-center flex-wrap">
+        <Button size="s">Button</Button>
+        <Button variant="primary" size="s">Button</Button>
+        <Button variant="destructive" size="s">Button</Button>
+        <Button variant="success" size="s">Button</Button>
+        <Button variant="ghost" size="s">Button</Button>
       </div>
-
-      <div className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
-        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
-          Primary with Icon
-        </h3>
-        <div className="flex items-center gap-[var(--space-m)]">
-          <Button variant="primary" icon={Plus} iconPosition="left">
-            Add Item
-          </Button>
-          <code className="text-body-sm rounded-[var(--border-radius-s)] bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
-            {`<Button variant="primary" icon={Plus} iconPosition="left">Add Item</Button>`}
-          </code>
-        </div>
+      <div className="flex gap-[var(--space-m)] items-center flex-wrap">
+        <Button size="m">Button</Button>
+        <Button variant="primary" size="m">Button</Button>
+        <Button variant="destructive" size="m">Button</Button>
+        <Button variant="success" size="m">Button</Button>
+        <Button variant="ghost" size="m">Button</Button>
       </div>
-
-      <div className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
-        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
-          Icon Only Button
-        </h3>
-        <div className="flex items-center gap-[var(--space-m)]">
-          <Button icon={Settings} size="m" />
-          <code className="text-body-sm rounded-[var(--border-radius-s)] bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
-            {`<Button icon={Settings} size="m" />`}
-          </code>
-        </div>
-      </div>
-
-      <div className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
-        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
-          Loading Button
-        </h3>
-        <div className="flex items-center gap-[var(--space-m)]">
-          <Button variant="primary" icon={Save} iconPosition="left" loading>
-            Saving...
-          </Button>
-          <code className="text-body-sm rounded-[var(--border-radius-s)] bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
-            {`<Button variant="primary" icon={Save} iconPosition="left" loading>Saving...</Button>`}
-          </code>
-        </div>
-      </div>
-
-      <div className="rounded-[var(--border-radius-l)] border border-[var(--color-border-primary-subtle)] bg-[var(--color-surface-primary)] p-[var(--space-l)]">
-        <h3 className="text-heading-sm mb-[var(--space-s)] text-[var(--color-text-primary)]">
-          Dropdown Button
-        </h3>
-        <div className="flex flex-col gap-[var(--space-m)]">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button dropdown>More Options</Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem>Option 1</DropdownMenuItem>
-              <DropdownMenuItem>Option 2</DropdownMenuItem>
-              <DropdownMenuItem>Option 3</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <code className="text-body-sm rounded-[var(--border-radius-s)] bg-[var(--color-surface-secondary)] px-[var(--space-s)] py-[var(--space-xs)] text-[var(--color-text-primary)]">
-            {`<DropdownMenu>
-  <DropdownMenuTrigger asChild>
-    <Button dropdown>More Options</Button>
-  </DropdownMenuTrigger>
-  <DropdownMenuContent>
-    <DropdownMenuItem>Option 1</DropdownMenuItem>
-  </DropdownMenuContent>
-</DropdownMenu>`}
-          </code>
-        </div>
+      <div className="flex gap-[var(--space-m)] items-center flex-wrap">
+        <Button size="l">Button</Button>
+        <Button variant="primary" size="l">Button</Button>
+        <Button variant="destructive" size="l">Button</Button>
+        <Button variant="success" size="l">Button</Button>
+        <Button variant="ghost" size="l">Button</Button>
       </div>
     </div>
   ),
 }
 
-export const AllVariants: Story = {
+export const Disabled: Story = {
   render: () => (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <h4 className="text-sm font-medium">Button Variants</h4>
-        <div className="flex space-x-2">
-          <Button>Default</Button>
-          <Button variant="primary">Primary</Button>
-          <Button variant="destructive">Destructive</Button>
-          <Button variant="success">Success</Button>
-          <Button variant="ghost">Ghost</Button>
-        </div>
+    <div className="flex gap-[var(--space-m)] items-center flex-wrap">
+      <Button disabled>Default</Button>
+      <Button variant="primary" disabled>Primary</Button>
+      <Button variant="destructive" disabled>Destructive</Button>
+      <Button variant="success" disabled>Success</Button>
+      <Button variant="ghost" disabled>Ghost</Button>
+    </div>
+  ),
+}
+
+export const DisabledGhostOnBackgrounds: Story = {
+  render: () => (
+    <div className="flex gap-[var(--space-m)] items-center flex-wrap">
+      <div className="p-[var(--space-xl)] rounded-[var(--border-radius-m)] bg-[var(--color-background-info-subtle)]">
+        <Button variant="ghost" disabled>Ghost</Button>
       </div>
-      <div className="space-y-2">
-        <h4 className="text-sm font-medium">Button Sizes</h4>
-        <div className="flex items-center space-x-2">
-          <Button size="s">Small</Button>
-          <Button size="m">Medium</Button>
-          <Button size="l">Large</Button>
-        </div>
+      <div className="p-[var(--space-xl)] rounded-[var(--border-radius-m)] bg-[var(--color-background-warning-subtle)]">
+        <Button variant="ghost" disabled>Ghost</Button>
       </div>
-      <div className="space-y-2">
-        <h4 className="text-sm font-medium">With Icons</h4>
-        <div className="flex items-center space-x-2">
-          <Button icon={Plus} iconPosition="left">Add</Button>
-          <Button icon="arrow-right" iconPosition="right">Next</Button>
-          <Button icon={Settings} />
-          <Button icon="star" variant="primary" />
-        </div>
+      <div className="p-[var(--space-xl)] rounded-[var(--border-radius-m)] bg-[var(--color-background-neutral-default)]">
+        <Button variant="ghost" disabled>Ghost</Button>
       </div>
-      <div className="space-y-2">
-        <h4 className="text-sm font-medium">States</h4>
-        <div className="flex items-center space-x-2">
-          <Button>Normal</Button>
-          <Button disabled>Disabled</Button>
-          <Button loading>Loading</Button>
-        </div>
+      <div className="p-[var(--space-xl)] rounded-[var(--border-radius-m)] bg-white">
+        <Button variant="ghost" disabled>Ghost</Button>
       </div>
+    </div>
+  ),
+}
+
+export const WithIcons: Story = {
+  render: () => (
+    <div className="flex flex-col gap-[var(--space-m)]">
+      <div className="flex gap-[var(--space-m)] items-center flex-wrap">
+        <Button icon={Plus} iconPosition="left">Button</Button>
+        <Button variant="primary" icon={Plus} iconPosition="left">Button</Button>
+        <Button variant="destructive" icon={Plus} iconPosition="left">Button</Button>
+        <Button variant="success" icon={Plus} iconPosition="left">Button</Button>
+        <Button variant="ghost" icon={Plus} iconPosition="left">Button</Button>
+      </div>
+      <div className="flex gap-[var(--space-m)] items-center flex-wrap">
+        <Button icon={Plus} iconPosition="right">Button</Button>
+        <Button variant="primary" icon={Plus} iconPosition="right">Button</Button>
+        <Button variant="destructive" icon={Plus} iconPosition="right">Button</Button>
+        <Button variant="success" icon={Plus} iconPosition="right">Button</Button>
+        <Button variant="ghost" icon={Plus} iconPosition="right">Button</Button>
+      </div>
+    </div>
+  ),
+}
+
+export const IconOnly: Story = {
+  render: () => (
+    <div className="flex flex-col gap-[var(--space-m)]">
+      <div className="flex gap-[var(--space-m)] items-center flex-wrap">
+        <Button icon={Settings} />
+        <Button variant="primary" icon={Settings} />
+        <Button variant="destructive" icon={Settings} />
+        <Button variant="success" icon={Settings} />
+        <Button variant="ghost" icon={Settings} />
+      </div>
+      <div className="flex gap-[var(--space-m)] items-center flex-wrap">
+        <Button icon={Settings} size="s" />
+        <Button icon={Settings} size="m" />
+        <Button icon={Settings} size="l" />
+      </div>
+    </div>
+  ),
+}
+
+export const Loading: Story = {
+  render: () => (
+    <div className="flex gap-[var(--space-m)] items-center flex-wrap">
+      <Button loading>Button</Button>
+      <Button variant="primary" loading>Button</Button>
+      <Button variant="destructive" loading>Button</Button>
+      <Button variant="success" loading>Button</Button>
+      <Button variant="ghost" loading>Button</Button>
     </div>
   ),
 }

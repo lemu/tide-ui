@@ -2227,3 +2227,82 @@ export const LegendHeightControl: Story = {
   ),
 }
 
+// 40-point time-series data for the scrollable story
+const TRANSITION_DAY = 28 // days 1–28 = actual, days 29–40 = prediction
+
+const scrollableData = Array.from({ length: 40 }, (_, i) => {
+  const day = i + 1
+  const priceValue = Math.round(2000 + Math.sin(i / 3) * 400 + Math.sin(i * 1.7) * 100)
+  const volume = Math.round(1200 + Math.cos(i / 4) * 300 + Math.cos(i * 2.1) * 75)
+
+  return {
+    name: `Day ${day}`,
+    priceActual: day <= TRANSITION_DAY ? priceValue : null,
+    pricePrediction: day >= TRANSITION_DAY ? priceValue : null,
+    volumeActual: day <= TRANSITION_DAY ? volume : null,
+    volumePrediction: day >= TRANSITION_DAY ? volume : null,
+  }
+})
+
+const todayMarkerData = Array.from({ length: 10 }, (_, i) => ({
+  name: `Day ${i + 1}`,
+  revenue: Math.round(3000 + Math.sin(i / 2) * 500),
+  cost: Math.round(1800 + Math.cos(i / 2) * 300),
+}))
+
+export const TodayMarkerLineChart: Story = {
+  render: () => (
+    <div className="w-[600px] h-[400px]">
+      <Chart
+        type="line"
+        data={todayMarkerData}
+        config={createChartConfig({
+          revenue: { label: 'Revenue', color: 'var(--color-chart-line-1)' },
+          cost: { label: 'Cost', color: 'var(--color-chart-line-2)' },
+        })}
+        showLegend={true}
+        className="h-full"
+        todayMarker={{ xValue: 'Day 7' }}
+      />
+    </div>
+  ),
+}
+
+export const ScrollableLineChart: Story = {
+  render: () => (
+    <div className="w-[600px]">
+      <Chart
+        type="line"
+        data={scrollableData}
+        config={createChartConfig({
+          priceActual: {
+            label: 'Price',
+            color: 'var(--color-chart-line-1)',
+            strokeStyle: 'solid',
+          },
+          pricePrediction: {
+            label: 'Price (Prediction)',
+            color: 'var(--color-chart-line-1)',
+            strokeStyle: 'dashed',
+          },
+          volumeActual: {
+            label: 'Volume',
+            color: 'var(--color-chart-line-2)',
+            strokeStyle: 'solid',
+          },
+          volumePrediction: {
+            label: 'Volume (Prediction)',
+            color: 'var(--color-chart-line-2)',
+            strokeStyle: 'dashed',
+          },
+        })}
+        height={300}
+        legendHeight={44}
+        showLegend={true}
+        scrollable={true}
+        todayMarker={{ xValue: 'Day 28' }}
+      />
+    </div>
+  ),
+}
+

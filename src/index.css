@@ -253,14 +253,15 @@
   /* background/neutral */
   --color-background-neutral-bold: var(--grey-500);
   --color-background-neutral-bold-hovered: var(--grey-600);
-  --color-background-neutral-default: var(--grey-alpha-50);
-  --color-background-neutral-hovered: var(--grey-alpha-100);
+  --color-background-neutral-default: var(--grey-50);
+  --color-background-neutral-hovered: var(--grey-100);
+  --color-background-neutral-hovered-opacity: var(--grey-alpha-100);
   --color-background-neutral-muted: var(--grey-200);
   --color-background-neutral-muted-hovered: var(--grey-300);
-  --color-background-neutral-selected: var(--grey-alpha-50);
-  --color-background-neutral-selected-hovered: var(--grey-alpha-100);
+  --color-background-neutral-selected: var(--grey-50);
+  --color-background-neutral-selected-hovered: var(--grey-100);
   --color-background-neutral-subtlest: var(--neutral-white);
-  --color-background-neutral-subtlest-hovered: var(--grey-alpha-25);
+  --color-background-neutral-subtlest-hovered: var(--grey-25);
 
   /* background/error */
   --color-background-error-bold: var(--red-500);
