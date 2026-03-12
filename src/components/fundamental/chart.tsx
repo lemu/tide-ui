@@ -175,7 +175,7 @@ export interface ChartProps {
   data: ChartDataPoint[];
   config: ChartConfig;
   className?: string;
-  height?: number;
+  height?: number | string;
   width?: number;
   minWidth?: number;
   onDataPointClick?: (data: ChartDataPoint, index: number) => void;
@@ -504,7 +504,7 @@ export function Chart({
   className,
   height = 300,
   width,
-  minWidth = 300,
+  minWidth = 240,
   onDataPointClick,
   onDataPointHover,
   highlightedIndex,
@@ -1469,7 +1469,7 @@ export function Chart({
     <div
       ref={chartRef}
       className={cn("w-full", className)}
-      style={{ minWidth }}
+      style={{ minWidth: responsive ? 0 : minWidth, ...(typeof height === 'string' ? { height } : {}) }}
       role="img"
       aria-label={title || `${type} chart`}
       aria-describedby={description ? `${chartRef.current?.id || 'chart'}-desc` : undefined}
@@ -1489,7 +1489,11 @@ export function Chart({
       {(() => {
         // When legendHeight is set: height = total container, chart gets (height - legendHeight)
         // Otherwise: height applies to entire chart (body + legend share the space)
-        const chartHeight = legendHeight ? height - legendHeight : height;
+        const chartHeight = typeof height === 'string'
+          ? height
+          : legendHeight
+            ? height - legendHeight
+            : height;
 
         // Scrollable two-pane layout (fixed Y-axis + drag-scrollable data pane)
         if (scrollable && type !== 'horizontal-bar' && type !== 'scatter') {

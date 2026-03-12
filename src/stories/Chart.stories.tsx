@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import React from 'react'
 import { Chart, generateChartColors, createChartConfig, formatNumber } from '../components/fundamental/chart'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 
@@ -644,10 +645,41 @@ export const ColorSchemesShowcase: Story = {
 
 export const ResponsiveChart: Story = {
   render: () => (
-    <div className="w-full max-w-5xl">
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-        <div className="h-64 min-w-0">
-          <h4 className="text-sm font-medium mb-2">Revenue Trend</h4>
+    <div className="w-full max-w-5xl space-y-8">
+      {/* Section 1: responsive grid */}
+      <div>
+        <h4 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">Responsive Grid</h4>
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+          <div className="h-64 min-w-0">
+            <Chart
+              type="line"
+              title="Revenue Trend"
+              data={monthlyData}
+              config={createChartConfig({
+                value: { label: 'Revenue', color: 'var(--color-chart-line-1)' },
+              })}
+              className="h-full"
+            />
+          </div>
+          <div className="h-64 min-w-0">
+            <Chart
+              type="bar"
+              title="Sales vs Profit"
+              data={monthlyData}
+              config={createChartConfig({
+                sales: { label: 'Sales', color: 'var(--color-chart-bar-1)' },
+                profit: { label: 'Profit', color: 'var(--color-chart-bar-2)' },
+              })}
+              className="h-full"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Section 2: narrow container — proves no overflow */}
+      <div>
+        <h4 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">Narrow Container (200px) — no overflow</h4>
+        <div style={{ width: 200 }} className="h-48 overflow-hidden border border-[var(--color-border-primary-subtle)] rounded-[var(--border-radius-m)]">
           <Chart
             type="line"
             data={monthlyData}
@@ -657,15 +689,18 @@ export const ResponsiveChart: Story = {
             className="h-full"
           />
         </div>
-        
-        <div className="h-64 min-w-0">
-          <h4 className="text-sm font-medium mb-2">Sales vs Profit</h4>
+      </div>
+
+      {/* Section 3: non-responsive, minWidth respected */}
+      <div>
+        <h4 className="text-heading-sm text-[var(--color-text-primary)] mb-[var(--space-m)]">Non-Responsive (responsive=false) — minWidth=240 applies</h4>
+        <div className="h-48">
           <Chart
             type="bar"
+            responsive={false}
             data={monthlyData}
             config={createChartConfig({
-              sales: { label: 'Sales', color: 'var(--color-chart-bar-1)' },
-              profit: { label: 'Profit', color: 'var(--color-chart-bar-2)' },
+              value: { label: 'Revenue', color: 'var(--color-chart-bar-1)' },
             })}
             className="h-full"
           />
@@ -2304,5 +2339,80 @@ export const ScrollableLineChart: Story = {
       />
     </div>
   ),
+}
+
+const ResizableContainerDemo = () => {
+  const [size, setSize] = React.useState({ width: 600, height: 300 })
+  const dragging = React.useRef(false)
+  const origin = React.useRef({ x: 0, y: 0, w: 600, h: 300 })
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault()
+    dragging.current = true
+    origin.current = { x: e.clientX, y: e.clientY, w: size.width, h: size.height }
+    const onMove = (e: MouseEvent) => {
+      if (!dragging.current) return
+      setSize({
+        width: Math.max(200, origin.current.w + e.clientX - origin.current.x),
+        height: Math.max(150, origin.current.h + e.clientY - origin.current.y),
+      })
+    }
+    const onUp = () => { dragging.current = false }
+    window.addEventListener('mousemove', onMove)
+    window.addEventListener('mouseup', onUp, { once: true })
+  }
+
+  return (
+    <div style={{ position: 'relative', width: size.width, height: size.height }}>
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          border: '2px dashed var(--color-border-primary-subtle)',
+          borderRadius: 'var(--border-radius-m)',
+          overflow: 'hidden',
+        }}
+      >
+        <Chart
+          type="line"
+          data={monthlyData}
+          config={createChartConfig({
+            value: { label: 'Revenue', color: 'var(--color-chart-area-1)' },
+            sales: { label: 'Sales', color: 'var(--color-chart-area-2)' },
+            profit: { label: 'Profit', color: 'var(--color-chart-area-3)' },
+          })}
+          height="100%"
+          className="w-full"
+          showGrid
+        />
+      </div>
+      {/* Drag handle */}
+      <div
+        onMouseDown={onMouseDown}
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          width: 16,
+          height: 16,
+          cursor: 'se-resize',
+          zIndex: 10,
+          display: 'flex',
+          alignItems: 'flex-end',
+          justifyContent: 'flex-end',
+          padding: 3,
+        }}
+      >
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="var(--color-border-primary-subtle)">
+          <path d="M9 1L1 9M9 5L5 9M9 9L9 9" stroke="var(--color-border-primary-subtle)" strokeWidth="1.5" strokeLinecap="round"/>
+        </svg>
+      </div>
+    </div>
+  )
+}
+
+export const ResizableContainer: Story = {
+  name: 'Resizable Container (height="100%")',
+  render: () => <ResizableContainerDemo />,
 }
 
