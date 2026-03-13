@@ -924,8 +924,7 @@ function BookmarkTabs({
             {/* Add separator between system and user bookmarks */}
             {showSeparator && (
               <Separator
-                type="line"
-                layout="horizontal"
+                type="vertical-line"
                 className="h-20 flex-shrink-0"
                 aria-hidden="true"
               />
@@ -1104,7 +1103,7 @@ export function BookmarksDefaultActions() {
 
   return (
     <>
-      <Separator type="dot" layout="horizontal" />
+      <Separator type="dot" />
       {isSystemBookmark ? (
         <>
           <BookmarksResetButton />

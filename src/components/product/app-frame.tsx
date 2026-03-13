@@ -517,7 +517,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
 
           {/* Separator between Main and Operations in collapsed state */}
           <div className="my-2 hidden justify-center px-2 group-data-[collapsible=icon]:flex">
-            <Separator layout="vertical" />
+            <Separator type="horizontal-line" />
           </div>
 
           {/* Operations Section */}
@@ -643,7 +643,7 @@ function AppSidebar({ navigationData, user, teams, onNavigate, navigationMode, o
 
           {/* Separator between Operations and Intelligence in collapsed state */}
           <div className="my-2 hidden justify-center px-2 group-data-[collapsible=icon]:flex">
-            <Separator layout="vertical" />
+            <Separator type="horizontal-line" />
           </div>
 
           {/* Intelligence Section */}
@@ -1485,7 +1485,7 @@ export function AppFrame({
           {(headerContent || headerActions || headerTabs) && (
             <header className="flex h-12 shrink-0 items-center gap-2 border-b border-[var(--color-border-primary-subtle)] transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 box-border px-[var(--space-m)]">
               <SidebarToggleWithTooltip />
-              <Separator layout="horizontal" className="mr-2 h-4" />
+              <Separator type="vertical-line" className="mr-2 h-4" />
 
               {/* Left side: Breadcrumbs/content */}
               <div className="flex-1 min-w-0">

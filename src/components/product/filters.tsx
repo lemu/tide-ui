@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { MonthPicker } from "../fundamental/month-picker"
 import { Calendar } from "../fundamental/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "../fundamental/popover"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../fundamental/tooltip'
 import { Separator } from "../fundamental/separator"
 import { Badge } from "../fundamental/badge"
 import { calculatePresetRange, formatDateRange, getPresetLabel } from "../../lib/date-utils"
@@ -1292,11 +1293,16 @@ export function Filters({
 }: FiltersProps) {
   const [isFilterMenuOpen, setIsFilterMenuOpen] = React.useState(false)
   const [openSlotId, setOpenSlotId] = React.useState<string | null>(null)
+  const [recentlyClosedSlotId, setRecentlyClosedSlotId] = React.useState<string | null>(null)
   const [announcement, setAnnouncement] = React.useState('')
   const previousActiveFiltersRef = React.useRef(activeFilters)
   const previousSearchTermsRef = React.useRef(globalSearchTerms)
   // Refs for focus management - return focus to trigger when popover closes
   const filterSlotTriggerRefs = React.useRef<Record<string, HTMLDivElement | null>>({})
+  const filterScrollContainerRef = React.useRef<HTMLDivElement | null>(null)
+  const [visibleFilterIds, setVisibleFilterIds] = React.useState<Set<string>>(new Set())
+  const pinnedFiltersAreaRef = React.useRef<HTMLDivElement | null>(null)
+  const [pinnedFiltersCollapsed, setPinnedFiltersCollapsed] = React.useState(false)
 
   // Handle popover open/close with focus management
   const handleSlotPopoverChange = React.useCallback((open: boolean, filterId: string) => {
@@ -1305,6 +1311,9 @@ export function Filters({
 
     // Return focus to trigger when closing
     if (!open && previousOpenSlotId === filterId) {
+      setRecentlyClosedSlotId(filterId)
+      setTimeout(() => setRecentlyClosedSlotId(null), 500)
+
       // Use setTimeout to ensure the popover has closed before focusing
       setTimeout(() => {
         filterSlotTriggerRefs.current[filterId]?.focus()
@@ -1472,6 +1481,69 @@ export function Filters({
   // Get pinned filters in order of filters array (not pinned order)
   const pinnedFilterObjects = filters
     .filter(f => pinnedFilters.includes(f.id))
+
+  // Collapse pinned filter row when available space < 320px
+  React.useEffect(() => {
+    const wrapper = pinnedFiltersAreaRef.current
+    if (!wrapper) return
+    const parent = wrapper.parentElement
+    if (!parent) return
+
+    const getAvailableWidth = () => {
+      let siblingsWidth = 0
+      let siblingCount = 0
+      for (const child of Array.from(parent.children)) {
+        if (child === wrapper) continue
+        const el = child as HTMLElement
+        const w = el.offsetWidth
+        if (w === 0) continue // skip hidden/zero-width elements (e.g. sr-only)
+        siblingsWidth += w
+        siblingCount++
+      }
+      // gap-[3px] — account for gaps between siblings and the wrapper slot
+      const totalGaps = (siblingCount + 1) * 3
+      return parent.clientWidth - siblingsWidth - totalGaps
+    }
+
+    const observer = new ResizeObserver(() => {
+      setPinnedFiltersCollapsed(getAvailableWidth() < 320)
+    })
+
+    observer.observe(parent)
+    return () => observer.disconnect()
+  }, [])
+
+  // Suppress tooltips for filter triggers not fully visible in the scroll container
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  React.useEffect(() => {
+    const container = filterScrollContainerRef.current
+    if (!container || pinnedFilterObjects.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setVisibleFilterIds(prev => {
+          const next = new Set(prev)
+          entries.forEach(entry => {
+            const id = (entry.target as HTMLElement).dataset.filterId
+            if (!id) return
+            if (entry.isIntersecting && entry.intersectionRatio >= 1) {
+              next.add(id)
+            } else {
+              next.delete(id)
+            }
+          })
+          return next
+        })
+      },
+      { root: container, threshold: 1.0 }
+    )
+
+    Object.values(filterSlotTriggerRefs.current).forEach(el => {
+      if (el) observer.observe(el)
+    })
+
+    return () => observer.disconnect()
+  }, [pinnedFilterObjects])
 
   // Pre-build lookup map for efficient search term matching (O(1) vs O(n*m*o))
   // Maps normalized labels to filter info for quick lookups
@@ -1701,27 +1773,41 @@ export function Filters({
       )}
 
       {/* Dot Separator (after Filter button) */}
-      {isFiltersButtonVisible && pinnedFilterObjects.length > 0 && (
-        <Separator type="dot" layout="horizontal" />
+      {isFiltersButtonVisible && pinnedFilterObjects.length > 0 && !pinnedFiltersCollapsed && (
+        <Separator type="dot" />
       )}
 
       {/* Pinned Filter Slots */}
       {pinnedFilterObjects.length > 0 && (
-        <div className="min-w-0 flex gap-[7px] overflow-x-auto scrollbar-hide p-1">
+        <div ref={pinnedFiltersAreaRef} className={cn("min-w-0 flex-1 overflow-hidden", pinnedFiltersCollapsed && "hidden")}>
+          {!pinnedFiltersCollapsed && (
+        <TooltipProvider delayDuration={400}>
+        <div ref={filterScrollContainerRef} className="min-w-0 flex gap-[7px] overflow-x-auto scrollbar-hide p-1">
           {pinnedFilterObjects.map((filter) => {
         const slotContent = getSlotContent(filter)
         const isActive = slotContent.type !== 'empty'
         const IconComponent = slotContent.icon
 
         return (
-          <Popover
+          <Tooltip
             key={filter.id}
+            open={
+              openSlotId === filter.id ||
+              recentlyClosedSlotId === filter.id ||
+              !visibleFilterIds.has(filter.id)
+                ? false
+                : undefined
+            }
+          >
+          <Popover
             open={openSlotId === filter.id}
             onOpenChange={(open) => handleSlotPopoverChange(open, filter.id)}
           >
+            <TooltipTrigger asChild>
             <PopoverTrigger asChild>
               <div
                 ref={(el) => { filterSlotTriggerRefs.current[filter.id] = el }}
+                data-filter-id={filter.id}
                 role="button"
                 tabIndex={0}
                 aria-label={`${filter.label}: ${
@@ -1796,6 +1882,7 @@ export function Filters({
                 )}
               </div>
             </PopoverTrigger>
+            </TooltipTrigger>
             <PopoverContent
               className={cn(
                 "p-[var(--space-l)]",
@@ -1813,14 +1900,21 @@ export function Filters({
               />
             </PopoverContent>
           </Popover>
+          {slotContent.type === 'values' && (
+            <TooltipContent side="top">{filter.label}</TooltipContent>
+          )}
+          </Tooltip>
         )
       })}
+        </div>
+        </TooltipProvider>
+          )}
         </div>
       )}
 
       {/* Vertical Line Separator (before global search) */}
       {enableGlobalSearch && (isFiltersButtonVisible || pinnedFilterObjects.length > 0) && (
-        <Separator type="line" layout="horizontal" className="mx-[var(--space-s)]" />
+        <Separator type="vertical-line" className="mx-[var(--space-s)]" />
       )}
 
       {/* Global Search Input */}
@@ -1881,7 +1975,7 @@ export function Filters({
 
       {/* Dot Separator (before Reset) */}
       {!hideReset && (hasActiveFilters || hasGlobalSearch) && (
-        <Separator type="dot" layout="horizontal" />
+        <Separator type="dot" />
       )}
 
       {/* Reset Button */}
