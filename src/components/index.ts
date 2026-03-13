@@ -245,6 +245,7 @@ export type { FlagProps, FlagSize } from './fundamental/flag'
 export { FileUpload } from './fundamental/file-upload'
 export type {
   FileUploadFile,
+  FileUploadFileMeta,
   FileUploadProps,
   FileUploadDropzoneProps,
   FileUploadTriggerProps,

@@ -90,21 +90,21 @@ export const ImageUpload: Story = {
   render: () => {
     const [files, setFiles] = useState<FileUploadFile[]>([])
     
-    const simulateUpload = async (newFiles: File[]) => {
+    const simulateUpload = async (newFiles: FileUploadFile[]) => {
       // Simulate upload progress for demo
       const updatedFiles = files.map(f => ({ ...f }))
-      
-      newFiles.forEach((newFile, index) => {
-        const fileUpload = updatedFiles.find(f => f.file === newFile)
+
+      newFiles.forEach((newFile) => {
+        const fileUpload = updatedFiles.find(f => f.id === newFile.id)
         if (fileUpload) {
           fileUpload.status = 'uploading'
           fileUpload.progress = 0
-          
+
           // Simulate progress
           const interval = setInterval(() => {
             fileUpload.progress = Math.min((fileUpload.progress || 0) + 10, 100)
             setFiles([...updatedFiles])
-            
+
             if (fileUpload.progress >= 100) {
               clearInterval(interval)
               fileUpload.status = 'success'

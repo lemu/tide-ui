@@ -16,7 +16,8 @@ interface FileUploadContextValue {
   accept?: string[];
   disabled?: boolean;
   multiple?: boolean;
-  onUpload?: (files: File[]) => Promise<void>;
+  onUpload?: (files: FileUploadFile[]) => Promise<void>;
+  onDelete?: (file: FileUploadFile) => Promise<void>;
 }
 
 const FileUploadContext = React.createContext<FileUploadContextValue | null>(
@@ -32,9 +33,20 @@ const useFileUpload = () => {
 };
 
 // File upload types
+export interface FileUploadFileMeta {
+  name: string;
+  size: number;
+  type?: string;
+}
+
+function isFile(f: File | FileUploadFileMeta): f is File {
+  return f instanceof File
+}
+
 export interface FileUploadFile {
   id: string;
-  file: File;
+  externalId?: string;
+  file: File | FileUploadFileMeta;
   status: "pending" | "uploading" | "success" | "error";
   progress?: number;
   error?: string;
@@ -50,7 +62,8 @@ export interface FileUploadProps extends React.HTMLAttributes<HTMLDivElement> {
   accept?: string[];
   disabled?: boolean;
   multiple?: boolean;
-  onUpload?: (files: File[]) => Promise<void>;
+  onUpload?: (files: FileUploadFile[]) => Promise<void>;
+  onDelete?: (file: FileUploadFile) => Promise<void>;
 }
 
 const FileUploadRoot = React.forwardRef<HTMLDivElement, FileUploadProps>(
@@ -65,6 +78,7 @@ const FileUploadRoot = React.forwardRef<HTMLDivElement, FileUploadProps>(
       disabled = false,
       multiple = true,
       onUpload,
+      onDelete,
       children,
       ...props
     },
@@ -80,6 +94,7 @@ const FileUploadRoot = React.forwardRef<HTMLDivElement, FileUploadProps>(
         disabled,
         multiple,
         onUpload,
+        onDelete,
       }),
       [
         files,
@@ -90,6 +105,7 @@ const FileUploadRoot = React.forwardRef<HTMLDivElement, FileUploadProps>(
         disabled,
         multiple,
         onUpload,
+        onDelete,
       ],
     );
 
@@ -372,7 +388,7 @@ const FileUploadItemPreview = React.forwardRef<
       )}
       {...props}
     >
-      {file.preview ? (
+      {file.preview && isFile(file.file) ? (
         <img
           src={file.preview}
           alt={file.file.name}
@@ -380,7 +396,7 @@ const FileUploadItemPreview = React.forwardRef<
         />
       ) : (
         <Icon
-          name={getFileIcon(file.file.type) as any}
+          name={getFileIcon(file.file.type ?? '') as any}
           className="h-5 w-5 text-[var(--color-text-secondary)]"
         />
       )}
@@ -398,22 +414,26 @@ export interface FileUploadItemMetadataProps
 const FileUploadItemMetadata = React.forwardRef<
   HTMLDivElement,
   FileUploadItemMetadataProps
->(({ className, file, ...props }, ref) => {
+>(({ className, file, children, ...props }, ref) => {
   return (
     <div ref={ref} className={cn("flex-1 space-y-1", className)} {...props}>
-      <div className="flex items-center gap-2">
-        <p className="text-body-sm truncate font-medium">{file.file.name}</p>
-        <Badge>
-          {file.status}
-        </Badge>
-      </div>
-      <p className="text-caption-sm text-[var(--color-text-secondary)]">
-        {formatFileSize(file.file.size)}
-      </p>
-      {file.error && (
-        <p className="text-caption-sm text-[var(--color-text-error-bold)]">
-          {file.error}
-        </p>
+      {children ?? (
+        <>
+          <div className="flex items-center gap-2">
+            <p className="text-body-sm truncate font-medium">{file.file.name}</p>
+            <Badge>
+              {file.status}
+            </Badge>
+          </div>
+          <p className="text-caption-sm text-[var(--color-text-secondary)]">
+            {formatFileSize(file.file.size)}
+          </p>
+          {file.error && (
+            <p className="text-caption-sm text-[var(--color-text-error-bold)]">
+              {file.error}
+            </p>
+          )}
+        </>
       )}
     </div>
   );
@@ -454,9 +474,16 @@ const FileUploadItemDelete = React.forwardRef<
   HTMLButtonElement,
   FileUploadItemDeleteProps
 >(({ file, ...props }, ref) => {
-  const { files, onFilesChange } = useFileUpload();
+  const { files, onFilesChange, onDelete } = useFileUpload();
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    if (onDelete) {
+      try {
+        await onDelete(file)
+      } catch {
+        return
+      }
+    }
     const updatedFiles = files.filter((f) => f.id !== file.id);
     onFilesChange(updatedFiles);
   };
